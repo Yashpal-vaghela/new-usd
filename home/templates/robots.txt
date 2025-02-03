@@ -1,9 +1,9 @@
 User-agent: *
-Alllow: /
-Disallow: account/dentist/*
-Disallow: gallery/*
-Disallow: contact/*
-Disallow: all-usd/*
-Disallow: blogs/*?*
-Disallow: find-dentist/*
+Allow: /
+Disallow: /account/dentist/*
+Disallow: /gallery/*
+Disallow: /contact/*
+Disallow: /all-usd/*
+Disallow: /blogs/*?*
+Disallow: /find-dentist/*
 Sitemap: https://ultimatesmiledesign.com/sitemap.xml
