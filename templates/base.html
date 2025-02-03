@@ -29,6 +29,8 @@
     <!-- Feather STYLE SHEET -->
     <link href="{% static 'css/feather.css' %}" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     
     <!-- OWL CAROUSEL STYLE SHEET -->
     <link href="{% static 'css/owl.carousel.min.css' %}" rel="stylesheet">
@@ -58,6 +60,8 @@
     <link href="{% static 'css/fullcalendar.min.css' %}" rel="stylesheet">   
     <!-- MAIN STYLE SHEET -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">   
+
+    
     
 
 
@@ -105,74 +109,74 @@
                         <span>Subscribe Our Newsletter</span>
                         <form>
                             <div class="sf-news-l-form">
-                                <input type="text" class="form-control" placeholder="Enter Your Email">
-                                <button type="submit" class="sf-sb-btn bat">Submit</button>
+                                <input type="text" class="form-control-footer" placeholder="Enter Your Email">
+                                <button type="submit" class="sf-sb-btn-footer bat">Submit</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
+            
 
             <!-- FOOTER BLOCKS START -->  
-<div class="footer-top">
-    <div class="container">
-        <div class="row">
-            <!-- COLUMNS 1 -->
-            <div class="col-md-3 col-sm-6 col-xs-6">
-                <div class="sf-site-link sf-widget-link">
-                    <h4 class="aon-f-title cool">About Us</h4>
-                    <p style="color:white;">Your journey to a brighter smile begins here. Our commitment is to connect you with the finest Ultimate Smile Designers in the industry.</p>
-                    <ul class="aon-socila-icon d-flex">
+            <div class="footer-top">
+                <div class="container">
+                    <div class="row">
+                       
+                        <!-- COLUMNS 1 -->
+                        <div class="col-md-4 col-sm-6 col-xs-6 text-center order-lg-first order-md-first">
+                            <div class="sf-site-link sf-widget-cities c1">
+                                <h4 class="aon-f-title cool  ">Quick Links</h4>
+                                <ul class="foo-links">
+                                    <li><a href="https://advancedentalexport.com/about-us/" target="_blank" class="hover-link">About ADE</a></li>
+                                    <li><a href="{% url 'home:all_usd' %}" class="hover-link">All Dentists</a></li>
+                                    <li><a href="{% url 'home:contact' %}" class="hover-link">Contact Us</a></li>
+                                    <li><a target="_blank" href="{% url 'account:dentist' %}" class="hover-link">Consultation</a></li>
+                                </ul>
+                            </div>
+                        </div>
+            
+                        <!-- COLUMNS 2 -->
+                        <div class="col-md-4 col-sm-12 col-xs-6 text-center  order-sm-first order-first ">
+                            <div class="sf-site-link sf-widget-link  ">
+                                    <div class="footer-logo">
+                                        <a href="{% url 'home:home' %}">
+                                            <img class="logo-pic-one " src="{% static 'usdlog.png' %}" alt="usdlogo">
+                                        </a>
+                                    </div>
+                                   
+                                <div class="social-container ">
+                                
+                                <ul class="aon-socila-icon d-flex align-items-center ">
                         
-                        <li><a href="https://www.facebook.com/profile.php?id=61560203902716&mibextid=ZbWKwL" class="hover-link"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="https://www.linkedin.com/company/ultimate-smile-designing-by-ade"><i class="fa fa-linkedin" class="hover-link"></i></a></li>
-                        <li><a href="https://www.instagram.com/ultimatesmiledesigningbyade?igsh=MWVuOThwb2dqeHlpMQ=="><i class="fa fa-instagram" class="hover-link"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-            <!-- COLUMNS 2 -->
-            <div class="col-md-3 col-sm-6 col-xs-6">
-                <div class="sf-site-link sf-widget-cities">
-                    <h4 class="aon-f-title cool">Quick Links</h4>
-                    <ul>
-                        <li><a href="https://advancedentalexport.com/about-us/" target="_blank" class="hover-link">About ADE</a></li>
-                        <li><a href="{% url 'home:all_usd' %}" class="hover-link">All Dentists</a></li>
-                     
-                        <li><a href="{% url 'home:contact' %}" class="hover-link">Contact Us</a></li>
-                    </ul>
-                </div>
-            </div>
-            <!-- COLUMNS 3 -->
-            <div class="col-md-3 col-sm-6 col-xs-6">
-                <div class="sf-site-link sf-widget-categories">
-                    <h4 class="aon-f-title cool">Important Link</h4>
-                    <ul>
-                        <li><a target="_blank" href="https://advancedentalexport.com/gentle-glow-mastering-teeth-whitening/" class="hover-link">Cosmetic Dentistry</a></li>
-                        <li><a target="_blank" href="https://advancedentalexport.com/embracing-advance-zirconia-redefining-dental-excellence-with-cutting-edge-materials/" class="hover-link">Advance Zirconia</a></li>
-                        <li><a target="_blank" href="https://advancedentalexport.com/nobelprocera/" class="hover-link">NobelProcera</a></li>
-                        <li><a target="_blank" href="https://advancedentalexport.com/exhibition-gallery/" class="hover-link">Exhibition Gallery</a></li>
-                        <li><a target="_blank" href="https://advancedentalexport.com/advanced-aligners/" class="hover-link">ADE Aligner</a></li>
-                        <li><a target="_blank" href="{% url 'account:dentist' %}" class="hover-link">Request Consultation</a></li>
-                        {% comment %} <li><a target="_blank" href="https://ultimatesmiledesign.com/" class="hover-link">Back to Home</a></li> {% endcomment %}
-                    </ul>
-                </div>
-            </div>
-            <!-- COLUMNS 4 -->
-            <div class="col-md-3 col-sm-6 col-xs-6">
-                <div class="sf-site-link sf-widget-contact">
-                    <h4 class="aon-f-title cool">Contact Us</h4>
-                    <ul>
-                        <li><a href="tel:+918488888877" class="hover-link">+91 84 88 88 88 77</a></li>
-                        <li><a href="tel:+918469888877" class="hover-link">+91 84 69 88 88 77</a></li>
-                        
-                        <li><a href="mailto:info@advancedentalexport.com" class="hover-link">usd@gmail.com</a></li>
-                    </ul>
-                </div>
-            </div>
+                                    <li><a href="https://www.facebook.com/profile.php?id=61560203902716&mibextid=ZbWKwL" class="hover-link"><i class="fa-brands fa-facebook-f"></i></a></li>
+                                    <li><a href="https://www.linkedin.com/company/ultimate-smile-designing-by-ade"><i class="fa-brands fa-linkedin" class="hover-link"></i></a></li>
+                                    <li><a href="https://www.instagram.com/ultimatesmiledesigningbyade?igsh=MWVuOThwb2dqeHlpMQ=="><i class="fa-brands fa-instagram" class="hover-link"></i></a></li>
+                                </ul>
+                            </div>
+                            </div>
+                        </div>
+            
+                        <!-- COLUMNS 3 --> 
+                        <div class="col-md-4 col-sm-6 col-xs-6 text-center order-5">
+                            <div class="sf-site-link sf-widget-categories">
+                                <h4 class="aon-f-title cool">Important Link</h4>
+                                <ul class="foo-links">
+                                    <li><a target="_blank" href="https://advancedentalexport.com/gentle-glow-mastering-teeth-whitening/" class="hover-link">Cosmetic Dentistry</a></li>
+                                    <li><a target="_blank" href="https://advancedentalexport.com/embracing-advance-zirconia-redefining-dental-excellence-with-cutting-edge-materials/" class="hover-link">Advance Zirconia</a></li>
+                                    <li><a target="_blank" href="https://advancedentalexport.com/nobelprocera/" class="hover-link">NobelProcera</a></li>
+                                    <li><a target="_blank" href="https://advancedentalexport.com/exhibition-gallery/" class="hover-link">Exhibition Gallery</a></li>
+                                    <li><a target="_blank" href="https://advancedentalexport.com/advanced-aligners/" class="hover-link">ADE Aligner</a></li>
+                                    
+                                    {% comment %} <li><a target="_blank" href="https://ultimatesmiledesign.com/" class="hover-link">Back to Home</a></li> {% endcomment %}
+                                </ul>
+                            </div>
+                        </div>
 
-        </div>
-    </div>
-</div>
+            
+                    </div>
+                </div>
+            </div>
 <!-- FOOTER BLOCKS END -->
 
             
@@ -186,7 +190,7 @@
                         </div>
                     </div>
                 </div>   
-            </div>       
+            </div>      
         </footer>
         <!-- FOOTER END -->
 

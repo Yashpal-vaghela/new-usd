@@ -11,7 +11,7 @@
                     <div class="logo-header-inner logo-header-one">
                         <a href="{% url 'home:home' %}">
                             <img class="logo-pic-one" src="{% static 'usdlog.png' %}" alt="usdlogo">
-                            <img class="logo-pic-two" src="{% static 'usdlog.png' %}" alt="usdlogo">
+                           
                         </a>
                     </div>
                 </div>  
@@ -30,18 +30,21 @@
                     
                     <ul class=" nav navbar-nav">
                         
-                        <li class="cool"><a href="{% url 'home:home' %}">Ultimate Smile Design 
+                        <li class=""><a href="{% url 'home:home' %}"><span {% if request.path == '/' %}class="heasder_active cool"{% endif %}> Home</span>
                         </a>
                         </li> 
-                        <li class="cool"><a href={% url 'home:search_all_usd' %}>Find Dentist</a>
+                        <li class=""><a href={% url 'home:search_all_usd' %}><span {% if request.path == '/search-all-usd/' %}class="heasder_active cool"{% endif %}> Find Dentist</span></a>
                         </li> 
-                        <li class="cool"><a href="{% url 'home:gallery' %}">Gallery</a>
+                        <li class=""><a href="{% url 'home:gallery' %}"><span {% if request.path == '/gallery/' %}class="heasder_active cool"{% endif %}> Gallery</span></a>
                         </li> 
-                        <li class="cool"><a href="{% url 'home:blogs' %}">Blogs</a>
+                        <li class=""><a href="{% url 'home:blogs' %}"><span {% if request.path == '/blogs/' %}class="heasder_active cool"{% endif %}> Blogs</span></a>
                         </li>                                                                
-                        <li class="cool"><a href="{% url 'home:contact' %}">Contact</a>
-                                                   
+                        <li class=""><a href="{% url 'home:contact' %}"><span {% if request.path == '/contact/' %}class="heasder_active cool"{% endif %}> Contact</span></a>                          
                         </li> 
+                        <li class="hea-shrink-btn"><a href="{% url 'account:dentist' %}" class="hea-shrink-btn-inner">
+                        For Patients</a></li>
+                        <li class="hea-shrink-btn"><a href="https://dentist.ultimatesmiledesign.com/" target="_blank" class="hea-shrink-btn-inner">
+                        For Dentist</a></li>
                 
                     </ul>
 
@@ -70,12 +73,13 @@
                         <!--    <i class="feather-user"></i> Sign In-->
                         <!--</a>-->
                         <!--Add Listing up-->
-                        <a href="{% url 'account:dentist' %}" class="site-button aon-add-listing m-l20 bat">
-                          <img src="{% static 'medical.png' %}" alt="For Patients" style="width: 20px; height: 20px;"> For Patients
-                        </a>
-                        <a href="https://dentist.ultimatesmiledesign.com/" target="_blank" class="site-button aon-add-listing m-l20 bat">
-                           <img src="{% static 'doctor.png' %}" alt="For Dentist" style="width: 20px; height: 20px;"> For Dentist
-                        </a>
+                        <a href="{% url 'account:dentist' %}" class="site-button aon-add-listing m-l20 header-buttons bat">
+                            <p class="">For Patients</p>   
+                          </a>
+                          <a href="https://dentist.ultimatesmiledesign.com/" target="_blank" class="site-button aon-add-listing m-l20 bat header-buttons">
+                      
+                             <p class="">For Dentist</p>
+                          </a>
 
                         {% endif %}
 
