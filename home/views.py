@@ -53,6 +53,10 @@ def home(request):
     }
     return render(request, 'index.html', context)
 
+def location_view(request):
+    data1 = City.objects.all()[:10]
+    return render(request, 'location.html', {'data1': data1})
+
 def search_all_usd(request):
     """
     Handles the search functionality for dentists.

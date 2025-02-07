@@ -1,0 +1,503 @@
+.smile_step_Section {
+    background-color: #F7F5F0;
+    padding: 50px 0px;
+}
+
+
+/* image card */
+
+.mainImageCard {
+    position: relative;
+    margin: 40px 0px;
+}
+
+.smile_S1 {
+    
+    padding: 40px 30px;
+}
+
+.card {
+    position: absolute;
+    text-align: center;
+    align-content: center;
+    padding: 12px;
+    background-color: white;
+    border-radius: 15px;
+    max-width: 250px;
+}
+
+.icon_img {
+    height: 46px;
+    width: 46px;
+    align-content: center;
+    margin: 0 auto;   
+}
+
+.s_heading1 {
+    font-family: "Gilda Display", serif;
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+.s_subheading1 {
+    font-family: "Barlow", sans-serif;
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.one {
+    top: -2%;
+    left:31%;
+}
+
+.two {
+    bottom: 0%;
+}
+
+/* Step Text */
+
+.step_card{
+    margin-top: 12px;
+}
+.point {
+    padding: 0 20px;
+}
+
+.line {
+    display: block;
+    width: 80%;
+    height: 2px !important;
+    border-radius: 4px;
+    background-color: #DCAD81 !important ;
+}
+
+.step_header{
+    padding: 0 20px;
+}
+
+.s_heading2 {
+    font-family: "Gilda Display", serif;
+    font-size: 20px;
+}
+
+.s_subheading2 {
+    font-family: "Barlow", sans-serif;
+    font-size: 16px;
+    color: #666;
+}
+
+
+/* Resonsive design */
+
+
+@media (max-width: 1200px) {
+    .icon_img {
+        height: 35px;
+        width: 35px; 
+    }
+
+    .s_heading1 {
+        font-size: 14px;
+    }
+    .two {
+        bottom: 0%;
+        left: -8%;
+    }
+
+    .card {
+        max-width: 210px;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 992px) {
+    .smile_S1 {
+        padding: 40px 30px;
+        width: 561px;
+        height: 501px;
+        display: flex;
+        margin: 0 auto;
+    }
+
+    .one {
+        top: 4%;
+        right: 0%;
+    }
+    .two {
+        bottom: 10%;
+        left: 6%;
+    }
+
+    .card {
+        max-width: 250px;
+    }
+    .mainImageCard {
+        position: relative;
+        margin: 10px 0px;
+    }
+}
+
+@media (max-width: 768px) {
+    .icon_img {
+        height: 24px;
+        width: 24px; 
+    }
+
+    .s_heading1 {
+        font-size: 12px;
+        margin-bottom: 0px !important;
+    }
+
+    .one {
+        top: 4%;
+        right: 0%;
+    }
+    .two {
+        bottom: 0%;
+        left: 6%;
+    }
+
+    .card {
+        max-width: 250px;
+    }
+    .mainImageCard {
+        position: relative;
+        margin: 10px 0px;
+    }
+}
+
+@media (max-width: 576px) {
+    .icon_img {
+        height: 24px;
+        width: 24px; 
+    }
+
+    .s_heading1 {
+        font-size: 12px;
+        margin-bottom: 0px !important;
+    }
+
+    .one {
+        top: -5%;
+        right: 5%;
+    }
+    .two {
+        bottom: -10%;
+        left: 8%;
+    }
+
+    .card {
+        max-width: 220px;
+    }
+
+    .smile_S1 {
+        padding: 10px 10px;
+    }
+
+    .s_subheading1 {
+        font-size: 10px;
+    }
+
+    .point {
+        padding: 0 10px;
+    }
+
+    .step_header{
+        padding: 0 10px;
+    }
+    .s_heading2 {
+        font-size: 16px;
+    }
+    
+    .s_subheading2 {
+        font-family: "Barlow", sans-serif;
+        font-size: 14px;
+        color: #666;
+    }
+
+    .mainImageCard {
+        position: relative;
+        margin: 30px 0px;
+    }
+}
+
+
+/* Animated Line */
+
+.dashed_line {
+    margin: 20px 0px;
+}
+
+.animated-line {
+    width: 2px; /* Thin vertical line */
+    height: 100%; /* Full height */
+    background: repeating-linear-gradient(
+        to bottom,
+        #DCAD81 0px, 
+        #DCAD81 20px, 
+        transparent 20px, 
+        transparent 30px, 
+        #DCAD81 30px, 
+        #DCAD81 32px, 
+        transparent 32px, 
+        transparent 43px 
+    );
+    position: relative;
+    animation: moveLine 2s linear infinite;
+}
+
+@keyframes moveLine {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 0 50px;
+    }
+}
+
+
+
+
+/* -----------------------------------------Registration Page-------------------------------------------- */
+
+.registration_Patient {
+    position: relative;
+    background-color: white;
+    overflow: hidden;
+}
+
+.vec_one {
+    position: absolute;
+    top: -30%;
+}
+
+.vec_two {
+    position: absolute;
+    bottom: -44%;
+    transform: scaleX(-1);
+    right: 0%;
+}
+
+.inner_card {
+    margin: 50px 0px;
+    background: transparent;
+    position: relative;
+}
+
+.registration_heading {
+    font-family: "Gilda Display", serif;
+    font-size: 30px;
+    color: #000;
+}
+
+.registrayion_small{
+    font-family: "Barlow Condensed", sans-serif;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 0px;
+}
+
+.text_vec {
+    height: 8px;
+    width: 90px;
+    margin-bottom: 20px;
+}
+
+.registration_subtext {
+    font-family: "Barlow", sans-serif;
+    color: #666;
+    font-size: 14px;
+    padding: 0 50px;
+}
+
+@media (max-width: 768px) {
+    .registration_subtext {
+        padding: 0 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .registration_heading {
+        font-size: 20px;
+    }
+}
+
+/* -----------------------------------------Registration Doctor-------------------------------------------- */
+
+.registration_Doctor {
+    background-color: white;
+    padding: 50px 0px;
+}
+
+.inner_card_doctor {
+    position: relative;
+    padding: 20px 0px;
+    border-radius: 25px;
+    background-color: #F7F5F0;
+    overflow: hidden;
+    
+}
+
+.vec2_one {
+    position: absolute;
+    transform: scaleX(-1);
+    top: -30%;
+    left: 0%;
+}
+
+.vec2_two {
+    position: absolute;
+    bottom: -44%;
+    right: 0%;
+}
+
+.Doctor_subtext {
+    font-family: "Barlow", sans-serif;
+    color: #666;
+    font-size: 14px;
+    padding: 0 50px;
+    font-weight: 600;
+}
+
+@media (max-width: 576px) {
+    .Doctor_subtext {
+        font-size: 12px;
+    }
+}
+
+
+/* ----------------------------------------- Developer Section -------------------------------------------- */
+
+.Developer_Section {
+    position: relative;
+    background-color: white;
+    overflow: hidden;
+}
+
+.Discover_subtext {
+    font-family: "Barlow", sans-serif;
+    color: #666;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.Discover_heading {
+    font-family: "Barlow Condensed", sans-serif;
+    font-weight: 500;
+    display: inline-block;
+    margin-bottom: 0px;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.Discover_Group {
+    padding: 40px 70px;
+
+}
+
+.Discover_text1 {
+    font-family: "Gilda Display", serif;
+    font-size: 22px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    color: #000;
+    display: none;
+}
+
+/* animation */
+
+.usd_ring {
+    height: 130px;
+    width: 130px;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    animation: rotateRing 10s linear infinite;
+}
+
+@keyframes rotateRing {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* discover card */
+
+.Discover_text_card {
+    position: absolute;
+    right: 10%;
+    top: 17%;
+}
+
+.Discover_text {
+    font-family: "Gilda Display", serif;
+    font-size: 22px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    color: #000;
+}
+
+@media (max-width: 992px) {
+    .Discover_text_card {
+        right: 15%;
+        top: 20%;
+    }
+}
+
+@media (max-width: 768px) {
+    .Discover_text_card {
+        display: none;
+     }
+
+     .Discover_Group {
+        width: 100%;
+        height: auto;
+        padding: 10px 20px;
+    }
+
+     .usd_ring {
+        height: 100px;
+        width: 100px;
+        top: 0%;
+        left: 50%;   
+    }
+    .Discover_text1 {
+        display: block;
+        margin-bottom: 20px;
+    }
+    .Discover_heading {
+        margin-bottom: 10px;
+    }
+    
+ 
+}
+
+@media (max-width: 576px) {
+    .Discover_text_card {
+       display: none;
+    }
+
+    .usd_ring {
+        height: 80px;
+        width: 80px;
+        top: -4%;
+        left: 50%;   
+    }
+
+    .Discover_Group {
+        padding: 10px 0px;
+    
+    }
+    .Discover_text1 {
+        display: block;
+        margin-bottom: 20px;
+    }
+    .Discover_heading {
+        margin-bottom: 10px;
+    }
+    
+}

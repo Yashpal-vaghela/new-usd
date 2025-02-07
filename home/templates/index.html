@@ -134,7 +134,7 @@
     
 
      <!-- About Doctor Section -->
-     <section class="aon-med-how-work">
+     {% comment %} <section class="aon-med-how-work">
         <div class="container-fluid g-0">
 
             <div class="row g-0">
@@ -210,16 +210,22 @@
             </div>
             
         </div>
-    </section>
+    </section> {% endcomment %}
     <!-- About Doctor Section END -->  
        
-
+    {% include "smile_step.html" %}
 
       <!-- Service Categories Section -->
-    <section class="aon-med-srv-cat-area bg-white">
+      {% include "location.html" %}
+    {% comment %} <section class="aon-med-srv-cat-area bg-white">
         <div class="container">
 
             <!--Title Section Start-->
+
+            
+
+
+
             <div class="section-head center">
                 <span class="aon-sub-title">Locations</span>
                 <h2 class="aon-title cool">Top Searched Locations</h2>
@@ -264,7 +270,7 @@
             </div>
 
         </div>
-    </section>
+    </section> {% endcomment %}
     <!-- Service Categories END -->            
         
 
@@ -340,7 +346,7 @@
 
 
   <!-- Appointment Section -->
-  <section class="aon-med-appoint-area2">
+  {% comment %} <section class="aon-med-appoint-area2">
     <div class="container">
         <div class="row">
             <div class="col-md-5">
@@ -365,12 +371,12 @@
         </div>
         
     </div>
-</section>
+</section> {% endcomment %}
 <!-- Appointment Section END --> 
 
 
 <!-- We are Building  Section -->
-<section class="aon-med-future-area bg-white">
+{% comment %} <section class="aon-med-future-area bg-white">
     <div class="container">
         <div class="section-content">
             <div class="aon-med-future-section">
@@ -438,12 +444,12 @@
             </div>
         </div>
     </div>
-</section>
+</section> {% endcomment %}
 <!-- We are Building Section End-->
 
 
   <!-- Statics Section -->
-  <section class="aon-static2-area bg-white mt-0 pt-0">
+  {% comment %} <section class="aon-static2-area bg-white mt-0 pt-0">
     <div class="container">
         <div class="section-content">
             <div class="aon-static2-section-wrap">
@@ -514,13 +520,13 @@
             </div>
         </div>
     </div>
-</section>
+</section> {% endcomment %}
 <!-- Statics Section End -->
 
 
 
 <!-- Provider Section -->
-<section class="aon-med-provider-area2">
+{% comment %} <section class="aon-med-provider-area2">
     <div class="container">
         <div class="aon-med-provider-mid-wrap">
             <div class="aon-med-provider-mid">
@@ -541,7 +547,7 @@
             </div>
         </div>                
     </div>
-</section>
+</section> {% endcomment %}
 <!-- Provider Categories END -->     
     <!-- Product Section -->
     <div class="aon-med-shop-area">
@@ -549,7 +555,7 @@
             <!--Title Section Start-->
             <div class="section-head center">
                 <span class="aon-sub-title">Gallery</span>
-                <h2 class="aon-title cool">Before & After Smile Transformations</h2>
+                <h2 class="aon-title cool">Before & After Smile Transformations </h2>
                 <p>Explore our gallery to see the remarkable transformations achieved through our Ultimate Smile Design services. Witness the power of expert smile design in enhancing confidence and creating beautiful smiles with these before-and-after showcases.</p>
             </div>
             
@@ -804,7 +810,7 @@
         var syncedSecondary = true;
 
         sync1.owlCarousel({
-            items: 3, // Default number of items on larger screens
+            items: 4, // Default number of items on larger screens
             slideSpeed: 2000,
             nav: true,
             autoplay: true,
@@ -819,8 +825,11 @@
                 768: {
                     items: 2 // Optional: Show 2 items on tablets or larger
                 },
+                992: {
+                    items: 3
+                },
                 1000: {
-                    items: 3 // Default to 3 items on larger screens
+                    items: 4 // Default to 3 items on larger screens
                 }
             }
         }).on('changed.owl.carousel', syncPosition);

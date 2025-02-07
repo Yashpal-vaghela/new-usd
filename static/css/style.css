@@ -19925,6 +19925,7 @@ input[placeholder],
   -webkit-text-fill-color: transparent !important;
   background-clip: text !important;
   color: transparent !important;
+  background-color: #2d2d2d !important;
 }
 
 
@@ -20100,15 +20101,17 @@ input[placeholder],
 .header-buttons {
   background-color: rgba(45, 45, 45, 1) !important;
   border-radius: 15px !important;
-
   line-height: 21.6px;
   font-size: 15px !important;
+  font-weight: 600;
+  padding: 10px 20px;
 }
 
 
 
 .header-buttons p {
   margin-bottom: 0px !important;
+  color: black !important;
 }
 
 .heasder_active {
@@ -20251,3 +20254,43 @@ input[placeholder],
     general Button
     ======================================================================================================================= */
 
+    .section-title {
+      font-size: 24px;
+      font-weight: bold;
+  }
+  
+  .description {
+      font-size: 16px;
+      margin-bottom: 20px;
+  }
+  
+  /* .locations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+  } */
+  
+  .location-card {
+      background-color: #222;
+      border: 1px solid #444;
+      padding: 15px;
+      border-radius: 10px;
+  }
+  
+  .button-container {
+      margin-top: 20px;
+  }
+  
+  .load-more {
+      background-color: #E0A96D;
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+  }
+  
+  .load-more:hover {
+      background-color: #d18c4a;
+  }
+  
