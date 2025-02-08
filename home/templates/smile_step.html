@@ -137,5 +137,200 @@
         </div>
    </section>
 
+   
+
+    <!-- Testanomial Slider-->
+    <!-- Review Section -->
+
+
+
+
+<section class="beforeAndAfter_Section1">
+  <div class="container">
+    <p class="registrayion_small cool " style="padding-left: 12px">Testimonials</p><br>
+    <img src="{% static 'text_vec.svg' %}" class="text_vec" loading="lazy" alt="text vector" />
+    <p class="registration_heading " style="color: white">What People Say</p>
+    <p class="Discover_subtext" style="color: white">Discover the stories of transformation and joy from our patients who have experienced remarkable smile makeovers with our Ultimate Smile Designers.</p>
+    <div class="swiper-container">
+    <div class="swiper myswiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img src="{% static 'Quotes.svg' %}" class="bgreviw" loading="lazy" alt="Quotes" />
+          <p class="reviewName">Priyanka Sharma</p>
+          <div class="reviewContent">I never imagined my smile could look this great. The entire process was smooth and tailored to my needs. I'm so grateful to the team and my smile designer!</div>
+          <div class="stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            {% comment %} <i class="fa-regular fa-star"></i>  {% endcomment %}
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <img src="{% static 'Quotes.svg' %}" class="bgreviw" loading="lazy" alt="Quotes" />
+          <p class="reviewName">Priyanka Sharma</p>
+          <div class="reviewContent">I never imagined my smile could look this great. The entire process was smooth and tailored to my needs. I'm so grateful to the team and my smile designer!</div>
+          <div class="stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            {% comment %} <i class="fa-regular fa-star"></i>  {% endcomment %}
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <img src="{% static 'Quotes.svg' %}" class="bgreviw" loading="lazy" alt="Quotes" />
+          <p class="reviewName">Priyanka Sharma</p>
+          <div class="reviewContent">I never imagined my smile could look this great. The entire process was smooth and tailored to my needs. I'm so grateful to the team and my smile designer!</div>
+          <div class="stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            {% comment %} <i class="fa-regular fa-star"></i>  {% endcomment %}
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <img src="{% static 'Quotes.svg' %}" class="bgreviw" loading="lazy" alt="Quotes" />
+          <p class="reviewName">Priyanka Sharma</p>
+          <div class="reviewContent">I never imagined my smile could look this great. The entire process was smooth and tailored to my needs. I'm so grateful to the team and my smile designer!</div>
+          <div class="stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            {% comment %} <i class="fa-regular fa-star"></i>  {% endcomment %}
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <img src="{% static 'Quotes.svg' %}" class="bgreviw" loading="lazy" alt="Quotes" />
+          <p class="reviewName">Priyanka Sharma</p>
+          <div class="reviewContent">I never imagined my smile could look this great. The entire process was smooth and tailored to my needs. I'm so grateful to the team and my smile designer!</div>
+          <div class="stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            {% comment %} <i class="fa-regular fa-star"></i>  {% endcomment %}
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    
+  </div>
+  
+</section>
+
+<!-- Before & After -->
+<section class="beforeAndAfter_Section">
+  <div class="container">
+    <p class="registrayion_small cool " style="padding-left: 12px">Gallery</p><br>
+    <img src="{% static 'text_vec.svg' %}" class="text_vec1" loading="lazy" alt="text vector" />
+    <p class="registration_heading">Before & After Smile Transformations</p>
+    <p class="Discover_subtext">Explore our gallery to see the remarkable transformations achieved through our Ultimate Smile Design services. Witness the power of expert smile design in enhancing confidence and creating beautiful smiles with these before-and-after showcases.</p>
+    <div class="swiper-container">
+    <div class="swiper Beforeswiper">
+      <div class="swiper-wrapper">
+        {% for ie in gallery %}
+        <div class="swiper-slide">
+          <img src="{{ie.image.url}}" alt="Slide 1" class="BAImg" loading="lazy" >
+        </div>
+        {% comment %} <div class="ser-shop-media">
+          <a href="{% url 'home:gallery' %}"><img src="{{ie.image.url}}" loading="lazy" alt=""></a>
+          <span class="bedge">New</span>
+      </div> {% endcomment %}
+        {% endfor %}
+      </div>
+    
+      <!-- Navigation Buttons -->
+      <!-- <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div> -->
+    </div>
+      <!-- Pagination Dots -->
+      <div class="swiper-pagination "></div>
+    </div>
+    
+  </div>
+  
+</section>
+
+
+    
+
+    <!-- Before & After Script -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const swiper = new Swiper(".Beforeswiper", {
+          loop: true,
+          autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+          },
+          navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+          },
+          pagination: {
+            el: ".swiper-pagination",
+            dynamicBullets: true,
+          },
+          breakpoints: {
+            1200: { slidesPerView: 4, spaceBetween: 20 }, // Large screens
+            992: { slidesPerView: 3, spaceBetween: 15 },  // Medium screens
+            768: { slidesPerView: 2, spaceBetween: 10 },  // Small screens
+            480: { slidesPerView: 1, spaceBetween: 5 }    // Extra small screens
+          }
+        });
+      });
+    </script>
+
+
+     <!-- Review Script -->
+
+     <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const mySwiper = new Swiper(".myswiper", {
+          loop: true,
+          centeredSlides: true,
+          slidesPerView: "auto", // Adjusts based on container size
+          spaceBetween: 20,
+          autoplay: {
+            delay: 2500,
+            disableOnInteraction: false,
+          },
+          speed: 800, // Smooth transition
+          effect: "slide", // Ensure smooth sliding
+          grabCursor: true,
+          observer: true,
+          observeParents: true,
+          breakpoints: {
+            768: {
+              slidesPerView: 1.5, 
+        spaceBetween: 10,
+            },
+            1024: {
+              slidesPerView: 3,
+            },
+          },
+        });
+      });
+      
+     </script>
+     
+
+
+
   
 </body>
+
+
+

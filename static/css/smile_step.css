@@ -501,3 +501,127 @@
     }
     
 }
+
+/* ----------------------------------------- Before & After Section -------------------------------------------- */
+
+.beforeAndAfter_Section {
+    background-color: #F7F5F0;
+    padding: 50px 0px;
+}
+
+.beforeAndAfter_Section .swiper-container {
+    position: relative;
+    max-width: 90%;
+    margin: auto;
+  }
+
+  .beforeAndAfter_Section .swiper {
+    width: 100%;
+    padding: 50px 0px; 
+  }
+
+  .beforeAndAfter_Section .swiper-slide {
+    display: flex;
+    justify-content: center;  
+    align-items: center;      
+    text-align: center;       
+}
+
+
+  .BAImg {
+    width: 294px;
+     height: auto; 
+    border-radius: 20px;
+  }
+
+.swiper-pagination-bullet-active {
+    background-color: #DCAD81 !important;
+  }
+
+  .swiper-pagination-bullet {
+    background-color: black;
+  }
+
+@media (max-width: 768px) {
+    .BAImg {
+        width: 303px;
+      }
+    
+}
+
+
+/* ----------------------------------------- Testanomial Section -------------------------------------------- */
+
+.beforeAndAfter_Section1 {
+    background-color: #222222;
+    padding: 50px 0px;
+}
+
+.beforeAndAfter_Section1 .myswiper {
+    width: 100%;
+    max-width: 100%;
+    padding: 20px 0px;
+}
+
+.beforeAndAfter_Section1 .swiper-wrapper {
+    display: flex;
+}
+
+.beforeAndAfter_Section1 .swiper-slide {
+    background: #2D2D2D;
+    text-align: center;
+    font-size: 18px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 300px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0.5;
+    position: relative;
+}
+
+/* Style the active slide */
+.beforeAndAfter_Section1 .swiper-slide-active {
+    /* transform: scale(1.1); */
+    transform: translateY(-15px);
+    opacity: 1;
+    margin-bottom: 10px !important;
+}
+
+.reviewName {
+    position: relative;
+    font-family: "Barlow Condensed", sans-serif;
+    font-weight: 600;
+    font-size: 25px;
+}
+
+.reviewContent {
+    position: relative;
+    font-family: "Barlow", sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    padding: 0 20px;
+    margin-bottom: 10px;
+}
+
+.stars {
+    position: relative;
+    color: #f1c40f;
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+
+.bgreviw  {
+    font-family: "Gilda Display", serif;
+    position: absolute;
+    color: #222222;
+    opacity: 0.2;
+    font-size: 500px;
+    height: 200px;
+    top: 0%;
+    left: 15%;
+}
+
+

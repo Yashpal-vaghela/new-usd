@@ -57,6 +57,10 @@ def location_view(request):
     data1 = City.objects.all()[:10]
     return render(request, 'location.html', {'data1': data1})
 
+def smile_step(request):
+    gallery = Gallery.objects.all().order_by("?")
+    return render(request, 'smile_step.html', {'gallery':gallery,})
+
 def search_all_usd(request):
     """
     Handles the search functionality for dentists.
