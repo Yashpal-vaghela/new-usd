@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Location, City, Specializations, Dentist, Image, Rating, Category, Tags, Author, Blog, Team, Testimonials, Gallery, Contact, UserSubmission
+from .models import Location, City, Specializations, Dentist, Image, Rating, Category, Tags, Author, Blog, Team, Testimonials, Gallery, Hgallery, Contact, UserSubmission
 
 class DentistAdmin(admin.ModelAdmin):
     list_display = ('name', 'city', 'contact', 'status')
@@ -41,5 +41,6 @@ admin.site.register(Blog, BlogAdmin)
 admin.site.register(Team, TeamAdmin)
 admin.site.register(Testimonials, TestimonialsAdmin)
 admin.site.register(Gallery)
+admin.site.register(Hgallery)
 admin.site.register(Contact, ContactAdmin)
 admin.site.register(UserSubmission)

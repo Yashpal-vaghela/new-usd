@@ -192,6 +192,12 @@ class Gallery(models.Model):
     def __str__(self):
         return str(self.id)
 
+class Hgallery(models.Model):
+    image = models.ImageField(upload_to="SEO")
+
+    def __str__(self):
+        return str(self.id)
+
 class Contact(models.Model):
     name =models.CharField(max_length = 1256,blank=True, null=True)
     email = models.CharField(max_length = 1256,blank=True, null=True)

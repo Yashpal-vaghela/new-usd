@@ -98,7 +98,7 @@ def search_all_usd(request):
         search_message = "No Ultimate Designers Found Based On Your Query."
 
     # Pagination
-    paginator = Paginator(data1, 12)  # 12 dentists per page
+    paginator = Paginator(data1, 6)  # 12 dentists per page
     page = request.GET.get('page', 1)
 
     try:
@@ -192,8 +192,10 @@ def find_dentist_d(request, pk):
 
 def gallery(request):
     data = Gallery.objects.all().order_by("?")
+    data1 = Hgallery.objects.all().order_by("?")
     context = {
         'data':data,
+        'data1':data1,
         
     }
     return render(request, 'gallery.html', context)
