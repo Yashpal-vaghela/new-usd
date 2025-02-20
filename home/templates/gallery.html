@@ -2,189 +2,117 @@
 {% load static %}
 
 {% block header %}
-
 {% endblock header %}
 
 {% block css %}
-    
 {% endblock css %}
-    
-
 
 {% block body %}
 {% load static %}
 
 <!-- Content -->
 <div class="page-content">
-            
     <!-- Search Bar -->
-   {% include 'searchbar.html' %}
-   <!-- Search Bar End -->   
-   
-   <!-- PRODUCT DETAILS -->
-   <div class="container woo-entry">
-                
-    <div class="row m-b30">
-        <div class="col-lg-12 col-md-12  m-b30">
-            <div class="p-4">
-                <div class="wt-box wt-product-gallery on-show-slider"> 
-            
-                    <div id="sync1" class="owl-carousel owl-theme owl-btn-vertical-center m-b5">
-                       
-                       {% for ie in data  %}
-                         <!--Large Pic 1-->
-                         <div class="item" style="margin-right: 10px;">
-                            <div class="mfp-gallery">
-                                <div class="wt-box">
-                                    <div class="wt-thum-bx wt-img-overlay1 ">
-                                        <img src="{{ie.image.url}}" alt="">
-                                        <!--<div class="product-view">-->
-                                        <!--    <a class="elem pic-long product-view-btn" href="{{ie.image.url}}" title="Nh-16 Highway Bridge" -->
-                                        <!--    data-lcl-txt="" data-lcl-author="" data-lcl-thumb="{{ie.image.url}}">-->
-                                        <!--    <i class="fa fa-search-plus"></i>     -->
-                                        <!--    </a> -->
-                                        <!--</div>-->
-                                    </div>
+    {% comment %} {% include 'searchbar.html' %} {% endcomment %}
+    <!-- Search Bar End -->   
+
+    <!-- PRODUCT DETAILS -->
+    <div class="container ">
+        <div class="row m-b30">
+            <div class="col-lg-12 col-md-12 m-b30">
+                <div class="p-4">
+                    <div class="wt-box wt-product-gallery">
+                        <div class="image-container" >
+                            <div class="m-top">
+                            </div>
+                            <div class="image-grid" id="imageGrid" >
+                                {% for ie in data %}
+                                <div class="image-item">
+                                    <img src="{{ ie.image.url }}" alt="Image">
                                 </div>
+                                {% if forloop.counter == 2 and data1|length > 0 %}
+                                {% comment %} {% for ie1 in data1%} {% endcomment %}
+                                <div class="image-item single-image" style="display: flex; justify-content: flex-start; gap: 80px; flex-wrap: wrap; ">
+                                    <img src="{{ data1.0.image.url }}" alt="single-image" style="width: 350px; height: 450px; object-fit: cover;">
+                                </div>
+                                {% comment %} {% endfor %} {% endcomment %}
+                                {% endif %}
+                                {% if forloop.counter == 4 and data1|length > 1%}
+                                    <div class="image-item single-image" style="display: flex; justify-content: flex-end; gap: 80px; flex-wrap: wrap;">
+                                        <img src="{{ data1.1.image.url }}" alt="single-image-2" style="width: 350px; height: 450px; object-fit: cover;"/>
+                                    </div>
+                                {% endif %}
+                                {% if forloop.counter == 6 and data1|length > 1%}
+                                    <div class="image-item single-image" style="display: flex; justify-content: flex-start; gap: 80px; flex-wrap: wrap; ">
+                                        <img src="{{ data1.2.image.url }}" alt="single-image-2" style="width: 350px; height: 450px; object-fit: cover;"/>
+                                    </div>
+                                {% endif %}
+                                {% if forloop.counter == 8 and data1|length > 1%}
+                                    <div class="image-item single-image" style="display: flex; justify-content: flex-end; gap: 80px; flex-wrap: wrap;">
+                                        <img src="{{ data1.3.image.url }}" alt="single-image-2" style="width: 350px; height: 450px; object-fit: cover;"/>
+                                    </div>
+                                {% endif %}
+                                {% endfor %}   
                             </div>
                         </div>
-                       
-                       {% endfor %}
-                        
                     </div>
-                    <div id="sync2" class="owl-carousel owl-theme">
-                        
-                        <!--{% for ie in data  %}-->
-                        <!--<div class="item">-->
-                        <!--    <div class="wt-media">-->
-                        <!--        <img src="{{ie.image.url}}" alt="">-->
-                        <!--    </div>-->
-                        <!--</div>-->
-                        <!--{% endfor %}-->
-                            
-                        
-                    </div>
-                   
                 </div>
-            </div>
+            </div> 
         </div>
-       
     </div>
-        
-
-              
-    
-</div>
-<!-- PRODUCT DETAILS -->  
-   
-   
+    <!-- PRODUCT DETAILS -->  
 </div>
 <!-- Content END-->
 {% endblock body %}
-    
-
 
 {% block js %}
-        
 <script>
-    $(document).ready(function() {
-        var sync1 = $("#sync1");
-        var sync2 = $("#sync2");
-        var slidesPerPage = 5; // globally define number of elements per page
-        var syncedSecondary = true;
+    document.addEventListener('DOMContentLoaded', function () {
+        const imageGrid = document.getElementById('imageGrid');
+        const introSection = document.querySelector(".intro-section");
+        const allImages = Array.from(imageGrid.children);
+        let imageIndex = allImages.length;
+        let imagesLoaded = false; 
+        let lastScrollTop = 0;
+        window.addEventListener("scroll", function () {
+            let scrollTop = window.scrollY;
 
-        sync1.owlCarousel({
-            items: 3, // Default number of items on larger screens
-            slideSpeed: 2000,
-            nav: true,
-            autoplay: true,
-            dots: true,
-            loop: true,
-            responsiveRefreshRate: 200,
-            navText: ['<i class="fa fa-chevron-left"></i>', '<i class="fa fa-chevron-right"></i>'],
-            responsive: {
-                0: {
-                    items: 1 // Show 1 item on mobile devices (0px to 768px)
-                },
-                768: {
-                    items: 2 // Optional: Show 2 items on tablets or larger
-                },
-                1000: {
-                    items: 3 // Default to 3 items on larger screens
-                }
+            if (scrollTop > 100 && scrollTop > lastScrollTop) {
+                introSection.style.opacity = "0";
+                setTimeout(() => {
+                    introSection.style.display = "none";
+                }, 300);
+            } else if (scrollTop <600 ){
+                introSection.style.display = "flex";
+                setTimeout(() => {
+                    introSection.style.opacity = "1";
+                }, 100);
             }
-        }).on('changed.owl.carousel', syncPosition);
-
-        sync2
-            .on('initialized.owl.carousel', function () {
-                sync2.find(".owl-item").eq(0).addClass("current");
-            })
-            .owlCarousel({
-                items: slidesPerPage,
-                dots: false,
-                nav: false,
-                margin: 15,
-                smartSpeed: 200,
-                slideSpeed: 500,
-                slideBy: slidesPerPage, // alternatively you can slide by 1
-                responsiveRefreshRate: 100
-            }).on('changed.owl.carousel', syncPosition2);
-
-        function syncPosition(el) {
-            var count = el.item.count - 1;
-            var current = Math.round(el.item.index - (el.item.count / 2) - .5);
-            
-            if (current < 0) {
-                current = count;
-            }
-            if (current > count) {
-                current = 0;
-            }
-
-            sync2
-                .find(".owl-item")
-                .removeClass("current")
-                .eq(current)
-                .addClass("current");
-            var onscreen = sync2.find('.owl-item.active').length - 1;
-            var start = sync2.find('.owl-item.active').first().index();
-            var end = sync2.find('.owl-item.active').last().index();
-
-            if (current > end) {
-                sync2.data('owl.carousel').to(current, 100, true);
-            }
-            if (current < start) {
-                sync2.data('owl.carousel').to(current - onscreen, 100, true);
-            }
-        }
-
-        function syncPosition2(el) {
-            if (syncedSecondary) {
-                var number = el.item.index;
-                sync1.data('owl.carousel').to(number, 100, true);
-            }
-        }
-
-        sync2.on("click", ".owl-item", function(e) {
-            e.preventDefault();
-            var number = $(this).index();
-            sync1.data('owl.carousel').to(number, 300, true);
+            lastScrollTop = scrollTop;
         });
-    });
 
-    $(document).ready(function() {
-        $(".aon-med-testimonial").owlCarousel({
-            items: 1, // Show one testimonial at a time
-            loop: true,
-            autoplay: true,
-            autoplayTimeout: 5000, // Auto-slide every 5 seconds
-            nav: true,
-            dots: true,
-            navText: ['<i class="fa fa-chevron-left"></i>', '<i class="fa fa-chevron-right"></i>']
+        function loadNextImages() {
+            if (imagesLoaded) return;
+            
+            for (let i = 0; i < 2; i++) {
+                if (imageIndex >= allImages.length) break;
+                const nextImage = allImages[imageIndex % allImages.length].cloneNode(true);
+                imageGrid.appendChild(nextImage);
+                imageIndex++;
+            }
+        }
+        const items = imageGrid.querySelectorAll('.image-item');
+            items.forEach((item) => {
+                if (item.classList.contains('single-image')) {
+                    item.style.gridColumn = "span 2";
+                }
+            });
+        document.getElementById('imageContainer').addEventListener('scroll', function () {
+            // Check if scrolled near the bottom
+            if (this.scrollTop + this.clientHeight >= this.scrollHeight - 100) {
+                loadNextImages();
+            }
         });
     });
 </script>
-
-    
 {% endblock js %}
-    
