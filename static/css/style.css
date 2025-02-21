@@ -2932,6 +2932,9 @@ THEMEFOREST REQUIRED CLASSES
   /*-- Submenu direction---*/
 }
 
+.navbar-collapse{
+  flex-grow: 0;
+}
 @media (max-width: 991px) {
   .header-nav {
     clear: both;
@@ -3186,13 +3189,13 @@ THEMEFOREST REQUIRED CLASSES
 
 .header-nav .submenu-direction .sub-menu li>.sub-menu {
   left: auto;
-  right: 220px;
+  /* right: 220px; */
   margin: 0px 20px 0px 0px;
 }
 
 .header-nav .submenu-direction .sub-menu li:hover>.sub-menu {
   left: auto;
-  right: 220px;
+  /* right: 220px; */
   margin: 0px 0px 0px 0px;
 }
 
@@ -5380,6 +5383,79 @@ SIMPLE INNER SCROLLBAR
 
 .content-admin-main h2 {
   font-size: 36px;
+}
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 100px;
+  grid-auto-rows: auto;
+  z-index: 1;
+}
+.intro-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  z-index: 10;
+  transition: opacity 0.8s ease-in-out;
+}
+.intro-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.image-item {
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s;
+}
+
+.image-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.image-item:hover {
+  transform: scale(1.05);
+}
+
+.image-container {
+  overflow-y: auto;
+  padding: 20px;
+  background-image: url("../Group.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: relative;
+  padding-top: 50px;
+  z-index: 0;
+}
+.m-top {
+  height: 80vh;
+  background-color: transparent;
+  width: 100%;
+}
+
+.single-image{
+  grid-column: span 1;
+  max-width: 100%;
+}
+.single-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-top: 20px;
 }
 
 @media only screen and (max-width:991px) {
@@ -8255,7 +8331,7 @@ body[class*="active-"] .cs-message-panel {
 }
 
 .aon-search2-form.no-p-lr {
-  padding: 25px 0px;
+  padding: 25px 0px 15px;
 }
 
 .aon-search2-bar-wrap {
@@ -9289,7 +9365,7 @@ body[class*="active-"] .cs-message-panel {
   font-size: 20px;
 }
 
-.aon-find-doctors-wrap {
+/* .aon-find-doctors-wrap {
   border-top: 1px solid #ddd;
 }
 
@@ -9297,7 +9373,7 @@ body[class*="active-"] .cs-message-panel {
   .aon-find-doctors-wrap {
     padding: 20px;
   }
-}
+} */
 
 .aon-doctor-tabs {
   margin-bottom: 30px !important;
@@ -10081,7 +10157,7 @@ body[class*="active-"] .cs-message-panel {
 
 .aon-video-gallery {
   background-image: url("../images/video.jpg");
-  height: 250px;
+  height: 233px;
   border-radius: 10px;
   background-position: center;
   background-size: cover;
@@ -14897,6 +14973,7 @@ body[class*="active-"] .cs-message-panel {
 .aon-page-jobs-wrap {
   padding-top: 50px;
   padding-bottom: 50px;
+  position: relative;
 }
 
 @media only screen and (max-width:991px) {
@@ -20294,8 +20371,202 @@ input[placeholder],
       background-color: #d18c4a;
   }
   
-
-
-
-
   
+  /* ------------------------------------------------------------------ Dentist Detail Page -------------------------------------------------------------------------------- */
+
+  .bg_detail_vec1 {
+    position: absolute;
+    top: -8%;
+    left: 0%;
+    height: 800px;
+    object-fit: cover;
+}
+.Doctor_photo_card {
+  display: inline-block;
+  background-color: #2D2D2D;
+  padding: 20px;
+  max-width: 422px;
+  border-radius: 25px;
+  align-content: center;
+}
+.Doctor_photo {
+  position: relative;
+  border-radius: 12.5px;
+  max-width: 250px;
+}
+.appoint_btn {
+  position: relative;
+  margin-top: 12.5px;
+  color: black;
+  border-radius: 12.5px;
+  text-align: center;
+  padding: 8px 0px;
+}
+.Doctor_Detail_Card {
+  position: relative;
+  background-color: #2D2D2D;
+  margin-top: 50px;
+  padding: 40px;
+  border-radius: 25px;
+  width: 100%;
+}
+.Doctor_Name {
+  font-family: "Barlow Condensed", sans-serif;
+  display: inline-block;
+  font-size: 25px;
+  font-weight: 600;
+}
+.Doctor-Text {
+  font-family: "Barlow", sans-serif;
+  color: white;
+  /* margin-top: 6px; */
+}
+.Doctor-City {
+  font-size: 20px;
+  font-weight: 600;
+}
+.Doctor-subtext {
+  display: inline-block;
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  margin-top: 20px;
+}
+.Education_list li {
+  list-style: none ;
+  padding-bottom: 0px !important;
+}
+.details_card {
+  width: 100%;
+  padding: 20px;
+  border-radius: 25px;
+  background-color: #2D2D2D;
+}
+.Loc-subtext {
+  display: inline-block;
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  margin-bottom : 10px;
+  margin-top: 20px;
+}
+.address_dr {
+  margin-bottom: 20px;
+}
+@media (max-width: 875px) {
+  .bg_detail_vec1 {
+    top: -14%;
+    height: 800px;
+    object-fit: cover;
+  }
+}
+@media (max-width: 575px) {
+  .bg_detail_vec1 {
+    top: 0%;
+    height: 800px;
+    object-fit: cover;
+  }
+
+  .Doctor_Detail_Card {
+    padding: 20px;
+  }
+
+  .Doctor_Name {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .Doctor-City {
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .Doctor-Text {
+    font-size: 14px;
+  }
+}
+
+/* ------------------------------------------ Gallary Page Css --------------------------------------------------------- */
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 100px;
+  grid-auto-rows: auto;
+  z-index: 1;
+}
+.intro-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  z-index: 10;
+  transition: opacity 0.8s ease-in-out;
+}
+.intro-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.image-item {
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s;
+}
+.image-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.image-item:hover {
+  transform: scale(1.05);
+}
+.image-container {
+  overflow-y: auto;
+  padding: 20px;
+  background-image: url("../Group.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: relative;
+  margin-top: 100vh;
+  padding-top: 50px;
+  z-index: 0;
+}
+.single-image{
+  grid-column: span 1;
+  max-width: 100%;
+}
+.single-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+/* ------------------------------------------ Header page --------------------------------------------------------- */
+.main-bar {
+  /* transition: all 5s; */
+}
+
+.custom-header {
+  background-color: brown !important;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 4s ease-in-out;
+}

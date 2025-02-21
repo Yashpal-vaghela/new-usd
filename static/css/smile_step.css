@@ -1,627 +1,708 @@
 .smile_step_Section {
-    background-color: #F7F5F0;
-    padding: 50px 0px;
+  background-color: #f7f5f0;
+  padding: 50px 0px;
 }
 
-
+.smile_step_Section .text_vec {
+  margin-bottom: 10px;
+}
+.smile_step_Section .registration_heading {
+  width: 55%;
+}
 /* image card */
-
 .mainImageCard {
-    position: relative;
-    margin: 40px 0px;
+  position: relative;
+  margin: 40px 0px;
 }
 
 .smile_S1 {
-    
-    padding: 40px 30px;
+  padding: 40px 30px;
 }
 
-.card {
-    position: absolute;
-    text-align: center;
-    align-content: center;
-    padding: 12px;
-    background-color: white;
-    border-radius: 15px;
-    max-width: 250px;
+.card-consult {
+  position: absolute;
+  text-align: center;
+  align-content: center;
+  padding: 12px;
+  background-color: white;
+  border-radius: 15px;
+  max-width: 250px;
 }
 
 .icon_img {
-    height: 46px;
-    width: 46px;
-    align-content: center;
-    margin: 0 auto;   
+  height: 46px;
+  width: 46px;
+  align-content: center;
+  margin: 0 auto;
 }
 
 .s_heading1 {
-    font-family: "Gilda Display", serif;
-    font-size: 16px;
-    margin-top: 10px;
-    margin-bottom: 0px;
+  font-family: "Gilda Display", serif;
+  font-size: 16px;
+  margin-top: 10px;
+  margin-bottom: 0px;
 }
 
 .s_subheading1 {
-    font-family: "Barlow", sans-serif;
-    font-size: 12px;
-    color: #666;
-    margin-bottom: 10px;
+  font-family: "Barlow", sans-serif;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 10px;
 }
 
 .one {
-    top: -2%;
-    left:31%;
+  top: -2%;
+  left: 31%;
 }
 
 .two {
-    bottom: 0%;
+  bottom: 0%;
 }
 
 /* Step Text */
 
-.step_card{
-    margin-top: 12px;
+.step_card {
+  margin-top: 12px;
 }
 .point {
-    padding: 0 20px;
+  padding: 0 20px;
 }
 
 .line {
-    display: block;
-    width: 80%;
-    height: 2px !important;
-    border-radius: 4px;
-    background-color: #DCAD81 !important ;
+  display: block;
+  width: 80%;
+  height: 2px !important;
+  border-radius: 4px;
+  background-color: #dcad81 !important ;
 }
 
-.step_header{
-    padding: 0 20px;
+.step_header {
+  padding: 0 20px;
 }
 
 .s_heading2 {
-    font-family: "Gilda Display", serif;
-    font-size: 20px;
+  font-family: "Gilda Display", serif;
+  font-size: 20px;
 }
 
 .s_subheading2 {
-    font-family: "Barlow", sans-serif;
-    font-size: 16px;
-    color: #666;
+  font-family: "Barlow", sans-serif;
+  font-size: 16px;
+  color: #666;
 }
-
 
 /* Resonsive design */
 
-
 @media (max-width: 1200px) {
-    .icon_img {
-        height: 35px;
-        width: 35px; 
-    }
+  .icon_img {
+    height: 35px;
+    width: 35px;
+  }
 
-    .s_heading1 {
-        font-size: 14px;
-    }
-    .two {
-        bottom: 0%;
-        left: -8%;
-    }
+  .s_heading1 {
+    font-size: 14px;
+  }
+  .two {
+    bottom: 0%;
+    left: -8%;
+  }
 
-    .card {
-        max-width: 210px;
-    }
+  .card-consult {
+    max-width: 210px;
+  }
 }
 
 @media (min-width: 601px) and (max-width: 992px) {
-    .smile_S1 {
-        padding: 40px 30px;
-        width: 561px;
-        height: 501px;
-        display: flex;
-        margin: 0 auto;
-    }
+  .smile_S1 {
+    padding: 40px 30px;
+    width: 561px;
+    height: 501px;
+    display: flex;
+    margin: 0 auto;
+  }
 
-    .one {
-        top: 4%;
-        right: 0%;
-    }
-    .two {
-        bottom: 10%;
-        left: 6%;
-    }
+  .one {
+    top: 4%;
+    right: 0%;
+  }
+  .two {
+    bottom: 10%;
+    left: 6%;
+  }
 
-    .card {
-        max-width: 250px;
-    }
-    .mainImageCard {
-        position: relative;
-        margin: 10px 0px;
-    }
+  .card-consult {
+    max-width: 250px;
+  }
+  .mainImageCard {
+    position: relative;
+    margin: 10px 0px;
+  }
 }
 
 @media (max-width: 768px) {
-    .icon_img {
-        height: 24px;
-        width: 24px; 
-    }
+  .icon_img {
+    height: 24px;
+    width: 24px;
+  }
 
-    .s_heading1 {
-        font-size: 12px;
-        margin-bottom: 0px !important;
-    }
+  .s_heading1 {
+    font-size: 12px;
+    margin-bottom: 0px !important;
+  }
 
-    .one {
-        top: 4%;
-        right: 0%;
-    }
-    .two {
-        bottom: 0%;
-        left: 6%;
-    }
+  .one {
+    top: 4%;
+    right: 0%;
+  }
+  .two {
+    bottom: 0%;
+    left: 6%;
+  }
 
-    .card {
-        max-width: 250px;
-    }
-    .mainImageCard {
-        position: relative;
-        margin: 10px 0px;
-    }
+  .card-consult {
+    max-width: 250px;
+  }
+  .mainImageCard {
+    position: relative;
+    margin: 10px 0px;
+  }
 }
 
 @media (max-width: 576px) {
-    .icon_img {
-        height: 24px;
-        width: 24px; 
-    }
+  .icon_img {
+    height: 24px;
+    width: 24px;
+  }
 
-    .s_heading1 {
-        font-size: 12px;
-        margin-bottom: 0px !important;
-    }
+  .s_heading1 {
+    font-size: 12px;
+    margin-bottom: 0px !important;
+  }
 
-    .one {
-        top: -5%;
-        right: 5%;
-    }
-    .two {
-        bottom: -10%;
-        left: 8%;
-    }
+  .one {
+    top: -5%;
+    right: 5%;
+  }
+  .two {
+    bottom: -10%;
+    left: 8%;
+  }
 
-    .card {
-        max-width: 220px;
-    }
+  .card-consult {
+    max-width: 220px;
+  }
 
-    .smile_S1 {
-        padding: 10px 10px;
-    }
+  .smile_S1 {
+    padding: 10px 10px;
+  }
 
-    .s_subheading1 {
-        font-size: 10px;
-    }
+  .s_subheading1 {
+    font-size: 10px;
+  }
 
-    .point {
-        padding: 0 10px;
-    }
+  .point {
+    padding: 0 10px;
+  }
 
-    .step_header{
-        padding: 0 10px;
-    }
-    .s_heading2 {
-        font-size: 16px;
-    }
-    
-    .s_subheading2 {
-        font-family: "Barlow", sans-serif;
-        font-size: 14px;
-        color: #666;
-    }
+  .step_header {
+    padding: 0 10px;
+  }
+  .s_heading2 {
+    font-size: 16px;
+  }
 
-    .mainImageCard {
-        position: relative;
-        margin: 30px 0px;
-    }
+  .s_subheading2 {
+    font-family: "Barlow", sans-serif;
+    font-size: 14px;
+    color: #666;
+  }
+
+  .mainImageCard {
+    position: relative;
+    margin: 10px 0px;
+  }
+  .smile_step_Section .registration_heading {
+    width: 100%;
+  }
+  .smile_step_Section .text_vec{
+    margin-bottom: 20px;
+  }
+  
 }
-
 
 /* Animated Line */
 
 .dashed_line {
-    margin: 20px 0px;
+  margin: 20px 0px;
 }
 
 .animated-line {
-    width: 2px; /* Thin vertical line */
-    height: 100%; /* Full height */
-    background: repeating-linear-gradient(
-        to bottom,
-        #DCAD81 0px, 
-        #DCAD81 20px, 
-        transparent 20px, 
-        transparent 30px, 
-        #DCAD81 30px, 
-        #DCAD81 32px, 
-        transparent 32px, 
-        transparent 43px 
-    );
-    position: relative;
-    animation: moveLine 2s linear infinite;
+  width: 2px; /* Thin vertical line */
+  height: 100%; /* Full height */
+  background: repeating-linear-gradient(
+    to bottom,
+    #dcad81 0px,
+    #dcad81 20px,
+    transparent 20px,
+    transparent 30px,
+    #dcad81 30px,
+    #dcad81 32px,
+    transparent 32px,
+    transparent 43px
+  );
+  position: relative;
+  animation: moveLine 2s linear infinite;
 }
 
 @keyframes moveLine {
-    from {
-        background-position: 0 0;
-    }
-    to {
-        background-position: 0 50px;
-    }
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 50px;
+  }
 }
-
-
-
 
 /* -----------------------------------------Registration Page-------------------------------------------- */
 
 .registration_Patient {
-    position: relative;
-    background-color: white;
-    overflow: hidden;
+  position: relative;
+  background-color: white;
+  overflow: hidden;
+  padding: 50px 0px;
 }
 
 .vec_one {
-    position: absolute;
-    top: -30%;
+  position: absolute;
+  top: -30%;
 }
 
 .vec_two {
-    position: absolute;
-    bottom: -44%;
-    transform: scaleX(-1);
-    right: 0%;
+  position: absolute;
+  bottom: -44%;
+  transform: scaleX(-1);
+  right: 0%;
 }
 
 .inner_card {
-    margin: 50px 0px;
-    background: transparent;
-    position: relative;
+  /* margin: 50px 0px; */
+  background: transparent;
+  position: relative;
 }
 
 .registration_heading {
-    font-family: "Gilda Display", serif;
-    font-size: 30px;
-    color: #000;
+  font-family: "Gilda Display", serif;
+  font-size: 36px;
+  color: #000;
+  font-weight: 400;
+  margin-bottom: 20px;
+  line-height: 1.4;
 }
 
-.registrayion_small{
-    font-family: "Barlow Condensed", sans-serif;
-    font-weight: bold;
-    display: inline-block;
-    margin-bottom: 0px;
+.registrayion_small {
+  font-family: "Barlow Condensed", sans-serif;
+  display: block;
+  margin-bottom: 0px;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 38.4px;
+  letter-spacing: 0.03em;
+  text-align: left;
+  position: relative;
+  background: linear-gradient(
+      50deg,
+      rgb(220, 173, 129) 0%,
+      rgb(216, 169, 124) 44%,
+      rgb(255, 210, 164) 50%,
+      rgb(216, 169, 124) 55%,
+      rgb(220, 173, 129) 100%
+    )
+    text !important;
+  color: transparent !important;
 }
 
 .text_vec {
-    height: 8px;
-    width: 90px;
-    margin-bottom: 20px;
+  height: 8px;
+  width: 90px;
+  margin-bottom: 20px;
 }
 
 .registration_subtext {
-    font-family: "Barlow", sans-serif;
-    color: #666;
-    font-size: 14px;
-    padding: 0 50px;
+  font-family: "Barlow", sans-serif;
+  color: #666;
+  font-size: 16px;
+  padding: 0 50px;
+  font-weight: 600;
 }
-
+.loc-button-container {
+  width: 100%;
+  text-align: center;
+  margin: 25px 0px;
+}
+.loc_btn {
+  align-content: center;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 25px;
+  color: #fff;
+  font-size: 14px;
+  font-family: "Barlow", sans-serif;
+}
 @media (max-width: 768px) {
-    .registration_subtext {
-        padding: 0 20px;
-    }
+  .registration_subtext {
+    padding: 0 20px;
+  }
 }
 
 @media (max-width: 576px) {
-    .registration_heading {
-        font-size: 20px;
-    }
+  .registration_heading {
+    font-size: 20px;
+  }
 }
 
 /* -----------------------------------------Registration Doctor-------------------------------------------- */
 
 .registration_Doctor {
-    background-color: white;
-    padding: 50px 0px;
+  background-color: white;
+  padding: 60px 0px;
 }
 
 .inner_card_doctor {
-    position: relative;
-    padding: 20px 0px;
-    border-radius: 25px;
-    background-color: #F7F5F0;
-    overflow: hidden;
-    
+  position: relative;
+  padding: 20px 0px;
+  border-radius: 25px;
+  background-color: #f7f5f0;
+  overflow: hidden;
 }
 
 .vec2_one {
-    position: absolute;
-    transform: scaleX(-1);
-    top: -30%;
-    left: 0%;
+  position: absolute;
+  transform: scaleX(-1);
+  top: -30%;
+  left: 0%;
 }
 
 .vec2_two {
-    position: absolute;
-    bottom: -44%;
-    right: 0%;
+  position: absolute;
+  bottom: -44%;
+  right: 0%;
 }
 
 .Doctor_subtext {
-    font-family: "Barlow", sans-serif;
-    color: #666;
-    font-size: 14px;
-    padding: 0 50px;
-    font-weight: 600;
+  font-family: "Barlow", sans-serif;
+  color: #666;
+  font-size: 14px;
+  padding: 0 50px;
+  font-weight: 600;
 }
 
 @media (max-width: 576px) {
-    .Doctor_subtext {
-        font-size: 12px;
-    }
+  .Doctor_subtext {
+    font-size: 12px;
+  }
+  /* .vec2_two,.vec2_one{
+    display: none;
+  }
+  .inner_card_doctor{
+    background-color: white;
+    padding: 0px;
+  }
+  .registration_Doctor{
+    padding: 40px 0px 35px;
+  } */
 }
-
 
 /* ----------------------------------------- Developer Section -------------------------------------------- */
 
 .Developer_Section {
-    position: relative;
-    background-color: white;
-    overflow: hidden;
+  position: relative;
+  background-color: white;
+  overflow: hidden;
+  padding: 25px 0px 0px;
 }
 
 .Discover_subtext {
-    font-family: "Barlow", sans-serif;
-    color: #666;
-    font-size: 14px;
-    font-weight: 600;
+  font-family: "Barlow", sans-serif;
+  color: #666;
+  font-size: 16px;
+  font-weight: 600;
+  width: 65%;
 }
 
 .Discover_heading {
-    font-family: "Barlow Condensed", sans-serif;
-    font-weight: 500;
-    display: inline-block;
-    margin-bottom: 0px;
-    font-size: 18px;
-    margin-bottom: 20px;
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 500;
+  display: inline-block;
+  margin-bottom: 0px;
+  font-size: 21px;
+  margin-bottom: 20px;
 }
 
 .Discover_Group {
-    padding: 40px 70px;
-
+  padding: 40px 70px;
 }
 
 .Discover_text1 {
-    font-family: "Gilda Display", serif;
-    font-size: 22px;
-    margin-top: 10px;
-    margin-bottom: 0px;
-    color: #000;
-    display: none;
+  font-family: "Gilda Display", serif;
+  font-size: 22px;
+  margin-top: 10px;
+  margin-bottom: 0px;
+  color: #000;
+  display: none;
 }
 
 /* animation */
 
 .usd_ring {
-    height: 130px;
-    width: 130px;
-    position: absolute;
-    top: 0%;
-    left: 0%;
-    animation: rotateRing 10s linear infinite;
+  height: 130px;
+  width: 130px;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  animation: rotateRing 10s linear infinite;
 }
 
 @keyframes rotateRing {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* discover card */
 
 .Discover_text_card {
-    position: absolute;
-    right: 10%;
-    top: 17%;
+  position: absolute;
+  right: 10%;
+  top: 17%;
 }
 
 .Discover_text {
-    font-family: "Gilda Display", serif;
-    font-size: 22px;
-    margin-top: 10px;
-    margin-bottom: 0px;
-    color: #000;
+  font-family: "Gilda Display", serif;
+  font-size: 24px;
+  margin-top: 10px;
+  margin-bottom: 0px;
+  color: #000;
 }
-
+@media (max-width: 1200px) {
+  .Discover_text {
+    font-size: 22px;
+    margin-top: 0px;
+  }
+  .Discover_subtext {
+    font-size: 14px;
+  }
+  .usd_ring {
+    top: -3.5%;
+    left: 1%;
+  }
+}
 @media (max-width: 992px) {
-    .Discover_text_card {
-        right: 15%;
-        top: 20%;
-    }
+  .Discover_text_card {
+    right: 15%;
+    top: 20%;
+  }
+  .Developer_Section {
+    padding: 40px 0px 15px;
+  }
+  .Discover_heading {
+    font-size: 22px;
+  }
+  .Discover_heading br {
+    display: none;
+  }
+  .Discover_subtext {
+    font-size: 16px;
+  }
 }
 
 @media (max-width: 768px) {
-    .Discover_text_card {
-        display: none;
-     }
+  .Discover_text_card {
+    display: none;
+  }
 
-     .Discover_Group {
-        width: 100%;
-        height: auto;
-        padding: 10px 20px;
-    }
+  .Discover_Group {
+    width: 100%;
+    height: auto;
+    padding: 10px 20px;
+  }
 
-     .usd_ring {
-        height: 100px;
-        width: 100px;
-        top: 0%;
-        left: 50%;   
-    }
-    .Discover_text1 {
-        display: block;
-        margin-bottom: 20px;
-    }
-    .Discover_heading {
-        margin-bottom: 10px;
-    }
-    
- 
+  .usd_ring {
+    height: 120px;
+    width: 120px;
+    top: -5%;
+    left: 54%;
+  }
+  .Discover_text1 {
+    display: block;
+    margin-bottom: 18px;
+    margin-top: 0px;
+  }
+  .Discover_heading {
+    margin-bottom: 10px;
+    font-size: 20px;
+  }
 }
 
 @media (max-width: 576px) {
-    .Discover_text_card {
-       display: none;
-    }
+  .Discover_text_card {
+    display: none;
+  }
+  .usd_ring {
+    height: 80px;
+    width: 80px;
+    top: -4%;
+    left: 53%;
+  }
 
-    .usd_ring {
-        height: 80px;
-        width: 80px;
-        top: -4%;
-        left: 50%;   
-    }
-
-    .Discover_Group {
-        padding: 10px 0px;
-    
-    }
-    .Discover_text1 {
-        display: block;
-        margin-bottom: 20px;
-    }
-    .Discover_heading {
-        margin-bottom: 10px;
-    }
-    
+  .Discover_Group {
+    padding: 10px 0px;
+  }
+  .Discover_text1 {
+    display: block;
+    margin-bottom: 20px;
+    line-height: 1.5;
+    font-size: 20px;
+  }
+  .Discover_heading {
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+  .Discover_subtext {
+    font-size: 14px;
+  }
+  .Developer_Section {
+    padding: 30px 0px 15px;
+  }
 }
 
 /* ----------------------------------------- Before & After Section -------------------------------------------- */
 
 .beforeAndAfter_Section {
-    background-color: #F7F5F0;
-    padding: 50px 0px;
+  background-color: #f7f5f0;
+  padding: 50px 0px;
 }
 
 .beforeAndAfter_Section .swiper-container {
-    position: relative;
-    max-width: 90%;
-    margin: auto;
-  }
-
-  .beforeAndAfter_Section .swiper {
-    width: 100%;
-    padding: 50px 0px; 
-  }
-
-  .beforeAndAfter_Section .swiper-slide {
-    display: flex;
-    justify-content: center;  
-    align-items: center;      
-    text-align: center;       
+  position: relative;
+  max-width: 95%;
+  margin: auto;
 }
 
+.beforeAndAfter_Section .swiper {
+  width: 100%;
+  padding: 50px 0px;
+}
 
-  .BAImg {
-    width: 294px;
-     height: auto; 
-    border-radius: 20px;
-  }
+.beforeAndAfter_Section .swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.BAImg {
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+}
 
 .swiper-pagination-bullet-active {
-    background-color: #DCAD81 !important;
-  }
-
-  .swiper-pagination-bullet {
-    background-color: black;
-  }
-
-@media (max-width: 768px) {
-    .BAImg {
-        width: 303px;
-      }
-    
+  background-color: #dcad81 !important;
 }
 
+.swiper-pagination-bullet {
+  background-color: black;
+}
+
+@media (max-width: 768px) {
+  .BAImg {
+    width: 303px;
+  }
+}
 
 /* ----------------------------------------- Testanomial Section -------------------------------------------- */
 
 .beforeAndAfter_Section1 {
-    background-color: #222222;
-    padding: 50px 0px;
+  background-color: #222222;
+  padding: 50px 0px;
+}
+.testimonials-section .text_vec {
+  height: 12px;
+  width: 117px;
+  margin-bottom: 20px;
 }
 
+.testimonials-section .Discover_subtext {
+  width: 65%;
+}
 .beforeAndAfter_Section1 .myswiper {
-    width: 100%;
-    max-width: 100%;
-    padding: 20px 0px;
+  width: 100%;
+  max-width: 100%;
+  padding: 20px 0px;
 }
 
 .beforeAndAfter_Section1 .swiper-wrapper {
-    display: flex;
+  display: flex;
 }
 
 .beforeAndAfter_Section1 .swiper-slide {
-    background: #2D2D2D;
-    text-align: center;
-    font-size: 18px;
-    border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 300px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    opacity: 0.5;
-    position: relative;
+  background: #2d2d2d;
+  text-align: center;
+  font-size: 18px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 300px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0.5;
+  position: relative;
 }
 
 /* Style the active slide */
 .beforeAndAfter_Section1 .swiper-slide-active {
-    /* transform: scale(1.1); */
-    transform: translateY(-15px);
-    opacity: 1;
-    margin-bottom: 10px !important;
+  /* transform: scale(1.1); */
+  transform: translateY(-15px);
+  opacity: 1;
+  margin-bottom: 10px !important;
 }
 
 .reviewName {
-    position: relative;
-    font-family: "Barlow Condensed", sans-serif;
-    font-weight: 600;
-    font-size: 25px;
+  position: relative;
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 600;
+  font-size: 25px;
+  color: #fff;
 }
 
 .reviewContent {
-    position: relative;
-    font-family: "Barlow", sans-serif;
-    font-weight: 500;
-    font-size: 15px;
-    padding: 0 20px;
-    margin-bottom: 10px;
+  position: relative;
+  font-family: "Barlow", sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  padding: 0 20px;
+  margin-bottom: 10px;
+  color: #fff;
 }
 
 .stars {
-    position: relative;
-    color: #f1c40f;
-    font-size: 18px;
-    margin-bottom: 15px;
-  }
-
-.bgreviw  {
-    font-family: "Gilda Display", serif;
-    position: absolute;
-    color: #222222;
-    opacity: 0.2;
-    font-size: 500px;
-    height: 200px;
-    top: 0%;
-    left: 15%;
+  position: relative;
+  color: #f1c40f;
+  font-size: 18px;
+  margin-bottom: 15px;
 }
 
-
+.bgreviw {
+  font-family: "Gilda Display", serif;
+  position: absolute;
+  color: #222222;
+  opacity: 0.2;
+  font-size: 500px;
+  height: 200px;
+  top: 0%;
+  left: 15%;
+}

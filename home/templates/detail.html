@@ -10,8 +10,6 @@
 {% block css %}
 
 {% endblock css %}
-    
-
 
 {% block body %}
      <!-- Content -->
@@ -21,31 +19,24 @@
         <div class="aon-page-jobs-wrap d-flex justify-content-center">
             <img src="{% static 'doc_detail_vec.svg' %}" class=" img-fluid bg_detail_vec1" loading="lazy" alt="background vector" />
             <div class="container">
-
-                <div class="row ">
+                <div class="row">
                     <!-- Left part start -->
-                    <div class="col-lg-12 d-flex justify-content-center flex-column align-items-center">
-                         
-                        
-                        <!-- doctor photo card -->
-                         <div class="Doctor_photo_card">
+                    <div class="col-lg-12 d-flex justify-content-center flex-column align-items-center">              
+
+                        <!-- Doctor about -->
+                        <div class="Doctor_photo_card">
                             {% if data.profile %}
-                                    <img src="{{data.profile.url}}" alt="" class="img-fluid Doctor_photo">
-                                    {% else %}
-                                    <img src="{% static 'noimage-team.webp' %}" alt="Image">
-                                    {% endif %}    
-                                    
+                             <img src="{{data.profile.url}}" alt="" class="img-fluid Doctor_photo" />
+                             {% else %}
+                             <img src="{% static 'noimage-team.webp' %}" alt="Image" />
+                             {% endif %}    
+                             
+                             <div class="bat appoint_btn">Book Appointment</div>
+                        </div>
 
-                            <div class="bat appoint_btn">
-                                Find Doctor
-                            </div>
-                         </div>
-
-                         <!-- doctor detail card -->
-                          <div class="Doctor_Detail_Card">
-
+                        <!-- doctor detail card -->
+                        <div class="Doctor_Detail_Card">
                             <h3 class="Doctor_Name  cool">{{data.name}}</h3>
-
                             <div class="Doctor-City Doctor-Text">
                                 {% if data.city %}
                                 {{data.city.city}}
@@ -59,18 +50,17 @@
                             </div>
 
                             <h3 class="Doctor-subtext cool">Education Training</h3>
-                             <ul class="Education_list Doctor-Text">
+                            <ul class="Education_list Doctor-Text">
                                 {{data.education|safe}}
-                             </ul>
-                             
+                            </ul>
 
-                             <h3 class="Doctor-subtext cool">Experience</h3>
-                             <ul class="sf-doc-exp-list-detail Doctor-Text">
+                            <h3 class="Doctor-subtext cool">Experience</h3>
+                            <ul class="sf-doc-exp-list-detail Doctor-Text">
                                 {{data.experience|safe}}
-                             </ul>
+                            </ul>
 
-                             <h3 class="Doctor-subtext cool">Specializations</h3>
-                             <div class="row">
+                            <h3 class="Doctor-subtext cool">Specializations</h3>
+                            <div class="row">
                                 {% for ie in data.specializations.all  %}
                                      <div class="col-md-4 col-sm-6 mb-4">
                                          <div class="aon-insuranc-list">
@@ -78,222 +68,51 @@
                                          </div> 
                                      </div>    
                                 {% endfor %}  
-                             </div>
-
-                          </div>
-
-                        <!-- Doctor about -->
-                            {% comment %} <div class="aon-doctorAbout-wrap d-flex" id="aon-about-area">
-
-                                <div class="aon-doctorAbout-left">
-
-                                    <div class="aon-doctorAbout-pic">
-                                        
-                                        {% if data.profile %}
-                                        <img src="{{data.profile.url}}" alt="">
-                                        {% else %}
-                                        <img src="{% static 'noimage-team.webp' %}" alt="Image">
-                                        {% endif %}    
-                                        <i class="fa feather-check"></i>
-                                    </div>
-                                
-                                    <div class="aon-doctorAbout-location"><i class="feather-map-pin"></i>
-                                        
-                                        {% if data.city %}
-                                        {{data.city.city}}
-                                        {% else %}
-                                        India
-                                        {% endif %}
-                                            
-                                    </div>
-                                </div>
-
-
-                                <div class="aon-doctorAbout-right">
-                                    <div class="aon-doctorAbout-info">
-                                        <h3 class="aon-doctorAbout-name cap cool">{{data.name}}</h3>
-                                        <div class="aon-doctorAbout-type cool">{{ie.title}}</div>
-                                    
-                                        <div class="aon-doctorAbout-exper">{{ie.sub_title}}</div>
-                                        <!-- <ul class="aon-doctorAbout-contat">
-                                            <li><i class="feather-mail"></i> david@gmail.com</li>
-                                            <li><i class="feather-phone"></i> +41 5225 563 256</li>
-                                        </ul> -->
-                                        <div class="aon-doctorAbout-text">
-                                            {{data.bio}}
-                                        </div>
-                                        <ul class="aon-doctorAddto-share">
-                                            <li class="cool"><a href="{% url 'home:contact' %}"><i class="feather-heart"></i> Book an Appointment</a></li>
-                                    
-                                            <li class="cool"><a href="https://api.whatsapp.com/send?text=https://ultimatesmiledesign.com{% url 'home:find_dentist_d' data.slug %}"><i class="feather-share-2"></i> Share In Whatsapp</a></li>
-                                        </ul>   
-                                    
-                                    </div>
-                                </div>
-
-                            </div> {% endcomment %}
-                        <!-- Doctor about Endf-->
-                        
-                        <!--Location-->
-                        <div class="aon-docLocation-wrap mt-4" id="aon-locations-area">
-                            
-                            <div class="sf-doc-location">
-                            <div class="row">
-                                <div class="col-lg-8">
-                                    <h3 class="Loc-subtext cool">Location</h3>
-                                    <div class="details_card">
-                                        <div class="address_dr">{{data.address}}</div>
-                                        
-                                        <div class="sf-doc-location-map grayscle-area">
-                                            {{data.iframe|safe}} 
-                                           </div>
-                                    </div>
-
-                                </div>
-                                <div class="col-lg-4">
-                                    <h3 class="Loc-subtext cool">Photo Gallery</h3>
-                                    <div class="details_card" >
-                                        <div class="aon-find-doctors-wrap " >
-              
-                                          <div class="aon-photo-gallery d-flex">
-                                          <!-- If there are more than 5 images, display "10+" for remaining images -->
-                                           {% if gallery|length > 5 %}
-                                             <a class="aon-photo-num elem pic-long d-flex justify-content-center align-items-center" href="{% static 'a5.png' %}">10+</a>
-                                           {% endif %}
-                  
-                                          <!-- Loop through the gallery and show up to 5 images -->
-                                          {% for ie in gallery|slice:":5" %}
-                                              <a class="elem pic-long" href="{{ ie.image.url }}">
-                                                <img src="{{ ie.image.url }}" alt="Gallery Image" class="img-thumbnail"/>
-                                               </a>
-                                          {% endfor %}
-                                     </div>
-                                    </div>  
-                                </div>
-                            </div> 
+                            </div>
                         </div>
 
+                        <!--Location-->
+                        <div class="aon-docLocation-wrap" id="aon-locations-area">
+                            <h3 class="mb-4"><span class="cool">Location</span></h3>
+                            <div class="sf-doc-location">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <h3 class="Loc-subtext cool">Location</h3>
+                                        <div class="details_card">
+                                                <div class="address_dr">{{data.address}}</div>
+                                                <div class="sf-doc-location-map grayscle-area">
+                                                    {{data.iframe|safe}} 
+                                                </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <h3 class="Loc-subtext cool">Photo Gallery</h3>
+                                        <div class="details_card">
+                                            <div class="aon-find-doctors-wrap">
+                                                <div class="aon-photo-gallery d-flex">
+                                                    {% if gallery|length > 5 %}
+                                                        <a class="aon-photo-num elem pic-long d-flex justify-content-center align-items-center" href="{% static 'a5.png' %}">10+</a>
+                                                    {% endif %}
+
+                                                    <!-- Loop through the gallery and show up to 5 images -->
+                                                    {% for ie in gallery|slice:":5" %}
+                                                        <a class="elem pic-long" href="{{ ie.image.url }}">
+                                                            <img src="{{ ie.image.url }}" alt="Gallery Image" class="img-thumbnail"/>
+                                                        </a>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div>
                         </div> 
-
-                      
-
                     </div>
-                    <!-- Left part END --> 
-                    
-                    <!-- Side bar start -->
-                    {% comment %} <div class="col-lg-4">
-
-                        <aside class="aon-side-bar">
-                                
-                            <!-- About Me -->
-                            <ul class="aon-siderbar-nav">
-                                <li><a href="#aon-about-area">About Me</a></li>
-                                <li><a href="#aon-education-area">Education &amp; Training</a></li>
-                                <li><a href="#aon-insurances-area">Insurances</a></li>
-                                <li><a href="#aon-specializations-area">Specializations</a></li>
-                                <li><a href="#aon-languages-area">Languages</a></li>
-                                <li><a href="#aon-ques-ans-area">Question &amp; Answer</a></li>
-                                <li><a href="#aon-locations-area">Locations</a></li>
-                                <li><a href="#aon-reviews-area">Reviews</a></li>
-                                
-                            </ul>
-                            <!-- About Me End-->   
-                            
-                            
-                            <!--time table-->
-                            <div class="sf-doc-timeing-card p-a30">
-                                <div class="tab-content" id="pills-tabContent">
-                                   <div class="tab-pane fade show active" id="pills-home" role="tabpanel">
-                                       <!-- Timing slots start-->
-                                          <div class="sf-doc-timing-slots">
-                                              <div class="row">
-                                                  
-                                             <div class="sf-doc-timing-slots-btn mb-5">
-                                                 
-                                                 <a href="{% url 'home:contact' %}" class="site-button bat">
-                                                     <i class="fa fa-calendar-o"></i>Book Appointment
-                                                 </a>
-                                             </div>
-                                          </div>
-                                       <!-- Timing slots list End-->
-                                   </div>
-                                   
-                               </div>
-                           </div>
-                            <!-- Time Me End-->
-                            
-                            <!--Photo Gallery -->
-                            <div class="aon-find-doctors-wrap p-a30">
-                                  <div class="aon-find-doctors-title mb-3">
-                                        <h3 class="cool">Photo Gallery</h3>
-                                   </div>
-    
-                                <div class="aon-photo-gallery d-flex">
-                                <!-- If there are more than 5 images, display "10+" for remaining images -->
-                                 {% if gallery|length > 5 %}
-                                   <a class="aon-photo-num elem pic-long d-flex justify-content-center align-items-center" href="{% static 'a5.png' %}">10+</a>
-                                 {% endif %}
-        
-                                <!-- Loop through the gallery and show up to 5 images -->
-                                {% for ie in gallery|slice:":5" %}
-                                    <a class="elem pic-long" href="{{ ie.image.url }}">
-                                      <img src="{{ ie.image.url }}" alt="Gallery Image" class="img-thumbnail"/>
-                                     </a>
-                                {% endfor %}
-                           </div>
-                         </div>
-
-                            <!-- Photo Gallery End -->  
-                            
-                            
-                            <!--Find Doctors -->
-                           <!-- <div class="aon-find-doctors-wrap p-a30">-->
-                                
-                           <!--     <div class="aon-find-doctors-title mb-3">-->
-                           <!--         <h3 class="cool">Find Dentists</h3>-->
-                           <!--     </div>-->
-                            
-                                                                    
-                           <!--     <form class="aon-search4-form row">-->
-
-                           <!--         <div class="aon-search3-col aon-search-col m-b30">-->
-                           <!--             <div class="aon-inputicon-box"> -->
-                           <!--                 <input class="form-control sf-form-control" name="company_name" type="text" placeholder="Search doctors, clinics, hospitals, etc.">-->
-                           <!--                 <i class="aon-input-icon feather-search"></i>-->
-                           <!--             </div>-->
-                           <!--         </div>-->
-
-                                   
-
-                           <!--         <div class="aon-search3-col aon-search-btn mb-0">-->
-                           <!--             <button class="aon-search2-btn site-button w-100 bat" type="submit">Search</button>-->
-                           <!--         </div>-->
-                                        
-                           <!--     </form>-->
-                              
-                           <!--</div>-->
-                            <!-- Find Doctors End -->
-                            
-                                                      
-                            
-                            
-                        </aside>
-
-                    </div> {% endcomment %}
-                    <!-- Side bar END -->
-
                 </div>
             </div>
         </div> 
-        <!-- Left & right section  END -->
-        
     </div>
-    <!-- Content END-->
-
-    
 {% endblock body %}
-    
-
 
 {% block js %}
     

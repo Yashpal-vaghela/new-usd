@@ -8,146 +8,219 @@
 {% block css %}
     
 {% endblock css %}
-    
-
 
 {% block body %}
 {% load static %}
 
 <!-- Content -->
-<div class="page-content">
-            
+{% comment %} <div class="page-content">       
     <!-- Banner Area -->
     <div class="aon-page-benner-area">
-      <div class="aon-page-banner-row">
-         <div class="aon-page-benner-overlay" ></div>
-         <div class="sf-banner-heading-wrap">
-           <div class="sf-banner-heading-area">
-             <div class="sf-banner-heading-large">Latest Blogs</div>
-             <div class="sf-banner-breadcrumbs-nav">
-               <ul class="list-inline">
-                 <li><a href="{% url 'home:home' %}"> Home </a></li>
-                 <li><a href="">Blogs</a></li>
-               </ul>
-             </div>
-           </div>
-         </div>
-       </div>
-     </div>
-     <!-- Banner Area End -->
-     
-     <!-- Left & right section -->
-     <div class="aon-page-jobs-wrap">
-         <div class="container">
-             <div class="row">
-  
-                 
-  
-                 <!-- Left part start -->
-                 <div class="col-lg-12">
-                                               
-  
-                  <div class="row">
-                    <!-- COLUMNS 1 -->
-                    {% for blog in page_obj %}
-                    {% if blog.status %}
-                    <div class="col-lg-4 col-md-12">
-                        <div class="aon-blog-style-1">
-                            <div class="post-bx">
-                                <!-- Content section for blogs start -->
-                                <div class="post-thum"> 
-                                    <img title="title" alt="" src="{{blog.blog_banner_lg.url}}">
-                                </div>
-                                <div class="post-info">
-                                    <div class="post-categories"><a href="#">{{blog.category}}</a></div>
-                                    <div class="post-meta">
-                                        <ul>
-                                            <li class="post-date"><span>{{blog.published}}</span></li>
-                                            <li class="post-author">By
-                                                <a href="#" title="Posts by admin" rel="author">{{blog.author}}</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="post-text">
-                                        <h4 class="post-title cool">
-                                            <a href="{% url 'home:blogsd' blog.slug %}">{{blog.title}}</a>
-                                        </h4>
-                                    </div>
-                                    <div class="post-read-more">
-                                        <a href="{% url 'home:blogsd' blog.slug %}" class="site-button-link">Read More</a>
-                                    </div>                                                
-                                </div>
-                                <!-- Content section for blogs end -->
+        <div class="aon-page-banner-row">
+            <div class="aon-page-benner-overlay" ></div>
+                <div class="sf-banner-heading-wrap">
+                    <div class="sf-banner-heading-area">
+                        <div class="sf-banner-heading-large">Latest Blogs</div>
+                            <div class="sf-banner-breadcrumbs-nav">
+                                <ul class="list-inline">
+                                    <li><a href="{% url 'home:home' %}"> Home </a></li>
+                                    <li><a href="">Blogs</a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                    {% endif %}
-                    {% endfor %}
-                    
-                    <div class="site-pagination s-p-center">
-                        <ul class="pagination">
-                            {% if page_obj.has_previous %}
-                            <li class="page-item">
-                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1">
-                                    <i class="fa fa-chevron-left"></i>
-                                </a>
-                            </li>
-                            {% else %}
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1">
-                                    <i class="fa fa-chevron-left"></i>
-                                </a>
-                            </li>
-                            {% endif %}
-                    
-                            {% for num in page_obj.paginator.page_range %}
-                            {% if page_obj.number == num %}
-                            <li class="page-item active">
-                                <a class="page-link" href="#">{{ num }} <span class="sr-only">(current)</span></a>
-                            </li>
-                            {% else %}
-                            <li class="page-item">
-                                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
-                            </li>
-                            {% endif %}
-                            {% endfor %}
-                    
-                            {% if page_obj.has_next %}
-                            <li class="page-item">
-                                <a class="page-link" href="?page={{ page_obj.next_page_number }}">
-                                    <i class="fa fa-chevron-right"></i>
-                                </a>
-                            </li>
-                            {% else %}
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#">
-                                    <i class="fa fa-chevron-right"></i>
-                                </a>
-                            </li>
-                            {% endif %}
-                        </ul>
-                    </div>
-                    
                 </div>
-                                               
-  
+        </div>
+    </div>
+     <!-- Banner Area End -->
+     <!-- Left & right section -->
+    <div class="aon-page-jobs-wrap">
+         <div class="container">
+            <div class="row">
+                 <!-- Left part start -->
+                 <div class="col-lg-12">
+                    <div class="row">
+                        <!-- COLUMNS 1 -->
+                        {% for blog in page_obj %}
+                        {% if blog.status %}
+                        <div class="col-lg-4 col-md-12">
+                            <div class="aon-blog-style-1">
+                                <div class="post-bx">
+                                    <!-- Content section for blogs start -->
+                                    <div class="post-thum"> 
+                                        <img title="title" alt="" src="{{blog.blog_banner_lg.url}}">
+                                    </div>
+                                    <div class="post-info">
+                                        <div class="post-categories"><a href="#">{{blog.category}}</a></div>
+                                            <div class="post-meta">
+                                                <ul>
+                                                    <li class="post-date"><span>{{blog.published}}</span></li>
+                                                    <li class="post-author">By
+                                                        <a href="#" title="Posts by admin" rel="author">{{blog.author}}</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="post-text">
+                                                <h4 class="post-title cool">
+                                                    <a href="{% url 'home:blogsd' blog.slug %}">{{blog.title}}</a>
+                                                </h4>
+                                            </div>
+                                            <div class="post-read-more">
+                                                <a href="{% url 'home:blogsd' blog.slug %}" class="site-button-link">Read More</a>
+                                            </div>                                                
+                                        </div>
+                                    </div>
+                                    <!-- Content section for blogs end -->
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        
+                        <div class="site-pagination s-p-center">
+                            <ul class="pagination">
+                                {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1">
+                                        <i class="fa fa-chevron-left"></i>
+                                    </a>
+                                </li>
+                                {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1">
+                                        <i class="fa fa-chevron-left"></i>
+                                    </a>
+                                </li>
+                                {% endif %}
+                        
+                                {% for num in page_obj.paginator.page_range %}
+                                {% if page_obj.number == num %}
+                                <li class="page-item active">
+                                    <a class="page-link" href="#">{{ num }} <span class="sr-only">(current)</span></a>
+                                </li>
+                                {% else %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                </li>
+                                {% endif %}
+                                {% endfor %}
+                        
+                                {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                                        <i class="fa fa-chevron-right"></i>
+                                    </a>
+                                </li>
+                                {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#">
+                                        <i class="fa fa-chevron-right"></i>
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div> 
+                    </div>
                  </div>
                  <!-- Left part END --> 
-                 
-  
-             </div>
+            </div>
          </div>
-     </div> 
+    </div> 
      <!-- Left & right section  END --> 
-     
-    
-  </div>
+</div> {% endcomment %}
+
+<div class="blog-page-wrapper">
+    <section class="breadcrumbs-section">
+        <div class="container">
+            <h1 class="breadcrumbs-title mb-0">Blog</h1>
+            <img src="{% static 'text_vec.svg' %}" class="img-fluid" />
+        </div>
+    </section>
+    <section class="blog-content" style="background-color:#222">
+        <div class="container pt-3" >
+            <h2 class="blog-content-title">Recent Blog</h2>
+                <div class="blog-content-wrapper row justify-content-center mx-auto pb-5">
+                    <div class="col-lg-6 col-md-6 col-sm-11 position-relative mx-auto">
+                        <div class="blog-icon-content1 d-flex align-items-center mx-auto">
+                        <span class="me-5"><img src="{% static 'new-calender.svg' %}" class="icon-img me-2 img-fluid" />Jan. 22, 2025</span>
+                        <span><img src="{% static 'user.svg'%}" class="icon-img me-2 img-fluid" />By Haresh Savani</span>
+                        </div>
+                        <h2 class="blog-content-title1">What is Smile Designing Surgery?</h2>
+                        <p class="blog-content-subtitle">Smile designing surgery is a transformative dental procedure that allows individuals to achieve a customized, aesthetically pleasing smile....</p>
+                        <span class="read-more">Read More</span>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-11 mx-auto">
+                        <img src="{% static 'blogContent-img.webp' %}" class=" img-fluid"/>
+                    </div>
+                </div>
+             <h2 class="blog-content-title">All Blog</h2>
+             <div class="row align-items-center justify-content-center pb-5">
+                <div class="col-lg-4 col-md-6 col-sm-10 mb-md-4 mb-lg-0  d-md-block ">
+                    <div class="blog-content-details-card card">
+                        <img src="{% static 'blog-img1.webp' %}" class="card-img-top img-fluid" />
+                            <div class="blog-content-details position-relative card-body">
+                                <div class="blog_date">22 Jan</div>
+                                <p class="card-text"> Understanding Different Types of Dental Implants and Their Benefits for a Healthier Smile </p>
+                                <div class="mb-4">
+                                    <img src="{% static 'user.svg'%}" class="icon-img me-1 img-fluid" />
+                                    <span>By Haresh Savani</span><br/>
+                                </div>
+                                <span class="read-more1">Read More</span>
+                            </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-md-4 mb-lg-0 d-none d-sm-none d-md-block">
+                    <div class="blog-content-details-card card">
+                        <img src="{% static 'blog-img2.webp' %}" class="card-img-top img-fluid" />
+                            <div class="blog-content-details position-relative card-body">
+                                <div class="blog_date">22 Jan</div>
+                                <p class="card-text"> Understanding Different Types of Dental Implants and Their Benefits for a Healthier Smile </p>
+                                <div class="mb-4">
+                                    <img src="{% static 'user.svg'%}" class="icon-img me-1 img-fluid" />
+                                    <span>By Haresh Savani</span><br/>
+                                </div>
+                                <span class="read-more1">Read More</span>
+                            </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 d-none d-sm-none d-md-none d-lg-block">
+                    <div class="blog-content-details-card card">
+                        <img src="{% static 'blog-img3.webp' %}" class="card-img-top img-fluid" />
+                            <div class="blog-content-details position-relative card-body">
+                                <div class="blog_date">22 Jan</div>
+                                <p class="card-text"> Understanding Different Types of Dental Implants and Their Benefits for a Healthier Smile </p>
+                                <div class="mb-4">
+                                    <img src="{% static 'user.svg'%}" class="icon-img me-1 img-fluid" />
+                                    <span>By Haresh Savani</span><br/>
+                                </div>
+                                <span class="read-more1">Read More</span>
+                            </div>
+                    </div>
+                </div>
+                <nav class="blog-page-pagination" aria-label="Page navigation example">
+                    <ul class="pagination mb-0 mt-4 justify-content-center">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true"><i class="fa-solid fa-chevron-left"></i></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                        </li>
+                    </ul>
+                </nav>
+             </div>
+        </div>
+    </section>
+</div>
   <!-- Content END-->
 {% endblock body %}
-    
-
-
 {% block js %}
-
 {% endblock js %}
-    

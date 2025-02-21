@@ -98,7 +98,7 @@ def search_all_usd(request):
         search_message = "No Ultimate Designers Found Based On Your Query."
 
     # Pagination
-    paginator = Paginator(data1, 6)  # 12 dentists per page
+    paginator = Paginator(data1, 12)  # 12 dentists per page
     page = request.GET.get('page', 1)
 
     try:
@@ -164,7 +164,7 @@ def find_dentist(request):
             data1 = Dentist.objects.all().order_by('name')
 
     # Pagination
-    paginator = Paginator(data1, 12)  # 12 dentists per page
+    paginator = Paginator(data1, 6)  # 12 dentists per page
     page = request.GET.get('page', 1)
 
     try:
