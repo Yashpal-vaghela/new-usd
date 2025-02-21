@@ -1,0 +1,426 @@
+.searchInfo-content-wrapper .searchInfo-title{
+  font-family: "Barlow Condensed", serif;
+  font-size: 22px;
+  font-weight: 600;
+  background: linear-gradient(
+    50deg,
+    rgb(220, 173, 129) 0%,
+    rgb(216, 169, 124) 1.5%,
+    rgb(255, 210, 164) 5%,
+    rgb(216, 169, 124) 8%,
+    rgb(220, 173, 129) 51%
+  )
+  text;
+  color: transparent;
+}
+
+.searchInfo-content-wrapper .searchInfo-subtitle{
+  color: rgba(255, 255, 255, 1);
+  font-family: "Gilda Display", serif;
+  font-weight: 400;
+  font-size: 40px;
+}
+.searchInfo-content-wrapper .searchInfo-description{
+  font-family: "Barlow", sans-serif;
+  font-weight: 600;
+  color:rgba(255, 255, 255, 1);
+}
+.searchbar-wrap .row{
+  --bs-gutter-x: 0.8rem !important;
+}
+
+.searchbar-box-wrapper {
+  /* width: 450px; */
+  height: 40px;
+  /* background-color: rgb(211 224 231 / 64%); */
+  background-color: rgba(45, 45, 45, 1);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 22px 15px;
+}
+
+.searchbar-box-wrapper input,
+.searchbar-box-wrapper select {
+  flex: 1;
+  height: 20px;
+  background-color: transparent;
+  color: #fff !important;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  padding: 0px 7px 0px 10px;
+}
+.searchbar-box-wrapper input:focus,
+.searchbar-box-wrapper select:focus {
+  background-color: transparent;
+  box-shadow: none !important;
+}
+.searchbar-box-wrapper input[placeholder],
+.searchbar-box-wrapper select[placeholder] {
+  color: rgb(255, 255, 255, 0.7) !important;
+}
+
+.searchbar-box-wrapper select option {
+  background-color: rgb(45, 45, 45);
+  color: #fff;
+}
+
+
+.searchbar-box-wrapper select option:hover {
+  background-color: #fff !important;
+  color: #222 !important;
+}
+.searchbar-box-wrapper img {
+  color: #777;
+  border-right: 1.5px solid rgba(177, 177, 177, 1);
+  padding: 5px 8px 5px 0px;
+  width: 8%;
+}
+
+.search-button {
+  background: linear-gradient(
+    259.34deg,
+    #dcad81 0%,
+    #d8a97c 25%,
+    #ffd2a4 50%,
+    #d8a97c 75%,
+    #dcad81 100%
+  );
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-weight: 600;
+}
+
+.searchbar-button-wrapper {
+    background: linear-gradient(
+        259.34deg,
+        #dcad81 0%,
+        #d8a97c 25%,
+        #ffd2a4 50%,
+        #d8a97c 75%,
+        #dcad81 100%
+      );
+      border-radius: 8px;
+      padding: 9px 8px;
+}
+.searchbar-button-wrapper img{
+    width: 10%;
+    margin-bottom: 2px;
+}
+.searchbar-button-wrapper span{
+    font-size: 15px;
+    color: #222;
+    font-weight: 600;
+}
+
+
+/* home page search bar section  */
+.searchbar-box-wrapper1{
+  height: 50px;
+  background-color:  rgba(247, 245, 240, 1);
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  padding: 22px 15px;
+  /* padding: 0px 8px; */
+  position: relative;
+}
+
+.searchbar-box-wrapper1 input,
+.searchbar-box-wrapper1 select{
+  flex: 1;
+  height: 20px;
+  background-color: transparent;
+  color: #212529 !important;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  padding: 0px 7px 0px 10px;
+}
+
+.searchbar-box-wrapper1 input:focus,
+.searchbar-box-wrapper1 select:focus {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+.searchbar-box-wrapper1 select option {
+  background-color: rgba(247, 245, 240, 1);
+  color: #222;
+}
+.searchbar-box-wrapper1 select option:checked,
+.searchbar-box-wrapper1 select option:active,
+.searchbar-box-wrapper1 select option:hover {
+  background-color: #fff !important;
+  color: #222 !important;
+}
+.searchbar-box-wrapper1 img {
+  color: #777;
+  border-right: 1px solid rgba(177, 177, 177, 1);
+  padding: 2px 9px 2px 0px;
+  width: 6%;
+}
+
+.searchbar-button-wrapper1 {
+  background: linear-gradient(
+      259.34deg,
+      #dcad81 0%,
+      #d8a97c 25%,
+      #ffd2a4 50%,
+      #d8a97c 75%,
+      #dcad81 100%
+    );
+    border-radius: 8px;
+    padding: 9px 8px;
+}
+.searchbar-box-wrapper1 i{
+  color: #222;
+  /* padding-right: 10px; */
+  padding: 5px 10px 5px 0px;
+  display: flex;
+  border-right: 1px solid rgba(177, 177, 177, 1);
+}
+
+.searchbar-button-wrapper1 img{
+  width: 10%;
+  margin-bottom: 2px;
+}
+.searchbar-button-wrapper1 span{
+  font-size: 15px;
+  color: #222;
+  font-weight: 600;
+}
+
+/* dentists section */
+.dentist-content{
+    background-color: rgba(45, 45, 45, 1);
+    padding: 15px;
+    border-radius: 20px;
+    height: 100%;
+}
+.dentist-content .card{
+    border-radius: 24px;
+    background-color: rgba(45, 45, 45, 1);
+}
+.dentist-content .card img{
+    border-radius: 12px;
+    width: 230px;
+    height: 230px;
+}
+.dentist-content .card-body .bookAppoinment-btn{
+    background: linear-gradient(
+        259.34deg,
+        #dcad81 0%,
+        #d8a97c 25%,
+        #ffd2a4 50%,
+        #d8a97c 75%,
+        #dcad81 100%
+      );
+      border-radius: 8px;
+      padding: 9px 12px;
+      font-family: "Barlow", sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+}
+.dentist-content .card-body .bookAppoinment-btn a{
+    color: #222;
+}
+.dentist-content .card-body{
+    background-color: rgba(45, 45, 45, 1);
+    padding: 12px 5px;
+}
+.dentist-content .card-body h2{
+    font-family: "Barlow", sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 1);
+    margin-bottom: 3px;
+}
+.dentist-content .card-body p{
+    font-family: "Barlow", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 28px;
+    color: rgba(255, 255, 255, 1);
+}
+.dentist-content .card-body span{
+    font-family: "Barlow", sans-serif;
+    font-style: italic;
+    font-size: 12px;
+    color: #08a300;
+    margin-bottom: 0px;
+    font-weight: 500;
+    text-align: end;
+    position: relative;
+    display: block;
+}
+
+.dentist-content1,.dentist-content2{
+    background-color: rgba(45, 45, 45, 1);
+    padding: 15px;
+    border-radius: 20px;
+    height: 100%;
+}
+
+.dentist-content1 h1{
+    background: linear-gradient(
+        50deg,
+        rgb(220, 173, 129) 0%,
+        rgb(216, 169, 124) 15%,
+        rgb(255, 210, 164) 25%,
+        rgb(216, 169, 124) 40%,
+        rgb(220, 173, 129) 75%
+      )
+      text !important;
+    color: transparent !important;
+    font-family: "Barlow Condensed", serif;
+    font-size: 30px;
+}
+.dentist-content1 p{
+    font-size: 14px
+}
+.dentist-content1 h2{
+    font-family: "Barlow", sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 1);
+    margin-bottom: 15px;
+}
+.dentist-content2 iframe{
+    border-radius: 15px;
+    width:100%;
+    height: 100%;   
+}
+
+@media(max-width:1200px){
+  .searchbar-button-wrapper span{
+    font-size: 13px;
+  }
+  .searchbar-button-wrapper{
+    padding: 8px 5px;
+  }
+  .searchbar-box-wrapper{
+    padding: 22px 10px;
+  }
+
+  /* dentist content */
+  .dentist-section .row{
+    --bs-gutter-x: 1rem;
+  }
+  .dentist-section .row .col-12{
+    margin-bottom: 1rem !important;
+  }
+  .dentist-content .card img{
+    width: 200px;
+    height: 200px;
+  }
+  .dentist-content1 h1{
+    font-size: 28px;
+  }
+  .dentist-content1 h2{
+    font-size: 16px;
+  }
+  .dentist-content1 p{
+    line-height: 1.6;
+  }
+}
+@media(max-width:991px){
+  .searchbar-wrap .row .col-lg-4,
+  .searchbar-wrap .row .col-lg-2{
+    margin-bottom: 20px;
+  }
+  .searchInfo-content-wrapper .searchInfo-subtitle{
+    font-size: 36px;
+  }
+  .searchbar-box-wrapper{
+    padding: 22px 15px;
+  }
+  .searchbar-button-wrapper{
+    padding: 8px 12px;
+  }
+  .searchbar-button-wrapper img{
+    width: 11%;
+    margin-right: 8px;
+  }
+  .searchbar-button-wrapper span{
+    font-size: 16px;
+  }
+
+  /* dentist content */
+  .dentist-content .card-body h2{
+    font-size: 16px;
+  }
+  .dentist-content .card-body p{
+    font-size: 14px;
+  }
+  .dentist-content,.dentist-content1,.dentist-content2{
+    padding: 12px;
+  }
+  .dentist-content2 iframe{
+    border-radius: 12px;
+  }
+}
+@media(max-width:768px){
+  .searchInfo-content-wrapper .searchInfo-title{
+    font-size: 20px;
+  }
+  .searchInfo-content-wrapper .searchInfo-subtitle{
+    font-size: 32px;
+  }
+  .searchbar-box-wrapper img{
+    width: 6%;
+  }
+  /* dentist section */
+  .dentist-content, .dentist-content1, .dentist-content2 {
+    padding: 8px;
+  }
+  .dentist-content .card img {
+    width: 100%;
+    height: 25vh;
+  }
+}
+@media(max-width:576px){
+  .searchbar-box-wrapper img{
+    width: 8%;
+  }
+  /* dentist section */
+  .dentist-content .card img {
+    width: 100%;
+    height: 100%;
+    /* display: flex;
+    margin:auto; */
+  }
+  .searchbar-wrap .row,.dentist-section .row{
+    justify-content: center;
+  }
+  .searchbar-wrap .row,.dentist-section .row .col-10{
+    margin-bottom: 1.2rem !important;
+  }
+  .dentist-content, .dentist-content1, .dentist-content2 {
+    padding: 15px;
+  }
+  /* .dentist-content .card-body h2 {
+    text-align: center;
+    font-size: 20px;
+  } */
+  .dentist-content .card-body{
+    padding: 12px 12px;
+  }
+  /* .dentist-content .card-body p{
+    text-align: center;
+    font-size: 16px;
+  } */
+  /* .dentist-content .card-body .bookAppoinment-btn{
+    width: 90% !important;
+    margin: auto;
+    display: block;
+  } */
+  /* .dentist-content .card-body span{
+    right: 18px;
+  } */
+}
+@media(max-width:500px){
+  .searchbar-box-wrapper img{
+    width: 9%;
+  }
+}

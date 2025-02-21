@@ -4,56 +4,71 @@
   <link href="{% static 'css/location.css' %}" rel="stylesheet" />
 </head>
 <body>
-  <div class="container">
-    <div style="margin: 60px 0px;">
-      <!-- Wrapped Cards in a Container for Better Selection -->
-      <div class="row g-4 location-grid">
-        <div class="col-12 col-md-8 col-lg-6 loc-title-card">
-          <p class="registrayion_small cool">Locations</p>
-          <img src="{% static 'text_vec.svg' %}" class="text_vec1" loading="lazy" alt="text vector" />
-          <h3 class="Loc-title">Top Searched Locations</h3>
-          <p class="Loc-description">Discover the leading destinations where patients connect with our network of Ultimate Smile Designers. Our platform helps you find expert dentists across various prime locations.</p>
+  <section class="location-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-md-8 col-12">
+          <h2 class="location-title mb-0">Locations</h2>
+          <img
+            src="/static/text_vec.svg"
+            class="text_vec2"
+            loading="lazy"
+            alt="text vector"
+          />
+          <h3 class="location-subtitle">Top Searched Locations</h3>
+          <p class="Loc-description">
+            Discover the leading destinations where patients connect with our
+            network of Ultimate Smile Designers. Our platform helps you find
+            expert dentists across various prime locations.
+          </p>
         </div>
         {% for city in data1 %}
-          <div class="col-6 col-md-4 col-lg-3 square-card-wrapper">
-            <div class="square-card">
-              <img src="{% static 'bg_loc.svg' %}" class="bgloc" loading="lazy" alt="Location Icon" />
+          <div class="col-lg-3 col-md-4 col-12 square-card-wrapper">
+             <div class="square-card">
+              <img
+                src="{% static 'bg_loc.svg' %}"
+                class="bgloc"
+                loading="lazy"
+                alt="Location Icon"
+              />
               <div class="square-card-content">
-                <h4 class="city_txt cool"><a href="{% url 'home:search_all_usd' %}?city={{ city.id }}">{{ city.city }}</a></h4>
-                <p class="Designer_txt">{{ city.countdr }} - Smile Designers</p>
+                <h4 class="city_txt cool">
+                  <a href="{% url 'home:search_all_usd' %}?city={{ city.id }}"
+                    >{{ city.city }}</a
+                  >
+                </h4>
+                <p class="Designer_txt mb-0">{{ city.countdr }} - Smile Designers</p>
               </div>
             </div>
           </div>
         {% endfor %}
       </div>
-    </div>
 
-    {% comment %} <div class="loc-button-container">
-      <button class="bat loc_btn">Load More</button>
-    </div> {% endcomment %}
-  </div>
+     
+    </div>
+  </section>
 
   <!-- JavaScript for Hiding Extra Rows Dynamically -->
   <script>
     function updateCardDisplay() {
-      let cards = document.querySelectorAll('.square-card-wrapper')
-      let maxCards
+      let cards = document.querySelectorAll(".square-card-wrapper");
+      let maxCards;
       if (window.innerWidth >= 992) {
-        maxCards = 6
+        maxCards = 6;
       } else if (window.innerWidth >= 768) {
-        maxCards = 4
+        maxCards = 4;
       } else {
-        maxCards = 2
+        maxCards = 2;
       }
       cards.forEach((card, index) => {
         if (index >= maxCards) {
-          card.style.display = 'none'
+          card.style.display = "none";
         } else {
-          card.style.display = 'block'
+          card.style.display = "block";
         }
-      })
+      });
     }
-    document.addEventListener('DOMContentLoaded', updateCardDisplay)
-    window.addEventListener('resize', updateCardDisplay)
+    document.addEventListener("DOMContentLoaded", updateCardDisplay);
+    window.addEventListener("resize", updateCardDisplay);
   </script>
 </body>

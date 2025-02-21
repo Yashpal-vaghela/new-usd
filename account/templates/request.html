@@ -1,201 +1,119 @@
-{% extends 'base2.html' %}
-{% load static %}
+{% extends 'base2.html' %} {% load static %} {% block header %} {% endblock header %} {% block css %}
+<link
+  href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
+  rel="stylesheet"
+/>
 
-{% block header %}
-
-{% endblock header %}
-
-{% block css %}
-<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
-
-
-    
-{% endblock css %}
-    
+{% endblock css %} {% block body %}
+<link rel="stylesheet" href="{% static 'css/contact.css' %}" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
 
 
-{% block body %}
-   
-<div class="page-wraper">
-     
-    
-    <!-- CONTENT START -->
-    <div class="page-content">
+<div class="page-content " >
+  <section class="request-section d-flex justify-content-center align-items-center "  >
+    <div class="container">
+      <div class="request-img-section d-flex justify-content-center mx-auto">
+        <a href="/" style="display:contents">
+          <img class="img-fluid" src="{% static 'usdlog.png' %}" />
+        </a>
+        <div class="request-content d-block">
+          <h2>Request consultation</h2>
+          <p class="mb-0">Please enter the details below for a call back.</p>
 
-    
-        <!-- Search Bar Home START -->
-        <div class="aon-login-wrap d-flex">
-             <div class="aon-login-left">
-                 <div class="aon-login-heading butt">
-                     <div class="aon-login-text cool">
-                         Your Trust is Our Greatest Incentive!
-                     </div>
-                     <div class="aon-login-pic">
-                         <img src="{% static 'ddd.png' %}" alt=""/>
-                     </div>
-                 </div>
-            </div>
-             <div class="aon-login-right d-flex flex-wrap align-items-center">
-                 <div class="aon-login-area">
-                 <div class="col-md-12">
-                     <div class="site-logo login-sign-logo">
-                         <a href="{% url 'home:home' %}"><img src="{% static 'usdlog.png' %}" style="height: 240px;" alt=""/></a>
-                     </div>
-                 </div>
-                 <div class="col-md-12">
-                     <div class="login-sign-head">
-                         <strong class="cool">Request consultation</strong>
-                         <span class="cool">Please enter the details below for a call back.</span>
-                     </div>
-                 </div>                       
-                 
-                <ul class="nav nav-pills mb-3 aon-custom-nav aon-login-sign-tabs calen-list-nav m-b30" id="pills-tab" role="tablist">
-                    <!--<li class="nav-item" role="presentation">-->
-                    <!--    <div class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-one" role="tab" aria-selected="true">Login</div>-->
-                    <!--</li>-->
-                    <!--<li class="nav-item" role="presentation">-->
-                    <!--    <div class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-two" role="tab" aria-selected="false">Request consultation</div>-->
-                    <!--</li>-->
-                </ul>
-                <div class="tab-content" >
-                <!--    <div class="tab-pane fade show active" id="pills-one pills-two " role="tabpanel" aria-labelledby="pills-home-tab">-->
-                <!--        <form class="aon-login-form">-->
-                <!--         <div class="row">-->
-                <!--             <div class="col-md-12">-->
-                <!--                 <div class="form-group">-->
-                <!--                    <label>First Name</label>-->
-                <!--                    <div class="aon-inputicon-box"> -->
-                <!--                        <input class="form-control sf-form-control" name="company_name" type="text">-->
-                <!--                        <i class="aon-input-icon fa fa-user"></i>-->
-                <!--                    </div>-->
-                <!--                 </div>-->
-                <!--             </div>-->
-                <!--             <div class="col-md-12">-->
-                <!--                 <div class="form-group">-->
-                <!--                    <label>Password</label>-->
-                <!--                    <div class="aon-inputicon-box"> -->
-                <!--                        <input class="form-control sf-form-control" name="company_name" type="text">-->
-                <!--                        <i class="aon-input-icon fa fa-lock"></i>-->
-                <!--                    </div>-->
-                <!--                 </div>-->
-                <!--             </div>-->
-                <!--             <div class="col-md-12">-->
-                <!--                <div class="form-group d-flex aon-login-option justify-content-between">-->
-                <!--                    <div class="aon-login-opleft">-->
-                <!--                         <div class="checkbox sf-radio-checkbox">-->
-                <!--                            <input id="td2_2" name="abc" value="five" type="checkbox">-->
-                <!--                            <label for="td2_2">Keep me logged</label>-->
-                <!--                        </div>  -->
-                <!--                    </div>-->
-                <!--                    <div class="aon-login-opright">-->
-                <!--                        <a href="#">Forget Password</a>-->
-                <!--                    </div>-->
-                <!--                </div>-->
-                <!--             </div>-->
-                <!--             <div class="col-md-12">-->
-                <!--                <button type="submit" class="site-button w-100">Submit <i class="feather-arrow-right"></i> </button>-->
-                <!--             </div>-->
-                <!--         </div>-->
-                <!--     </form>-->
-                <!--    </div>-->
-                   <div class="tab-pane fade show active" id="pills-one" role="tabpanel" aria-labelledby="pills-profile-tab">
-    <form method="post" class="aon-login-form">
-        {% csrf_token %}
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label>First Name</label>
-                    <div class="aon-inputicon-box"> 
-                        <input class="form-control sf-form-control cool" name="first_name" type="text" placeholder="First Name" required>
-                        <i class="aon-input-icon fa fa-user"></i>
-                    </div>
+          <form method="post" class="aon-login-form login-form form ">
+            {% csrf_token %}
+            <div class="row justify-content-center">
+              <div class="col-lg-6">
+                <label class="form-label">First Name</label>
+                <div class="inputicon-box">
+                  <input
+                    class="form-control"
+                    name="first_name"
+                    type="text"
+                    placeholder="First Name"
+                    required
+                  />
+                  <i class="fa-solid fa-user"></i>
                 </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label>Last Name</label>
-                    <div class="aon-inputicon-box"> 
-                        <input class="form-control sf-form-control cool" name="last_name" type="text" placeholder="Last Name" required>
-                        <i class="aon-input-icon fa fa-user"></i>
-                    </div>
+              </div>
+              <div class="col-lg-6">
+                <label class="form-label">Last Name</label>
+                <div class="inputicon-box">
+                  <input
+                    class="form-control"
+                    name="last_name"
+                    type="text"
+                    placeholder="Last Name"
+                    required
+                  />
+                  <i class="fa-solid fa-user"></i>
                 </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label>Phone Number</label>
-                    <div class="aon-inputicon-box"> 
-                        <input class="form-control sf-form-control cool" name="phone" type="text" placeholder="Phone" required>
-                        <i class="aon-input-icon fa fa-phone"></i>
-                    </div>
+              </div>
+              <div class="col-lg-6">
+                <label class="form-label">Phone Number</label>
+                <div class="inputicon-box">
+                  <input
+                    class="form-control"
+                    name="phone"
+                    type="text"
+                    placeholder="Phone Number"
+                    required
+                  />
+                  <i class="fa-solid fa-phone"></i>
                 </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label>Email Address</label>
-                    <div class="aon-inputicon-box"> 
-                        <input class="form-control sf-form-control cool" name="email" type="email" placeholder="Email" required>
-                        <i class="aon-input-icon fa fa-envelope-o"></i>
-                    </div>
+              </div>
+              <div class="col-lg-6">
+                <label class="form-label">Email</label>
+                <div class="inputicon-box">
+                  <input
+                    class="form-control"
+                    name="email"
+                    type="email"
+                    placeholder="Email"
+                    required
+                  />
+                  <i class="fa-solid fa-envelope"></i>
                 </div>
+              </div>
+              <div class="col-12 d-flex align-items-center">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  name="agree_to_terms"
+                  required
+                />
+                <label class="mb-0 form-label">By submitting, you agree to receive SMS or emails via the provided channel.</label>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-5 col-6">
+                    <button type="submit" class="btn request-button w-100 ">submit</button>
+              </div>
             </div>
-            <div class="col-sm-12">
-                <div class="form-group sign-term-con">
-                    <div class="checkbox sf-radio-checkbox">
-                        <input id="td33" name="agree_to_terms" type="checkbox" required>
-                        <label for="td33">By submitting, you agree to receive SMS or emails via the provided channel.</label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12">
-                <button type="submit" class="site-button w-100 bat">Submit <i class="feather-arrow-right"></i></button>
-            </div>                                          
+          </form>
         </div>
-    </form>
+      </div>
+    </div>
+  </section>
 </div>
 
-
-
-
-
-
-
-
-                </div>
-                </div>
-                 
-             </div>
-        </div>
-        <!-- Search Bar Home END --> 
-        
-        
-    </div>
-    <!-- CONTENT END -->
-
-
- </div>
-
-
-{% endblock body %}
-    
-
-
-{% block js %}
+{% endblock body %} {% block js %}
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 {% if messages %}
 <script>
-    {% for message in messages %}
-    Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: '{{ message }}',
-        showConfirmButton: false,
-        timer: 1500
-    });
-    {% endfor %}
+  {% for message in messages %}
+  Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: '{{ message }}',
+      showConfirmButton: false,
+      timer: 1500
+  });
+  {% endfor %}
 </script>
-{% endif %}
-
-
-{% endblock js %}
-    
+{% endif %} {% endblock js %}

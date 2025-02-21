@@ -1,915 +1,1207 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block header %}
-
-{% endblock header %}
-
-{% block css %}
+{% extends 'base.html' %} {% load static %} {% block header %} {% endblock header %} {% block css %}
 <!-- Owl Carousel CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+/>
 
 <!-- Owl Carousel JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-<link rel="stylesheet" href="{% static 'css/service.css' %}">
+<link rel="stylesheet" href="{% static 'css/service.css' %}" />
 <style>
-    #sync1 .item {
-        margin-right: 10px !important;
-    }
-    /* Apply margin only for mobile view (up to 768px width) */
-    
+  #sync1 .item {
+    margin-right: 10px !important;
+  }
+  /* Apply margin only for mobile view (up to 768px width) */
 </style>
-{% endblock css %}
-    
-
-
-{% block body %}
+{% endblock css %} {% block body %}
 <!-- CONTENT START -->
 <div class="page-content">
-            
-           
-    <!-- BANNER SECTION START -->
-    <section class="aon-banner2-wrap">
-        <div class="aon-banner2-row">
-            <div class="container bis">
-                <div class="row">
-                    <!--Left Section-->
-                    <div class="col-lg-6 d-flex align-items-center" style="margin-top: 18px;">
-                        <div class="aon-banner2-left">
-                            <h2 class="aon-banner2-heading cool">Nothing You Wear is More Important Than <span class="cool">Your Smile</span></h2>
-                            <div class="aon-banner-search">
-                                
-                                <ul class="nav nav-pills mb-3 aon-custom-nav aon-search2-tabs" id="pills-tab" role="tablist">
-                                  <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" 
-                                    type="button" role="tab" aria-controls="pills-home" aria-selected="true">For Patients</button>
-                                  </li>
-                                  <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" 
-                                    data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">For Dentist</button>
-                                  </li>
-                                 
-                                </ul>
-                                <div class="tab-content" id="pills-tabContent">
-                                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                                        <!-- user msg list start-->
-                                        <form class="aon-search2-form aon-search2-form-area" action="{% url 'home:search_all_usd' %}" method="GET"> 
-                                         {% csrf_token %}
-                                          <div class="aon-search2-left">
-                                          <div class="aon-search2-table">
-                                          <div class="aon-search2-col aon-category-col">
-                                             <div class="aon-inputicon-box aon-inputicon2-bg">
-                                               <i class="aon-input-icon feather-plus-square"></i>
-                                              <label for="doctor-search">Find A Doctor (Name) </label>
-                                              <input type="text" class="form-select cool" placeholder="Enter Doctor's Name" name="q" id="doctor-search">
-                                            </div>
-                                          </div>
-                                        <div class="aon-search2-col aon-category-col">
-                                           <div class="aon-inputicon-box aon-inputicon2-bg">
-                                                  <i class="aon-input-icon feather-map-pin"></i>
-                                                  <label for="location-select">Select Location</label>
-                                                 <select class="form-select cool" name="city" id="location-select">
-                                                 <option value="" selected>Select City</option>
-                                                    {% for city in cities %}
-                                                    <option value="{{ city.id }}">{{ city.city }}</option>
-                                                   {% endfor %}
-                                                </select>
-                                           </div>
-                                       </div>
-                                     </div>
-                                   </div>
-                                     <div class="aon-search2-right">
-                                    <div class="aon-search2-col aon-search-btn">
-                                    {% comment %} <a href="{% url 'account:dentist' %}"> {% endcomment %}
-                                        <button class="aon-search2-btn site-button bat" type="submit">Find</button>
-                                    {% comment %} </a> {% endcomment %}
-                                    </div>
-                                    </div>
-                                    </form>
+  <!-- BANNER SECTION START -->
+  <section class="aon-banner2-wrap">
+    <div class="aon-banner2-row">
+      <div class="container bis">
+        <div class="row">
+          <!--Left Section-->
+          <div
+            class="col-lg-6 d-flex align-items-center"
+            style="margin-top: 18px"
+          >
+            <div class="aon-banner2-left">
+              <h2 class="aon-banner2-heading cool">
+                Nothing You Wear is More Important Than
+                <span class="cool">Your Smile</span>
+              </h2>
+              <div class="aon-banner-search">
+                <ul
+                  class="nav nav-pills mb-3 aon-custom-nav aon-search2-tabs"
+                  id="pills-tab"
+                  role="tablist"
+                >
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link active"
+                      id="pills-home-tab"
+                      data-bs-toggle="pill"
+                      data-bs-target="#pills-home"
+                      type="button"
+                      role="tab"
+                      aria-controls="pills-home"
+                      aria-selected="true"
+                    >
+                      For Patients
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link"
+                      id="pills-profile-tab"
+                      data-bs-toggle="pill"
+                      data-bs-target="#pills-profile"
+                      type="button"
+                      role="tab"
+                      aria-controls="pills-profile"
+                      aria-selected="false"
+                    >
+                      For Dentist
+                    </button>
+                  </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                  <div
+                    class="tab-pane fade show active"
+                    id="pills-home"
+                    role="tabpanel"
+                    aria-labelledby="pills-home-tab"
+                  >
+                    <!-- user msg list start-->
+                    <form
+                      class="aon-search2-form aon-search2-form-area"
+                      action="{% url 'home:search_all_usd' %}"
+                      method="GET"
+                    >
+                      {% csrf_token %}
+                      <div class="aon-search2-left">
+                        <div class="aon-search2-table">
+                          <div class="aon-search2-col aon-category-col">
+                            <div class="aon-inputicon-box aon-inputicon2-bg">
+                              <i class="aon-input-icon feather-plus-square"></i>
+                              <label for="doctor-search"
+                                >Find A Doctor (Name)
+                              </label>
+                              <input
+                                type="text"
+                                class="form-select cool"
+                                placeholder="Enter Doctor's Name"
+                                name="q"
+                                id="doctor-search"
+                              />
+                            </div>
+                          </div>
+                          <div class="aon-search2-col aon-category-col">
+                            <div class="aon-inputicon-box aon-inputicon2-bg">
+                              <i class="aon-input-icon feather-map-pin"></i>
+                              <label for="location-select"
+                                >Select Location</label
+                              >
+                              <select
+                                class="form-select cool"
+                                name="city"
+                                id="location-select"
+                              >
+                                <option value="" selected>Select City</option>
+                                {% for city in cities %}
+                                <option value="{{ city.id }}">
+                                  {{ city.city }}
+                                </option>
+                                {% endfor %}
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="aon-search2-right">
+                        <div class="aon-search2-col aon-search-btn">
+                          {% comment %}
+                          <a href="{% url 'account:dentist' %}">
+                            {% endcomment %}
+                            <button
+                              class="aon-search2-btn site-button bat"
+                              type="submit"
+                            >
+                              Find
+                            </button>
+                            {% comment %}
+                          </a>
+                          {% endcomment %}
+                        </div>
+                      </div>
+                    </form>
 
-
-                                        <!-- user msg list End-->
-                                    </div>
-                                    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                                        <!-- user msg list start-->
-                                        <form class="aon-search2-form aon-search2-form-area">
-                                            <!-- <div class="aon-search2-right">
+                    <!-- user msg list End-->
+                  </div>
+                  <div
+                    class="tab-pane fade"
+                    id="pills-profile"
+                    role="tabpanel"
+                    aria-labelledby="pills-profile-tab"
+                  >
+                    <!-- user msg list start-->
+                    <form class="aon-search2-form aon-search2-form-area">
+                      <!-- <div class="aon-search2-right">
                                                 <div class="aon-search2-col aon-search-btn">
                                                     <button class="aon-search2-btn site-button" type="submit">Login</button>
                                                 </div>
                                             </div> -->
-                                            <div class="aon-search2-right">
-                                                <div class="aon-search2-col aon-search-btn">
-                                                    <button class="aon-search2-btn site-button bat" >
-                                                        <i class="feather-plus-circle"></i> <a href="https://dentist.ultimatesmiledesign.com/" style="color: black;"> Ultimate smile design</a>
-                                                    </button>
-                                                        
-                                                </div>
-                                            </div>
-                                        </form>
-                                        <!-- user msg list End-->
-                                    </div>
-                                    
-                                </div>                                    
-                                   
-                            </div>
-                            
+                      <div class="aon-search2-right">
+                        <div class="aon-search2-col aon-search-btn">
+                          <button class="aon-search2-btn site-button bat">
+                            <i class="feather-plus-circle"></i>
+                            <a
+                              href="https://dentist.ultimatesmiledesign.com/"
+                              style="color: black"
+                            >
+                              Ultimate smile design</a
+                            >
+                          </button>
                         </div>
-                    </div>                        
-                    <!--Right Section-->
-                    <div class="col-lg-6">
-                        <div class="aon-banner2-pic move-25">
-                            <img src="{% static 'kk.png' %}" class="bs3" loading="lazy" alt="Happy Patients"/>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- BANNER SECTION END -->  
-  
-    
-
-     <!-- About Doctor Section -->
-     {% comment %} <section class="aon-med-how-work">
-        <div class="container-fluid g-0">
-
-            <div class="row g-0">
-                <div class="col-lg-6 col-md-12 d-flex flex-wrap">
-                    <div class="aon-how-work-left d-flex flex-wrap justify-content-end w-100">
-                        <div class="aon-howLeft-col">
-                            <span class="aon-howLeft-icon">+</span>
-                            <h2 class="aon-howLeft-title mb-4 cool">Discover Your Ideal Smile with Our Ultimate Smile Designers</h2>
-                            <div class="aon-howLeft-text">
-                                <p>
-                                    Begin your journey to a radiant smile with our curated list of Ultimate Smile Designers. 
-                                </p>
-                                <p>
-                                    Our platform offers you access to premier dental experts who are adept at crafting smiles that not only look stunning but 
-                                also complement your individuality.
-                                </p>
-                            
-                                <p>
-                                    Through cutting-edge digital dentistry, our professionals are committed to providing you with a 
-                                    smile that enhances both your aesthetic appeal and dental health, tailored specifically to your facial features and personal preferences.
-                                </p>
-                            </div>
-                        </div> 
-                    </div>
-                      
-                </div>
-                <div class="col-lg-6 col-md-12 d-flex flex-wrap">
-                    <div class="aon-how-work-right d-flex flex-wrap justify-content-start w-100">
-                        <div class="aon-howRight-col">
-                            <div class="section-head mb-5">
-                                <span class="aon-sub-title">Working</span>
-                                <h2 class="aon-title cool">How Our Platform Works</h2>
-                            </div>
-                            <ul class="list-unstyled m-0">
-                                <li class="mb-4">
-                                    <div class="aon-hwork-list d-flex">
-                                        <div class="aon-hwork-list-icon">
-                                            <img src="{% static '19.png' %}" loading="lazy" alt="">
-                                        </div>
-                                        <div class="aon-hwork-list-text">
-                                            <h4 class="cool">Search for Your Smile Designer</h4>
-                                            <span style="color: white;">Explore our directory to find your ideal Ultimate Smile Designer. Filter by location, expertise, and ratings to find the perfect match for your smile goals.</span>
-                                        </div> 
-                                    </div>
-                                </li>
-                                <li class="mb-4">
-                                    <div class="aon-hwork-list d-flex">
-                                        <div class="aon-hwork-list-icon">
-                                            <img src="{% static '2.png' %}" loading="lazy" alt="">
-                                        </div>
-                                        <div class="aon-hwork-list-text">
-                                            <h4 class="cool">Book Your Appointment</h4>
-                                            <span style="color: white;">Select your preferred time and date to schedule an appointment with your chosen Smile Designer. Our platform makes booking easy and convenient.</span>
-                                        </div> 
-                                    </div>
-                                </li>
-                                <li class="mb-0">
-                                    <div class="aon-hwork-list d-flex">
-                                        <div class="aon-hwork-list-icon">
-                                            <img src="{% static '3.png' %}" loading="lazy" alt="">
-                                        </div>
-                                        <div class="aon-hwork-list-text">
-                                            <h4 class="cool">Experience Your Smile Transformation</h4>
-                                            <span style="color: white;">Attend your appointment to start the journey towards your dream smile. With expert care and advanced digital techniques, your Smile Designer will bring your vision to life.</span>
-                                        </div> 
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                                         
-                </div>
-            </div>
-            
-        </div>
-    </section> {% endcomment %}
-    <!-- About Doctor Section END -->  
-       
-    {% include "smile_step.html" %}
-
-      <!-- Service Categories Section -->
-      {% include "location.html" %}
-    {% comment %} <section class="aon-med-srv-cat-area bg-white">
-        <div class="container">
-
-            <!--Title Section Start-->
-
-            
-
-
-
-            <div class="section-head center">
-                <span class="aon-sub-title">Locations</span>
-                <h2 class="aon-title cool">Top Searched Locations</h2>
-                <p>Discover the leading destinations where patients connect with our network of Ultimate Smile Designers. Our platform helps you find expert dentists across various prime locations, ensuring you're never far from achieving your perfect smile.</p>
-            </div>
-            
-            <!--Title Section End-->
-
-            <div class="section-content">
-                <div class="aon-med-srv-cat-section">
-                    <ul class="justify-content-center">
-                        {% for city in data1 %}
-                            <li>
-                                <div class="aon-med-sevices-cat aon-icon-effect">
-                                    <div class="media">
-                                        <span class="aon-icon">
-                                            <!-- Link to search_all_usd view with city parameter -->
-                                            <a href="{% url 'home:search_all_usd' %}?city={{ city.id }}">
-                                                <img src="{% static '19.png' %}" loading="lazy" alt="">
-                                            </a>
-                                        </span>
-                                    </div>
-                                    <div class="aon-med-serices-cat-info">
-                                        <h4 class="cool">
-                                            <a href="{% url 'home:search_all_usd' %}?city={{ city.id }}">
-                                                {{ city.city }}
-                                            </a>
-                                        </h4>
-                                        <p><b>{{ city.countdr }}</b> - Smile Designers</p>
-                                    </div>
-                                </div>
-                            </li>
-                        {% endfor %}
-                    </ul> 
-                </div>
-
-    <!--<div class="aon-addmore-btn-section">-->
-    <!--    <a href="{% url 'home:all_usd' %}" class="aon-addplus">-->
-    <!--        <i class="feather-plus"></i>-->
-    <!--    </a>-->
-    <!--</div>-->
-            </div>
-
-        </div>
-    </section> {% endcomment %}
-    <!-- Service Categories END -->            
-        
-
-
-<!-- Team Section -->
-<!--<section class="aon-med-team-area aon-med-team-area2 bg-white ">-->
-<!--    <div class="container">-->
-
-        <!--Title Section Start-->
-<!--        <div class="section-head center">-->
-<!--            <span class="aon-sub-title">Our Ultimate Smile Designers</span>-->
-<!--            <h2 class="aon-title cool">Check Our Dentists</h2>-->
-<!--            <p>Discover our handpicked selection of Ultimate Smile Designers, the most acclaimed dentists who are renowned for their expertise in creating beautiful, healthy smiles. Their commitment to excellence and patient satisfaction sets them apart in the world of dental aesthetics.</p>-->
-<!--        </div>-->
-        
-        <!--Title Section End-->
-
-<!--        <div class="section-content">-->
-<!--            <div class="aon-med-team-section">-->
-<!--                <div class="row">-->
-<!--                    {% for dentist in dentist %}-->
-<!--                    <div class="col-lg-6 col-md-6">-->
-                        
-<!--                        <div class="aon-med-team bg-light-gray">-->
-<!--                            <div class="aon-med-team-pic">-->
-                                
-<!--                                {% if dentist.profile %}-->
-<!--                                <img src="{{dentist.profile.url}}" class="height45" loading="lazy" alt="Image">-->
-<!--                                {% else %}-->
-<!--                                <img src="{% static 'noimage-team.webp' %}" class="height45" loading="lazy" alt="Image">-->
-                                
-<!--                                {% endif %}-->
-                                    
-<!--                            </div>-->
-<!--                            <div class="aon-med-team-info">-->
-<!--                                <h4 class="aon-title"><a class="cap cool" href="{% url 'home:find_dentist_d' dentist.slug %}">{{dentist.name}}</a></h4>-->
-<!--                                <p class="aon-med-team-discription">{{dentist.state}}</p>-->
-                                
-<!--                                {% if dentist.sub_title %}-->
-<!--                                    <span class="aon-med-team-position">-->
-<!--                                        {{ dentist.sub_title }}-->
-<!--                                    </span>-->
-                                    
-<!--                                {% endif %}-->
-                                    
-<!--                                <span class="aon-med-team-location"><i class="feather-map-pin io"></i>-->
-                                    
-<!--                                    {% if dentist.city %}-->
-<!--                                    {{dentist.city}}-->
-<!--                                    {% else %}-->
-<!--                                    India-->
-<!--                                    {% endif %}-->
-                                        
-<!--                                </span>-->
-<!--                                <div class="aon-df-rating">-->
-                                    <!-- <span class="aon-df-lable">(124)</span> -->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-                        
-<!--                    </div>-->
-<!--                    {% endfor %}-->
-<!--                </div>-->
-<!--                <div class="aon-addmore-btn-section">-->
-<!--                    <a href="{% url 'home:all_usd' %}" class="aon-addplus"><i class="feather-plus"></i></a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-        
-<!--    </div>-->
-<!--</section>-->
-<!-- Team Section END -->     
-
-
-  <!-- Appointment Section -->
-  {% comment %} <section class="aon-med-appoint-area2">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-5">
-                <div class="media">
-                    <img src="{% static 'a1.png' %}" loading="lazy" alt="Image">
-                </div>
-            </div>
-            <div class="col-md-7">
-                <!--Title Section Start-->
-                <div class="aon-med-appoint-area2-content">
-                    <div class="section-head white">
-                        <span class="aon-sub-title">Registration</span>
-                        <h2 class="aon-title cool">Want to Schedule Your Smile Design Appointment Easily?</h2>
-                        <p>Transform your smile and boost your confidence. Our network of Ultimate Smile Designers is ready to provide you with personalized dental solutions. If you're aiming for a radiant smile, our experts are here to guide you every step of the way. Should you require a more tailored approach, don't hesitate to get in touch with us.</p>
-                        <a href="{% url 'account:dentist' %}" class="site-button bat">Get In Touch</a> 
-                       
-                    </div>
-                </div>
-                <!--Title Section End-->
-            </div>
-            
-        </div>
-        
-    </div>
-</section> {% endcomment %}
-<!-- Appointment Section END --> 
-
-
-<!-- We are Building  Section -->
-{% comment %} <section class="aon-med-future-area bg-white">
-    <div class="container">
-        <div class="section-content">
-            <div class="aon-med-future-section">
-                <div class="row ">
-                    <div class="col-lg-6 col-md-12">
-                        <div class="section-head left">
-                            <span class="aon-sub-title">Creating Smiles</span>
-                            <h2 class="aon-title cool">We are Crafting Beautiful Smiles for a Brighter Future.</h2>
-                            <ul class="list-check-style2">
-                                <li>
-                                    <i class="feather-check bat"></i>
-                                    <h3 class="list-title cool">Find Your Ultimate Smile Designer</h3>
-                                    <p>Explore our extensive directory to discover a skilled Ultimate Smile Designer near you, one who aligns with your smile aspirations and dental needs.</p>
-                                </li>
-                                <li>
-                                    <i class="feather-check bat"></i>
-                                    <h3 class="list-title cool">Customize Your Smile Journey</h3>
-                                    <p>Select the perfect time for your appointment and embark on a personalized journey to achieve the smile that best fits your personality and desires.</p>
-                                </li>
-                                <li>
-                                    <i class="feather-check bat"></i>
-                                    <h3 class="list-title cool">Secure and Easy Payment</h3>
-                                    <p>Enjoy a seamless booking experience with our secure and straightforward payment process, setting you on the path to your smile transformation.</p>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <div class="col-lg-6 col-md-12">
-                        <div class="aone-med-future-r-section">
-                            <ul>
-                                <li class="animate-v2">
-                                    <div class="aone-med-future-l-inner shine-hover">
-                                        <div class="aone-med-future-content">
-                                            <span><img src="{% static 'images/future/icon1.png' %}" loading="lazy" alt=""></span>
-                                            <h3 class="cool">Consult Top Smile Designers</h3>
-                                            <p>Connect with leading smile experts who blend artistry and science to craft your perfect smile.</p>
-                                        </div>
-                                        <div class="media shine-box">
-                                            <img src="{% static 'After.png' %}" loading="lazy" alt="">
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="animate-v3">
-                                    <div class="aone-med-future-r-inner shine-hover">
-                                        <div class="media shine-box">
-                                            <img src="{% static 't1.jpeg' %}" loading="lazy" alt="">
-                                        </div>
-                                        <div class="aone-med-future-content">
-                                            <span><img src="{% static 'images/future/icon2.png' %}" loading="lazy" alt=""></span>
-                                            <h3 class="cool">Experience Unmatched Care</h3>
-                                            <p>With our Ultimate Smile Designers, rest assured you are in capable hands committed to your dental health and beauty.</p>
-                                        </div>
-                                        
-                                    </div>
-                                </li>
-                            </ul>
-                            
-                        </div>
-                        
-                    </div>
-                    
-                    
-                </div>
-            </div>
-        </div>
-    </div>
-</section> {% endcomment %}
-<!-- We are Building Section End-->
-
-
-  <!-- Statics Section -->
-  {% comment %} <section class="aon-static2-area bg-white mt-0 pt-0">
-    <div class="container">
-        <div class="section-content">
-            <div class="aon-static2-section-wrap">
-                <div class="row">
-                    <div class="col-lg-6 col-md-12">
-                        <div class="aon-static2-section-content">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="aon-static2-section aon-icon-effect">
-                                        <div class="media shine-box">
-                                            <span class="aon-icon"><img src="{% static 'dd1.png' %}" loading="lazy" alt="#"></span>
-                                        </div>
-                                        <div class="counter-area"><span class="counter">432</span>+</div>
-                                        <div class="aon-med-static-name">Dentists</div>
-                                    </div>
-                                </div>
-        
-                                <div class="col-sm-6">
-                                    <div class="aon-static2-section aon-icon-effect" style="margin-top: -33px;">
-                                        <div class="media">
-                                            <span class="aon-icon"><img src="{% static 'dd2.png' %}" loading="lazy" alt="#"></span>
-                                        </div>
-                                        <div class="counter-area"><span class="counter">12127</span>+</div>
-                                        <div class="aon-med-static-name">Smile Makeover</div>
-                                    </div>
-                                </div>
-        
-                                <div class="col-sm-6">
-                                    <div class="aon-static2-section aon-icon-effect" style="margin-top: 10px;">
-                                        <div class="media">
-                                            <span class="aon-icon"><img src="{% static 'dd3.png' %}" loading="lazy" alt="#"></span>
-                                        </div>
-                                        <div class="counter-area"><span class="counter">25</span>+</div>
-                                        <div class="aon-med-static-name">Cities</div>
-                                    </div>
-                                </div>
-        
-                                <div class="col-sm-6">
-                                    <div class="aon-static2-section aon-icon-effect" style="margin-top: -25px;">
-                                        <div class="media">
-                                            <span class="aon-icon"><img src="{% static 'dd4.png' %}" loading="lazy" alt="#"></span>
-                                        </div>
-                                        <div class="counter-area"><span class="counter">15</span>+</div>
-                                        <div class="aon-med-static-name">Years Of Experience</div>
-                                    </div>
-                                </div>
-        
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6 col-md-12">
-                        <div class="aon-static2-right">
-                            <!--Title Section Start-->
-                            <div class="section-head left">
-                                <span class="aon-sub-title">Get Started</span>
-                                <h2 class="aon-title cool">Call Us and Schedule Your Smile Design Consultation</h2>
-                                <p>Embark on a journey to enhance your smile with our Ultimate Smile Designers. Reach out to us, and let's schedule your initial consultation. Our team is dedicated to providing you with personalized care and expert guidance every step of the way towards achieving your dream smile.</p>
-                                <a href="tel:+918469888877" class="site-button bat">Call Us</a>
-                            </div>
-                            <!--Title Section End-->
-                        </div>
-                        
-                    </div>
-                    
-                    
-                </div>
-            </div>
-        </div>
-    </div>
-</section> {% endcomment %}
-<!-- Statics Section End -->
-
-
-
-<!-- Provider Section -->
-{% comment %} <section class="aon-med-provider-area2">
-    <div class="container">
-        <div class="aon-med-provider-mid-wrap">
-            <div class="aon-med-provider-mid">
-                <!--Title Section Start-->
-                <div class="aon-med-provider-area2-content">
-                    <div class="section-head white">
-                        <span class="aon-sub-title">Registration</span>
-                        <h2 class="aon-title cool">Are You a Dentist Interested in Attracting New Patients?</h2>
-                        <ul class="list-check-style">
-                            <li><i class="feather-check"></i>Join our exclusive network of Ultimate Smile Designers.</li>
-                            <li><i class="feather-check"></i>Connect with patients looking for top-notch smile transformations.</li>
-                            <li><i class="feather-check"></i>Showcase your expertise and grow your practice with our platform.</li>
-                        </ul>  
-                        <a href="https://dentist.ultimatesmiledesign.com/" class="site-button bat">List Your Practice With Us</a>
-                    </div>
-                </div>
-                <!--Title Section End-->
-            </div>
-        </div>                
-    </div>
-</section> {% endcomment %}
-<!-- Provider Categories END -->     
-    <!-- Product Section -->
-    <div class="aon-med-shop-area">
-        <div class="container">
-            <!--Title Section Start-->
-            <div class="section-head center">
-                <span class="aon-sub-title">Gallery</span>
-                <h2 class="aon-title cool">Before & After Smile Transformations </h2>
-                <p>Explore our gallery to see the remarkable transformations achieved through our Ultimate Smile Design services. Witness the power of expert smile design in enhancing confidence and creating beautiful smiles with these before-and-after showcases.</p>
-            </div>
-            
-            <!--Title Section End-->
-            <div class="section-content">
-                <div class="wt-box wt-product-gallery on-show-slider"> 
-                    <div id="sync1" class="owl-carousel owl-theme owl-btn-vertical-center m-b5">
-                        {% for ie in gallery %}
-                            <!--block 1-->
-                            <div class="item" style="margin-right: 10px !important;">
-                                <div class="ser-shop-style1-box ser-shine-hover animate" data-animate="zoomIn" data-duration="1.0s" data-delay="0.1s" data-offset="100">
-                                    <div class="ser-shop-media">
-                                        <a href="{% url 'home:gallery' %}"><img src="{{ie.image.url}}" loading="lazy" alt=""></a>
-                                        <span class="bedge">New</span>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    </div>
-    
-    
-    
-    
-<div class="container woo-entry">
-                
-    <div class="row">
-        <div class="col-lg-12 col-md-12  m-b30">
-            <div class="p-4">
-                <div class="wt-box wt-product-gallery on-show-slider"> 
-            
-                    <div id="sync1" class="owl-carousel owl-theme owl-btn-vertical-center m-b5">
-                       
-                       {% for ie in gallery  %}
-                         <!--Large Pic 1-->
-                         <div class="item">
-                            <div class="mfp-gallery">
-                                <div class="wt-box">
-                                    <div class="wt-thum-bx wt-img-overlay1 ">
-                                        <img src="{{ie.image.url}}" alt="">
-                                        <div class="product-view">
-                                            <a class="elem pic-long product-view-btn" href="{{ie.image.url}}" title="Nh-16 Highway Bridge" 
-                                            data-lcl-txt="" data-lcl-author="" data-lcl-thumb="{{ie.image.url}}">
-                                            <i class="fa fa-search-plus"></i>     
-                                            </a> 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                       
-                       {% endfor %}
-                        
-                    </div>
-                    <div id="sync2" class="owl-carousel owl-theme">
-                        
-                        <!--{% for ie in data  %}-->
-                        <!--<div class="item">-->
-                        <!--    <div class="wt-media">-->
-                        <!--        <img src="{{ie.image.url}}" alt="">-->
-                        <!--    </div>-->
-                        <!--</div>-->
-                        <!--{% endfor %}-->
-                            
-                        
-                    </div>
-                   
-                </div>
-            </div>
-        </div>
-       
-    </div>
-        
-
-              
-    
-</div>
-    <!-- Product Section END -->               
-
-        <!-- Testimonial Section -->
-<div class="aon-med-testimonial2-area">
-    <div class="container">
-        <!--Title Section Start-->
-        <div class="section-head center">
-            <span class="aon-sub-title">Testimonials</span>
-            <h2 class="aon-title cool">What People Say</h2>
-            <p>Discover the stories of transformation and joy from our patients who have experienced remarkable smile makeovers with our Ultimate Smile Designers.</p>
-        </div>
-        <!--Title Section End-->
-
-        <div class="section-content">
-    <div class="aon-testimonial2-contaent-wrap">
-
-        <div class="aon-med-testimonial2-left">
-            <!-- Testimonial Slider -->
-            <div class="owl-carousel aon-med-testimonial aon-owl-arrow left">
-                <!-- COLUMN 1 -->
-                <div class="item">
-                    <div class="aon-med-testimonial-2">
-                        <div class="aon-df-rating">
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                        </div>
-                        <p>I never imagined my smile could look this great. The entire process was smooth and tailored to my needs. I'm so grateful to the team and my smile designer!</p>
-                        <div class="aon-testimonial-name cool">Priyanka Sharma</div>
-                    </div>
-                </div>
-                <!-- COLUMN 2 -->
-                <div class="item">
-                    <div class="aon-med-testimonial-2">
-                        <div class="aon-df-rating">
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                        </div>
-                        <p>The transformation has been incredible. I feel more confident and love my new smile. Thank you to my dentist for such an amazing experience!</p>
-                        <div class="aon-testimonial-name cool">Rahul Kumar</div>
-                    </div>
-                </div>
-                <!-- COLUMN 3 -->
-                <div class="item">
-                    <div class="aon-med-testimonial-2">
-                        <div class="aon-df-rating">
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                        </div>
-                        <p>My experience was beyond my expectations. The attention to detail and personalized care I received was truly outstanding. Highly recommend!</p>
-                        <div class="aon-testimonial-name cool">Anjali Mehta</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="aon-med-testimonial2-right">
-            <div class="aon-large-circle-wrap">
-                <div class="media">
-                    <img src="{% static 'a5.png' %}" loading="lazy" alt="">
-                </div>
-                <span class="ring1 animate-v2"><img src="{% static 'a6.png' %}" loading="lazy" alt=""></span>
-                <span class="ring2 animate-v3"><img src="{% static 'a7.png' %}" loading="lazy" alt=""></span>
-                <span class="ring3 animate-v2"><img src="{% static 'a8.png' %}" loading="lazy" alt=""></span>
-                <span class="ring4 animate-v3"><img src="{% static 'a9.png' %}" loading="lazy" alt=""></span>
-                <span class="ring5 animate-v2"><img src="{% static 'a10.png' %}" loading="lazy" alt=""></span>
-                <span class="ring6 animate-v3"></span>
-                <span class="ring7 animate-v2"></span>
-                <span class="ring8 animate-v3"></span>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-
-    </div>
-</div>
-<!-- Testimonial Section END -->
- 
-                    
-     <!-- Find Doctor Section -->
-    <section class="aon-med-srv-cat-area  bg-light-gray">
-        <div class="container">
-
-           <!--Title Section Start-->
-            <div class="section-head center">
-                <span class="aon-sub-title">Find</span>
-                <h2 class="aon-title cool">Find Ultimate Smile Designers </h2>
-                <p>Explore our network of Ultimate Smile Designers across various cities to find the perfect match for your smile transformation journey. Whether you're looking for a local expert or considering options in a different city, our directory makes it easy to connect with top-rated dental professionals near you.</p>
-            </div>
-            <!--Title Section End-->
-
-
-<div class="aon-search2-bar-wrap">
-    <div class="container">
-       <div class="aon-search2-row">
-          <form class="aon-search2-form no-p-lr row justify-content-between" method="GET" action="{% url 'home:search_all_usd' %}">
-            {% csrf_token %}
-              <div class="aon-search2-left hig">
-                  <div class="aon-search2-table">
-
-                      <div class="aon-search2-col aon-search-col">
-                          <div class="aon-inputicon-box"> 
-                              <input class="form-control sf-form-control" name="q" type="text" placeholder="Search doctors, clinics, hospitals, etc.">
-                              <i class="aon-input-icon feather-search"></i>
-                          </div>
                       </div>
-
-                      <div class="aon-search2-col aon-category-col">
-                          <div class="aon-inputicon-box">
-                              <i class="aon-input-icon feather-map-pin"></i>
-                              <select class="form-select" name="city" aria-label="Default select example">
-                                  <option value="">Select Location</option>
-                                  
-                                  {% for ie in a_city %}
-                                  <option value="{{ie.id}}">{{ie.city}}</option>
-                                  {% endfor %}
-                                    
-                                  
-                              </select>
-
-                          </div>
-                      </div>
-
-                      <div class="aon-search2-col aon-search-btn">
-                          <button class="aon-search2-btn site-button bat" type="submit">Search</button>
-                      </div>
-                      
+                    </form>
+                    <!-- user msg list End-->
                   </div>
-                      
-                  
+                </div>
               </div>
-              
-          </form>
+            </div>
+          </div>
+          <!--Right Section-->
+          <div class="col-lg-6">
+            <div class="aon-banner2-pic move-25">
+              <img
+                src="{% static 'kk.png' %}"
+                class="bs3"
+                loading="lazy"
+                alt="Happy Patients"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+  </section>
+  <!-- BANNER SECTION END -->
+
+  <section class="Developer_Section">
+    <img
+      src="{% static 'bg_vec.svg' %}"
+      class="vec_one"
+      loading="lazy"
+      alt="care Icon"
+    />
+    <img
+      src="{% static 'bg_vec.svg' %}"
+      class="vec_two"
+      loading="lazy"
+      alt="care Icon"
+    />
+    <div class="container">
+      <div class="row">
+        <!-- Left Column -->
+        <div class="col-lg-7 mainImageCard order-0 order-lg-2">
+          <img
+            src="{% static 'Discover_Group.png' %}"
+            class="Discover_Group img-fluid"
+            loading="lazy"
+            alt="Smile Step Group 1"
+          />
+          <img
+            src="{% static 'ring.svg' %}"
+            class="usd_ring"
+            loading="lazy"
+            alt="USD ring"
+          />
+
+          <div class="Discover_text_card">
+            <p class="Discover_text">
+              Discover Your <br />Ideal Smile with <br />
+              Our Ultimate <br />
+              Smile Designers
+            </p>
+          </div>
+        </div>
+
+        <!-- Right Column -->
+        <div
+          class="px-0 col-lg-5 d-flex align-items-center flex-column justify-content-center"
+          style="margin-top: 12px; margin-bottom: 18px; position: relative"
+        >
+          <div class="step_card d-flex flex-row align-items-start">
+            <div class="step_header">
+              <h3 class="Discover_heading cool">
+                Transform Your Smile with The <br />
+                Expert Smile Designer
+              </h3>
+              <p class="Discover_text1">
+                Discover Your Ideal Smile with Our Ultimate Smile Designers
+              </p>
+              <p class="Discover_subtext">
+                Begin your journey to a radiant smile with our curated list of
+                Ultimate Smile Designers.
+              </p>
+              <p class="Discover_subtext">
+                Our platform offers you access to premier dental experts who are
+                adept at crafting smiles that not only look stunning but also
+                complement your individuality.
+              </p>
+              <p class="Discover_subtext">
+                Through cutting-edge digital dentistry, our professionals are
+                committed to providing you with a smile that enhances both your
+                aesthetic appeal and dental health, tailored specifically to
+                your facial features and personal preferences.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="working-section">
+    <div class="container">
+      <h2 class="working_title mb-0">Working</h2>
+      <img
+        src="/static/text_vec.svg"
+        class="text_vec2"
+        loading="lazy"
+        alt="text vector"
+      />
+      <h3 class="working_subtitle mb-0">How Our Platform Works</h3>
+      <div
+        class="row working-main-content justify-content-lg-start justify-content-center gap-md-0"
+      >
+        <div class="col-lg-4 col-md-6 col-sm-10 col-12">
+          <div class="card working-main-wrapper">
+            <div
+              class="location-icon mx-auto my-lg-4 mt-4 mb-3 d-flex align-items-center justify-content-center"
+            >
+              <img
+                src="{% static 'process-1.svg' %}"
+                class="img-fluid"
+                alt="location"
+              />
+            </div>
+            <div class="card-body">
+              <h2 class="working-main-title mb-1 mb-lg-2">
+                Search for Your Smile Designer
+              </h2>
+              <p class="working-main-description my-lg-3 my-2">
+                Explore our directory to find your ideal Ultimate Smile
+                Designer. Filter by location, expertise, and ratings to find the
+                perfect match for your smile goals.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-10 col-12">
+          <div class="card working-main-wrapper">
+            <div
+              class="location-icon mx-auto my-lg-4 mt-4 mb-3 d-flex align-items-center justify-content-center"
+            >
+              <img
+                src="{% static 'process-2.svg' %}"
+                class="img-fluid"
+                alt="location"
+              />
+            </div>
+            <div class="card-body">
+              <h2 class="working-main-title mb-1 mb-lg-2">
+                Book Your Appointment
+              </h2>
+              <p class="working-main-description my-lg-3 my-2">
+                Select your preferred time and date to schedule an appointment
+                with your chosen Smile Designer. Our platform makes booking easy
+                and convenient.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-10 col-12">
+          <div class="card working-main-wrapper">
+            <div
+              class="location-icon mx-auto my-lg-4 mt-4 mb-3 d-flex align-items-center justify-content-center"
+            >
+              <img
+                src="{% static 'process-3.svg' %}"
+                class="img-fluid"
+                alt="location"
+              />
+            </div>
+            <div class="card-body">
+              <h2 class="working-main-title mb-1 mb-lg-2">
+                Experience Your Smile Transformation
+              </h2>
+              <p class="working-main-description my-lg-3 my-2">
+                Attend your appointment to start the journey towards your dream
+                smile. With expert care and advanced digital techniques, your
+                Smile Designer will bring your vision to life.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% include "location.html" %}
+
+  <section class="registration_Patient">
+    <img
+      src="{% static 'bg_vec.svg' %}"
+      class="vec_one"
+      loading="lazy"
+      alt="care Icon"
+    />
+    <img
+      src="{% static 'bg_vec.svg' %}"
+      class="vec_two"
+      loading="lazy"
+      alt="care Icon"
+    />
+    <div class="container">
+      <div class="inner_card text-center">
+        <h2 class="registrayion_small text-center">Registration</h2>
+        <img
+          src="{% static 'text_vec.svg' %}"
+          class="text_vec"
+          loading="lazy"
+          alt="text vector"
+          style="width: 136px; height: 10px"
+        />
+        {% comment %}
+        <img
+          src="{% static 'Group 291.svg' %}"
+          class="text_vec"
+          loading="lazy"
+          alt="text vector"
+        />
+        {% endcomment %}
+        <h3 class="registration_heading">
+          Want to Schedule Your Smile <br />
+          Design Appointment Easily?
+        </h3>
+        <p class="registration_subtext">
+          Transform your smile and boost your confidence. Our network of
+          Ultimate Smile Designers is ready to provide you with personalized
+          dental solutions. If you're aiming for a radiant smile, our experts
+          are here to guide you every step of the way. Should you require a more
+          tailored approach, don't hesitate to get in touch with us.
+        </p>
+        <div class="loc-button-container">
+          <button class="bat loc_btn">Get in Touch</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="dentists-section">
+    <div class="container">
+      <h1 class="dentists_title mb-0">Dentists</h1>
+      <img
+        src="/static/text_vec.svg"
+        class="text_vec2"
+        loading="lazy"
+        alt="text vector"
+        style="margin-bottom: 5px; width: 75px; height: 12px"
+      />
+      <h2 class="dentists_subtitle">Best Dentist Near Me</h2>
+      <div
+        class="dentists-content-1 d-flex align-items-end justify-content-between"
+      >
+        <p class="mb-0">
+          Discover trusted dental professionals via Ultimate Smile Designers.
+          Our platform connects you to expert dentists offering check‐ups,
+          cosmetic, and advanced procedures. Enjoy personalized, quality care
+          for your smile with us.
+        </p>
+        <div class="dropdown">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Surat <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" href="#">Ahmedabad</a></li>
+            <li><a class="dropdown-item" href="#">Mumbai</a></li>
+            <li><a class="dropdown-item" href="#">Chhattisgarh</a></li>
+            <li><a class="dropdown-item" href="#">Bardoli</a></li>
+            <li><a class="dropdown-item" href="#">Vadodara</a></li>
+            <li><a class="dropdown-item" href="#">Rajkot</a></li>
+            <li><a class="dropdown-item" href="#">Rohtak</a></li>
+            <li><a class="dropdown-item" href="#">Chennai</a></li>
+            <li><a class="dropdown-item" href="#">Faridkot</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="row dentists-content-2 mt-5 justify-content-center">
+        <div class="col-lg-4 col-md-6 col-sm-11">
+          <div class="card dentists-content">
+            <img src="{% static 'dentists-img1.webp' %}" class="img-fluid" />
+            <div class="card-body px-0 pb-0">
+              <h2 class="dentists-content-title mb-0">
+                Dr. Apeksha Maheshwari 
+              </h2>
+              <p class="mb-2">Surat</p>
+              <button class="btn btn-appointment w-100 my-2">
+                Book Appointment
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-11">
+          <div class="card dentists-content">
+            <img src="{% static 'dentists-img2.webp' %}" class="img-fluid" />
+            <div class="card-body px-0 pb-0">
+              <h2 class="dentists-content-title mb-0">Dr. Kalpesh Bhayani</h2>
+              <p class="mb-2">Surat</p>
+              <button class="btn btn-appointment w-100 my-2">
+                Book Appointment
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 d-none d-lg-block">
+          <div class="card dentists-content">
+            <img src="{% static 'dentists-img3.webp' %}" class="img-fluid" />
+            <div class="card-body px-0 pb-0">
+              <h2 class="dentists-content-title mb-0">Dr. Nirali Padsala</h2>
+              <p class="mb-2">Surat</p>
+              <button class="btn btn-appointment w-100 my-2">
+                Book Appointment
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-3 col-sm-11 col-12 dentists-load-wrapper">
+          <button class="btn btn-appointment w-100">Load More</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="smile_step_Section">
+    <div class="container">
+      <h2 class="registrayion_small">Creating Smiles</h2>
+      <img
+        src="{% static 'text_vec.svg' %}"
+        class="text_vec"
+        loading="lazy"
+        alt="text vector"
+        style="width: 140px; height: 14px"
+      />
+      <p class="registration_heading">
+        We are Crafting Beautiful Smiles for a Brighter Future.
+      </p>
+      <div class="row">
+        <!-- Left Column -->
+        <div class="col-lg-6 mainImageCard">
+          <img
+            src="{% static 'smile_S1.png' %}"
+            class="smile_S1 img-fluid"
+            loading="lazy"
+            alt="Smile Step Group 1"
+          />
+
+          <div class="card card-consult one">
+            <img
+              src="{% static 'top_Rank.svg' %}"
+              class="icon_img mx-auto d-block"
+              loading="lazy"
+              alt="Top rank Icon"
+            />
+            <p class="s_heading1 cool">Consult Top Smile Designers</p>
+            <p class="s_subheading1">
+              Connect with leading smile experts who blend artistry and science
+              to craft your perfect smile.
+            </p>
+          </div>
+
+          <div class="card card-consult two">
+            <img
+              src="{% static 'care.svg' %}"
+              class="icon_img mx-auto d-block"
+              loading="lazy"
+              alt="care Icon"
+            />
+            <p class="s_heading1 cool">Experience Unmatched Care</p>
+            <p class="s_subheading1">
+              With our Ultimate Smile Designers, rest assured you are in capable
+              hands committed to your dental health and beauty.
+            </p>
+          </div>
+        </div>
+
+        <!-- Animated Line in the Center -->
+        <div class="col-lg-1 d-flex justify-content-center dashed_line">
+          <div class="animated-line"></div>
+        </div>
+
+        <!-- Right Column -->
+        <div
+          class="col-lg-5 d-flex align-items-center flex-column justify-content-center"
+          style="margin-top: 12px; margin-bottom: 18px"
+        >
+          <div class="step_card d-flex flex-row align-items-start">
+            <img
+              src="{% static 'point.svg' %}"
+              class="point"
+              loading="lazy"
+              alt="Top rank Icon"
+            />
+            <div class="step_header">
+              <h3 class="s_heading2 cool">Find Your Ultimate Smile Designer</h3>
+              <p class="s_subheading1">
+                Explore our extensive directory to discover a skilled Ultimate
+                Smile Designer near you, one who aligns with your smile
+                aspirations and dental needs.
+              </p>
+              <hr class="line" />
+            </div>
+          </div>
+
+          <div class="step_card d-flex flex-row align-items-start">
+            <img
+              src="{% static 'point.svg' %}"
+              class="point"
+              loading="lazy"
+              alt="Top rank Icon"
+            />
+            <div class="step_header">
+              <h3 class="s_heading2 cool">Customize Your Smile Journey</h3>
+              <p class="s_subheading1">
+                Select the perfect time for your appointment and embark on a
+                personalized journey to achieve the smile that best fits your
+                personality and desires.
+              </p>
+              <hr class="line" />
+            </div>
+          </div>
+
+          <div class="step_card d-flex flex-row align-items-start">
+            <img
+              src="{% static 'point.svg' %}"
+              class="point"
+              loading="lazy"
+              alt="Top rank Icon"
+            />
+            <div class="step_header">
+              <h3 class="s_heading2 cool">Secure and Easy Payment</h3>
+              <p class="s_subheading1">
+                Enjoy a seamless booking experience our secure and
+                straightforward payment process, setting you on the path to your
+                smile transformation.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="schedule-data-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div
+          class="schedule-data-content-img1 col-xl-6 col-lg-6 col-md-6 px-md-1 position-relative"
+        >
+          <img src="{% static 'Subtract.webp' %}" class="img-fluid" />
+          <div class="bg-schedule">
+            <div class="d-flex align-items-center justify-content-center">
+              <img
+                src="{% static 'Frame.svg' %}"
+                class="mt-4 mb-md-3 mb-4 schedule-data-icon img-fluid"
+                alt="dentists"
+              />
+            </div>
+            <h3 class="text-center mb-md-1 mb-1">432+</h3>
+            <p class="text-center mb-md-2 mb-0">Dentists</p>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 schedule-data-content">
+          <h2 class="schedule-data-title mb-0">Get Started</h2>
+          <img
+            src="/static/text_vec.svg"
+            class="text_vec2"
+            loading="lazy"
+            alt="text vector"
+          />
+          <h3 class="schedule-data-subtitle">Call Us and Schedule Your Smile Design Consultation</h3>
+          {% comment %} <h2 class="schedule-data-subtitle"></h2> {% endcomment %}
+          <p>
+            Discover the leading destinations where patients connect with our
+            network of Ultimate Smile Designers. Our platform helps you find
+            expert dentists across various prime locations, ensuring you're
+            never far from achieving your perfect smile.
+          </p>
+          <div class="schedule-data-content-2 row pt-lg-3 pt-sm-4 pt-md-3 pt-3">
+            <div class="col-lg-4 col-sm-6 col-6 d-lg-none d-md-none d-sm-block">
+              <div class="schedule-data-link">
+                <div
+                  class="d-flex justify-content-center align-items-center mx-auto"
+                >
+                  <img
+                    src="{% static 'Frame.svg'%}"
+                    class="mt-4 mb-3 img-fluid"
+                    alt="smile-makeover"
+                    style="width: 23.35%"
+                  />
+                </div>
+                <h3 class="mb-1">432+</h3>
+                <p class="text-center mb-0">Dentists</p>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-6 px-md-2">
+              <div class="schedule-data-link">
+                <div
+                  class="d-flex justify-content-center align-items-center mx-auto"
+                >
+                  <img
+                    src="{% static 'smile-makeover.svg'%}"
+                    class="mt-4 mb-3 img-fluid"
+                    alt="smile-makeover"
+                  />
+                </div>
+                <h3 class="mb-1">12k+</h3>
+                <p class="text-center mb-0">Smile Makeover</p>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-6 px-md-2">
+              <div class="schedule-data-link">
+                <div
+                  class="d-flex justify-content-center align-items-center mx-auto"
+                >
+                  <img
+                    src="{% static 'cities.svg'%}"
+                    class="mt-4 mb-3 img-fluid"
+                    alt="smile-makeover"
+                  />
+                </div>
+                <h3 class="mb-1">25k+</h3>
+                <p class="text-center mb-0">Cities</p>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-6 px-md-2">
+              <div class="schedule-data-link">
+                <div
+                  class="d-flex justify-content-center align-items-center mx-auto"
+                >
+                  <img
+                    src="{% static 'experience-year.svg'%}"
+                    class="mt-4 mb-3 img-fluid"
+                    alt="smile-makeover"
+                  />
+                </div>
+                <h3 class="mb-1">15k+</h3>
+                <p class="text-center mb-0">Experience Years</p>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-5 col-sm-5 col-6 callus-btn-wrapper">
+              <button
+                class="d-flex align-items-center justify-content-center btn btn-call"
+              >
+                <b>Call Us</b>
+                <i
+                  class="ms-4 ms-sm-3 ms-lg-3 fa-solid fa-arrow-right-long"
+                ></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="registration_Doctor">
+    <div class="container">
+      <div class="inner_card_doctor text-center">
+        <img
+          src="{% static 'bg_vec2.svg' %}"
+          class="vec2_two"
+          loading="lazy"
+          alt="vector "
+        />
+        <img
+          src="{% static 'bg_vec2.svg' %}"
+          class="vec2_one"
+          loading="lazy"
+          alt="vector "
+        />
+        <h2 class="registrayion_small text-center">Registration</h2>
+        <img
+          src="{% static 'text_vec.svg' %}"
+          class="text_vec"
+          loading="lazy"
+          alt="text vector"
+          style="width: 110px; height: 12px"
+        />
+        <p class="registration_heading">
+          Are You a Dentist Interested in <br />
+          Attracting New Patients?
+        </p>
+        <p class="Doctor_subtext">
+          <img
+            src="{% static 'point_grey.svg' %}"
+            class="point"
+            loading="lazy"
+            alt="Point"
+          />Join our exclusive network of Ultimate Smile Designers.
+        </p>
+        <p class="Doctor_subtext">
+          <img
+            src="{% static 'point_grey.svg' %}"
+            class="point"
+            loading="lazy"
+            alt="Point"
+          />Connect with patients looking for top-notch smile transformations.
+        </p>
+        <p class="Doctor_subtext">
+          <img
+            src="{% static 'point_grey.svg' %}"
+            class="point"
+            loading="lazy"
+            alt="Point"
+          />Showcase your expertise and grow your practice with our platform.
+        </p>
+        <div class="loc-button-container">
+          <button class="bat loc_btn">List Your Practice With Us</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="beforeAndAfter_Section">
+    <div class="container">
+      <h2 class="registrayion_small" style="padding-left: 5px">Gallery</h2>
+      {% comment %}
+      <p class="registrayion_small cool" style="padding-left: 12px"></p>
+      {% endcomment %}
+      <img
+        src="{% static 'text_vec.svg' %}"
+        class="text_vec1"
+        loading="lazy"
+        alt="text vector"
+      />
+      <h3 class="registration_heading mb-3">
+        Before & After Smile Transformations
+      </h3>
+      <p class="Discover_subtext mb-0">
+        Explore our gallery to see the remarkable transformations achieved
+        through our Ultimate Smile Design services. Witness the power of expert
+        smile design in enhancing confidence and creating beautiful smiles with
+        these before-and-after showcases.
+      </p>
+      <div class="swiper-container">
+        <div class="swiper Beforeswiper">
+          <div class="swiper-wrapper">
+            {% for ie in gallery %}
+            <div class="swiper-slide">
+              <img
+                src="{{ie.image.url}}"
+                alt="Slide 1"
+                class="BAImg"
+                loading="lazy"
+              />
+            </div>
+            {% comment %}
+            <div class="ser-shop-media">
+              <a href="{% url 'home:gallery' %}"
+                ><img src="{{ie.image.url}}" loading="lazy" alt=""
+              /></a>
+              <span class="bedge">New</span>
+            </div>
+            {% endcomment %} {% endfor %}
+          </div>
+
+          <!-- Navigation Buttons -->
+          <!-- <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div> -->
+        </div>
+        <!-- Pagination Dots -->
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials-section beforeAndAfter_Section1">
+    <div class="container">
+      <h2 class="registrayion_small">Testimonials</h2>
+      <img
+        src="{% static 'text_vec.svg' %}"
+        class="text_vec"
+        loading="lazy"
+        alt="text vector"
+      />
+      <h3 class="registration_heading" style="color: #fff">What People Say</h3>
+      {% comment %}
+      <p class="registration_heading" style="color: white">What People Say</p>
+      {% endcomment %}
+      <p class="Discover_subtext" style="color: white">
+        Discover the stories of transformation and joy from our patients who
+        have experienced remarkable smile makeovers with our Ultimate Smile
+        Designers.
+      </p>
+      <div class="swiper-container">
+        <div class="swiper myswiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <img
+                src="{% static 'Quotes.svg' %}"
+                class="bgreviw"
+                loading="lazy"
+                alt="Quotes"
+              />
+              <p class="reviewName">Priyanka Sharma</p>
+              <div class="reviewContent">
+                I never imagined my smile could look this great. The entire
+                process was smooth and tailored to my needs. I'm so grateful to
+                the team and my smile designer!
+              </div>
+              <div class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <img
+                src="{% static 'Quotes.svg' %}"
+                class="bgreviw"
+                loading="lazy"
+                alt="Quotes"
+              />
+              <p class="reviewName">Priyanka Sharma</p>
+              <div class="reviewContent">
+                I never imagined my smile could look this great. The entire
+                process was smooth and tailored to my needs. I'm so grateful to
+                the team and my smile designer!
+              </div>
+              <div class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <img
+                src="{% static 'Quotes.svg' %}"
+                class="bgreviw"
+                loading="lazy"
+                alt="Quotes"
+              />
+              <p class="reviewName">Priyanka Sharma</p>
+              <div class="reviewContent">
+                I never imagined my smile could look this great. The entire
+                process was smooth and tailored to my needs. I'm so grateful to
+                the team and my smile designer!
+              </div>
+              <div class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <img
+                src="{% static 'Quotes.svg' %}"
+                class="bgreviw"
+                loading="lazy"
+                alt="Quotes"
+              />
+              <p class="reviewName">Priyanka Sharma</p>
+              <div class="reviewContent">
+                I never imagined my smile could look this great. The entire
+                process was smooth and tailored to my needs. I'm so grateful to
+                the team and my smile designer!
+              </div>
+              <div class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <img
+                src="{% static 'Quotes.svg' %}"
+                class="bgreviw"
+                loading="lazy"
+                alt="Quotes"
+              />
+              <p class="reviewName">Priyanka Sharma</p>
+              <div class="reviewContent">
+                I never imagined my smile could look this great. The entire
+                process was smooth and tailored to my needs. I'm so grateful to
+                the team and my smile designer!
+              </div>
+              <div class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="find-section">
+    <div class="container">
+      <h2 class="find-section-title text-center mb-0">Find</h2>
+      <img
+        src="{% static 'text_vec.svg' %}"
+        class="text_vec_gallery"
+        loading="lazy"
+        alt="text vector"
+      />
+      <h3 class="find-section-subtitle text-center">
+        Find Ultimate Smile Designers
+      </h3>
+      <p
+        class="find-section-description text-center my-sm-3 my-md-4 my-lg-4 my-2">
+        Explore our network of Ultimate Smile Designers across various cities to
+        find the perfect match for your smile transformation journey. Whether
+        you're looking for a local expert or considering options in a different
+        city, our directory makes it easy to connect with top-rated dental
+        professionals near you.
+      </p>
+      <form
+        class="row form justify-content-between py-4"
+        method="GET"
+        action="/search-all-usd/"
+      >
+        <div class="col-lg-5">
+          <div class="searchbar-box-wrapper1">
+            <i class="fi fi-br-search"></i>
+            <input
+              class="form-control sf-form-control"
+              name="q"
+              type="text"
+              placeholder="Search doctors, clinics, hospitals, etc."
+              style="background-color: rgba(247, 245, 240, 1)"
+            />
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="searchbar-box-wrapper1">
+            <img
+              src="{% static 'location-icon.svg' %}"
+              class="aon-input-icon img-fluid"
+            />
+            <select
+              class="form-select"
+              name="city"
+              aria-label="Default select example"
+            >
+              <option value="">Select Location</option>
+              {% for ie in a_city %}
+              <option value="{{ie.id}}">{{ie.city}}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-2">
+          <button class="w-100 aon-search2-btn site-button bat" type="submit">
+            Search
+          </button>
+        </div>
+      </form>
+  
+    </div>
+  </section>
 </div>
 
-        </div>
-    </section>
-    <!-- Find Doctor END -->         
-
-         
-        
-        
-    </div>
-    <!-- CONTENT END -->
-
-
-{% endblock body %}
-    
-
-
-{% block js %}
-
+{% endblock body %} {% block js %}
 <script>
-    $(document).ready(function() {
-        var sync1 = $("#sync1");
-        var sync2 = $("#sync2");
-        var slidesPerPage = 5; // globally define number of elements per page
-        var syncedSecondary = true;
+  $(document).ready(function () {
+    var sync1 = $("#sync1");
+    var sync2 = $("#sync2");
+    var slidesPerPage = 5; // globally define number of elements per page
+    var syncedSecondary = true;
 
-        sync1.owlCarousel({
-            items: 4, // Default number of items on larger screens
-            slideSpeed: 2000,
-            nav: true,
-            autoplay: true,
-            dots: true,
-            loop: true,
-            responsiveRefreshRate: 200,
-            navText: ['<i class="fa fa-chevron-left"></i>', '<i class="fa fa-chevron-right"></i>'],
-            responsive: {
-                0: {
-                    items: 1 // Show 1 item on mobile devices (0px to 768px)
-                },
-                768: {
-                    items: 2 // Optional: Show 2 items on tablets or larger
-                },
-                992: {
-                    items: 3
-                },
-                1000: {
-                    items: 4 // Default to 3 items on larger screens
-                }
-            }
-        }).on('changed.owl.carousel', syncPosition);
+    sync1
+      .owlCarousel({
+        items: 4, // Default number of items on larger screens
+        slideSpeed: 2000,
+        nav: true,
+        autoplay: true,
+        dots: true,
+        loop: true,
+        responsiveRefreshRate: 200,
+        navText: [
+          '<i class="fa fa-chevron-left"></i>',
+          '<i class="fa fa-chevron-right"></i>',
+        ],
+        responsive: {
+          0: {
+            items: 1, // Show 1 item on mobile devices (0px to 768px)
+          },
+          768: {
+            items: 2, // Optional: Show 2 items on tablets or larger
+          },
+          992: {
+            items: 3,
+          },
+          1000: {
+            items: 4, // Default to 3 items on larger screens
+          },
+        },
+      })
+      .on("changed.owl.carousel", syncPosition);
 
-        sync2
-            .on('initialized.owl.carousel', function () {
-                sync2.find(".owl-item").eq(0).addClass("current");
-            })
-            .owlCarousel({
-                items: slidesPerPage,
-                dots: false,
-                nav: false,
-                margin: 15,
-                smartSpeed: 200,
-                slideSpeed: 500,
-                slideBy: slidesPerPage, // alternatively you can slide by 1
-                responsiveRefreshRate: 100
-            }).on('changed.owl.carousel', syncPosition2);
+    sync2
+      .on("initialized.owl.carousel", function () {
+        sync2.find(".owl-item").eq(0).addClass("current");
+      })
+      .owlCarousel({
+        items: slidesPerPage,
+        dots: false,
+        nav: false,
+        margin: 15,
+        smartSpeed: 200,
+        slideSpeed: 500,
+        slideBy: slidesPerPage, // alternatively you can slide by 1
+        responsiveRefreshRate: 100,
+      })
+      .on("changed.owl.carousel", syncPosition2);
 
-        function syncPosition(el) {
-            var count = el.item.count - 1;
-            var current = Math.round(el.item.index - (el.item.count / 2) - .5);
-            
-            if (current < 0) {
-                current = count;
-            }
-            if (current > count) {
-                current = 0;
-            }
+    function syncPosition(el) {
+      var count = el.item.count - 1;
+      var current = Math.round(el.item.index - el.item.count / 2 - 0.5);
 
-            sync2
-                .find(".owl-item")
-                .removeClass("current")
-                .eq(current)
-                .addClass("current");
-            var onscreen = sync2.find('.owl-item.active').length - 1;
-            var start = sync2.find('.owl-item.active').first().index();
-            var end = sync2.find('.owl-item.active').last().index();
+      if (current < 0) {
+        current = count;
+      }
+      if (current > count) {
+        current = 0;
+      }
 
-            if (current > end) {
-                sync2.data('owl.carousel').to(current, 100, true);
-            }
-            if (current < start) {
-                sync2.data('owl.carousel').to(current - onscreen, 100, true);
-            }
-        }
+      sync2
+        .find(".owl-item")
+        .removeClass("current")
+        .eq(current)
+        .addClass("current");
+      var onscreen = sync2.find(".owl-item.active").length - 1;
+      var start = sync2.find(".owl-item.active").first().index();
+      var end = sync2.find(".owl-item.active").last().index();
 
-        function syncPosition2(el) {
-            if (syncedSecondary) {
-                var number = el.item.index;
-                sync1.data('owl.carousel').to(number, 100, true);
-            }
-        }
+      if (current > end) {
+        sync2.data("owl.carousel").to(current, 100, true);
+      }
+      if (current < start) {
+        sync2.data("owl.carousel").to(current - onscreen, 100, true);
+      }
+    }
 
-        sync2.on("click", ".owl-item", function(e) {
-            e.preventDefault();
-            var number = $(this).index();
-            sync1.data('owl.carousel').to(number, 300, true);
-        });
+    function syncPosition2(el) {
+      if (syncedSecondary) {
+        var number = el.item.index;
+        sync1.data("owl.carousel").to(number, 100, true);
+      }
+    }
+
+    sync2.on("click", ".owl-item", function (e) {
+      e.preventDefault();
+      var number = $(this).index();
+      sync1.data("owl.carousel").to(number, 300, true);
     });
+  });
 
-    $(document).ready(function() {
-      $(".aon-med-testimonial2-area .owl-carousel").owlCarousel({
-        items: 1,               // Show one testimonial at a time
-        loop: true,             // Enable looping
-        autoplay: true,         // Auto-play enabled
-        autoplayTimeout: 2000,  // 5-second auto-slide
-        nav: true,              // Navigation arrows
-        dots: true,             // Dots navigation
-        navText: ['<i class="fa fa-chevron-left"></i>', '<i class="fa fa-chevron-right"></i>']
-      });
-});
-
+  $(document).ready(function () {
+    $(".aon-med-testimonial2-area .owl-carousel").owlCarousel({
+      items: 1, // Show one testimonial at a time
+      loop: true, // Enable looping
+      autoplay: true, // Auto-play enabled
+      autoplayTimeout: 2000, // 5-second auto-slide
+      nav: true, // Navigation arrows
+      dots: true, // Dots navigation
+      navText: [
+        '<i class="fa fa-chevron-left"></i>',
+        '<i class="fa fa-chevron-right"></i>',
+      ],
+    });
+  });
 </script>
-
-
-
-
-
-
-    
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const swiper = new Swiper(".Beforeswiper", {
+      loop: true,
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        dynamicBullets: true,
+      },
+      breakpoints: {
+        1200: { slidesPerView: 4, spaceBetween: 20 }, // Large screens
+        992: { slidesPerView: 3, spaceBetween: 15 }, // Medium screens
+        768: { slidesPerView: 2, spaceBetween: 10 }, // Small screens
+        480: { slidesPerView: 1, spaceBetween: 5 }, // Extra small screens
+      },
+    });
+  });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const mySwiper = new Swiper(".myswiper", {
+      loop: true,
+      centeredSlides: true,
+      slidesPerView: "auto", // Adjusts based on container size
+      spaceBetween: 20,
+      autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+      },
+      speed: 800, // Smooth transition
+      effect: "slide", // Ensure smooth sliding
+      grabCursor: true,
+      observer: true,
+      observeParents: true,
+      breakpoints: {
+        768: {
+          slidesPerView: 1.5,
+          spaceBetween: 10,
+        },
+        1024: {
+          slidesPerView: 3,
+        },
+      },
+    });
+  });
+</script>
 {% endblock js %}
-    
