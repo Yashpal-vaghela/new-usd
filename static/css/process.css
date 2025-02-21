@@ -634,6 +634,11 @@
     margin-bottom: 18px !important;
     left:0%;
   }
+  /* find section */
+  .find-section .row .col-md-6{
+    margin-bottom: 15px;
+  }
+
 }
 @media (max-width: 767px) {
   .working-main-wrapper {
@@ -686,7 +691,7 @@
   /* dentist section */
   .dentists_subtitle {
     line-height: normal;
-    margin-top: 18px;
+    /* margin-top: 18px; */
     margin-bottom: 21px;
   }
   .dentists-content-1 {
@@ -708,6 +713,12 @@
     border-radius: 40px;
   }
   /* schedule section */
+  .schedule-data-section{
+    padding: 40px 0px 35px;
+  }
+  .schedule-data-section .row{
+    margin: 0px auto;
+  }
   .schedule-data-content-img1 {
     display: none;
   }
@@ -752,12 +763,13 @@
   }
   .find-section-description{
     font-size: 16px;
+    padding: 0px;
   }
   .aon-search2-form.no-p-lr{
     padding: 15px 0 !important;
   }
   .text_vec2{
-    height: 100% !important;
+    /* height: 100% !important; */
     width: 74px !important;
     margin-bottom: 18px !important;
     position: relative;
@@ -858,7 +870,7 @@
     margin-bottom: 0px !important;
   }
   .text_vec2{
-    height: 100% !important;
+    /* height: 100% !important; */
     width: 76px !important;
     margin-bottom: 23px !important;
     position: relative;
