@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
 
+    
+  
 {% block header %}
 
 {% endblock header %}
 
 {% block css %}
-    
+
 {% endblock css %}
     
 
@@ -16,178 +18,157 @@
      <div class="page-content" style="border-top:1px solid #ddd">
                     
         <!-- Left & right section -->
-        <div class="aon-page-jobs-wrap">
+        <div class="aon-page-jobs-wrap d-flex justify-content-center">
+            <img src="{% static 'doc_detail_vec.svg' %}" class=" img-fluid bg_detail_vec1" loading="lazy" alt="background vector" />
             <div class="container">
 
-                <div class="row">
+                <div class="row ">
                     <!-- Left part start -->
-                    <div class="col-lg-8">
-                                                  
-
-                        <!-- Doctor about -->
-                        <div class="aon-doctorAbout-wrap d-flex" id="aon-about-area">
-
-                            <div class="aon-doctorAbout-left">
-
-                                <div class="aon-doctorAbout-pic">
-                                    
-                                    {% if data.profile %}
-                                    <img src="{{data.profile.url}}" alt="">
+                    <div class="col-lg-12 d-flex justify-content-center flex-column align-items-center">
+                         
+                        
+                        <!-- doctor photo card -->
+                         <div class="Doctor_photo_card">
+                            {% if data.profile %}
+                                    <img src="{{data.profile.url}}" alt="" class="img-fluid Doctor_photo">
                                     {% else %}
                                     <img src="{% static 'noimage-team.webp' %}" alt="Image">
                                     {% endif %}    
-                                    <i class="fa feather-check"></i>
-                                </div>
-                               
-                                <div class="aon-doctorAbout-location"><i class="feather-map-pin"></i>
                                     
-                                    {% if data.city %}
-                                    {{data.city.city}}
-                                    {% else %}
-                                    India
-                                    {% endif %}
+
+                            <div class="bat appoint_btn">
+                                Find Doctor
+                            </div>
+                         </div>
+
+                         <!-- doctor detail card -->
+                          <div class="Doctor_Detail_Card">
+
+                            <h3 class="Doctor_Name  cool">{{data.name}}</h3>
+
+                            <div class="Doctor-City Doctor-Text">
+                                {% if data.city %}
+                                {{data.city.city}}
+                                {% else %}
+                                India
+                                {% endif %}
+                            </div>
+
+                            <div class="Doctor-Text mt-2">
+                                {{data.bio}}
+                            </div>
+
+                            <h3 class="Doctor-subtext cool">Education Training</h3>
+                             <ul class="Education_list Doctor-Text">
+                                {{data.education|safe}}
+                             </ul>
+                             
+
+                             <h3 class="Doctor-subtext cool">Experience</h3>
+                             <ul class="sf-doc-exp-list-detail Doctor-Text">
+                                {{data.experience|safe}}
+                             </ul>
+
+                             <h3 class="Doctor-subtext cool">Specializations</h3>
+                             <div class="row">
+                                {% for ie in data.specializations.all  %}
+                                     <div class="col-md-4 col-sm-6 mb-4">
+                                         <div class="aon-insuranc-list">
+                                             <div class="Doctor-Text">{{ie}}</div> 
+                                         </div> 
+                                     </div>    
+                                {% endfor %}  
+                             </div>
+
+                          </div>
+
+                        <!-- Doctor about -->
+                            {% comment %} <div class="aon-doctorAbout-wrap d-flex" id="aon-about-area">
+
+                                <div class="aon-doctorAbout-left">
+
+                                    <div class="aon-doctorAbout-pic">
                                         
-                                </div>
-                            </div>
-
-
-                            <div class="aon-doctorAbout-right">
-                                <div class="aon-doctorAbout-info">
-                                    <h3 class="aon-doctorAbout-name cap cool">{{data.name}}</h3>
-                                    <div class="aon-doctorAbout-type cool">{{ie.title}}</div>
-                                   
-                                    <div class="aon-doctorAbout-exper">{{ie.sub_title}}</div>
-                                    <!-- <ul class="aon-doctorAbout-contat">
-                                        <li><i class="feather-mail"></i> david@gmail.com</li>
-                                        <li><i class="feather-phone"></i> +41 5225 563 256</li>
-                                    </ul> -->
-                                    <div class="aon-doctorAbout-text">
-                                        {{data.bio}}
+                                        {% if data.profile %}
+                                        <img src="{{data.profile.url}}" alt="">
+                                        {% else %}
+                                        <img src="{% static 'noimage-team.webp' %}" alt="Image">
+                                        {% endif %}    
+                                        <i class="fa feather-check"></i>
                                     </div>
-                                    <ul class="aon-doctorAddto-share">
-                                        <li class="cool"><a href="{% url 'home:contact' %}"><i class="feather-heart"></i> Book an Appointment</a></li>
-                                 
-                                        <li class="cool"><a href="https://api.whatsapp.com/send?text=https://ultimatesmiledesign.com{% url 'home:find_dentist_d' data.slug %}"><i class="feather-share-2"></i> Share In Whatsapp</a></li>
-                                    </ul>   
-                                   
+                                
+                                    <div class="aon-doctorAbout-location"><i class="feather-map-pin"></i>
+                                        
+                                        {% if data.city %}
+                                        {{data.city.city}}
+                                        {% else %}
+                                        India
+                                        {% endif %}
+                                            
+                                    </div>
                                 </div>
-                            </div>
 
-                        </div>
+
+                                <div class="aon-doctorAbout-right">
+                                    <div class="aon-doctorAbout-info">
+                                        <h3 class="aon-doctorAbout-name cap cool">{{data.name}}</h3>
+                                        <div class="aon-doctorAbout-type cool">{{ie.title}}</div>
+                                    
+                                        <div class="aon-doctorAbout-exper">{{ie.sub_title}}</div>
+                                        <!-- <ul class="aon-doctorAbout-contat">
+                                            <li><i class="feather-mail"></i> david@gmail.com</li>
+                                            <li><i class="feather-phone"></i> +41 5225 563 256</li>
+                                        </ul> -->
+                                        <div class="aon-doctorAbout-text">
+                                            {{data.bio}}
+                                        </div>
+                                        <ul class="aon-doctorAddto-share">
+                                            <li class="cool"><a href="{% url 'home:contact' %}"><i class="feather-heart"></i> Book an Appointment</a></li>
+                                    
+                                            <li class="cool"><a href="https://api.whatsapp.com/send?text=https://ultimatesmiledesign.com{% url 'home:find_dentist_d' data.slug %}"><i class="feather-share-2"></i> Share In Whatsapp</a></li>
+                                        </ul>   
+                                    
+                                    </div>
+                                </div>
+
+                            </div> {% endcomment %}
                         <!-- Doctor about Endf-->
                         
-                        <!--Doctor Education-->
-                       <div class="aon-doctoreducation-wrap " id="aon-education-area">
-                            <ul class="nav nav-pills mb-3 aon-custom-nav aon-doctor-tabs" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <div class="nav-link active" id="Experience" data-bs-toggle="pill" data-bs-target="#Experience-tabs" role="tab" aria-controls="Experience-tabs" aria-selected="true">
-                                        <h3 class="cool">Education Training</h3>
-                                    </div>
-                                </li>
-                                {% if data.awards %}
-                                <li class="nav-item" role="presentation">
-                                    <div class="nav-link" id="Locations" data-bs-toggle="pill" data-bs-target="#Locationstabs" role="tab" aria-controls="Locationstabs" aria-selected="false">
-                                        <h3 class="cool">Honors & Awards</h3>
-                                    </div>
-                                </li>
-                                {% endif %}
-                                <li class="nav-item" role="presentation">
-                                    <div class="nav-link" id="Question_&_Answer" data-bs-toggle="pill" data-bs-target="#QA-tabs" role="tab" aria-controls="QA-tabs" aria-selected="false">
-                                        <h3 class="cool">Experience</h3>
-                                    </div>
-                                </li>
-                            </ul>
-                            <div class="tab-content">
-                                <div class="tab-pane fade show active" id="Experience-tabs" role="tabpanel" aria-labelledby="Experience">
-                                    <!-- Award List-->
-                                    <ul class="aon-award-list">
-                                            {{data.education|safe}}
-                                    </ul>
-                                    <!-- Award List End-->
-                                </div>
-                               
-                               {% if data.awards %}
-                               <div class="tab-pane fade" id="Locationstabs" role="tabpanel" aria-labelledby="Locations">
-                                <!-- Award List-->
-                                <ul class="aon-award-list">
-                                    {{data.awards|safe}}
-                                </ul>
-                                <!-- Award List End-->
-                            </div>
-                               {% endif %}
-                                
-                                <div class="tab-pane fade" id="QA-tabs" role="tabpanel" aria-labelledby="Question_&_Answer">
-                                    <!-- Award List-->
-                                    <div class="sf-doc-exp-list">
-                                    <!--<p>Dr. Agnes Ayres is a Maxillofacial Surgeon in New York, NY. Dr. Ayres has more experience with Congenital Cardiac Disorders and Cardiac Care than other specialists in his area. He is affiliated with medical facilities.</p>-->
-                                    <ul class="sf-doc-exp-list-detail">
-                                        {{data.experience|safe}}
-                                    </ul>
-                                </div>
-                                    <!-- Award List End-->
-                                </div>
-                            </div>
-                        </div>  
-                        
-                        
-                      
-                        
-                        
-                        
-                         <!-- Specializations -->
-                        <div class="aon-doctorSpecializ-wrap cool" id="aon-specializations-area">
-                            
-                            <h3 class="aon-doctorInsuranc-title mb-4"><span class="cool">Specializations</span></h3>
-                            <div class="row">
-                               
-                               {% for ie in data.specializations.all  %}
-                                    <div class="col-md-4 col-sm-6 mb-4">
-                                        <div class="aon-insuranc-list">
-                                            <i class="feather-check"></i>
-                                            <div class="aon-Specializ-name">{{ie}}</div> 
-                                        </div> 
-                                    </div>
-                                    
-                               {% endfor %}
-                                
-                            </div>
-
-                        </div>
-                        <!-- Specializations End --> 
-                        
-                        
-                        
-                       
-                        
                         <!--Location-->
-                        <div class="aon-docLocation-wrap" id="aon-locations-area">
-                            <h3 class="mb-4"><span class="cool">Location</span></h3>
+                        <div class="aon-docLocation-wrap mt-4" id="aon-locations-area">
+                            
                             <div class="sf-doc-location">
                             <div class="row">
-                                <div class="col-lg-6">
-                                   <div class="sf-doc-location-map grayscle-area">
-                                    {{data.iframe|safe}} 
-                                   </div>
+                                <div class="col-lg-8">
+                                    <h3 class="Loc-subtext cool">Location</h3>
+                                    <div class="details_card">
+                                        <div class="address_dr">{{data.address}}</div>
+                                        
+                                        <div class="sf-doc-location-map grayscle-area">
+                                            {{data.iframe|safe}} 
+                                           </div>
+                                    </div>
+
                                 </div>
-                                <div class="col-lg-6">
-                                    <ul class="sf-doc-contacts">
-                                        <li>
-                                            {{data.address}}
-                                        </li>
-                                        <hr>
-                                      
-                                            <div class="sf-listing-con-timeing">
-                                                <i class="feather-clock"></i>
-                                                <span class="{{data.Mon}}">Mon,</span>
-                                                <span class="{{data.Tue}}">Tue,</span> 
-                                                <span class="{{data.Wed}}">Wed,</span> 
-                                                <span class="{{data.Thu}}">Thu,</span> 
-                                                <span class="{{data.Fri}}">Fri,</span>
-                                                <span class="{{data.Sat}}">Sat,</span>
-                                                <span class="{{data.Sun}}" style="color: green;">Sun</span>
-                                            </div>
-                                       
-                                    </ul>
+                                <div class="col-lg-4">
+                                    <h3 class="Loc-subtext cool">Photo Gallery</h3>
+                                    <div class="details_card" >
+                                        <div class="aon-find-doctors-wrap " >
+              
+                                          <div class="aon-photo-gallery d-flex">
+                                          <!-- If there are more than 5 images, display "10+" for remaining images -->
+                                           {% if gallery|length > 5 %}
+                                             <a class="aon-photo-num elem pic-long d-flex justify-content-center align-items-center" href="{% static 'a5.png' %}">10+</a>
+                                           {% endif %}
+                  
+                                          <!-- Loop through the gallery and show up to 5 images -->
+                                          {% for ie in gallery|slice:":5" %}
+                                              <a class="elem pic-long" href="{{ ie.image.url }}">
+                                                <img src="{{ ie.image.url }}" alt="Gallery Image" class="img-thumbnail"/>
+                                               </a>
+                                          {% endfor %}
+                                     </div>
+                                    </div>  
                                 </div>
                             </div> 
                         </div>
@@ -200,7 +181,7 @@
                     <!-- Left part END --> 
                     
                     <!-- Side bar start -->
-                    <div class="col-lg-4">
+                    {% comment %} <div class="col-lg-4">
 
                         <aside class="aon-side-bar">
                                 
@@ -248,12 +229,12 @@
                                    </div>
     
                                 <div class="aon-photo-gallery d-flex">
-        <!-- If there are more than 5 images, display "10+" for remaining images -->
+                                <!-- If there are more than 5 images, display "10+" for remaining images -->
                                  {% if gallery|length > 5 %}
                                    <a class="aon-photo-num elem pic-long d-flex justify-content-center align-items-center" href="{% static 'a5.png' %}">10+</a>
                                  {% endif %}
         
-        <!-- Loop through the gallery and show up to 5 images -->
+                                <!-- Loop through the gallery and show up to 5 images -->
                                 {% for ie in gallery|slice:":5" %}
                                     <a class="elem pic-long" href="{{ ie.image.url }}">
                                       <img src="{{ ie.image.url }}" alt="Gallery Image" class="img-thumbnail"/>
@@ -298,7 +279,7 @@
                             
                         </aside>
 
-                    </div>
+                    </div> {% endcomment %}
                     <!-- Side bar END -->
 
                 </div>
