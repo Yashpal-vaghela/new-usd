@@ -20570,3 +20570,21 @@ input[placeholder],
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
   transition: transform 4s ease-in-out;
 }
+
+
+/* common css */
+.text-header{
+  font-family: "Barlow Condensed", serif;
+  font-size: 24px;
+  font-weight: 600;
+  background: linear-gradient(
+    50deg,
+    rgb(220, 173, 129) 0%,
+    rgb(216, 169, 124) 1.5%,
+    rgb(255, 210, 164) 5%,
+    rgb(216, 169, 124) 8%,
+    rgb(220, 173, 129) 51%
+  )
+  text !important;
+  color: transparent !important;
+}

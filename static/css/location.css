@@ -118,8 +118,6 @@
   letter-spacing: 0.5px;
 }
 
-
-
 @media (max-width: 768px) {
   .loc-title-card {
     display: flex;
@@ -129,8 +127,7 @@
   }
 
   .Loc-description {
-    font-family: "Barlow", sans-serif;
-    text-align: center;
+    text-align: left;
   }
 }
 
