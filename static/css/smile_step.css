@@ -424,7 +424,8 @@
 /* ----------------------------------------- Banner Section -------------------------------------------- */
 .Banner_Section {
   position: relative;
-  background-color: #2222;
+   /* background-color: #2222; */
+  background: linear-gradient(250.55deg, #120b07 0%, #311b0d 28.55%, #160d07 75.55%);
   overflow: hidden;
   padding: 25px 0px 0px;
 }
