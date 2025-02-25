@@ -44,12 +44,48 @@ def home(request):
     dentist = Dentist.objects.all().order_by("?")[:6]
     gallery = Gallery.objects.all().order_by("?")
     cities = City.objects.all()
+    
+    city_id = request.GET.get('city', '').strip()
+    query = request.GET.get('q', '').strip()
+    data1 = Dentist.objects.all().order_by('name')  # Default queryset
+    search_message = None
+
+    # Check for city in request; if not found, check session
+    if not city_id:
+        city_name = request.session.get('city','Surat')
+        if city_name:
+            try:
+                city = City.objects.get(city=city_name)
+                data1 = data1.filter(city=city)
+            except City.DoesNotExist:
+                search_message = f"No Ultimate Designers Found in {city_name}."
+        else:
+            search_message = "No city selected."
+
+    else:
+        # Filter by city from request
+        city = get_object_or_404(City, id=city_id)
+        data1 = data1.filter(city=city)
+
+    # Filter by search query if provided
+    if query:
+        data1 = data1.filter(name__icontains=query)
+
+    # Check if the query returned results
+    if not data1.exists():
+        search_message = "No Ultimate Designers Found Based On Your Query."
+
+    data = data1[:3] 
+
     context = {
       'data1':data1,
       'dentist':dentist,
       'gallery':gallery,
       'cities': cities,
-      
+      'data': data,
+      'search_message': search_message,
+      'query': query,
+      'city': city_id or request.session.get('city'),
     }
     return render(request, 'index.html', context)
 
@@ -201,31 +237,55 @@ def gallery(request):
     return render(request, 'gallery.html', context)
 
 def blogs(request):
-    blog = Blog.objects.all().order_by('-published')
-    paginator = Paginator(blog, 6)  # Show 3 blog posts per page
+    all_blogs = Blog.objects.all().order_by('-published')  # Fetch all blogs
+    first_blog = all_blogs.first()
+    remaining_blogs = all_blogs[1:]
+    paginator = Paginator(remaining_blogs, 6)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-
     context = {
+        'first_blog': first_blog,
         'page_obj': page_obj,
-        'blog':blog,
     }
     return render(request, 'blogs.html', context)
+    # per_page = request.GET.get('per_page', 3)  # Default to the first page
+    # try:
+    #     per_page = int(per_page)
+    # except ValueError:
+    #     per_page = 3  # Default to page 1 if invalid
+
+    # # Set per_page dynamically
+    # blog_list = Blog.objects.all().order_by('-published') # Get all blogs sorted by published date
+    # paginator = Paginator(blog_list, per_page)
+    # page_number = request.GET.get('page')
+    # page_obj = paginator.get_page(page_number)
+    # current_blog = Blog.objects.all().order_by('-id')[:1]  # Get the latest blog
+
+    # context = {
+    #     'page_obj': page_obj,
+    #     'current_blog': current_blog,
+    #     'is_first_page': page_number == 1
+    # }
+    # return render(request, 'blogs.html', context)
 
 def blogsd(request, pk):
     blog = Blog.objects.get(slug=pk)
     data2 = Blog.objects.all().order_by('-id')
+    related_blog = Blog.objects.all().order_by('-id')[:3]
     # unique_tags = set(tag for blog in Blog.objects.all() for tag in blog.tag.all())
     # unique_categories = set(category for blog in Blog.objects.all() for category in blog.category.all())
     unique_tags = blog.tag.all()
     unique_categories = blog.category.all()
     
+   
     context = {
      'cata':unique_categories,
      'blog':blog,
      'tags':unique_tags,
      'data2':data2,
+     'relatedBlog':related_blog
     }
+    print("relatedBlog",related_blog)
     return render(request, 'blogsd.html', context)
 
 def contact(request):

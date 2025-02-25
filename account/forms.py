@@ -12,9 +12,9 @@ class UserSubmissionForm(forms.ModelForm):
         model = UserSubmission
         fields = ['first_name', 'last_name', 'phone', 'email', 'agree_to_terms']
         widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-control sf-form-control cool', 'placeholder': 'First Name'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control sf-form-control cool', 'placeholder': 'Last Name'}),
-            'phone': forms.TextInput(attrs={'class': 'form-control sf-form-control cool', 'placeholder': 'Phone'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control sf-form-control cool', 'placeholder': 'Email'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control ', 'placeholder': 'First Name'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control ', 'placeholder': 'Last Name'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control ', 'placeholder': 'Phone'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
             'agree_to_terms': forms.CheckboxInput(attrs={'id': 'td33'}),
         }

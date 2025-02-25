@@ -12,25 +12,21 @@
 }
 .breadcrumbs-title{
     font-size: 36px;
-    font-weight: 400;
     line-height: 49px;
     font-family: "Gilda Display", serif;
-    background: linear-gradient(
-        50deg,
-        rgb(220, 173, 129) 0%,
-        rgb(216, 169, 124) 1.5%,
-        rgb(255, 210, 164) 5%,
-        rgb(216, 169, 124) 8%,
-        rgb(220, 173, 129) 51%
-      )
-      text !important;
-    color: transparent !important;
-    /* background: linear-gradient(259.34deg, #DCAD81 0%, #D8A97C 25%, #FFD2A4 50%, #D8A97C 75%, #DCAD81 100%) text !important; */
+    width:18%;
+    /* background: linear-gradient(259.34deg, #DCAD81 0%, #D8A97C 25%, #FFD2A4 50%, #D8A97C 75%, #DCAD81 100%) text !important; 
+    color: transparent !important; */
+    /* font-weight: bold; */
+}
+.blog-page-wrapper .breadcrumbs-title{
+    width:7%;
 }
 .breadcrumbs-section img{
     height: 8px;
     width: 75px;
     position: relative;
+    margin-bottom: 10px;
 }
 .blog-content{
     background-color: #222;
@@ -45,7 +41,7 @@
     line-height: 44px;
     font-size: 22px;
     color:#fff;
-    margin-bottom: 40px;
+    margin-bottom: 25px;
 }
 .blog-content-wrapper span{
     color:#fff
@@ -62,8 +58,8 @@
     /* font-size: 28px; */
     font-size: 32px;
     line-height: 44px;
-    margin-bottom: 35px;
-    width: 85%;
+    margin-bottom: 15px;
+    width: 96%;
 }
 .blog-content-subtitle{
     font-weight: 400;
@@ -75,9 +71,6 @@
     padding-bottom: 37px; 
     /* border-image: linear-gradient(259.34deg, #DCAD81 0%, #D8A97C 25%, #FFD2A4 50%, #D8A97C 75%, #DCAD81 100%); */
     border-bottom: 2px solid #D8A97C;
-    /* background: linear-gradient(259.34deg, #DCAD81 0%, #D8A97C 25%, #FFD2A4 50%, #D8A97C 75%, #DCAD81 100%) !important; */
-    /* background: linear-gradient(#f9f5f0, #f9f5f0) padding-box, linear-gradient(to top, rgba(255, 255, 255, 0), #d4a87d) border-box; */
-    /* width: 90%; */
 }
 .blog-content-wrapper {
     position: relative;
@@ -91,12 +84,12 @@
     color: #fff;
     position: absolute;
     z-index: 1;
-    bottom: 8.5%;
+    bottom: 1%;
     padding: 0px 14px;
     right:20%;
 }
 .blog-icon-content1{
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .blog-content-details-card{
@@ -124,6 +117,9 @@
     font-family: "Barlow", sans-serif;
     font-size: 16px;
 }
+.blog-content-details span a{
+    color: #fff;
+}
 .blog-content-details .read-more1{
     font-weight: 400;
     font-family: "Barlow", sans-serif;
@@ -136,6 +132,10 @@
     bottom: -6.5%;
     padding: 0px 14px;
     right: 13%;
+    border: none;
+}
+.blog-content-details .read-more1 a{
+    color:#fff;
 }
 .blog_date{
     display: flex;
@@ -144,7 +144,7 @@
     width: 67px;
     height: 68px;
     padding: 10px;
-    border: 2px solid rgb(216, 169, 124,0.1);
+    border: 2px solid #D8A97C;
     background-color:rgba(34, 34, 34, 1);
     color: #fff;
     font-weight: 400;
@@ -154,15 +154,20 @@
     top: -26.5%;
     border-radius: 12px;
     text-align: center;
-    line-height: normal;
+    line-height: 28px;
 }
 .blog-content-details p{
     margin-top: 25px;
 }
-
+.blog-content-details p a{
+    color: #fff;
+    display: block;
+    height: 95px;
+}
 .blog-page-pagination ul li{
     margin: 0px 6px !important;
 }
+
 .blog-page-pagination .pagination .page-item .page-link{
     border-radius: 50% !important;
     padding: 0px 8px;
@@ -170,6 +175,10 @@
     background-color: #222;
     border: 1px solid #D8A97C;
     color: #fff;
+}
+.blog-page-pagination ul .page-item.disabled .page-link{
+    border: 1px solid #6c757d;
+    color: #6c757d
 }
 .blog-page-pagination .pagination .page-item .page-link span{
     font-size: 14px;
@@ -200,20 +209,31 @@
         padding: 30px 65px 0px 15px;
     }
     .blog-content-title1{
-        font-size: 30px;
+        font-size: 26px;
     }
     .blog-content-subtitle{
         padding-bottom: 30px;
-        font-size: 18px;
+        font-size: 16px;
     }
 
 } 
+/* @media(min-width:992px){
+    .blog-content .container .row .col-lg-4:nth-child(4){
+        display: none !important;
+    }
+} */
 @media(max-width:1220px){
     .read-more{
         bottom: 4.5%;
     }
 }
 @media(max-width:1200px){
+    .breadcrumbs-title{
+        width:25%;
+    }
+    .blog-page-wrapper .breadcrumbs-title{
+        width: 8.5%;
+    }
     .blog-content-wrapper .col-lg-6:first-child{
         padding: 30px 65px 0px 15px;
     }
@@ -237,6 +257,10 @@
         font-size: 16px;
         margin-top: 30px;
     }
+    .blog-content-details p a{
+        display: block;
+        height: 82px;
+    }
     .blog-content-details .read-more1{
         padding: 0px 10px;
         font-size: 14px;
@@ -244,6 +268,7 @@
     }
 }
 @media(max-width:1024px){
+
     .blog-content-subtitle{
         font-size: 16px;
     }
@@ -252,6 +277,12 @@
     }
 }
 @media(max-width:991px){
+    .breadcrumbs-title{
+        width:25.8%;
+    }
+    .blog-page-wrapper .breadcrumbs-title{
+        width: 11%;
+    }
     .blog-content-wrapper .col-lg-6:first-child{
         padding: 5px 35px 0px 15px;
     }
@@ -291,8 +322,22 @@
         font-size: 18px;
         margin-bottom: 0.7rem;
     }
+    .blog-content-details p a{
+        display: block;
+        height: 92px;
+    }
+    .blog_date{
+        top:-28%;
+    }
 }
 @media(max-width:768px){
+    .breadcrumbs-title{
+        width:29%;
+        font-size: 30px;
+    }
+    .blog-page-wrapper .breadcrumbs-title{
+        width: 12%;
+    }
     .blog-content-wrapper{
         flex-direction: column-reverse;
     }
@@ -305,6 +350,7 @@
     .blog-content-title1{
         font-size: 26px;
         margin-bottom:22px;
+        margin-top: 12px;
     }
     .blog-content-subtitle{
         font-size: 16px;
@@ -318,6 +364,7 @@
     }
     .blog-content-details-card{
         border-radius: 30px;
+        margin-bottom: 20px;
     }
     .blog-content-details-card img{
         border-top-left-radius: 30px !important;
@@ -326,14 +373,32 @@
     .blog-content-title{
         margin-bottom: 10px;
     }
+    .blog_date{
+        top:-33%;
+    }
 }
 @media(max-width:576px){
+    .breadcrumbs-title{
+        width:34%;
+    }
+    .blog-page-wrapper .breadcrumbs-title{
+        width: 14%;
+    }
     .blog-content-title1{
         font-size: 22px;
         margin-bottom: 20px;
+        margin-top: 0px;
     }
     .blog-content-subtitle{
         font-size: 16px;
         line-height: 22px;
+    }
+}
+@media(max-width:500px){
+    .breadcrumbs-title{
+        width:45%;
+    }
+    .blog-page-wrapper .breadcrumbs-title{
+        width: 22%;
     }
 }

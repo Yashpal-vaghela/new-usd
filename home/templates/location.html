@@ -15,7 +15,7 @@
             loading="lazy"
             alt="text vector"
           />
-          <h3 class="location-subtitle">Top Searched Locations</h3>
+          <h3 class="location-subtitle text-header-subtitle">Top Searched Locations</h3>
           <p class="Loc-description">
             Discover the leading destinations where patients connect with our
             network of Ultimate Smile Designers. Our platform helps you find
@@ -34,8 +34,7 @@
               <div class="square-card-content">
                 <h4 class="city_txt cool">
                   <a href="{% url 'home:search_all_usd' %}?city={{ city.id }}"
-                    >{{ city.city }}</a
-                  >
+                    >{{ city.city }}</a>
                 </h4>
                 <p class="Designer_txt mb-0">{{ city.countdr }} - Smile Designers</p>
               </div>

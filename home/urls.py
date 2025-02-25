@@ -16,6 +16,6 @@ urlpatterns = [
     path('search-all-usd/', views.search_all_usd, name='search_all_usd'),
     path('receive_location/', views.receive_location, name='receive_location'),
     path('locations/', views.location_view, name='locations'),
-    path('smile_step/', views.smile_step, name='smile_step'),
+    # path('smile_step/', views.smile_step, name='smile_step'),
 
 ] 

@@ -5435,10 +5435,6 @@ SIMPLE INNER SCROLLBAR
   background-size: 600px 180px;
   background-color: rgba(0, 0, 0, 0.4); /* Adjust the alpha (0 = fully transparent, 1 = fully opaque) */
   background-blend-mode: multiply;
-  /* background-image: url("../Group.png"); */
-  /* background-size: cover; */
-  /* height: 25px;
-  width: 25px; */
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -6709,12 +6705,6 @@ input::placeholder {
   }
 }
 
-
-
-
-
-
-
 .sf-select-box.form-control {
   background-color: #f7fafc;
   border-color: #e8edf1;
@@ -6787,8 +6777,6 @@ input::placeholder {
   background-color: #fff;
 }
 
-
-
 /*Data table head*/
 .sf-bd-data-tb-head {
   margin-bottom: 30px;
@@ -6801,7 +6789,6 @@ input::placeholder {
     text-align: center;
   }
 }
-
 
 .dropzone {
   min-height: 150px;
@@ -6853,9 +6840,6 @@ div.dataTables_wrapper div.dataTables_length select {
   max-width: 800px;
 }
 
-
-
-
 .action {
   width: 330px;
   display: none !important;
@@ -6868,9 +6852,6 @@ div.dataTables_wrapper div.dataTables_length select {
 .action .dx-selectbox {
   width: 90px;
 }
-
-
-
 
 .card-custom-area {
   display: table;
@@ -7805,20 +7786,16 @@ body[class*="active-"] .cs-message-panel {
   border-width: 7px 0 7px 12px;
   border-color: transparent transparent transparent #ad8545;
 }
-
 .create-feedback-body {
   border-top: 1px solid #ddd;
   padding-top: 15px;
   margin-top: 13px;
 }
-
-
 .aon-feedback-date span {
   display: block;
   font-family: arial;
   line-height: 1;
 }
-
 .aon-feedback-date .aon-day {
   font-size: 28px;
   font-weight: 600;
@@ -7843,32 +7820,26 @@ body[class*="active-"] .cs-message-panel {
   line-height: 1.2;
 }
 
-
-
 /*23 December */
 .card-reg-form-lr-wrap {
   display: flex;
   justify-content: space-between;
 }
-
 .card-reg-form-left {
   max-width: 540px;
   width: 100%;
   margin-right: 1%;
 }
-
 .card-reg-form-left {
   max-width: 540px;
   width: 100%;
 }
-
 .card-cost-section-block ul {
   margin: 0px;
   display: flex;
   flex-wrap: wrap;
   list-style: none;
 }
-
 .card-cost-section-block ul li {
   width: 20%;
   display: flex;
@@ -7898,15 +7869,12 @@ body[class*="active-"] .cs-message-panel {
   margin-bottom: 40px;
   text-align: center;
 }
-
 .calen-list-nav .nav-item {
   width: 33.333%;
 }
-
 .calen-list-nav .nav-item>.nav-link {
   padding: 15px 15px;
 }
-
 .ins-type {
   padding: 50px;
   background-color: #fff;
@@ -7914,7 +7882,6 @@ body[class*="active-"] .cs-message-panel {
   border-radius: 20px;
   border: 1px solid #ddd;
 }
-
 .ins-type span {
   display: inline-block;
   max-width: 100px;
@@ -8004,9 +7971,7 @@ body[class*="active-"] .cs-message-panel {
   }
 }
 
-
 /*Appointment*/
-
 .sf-appoi-row {
   margin-left: 0px;
   padding: 20px;
@@ -8033,12 +7998,10 @@ body[class*="active-"] .cs-message-panel {
   text-align: center;
   line-height: 1;
 }
-
 .aon-date-box strong {
   font-size: 30px;
   margin-bottom: 5px;
 }
-
 .aon-date-box span {
   font-size: 12px;
 }
@@ -8299,7 +8262,6 @@ body[class*="active-"] .cs-message-panel {
   margin-bottom: 0px;
 }
 
-
 /*Patient Booking*/
 .sf-appoint-doc-wrap2 {
   border-radius: 10px;
@@ -8310,113 +8272,91 @@ body[class*="active-"] .cs-message-panel {
   z-index: 1;
   overflow: hidden;
 }
-
 .sf-appoint-doc-info2 {
   text-align: center;
 }
-
 .sf-appoint-doc-date2 {
   padding-top: 10px;
   margin-top: 10px;
   border-top: 1px solid #ddd;
   text-align: center;
 }
-
 .sf-appoint-doc-date2 {
   padding-top: 20px;
   margin-top: 30px;
   border-top: 1px solid #ddd;
   text-align: center;
 }
-
 .sf-appoint-doc-info2 img {
   width: 100px;
   height: 100px;
   border-radius: 50%;
   margin-bottom: 20px;
 }
-
-
 .aon-search2-form {
-  padding: 15px 0px;
+  padding: 25px 0px;
 }
-
 .aon-search2-form.no-p-lr {
   padding: 25px 0px 15px;
 }
-
 .aon-search2-bar-wrap {
   background: #000000;
 }
-
 .aon-search2-left {
   width: 80%;
   display: table;
 }
-
 .aon-search2-col {
   display: table-cell;
   vertical-align: middle;
   padding: 0px 5px;
 }
-
 .aon-search-btn .site-button {
   width: 100%;
 }
-
 .aon-search2-right {
   width: auto;
 }
-
 .aon-search2-btn {
   padding: 10px 25px;
-  color: black !important;
+  /* color: black !important; */
 }
-
 .aon-search2-right.a-s-auto {
   width: auto;
 }
-
 .aon-search2-table {
   display: table;
   width: 100%;
 }
-
 .aon-search-advance-btn {
   background: none;
   border: none;
   color: #fff;
   float: right;
 }
-
 .aon-search-advance-btn i {
   font-size: 28px;
   margin-right: 10px;
 }
-
 .aon-search-advance-btn strong {
   display: block;
   font-size: 16px;
   line-height: 1;
   text-transform: uppercase;
 }
-
 .aon-search-advance-btn span {
   display: block;
   font-size: 16px;
   line-height: 1;
 }
-
 .aon-search-advance-btn span:last-child {
   letter-spacing: 1px;
   letter-spacing: 4.5px;
 }
-
 @media only screen and (max-width:991px) {
   .aon-search2-left {
     width: 100%;
   }
-
   .aon-search2-table {
     width: 100%;
     display: block;
@@ -8426,7 +8366,6 @@ body[class*="active-"] .cs-message-panel {
     flex-wrap: wrap;
     margin-bottom: 10px;
   }
-
   .aon-search2-col.aon-search-col,
   .aon-search2-col.aon-category-col {
     display: block;
@@ -9002,8 +8941,8 @@ body[class*="active-"] .cs-message-panel {
 }
 
 .site-pagination .page-item.active .page-link {
-  background-color: #ad8545;
-  border-color: #ad8545;
+  background-color: #D8A97C;
+  border-color:#D8A97C;
 }
 
 .site-pagination .pagination>li>a,
@@ -9013,13 +8952,21 @@ body[class*="active-"] .cs-message-panel {
   border-radius: 30px !important;
   padding: 5px 2px;
   min-width: 36px;
+  background-color: transparent;
+  border: 1px solid #D8A97C;
+  color: #fff;
 }
 
+.site-pagination .pagination>li.disabled a{
+  color: #6c757d;
+  background-color: transparent !important;
+  border: 1px solid #6c757d;
+}
 .site-pagination .pagination>li>a:hover,
 .site-pagination .pagination>li>span:hover {
   color: #fff;
-  background-color: #ad8545;
-  border-color: #ad8545;
+  background-color: #D8A97C;
+  border-color: #D8A97C;
 }
 
 
@@ -20607,4 +20554,15 @@ input[placeholder],
   )
   text !important;
   color: transparent !important;
+}
+.bg-linear-gradient{
+  background: linear-gradient(259.34deg, #DCAD81 0%, #D8A97C 25%, #FFD2A4 50%, #D8A97C 75%, #DCAD81 100%) text !important;
+  color: transparent !important;
+}
+.text-header-subtitle{
+  color: #000;
+  font-family: "Gilda Display", serif;
+  font-weight: 400;
+  font-size: 38px;
+  line-height: 64.4px;
 }

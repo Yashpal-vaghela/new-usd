@@ -1,163 +1,212 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block header %}
-
-{% endblock header %}
-
-{% block css %}
-    
-{% endblock css %}
-    
-
-
-{% block body %}
-{% load static %}
+{% extends 'base.html' %} {% load static %} {% block header %} {% endblock header %} {% block css %} {% endblock css %} {% block body %} {% load static %}
 
 <!-- Content -->
+{% comment %}
 <div class="page-content">
-            
-    <!-- Banner Area -->
-    <div class="aon-page-benner-area">
-      <div class="aon-page-banner-row">
-         <div class="aon-page-benner-overlay" ></div>
-         <div class="sf-banner-heading-wrap">
-           <div class="sf-banner-heading-area">
-             <div class="sf-banner-heading-large">Latest Blogs</div>
-             <div class="sf-banner-breadcrumbs-nav">
-               <ul class="list-inline">
-                 <li><a href="{% url 'home:home' %}"> Home </a></li>
-                 <li><a href="{% url 'home:blogs' %}">Blogs</a></li>
-                 <li><a href="">{{blog.h1}}</a></li>
-               </ul>
-             </div>
-           </div>
-         </div>
-       </div>
-     </div>
-     <!-- Banner Area End -->
-     
-     <div class="aon-page-jobs-wrap">
-        <div class="container">
-            <div class="row">
-
-                
-
-                <!-- Left part start -->
-                <div class="col-lg-8">
-                  
-                    <div class="sf-post-detail">
-
-                        <div class="post blog-post blog-detail">
-                          <div class="post-bx">
-                              <!-- Content section for blogs start -->
-                              <div class="post-thum"> 
-                                <img title="title" alt="" src={{blog.blog_banner_sm.url}}>
-                              </div>
-                              <div class="post-info pt-4">
-                                <div class="post-meta sf-icon-post-meta">
-                                  <ul>
-                                    <li class="post-author"><i class="feather-user"></i>By
-                                      <a href="#" title="" rel="">{{blog.author}}</a>
-                                    </li>
-                                    
-                                    
-                                    
-                                  </ul>
-                                </div>
-                                                                      
-                                <div class="post-text">
-                                  <h3 class="post-title mb-3 cool">
-                                      <a href="#">{{blog.h1}}</a>
-                                  </h3>
-                                    
-                                    
-                                  <p>{{blog.content|safe}}</p>
-                                  
-                                    
-                                    
-                                <div class="row pt-4 pb-2">
-                                  <div class="col-lg-5 col-md-6 mb-5"><img src={{blog.blog_banner_lg.url}} alt=""></div>
-                                </div>
-
-                                  
-                                    
-                                 <div class="sf-post-tags sf-post-tags2">
-                                    <h4>Popular Tags</h4>
-                                    <ul>
-                                        {% for tag in tags %}
-                                            <li class="cool"><a href="#">{{ tag }}</a></li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-
-                                
-                                    
-                                    
-
-                                </div>
-                                
-                              </div>
-                              <!-- Content section for blogs end -->
-                          </div>
-                        </div>
-                        <!-- Comment section for blogs start -->
-                        
-                        <!-- Comment section for blogs start -->
-                        
-                    </div>
-                                         
-                    
-                </div>
-                <!-- Left part END -->   
-                
-                <!-- Side bar start -->
-                <div class="col-lg-4">
-
-                    <aside class="side-bar ">
-                            
-                        <!-- SEARCH -->
-                        
-
-                        <!-- RECENT POSTS -->
-                       
-
-                        <!-- CATEGORY -->   
-                        <div class="widget widget_services rounded-sidebar-widget">
-                            <div class="text-left m-b30">
-                                <h3 class="widget-title">Categories</h3>
-                            </div>
-                            <ul>
-                                {% for category in cata %}
-                                    <li><a href="#">{{ category }}</a></li>
-                                {% endfor %}
-                            </ul>
-                        </div>   
-                         
-
-                         
-                     
-                                                                    
-                                                                 
-                  
-                                                                 
-                   
-                    </aside>
-
-                </div>
-                <!-- Side bar END -->
-
-            </div>
+  <!-- Banner Area -->
+  <div class="aon-page-benner-area">
+    <div class="aon-page-banner-row">
+      <div class="aon-page-benner-overlay"></div>
+      <div class="sf-banner-heading-wrap">
+        <div class="sf-banner-heading-area">
+          <div class="sf-banner-heading-large">Latest Blogs</div>
+          <div class="sf-banner-breadcrumbs-nav">
+            <ul class="list-inline">
+              <li><a href="{% url 'home:home' %}"> Home </a></li>
+              <li><a href="{% url 'home:blogs' %}">Blogs</a></li>
+              <li><a href="">{{blog.h1}}</a></li>
+            </ul>
+          </div>
         </div>
+      </div>
     </div>
-    
   </div>
-  <!-- Content END-->
-{% endblock body %}
-    
+  <!-- Banner Area End -->
 
+  <div class="aon-page-jobs-wrap">
+    <div class="container">
+      <div class="row">
+        <!-- Left part start -->
+        <div class="col-lg-8">
+          <div class="sf-post-detail">
+            <div class="post blog-post blog-detail">
+              <div class="post-bx">
+                <!-- Content section for blogs start -->
+                <div class="post-thum">
+                  <img title="title" alt="" src="{{blog.blog_banner_sm.url}}" />
+                </div>
+                <div class="post-info pt-4">
+                  <div class="post-meta sf-icon-post-meta">
+                    <ul>
+                      <li class="post-author">
+                        <i class="feather-user"></i>By
+                        <a href="#" title="" rel="">{{blog.author}}</a>
+                      </li>
+                    </ul>
+                  </div>
 
-{% block js %}
+                  <div class="post-text">
+                    <h3 class="post-title mb-3 cool">
+                      <a href="#">{{blog.h1}}</a>
+                    </h3>
 
-{% endblock js %}
-    
+                    <p>{{blog.content|safe}}</p>
+
+                    <div class="row pt-4 pb-2">
+                      <div class="col-lg-5 col-md-6 mb-5">
+                        <img src="{{blog.blog_banner_lg.url}}" alt="" />
+                      </div>
+                    </div>
+
+                    <div class="sf-post-tags sf-post-tags2">
+                      <h4>Popular Tags</h4>
+                      <ul>
+                        {% for tag in tags %}
+                        <li class="cool"><a href="#">{{ tag }}</a></li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <!-- Content section for blogs end -->
+              </div>
+            </div>
+            <!-- Comment section for blogs start -->
+
+            <!-- Comment section for blogs start -->
+          </div>
+        </div>
+        <!-- Left part END -->
+
+        <!-- Side bar start -->
+        <div class="col-lg-4">
+          <aside class="side-bar">
+            <!-- SEARCH -->
+
+            <!-- RECENT POSTS -->
+
+            <!-- CATEGORY -->
+            <div class="widget widget_services rounded-sidebar-widget">
+              <div class="text-left m-b30">
+                <h3 class="widget-title">Categories</h3>
+              </div>
+              <ul>
+                {% for category in cata %}
+                <li><a href="#">{{ category }}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+          </aside>
+        </div>
+        <!-- Side bar END -->
+      </div>
+    </div>
+  </div>
+</div>
+{% endcomment %}
+<div class="single-blog-wrapper">
+  <section class="breadcrumbs-section">
+    <div class="container">
+      <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold">Blog</h1>
+      <img src="{% static 'text_vec.svg' %}" class="img-fluid" />
+    </div>
+  </section>
+  <section class="single-blog-content py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="single-blog-page position-relative">
+            <h2 class="single-blog-title">{{blog.h1}}</h2>
+            <h3 class="single-blog-author d-flex">
+              <i class="feather-user"></i>By &nbsp;
+              <a href="#" title="" rel="">{{blog.author}}</a>
+            </h3>
+           
+            <img
+              src="{{blog.blog_banner_sm.url}}"
+              class="img-fluid"
+              alt="single-blog-img"
+            />
+            <div class="single-blog-date">Post date: {{blog.published}}</div>
+          </div>
+          <div class="single-page-main-content mt-5">
+            {{blog.content|safe}}
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="single-blog-content2">
+            <h2 class="single-blog-content2-title mb-0">Blog</h2>
+            <img src="{% static 'text_vec_light.svg' %}" class="img-fluid" />
+            <input type="text" class="form-control" placeholder="Search" />
+
+            <div class="row align-items-center mt-2 mb-2">
+            {% for ie in relatedBlog %}
+                <div class="col-lg-5 my-3">
+                <div class="single-blog-related-img">
+                  <img src="{{ie.blog_banner_sm.url}}" class="mb-0 img-fluid" />
+                </div>
+  
+              </div>
+              <div class="col-lg-7 mt-4  single-blog-related-content">
+                <h3 class="mb-2">
+                  Steps to Take Before Getting a Cosmetic Dental Procedure
+                </h3>
+                <div class="d-flex">
+                  <img
+                    src="{% static 'new-calender.svg' %}"
+                    class="pe-2 mb-0 img-fluid"
+                    style="width:25px"
+                  />
+                  <span>Jan. 22, 2025</span>
+                </div>
+              </div>
+            {% endfor %}
+             
+            </div>
+            <div class="category-wrapper">
+              <h2
+                class="single-blog-content2-title mb-0"
+                style="font-size: 30px"
+              >
+                Categories
+              </h2>
+              <img
+                src="{% static 'text_vec_light1.svg' %}"
+                class="category-img img-fluid"
+              />
+
+              <ul class="category-content mt-2">
+                {% for category in cata %}
+                <li><a href="#" style="color: #fff">{{category}}</a></li>
+                {% endfor %}
+              </ul>
+              {% comment %}
+              <h4 class="category-content mt-2">Cosmetic Dentistry</h4>
+              {% endcomment %}
+            </div>
+
+            <div class="tag-wrapper">
+              <h2
+                class="single-blog-content2-title mb-0"
+                style="font-size: 30px"
+              >
+                Tag
+              </h2>
+              <img
+                src="{% static 'text_vec_light.svg' %}"
+                class="tag-img img-fluid"
+              />
+              <ul>
+                {% for tag in tags %}
+                <li>{{tag}}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<!-- Content END-->
+{% endblock body %} {% block js %} {% endblock js %}

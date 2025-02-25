@@ -13,7 +13,7 @@
 {% load static %}
 
 <!-- Content -->
-{% comment %} <div class="page-content">       
+  {% comment %} <div class="page-content">       
     <!-- Banner Area -->
     <div class="aon-page-benner-area">
         <div class="aon-page-banner-row">
@@ -38,12 +38,13 @@
          <div class="container">
             <div class="row">
                  <!-- Left part start -->
+                
                  <div class="col-lg-12">
                     <div class="row">
                         <!-- COLUMNS 1 -->
                         {% for blog in page_obj %}
                         {% if blog.status %}
-                        <div class="col-lg-4 col-md-12">
+                        <div class="col-lg-4 col-md-12 blog-item">
                             <div class="aon-blog-style-1">
                                 <div class="post-bx">
                                     <!-- Content section for blogs start -->
@@ -127,96 +128,147 @@
          </div>
     </div> 
      <!-- Left & right section  END --> 
-</div> {% endcomment %}
+</div>   {% endcomment %}
 
 <div class="blog-page-wrapper">
     <section class="breadcrumbs-section">
         <div class="container">
-            <h1 class="breadcrumbs-title mb-0">Blog</h1>
+            <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold">Blog</h1>
             <img src="{% static 'text_vec.svg' %}" class="img-fluid" />
         </div>
     </section>
     <section class="blog-content" style="background-color:#222">
-        <div class="container pt-3" >
-            <h2 class="blog-content-title">Recent Blog</h2>
-                <div class="blog-content-wrapper row justify-content-center mx-auto pb-5">
-                    <div class="col-lg-6 col-md-6 col-sm-11 position-relative mx-auto">
-                        <div class="blog-icon-content1 d-flex align-items-center mx-auto">
-                        <span class="me-5"><img src="{% static 'new-calender.svg' %}" class="icon-img me-2 img-fluid" />Jan. 22, 2025</span>
-                        <span><img src="{% static 'user.svg'%}" class="icon-img me-2 img-fluid" />By Haresh Savani</span>
+        <div class="container pt-3">
+            {% if not page_obj.has_previous %}
+                <h2 class="blog-content-title">Recent Blog</h2>
+                <div class="blog-content-wrapper align-items-center row justify-content-center mx-auto pb-5">
+                    {% if first_blog %}
+                      <div class="col-lg-6 col-md-6 col-sm-11 position-relative mx-auto">
+                            <div class="blog-icon-content1 d-flex align-items-center mx-auto">
+                                <span class="me-5"><img src="{% static 'new-calender.svg' %}" class="icon-img me-2 img-fluid" />{{first_blog.published}}</span>
+                                <span><img src="{% static 'user.svg'%}" class="icon-img me-2 img-fluid" />By {{first_blog.author}}</span>
+                            </div>
+                            <h2 class="blog-content-title1">{{first_blog.title}}</h2>
+                            <p class="blog-content-subtitle">{{first_blog.description}}</p>
+                            <span class="read-more">Read More</span>
                         </div>
-                        <h2 class="blog-content-title1">What is Smile Designing Surgery?</h2>
-                        <p class="blog-content-subtitle">Smile designing surgery is a transformative dental procedure that allows individuals to achieve a customized, aesthetically pleasing smile....</p>
-                        <span class="read-more">Read More</span>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-11 mx-auto">
-                        <img src="{% static 'blogContent-img.webp' %}" class=" img-fluid"/>
-                    </div>
-                </div>
-             <h2 class="blog-content-title">All Blog</h2>
-             <div class="row align-items-center justify-content-center pb-5">
-                <div class="col-lg-4 col-md-6 col-sm-10 mb-md-4 mb-lg-0  d-md-block ">
-                    <div class="blog-content-details-card card">
-                        <img src="{% static 'blog-img1.webp' %}" class="card-img-top img-fluid" />
-                            <div class="blog-content-details position-relative card-body">
-                                <div class="blog_date">22 Jan</div>
-                                <p class="card-text"> Understanding Different Types of Dental Implants and Their Benefits for a Healthier Smile </p>
-                                <div class="mb-4">
-                                    <img src="{% static 'user.svg'%}" class="icon-img me-1 img-fluid" />
-                                    <span>By Haresh Savani</span><br/>
-                                </div>
-                                <span class="read-more1">Read More</span>
+                        <div class="col-lg-6 col-md-6 col-sm-11 mx-auto">
+                            <img src="{{first_blog.blog_banner_lg.url}}" class="img-fluid" style="border-radius:10px"/>
+                        </div>
+                    {% endif %}
+                    {% comment %} {% for blog in first_blog %}
+                        <div class="col-lg-6 col-md-6 col-sm-11 position-relative mx-auto">
+                            <div class="blog-icon-content1 d-flex align-items-center mx-auto">
+                                <span class="me-5"><img src="{% static 'new-calender.svg' %}" class="icon-img me-2 img-fluid" />{{blog.published}}</span>
+                                <span><img src="{% static 'user.svg'%}" class="icon-img me-2 img-fluid" />By {{blog.author}}</span>
                             </div>
-                    </div>
+                            <h2 class="blog-content-title1">{{blog.h1}}</h2>
+                            <p class="blog-content-subtitle">{{blog.description}}</p>
+                            <span class="read-more">Read More</span>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-11 mx-auto">
+                            <img src="{{blog.blog_banner_sm.url}}" class="img-fluid" style="border-radius:10px"/>
+                        </div>
+                    {% endfor %} {% endcomment %}
                 </div>
-                <div class="col-lg-4 col-md-6 mb-md-4 mb-lg-0 d-none d-sm-none d-md-block">
-                    <div class="blog-content-details-card card">
-                        <img src="{% static 'blog-img2.webp' %}" class="card-img-top img-fluid" />
-                            <div class="blog-content-details position-relative card-body">
-                                <div class="blog_date">22 Jan</div>
-                                <p class="card-text"> Understanding Different Types of Dental Implants and Their Benefits for a Healthier Smile </p>
-                                <div class="mb-4">
-                                    <img src="{% static 'user.svg'%}" class="icon-img me-1 img-fluid" />
-                                    <span>By Haresh Savani</span><br/>
+            {% endif %}
+              
+            <h2 class="blog-content-title">All Blog</h2>
+            <div class="row align-items-center justify-content-center pb-5">
+                {% if is_frist_page%}
+                    {% for blog in current_blog %}
+                        {% if forloop.counter <= 4 and blog.status %}
+                            <div class="col-lg-4 col-md-6 mb-md-4 mb-lg-4   d-md-block">
+                                <div class="blog-content-details-card card">
+                                    <img src="{{blog.blog_banner_lg.url}}" class="card-img-top img-fluid" />
+                                        <div class="blog-content-details position-relative card-body">
+                                            <div class="blog_date">{{blog.published|date:'j M'}}</div>
+                                            {% comment %} <h4 class="card-text">
+                                                <a href="{% url 'home:blogsd' blog.slug %}">{{blog.title}}</a>
+                                            </h4> {% endcomment %}
+                                            <p class="card-text"> 
+                                                <a href="{% url 'home:blogsd' blog.slug %}">{{blog.title}}</a> 
+                                            </p>
+                                            <div class="mb-md-3 mb-4">
+                                                <img src="{% static 'user.svg'%}" class="icon-img me-1 img-fluid" />
+                                                <span>By <a href="#" title="Posts by admin" rel="author">{{blog.author}}</a></span><br/>
+                                            </div>
+                                            <button class="read-more1"><a href="{% url 'home:blogsd' blog.slug %}">Read More</a></button>
+                                        </div>
                                 </div>
-                                <span class="read-more1">Read More</span>
                             </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 d-none d-sm-none d-md-none d-lg-block">
-                    <div class="blog-content-details-card card">
-                        <img src="{% static 'blog-img3.webp' %}" class="card-img-top img-fluid" />
-                            <div class="blog-content-details position-relative card-body">
-                                <div class="blog_date">22 Jan</div>
-                                <p class="card-text"> Understanding Different Types of Dental Implants and Their Benefits for a Healthier Smile </p>
-                                <div class="mb-4">
-                                    <img src="{% static 'user.svg'%}" class="icon-img me-1 img-fluid" />
-                                    <span>By Haresh Savani</span><br/>
+                        {% endif %}    
+                    {% endfor %}
+                {% else %}
+                    {% for blog in page_obj %}
+                        {% if blog.status %}
+                            <div class="col-lg-4 col-md-6 mb-md-4 mb-lg-4 d-md-block blog-wrapper">
+                                <div class="blog-content-details-card card">
+                                    <img src="{{ blog.blog_banner_lg.url }}" class="card-img-top img-fluid" />
+                                    <div class="blog-content-details position-relative card-body">
+                                            <div class="blog_date">{{ blog.published|date:'j M' }}</div>
+                                            <p class="card-text"> 
+                                                <a href="{% url 'home:blogsd' blog.slug %}">{{ blog.title }}</a> 
+                                            </p>
+                                            <div class="mb-md-3 mb-4">
+                                                <img src="{% static 'user.svg' %}" class="icon-img me-1 img-fluid" />
+                                                <span>By <a href="#" title="Posts by admin" rel="author">{{ blog.author }}</a></span><br/>
+                                            </div>
+                                            <button class="read-more1"><a href="{% url 'home:blogsd' blog.slug %}">Read More</a></button>
+                                    </div>
                                 </div>
-                                <span class="read-more1">Read More</span>
                             </div>
-                    </div>
-                </div>
-                <nav class="blog-page-pagination" aria-label="Page navigation example">
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                 <nav class="blog-page-pagination" aria-label="Page navigation example">
                     <ul class="pagination mb-0 mt-4 justify-content-center">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true"><i class="fa-solid fa-chevron-left"></i></span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                        </li>
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous" tabindex="-1">
+                                    <span aria-hidden="true"><i class="fa-solid fa-chevron-left"></i></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1">
+                                    <span aria-hidden="true">
+                                        <i class="fa fa-chevron-left"></i>
+                                    </span>
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <li class="page-item active"><a class="page-link" href="#">{{ num }}</a></li>
+                                {% else %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                    </li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                                        <span aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#">
+                                        <i class="fa fa-chevron-right"></i>
+                                    </a>
+                                </li>
+                        {% endif %}
                     </ul>
                 </nav>
-             </div>
+            </div>
+
+               
         </div>
     </section>
 </div>
@@ -224,3 +276,36 @@
 {% endblock body %}
 {% block js %}
 {% endblock js %}
+
+<script>
+    // Check if the URL contains a page number
+    document.addEventListener("DOMContentLoaded", function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const page = urlParams.get("page");
+        const featuredBlog = document.getElementById("featured-blog-container");
+
+        // Hide the featured blog if the page number is greater than 1
+        if (page && parseInt(page) > 1) {
+            featuredBlog.style.display = "none";
+        }
+    });
+</script>
+{% comment %} <script>
+    function updateCardDisplay(){
+        let cards = document.querySelectorAll('.blog-wrapper');
+        let maxCards;
+        if(window.innerWidth >= 768) and (window.innerWidth <= 992){
+            maxCards = 4;
+        }
+        else{
+            maxCards = 3;
+        }
+        cards.forEach((card,index)=>{
+            if(index >=  maxCards){
+                card.style.display = "none";
+            }else{
+                card.style.display = "block";
+            }
+        })
+    }
+</script> {% endcomment %}
