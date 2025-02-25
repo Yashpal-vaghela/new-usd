@@ -234,7 +234,6 @@
 }
 
 /* Animated Line */
-
 .dashed_line {
   margin: 20px 0px;
 }
@@ -294,12 +293,12 @@
 }
 
 .registration_heading {
-  font-family: "Gilda Display", serif;
+  /* font-family: "Gilda Display", serif;
   font-size: 36px;
   color: #000;
-  font-weight: 400;
+  font-weight: 400; */
   margin-bottom: 20px;
-  line-height: 1.4;
+  line-height: 1.4 !important;
 }
 
 .registrayion_small {
@@ -422,8 +421,7 @@
 }
 
 
-/* ----------------------------------------- Developer Section -------------------------------------------- */
-
+/* ----------------------------------------- Banner Section -------------------------------------------- */
 .Banner_Section {
   position: relative;
   background-color: #2222;

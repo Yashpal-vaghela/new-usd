@@ -1,4 +1,9 @@
 /* common css */
+.find-dentist-img{
+  height: 100% !important;
+  width: 200px !important;
+}
+
 .searchInfo-content-wrapper .searchInfo-title{
   font-family: "Barlow Condensed", serif;
   font-size: 22px;
@@ -112,7 +117,6 @@
     font-weight: 600;
 }
 
-
 /* home page search bar section  */
 .searchbar-box-wrapper1{
   height: 50px;
@@ -198,11 +202,14 @@
 .dentist-content .card{
     border-radius: 24px;
     background-color: rgba(45, 45, 45, 1);
+    border: none;
 }
 .dentist-content .card img{
     border-radius: 12px;
     width: 230px;
     height: 230px;
+    display: flex;
+    margin: auto;
 }
 .dentist-content .card-body .bookAppoinment-btn{
     background: linear-gradient(
@@ -274,7 +281,7 @@
     font-size: 30px;
 }
 .dentist-content1 p{
-    font-size: 14px
+    font-size: 14px;
 }
 .dentist-content1 h3{
     font-family: "Barlow", sans-serif;
@@ -289,6 +296,12 @@
     height: 100%;   
 }
 
+@media(min-width:1900px){
+  .dentist-content .card img{
+    width: 100%;
+    height: 100%;
+  }
+}
 @media(max-width:1200px){
   .searchbar-button-wrapper span{
     font-size: 13px;

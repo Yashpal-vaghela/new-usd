@@ -1,0 +1,122 @@
+.single-blog-content{
+    background-color: #222;
+}
+
+.single-blog-title{
+    color: #fff;
+    font-family: "Gilda Display", serif;
+    font-size: 32px;
+    font-weight: 400;
+}
+.single-blog-author{
+    font-family: '';
+    margin-bottom: 35px;
+    font-size: 16px;
+    color: #fff;
+    font-family: "Barlow", sans-serif;
+    font-weight: 400;
+}
+.single-blog-author i{
+    margin-right: 10px;
+    color:#D8A97C;
+}
+.single-blog-author a{
+    color: #fff;
+}
+.single-blog-date{
+    position: absolute;
+    background-color: #000;
+    color: #fff;
+    border: 1px solid #D8A97C;
+    padding: 10px 25px;
+    border-radius: 8px;
+    bottom: -4.5%;
+    left: 13%;
+}
+.single-page-main-content h3{
+    font-family: "Barlow Condensed", serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 33.6px;
+}
+.single-page-main-content p{
+    color: #fff;
+    
+}
+/* .single-blog-img-wrapper-content p{
+    line-height: 10px;
+} */
+.single-blog-img-wrapper-content p:last-child{
+    margin-bottom: 0px;
+}
+
+/* single blog content2 */
+.single-blog-content2{
+    background-color: rgba(45, 45, 45, 1);
+    border-radius: 25px;
+    padding: 20px 25px;
+    position: relative;
+}
+.single-blog-content2-title{
+    color:#fff;
+    font-family: "Gilda Display", serif;
+    font-weight: 500;
+    font-size: 32px;
+}
+.single-blog-content2 img{
+    /* margin-bottom: 10px; */
+    border-radius: 8px;
+}
+.single-blog-content2 .form-control{
+    background-color: #000;
+    border-radius: 12px;
+    color: #fff !important;
+    border: 1px solid #000;
+}
+.single-blog-content2 .form-control:focus{
+    color: #000 !important;
+}
+.single-blog-related-content h3{
+    color: #fff;
+    font-family: "Gilda Display", serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.single-blog-related-content span{
+    color: #fff;
+    font-size: 12px;
+}
+/* category */
+.category-wrapper{
+    margin-bottom: 28px;
+}
+.category-img{
+    width:145px;
+}
+.category-content{
+    font-family: "Barlow", sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: #fff;
+    background-color: #000;
+    padding: 15px 38px;
+    border-radius: 12px;
+}
+
+/* tag wrapper */
+
+.tag-img{
+    width:50px;
+}
+.tag-wrapper ul{
+    padding-left: 30px;
+    color: #fff;
+}
+.tag-wrapper ul li{
+    font-family: "Gilda Display", serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 30px;
+}

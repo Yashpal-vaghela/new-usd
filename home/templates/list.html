@@ -15,16 +15,16 @@
   <section class="breadcrumbs-section contactus-breadcrumbs-section">
     <div class="container">
       <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold">Find Dentist</h1>
-      <img src="{% static 'Group 291.svg' %}" class="img-fluid" />
+      <img src="{% static 'Group 291.svg' %}" class="find-dentist-img img-fluid" />
     </div>
   </section>
-  <section class="searchbar-wrap pt-4">
-    <div class="container">
+  <section class="searchbar-wrap">
+    <div class="container pt-4">
       <div class="searchInfo-content-wrapper mb-5">
         {% comment %} <h2 class="searchInfo-title text-header">Dentist</h2> {% endcomment %}
         {% if noshow %}
         <h1 class="searchInfo-subtitle">
-          Ultimate Smile Designers found in Surat
+          Ultimate Smile Designers found in Surat
         </h1>
         {% else %} {% if nomatch %}
         <h1 class="searchInfo-subtitle">{{nomatch}} in {{city}}</h1>
@@ -121,9 +121,7 @@
         <div class="col-lg-5 col-md-8 col-sm-8 col-12 mb-4">
           <div class="dentist-content1">
             <h2 class="mt-3">{{ie.name}}</h2>
-            {% comment %} <h1 class="mt-3">{{ie.name}}</h1> {% endcomment %}
             <h3>{{ie.city}}</h3>
-            {% comment %} <h2>{{ie.city}}</h2> {% endcomment %}
             <p>{{ie.bio}}</p>
           </div>
         </div>
