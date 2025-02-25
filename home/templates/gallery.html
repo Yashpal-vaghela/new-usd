@@ -12,6 +12,12 @@
 
 <!-- Content -->
 <div class="page-content">
+    <section class="breadcrumbs-section contactus-breadcrumbs-section">
+        <div class="container">
+          <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold">Gallery</h1>
+          <img src="{% static 'Group 291.svg' %}" class="img-fluid" />
+        </div>
+      </section>
     <!-- Search Bar -->
     {% comment %} {% include 'searchbar.html' %} {% endcomment %}
     <!-- Search Bar End -->   
@@ -22,40 +28,43 @@
             <div class="col-lg-12 col-md-12 m-b30">
                 <div class="p-4">
                     <div class="wt-box wt-product-gallery">
+                       
                         <div class="image-container" >
-                            <div class="m-top">
-                            </div>
+                            {% comment %} <div class="m-top">
+
+                            </div> {% endcomment %}
                             <div class="image-grid" id="imageGrid" >
                                 {% for ie in data %}
-                                <div class="image-item">
+                                <div class="image-item col-12" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="0">
                                     <img src="{{ ie.image.url }}" alt="Image">
                                 </div>
                                 {% if forloop.counter == 2 and data1|length > 0 %}
                                 {% comment %} {% for ie1 in data1%} {% endcomment %}
-                                <div class="image-item single-image" style="display: flex; justify-content: flex-start; gap: 80px; flex-wrap: wrap; ">
-                                    <img src="{{ data1.0.image.url }}" alt="single-image" style="width: 350px; height: 450px; object-fit: cover;">
+                                <div class="image-item single-image" style="display: flex; justify-content: flex-start; gap: 80px; flex-wrap: wrap; " data-aos="zoom-in-right" data-aos-duration="1500" data-aos-delay="0">
+                                    <img src="{{ data1.0.image.url }}" alt="single-image" class="vertical-Image" />
                                 </div>
                                 {% comment %} {% endfor %} {% endcomment %}
                                 {% endif %}
                                 {% if forloop.counter == 4 and data1|length > 1%}
-                                    <div class="image-item single-image" style="display: flex; justify-content: flex-end; gap: 80px; flex-wrap: wrap;">
-                                        <img src="{{ data1.1.image.url }}" alt="single-image-2" style="width: 350px; height: 450px; object-fit: cover;"/>
+                                    <div class="image-item single-image" style="display: flex; justify-content: flex-end; gap: 80px; flex-wrap: wrap;" data-aos="zoom-in-left" data-aos-duration="1500" data-aos-delay="0">
+                                        <img src="{{ data1.1.image.url }}" alt="single-image-2" class="vertical-Image" />
                                     </div>
                                 {% endif %}
                                 {% if forloop.counter == 6 and data1|length > 1%}
-                                    <div class="image-item single-image" style="display: flex; justify-content: flex-start; gap: 80px; flex-wrap: wrap; ">
-                                        <img src="{{ data1.2.image.url }}" alt="single-image-2" style="width: 350px; height: 450px; object-fit: cover;"/>
+                                    <div class="image-item single-image" style="display: flex; justify-content: flex-start; gap: 80px; flex-wrap: wrap; " data-aos="zoom-in-right" data-aos-duration="1500" data-aos-delay="0">
+                                        <img src="{{ data1.2.image.url }}" alt="single-image-2" class="vertical-Image" />
                                     </div>
                                 {% endif %}
                                 {% if forloop.counter == 8 and data1|length > 1%}
-                                    <div class="image-item single-image" style="display: flex; justify-content: flex-end; gap: 80px; flex-wrap: wrap;">
-                                        <img src="{{ data1.3.image.url }}" alt="single-image-2" style="width: 350px; height: 450px; object-fit: cover;"/>
+                                    <div class="image-item single-image" style="display: flex; justify-content: flex-end; gap: 80px; flex-wrap: wrap;" data-aos="zoom-in-left" data-aos-duration="1500" data-aos-delay="0">
+                                        <img src="{{ data1.3.image.url }}" alt="single-image-2" class="vertical-Image" />
                                     </div>
                                 {% endif %}
                                 {% endfor %}   
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div> 
         </div>
@@ -115,4 +124,12 @@
         });
     });
 </script>
+
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+  AOS.init({
+    offset: 100,
+  });
+</script> 
+
 {% endblock js %}
