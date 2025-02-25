@@ -9,7 +9,7 @@
 
 .contactus-breadcrumbs-section img {
   height: auto !important;
-  width: 15% !important;
+  width: 16% !important;
 }
 
 .contact-section {
@@ -67,8 +67,8 @@
     #d8a97c 75%,
     #dcad81 100%
   ) !important;
-  font-weight: 600 !important;
-  color: #fff !important;
+  font-weight: 500 !important;
+  color: #000 !important;
   width: 25%;
   justify-content: center;
   padding: 8px 12px;
@@ -123,6 +123,7 @@
   justify-content: center; */
 }
 .request-img-section{
+  position: relative;
   border: 6px solid rgba(45, 45, 45, 1);
   border-radius: 25px;
   padding: 40px 80px 5px;
@@ -139,6 +140,27 @@
   z-index: 1;
   width: 30%;
 }
+.cnacel_btn {
+  position: absolute;
+  top: 3%;
+  right: 2%;
+  font-size: 25px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 767px) {
+  .cnacel_btn {
+
+    right:4%;
+ 
+  }
+}
+
+.cnacel_btn:hover {
+  cursor: pointer;
+  color: white;
+}
+
 .request-content {
   width: 100%;
   margin: auto;
@@ -290,6 +312,9 @@ text-align: center;
   .contact-info-wrapper h2 {
     font-size: 20px;
   }
+  .contactus-breadcrumbs-section img {
+    width:18% !important;
+  }
   .contact-info-img {
     margin: auto 10px auto 0px;
     width: 58px;
@@ -303,6 +328,9 @@ text-align: center;
 }
 
 @media(max-width:991px){
+  .contactus-breadcrumbs-section img {
+    width: 25% !important;
+  }
   .contact-info-content {
     gap: 0px;
   }
@@ -349,6 +377,10 @@ text-align: center;
 }
 
 @media(max-width:767px){
+  .contactus-breadcrumbs-section img {
+    width: 28% !important;
+    margin-bottom: 20px !important;
+  }
   .contact-info-content{
     gap:20px;
   }
@@ -398,6 +430,9 @@ text-align: center;
 }
 
 @media(max-width:576px){
+  .contactus-breadcrumbs-section img {
+    width: 30% !important;
+  }
   .contact-info-content{
     gap:10px
   }
@@ -416,7 +451,19 @@ text-align: center;
   .contact-info-wrapper .d-block{
     width: 100%;
   }
-
+  .btn-submit{
+    width:100%;
+    padding: 6px 10px;
+    border-radius: 10px;
+    font-size: 18px;
+  }
+  .contact-form{
+    padding: 50px 0px 55px;
+  }
+  .contact-title{
+    font-size: 32px;
+    margin-bottom: 30px;
+  }
   /* request section content */
   .request-img-section{
     padding: 40px 15px 35px;
@@ -433,6 +480,18 @@ text-align: center;
   }
 }
 @media(max-width:500px){
+  .breadcrumbs-section .container{
+    top:69% !important;
+  }
+  .contact-form .row{
+    --bs-gutter-x: 0.4rem;
+  }
+  .contactus-breadcrumbs-section img {
+    width: 34% !important;
+  }
+  .contact-title{
+    font-size: 28px;
+  }
   .contact-info-img{
     width: 18%;
     height: 63px;

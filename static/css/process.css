@@ -153,7 +153,7 @@
   /* margin-top: 15px; */
 }
 .dentists-content-1 {
-  gap: 112px;
+  /* gap: 112px; */
 }
 .dentists-content-1 p {
   font-family: "Barlow", sans-serif;
@@ -228,6 +228,12 @@
 }
 .dentists-load-wrapper {
   margin-top: 35px;
+}
+
+@media (max-width: 768px) {
+  .contnent-1-txt {
+    width: 100%;
+  }
 }
 /* schedule section */
 .schedule-data-section {

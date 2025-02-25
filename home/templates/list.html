@@ -11,11 +11,17 @@
 
 {% endblock css %} {% block body %}
 
-<div class="page-content pt-4">
-  <section class="searchbar-wrap">
+<div class="page-content">
+  <section class="breadcrumbs-section contactus-breadcrumbs-section">
+    <div class="container">
+      <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold">Find Dentist</h1>
+      <img src="{% static 'Group 291.svg' %}" class="img-fluid" />
+    </div>
+  </section>
+  <section class="searchbar-wrap pt-4">
     <div class="container">
       <div class="searchInfo-content-wrapper mb-5">
-        <h2 class="searchInfo-title text-header">Dentist</h2>
+        {% comment %} <h2 class="searchInfo-title text-header">Dentist</h2> {% endcomment %}
         {% if noshow %}
         <h1 class="searchInfo-subtitle">
           Ultimate Smile Designers found in Surat

@@ -8,6 +8,7 @@
 }
 .smile_step_Section .registration_heading {
   width: 55%;
+  position: relative;
 }
 /* image card */
 .mainImageCard {
@@ -346,10 +347,16 @@
   border: none;
   border-radius: 12px;
   padding: 10px 25px;
-  color: #fff;
+  color: #000;
   font-size: 14px;
   font-family: "Barlow", sans-serif;
+  position: relative;
 }
+
+.loc_btn:hover {
+  color: #000;
+}
+
 @media (max-width: 768px) {
   .registration_subtext {
     padding: 0 20px;
@@ -412,6 +419,137 @@
   .registration_Doctor{
     padding: 40px 0px 35px;
   } */
+}
+
+
+/* ----------------------------------------- Developer Section -------------------------------------------- */
+
+.Banner_Section {
+  position: relative;
+  background-color: #2222;
+  overflow: hidden;
+  padding: 25px 0px 0px;
+}
+
+.modelImageCard {
+  padding: 0px 67px;
+  padding-bottom: 50px;
+}
+
+.banner_content {
+  margin-top: 12px;
+}
+
+.banner_main_txt {
+  display: inline-block;
+  position: relative;
+  font-family: "Gilda Display", serif;
+  font-size: 50px;
+  font-weight: 500;
+  z-index: 20;
+}
+
+.banner_main_txt p{
+  margin-bottom: 0px;
+}
+
+.banner_special_text {
+  position: relative;
+  color: black !important;
+  z-index: 10;
+}
+
+.banner_vector {
+  position: absolute;
+  bottom: 3%;
+  left: 45%; 
+  transform: translateX(-50%); 
+  width: 120%; 
+  max-width: none; 
+  z-index: -1; 
+}
+
+  .banner_buttons {
+    margin-top: 50px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .banner-txt-field {
+    border: none;
+     width: 80%;
+     padding-left: 10px;
+     background-color: #2D2D2D;
+     color: white !important;
+  }
+
+  .banner-form {
+    border: none;
+    width: 80%;
+    background-color: #2D2D2D;
+   color: white !important;
+  }
+
+.banner_btn {
+  align-content: center;
+  border: none;
+  border-radius: 15px;
+  padding: 13px 28px;
+  color: #000;
+  font-size: 14px;
+  font-family: "Barlow", sans-serif;
+  position: relative;
+  margin-left: 10px;
+}
+
+.banner_btn:hover {
+  color: #000;
+}
+
+.search_function {
+  margin-top: 20px;
+  background-color: #2D2D2D;
+  border-radius: 15px;
+  /* height: 50px; */
+  width: 100%;
+}
+
+.submit_banner_btn {
+  border: none;
+  border-radius: 12px;
+  padding: 6px 30px;
+}
+
+.banner_field {
+  background-color: #2D2D2D;
+  border: none;
+}
+
+@media (max-width: 975px) {
+  .modelImageCard {
+    padding: 0px 175px;
+    padding-bottom: 31px;
+  }
+}
+
+@media (max-width: 768px) {
+  .modelImageCard {
+    padding: 0px 91px;
+    padding-bottom: 31px;
+  }
+  .banner_main_txt {
+    font-size: 38px;
+  }
+}
+
+@media (max-width: 575px) {
+  .modelImageCard {
+    padding: 0px 45px;
+    padding-bottom: 31px;
+  }
+  .banner_main_txt {
+    font-size: 32px;
+  }
 }
 
 /* ----------------------------------------- Developer Section -------------------------------------------- */

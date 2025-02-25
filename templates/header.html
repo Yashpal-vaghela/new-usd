@@ -2,12 +2,13 @@
 
  <!-- HEADER START -->
  <header class="site-header header-style-2 mobile-sider-drawer-menu">
-    <div class="sticky-header main-bar-wraper  navbar-expand-lg">
-        <div class="main-bar">  
+    <div class=" main-bar-wraper  navbar-expand-lg ">
+        <div class="main-bar " >  
                             
-            <div class="container clearfix" style="height: 59px;"> 
+            <div class="container clearfix " style="height: 59px;"> 
+                <div class="d-flex align-items-center justify-content-between w-100" style="height: 60px;">
                 <!--Logo section start-->
-                <div class="logo-header">
+                <div class="logo-header ">
                     <div class="logo-header-inner logo-header-one">
                         <a href="{% url 'home:home' %}">
                             <img class="logo-pic-one" src="{% static 'usdlog.png' %}" alt="usdlogo">
@@ -18,7 +19,7 @@
                 <!--Logo section End-->
 
                 <!-- NAV Toggle Button -->
-                <button id="mobile-side-drawer" data-target=".header-nav" data-toggle="collapse" type="button" class="navbar-toggler collapsed">
+                <button id="mobile-side-drawer" data-target=".header-nav" data-toggle="collapse" type="button" class="navbar-toggler collapsed order-2">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar icon-bar-first"></span>
                     <span class="icon-bar icon-bar-two"></span>
@@ -26,7 +27,7 @@
                 </button> 
 
                 <!-- MAIN Vav -->
-                <div class="nav-animation header-nav navbar-collapse collapse d-flex justify-content-center">
+                <div class="d-inline-block nav-animation header-nav navbar-collapse collapse   flex-1">
                     
                     <ul class=" nav navbar-nav">
                         
@@ -51,7 +52,7 @@
                 </div>
                 
                 <!-- Header Right Section-->
-                <div class="extra-nav header-2-nav">
+                <div class="extra-nav header-2-nav  flex-1">
                     <div class="extra-cell">
 
                         <!--Sign up-->
@@ -86,7 +87,7 @@
                         </div>
                         
                     </div>                            
-            
+                </div>
             </div>    
         
         </div>
@@ -99,3 +100,16 @@
     {{city}} or
     {{state}}
 </div>
+
+{% block js %}
+<script>
+    const navEl = document.querySelector('.main-bar');
+    window.addEventListener('scroll', () => {
+        if(window.scrollY >= 56){
+            navEl.classList.add('custom-header');
+        } else if(window.scrollY < 56) {
+            navEl.classList.remove('custom-header');
+        }
+    })
+</script>
+{% endblock js %}

@@ -8,7 +8,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-6 col-md-8 col-12">
-          <h2 class="location-title mb-0">Locations</h2>
+          <h2 class="location-title mb-0">Locations </h2>
           <img
             src="/static/text_vec.svg"
             class="text_vec2"
@@ -22,8 +22,8 @@
             expert dentists across various prime locations.
           </p>
         </div>
-        {% for city in data1 %}
-          <div class="col-lg-3 col-md-4 col-12 square-card-wrapper">
+        {% for city in cities %}
+          <div class="col-lg-3 col-md-4 col-6 col-sm-6 square-card-wrapper">
              <div class="square-card">
               <img
                 src="{% static 'bg_loc.svg' %}"
