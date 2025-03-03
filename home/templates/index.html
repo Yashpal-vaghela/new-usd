@@ -25,23 +25,49 @@
   <!-- BANNER SECTION START -->
   <section class="Banner_Section">
     <div class="container">
-      <div class="row">
-        <!-- Left Column -->
-        <div class="col-lg-6  order-0 order-lg-2 d-flex align-items-center" data-aos="zoom-in" data-aos-duration="1500">
-          <img
-            src="{% static 'mrs-india.png' %}"
-            class="modelImageCard img-fluid"
-            loading="lazy"
-            alt="Smile Step Group 1"
-          />
-                    
+      <div class="row ">
+        <div class="main-body-section text-center">
+          <div class="text-center banner_main_txt">
+            <!-- tooth Images -->
+            <img src="{% static 'usdBannerTeeth2.png' %}" class="banner-teeth-2 bg_1 img-fluid" loading="lazy" alt="Smile Step Group 1" />
+            <!-- Banner Text -->
+            <p class="position-relative">Nothing You Wear is More Important </p>
+            <p class="cool d-inline-block position-relative">Than Your Smile</p>
+          </div>
+          <!-- data-aos="fade-down" data-aos-duration="1500" data-aos-delay="0" -->
+           <!-- Search Functionality -->
+          <div class="aon-banner-search d-inline-block position-relative" style="margin-top: 30px; background-color: #2D2D2D" >
+            <form class="aon-search2-form aon-search2-form-area" action="{% url 'home:search_all_usd' %}" method="GET"> 
+              {% csrf_token %}
+              <div class="d-flex">
+                <img src="{% static 'doc_icon.svg' %}" class="img-fluid"  alt="location" width="25" height="25"/>
+                <input type="text" class="  banner-txt-field" placeholder="Enter Doctor's Name" name="q" id="doctor-search" style=" ">
+              </div>
+              <div class="d-flex">
+                <img  src="{% static 'process-1.svg' %}"  class="img-fluid pl-2"  alt="location"  width="25"  height="25" />
+                <select class=" banner-form" name="city" id="location-select" style="">
+                  <option value="" selected>Select City</option>
+                    {% for city in cities %}
+                    <option value="{{ city.id }}" style="color: white">{{ city.city }}</option>
+                    {% endfor %}
+                </select>
+              </div>
+              <div class="aon-search2-right">
+                <div class="aon-search2-col aon-search-btn">
+                    <button class="submit_banner_btn bat" type="submit">Find</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <!-- USD MAin Banner Teeth Image -->
+          <img  src="{% static 'usdBannerTeeth1.png' %}"  class=" img-fluid"  loading="lazy"  alt="Smile Step Group 1" />
         </div>
-
+        <!-- Left Column -->
+        
         <!-- Right Column -->
-        <div class="col-lg-6 d-flex align-items-center flex-column" style="margin-top: 50px;">
+        {% comment %} <div class="col-lg-6 d-flex align-items-center flex-column" style="margin-top: 50px;">
           <div class="banner_main_txt " data-aos="zoom-in-left" data-aos-duration="1500" data-aos-delay="300">
-            <p class="">Nothing You Wear <br> is More Important </p>
-            <div class="banner_special_text">Than Your Smile</div>
+            
             <img src="{% static 'banner_vec.png' %}" class="banner_vector img-fluid" loading="lazy" alt="Smile Step Group 1" />   
           </div>
           <div class="banner_buttons">
@@ -51,32 +77,10 @@
               For Dentist</a>
           </div>
 
-              <div class="aon-banner-search" style="margin-top: 30px; background-color: #2D2D2D" data-aos="fade-down" data-aos-duration="1500" data-aos-delay="0">
-                <form class="aon-search2-form aon-search2-form-area" action="{% url 'home:search_all_usd' %}" method="GET"> 
-                  {% csrf_token %}
-                  <div class="d-flex">
-                    <img src="{% static 'doc_icon.svg' %}" class="img-fluid"  alt="location" width="25" height="25"/>
-                    <input type="text" class="  banner-txt-field" placeholder="Enter Doctor's Name" name="q" id="doctor-search" style=" ">
-                  </div>
-                  <div class="d-flex">
-                    <img  src="{% static 'process-1.svg' %}"  class="img-fluid pl-2"  alt="location"  width="25"  height="25" />
-                    <select class=" banner-form" name="city" id="location-select" style="">
-                      <option value="" selected>Select City</option>
-                        {% for city in cities %}
-                        <option value="{{ city.id }}" style="color: white">{{ city.city }}</option>
-                        {% endfor %}
-                    </select>
-                  </div>
-                  <div class="aon-search2-right">
-                    <div class="aon-search2-col aon-search-btn">
-                        <button class="submit_banner_btn bat" type="submit">Find</button>
-                    </div>
-                  </div>
-                </form>
-              </div>
+              
               
           </div>
-      </div>    
+      </div>     {% endcomment %}
        
       </div>
     </div>
@@ -84,58 +88,26 @@
 
   <!-- BANNER SECTION END -->
   <section class="Developer_Section">
-    <img
-      src="{% static 'bg_vec.svg' %}"
-      class="vec_one"
-      loading="lazy"
-      alt="care Icon"
-    />
-    <img
-      src="{% static 'bg_vec.svg' %}"
-      class="vec_two"
-      loading="lazy"
-      alt="care Icon"
-    />
     <div class="container">
       <div class="row">
         <!-- Left Column -->
-        <div class="col-lg-7 mainImageCard order-0 order-lg-2">
-          <img
-            src="{% static 'Discover_Group.png' %}"
-            class="Discover_Group img-fluid"
-            loading="lazy"
-            alt="Smile Step Group 1"
-          />
-          <img
-            src="{% static 'ring.svg' %}"
-            class="usd_ring"
-            loading="lazy"
-            alt="USD ring"
-          />
-
-          <div class="Discover_text_card">
-            <p class="Discover_text">
-              Discover Your <br />Ideal Smile with <br />
-              Our Ultimate <br />
-              Smile Designers
-            </p>
-          </div>
+        <div class="col-lg-5 mainImageCard order-0 order-lg-2">
+          <img  src="{% static 'discover-img.png' %}"  class="Discover_Group img-fluid"  loading="lazy"  alt="Smile Step Group 1"  />
+          <img  src="{% static 'ring.svg' %}"  class="usd_ring"  loading="lazy"  alt="USD ring"  />
+          <img  src="{% static 'sm-orange.svg' %}"  class="smile_orange"  loading="lazy"  alt="orage smile"  />
         </div>
 
         <!-- Right Column -->
         <div
-          class="px-0 col-lg-5 d-flex align-items-center flex-column justify-content-center"
+          class="px-0 col-lg-7 d-flex align-items-center flex-column justify-content-center"
           style="margin-top: 12px; margin-bottom: 18px; position: relative"
         >
           <div class="step_card d-flex flex-row align-items-start">
             <div class="step_header">
+               <p class="Discover_text">  Discover Your Ideal Smile with Our Ultimate Smile Designers </p> 
               <h3 class="Discover_heading cool">
-                Transform Your Smile with The <br />
-                Expert Smile Designer
+                Transform Your Smile with The Expert Smile Designer
               </h3>
-              <p class="Discover_text1">
-                Discover Your Ideal Smile with Our Ultimate Smile Designers
-              </p>
               <p class="Discover_subtext">
                 Begin your journey to a radiant smile with our curated list of
                 Ultimate Smile Designers.
@@ -158,34 +130,31 @@
     </div>
   </section>
 
-  <section class="working-section">
+  <section class="working-section text-center">
     <div class="container">
-      <h2 class="working_title text-header mb-0">Working</h2>
-      <img
-        src="/static/text_vec.svg"
-        class="text_vec2"
-        loading="lazy"
-        alt="text vector"
-      />
+      <h2 class="working_title text-header mb-0 text-center cool">WORKING PROCESS </h2>
+     
       <h3 class="working_subtitle text-header-subtitle mb-0">How Our Platform Works</h3>
       <div
-        class="row working-main-content justify-content-lg-start justify-content-center gap-md-0"
+        class="row working-main-content justify-content-lg-center justify-content-center gap-md-0"
       >
         <div class="col-lg-4 col-md-6 col-sm-10 col-12">
-          <div class="card working-main-wrapper">
+          <div class="card working-main-wrapper card_1">
             <div
-              class="location-icon mx-auto my-lg-4 mt-4 mb-3 d-flex align-items-center justify-content-center"
+              class=" mx-auto my-lg-4 mt-4 mb-3 d-flex align-items-center justify-content-center "
             >
+            <img  src="{% static 'sm-grey.svg' %}"  class="smile_orange"  loading="lazy"  alt="orage smile"  />
               <img
                 src="{% static 'process-1.svg' %}"
                 class="img-fluid"
                 alt="location"
+                style="width: 60px; height: 60px;"
               />
             </div>
             <div class="card-body">
-              <h2 class="working-main-title mb-1 mb-lg-2">
+              <p class="working-main-title mb-1 mb-lg-2">
                 Search for Your Smile Designer
-              </h2>
+              </p>
               <p class="working-main-description my-lg-3 my-2">
                 Explore our directory to find your ideal Ultimate Smile
                 Designer. Filter by location, expertise, and ratings to find the
@@ -195,14 +164,15 @@
           </div>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-10 col-12">
-          <div class="card working-main-wrapper">
+          <div class="card working-main-wrapper card_2">
             <div
-              class="location-icon mx-auto my-lg-4 mt-4 mb-3 d-flex align-items-center justify-content-center"
+              class=" mx-auto my-lg-4 mt-4 mb-3 d-flex align-items-center justify-content-center"
             >
               <img
                 src="{% static 'process-2.svg' %}"
                 class="img-fluid"
                 alt="location"
+                style="width: 60px; height: 60px;"
               />
             </div>
             <div class="card-body">
@@ -218,21 +188,23 @@
           </div>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-10 col-12">
-          <div class="card working-main-wrapper">
+          <div class="card working-main-wrapper card_3">
             <div
-              class="location-icon mx-auto my-lg-4 mt-4 mb-3 d-flex align-items-center justify-content-center"
+              class=" mx-auto my-lg-4 mt-4 mb-3 d-flex align-items-center justify-content-center "
             >
+            <img  src="{% static 'sm-yellow.svg' %}"  class="smile_yellow"  loading="lazy"  alt="orage smile"  />
               <img
                 src="{% static 'process-3.svg' %}"
                 class="img-fluid"
                 alt="location"
+                style="width: 60px; height: 60px;"
               />
             </div>
             <div class="card-body">
               <h2 class="working-main-title mb-1 mb-lg-2">
                 Experience Your Smile Transformation
               </h2>
-              <p class="working-main-description my-lg-3 my-2">
+              <p class="working-main-description my-lg-3 my-2 position-relative">
                 Attend your appointment to start the journey towards your dream
                 smile. With expert care and advanced digital techniques, your
                 Smile Designer will bring your vision to life.

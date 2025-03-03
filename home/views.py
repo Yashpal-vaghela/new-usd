@@ -11,6 +11,8 @@ from account.forms import ContactForm
 from django.db.models import Q
 from django.core.paginator import Paginator
 from hm.pre import get_location_info
+from geopy.distance import geodesic
+import re
 
 @csrf_exempt  # This bypasses CSRF protection for demonstration purposes only
 def receive_location(request):
@@ -103,10 +105,21 @@ def search_all_usd(request):
     Allows filtering by city (from request or session) and search query (name).
     Supports pagination.
     """
+
+    city = None
     city_id = request.GET.get('city', '').strip()
     query = request.GET.get('q', '').strip()
     data1 = Dentist.objects.all().order_by('name')  # Default queryset
     search_message = None
+
+    # print(data1[0].iframe)
+    # iframe_link = data1[0].iframe
+    # match = re.search(r"!2d(-?\d+\.\d+)!3d(-?\d+\.\d+)", iframe_link)
+    # longitude = match.group(1)
+    # latitude = match.group(2)
+    # print("long",longitude, "lat", latitude)
+    user_latitude = request.session.get('latitude')
+    user_longitude = request.session.get('longitude')
 
     # Check for city in request; if not found, check session
     if not city_id:
@@ -125,6 +138,36 @@ def search_all_usd(request):
         city = get_object_or_404(City, id=city_id)
         data1 = data1.filter(city=city)
 
+    if user_latitude and user_longitude:
+        doctors_with_location = []
+        doctors_without_location = []
+
+        for doctor in data1:
+            if doctor.iframe:
+                match = re.search(r"!2d(-?\d+\.\d+)!3d(-?\d+\.\d+)", doctor.iframe)
+                if match:
+                    doctor_longitude = float(match.group(1))
+                    doctor_latitude = float(match.group(2))
+
+                    # Calculate distance if user location is available
+                    doctor_distance = geodesic((user_latitude, user_longitude), (doctor_latitude, doctor_longitude)).km
+                    doctors_with_location.append((doctor_distance, doctor))
+                else:
+                    doctors_without_location.append(doctor)
+            else:
+                doctors_without_location.append(doctor)
+        # Sort doctors by distance (nearest first)
+        doctors_with_location.sort(key=lambda x: x[0])
+        # Combine sorted doctors with those that don't have location info
+        sorted_doctors = [doc for _, doc in doctors_with_location] + doctors_without_location
+
+    else:
+        # If user location is not available, return the doctors as they are
+        sorted_doctors = list(data1)
+    
+    print(sorted_doctors)
+
+
     # Filter by search query if provided
     if query:
         data1 = data1.filter(name__icontains=query)
@@ -134,7 +177,7 @@ def search_all_usd(request):
         search_message = "No Ultimate Designers Found Based On Your Query."
 
     # Pagination
-    paginator = Paginator(data1, 12)  # 12 dentists per page
+    paginator = Paginator(sorted_doctors, 12)  # 12 dentists per page
     page = request.GET.get('page', 1)
 
     try:
@@ -145,11 +188,14 @@ def search_all_usd(request):
         data = paginator.page(paginator.num_pages)
 
     context = {
+        'sorted_doctors': sorted_doctors,
         'data': data,
         'search_message': search_message,
         'query': query,
-        'city': city_id or request.session.get('city'),
+        'city': city or request.session.get('city') or 'all',
+        'total': len(data)
     }
+    
     return render(request, 'list.html', context)
 
 def all_usd(request):

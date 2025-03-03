@@ -89,6 +89,7 @@
 
   <section class="dentist-section">
     <div class="container">
+      {% if data %}
       <div class="row mt-4 mt-md-4 mt-sm-5">
         {% for ie in data %}
         <div class="col-lg-3 col-md-4 col-sm-4 col-12 mb-4">
@@ -123,6 +124,7 @@
             <h2 class="mt-3">{{ie.name}}</h2>
             <h3>{{ie.city}}</h3>
             <p>{{ie.bio}}</p>
+            <p class="cool profile_btn"><a href="{% url 'home:find_dentist_d' ie.slug %}">View Profile ></a></p>
           </div>
         </div>
         <div class="col-lg-4 col-md-12 col-sm-12 col-12 mb-4">
@@ -136,6 +138,9 @@
         </div>
         {% endfor %} {% include 'pagination.html' %}
       </div>
+      {% else %}
+      <h3 class="d-flex justify-content-center text-white">Not Found in {{city}}</h3>
+      {% endif %}
     </div>
   </section>
 </div>

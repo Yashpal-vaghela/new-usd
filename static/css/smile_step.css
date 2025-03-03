@@ -92,6 +92,10 @@
   color: #666;
 }
 
+
+.Discover_subtext{
+  color: #C9C9C9;
+}
 /* Resonsive design */
 
 @media (max-width: 1200px) {
@@ -274,17 +278,7 @@
   padding: 50px 0px;
 }
 
-.vec_one {
-  position: absolute;
-  top: -30%;
-}
 
-.vec_two {
-  position: absolute;
-  bottom: -44%;
-  transform: scaleX(-1);
-  right: 0%;
-}
 
 .inner_card {
   /* margin: 50px 0px; */
@@ -424,38 +418,45 @@
 /* ----------------------------------------- Banner Section -------------------------------------------- */
 .Banner_Section {
   position: relative;
-   /* background-color: #2222; */
-  background: linear-gradient(250.55deg, #120b07 0%, #311b0d 28.55%, #160d07 75.55%);
+   background-color: #000000;
   overflow: hidden;
   padding: 25px 0px 0px;
+  /* height: 80vh; */
 }
 
-.modelImageCard {
-  padding: 0px 67px;
-  padding-bottom: 50px;
+.main-body-section {
+  margin-top: 120px;
 }
 
 .banner_content {
   margin-top: 12px;
 }
 
+.banner-teeth-2 {
+  position: absolute;
+
+  height: 250px;
+  width: 250px;
+  z-index: 0;
+}
+
+.bg_1 {
+  top: -53%;
+  right: 7%;
+}
+
 .banner_main_txt {
-  display: inline-block;
   position: relative;
   font-family: "Gilda Display", serif;
-  font-size: 50px;
+  font-size: 40px;
   font-weight: 500;
+  color: white;
   z-index: 20;
+  margin-bottom: 0px;
 }
 
 .banner_main_txt p{
   margin-bottom: 0px;
-}
-
-.banner_special_text {
-  position: relative;
-  color: black !important;
-  z-index: 10;
 }
 
 .banner_vector {
@@ -517,6 +518,7 @@
   border: none;
   border-radius: 12px;
   padding: 6px 30px;
+  margin-top: 3px;
 }
 
 .banner_field {
@@ -525,44 +527,75 @@
 }
 
 @media (max-width: 975px) {
-  .modelImageCard {
-    padding: 0px 175px;
-    padding-bottom: 31px;
+  
+  .banner_main_txt {
+    /* font-size: 35px; */
+    margin-bottom: 40px;
+    
   }
+  .banner-teeth-2 {
+    height: 200px;
+    width: 200px;
+  }
+
+  .bg_1 {
+    top: -41%;
+    right: -4%;
+  }
+
 }
 
 @media (max-width: 768px) {
-  .modelImageCard {
-    padding: 0px 91px;
-    padding-bottom: 31px;
-  }
+ 
   .banner_main_txt {
-    font-size: 38px;
+    font-size: 35px;
+    margin-bottom: 40px;
+    
   }
+  .banner-teeth-2 {
+    height: 170px;
+    width: 170px;
+  }
+
+  .bg_1 {
+    top: -41%;
+    right: -4%;
+  }
+
 }
 
 @media (max-width: 575px) {
-  .modelImageCard {
-    padding: 0px 45px;
-    padding-bottom: 31px;
-  }
   .banner_main_txt {
-    font-size: 32px;
+    font-size: 20px;
+    margin-bottom: 30px;
+  }
+
+  .main-body-section {
+    margin-top: 80px;
+  }
+
+  .banner-teeth-2 {
+    height: 120px;
+    width: 120px;
+  }
+
+  .bg_1 {
+    top: -81%;
+    right: -4%;
   }
 }
 
 /* ----------------------------------------- Developer Section -------------------------------------------- */
 
 .Developer_Section {
-  position: relative;
-  background-color: white;
+  background-color: #000000;
   overflow: hidden;
   padding: 25px 0px 0px;
 }
 
 .Discover_subtext {
   font-family: "Barlow", sans-serif;
-  color: #666;
+  color: rgba(201 ,201, 201, 0.8);
   font-size: 16px;
   font-weight: 600;
   /* width: 65%; */
@@ -578,17 +611,10 @@
 }
 
 .Discover_Group {
-  padding: 40px 70px;
+  padding: 40px 90px;
 }
 
-.Discover_text1 {
-  font-family: "Gilda Display", serif;
-  font-size: 22px;
-  margin-top: 10px;
-  margin-bottom: 0px;
-  color: #000;
-  display: none;
-}
+
 
 /* animation */
 
@@ -597,8 +623,16 @@
   width: 130px;
   position: absolute;
   top: 0%;
-  left: 0%;
+  left: 12%;
   animation: rotateRing 10s linear infinite;
+}
+
+.smile_orange {
+  position: absolute;
+  width: 200px;
+  height: 177.78px;
+  bottom: 10%;
+  right: 4%;
 }
 
 @keyframes rotateRing {
@@ -612,22 +646,17 @@
 
 /* discover card */
 
-.Discover_text_card {
-  position: absolute;
-  right: 10%;
-  top: 17%;
-}
 
 .Discover_text {
   font-family: "Gilda Display", serif;
-  font-size: 24px;
+  font-size: 35px;
   margin-top: 10px;
   margin-bottom: 0px;
-  color: #000;
+  color: #ffffff;
 }
 @media (max-width: 1200px) {
   .Discover_text {
-    font-size: 22px;
+    font-size: 30px;
     margin-top: 0px;
   }
   .Discover_subtext {
@@ -639,10 +668,27 @@
   }
 }
 @media (max-width: 992px) {
-  .Discover_text_card {
-    right: 15%;
-    top: 20%;
+
+  .usd_ring {
+    height: 130px;
+    width: 130px;
+    
+    top: 0%;
+    left: 18%;
   }
+  
+  .smile_orange {
+
+    width: 200px;
+    height: 177.78px;
+    bottom: 10%;
+    right: 10%;
+  }
+
+  .mainImageCard {
+    text-align: center;
+  }
+ 
   .Developer_Section {
     padding: 40px 0px 15px;
   }
@@ -658,27 +704,31 @@
 }
 
 @media (max-width: 768px) {
-  .Discover_text_card {
-    display: none;
-  }
+ 
 
   .Discover_Group {
     width: 100%;
     height: auto;
-    padding: 10px 20px;
+    /* padding: 10px 20px; */
   }
 
   .usd_ring {
-    height: 120px;
-    width: 120px;
-    top: -5%;
-    left: 54%;
+    height: 130px;
+    width: 130px;
+    
+    top: 0%;
+    left: 8%;
   }
-  .Discover_text1 {
-    display: block;
-    margin-bottom: 18px;
-    margin-top: 0px;
+  
+  .smile_orange {
+
+    width: 150px;
+    height: 133.33px;
+    bottom: 10%;
+    right: 10%;
   }
+
+ 
   .Discover_heading {
     margin-bottom: 10px;
     font-size: 20px;
@@ -686,23 +736,19 @@
 }
 
 @media (max-width: 576px) {
-  .Discover_text_card {
-    display: none;
-  }
+
   .usd_ring {
     height: 80px;
     width: 80px;
-    top: -4%;
-    left: 53%;
+    top: 0%;
+    left: 18%;
   }
 
-  .Discover_Group {
+  /* .Discover_Group {
     padding: 10px 0px;
-  }
-  .Discover_text1 {
-    display: block;
-    margin-bottom: 20px;
-    line-height: 1.5;
+  } */
+  .Discover_text {
+   
     font-size: 20px;
   }
   .Discover_heading {
@@ -845,3 +891,7 @@
   top: 0%;
   left: 15%;
 }
+
+
+
+
