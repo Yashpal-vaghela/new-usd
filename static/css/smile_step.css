@@ -434,15 +434,14 @@
 
 .banner-teeth-2 {
   position: absolute;
-
-  height: 250px;
-  width: 250px;
+  height: 270px;
+  width: 270px;
   z-index: 0;
 }
 
 .bg_1 {
-  top: -53%;
-  right: 7%;
+  top: -79%;
+  right: 6%;
 }
 
 .banner_main_txt {
@@ -519,49 +518,49 @@
   border-radius: 12px;
   padding: 6px 30px;
   margin-top: 3px;
+  background: linear-gradient(130deg,#636363 0%,#9B9B9B 20%,#B1B1B1 36%,#E1E1E1 50%,#B1B1B1 62%,#9B9B9B 75%,#636363 100%) !important;
 }
 
 .banner_field {
   background-color: #2D2D2D;
   border: none;
 }
-
-@media (max-width: 975px) {
-  
+@media(max-width:1200px){
+  .bg_1{
+    top:-75%;
+    right:-1%;
+    width:250px;
+    height:250px;
+  }
+}
+@media (max-width: 991px) {
   .banner_main_txt {
     /* font-size: 35px; */
     margin-bottom: 40px;
-    
   }
   .banner-teeth-2 {
     height: 200px;
     width: 200px;
   }
-
   .bg_1 {
-    top: -41%;
-    right: -4%;
+    top: -56%;
+    right: -13%;
   }
-
 }
 
 @media (max-width: 768px) {
- 
   .banner_main_txt {
-    font-size: 35px;
+    font-size: 30px;
     margin-bottom: 40px;
-    
   }
   .banner-teeth-2 {
     height: 170px;
     width: 170px;
   }
-
   .bg_1 {
-    top: -41%;
-    right: -4%;
+    top: -70%;
+    /* right: -7%; */
   }
-
 }
 
 @media (max-width: 575px) {
@@ -569,16 +568,13 @@
     font-size: 20px;
     margin-bottom: 30px;
   }
-
   .main-body-section {
     margin-top: 80px;
   }
-
   .banner-teeth-2 {
     height: 120px;
     width: 120px;
   }
-
   .bg_1 {
     top: -81%;
     right: -4%;
@@ -664,7 +660,7 @@
   }
   .usd_ring {
     top: -3.5%;
-    left: 1%;
+    left: 5%;
   }
 }
 @media (max-width: 992px) {
@@ -727,8 +723,6 @@
     bottom: 10%;
     right: 10%;
   }
-
- 
   .Discover_heading {
     margin-bottom: 10px;
     font-size: 20px;
@@ -736,19 +730,19 @@
 }
 
 @media (max-width: 576px) {
-
   .usd_ring {
     height: 80px;
     width: 80px;
-    top: 0%;
-    left: 18%;
+    top: 2%;
+    left: 12%;
   }
-
+  .smile_orange{
+    width:115px;
+  }
   /* .Discover_Group {
     padding: 10px 0px;
   } */
   .Discover_text {
-   
     font-size: 20px;
   }
   .Discover_heading {

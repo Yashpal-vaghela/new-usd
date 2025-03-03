@@ -218,7 +218,7 @@
 
   {% include "location.html" %}
 
-  <section class="registration_Patient">
+  {% comment %} <section class="registration_Patient">
     <img
       src="{% static 'bg_vec.svg' %}"
       class="vec_one"
@@ -241,14 +241,6 @@
           alt="text vector"
           style="width: 136px; height: 10px"
         />
-        {% comment %}
-        <img
-          src="{% static 'Group 291.svg' %}"
-          class="text_vec"
-          loading="lazy"
-          alt="text vector"
-        />
-        {% endcomment %}
         <h3 class="registration_heading text-header-subtitle">
           Want to Schedule Your Smile <br />
           Design Appointment Easily?
@@ -265,18 +257,24 @@
         </div>
       </div>
     </div>
+  </section> {% endcomment %}
+  <section class="registration_section text-center">
+    <div class="container my-5 ">
+      <div class="row register_wrapper justify-content-center">
+        <div class="col-lg-9 col-md-10 col-12 position-relative">  
+          <h2 class="working_title text-header mb-0 text-center cool">REGISTRATION</h2>
+          <h3 class="working_subtitle text-header-subtitle mb-0 ">Want to Schedule Your Smile Design Appointment Easily?</h3>
+          <p>Transform your smile and boost your confidence. Our network of Ultimate Smile Designers is ready to provide you with personalized dental solutions. If you're aiming for a radiant smile, our experts are here to guide you every step of the way. Should you require a more tailored approach, don't hesitate to get in touch with us.</p>
+          <img src="{% static 'registration-dentist.png'%}" class="img-fluid" />
+          <button class="btn getInTouch-btn bat my-1"><a href="/account/dentist">GET IN TOUCH</a></button>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="dentists-section">
     <div class="container">
-      <h1 class="dentists_title position-relative text-header mb-0">Dentists</h1>
-      <img
-        src="/static/text_vec.svg"
-        class="text_vec2"
-        loading="lazy"
-        alt="text vector"
-        style="margin-bottom: 5px; width: 75px; height: 12px"
-      />
+      <h1 class="working_title  text-center cool dentists_title position-relative text-header mb-0 cool">Dentists</h1>
       <h2 class="dentists_subtitle text-header-subtitle">Best Dentist Near Me</h2>
       <div
         class="dentists-content-1 d-flex align-items-end justify-content-between"

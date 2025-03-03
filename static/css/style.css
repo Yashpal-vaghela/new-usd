@@ -19946,7 +19946,7 @@ input[placeholder],
 .bat {
   background: rgb(203,145,21) !important;
   /* background: linear-gradient(259.34deg, #DCAD81 0%, #D8A97C 25%, #FFD2A4 50%, #D8A97C 75%, #DCAD81 100%) !important; */
-  background: linear-gradient(130deg, #C3942F 0%, #D89C27 18%, #DFC86F 37%, #E7DC96 50%, #DFC86F 64%, #D89C27 82%, #C99C30 100%) !important;
+  background: linear-gradient(130deg,#636363 0%,#9B9B9B 20%,#B1B1B1 36%,#E1E1E1 50%,#B1B1B1 62%,#9B9B9B 75%,#636363 100%) !important;
   font-weight: 600 !important;
 }
 
