@@ -106,6 +106,14 @@
   border: none !important;
   color:#fff !important;
   margin-left: auto;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/></svg>");
+}
+.dentists-content-1 .form-select:hover option{
+  color: #fff;
+}
+.dentists-content-1 .form-select:focus{
+  border-color: #fff !important;
+  box-shadow: none;
 }
 .dentists-content-1 .form-select::before{
   content:"\f078";
@@ -115,8 +123,8 @@
   font-family: "Font Awesome 6 Free";
   color: #fff;
 }
-/* end new dropdown menu */
 
+/* end new dropdown menu */
 .dentists-content-1 .dropdown .btn {
   background-color: rgba(45, 45, 45, 1) !important;
   border-radius: 15px;
@@ -151,13 +159,17 @@
 .dentists-content-2 {
   margin-bottom: 15px;
 }
+.dentists-content-2 .col-12{
+  padding-left: 1.3rem !important;
+  padding-right: 1.3rem !important;
+}
 .dentists-content {
   padding: 25px;
   background-color: rgba(45, 45, 45, 1);
   border-radius: 25px;
 }
 .dentists-content img{
-  width:300px;
+  width:100%;
   height: 250px;
   border-radius: 18px;
   display: flex;
@@ -215,10 +227,22 @@
 .schedule-data-section {
   background-color: rgba(34, 34, 34, 1);
   padding: 50px 0px;
+  position: relative;
+}
+.vector3-img{
+  position: absolute;
+  z-index: 0;
+  top:14%;
 }
 .schedule-data-section .row{
   margin: 25px auto 30px;
+  z-index: 1;
+  position: relative;
 }
+/* .schedule-data-content-2 .px-md-2{
+  padding-left: .3rem !important;
+  padding-right: .3rem !important;
+} */
 .schedule-data-title {
   letter-spacing: 0.03em;
 }
@@ -257,7 +281,7 @@
   font-family: "Gilda Display", serif;
   font-size: 32px;
   font-weight: 400;
-  background: linear-gradient(
+  /* background: linear-gradient(
       259.34deg,
       #dcad81 0%,
       #d8a97c 25%,
@@ -265,8 +289,8 @@
       #d8a97c 75%,
       #dcad81 100%
     )
-    text;
-  color: transparent;
+    text; */
+  color: #FBE9D0;
   text-align: center;
   letter-spacing: 0.03em;
 }
@@ -312,16 +336,7 @@
   padding: 0.5rem 0.98rem;
 }
 .btn-call b {
-  background: linear-gradient(
-      259.34deg,
-      #dcad81 0%,
-      #d8a97c 25%,
-      #ffd2a4 50%,
-      #d8a97c 75%,
-      #dcad81 100%
-    )
-    text !important;
-  color: transparent !important;
+  color: #000;
 }
 .schedule-data-content-2 .callus-btn-wrapper i {
   background-color: #000;
@@ -332,16 +347,7 @@
   font-size: 20px;
 }
 .schedule-data-content-2 .callus-btn-wrapper i::before {
-  background: linear-gradient(
-      259.34deg,
-      #dcad81 0%,
-      #d8a97c 25%,
-      #ffd2a4 50%,
-      #d8a97c 75%,
-      #dcad81 100%
-    )
-    text !important;
-  color: transparent !important;
+  color:#FBE9D0;
 }
 .arrow-icon {
   padding: 15px;
@@ -380,7 +386,6 @@
   border: none;
   border-radius: 15px;
 }
-
 .aon-inputicon-box .form-select {
   border: none;
   height: 50px;
@@ -414,7 +419,6 @@
 .site-button{
   color:#fff !important;
 }
-
 .schedule-data-content .text_vec2{
   height: 10px !important;
   width: 105px !important;
@@ -471,6 +475,17 @@
 .getInTouch-btn a{
   color: #000;
 }
+.vector1-img{
+  position: absolute;
+  z-index: -1;
+  bottom: 20%;
+}
+.vector2-img{
+  right: 0%;
+  position: absolute;
+  z-index: -1;
+  top:12%;
+}
 @media(min-width:2800px){
   .register_wrapper p{
     width:90%;
@@ -493,6 +508,11 @@
     font-size: 14px !important;
   }
 }
+@media(min-width:992px){
+  .dentists-content-2 .col-12{
+   width:30%;
+  }
+}
 @media (max-width: 1200px) {
   .working_subtitle{
     font-size: 35px;
@@ -508,6 +528,9 @@
   .dentists-content-title {
     font-size: 20px;
   }
+  .dentists-content img{
+    height: 250px;
+  }
   .dentists-content-1 {
     gap: 50px;
   }
@@ -519,8 +542,8 @@
     right: 0px;
   }
   .schedule-data-subtitle {
-    font-size: 36px;
-    line-height: 50px;
+    font-size: 36px !important;
+    line-height: 50px !important;
   }
   .schedule-data-content p {
     font-size: 14px;
@@ -547,6 +570,9 @@
   }
   .register_wrapper p{
     font-size: 14px;
+  }
+  .vector2-img{
+    top:9%;
   }
 }
 @media (max-width: 1024px) {
@@ -607,19 +633,18 @@
     left: -1px;
   }
   .schedule-data-subtitle {
-    font-size: 27px;
-    line-height: 40px;
+    font-size: 25px !important;
+    line-height: 40px !important;
     margin-top: 0px;
   }
-  
   .schedule-data-content p {
     margin-bottom: 0px;
     font-size: 12px;
   }
   .bg-schedule {
-    top: 58%;
-    width: 36.5%;
-    right: 10px;
+    top: 50%;
+    width: 37%;
+    right: 9px;
   }
   .schedule-data-link h3,
   .bg-schedule h3 {
@@ -627,7 +652,7 @@
   }
   .schedule-data-content-2 .col-sm-5:last-child {
     margin-top: 20px !important;
-    width: 45%;
+    width: 52%;
   }
   .schedule-data-content-2 .callus-btn-wrapper i {
     padding: 10px;
@@ -733,7 +758,7 @@
     display: none;
   }
   .schedule-data-subtitle {
-    font-size: 35px;
+    font-size: 35px !important;
   }
   .schedule-data-content-2 {
     justify-content: center;
@@ -745,20 +770,20 @@
     margin-bottom: 22px;
   }
   .btn-call {
-    background: linear-gradient(
+    /* background: linear-gradient(
       259.34deg,
       #dcad81 0%,
       #d8a97c 25%,
       #ffd2a4 50%,
       #d8a97c 75%,
       #dcad81 100%
-    ) !important;
+    ) !important; */
     border-radius: 15px;
     margin: 15px auto;
   }
-  .btn-call b {
+  /* .btn-call b {
     color: #000 !important;
-  }
+  } */
   .schedule-data-content-2 .callus-btn-wrapper i {
     padding: 13px;
   }
@@ -806,7 +831,8 @@
     height: 330px;
   }
   .working_title{
-    margin-bottom: 0px ;
+    margin-bottom: 0px;
+    line-height: normal !important;
   }
   .working_title,
   .dentists_title {
@@ -835,6 +861,7 @@
   .dentists_subtitle {
     /* margin-top:12px; */
     margin-bottom: 10px;
+    line-height: normal !important;
   }
   .dentists-content .card-body p {
     font-size: 14px;
@@ -848,6 +875,10 @@
   .dentists-content {
     border-radius: 30px;
     padding: 22px;
+  }
+  .vector2-img{
+    top:7%;
+    /* right: -10%; */
   }
   /* schedule data section */
   .schedule-data-section{
