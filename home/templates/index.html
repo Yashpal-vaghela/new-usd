@@ -261,7 +261,7 @@
   <section class="registration_section text-center">
     <div class="container my-5 ">
       <div class="row register_wrapper justify-content-center">
-        <div class="col-lg-9 col-md-10 col-12 position-relative">  
+        <div class="col-lg-9 col-md-10 col-12 position-relative">
           <h2 class="working_title text-header mb-0 text-center cool">REGISTRATION</h2>
           <h3 class="working_subtitle text-header-subtitle mb-0 ">Want to Schedule Your Smile Design Appointment Easily?</h3>
           <p>Transform your smile and boost your confidence. Our network of Ultimate Smile Designers is ready to provide you with personalized dental solutions. If you're aiming for a radiant smile, our experts are here to guide you every step of the way. Should you require a more tailored approach, don't hesitate to get in touch with us.</p>
@@ -272,203 +272,108 @@
     </div>
   </section>
 
-  <section class="dentists-section">
-    <div class="container">
-      <h1 class="working_title  text-center cool dentists_title position-relative text-header mb-0 cool">Dentists</h1>
-      <h2 class="dentists_subtitle text-header-subtitle">Best Dentist Near Me</h2>
-      <div
-        class="dentists-content-1 d-flex align-items-end justify-content-between"
-      >
-        <p class="mb-0">
-          Discover trusted dental professionals via Ultimate Smile Designers.
-          Our platform connects you to expert dentists offering check‐ups,
-          cosmetic, and advanced procedures. Enjoy personalized, quality care
-          for your smile with us.
-        </p>
-        <form id="searchForm" class="form position-relative" method="GET" action="{% url 'home:home' %}" style="width:20%">
-          {% csrf_token %}
-              <select
-                id="cityDropdown"
-                class="form-select"
-                name="city"
-                placeholder="Select Location"
-                aria-label="Default select example">
-                <option value="">Select Location</option>
-                {% for ie in a_city %}
-                <option value="{{ie.id}}" {% if ie.city == "Surat" or city == ie.id|stringformat:"s" %}selected{% endif %}>
-                  {{ie.city}}
-                </option>
-                {% endfor %}
-              </select>
-        </form>
-        {% comment %} <div class="dropdown">
-          <button
-            class="btn btn-secondary dropdown-toggle"
-            type="button"
-            id="dropdownMenuButton1"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Surat <i class="fa-solid fa-chevron-down"></i>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" href="#">Ahmedabad</a></li>
-            <li><a class="dropdown-item" href="#">Mumbai</a></li>
-            <li><a class="dropdown-item" href="#">Chhattisgarh</a></li>
-            <li><a class="dropdown-item" href="#">Bardoli</a></li>
-            <li><a class="dropdown-item" href="#">Vadodara</a></li>
-            <li><a class="dropdown-item" href="#">Rajkot</a></li>
-            <li><a class="dropdown-item" href="#">Rohtak</a></li>
-            <li><a class="dropdown-item" href="#">Chennai</a></li>
-            <li><a class="dropdown-item" href="#">Faridkot</a></li>
-          </ul>
-        </div> {% endcomment %}
-
-      </div>
-      <div class="row dentists-content-2 mt-5 " id="dentist-list">
-      {% for ie in data %}
-        <div class="col-lg-4 col-md-6 col-sm-8 col-11">
-          <div class="card dentists-content justify-content-center">
-            <a href="{% url 'home:find_dentist_d' ie.slug %}">
-              {% if ie.profile %}
-                <img src="{{ ie.profile.url }}" class="img-fluid" alt={{ ie.name }} />
-              {% else %}
-               <img src="{% static 'noimage-team.webp' %}" class="img-fluid" alt="Image" />
-              {% endif %}
-            </a>
-            <div class="card-body px-0 pb-0">
-              <h2 class="dentists-content-title mb-0">
-                {{ie.name}}
-              </h2>
-              <p class="mb-2">{{ie.city}}</p>
-              <button class="btn btn-appointment w-100 my-2">
-                <a href="/account/dentist/">Book Appointment</a>
-              </button>
-              <span>ADE Verified Dentist</span>
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-        {% comment %} <div class="col-lg-2 col-md-3 col-sm-11 col-12 dentists-load-wrapper">
-          <button class="btn btn-appointment w-100">Load More</button>
-        </div> {% endcomment %}
-      </div>
-    </div>
-  </section>
+  <section class="dentists-section position-relative">
+    <img src="{% static 'vector2.svg'%}" class="vector2-img img-fluid"/>
+     <div class="container">
+       <h1 class="working_title  text-center cool dentists_title position-relative text-header mb-0 cool">Dentists</h1>
+       <h2 class="dentists_subtitle text-header-subtitle">Best Dentist Near Me</h2>
+       <div class="dentists-content-1 d-flex align-items-end justify-content-between">
+         <p class="mb-0">
+           Discover trusted dental professionals via Ultimate Smile Designers.
+           Our platform connects you to expert dentists offering check‐ups,
+           cosmetic, and advanced procedures. Enjoy personalized, quality care
+           for your smile with us.
+         </p>
+         <form id="searchForm" class="form position-relative" method="GET" action="{% url 'home:home' %}" style="width:20%">
+           {% csrf_token %}
+               <select
+                 id="cityDropdown"
+                 class="form-select"
+                 name="city"
+                 placeholder="Select Location"
+                 aria-label="Default select example">
+                   <option value="">Select Location</option>
+                   {% for ie in a_city %}
+                   <option value="{{ie.id}}" {% if ie.city == "Surat" or city == ie.id|stringformat:"s" %}selected{% endif %}>
+                     {{ie.city}}
+                   </option>
+                   {% endfor %}
+               </select>
+         </form>
+       </div>
+       <div class="row dentists-content-2 mt-5 pb-4 justify-content-center " id="dentist-list">
+       {% for ie in data %}
+         <div class="col-lg-4 col-md-6 col-sm-10 col-12">
+           <div class="card dentists-content justify-content-center">
+             <a href="{% url 'home:find_dentist_d' ie.slug %}">
+               {% if ie.profile %}
+                 <img src="{{ ie.profile.url }}" class="img-fluid" alt={{ ie.name }} />
+               {% else %}
+                <img src="{% static 'noimage-team.webp' %}" class="img-fluid" alt="Image" />
+               {% endif %}
+             </a>
+             <div class="card-body px-0 pb-0">
+               <h2 class="dentists-content-title mb-0">
+                 {{ie.name}}
+               </h2>
+               <p class="mb-2">{{ie.city}}</p>
+               <button class="btn btn-appointment bat w-100 my-2">
+                 <a href="/account/dentist/">Book Appointment</a>
+               </button>
+               <span>ADE Verified Dentist</span>
+             </div>
+           </div>
+         </div>
+         {% endfor %}
+         {% comment %} <div class="col-lg-2 col-md-3 col-sm-11 col-12 dentists-load-wrapper">
+           <button class="btn btn-appointment w-100">Load More</button>
+         </div> {% endcomment %}
+       </div>
+     </div>
+     <img src="{% static 'vector1.svg'%}" class="vector1-img img-fluid"/>
+   </section>
 
   <section class="smile_step_Section">
     <div class="container">
-      <h2 class="registrayion_small">Creating Smiles</h2>
-      <img
-        src="{% static 'text_vec.svg' %}"
-        class="text_vec"
-        loading="lazy"
-        alt="text vector"
-        style="width: 140px; height: 14px"
-      />
-      <p class="registration_heading">
+      <div class="inner_smile_step_section">
+        <h2 class="registrayion_small cool">Creating Smiles</h2>
+        <p class="registration_heading">
         We are Crafting Beautiful Smiles for a Brighter Future.
-      </p>
-      <div class="row">
-        <!-- Left Column -->
-        <div class="col-lg-6 mainImageCard">
-          <img
-            src="{% static 'smile_S1.png' %}"
-            class="smile_S1 img-fluid"
-            loading="lazy"
-            alt="Smile Step Group 1"
-          />
-
-          <div class="card card-consult one">
-            <img
-              src="{% static 'top_Rank.svg' %}"
-              class="icon_img mx-auto d-block"
-              loading="lazy"
-              alt="Top rank Icon"
-            />
-            <p class="s_heading1 cool">Consult Top Smile Designers</p>
-            <p class="s_subheading1">
-              Connect with leading smile experts who blend artistry and science
-              to craft your perfect smile.
-            </p>
-          </div>
-
-          <div class="card card-consult two">
-            <img
-              src="{% static 'care.svg' %}"
-              class="icon_img mx-auto d-block"
-              loading="lazy"
-              alt="care Icon"
-            />
-            <p class="s_heading1 cool">Experience Unmatched Care</p>
-            <p class="s_subheading1">
-              With our Ultimate Smile Designers, rest assured you are in capable
-              hands committed to your dental health and beauty.
-            </p>
+        </p>
+      </div>
+      
+      <div class="all_step">
+        <div class="step_left">
+          <div class="step_image_content">
+          <p class="step_number step_number_left"> 01 </p>
+          <img  src="{% static 'step1.png' %}"  class="step_image img-fluid"  loading="lazy"  alt="Smile Step Group 1"  />
+        </div>
+          <div class="step_content">
+            <p class="step_head">Find Your Ultimate Smile Designer</p>
+            <p class="step_text">Explore our extensive directory to discover a skilled Ultimate Smile Designer near you, one who aligns with your smile aspirations and dental needs.</p>
           </div>
         </div>
 
-        <!-- Animated Line in the Center -->
-        <div class="col-lg-1 d-flex justify-content-center dashed_line">
-          <div class="animated-line"></div>
+        <div class="step_right">
+          
+          <div class="step_content_right order-1">
+            <p class="step_head">Find Your Ultimate Smile Designer</p>
+            <p class="step_text">Explore our extensive directory to discover a skilled Ultimate Smile Designer near you, one who aligns with your smile aspirations and dental needs.</p>
+          </div>
+          <div class="step_image_content order-0 order-md-1 order-lg-1 ">
+          <p class="step_number step_number_right"> 02 </p>
+          <img  src="{% static 'step2.png' %}"  class="step_image img-fluid "  loading="lazy"  alt="Smile Step Group 1"  />
+        </div>
         </div>
 
-        <!-- Right Column -->
-        <div
-          class="col-lg-5 d-flex align-items-center flex-column justify-content-center"
-          style="margin-top: 12px; margin-bottom: 18px"
-        >
-          <div class="step_card d-flex flex-row align-items-start">
-            <img
-              src="{% static 'point.svg' %}"
-              class="point"
-              loading="lazy"
-              alt="Top rank Icon"
-            />
-            <div class="step_header">
-              <h3 class="s_heading2 cool">Find Your Ultimate Smile Designer</h3>
-              <p class="s_subheading1">
-                Explore our extensive directory to discover a skilled Ultimate
-                Smile Designer near you, one who aligns with your smile
-                aspirations and dental needs.
-              </p>
-              <hr class="line" />
-            </div>
-          </div>
-
-          <div class="step_card d-flex flex-row align-items-start">
-            <img
-              src="{% static 'point.svg' %}"
-              class="point"
-              loading="lazy"
-              alt="Top rank Icon"
-            />
-            <div class="step_header">
-              <h3 class="s_heading2 cool">Customize Your Smile Journey</h3>
-              <p class="s_subheading1">
-                Select the perfect time for your appointment and embark on a
-                personalized journey to achieve the smile that best fits your
-                personality and desires.
-              </p>
-              <hr class="line" />
-            </div>
-          </div>
-
-          <div class="step_card d-flex flex-row align-items-start">
-            <img
-              src="{% static 'point.svg' %}"
-              class="point"
-              loading="lazy"
-              alt="Top rank Icon"
-            />
-            <div class="step_header">
-              <h3 class="s_heading2 cool">Secure and Easy Payment</h3>
-              <p class="s_subheading1">
-                Enjoy a seamless booking experience our secure and
-                straightforward payment process, setting you on the path to your
-                smile transformation.
-              </p>
-            </div>
+        <div class="step_left">
+          <div class="step_image_content">
+          <p class="step_number step_number_left"> 03 </p>
+          <img  src="{% static 'step3.png' %}"  class="step_image img-fluid"  loading="lazy"  alt="Smile Step Group 1"  />
+        </div>
+          <div class="step_content">
+            <p class="step_head">Find Your Ultimate Smile Designer</p>
+            <p class="step_text">Explore our extensive directory to discover a skilled Ultimate Smile Designer near you, one who aligns with your smile aspirations and dental needs.</p>
           </div>
         </div>
       </div>
@@ -476,12 +381,11 @@
   </section>
 
   <section class="schedule-data-section">
+    <img src="{% static 'vector3.png' %}" class="vector3-img img-fluid" />
     <div class="container">
       <div class="row justify-content-center">
-        <div
-          class="schedule-data-content-img1 col-xl-6 col-lg-6 col-md-6 px-md-1 position-relative"
-        >
-          <img src="{% static 'Subtract.webp' %}" class="img-fluid" />
+        <div class="schedule-data-content-img1 col-xl-6 col-lg-6 col-md-6 px-md-1 position-relative">
+          <img src="{% static 'filter-Subtract.webp' %}" class="img-fluid" />
           <div class="bg-schedule">
             <div class="d-flex align-items-center justify-content-center">
               <img
@@ -495,13 +399,7 @@
           </div>
         </div>
         <div class="col-lg-6 col-md-6 schedule-data-content">
-          <h2 class="schedule-data-title position-relative text-header mb-0">Get Started</h2>
-          <img
-            src="/static/text_vec.svg"
-            class="text_vec2"
-            loading="lazy"
-            alt="text vector"
-          />
+          <h2 class="working_title schedule-data-title position-relative text-header mb-0 cool">Get Started</h2>
           <h3 class="schedule-data-subtitle text-header-subtitle">Call Us and Schedule Your Smile Design Consultation</h3>
           {% comment %} <h2 class="schedule-data-subtitle"></h2> {% endcomment %}
           <p>
@@ -572,10 +470,10 @@
                 <p class="text-center mb-0">Experience Years</p>
               </div>
             </div>
-            <div class="col-lg-4 col-md-5 col-sm-5 col-6 callus-btn-wrapper">
-              <a href="tel:+918469888877">
+            <div class="col-lg-4 col-md-5 col-sm-5 col-6 callus-btn-wrapper ">
+              <a href="tel:+918469888877" >
                 <button
-                  class="d-flex align-items-center justify-content-center btn btn-call">
+                  class="d-flex align-items-center justify-content-center btn btn-call bat ">
                   <b>Call Us</b>
                   <i class="ms-4 ms-sm-3 ms-lg-3 fa-solid fa-arrow-right-long"></i>
                 </button>

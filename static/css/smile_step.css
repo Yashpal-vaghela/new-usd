@@ -1,63 +1,24 @@
 .smile_step_Section {
-  background-color: #f7f5f0;
+  background-color: #000000;
   padding: 50px 0px;
+  text-align: center;
+}
+
+.inner_smile_step_section {
+  width: 100%;
+
 }
 
 .smile_step_Section .text_vec {
   margin-bottom: 10px;
 }
 .smile_step_Section .registration_heading {
-  width: 55%;
   position: relative;
 }
 /* image card */
 .mainImageCard {
   position: relative;
   margin: 40px 0px;
-}
-
-.smile_S1 {
-  padding: 40px 30px;
-}
-
-.card-consult {
-  position: absolute;
-  text-align: center;
-  align-content: center;
-  padding: 12px;
-  background-color: white;
-  border-radius: 15px;
-  max-width: 250px;
-}
-
-.icon_img {
-  height: 46px;
-  width: 46px;
-  align-content: center;
-  margin: 0 auto;
-}
-
-.s_heading1 {
-  font-family: "Gilda Display", serif;
-  font-size: 16px;
-  margin-top: 10px;
-  margin-bottom: 0px;
-}
-
-.s_subheading1 {
-  font-family: "Barlow", sans-serif;
-  font-size: 12px;
-  color: #666;
-  margin-bottom: 10px;
-}
-
-.one {
-  top: -2%;
-  left: 31%;
-}
-
-.two {
-  bottom: 0%;
 }
 
 /* Step Text */
@@ -96,48 +57,95 @@
 .Discover_subtext{
   color: #C9C9C9;
 }
-/* Resonsive design */
 
-@media (max-width: 1200px) {
-  .icon_img {
-    height: 35px;
-    width: 35px;
-  }
+/* images for steps */
 
-  .s_heading1 {
-    font-size: 14px;
-  }
-  .two {
-    bottom: 0%;
-    left: -8%;
-  }
-
-  .card-consult {
-    max-width: 210px;
-  }
+.step_left {
+  
+  text-align: left;
+  display: flex;
+  align-items: center;
+  margin-top: 40px;
 }
 
+.step_right {
+  
+  text-align: right;
+  justify-content: right;
+  display: flex;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.step_image_content {
+  position: relative;
+}
+
+.step_image {
+  
+  height: 300px;
+  width: 240px;
+}
+
+.step_number {
+  font-size: 100px;
+  font-weight: bold;
+  font-family: "Barlow", sans-serif;
+  position: absolute; 
+  z-index: 10;
+}
+
+.step_number_left {
+  color: rgba(216,156,39, 0.9);
+  top: -30%;
+  left: 1%;
+}
+
+.step_number_right {
+  color: rgba(255,255,255, 0.9);
+  top: -30%;
+  right: 1%;
+}
+
+.step_content {
+  padding-left: 50px;
+}
+
+.step_content_right {
+  
+  padding-right: 50px;
+}
+
+.step_head {
+  font-family: "Gilda Display", serif;
+  font-size: 22px;
+  color: #FFFFFF;
+}
+
+.step_text {
+  font-family: "Barlow", sans-serif;
+  width: 500px;
+}
+
+/* Resonsive design */
+
+
 @media (min-width: 601px) and (max-width: 992px) {
-  .smile_S1 {
-    padding: 40px 30px;
-    width: 561px;
-    height: 501px;
-    display: flex;
-    margin: 0 auto;
+
+  .step_text {
+    width: 350px;
   }
 
-  .one {
-    top: 4%;
-    right: 0%;
-  }
-  .two {
-    bottom: 10%;
-    left: 6%;
+  .step_image {
+  
+    height: 250px;
+    width: 200px;
   }
 
-  .card-consult {
-    max-width: 250px;
+  .step_number {
+    font-size: 80px;
   }
+ 
   .mainImageCard {
     position: relative;
     margin: 10px 0px;
@@ -145,28 +153,20 @@
 }
 
 @media (max-width: 768px) {
-  .icon_img {
-    height: 24px;
-    width: 24px;
+  .step_text {
+    width: 250px;
   }
 
-  .s_heading1 {
-    font-size: 12px;
-    margin-bottom: 0px !important;
+  .step_image {
+  
+    height: 250px;
+    width: 200px;
   }
 
-  .one {
-    top: 4%;
-    right: 0%;
-  }
-  .two {
-    bottom: 0%;
-    left: 6%;
+  .step_number {
+    font-size: 80px;
   }
 
-  .card-consult {
-    max-width: 250px;
-  }
   .mainImageCard {
     position: relative;
     margin: 10px 0px;
@@ -180,35 +180,40 @@
 }
 
 @media (max-width: 576px) {
-  .icon_img {
-    height: 24px;
-    width: 24px;
+  .step_left {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .step_right {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
   }
 
-  .s_heading1 {
-    font-size: 12px;
-    margin-bottom: 0px !important;
+  .step_text {
+    width: 100%;
   }
 
-  .one {
-    top: -5%;
-    right: 5%;
+  .step_content {
+    padding-top: 20px;
+    padding-left: 0px;
   }
-  .two {
-    bottom: -10%;
-    left: 8%;
+  
+  .step_content_right {
+    padding-top: 20px;
+    padding-right: 0px;
+  }
+  
+  .step_head {
+    font-family: "Gilda Display", serif;
+    font-size: 18px;
+    color: #FFFFFF;
   }
 
-  .card-consult {
-    max-width: 220px;
-  }
-
-  .smile_S1 {
-    padding: 10px 10px;
-  }
-
-  .s_subheading1 {
-    font-size: 10px;
+  .all_step {
+    padding-top: 20px;
   }
 
   .point {
@@ -237,37 +242,6 @@
   }
 }
 
-/* Animated Line */
-.dashed_line {
-  margin: 20px 0px;
-}
-
-.animated-line {
-  width: 2px; /* Thin vertical line */
-  height: 100%; /* Full height */
-  background: repeating-linear-gradient(
-    to bottom,
-    #dcad81 0px,
-    #dcad81 20px,
-    transparent 20px,
-    transparent 30px,
-    #dcad81 30px,
-    #dcad81 32px,
-    transparent 32px,
-    transparent 43px
-  );
-  position: relative;
-  animation: moveLine 2s linear infinite;
-}
-
-@keyframes moveLine {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: 0 50px;
-  }
-}
 
 /* -----------------------------------------Registration Page-------------------------------------------- */
 
@@ -287,10 +261,10 @@
 }
 
 .registration_heading {
-  /* font-family: "Gilda Display", serif;
+  font-family: "Gilda Display", serif;
   font-size: 36px;
-  color: #000;
-  font-weight: 400; */
+  color: #fff;
+  font-weight: 400; 
   margin-bottom: 20px;
   line-height: 1.4 !important;
 }
@@ -303,18 +277,9 @@
   font-weight: 600;
   line-height: 38.4px;
   letter-spacing: 0.03em;
-  text-align: left;
+  display: inline-block;
   position: relative;
-  background: linear-gradient(
-      50deg,
-      rgb(220, 173, 129) 0%,
-      rgb(216, 169, 124) 44%,
-      rgb(255, 210, 164) 50%,
-      rgb(216, 169, 124) 55%,
-      rgb(220, 173, 129) 100%
-    )
-    text !important;
-  color: transparent !important;
+  
 }
 
 .text_vec {

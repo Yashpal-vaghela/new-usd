@@ -1,22 +1,12 @@
 .location-section {
   padding: 50px 0px 30px;
-  background-color: #222222;
 }
 .location-section .row .col-lg-6{
     padding-left: 25px;
     padding-right: 25px;
 }
 .location-title {
-  background: linear-gradient(
-      50deg,
-      rgb(220, 173, 129) 0%,
-      rgb(216, 169, 124) 5%,
-      rgb(255, 210, 164) 10%,
-      rgb(216, 169, 124) 15%,
-      rgb(220, 173, 129) 51%
-    )
-    text;
-  color: transparent;
+  display: inline-block;
   font-family: "Barlow Condensed", serif;
   font-size: 24px;
   font-weight: 600;
@@ -40,18 +30,12 @@
   position: relative;
   width: 100%;
   padding-top: 100%;
-  border: 1px solid transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 15px;
-  background: linear-gradient(#222, #222) padding-box,
-    linear-gradient(
-        259.34deg,
-        #dcad81 0%,
-        #d8a97c 25%,
-        #ffd2a4 50%,
-        #d8a97c 75%,
-        #dcad81 100%
-      )
-      border-box;
+  box-shadow: 0px -2px 10px rgba(255, 255, 255, 0.25);
+  /* background: linear-gradient(#000, #000) padding-box,
+  linear-gradient(130deg, #C3942F 0%, #D89C27 18%, #DFC86F 37%, #E7DC96 50%, #DFC86F 64%, #D89C27 82%, #C99C30 100%) 
+      border-box; */
 }
 
 .square-card-content {
