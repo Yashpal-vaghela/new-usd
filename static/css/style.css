@@ -8898,8 +8898,10 @@ body[class*="active-"] .cs-message-panel {
 }
 
 .site-pagination .page-item.active .page-link {
-  background-color: #D8A97C;
-  border-color:#D8A97C;
+  /* background-color: #D8A97C; */
+  /* border-color:#D8A97C; */
+  color: black;
+  background: linear-gradient(130deg, #C3942F 0%, #D89C27 18%, #DFC86F 37%, #E7DC96 50%, #DFC86F 64%, #D89C27 82%, #C99C30 100%) !important;
 }
 
 .site-pagination .pagination>li>a,
@@ -8910,7 +8912,7 @@ body[class*="active-"] .cs-message-panel {
   padding: 5px 2px;
   min-width: 36px;
   background-color: transparent;
-  border: 1px solid #D8A97C;
+  border: 1px solid #FFF;
   color: #fff;
 }
 
@@ -8921,8 +8923,8 @@ body[class*="active-"] .cs-message-panel {
 }
 .site-pagination .pagination>li>a:hover,
 .site-pagination .pagination>li>span:hover {
-  color: #fff;
-  background-color: #D8A97C;
+  color: #000;
+  background: linear-gradient(130deg, #C3942F 0%, #D89C27 18%, #DFC86F 37%, #E7DC96 50%, #DFC86F 64%, #D89C27 82%, #C99C30 100%) !important;
   border-color: #D8A97C;
 }
 
@@ -20317,6 +20319,7 @@ input[placeholder],
     left: 0%;
     height: 800px;
     object-fit: cover;
+    z-index: -1;
 }
 .Doctor_photo_card {
   display: inline-block;
@@ -20557,7 +20560,7 @@ input[placeholder],
 
 }
 .bg-linear-gradient{
-  background: linear-gradient(259.34deg, #DCAD81 0%, #D8A97C 25%, #FFD2A4 50%, #D8A97C 75%, #DCAD81 100%) text !important;
+  /* background: linear-gradient(259.34deg, #DCAD81 0%, #D8A97C 25%, #FFD2A4 50%, #D8A97C 75%, #DCAD81 100%) text !important; */
   color: transparent !important;
 }
 .text-header-subtitle{

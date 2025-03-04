@@ -66,7 +66,7 @@
 }
 
 .searchbar-box-wrapper select option {
-  background-color: rgb(45, 45, 45);
+  background-color: rgba(34, 34, 34, 0.6);;
   color: #fff;
 }
 
@@ -96,14 +96,7 @@
 }
 
 .searchbar-button-wrapper {
-    background: linear-gradient(
-        259.34deg,
-        #dcad81 0%,
-        #d8a97c 25%,
-        #ffd2a4 50%,
-        #d8a97c 75%,
-        #dcad81 100%
-      );
+   
       border-radius: 8px;
       padding: 9px 8px;
 }
@@ -194,14 +187,14 @@
 
 /* dentists section */
 .dentist-content{
-    background-color: rgba(45, 45, 45, 1);
+    background-color: rgba(34, 34, 34, 0.6);
     padding: 15px;
     border-radius: 20px;
     height: 100%;
 }
 .dentist-content .card{
     border-radius: 24px;
-    background-color: rgba(45, 45, 45, 1);
+    background-color: transparent;
     border: none;
 }
 .dentist-content .card img{
@@ -212,14 +205,7 @@
     margin: auto;
 }
 .dentist-content .card-body .bookAppoinment-btn{
-    background: linear-gradient(
-        259.34deg,
-        #dcad81 0%,
-        #d8a97c 25%,
-        #ffd2a4 50%,
-        #d8a97c 75%,
-        #dcad81 100%
-      );
+   
       border-radius: 8px;
       padding: 9px 12px;
       font-family: "Barlow", sans-serif;
@@ -230,7 +216,7 @@
     color: #222;
 }
 .dentist-content .card-body{
-    background-color: rgba(45, 45, 45, 1);
+    background-color: transparent;
     padding: 12px 5px;
 }
 .dentist-content .card-body h2{
@@ -260,23 +246,14 @@
 }
 
 .dentist-content1,.dentist-content2{
-    background-color: rgba(45, 45, 45, 1);
+    background-color: rgba(34, 34, 34, 0.6);
     padding: 15px;
     border-radius: 20px;
     height: 100%;
 }
 
 .dentist-content1 h2{
-    background: linear-gradient(
-        50deg,
-        rgb(220, 173, 129) 0%,
-        rgb(216, 169, 124) 15%,
-        rgb(255, 210, 164) 25%,
-        rgb(216, 169, 124) 40%,
-        rgb(220, 173, 129) 75%
-      )
-      text !important;
-    color: transparent !important;
+    
     font-family: "Barlow Condensed", serif;
     font-size: 30px;
 }

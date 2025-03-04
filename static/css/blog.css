@@ -14,10 +14,17 @@
     font-size: 36px;
     line-height: 49px;
     font-family: "Gilda Display", serif;
-    width:18%;
+    width:50%;
+    z-index: 100;
     /* background: linear-gradient(259.34deg, #DCAD81 0%, #D8A97C 25%, #FFD2A4 50%, #D8A97C 75%, #DCAD81 100%) text !important; 
     color: transparent !important; */
     /* font-weight: bold; */
+}
+
+@media (max-width: 575px) {
+    .breadcrumbs-title{
+        font-size: 20px;
+    }
 }
 .blog-page-wrapper .breadcrumbs-title{
     width:7%;

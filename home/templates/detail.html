@@ -13,10 +13,16 @@
 
 {% block body %}
      <!-- Content -->
-     <div class="page-content" style="border-top:1px solid #ddd; padding-top: 40px">
+     <div class="page-content" style="border-top:1px solid #ddd; ">
+        <section class="breadcrumbs-section contactus-breadcrumbs-section">
+            <div class="container">
+              <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool" >{{data.name}}</h1>
+              {% comment %} <img src="{% static 'Group 291.svg' %}" class="find-dentist-img img-fluid" /> {% endcomment %}
+            </div>
+          </section>
                     
         <!-- Left & right section -->
-        <div class="aon-page-jobs-wrap d-flex justify-content-center">
+        <div class="aon-page-jobs-wrap d-flex justify-content-center" style="padding-top: 40px ">
             <img src="{% static 'doc_detail_vec.svg' %}" class=" img-fluid bg_detail_vec1" loading="lazy" alt="background vector" />
             <div class="container">
                 <div class="row">
@@ -36,7 +42,7 @@
 
                         <!-- doctor detail card -->
                         <div class="Doctor_Detail_Card">
-                            <h3 class="Doctor_Name  cool">{{data.name}}</h3>
+                            <h2 class="Doctor_Name  cool">{{data.name}}</h2>
                             <div class="Doctor-City Doctor-Text">
                                 {% if data.city %}
                                 {{data.city.city}}

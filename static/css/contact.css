@@ -13,7 +13,7 @@
 }
 
 .contact-section {
-  background-color: #222;
+  background-color: #000;
 }
 .contact-title {
   font-family: "Gilda Display", serif;
@@ -21,20 +21,10 @@
   font-size: 36px;
   line-height: 48px;
   text-align: center;
-  background: linear-gradient(
-      259.34deg,
-      #dcad81 0%,
-      #d8a97c 25%,
-      #ffd2a4 50%,
-      #d8a97c 75%,
-      #dcad81 100%
-    )
-    text !important;
-  color: transparent !important;
 }
 
 .contact-form {
-  background-color: rgba(45, 45, 45, 1);
+  background-color: rgba(34, 34, 34, 0.6);
   border-radius: 12px;
   padding: 75px 0px 51px;
 }
@@ -199,16 +189,7 @@
   letter-spacing: 1px;
 }
 .request-content p{
-  background: linear-gradient(
-    259.34deg,
-    #dcad81 0%,
-    #d8a97c 25%,
-    #ffd2a4 50%,
-    #d8a97c 75%,
-    #dcad81 100%
-  )
-  text !important;
-color: transparent !important;
+ 
 font-family: "Barlow Condensed", serif;
 font-weight: 400;
 font-size: 18px;
@@ -287,7 +268,7 @@ text-align: center;
     margin-top: 0px;
 }
 .request-button{
-  background: linear-gradient(259.34deg, #DCAD81 0%, #D8A97C 25%, #FFD2A4 50%, #D8A97C 75%, #DCAD81 100%) !important;
+  /* background: linear-gradient(259.34deg, #DCAD81 0%, #D8A97C 25%, #FFD2A4 50%, #D8A97C 75%, #DCAD81 100%) !important; */
   border-radius: 8px;
   padding: 10px 12px;
   font-family: "Barlow", sans-serif;
@@ -295,11 +276,11 @@ text-align: center;
   font-size: 18px;
   line-height: 28px;
 }
-.request-button:hover{
+/* .request-button:hover{
   background: #222 !important;
   border: 1px solid #DCAD81;
   color:#fff;
-}
+} */
 @media (min-width: 992px) {
   .contact-info-wrapper:first-child {
     width: 25% !important;
