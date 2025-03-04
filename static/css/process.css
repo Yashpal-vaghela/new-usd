@@ -355,7 +355,7 @@
 }
 /* find section */
 .find-section {
-  background-color: #fff;
+  background-color: #000;
   padding: 50px 0;
 }
 .find-section-title {
@@ -368,7 +368,7 @@
   margin: 0px auto 15px;
 }
 .find-section-subtitle {
-  color: #000;
+  color: #fff;
   font-family: "Gilda Display", serif;
   font-weight: 400;
   font-size: 38px;
