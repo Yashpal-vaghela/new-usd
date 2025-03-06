@@ -1,5 +1,5 @@
 .single-blog-content{
-    background-color: #222;
+    background-color: #000;
 }
 
 .single-blog-title{
@@ -27,7 +27,11 @@
     position: absolute;
     background-color: #000;
     color: #fff;
-    border: 1px solid #D8A97C;
+    border:1px solid;
+    border-image-source: linear-gradient(130deg, #C3942F 0%, #D89C27 18%, #DFC86F 37%, #E7DC96 50%, #DFC86F 64%, #D89C27 82%, #C99C30 100%) !important;
+    border-image-slice: 1;  
+    border-image-width: 2px;
+    /* border: 1px solid #D8A97C; */
     padding: 10px 25px;
     border-radius: 8px;
     bottom: -4.5%;
@@ -35,24 +39,33 @@
 }
 .single-page-main-content h3{
     font-family: "Barlow Condensed", serif;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 20px;
     line-height: 33.6px;
+    background: linear-gradient(130deg, #C3942F 0%, #D89C27 18%, #DFC86F 37%, #E7DC96 50%, #DFC86F 64%, #D89C27 82%, #C99C30 100%) !important;
+  /* background: linear-gradient(259.34deg, #DCAD81 0%, #D8A97C 25%, #FFD2A4 50%, #D8A97C 75%, #DCAD81 100%) !important; */
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  color: transparent !important;
+  background-color: #2d2d2d !important;
+  display: inline-block;
+}
+.single-page-main-content h4,.single-page-main-content ul li strong{
+    color: #fff;
 }
 .single-page-main-content p{
-    color: #fff;
-    
+    color: #cec2c2;
 }
-/* .single-blog-img-wrapper-content p{
-    line-height: 10px;
-} */
+
+
 .single-blog-img-wrapper-content p:last-child{
     margin-bottom: 0px;
 }
 
 /* single blog content2 */
 .single-blog-content2{
-    background-color: rgba(45, 45, 45, 1);
+    background-color: rgba(52, 52, 52, 0.6);
     border-radius: 25px;
     padding: 20px 25px;
     position: relative;
@@ -64,7 +77,6 @@
     font-size: 32px;
 }
 .single-blog-content2 img{
-    /* margin-bottom: 10px; */
     border-radius: 8px;
 }
 .single-blog-content2 .form-control{
@@ -83,7 +95,6 @@
     font-weight: 400;
     line-height: 24px;
 }
-
 .single-blog-related-content span{
     color: #fff;
     font-size: 12px;
@@ -106,12 +117,11 @@
 }
 
 /* tag wrapper */
-
 .tag-img{
     width:50px;
 }
 .tag-wrapper ul{
-    padding-left: 30px;
+    padding-left: 28px;
     color: #fff;
 }
 .tag-wrapper ul li{

@@ -71,7 +71,7 @@
           </div>
         </div>
         <div class="col-lg-2 col-md-6 col-sm-6 col-12">
-          <button class="btn w-100 search-button bat" type="submit">Search</button>
+          <button class="btn w-100 search-button mt-0 bat" type="submit">Search</button>
         </div>
         <div class="col-lg-2 col-md-6 col-sm-6 col-12">
           <div
@@ -107,13 +107,13 @@
                 {% endif %}
               </a>
 
-              <div class="card-body">
-                <h2>{{ie.name}}</h2>
-                <p>{{ie.city}}</p>
+              <div class="card-body text-end">
+                <h2 class="text-start">{{ie.name}}</h2>
+                <p class="text-start mb-0">{{ie.city}}</p>
                 <button class="btn bookAppoinment-btn w-100 bat">
                   <a href="/account/dentist/">Book Appointment</a>
                 </button>
-                <span>ADE Verified Dentist</span>
+                <span class="cool d-inline-block">ADE Verified Dentist</span>
               </div>
               
             </div>
@@ -121,10 +121,10 @@
         </div>
         <div class="col-lg-5 col-md-8 col-sm-8 col-12 mb-4">
           <div class="dentist-content1">
-            <h2 class="mt-3 cool">{{ie.name}}</h2>
+            <h2 class="mt-3 cool d-inline-block">{{ie.name}}</h2>
             <h3>{{ie.city}}</h3>
             <p>{{ie.bio}}</p>
-            <p class="cool profile_btn"><a href="{% url 'home:find_dentist_d' ie.slug %}">View Profile ></a></p>
+            <p class="cool profile_btn"><a href="{% url 'home:find_dentist_d' ie.slug %}">View Profile <i class="fa-solid fa-angles-right" style="font-size:12px"></i></a></p>
           </div>
         </div>
         <div class="col-lg-4 col-md-12 col-sm-12 col-12 mb-4">

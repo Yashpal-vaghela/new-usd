@@ -97,12 +97,11 @@
   font-weight: 500;
 }
 
-.Loc-description {
+/* .Loc-description {
   font-family: "Barlow", sans-serif;
   color:#fff;
-  /* font-weight: 600; */
   letter-spacing: 0.5px;
-}
+} */
 
 @media (max-width: 768px) {
   .loc-title-card {

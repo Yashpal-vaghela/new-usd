@@ -82,21 +82,11 @@
 }
 
 .search-button {
-  background: linear-gradient(
-    259.34deg,
-    #dcad81 0%,
-    #d8a97c 25%,
-    #ffd2a4 50%,
-    #d8a97c 75%,
-    #dcad81 100%
-  );
-  border-radius: 8px;
-  padding: 9px 12px;
-  font-weight: 600;
+  border-radius: 8px !important;
+  padding: 10px 12px !important;
 }
 
 .searchbar-button-wrapper {
-   
       border-radius: 8px;
       padding: 9px 8px;
 }

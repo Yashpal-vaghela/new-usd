@@ -21,6 +21,7 @@
   font-size: 36px;
   line-height: 48px;
   text-align: center;
+  display: inline-block;
 }
 
 .contact-form {
@@ -49,21 +50,9 @@
 }
 
 .btn-submit {
-  background: linear-gradient(
-    259.34deg,
-    #dcad81 0%,
-    #d8a97c 25%,
-    #ffd2a4 50%,
-    #d8a97c 75%,
-    #dcad81 100%
-  ) !important;
-  font-weight: 500 !important;
-  color: #000 !important;
   width: 25%;
   justify-content: center;
-  padding: 8px 12px;
   font-size: 22px;
-  border-radius: 12px;
 }
 .btn-submit:focus{
   box-shadow: none;
@@ -71,7 +60,7 @@
 
 .contact-info-wrapper h2 {
   font-size: 22px;
-  background: linear-gradient(
+  /* background: linear-gradient(
       259.34deg,
       #dcad81 0%,
       #d8a97c 40%,
@@ -79,7 +68,7 @@
       #d8a97c 85%,
       #dcad81 100%
     )
-    text !important;
+    text !important; */
   color: transparent !important;
   font-weight: 400;
   font-family: "Gilda Display", serif;

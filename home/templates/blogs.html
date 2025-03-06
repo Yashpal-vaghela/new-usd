@@ -137,7 +137,7 @@
             {% comment %} <img src="{% static 'text_vec.svg' %}" class="img-fluid" /> {% endcomment %}
         </div>
     </section>
-    <section class="blog-content" style="background-color:#222">
+    <section class="blog-content" style="background-color:#000">
         <div class="container pt-3">
             {% if not page_obj.has_previous %}
                 <h2 class="blog-content-title">Recent Blog</h2>
@@ -145,15 +145,17 @@
                     {% if first_blog %}
                       <div class="col-lg-6 col-md-6 col-sm-11 position-relative mx-auto">
                             <div class="blog-icon-content1 d-flex align-items-center mx-auto">
-                                <span class="me-5"><img src="{% static 'new-calender.svg' %}" class="icon-img me-2 img-fluid" />{{first_blog.published}}</span>
-                                <span><img src="{% static 'user.svg'%}" class="icon-img me-2 img-fluid" />By {{first_blog.author}}</span>
+                                <span class="me-5"><img src="{% static 'calender.svg' %}" class="icon-img me-2 img-fluid" />{{first_blog.published}}</span>
+                                <span><img src="{% static 'user1.svg'%}" class="icon-img me-2 img-fluid" />By {{first_blog.author}}</span>
                             </div>
                             <h2 class="blog-content-title1">{{first_blog.title}}</h2>
                             <p class="blog-content-subtitle">{{first_blog.description}}</p>
                             <span class="read-more">Read More</span>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-11 mx-auto">
-                            <img src="{{first_blog.blog_banner_lg.url}}" class="img-fluid" style="border-radius:10px"/>
+                            <img src="{{first_blog.blog_banner_lg.url}}" class="img-fluid" 
+                            {% comment %} style="border-radius:10px" {% endcomment %}
+                            />
                         </div>
                     {% endif %}
                     {% comment %} {% for blog in first_blog %}
@@ -190,7 +192,7 @@
                                                 <a href="{% url 'home:blogsd' blog.slug %}">{{blog.title}}</a> 
                                             </p>
                                             <div class="mb-md-3 mb-4">
-                                                <img src="{% static 'user.svg'%}" class="icon-img me-1 img-fluid" />
+                                                <img src="{% static 'user1.svg'%}" class="icon-img me-1 img-fluid" />
                                                 <span>By <a href="#" title="Posts by admin" rel="author">{{blog.author}}</a></span><br/>
                                             </div>
                                             <button class="read-more1"><a href="{% url 'home:blogsd' blog.slug %}">Read More</a></button>
@@ -211,7 +213,7 @@
                                                 <a href="{% url 'home:blogsd' blog.slug %}">{{ blog.title }}</a> 
                                             </p>
                                             <div class="mb-md-3 mb-4">
-                                                <img src="{% static 'user.svg' %}" class="icon-img me-1 img-fluid" />
+                                                <img src="{% static 'user1.svg' %}" class="icon-img me-1 img-fluid" />
                                                 <span>By <a href="#" title="Posts by admin" rel="author">{{ blog.author }}</a></span><br/>
                                             </div>
                                             <button class="read-more1"><a href="{% url 'home:blogsd' blog.slug %}">Read More</a></button>
