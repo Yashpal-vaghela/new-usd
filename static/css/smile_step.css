@@ -16,16 +16,16 @@
   position: relative;
 }
 /* image card */
-.mainImageCard {
+/* .mainImageCard {
   position: relative;
   margin: 40px 0px;
-}
+} */
 
 /* Step Text */
 
-.step_card {
+/* .step_card {
   margin-top: 12px;
-}
+} */
 .point {
   padding: 0 20px;
 }
@@ -38,9 +38,9 @@
   background-color: #dcad81 !important ;
 }
 
-.step_header {
+/* .step_header {
   padding: 0 20px;
-}
+} */
 
 .s_heading2 {
   font-family: "Gilda Display", serif;
@@ -146,10 +146,10 @@
     font-size: 80px;
   }
  
-  .mainImageCard {
+  /* .mainImageCard {
     position: relative;
     margin: 10px 0px;
-  }
+  } */
 }
 
 @media (max-width: 768px) {
@@ -167,10 +167,10 @@
     font-size: 80px;
   }
 
-  .mainImageCard {
+  /* .mainImageCard {
     position: relative;
     margin: 10px 0px;
-  }
+  } */
   .smile_step_Section .registration_heading{
     width: 100%;
   }
@@ -221,9 +221,9 @@
   }
 
   
-  .step_header {
+  /* .step_header {
     padding: 0 10px;
-  }
+  } */
   .s_heading2 {
     font-size: 16px;
   }
@@ -234,10 +234,10 @@
     color: #666;
   }
 
-  .mainImageCard {
+  /* .mainImageCard {
     position: relative;
     margin: 10px 0px;
-  }
+  } */
   .smile_step_Section .text_vec{
     margin-bottom: 20px;
   }
@@ -382,23 +382,22 @@
 
 
 /* ----------------------------------------- Banner Section -------------------------------------------- */
-.Banner_Section {
+/* .Banner_Section {
   position: relative;
    background-color: #000000;
   overflow: hidden;
   padding: 25px 0px 0px;
-  /* height: 80vh; */
-}
+} */
 
-.main-body-section {
+/* .main-body-section {
   margin-top: 120px;
-}
+} */
 
-.banner_content {
+/* .banner_content {
   margin-top: 12px;
-}
+} */
 
-.banner-teeth-2 {
+/* .banner-teeth-2 {
   position: absolute;
   height: 270px;
   width: 270px;
@@ -408,9 +407,9 @@
 .bg_1 {
   top: -79%;
   right: 6%;
-}
+} */
 
-.banner_main_txt {
+/* .banner_main_txt {
   position: relative;
   font-family: "Gilda Display", serif;
   font-size: 40px;
@@ -418,13 +417,13 @@
   color: white;
   z-index: 20;
   margin-bottom: 0px;
-}
+} */
 
-.banner_main_txt p{
+/* .banner_main_txt p{
   margin-bottom: 0px;
-}
+} */
 
-.banner_vector {
+/* .banner_vector {
   position: absolute;
   bottom: 3%;
   left: 45%; 
@@ -432,30 +431,15 @@
   width: 120%; 
   max-width: none; 
   z-index: -1; 
-}
+} */
 
-  .banner_buttons {
+  /* .banner_buttons {
     margin-top: 50px;
     width: 100%;
     text-align: center;
-  }
+  } */
 
-  .banner-txt-field {
-    border: none;
-     width: 80%;
-     padding-left: 10px;
-     background-color: #2D2D2D;
-     color: white !important;
-  }
-
-  .banner-form {
-    border: none;
-    width: 80%;
-    background-color: #2D2D2D;
-   color: white !important;
-  }
-
-.banner_btn {
+/* .banner_btn {
   align-content: center;
   border: none;
   border-radius: 15px;
@@ -469,39 +453,31 @@
 
 .banner_btn:hover {
   color: #000;
-}
+} */
 
-.search_function {
+/* .search_function {
   margin-top: 20px;
   background-color: #2D2D2D;
   border-radius: 15px;
-  /* height: 50px; */
   width: 100%;
-}
+} */
 
-.submit_banner_btn {
-  border: none;
-  border-radius: 12px;
-  padding: 6px 30px;
-  margin-top: 3px;
-  background: linear-gradient(130deg,#636363 0%,#9B9B9B 20%,#B1B1B1 36%,#E1E1E1 50%,#B1B1B1 62%,#9B9B9B 75%,#636363 100%) !important;
-}
 
-.banner_field {
+
+/* .banner_field {
   background-color: #2D2D2D;
   border: none;
-}
-@media(max-width:1200px){
+} */
+/* @media(max-width:1200px){
   .bg_1{
     top:-75%;
     right:-1%;
     width:250px;
     height:250px;
   }
-}
-@media (max-width: 991px) {
+} */
+/* @media (max-width: 991px) {
   .banner_main_txt {
-    /* font-size: 35px; */
     margin-bottom: 40px;
   }
   .banner-teeth-2 {
@@ -512,9 +488,9 @@
     top: -56%;
     right: -13%;
   }
-}
+} */
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .banner_main_txt {
     font-size: 30px;
     margin-bottom: 40px;
@@ -525,11 +501,10 @@
   }
   .bg_1 {
     top: -70%;
-    /* right: -7%; */
   }
-}
+} */
 
-@media (max-width: 575px) {
+/* @media (max-width: 575px) {
   .banner_main_txt {
     font-size: 20px;
     margin-bottom: 30px;
@@ -545,114 +520,89 @@
     top: -81%;
     right: -4%;
   }
-}
+} */
 
 /* ----------------------------------------- Developer Section -------------------------------------------- */
 
-.Developer_Section {
+/* .Developer_Section {
   background-color: #000000;
   overflow: hidden;
   padding: 25px 0px 0px;
-}
-
-.Discover_subtext {
-  font-family: "Barlow", sans-serif;
-  color: rgba(201 ,201, 201, 0.8);
-  font-size: 16px;
-  font-weight: 600;
-  /* width: 65%; */
-}
-
-.Discover_heading {
+} */
+/* .Discover_heading {
   font-family: "Barlow Condensed", sans-serif;
   font-weight: 500;
   display: inline-block;
   margin-bottom: 0px;
   font-size: 21px;
   margin-bottom: 20px;
-}
+} */
 
-.Discover_Group {
+/* .Discover_Group {
   padding: 40px 90px;
-}
-
-
+} */
 
 /* animation */
 
-.usd_ring {
+/* .usd_ring {
   height: 130px;
   width: 130px;
   position: absolute;
   top: 0%;
   left: 12%;
   animation: rotateRing 10s linear infinite;
-}
+} */
 
-.smile_orange {
+/* .smile_orange {
   position: absolute;
   width: 200px;
   height: 177.78px;
   bottom: 10%;
   right: 4%;
-}
+} */
 
-@keyframes rotateRing {
+/* @keyframes rotateRing {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
   }
-}
+} */
 
 /* discover card */
-
-
-.Discover_text {
+/* .Discover_text {
   font-family: "Gilda Display", serif;
   font-size: 35px;
   margin-top: 10px;
   margin-bottom: 0px;
   color: #ffffff;
-}
-@media (max-width: 1200px) {
+} */
+/* @media (max-width: 1200px) {
   .Discover_text {
     font-size: 30px;
     margin-top: 0px;
-  }
-  .Discover_subtext {
-    font-size: 14px;
   }
   .usd_ring {
     top: -3.5%;
     left: 5%;
   }
-}
-@media (max-width: 992px) {
-
+} */
+/* @media (max-width: 992px) {
   .usd_ring {
     height: 130px;
     width: 130px;
-    
     top: 0%;
     left: 18%;
   }
-  
   .smile_orange {
-
     width: 200px;
     height: 177.78px;
     bottom: 10%;
     right: 10%;
   }
-
   .mainImageCard {
     text-align: center;
-  }
- 
-  .Developer_Section {
-    padding: 40px 0px 15px;
   }
   .Discover_heading {
     font-size: 22px;
@@ -660,30 +610,20 @@
   .Discover_heading br {
     display: none;
   }
-  .Discover_subtext {
-    font-size: 16px;
-  }
-}
+} */
 
-@media (max-width: 768px) {
- 
-
+/* @media (max-width: 768px) {
   .Discover_Group {
     width: 100%;
     height: auto;
-    /* padding: 10px 20px; */
   }
-
   .usd_ring {
     height: 130px;
     width: 130px;
-    
     top: 0%;
     left: 8%;
   }
-  
   .smile_orange {
-
     width: 150px;
     height: 133.33px;
     bottom: 10%;
@@ -693,9 +633,9 @@
     margin-bottom: 10px;
     font-size: 20px;
   }
-}
+} */
 
-@media (max-width: 576px) {
+/* @media (max-width: 576px) {
   .usd_ring {
     height: 80px;
     width: 80px;
@@ -705,9 +645,9 @@
   .smile_orange{
     width:115px;
   }
-  /* .Discover_Group {
+  .Discover_Group {
     padding: 10px 0px;
-  } */
+  }
   .Discover_text {
     font-size: 20px;
   }
@@ -715,16 +655,9 @@
     margin-bottom: 10px;
     font-size: 18px;
   }
-  .Discover_subtext {
-    font-size: 14px;
-  }
-  .Developer_Section {
-    padding: 30px 0px 15px;
-  }
-}
+} */
 
 /* ----------------------------------------- Before & After Section -------------------------------------------- */
-
 .beforeAndAfter_Section {
   background-color: #f7f5f0;
   padding: 50px 0px;
@@ -816,30 +749,8 @@
   margin-bottom: 10px !important;
 }
 
-.reviewName {
-  position: relative;
-  font-family: "Barlow Condensed", sans-serif;
-  font-weight: 600;
-  font-size: 25px;
-  color: #fff;
-}
 
-.reviewContent {
-  position: relative;
-  font-family: "Barlow", sans-serif;
-  font-weight: 500;
-  font-size: 15px;
-  padding: 0 20px;
-  margin-bottom: 10px;
-  color: #fff;
-}
 
-.stars {
-  position: relative;
-  color: #f1c40f;
-  font-size: 18px;
-  margin-bottom: 15px;
-}
 
 .bgreviw {
   font-family: "Gilda Display", serif;

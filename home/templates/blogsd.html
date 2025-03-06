@@ -108,7 +108,7 @@
   <section class="breadcrumbs-section">
     <div class="container">
       <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold">Blog</h1>
-      <img src="{% static 'text_vec.svg' %}" class="img-fluid" />
+      {% comment %} <img src="{% static 'text_vec.svg' %}" class="img-fluid" /> {% endcomment %}
     </div>
   </section>
   <section class="single-blog-content py-5">
@@ -118,7 +118,8 @@
           <div class="single-blog-page position-relative">
             <h2 class="single-blog-title">{{blog.h1}}</h2>
             <h3 class="single-blog-author d-flex">
-              <i class="feather-user"></i>By &nbsp;
+            <img src="{% static 'user1.svg' %}" class=" img-fluid" style="width:18px" />&nbsp; By &nbsp;
+              {% comment %} <i class="feather-user"></i>By &nbsp; {% endcomment %}
               <a href="#" title="" rel="">{{blog.author}}</a>
             </h3>
            
@@ -135,8 +136,8 @@
         </div>
         <div class="col-lg-4">
           <div class="single-blog-content2">
-            <h2 class="single-blog-content2-title mb-0">Blog</h2>
-            <img src="{% static 'text_vec_light.svg' %}" class="img-fluid" />
+            <h2 class="single-blog-content2-title  cool d-inline-block">Blog</h2>
+            {% comment %} <img src="{% static 'text_vec_light.svg' %}" class="img-fluid" /> {% endcomment %}
             <input type="text" class="form-control" placeholder="Search" />
 
             <div class="row align-items-center mt-2 mb-2">
@@ -147,13 +148,13 @@
                 </div>
   
               </div>
-              <div class="col-lg-7 mt-4  single-blog-related-content">
+              <div class="col-lg-7 mt-4 single-blog-related-content">
                 <h3 class="mb-2">
                   Steps to Take Before Getting a Cosmetic Dental Procedure
                 </h3>
                 <div class="d-flex">
                   <img
-                    src="{% static 'new-calender.svg' %}"
+                    src="{% static 'calender.svg' %}"
                     class="pe-2 mb-0 img-fluid"
                     style="width:25px"
                   />
@@ -165,15 +166,15 @@
             </div>
             <div class="category-wrapper">
               <h2
-                class="single-blog-content2-title mb-0"
+                class="single-blog-content2-title cool d-inline-block"
                 style="font-size: 30px"
               >
                 Categories
               </h2>
-              <img
+              {% comment %} <img
                 src="{% static 'text_vec_light1.svg' %}"
                 class="category-img img-fluid"
-              />
+              /> {% endcomment %}
 
               <ul class="category-content mt-2">
                 {% for category in cata %}
@@ -187,15 +188,15 @@
 
             <div class="tag-wrapper">
               <h2
-                class="single-blog-content2-title mb-0"
+                class="single-blog-content2-title cool d-inline-block"
                 style="font-size: 30px"
               >
                 Tag
               </h2>
-              <img
+              {% comment %} <img
                 src="{% static 'text_vec_light.svg' %}"
                 class="tag-img img-fluid"
-              />
+              /> {% endcomment %}
               <ul>
                 {% for tag in tags %}
                 <li>{{tag}}</li>

@@ -1,25 +1,24 @@
 {% load static %}
 <head>
   <!-- Add CSS File Here -->
-  <link href="{% static 'css/location.css' %}" rel="stylesheet" />
+  {% comment %} <link href="{% static 'css/location.css' %}" rel="stylesheet" /> {% endcomment %}
 </head>
 <body>
-  <section class="location-section">
+  <section class="location-section pt-50" style="background-color:#222">
     <div class="container">
-      <div class="row">
+      <div class="row ">
         <div class="col-lg-6 col-md-8 col-12">
-          <h2 class="location-title mb-0 cool">Locations </h2>
-         
-          <h3 class="location-subtitle text-header-subtitle">Top Searched Locations</h3>
-          <p class="Loc-description">
+          <h2 class="text-header text-start position-relative mb-0 cool">Locations </h2>
+          <h3 class="text-header-subtitle">Top Searched Locations</h3>
+          <p class="Loc-description text-subcontent">
             Discover the leading destinations where patients connect with our
             network of Ultimate Smile Designers. Our platform helps you find
             expert dentists across various prime locations.
           </p>
         </div>
         {% for city in cities %}
-          <div class="col-lg-3 col-md-4 col-6 col-sm-6 square-card-wrapper">
-             <div class="square-card">
+          <div class="col-lg-3 col-md-4 col-6 col-sm-6 m-auto square-card-wrapper">
+             <div class="square-card position-relative w-100">
               <img
                 src="{% static 'bg_loc.svg' %}"
                 class="bgloc"

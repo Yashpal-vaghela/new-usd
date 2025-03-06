@@ -1,8 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Dosis:wght@200..800&family=Gilda+Display&family=Jost:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Gilda+Display&display=swap");
 
-.working-section {
-  /* background-color: rgba(248, 245, 240, 1) !important; */
+/* .working-section {
   padding: 50px 0 40px;
   margin: 0px auto;
 }
@@ -11,53 +10,48 @@
   line-height: 38.4px;
   letter-spacing: 0.03em;
   position: relative;
-}
-.working_subtitle {
-  margin-top: 10px;
-  margin-bottom: 5px !important;
-}
-.working-main-wrapper {
+} */
+
+/* .working-main-wrapper {
   box-shadow: 2px 8px 15.7px rgba(255, 255, 255, 0.25);
   border-radius: 22px;
   background-color: transparent;
   height: 378px;
-}
-.card_1 {
+} */
+/* .card_1 {
   background-color: rgba(244,243,248,0.4);
   position: relative;
   overflow: hidden;
-}
-.card_2 {
+} */
+/* .card_2 {
   background-image: url("../process_img.svg");
   background-position: center;  
   background-repeat: no-repeat; 
-  /* background-size: contain;  */
   width: 100%;
   height: 100%;
- 
-}
-.card_3 {
+} */
+/* .card_3 {
   background-color: rgba(216,156,39,0.67);
   position: relative;
   overflow: hidden;
-}
-.smile_yellow {
+} */
+/* .smile_yellow {
   position: absolute;
   width: 200px;
   height: 177.78px;
   bottom: 10%;
   right: -15%;
-}
-.working-main-content {
+} */
+/* .working-main-content {
   margin: 35px auto;
-}
-.location-icon {
+} */
+/* .location-icon {
   background-color: #fff;
   padding: 23px;
   border-radius: 50%;
   width: 90px;
-}
-.working-main-title {
+} */
+/* .working-main-title {
   font-family:  "Barlow", sans-serif;
   font-size: 22px;
   font-weight: bold;
@@ -65,16 +59,16 @@
   letter-spacing: 0.03em;
   text-align: center;
   color: #fff;
-}
+} */
 
-.working-main-description {
+/* .working-main-description {
   color: rgba(255, 255, 255, 0.8);
   font-size: 16px;
   font-family: "Barlow", sans-serif;
   line-height: 28.8px;
   text-align: center;
   font-weight: 600;
-}
+} */
 /* dentists section */
 .dentists-section {
   /* background-color: rgba(34, 34, 34, 1); */
@@ -86,12 +80,7 @@
   color: #fff !important;
 }
 .dentists-content-1 p {
-  font-family: "Barlow", sans-serif;
-  font-size: 17px;
-  font-weight: 600;
-  line-height: 28.8px;
-  color: #fff;
-  width: 67%;
+  width: 65%;
 }
 
 /* new dropdown menu */
@@ -164,7 +153,7 @@
   padding-right: 1.3rem !important;
 }
 .dentists-content {
-  padding: 25px;
+  padding: 18px;
   background-color: rgba(45, 45, 45, 1);
   border-radius: 25px;
 }
@@ -177,7 +166,7 @@
 }
 .dentists-content-title {
   font-family: "Barlow", sans-serif;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 600;
   line-height: 36px;
   color: #fff;
@@ -186,6 +175,7 @@
   color: #fff;
   font-weight: 500;
   font-family: "Barlow", sans-serif;
+  font-size: 14px;
 }
 .btn-appointment {
   background: linear-gradient(
@@ -196,7 +186,7 @@
     #d8a97c 75%,
     #dcad81 100%
   ) !important;
-  border-radius: 15px;
+  border-radius: 12px;
   font-weight: 600;
   padding: 12px 0.75rem;
 }
@@ -225,17 +215,17 @@
 }
 /* schedule section */
 .schedule-data-section {
-  background-color: rgba(34, 34, 34, 1);
+  background-color: #000;
   padding: 50px 0px;
   position: relative;
 }
 .vector3-img{
   position: absolute;
   z-index: 0;
-  top:14%;
+  top:-6%;
 }
 .schedule-data-section .row{
-  margin: 25px auto 30px;
+  margin: 0px auto 0px;
   z-index: 1;
   position: relative;
 }
@@ -247,8 +237,10 @@
   letter-spacing: 0.03em;
 }
 .schedule-data-subtitle {
-  line-height: 56px !important;
+  line-height: 45px !important;
   color: #fff !important;
+  width:75%;
+  font-size: 32px !important;
 }
 .schedule-data-content h1 img{
   height: 8px !important;
@@ -256,21 +248,19 @@
   position: relative;
 }
 .schedule-data-content p {
-  font-family: "Barlow", sans-serif;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 400;
   line-height: 24px;
-  color: #fff;
-  margin-top: 15px;
-  margin-bottom: 40px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .schedule-data-content-2 p {
   padding-bottom: 15px;
-  font-size: 16px;
+  /* font-size: 16px; */
 }
 .schedule-data-link {
   background-color: rgba(26, 26, 26, 1);
-  padding: 12px 0px;
+  padding: 0px 0px;
   border-radius: 25px;
 }
 .schedule-data-link div img {
@@ -279,7 +269,7 @@
 .schedule-data-link h3,
 .bg-schedule h3 {
   font-family: "Gilda Display", serif;
-  font-size: 32px;
+  font-size: 25px;
   font-weight: 400;
   /* background: linear-gradient(
       259.34deg,
@@ -301,9 +291,9 @@
   background-repeat: no-repeat;
   background-size: contain;
   width: 38%;
-  height: 34%;
-  right: 12px;
-  top: 66%;
+  height: 35%;
+  right: 9px;
+  top: 65%;
   position: absolute;
   z-index: 1;
   border-radius: 15px;
@@ -322,18 +312,18 @@
   text-align: center;
 }
 .schedule-data-content-2 .col-sm-5:last-child {
-  margin-top: 50px !important;
-  width: 38%;
+  margin-top: 10px !important;
+  width: 34%;
 }
 .btn-call {
   background-color: rgba(26, 26, 26, 1);
   color: #fff;
-  border-radius: 20px;
+  border-radius: 12px;
   width: 100%;
   font-family: "Barlow", sans-serif;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 700;
-  padding: 0.5rem 0.98rem;
+  padding: 0.3rem 0.55rem;
 }
 .btn-call b {
   color: #000;
@@ -341,7 +331,7 @@
 .schedule-data-content-2 .callus-btn-wrapper i {
   background-color: #000;
   color: #fff;
-  padding: 18px;
+  padding: 8px;
   border-radius: 50%;
   transform: rotate(-40deg);
   font-size: 20px;
@@ -375,11 +365,11 @@
   line-height: 45px;
 }
 .find-section-description {
-  font-family: "Barlow", sans-serif;
+  /* font-family: "Barlow", sans-serif;
   font-size: 16px;
   font-weight: 600;
   line-height: 28px;
-  color: rgba(102, 102, 102, 1);
+  color: rgba(102, 102, 102, 1); */
   padding: 0px 61px;
 }
 .aon-inputicon-box .form-control{
@@ -417,7 +407,7 @@
   background: #ddd;
 }
 .site-button{
-  color:#fff !important;
+  color:#000 !important;
 }
 .schedule-data-content .text_vec2{
   height: 10px !important;
@@ -432,40 +422,23 @@
 }
 
 /* registration section */
-.registration_section{
-  margin: 0px auto;
-}
-.register_wrapper{
-  background-color: #222222;
-  border-radius: 30px;
-  padding: 80px 0px 90px;
-  /* display:block; */
-}
-.register_wrapper h2{
-  text-align: center;
-}
 
-.register_wrapper h3{
+/* .register_wrapper h3{
   font-size:29px;
-}
-.register_wrapper p{
+} */
+/* .register_wrapper p{
   position: absolute;
   z-index: 1;
-  /* width:59%; */
-  width:83.33%;
+  width:80.33%;
   padding-bottom: 0px;
   padding-top: 12px;
-  font-size: 18px;
   text-align: center;
-  color: #ffffff;
-  font-weight: 500;
-  /* left:20.5%; */
   left:8.5%;
   top:33%;
-}
-.register_wrapper img{
+} */
+/* .register_wrapper img{
   position: relative;
-}
+} */
 .getInTouch-btn{
   border-radius: 10px;
   border: none;
@@ -486,13 +459,14 @@
   z-index: -1;
   top:12%;
 }
-@media(min-width:2800px){
+
+/* @media(min-width:2800px){
   .register_wrapper p{
     width:90%;
     left:5%;
     top:37%;
   }
-}
+} */
 @media (min-width: 576px) {
   .working-section .row {
     --bs-gutter-x: 1.1rem !important;
@@ -513,14 +487,16 @@
    width:30%;
   }
 }
+@media(max-width:1400px){
+  .bg-schedule{
+    top:62.5%;
+    right:10px;
+  }
+}
 @media (max-width: 1200px) {
-  .working_subtitle{
-    font-size: 35px;
-    line-height: normal;
-  }
-  .working-main-wrapper {
+  /* .working-main-wrapper {
     height: 420px;
-  }
+  } */
   .dentists-content {
     border-radius: 35px;
     padding: 20px;
@@ -536,77 +512,82 @@
   }
   /* schedule section */
   .bg-schedule {
-    top: 64.5%;
-    width: 43%;
+    top: 62.6%;
+    width: 39%;
     height: auto;
-    right: 0px;
+    right: 5px;
   }
   .schedule-data-subtitle {
-    font-size: 36px !important;
+    font-size: 30px !important;
     line-height: 50px !important;
+    width:88%;
   }
   .schedule-data-content p {
-    font-size: 14px;
-    margin-bottom: 30px;
+    font-size: 12px;
+    margin-bottom: 20px;
   }
   .btn-call {
     padding: 0.5rem 0.75rem;
   }
   .schedule-data-content-2 .col-sm-5:last-child {
-    margin-top: 30px !important;
+    margin-top: 0px !important;
     padding: 0.5rem 0.75rem;
+    width:36%;
+  }
+  .schedule-data-link h3{
+    font-size: 20px;
   }
   .btn-call b {
     font-size: 18px;
   }
-  .schedule-data-content-2 .callus-btn-wrapper i {
+  /* .schedule-data-content-2 .callus-btn-wrapper i {
     padding: 15px;
-  }
+  } */
   /* registration section */
-  .register_wrapper h3{
+  /* .register_wrapper h3{
     font-size:30px;
     line-height: 48px;
     margin-top: 15px;
-  }
-  .register_wrapper p{
+  } */
+  /* .register_wrapper p{
     font-size: 14px;
-  }
+  } */
   .vector2-img{
     top:9%;
   }
 }
 @media (max-width: 1024px) {
   .bg-schedule {
-    top: 62%;
+    top: 60%;
   }
 }
 @media (max-width: 1014px) {
   .bg-schedule {
-    top: 58%;
+    top: 54%;
     width: 38%;
     right: 8px;
   }
 }
 @media (max-width: 991px) {
-  .working-main-content{
+  /* .working-main-content{
     margin: 18px auto;
-  }
-  .working-main-content .col-sm-10{
+  } */
+  /* .working-main-content .col-sm-10{
     margin-bottom: 10px;
-  }
+  } */
   .working-main-content .col-sm-5:last-child {
     margin-top: 15px;
   }
-  .working-main-wrapper {
+  /* .working-main-wrapper {
     height: 360px;
-  }
-  .working-main-title {
+  } */
+  /* .working-main-title {
     font-size: 18px;
-  }
-  .working-main-description {
+  } */
+  /* .working-main-description {
     font-size: 14px;
     line-height: 24px;
-  }
+  } */
   .location-icon {
     width: 80px;
     padding: 20px;
@@ -629,6 +610,9 @@
   }
 
   /* schedule section */
+  .vector3-img{
+    top:11.5%;
+  }
   .schedule-data-icon {
     left: -1px;
   }
@@ -636,29 +620,34 @@
     font-size: 25px !important;
     line-height: 40px !important;
     margin-top: 0px;
+    width:100%;
+  }
+  .schedule-data-content-2 .callus-btn-wrapper i{
+    padding: 7px;
+    font-size: 16px;
   }
   .schedule-data-content p {
     margin-bottom: 0px;
     font-size: 12px;
+    line-height: 18px;
   }
   .bg-schedule {
-    top: 50%;
+    top: 62%;
     width: 37%;
     right: 9px;
   }
-  .schedule-data-link h3,
+  /* .schedule-data-link h3, */
   .bg-schedule h3 {
     font-size: 28px;
   }
   .schedule-data-content-2 .col-sm-5:last-child {
-    margin-top: 20px !important;
-    width: 52%;
-  }
-  .schedule-data-content-2 .callus-btn-wrapper i {
-    padding: 10px;
+    /* margin-top: 20px !important; */
+    width: 49%;
   }
   .btn-call {
     border-radius: 12px;
+    padding: 6px 9px !important;
+    margin-top:10px !important;
   }
   .schedule-data-link {
     border-radius: 15px;
@@ -674,47 +663,52 @@
     margin-bottom: 15px;
   }
   /* registraion section */
-  .register_wrapper h3{
+  /* .register_wrapper h3{
     font-size: 26px;
-  }
-  .register_wrapper p{
+  } */
+  /* .register_wrapper p{
     font-size: 14px;
-  }
-  .register_wrapper img{
+  } */
+  /* .register_wrapper img{
     height: 42%;
-  }
+  } */
   .register_wrapper{
     padding: 60px 0px 70px;
   }
 }
-@media (max-width: 767px) {
-  .working-main-wrapper {
-    height: 340px;
+@media(max-width:900px){
+  .bg-schedule{
+    top: 57%;
   }
+}
+@media (max-width: 767px) {
+  /* .working-main-wrapper {
+    height: 340px;
+  } */
   .location-icon {
     width: 70px;
     padding: 20px;
   }
-  .working-main-title {
+  /* .working-main-title {
     font-size: 20px;
-  }
-  .working-main-description {
+  } */
+  /* .working-main-description {
     font-size: 16px;
     line-height: 28.8px;
-  }
-  .working-main-content {
+  } */
+  /* .working-main-content {
     gap: 25px;
     margin: 30px auto;
-  }
+  } */
   .working-main-content .col-sm-5:last-child {
     margin-top: 0px !important;
   }
   
-  .working_title,
+
   .dentists_title {
     font-size: 22px;
   }
-  .working_subtitle,
+
   .dentists_subtitle {
     font-size: 36px;
   }
@@ -797,7 +791,6 @@
     line-height: 40px;
   }
   .find-section-description{
-    font-size: 16px;
     padding: 0px;
   }
   .aon-search2-form.no-p-lr{
@@ -814,49 +807,44 @@
   .register_wrapper{
     padding: 45px 0px 95px;
   }
-  .register_wrapper h3{
+  /* .register_wrapper h3{
     font-size: 24px;
     line-height: 38px;
-  }
-  .register_wrapper p{
+  } */
+  /* .register_wrapper p{
     width:60%;
-    /* margin-bottom: 0px; */
-  }
-  .register_wrapper img{
+  } */
+  /* .register_wrapper img{
     height:58%;
-  }
+  } */
 }
 @media (max-width: 576px) {
-  .working-main-wrapper {
+  /* .working-main-wrapper {
     height: 330px;
-  }
-  .working_title{
-    margin-bottom: 0px;
-    line-height: normal !important;
-  }
-  .working_title,
+  } */
+
   .dentists_title {
     font-size: 20px;
   }
-  .working_subtitle,
+
   .dentists_subtitle {
     font-size: 20px;
     line-height: 40px;
   }
-  .working-main-title {
+  /* .working-main-title {
     font-size: 18px;
-  }
-  .working-main-description {
+  } */
+  /* .working-main-description {
     font-size: 14px;
     line-height: 24px;
-  }
+  } */
   .location-icon {
     width: 60px;
     padding: 16px;
   }
-  .working-main-content {
+  /* .working-main-content {
     margin: 25px auto;
-  }
+  } */
   /* dentists section */
   .dentists_subtitle {
     /* margin-top:12px; */
@@ -919,8 +907,8 @@
     margin-bottom: 0px;
   }
   .find-section-description{
-    font-size: 14px;
-    line-height: 24px;
+    font-size: 14px !important;
+    line-height: 24px !important;
   }
   .aon-search2-left{
     margin-bottom: 0px !important;
@@ -933,23 +921,143 @@
     left:-1%;
   }
   /* registion section  */
-  .register_wrapper h3 {
+  /* .register_wrapper h3 {
     font-size: 22px;
     line-height: 35px;
     margin-top: 5px;
-  }
-  .register_wrapper p{
+  } */
+  /* .register_wrapper p{
     font-size: 13px;
     width:83%;
     left:8.5%;
     display: flex;
     padding-top: 15px;
     line-height: inherit;
-  }
-  .register_wrapper img{
+  } */
+  /* .register_wrapper img{
     height:80%;
-  }
+  } */
   .register_wrapper{
     padding: 30px 0px 150px;
+  }
+}
+
+
+/* ----------------------- Testimonial section ---------------------- */
+/* testimonial img */
+.new-testimonial-section{
+  padding: 50px 0px;
+}
+.testimonial-vector-img{
+  position: absolute;
+  z-index: -1;
+  top: 14%;
+}
+.myswiper {
+  width: 100%;
+  max-width: 100%;
+  padding: 20px 0px;
+  overflow: visible !important;
+}
+.swiper-wrapper {
+  display: flex;
+}
+.testimonial-slide{
+  background: #000;
+  box-shadow: 0px 0px 20px rgba(255,255,255,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 15px;
+  padding: 20px 20px 60px;
+  position: relative;
+}
+.testimonial-slide img{
+  width: 20%;
+  margin: 30px 0px 0px;
+}
+/* .swiper-slide {
+  background: #2d2d2d;
+  text-align: center;
+  font-size: 18px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 300px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0.5;
+  position: relative;
+} */
+.swiper-slide-active {
+  transform: translateY(-15px);
+  opacity: 1;
+  margin-bottom: 10px !important;
+}
+.reviewName {
+  position: relative;
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 500;
+  font-size: 22px;
+  color: #fff;
+}
+.reviewContent {
+  position: relative;
+  font-family: "Barlow", sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  padding: 0 18px;
+  margin-bottom: 10px;
+  color: #fff;
+}
+.testimonial_subcontent{
+  width: 64%;
+  color: #fff;
+  font-weight: 500;
+}
+.stars {
+  position: relative;
+  color: #f1c40f;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+.quote2-img{
+  position: absolute;
+  top: -2%;
+  width:12% !important;
+  left:5%;
+}
+.quote1-img{
+  position: absolute;
+  bottom: 4%;
+  width:12% !important;
+  right:5%;
+}
+@media(max-width:991px){
+  .testimonial_subcontent{
+    width:80%;
+  }
+  /* .testimonial-vector-img{
+    top:10%;
+  } */
+}
+@media(max-width:767px){
+  .testimonial_subcontent{
+    width:100%;
+    font-size: 15px;
+  }
+  .testimonial-vector-img{
+    top:20%;
+  }
+}
+@media(max-width:576px){
+  .testimonial-vector-img {
+    top: 50%;
+  }
+  .testimonial_subcontent{
+    width:100%;
+    font-size: 14px;
   }
 }

@@ -38,13 +38,13 @@
                         </li> 
                         <li class=""><a href="{% url 'home:gallery' %}"><span {% if request.path == '/gallery/' %}class="heasder_active cool"{% endif %}> Gallery</span></a>
                         </li> 
-                        <li class=""><a href="{% url 'home:blogs' %}"><span {% if request.path == '/blogs/' %}class="heasder_active cool"{% endif %}> Blogs</span></a>
+                        <li class=""><a href="{% url 'home:blogs' %}"><span class="blogs"{% if request.path == '/blogs/' %}class="heasder_active cool"{% endif %} id="blogs"> Blogs</span></a>
                         </li>                                                                
                         <li class=""><a href="{% url 'home:contact' %}"><span {% if request.path == '/contact/' %}class="heasder_active cool"{% endif %}> Contact</span></a>                          
                         </li> 
-                        <li class="hea-shrink-btn"><a href="{% url 'account:dentist' %}" class="hea-shrink-btn-inner">
+                        <li class="hea-shrink-btn"><a href="{% url 'account:dentist' %}" class="bat text-center hea-shrink-btn-inner">
                         For Patients</a></li>
-                        <li class="hea-shrink-btn"><a href="https://dentist.ultimatesmiledesign.com/" target="_blank" class="hea-shrink-btn-inner">
+                        <li class="hea-shrink-btn"><a href="https://dentist.ultimatesmiledesign.com/" target="_blank" class="bat text-center hea-shrink-btn-inner">
                         For Dentist</a></li>
                 
                     </ul>
@@ -74,12 +74,12 @@
                         <!--    <i class="feather-user"></i> Sign In-->
                         <!--</a>-->
                         <!--Add Listing up-->
-                        <a href="{% url 'account:dentist' %}" class="aon-add-listing m-l20 header-buttons ">
-                            <p class="cool">For Patients</p>   
+                        <a href="{% url 'account:dentist' %}" class="aon-add-listing m-l20 header-buttons bat">
+                            <p class="">For Patients</p>   
                           </a>
-                          <a href="https://dentist.ultimatesmiledesign.com/" target="_blank" class="aon-add-listing m-l20 header-buttons ">
+                          <a href="https://dentist.ultimatesmiledesign.com/" target="_blank" class="bat aon-add-listing m-l20 header-buttons ">
                       
-                             <p class="cool">For Dentist</p>
+                             <p class="">For Dentist</p>
                           </a>
 
                         {% endif %}
@@ -111,5 +111,17 @@
             navEl.classList.remove('custom-header');
         }
     })
+
+    const currentPath = window.location.pathname;
+    const currentclass= document.getElementById("blogs");
+    let blogsId = currentPath.split("/")[2]
+    const m = ['heasder_active','cool']
+        if(currentPath == `/blogs/${blogsId}/`){
+            currentclass.classList.add(...m);
+        }else if(currentPath === `/blogs/`){
+            currentclass.classList.add(...m);
+        }else{
+            currentclass.classList.remove(...m);
+        }
 </script>
 {% endblock js %}

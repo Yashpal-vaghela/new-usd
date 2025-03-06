@@ -14,7 +14,7 @@
     font-size: 36px;
     line-height: 49px;
     font-family: "Gilda Display", serif;
-    width:50%;
+    /* width:50%; */
     z-index: 100;
     /* background: linear-gradient(259.34deg, #DCAD81 0%, #D8A97C 25%, #FFD2A4 50%, #D8A97C 75%, #DCAD81 100%) text !important; 
     color: transparent !important; */
@@ -76,8 +76,10 @@
     line-height: 30px;
     /* padding-bottom: 30px; */
     padding-bottom: 37px; 
-    /* border-image: linear-gradient(259.34deg, #DCAD81 0%, #D8A97C 25%, #FFD2A4 50%, #D8A97C 75%, #DCAD81 100%); */
-    border-bottom: 2px solid #D8A97C;
+    border-image-source: linear-gradient(130deg, #C3942F 0%, #D89C27 18%, #DFC86F 37%, #E7DC96 50%, #DFC86F 64%, #D89C27 82%, #C99C30 100%) !important;
+    /* border-bottom: 2px solid #D8A97C; */
+    border-image-slice: 1;
+    border-bottom:  2px solid ;
 }
 .blog-content-wrapper {
     position: relative;
@@ -87,7 +89,7 @@
     font-family: "Barlow", sans-serif;
     font-size: 16px;
     line-height: 28px;
-    background-color: #222;
+    background-color: #000;
     color: #fff;
     position: absolute;
     z-index: 1;
@@ -101,21 +103,28 @@
 
 .blog-content-details-card{
     color: #fff;
-    background-color: rgba(34, 34, 34, 1);
-    border: 1px solid #D8A97C;
-    border-radius: 23px;
+    background-color: rgba(52, 52, 52, 0.6);
+    border:1px solid;
+    border-image-source: linear-gradient(130deg, #C3942F 0%, #D89C27 18%, #DFC86F 37%, #E7DC96 50%, #DFC86F 64%, #D89C27 82%, #C99C30 100%) !important;
+    border-image-slice: 1;  
+    border-image-width: 1px;
+    /* border: 1px solid #D8A97C; */
+    border-radius: 0px;
 }
 .blog-content-details-card img{
-    border-top-left-radius: 23px !important;
-    border-top-right-radius: 23px !important;
+    border-top-left-radius: 0px !important;
+    border-top-right-radius: 0px !important;
 }
 .blog-content-details{
     font-weight: 400;
     font-size: 20px;
     font-family: "Gilda Display", serif;
-    border-bottom: 2px solid #D8A97C;
+    border-image-source: linear-gradient(130deg, #C3942F 0%, #D89C27 18%, #DFC86F 37%, #E7DC96 50%, #DFC86F 64%, #D89C27 82%, #C99C30 100%) !important;
+    border-image-slice: 1;
+    border-bottom: 2px solid;
     margin: 16px 16px 40px;
     padding: 0px;
+    display: inline-block;
 }
 .blog-content-details img{
     margin: 0px auto 5px;
@@ -132,7 +141,7 @@
     font-family: "Barlow", sans-serif;
     font-size: 16px;
     line-height: 28px;
-    background-color: #222;
+    background-color: #201f1f;
     color: #fff;
     position: absolute;
     z-index: 1;
@@ -151,7 +160,11 @@
     width: 67px;
     height: 68px;
     padding: 10px;
-    border: 2px solid #D8A97C;
+    border:2px solid;
+    border-image-source: linear-gradient(130deg, #C3942F 0%, #D89C27 18%, #DFC86F 37%, #E7DC96 50%, #DFC86F 64%, #D89C27 82%, #C99C30 100%) !important;
+    border-image-slice: 1;  
+    border-image-width: 2px;
+    /* border: 2px solid #D8A97C; */
     background-color:rgba(34, 34, 34, 1);
     color: #fff;
     font-weight: 400;
@@ -159,7 +172,8 @@
     font-family: "Gilda Display", serif;
     position: absolute;
     top: -26.5%;
-    border-radius: 12px;
+    border-radius: 0px;
+    /* border-radius: 12px; */
     text-align: center;
     line-height: 28px;
 }
@@ -176,12 +190,14 @@
 }
 
 .blog-page-pagination .pagination .page-item .page-link{
-    border-radius: 50% !important;
-    padding: 0px 8px;
+    /* border-radius: 50% !important; */
+    padding: 0px 9px;
     font-size: 14px;
     background-color: #222;
-    border: 1px solid #D8A97C;
+    border: 1px solid;
+    border-image: linear-gradient(130deg, #C3942F 0%, #D89C27 18%, #DFC86F 37%, #E7DC96 50%, #DFC86F 64%, #D89C27 82%, #C99C30 100%) 1 !important;
     color: #fff;
+    font-weight: 900;
 }
 .blog-page-pagination ul .page-item.disabled .page-link{
     border: 1px solid #6c757d;
@@ -199,9 +215,10 @@
 }
 .blog-page-pagination .pagination .active .page-link,
 .blog-page-pagination .pagination .page-item .page-link:hover{
-    background-color: #D8A97C;
-    border: 1px solid #222;
-    color: #fff;
+    /* background-color: #D8A97C; */
+    background: linear-gradient(130deg, #C3942F 0%, #D89C27 18%, #DFC86F 37%, #E7DC96 50%, #DFC86F 64%, #D89C27 82%, #C99C30 100%) !important;
+    /* border: 1px solid #222; */
+    color: #000;
 }
 .blog-page-pagination .pagination .page-item .page-link:focus{
     box-shadow: none;
