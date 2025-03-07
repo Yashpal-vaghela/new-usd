@@ -1,20 +1,9 @@
-.smile_step_Section {
-  background-color: #000000;
-  padding: 50px 0px;
-  text-align: center;
-}
 
-.inner_smile_step_section {
-  width: 100%;
-
-}
 
 .smile_step_Section .text_vec {
   margin-bottom: 10px;
 }
-.smile_step_Section .registration_heading {
-  position: relative;
-}
+
 /* image card */
 /* .mainImageCard {
   position: relative;
@@ -38,9 +27,7 @@
   background-color: #dcad81 !important ;
 }
 
-/* .step_header {
-  padding: 0 20px;
-} */
+
 
 .s_heading2 {
   font-family: "Gilda Display", serif;
@@ -60,170 +47,48 @@
 
 /* images for steps */
 
-.step_left {
-  
-  text-align: left;
-  display: flex;
-  align-items: center;
-  margin-top: 40px;
-}
 
-.step_right {
-  
-  text-align: right;
-  justify-content: right;
-  display: flex;
-  align-items: center;
-  margin-top: 40px;
-}
 
-.step_image_content {
-  position: relative;
-}
 
-.step_image {
-  
-  height: 300px;
-  width: 240px;
-}
 
-.step_number {
-  font-size: 100px;
-  font-weight: bold;
-  font-family: "Barlow", sans-serif;
-  position: absolute; 
-  z-index: 10;
-}
 
-.step_number_left {
-  color: rgba(216,156,39, 0.9);
-  top: -30%;
-  left: 1%;
-}
 
-.step_number_right {
-  color: rgba(255,255,255, 0.9);
-  top: -30%;
-  right: 1%;
-}
-
-.step_content {
-  padding-left: 50px;
-}
-
-.step_content_right {
-  
-  padding-right: 50px;
-}
-
-.step_head {
-  font-family: "Gilda Display", serif;
-  font-size: 22px;
-  color: #FFFFFF;
-}
-
-.step_text {
-  font-family: "Barlow", sans-serif;
-  width: 500px;
-}
 
 /* Resonsive design */
 
 
 @media (min-width: 601px) and (max-width: 992px) {
 
-  .step_text {
-    width: 350px;
-  }
 
-  .step_image {
-  
-    height: 250px;
-    width: 200px;
-  }
-
-  .step_number {
-    font-size: 80px;
-  }
  
-  /* .mainImageCard {
-    position: relative;
-    margin: 10px 0px;
-  } */
+ 
+
 }
 
 @media (max-width: 768px) {
-  .step_text {
-    width: 250px;
-  }
 
-  .step_image {
-  
-    height: 250px;
-    width: 200px;
-  }
 
-  .step_number {
-    font-size: 80px;
-  }
 
-  /* .mainImageCard {
-    position: relative;
-    margin: 10px 0px;
-  } */
-  .smile_step_Section .registration_heading{
-    width: 100%;
-  }
+ 
+
+ 
   .Discover_subtext{
     width: 100%;
   }
 }
 
 @media (max-width: 576px) {
-  .step_left {
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-  }
-  
-  .step_right {
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-  }
 
-  .step_text {
-    width: 100%;
-  }
-
-  .step_content {
-    padding-top: 20px;
-    padding-left: 0px;
-  }
   
-  .step_content_right {
-    padding-top: 20px;
-    padding-right: 0px;
-  }
-  
-  .step_head {
-    font-family: "Gilda Display", serif;
-    font-size: 18px;
-    color: #FFFFFF;
-  }
 
-  .all_step {
-    padding-top: 20px;
-  }
+
 
   .point {
     padding: 0 10px;
   }
 
   
-  /* .step_header {
-    padding: 0 10px;
-  } */
+
   .s_heading2 {
     font-size: 16px;
   }
@@ -234,13 +99,8 @@
     color: #666;
   }
 
-  /* .mainImageCard {
-    position: relative;
-    margin: 10px 0px;
-  } */
-  .smile_step_Section .text_vec{
-    margin-bottom: 20px;
-  }
+  
+  
 }
 
 
@@ -270,18 +130,6 @@
   line-height: 1.4 !important;
 }
 
-.registrayion_small {
-  font-family: "Barlow Condensed", sans-serif;
-  display: block;
-  margin-bottom: 0px;
-  font-size: 24px;
-  font-weight: 600;
-  line-height: 38.4px;
-  letter-spacing: 0.03em;
-  display: inline-block;
-  position: relative;
-  
-}
 
 .text_vec {
   height: 8px;
@@ -323,9 +171,7 @@
 }
 
 @media (max-width: 576px) {
-  .registration_heading {
-    font-size: 20px;
-  }
+ 
 }
 
 /* -----------------------------------------Registration Doctor-------------------------------------------- */
