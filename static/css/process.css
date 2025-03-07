@@ -70,21 +70,20 @@
   font-weight: 600;
 } */
 /* dentists section */
-.dentists-section {
-  /* background-color: rgba(34, 34, 34, 1); */
+/* .dentists-section {
   background-color: rgb(216, 156, 39,0.44);
   padding: 50px 0px;
-}
+} */
 
-.dentists_subtitle {
+/* .dentists_subtitle {
   color: #fff !important;
-}
-.dentists-content-1 p {
+} */
+/* .dentists-content-1 p {
   width: 65%;
-}
+} */
 
 /* new dropdown menu */
-.dentists-content-1 .form-select{
+/* .dentists-content-1 .form-select{
   background-color: rgba(45, 45, 45, 1) !important;
   border-radius: 15px;
   width:100%;
@@ -96,22 +95,22 @@
   color:#fff !important;
   margin-left: auto;
   background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/></svg>");
-}
-.dentists-content-1 .form-select:hover option{
+} */
+/* .dentists-content-1 .form-select:hover option{
   color: #fff;
 }
 .dentists-content-1 .form-select:focus{
   border-color: #fff !important;
   box-shadow: none;
-}
-.dentists-content-1 .form-select::before{
+} */
+/* .dentists-content-1 .form-select::before{
   content:"\f078";
   position: absolute;
   z-index: 1;
   top: 0%;
   font-family: "Font Awesome 6 Free";
   color: #fff;
-}
+} */
 
 /* end new dropdown menu */
 .dentists-content-1 .dropdown .btn {
@@ -145,39 +144,39 @@
 .dentists-content-1 .dropdown-menu li:hover a {
   color: rgba(45, 45, 45, 1) !important;
 }
-.dentists-content-2 {
+/* .dentists-content-2 {
   margin-bottom: 15px;
-}
-.dentists-content-2 .col-12{
+} */
+/* .dentists-content-2 .col-12{
   padding-left: 1.3rem !important;
   padding-right: 1.3rem !important;
-}
-.dentists-content {
+} */
+/* .dentists-content {
   padding: 18px;
   background-color: rgba(45, 45, 45, 1);
   border-radius: 25px;
-}
-.dentists-content img{
+} */
+/* .dentists-content img{
   width:100%;
   height: 250px;
   border-radius: 18px;
   display: flex;
   margin: auto;
-}
-.dentists-content-title {
+} */
+/* .dentists-content-title {
   font-family: "Barlow", sans-serif;
   font-size: 20px;
   font-weight: 600;
   line-height: 36px;
   color: #fff;
-}
-.dentists-content .card-body p {
+} */
+/* .dentists-content .card-body p {
   color: #fff;
   font-weight: 500;
   font-family: "Barlow", sans-serif;
   font-size: 14px;
-}
-.btn-appointment {
+} */
+/* .btn-appointment {
   background: linear-gradient(
     259.34deg,
     #dcad81 0%,
@@ -188,12 +187,12 @@
   ) !important;
   border-radius: 12px;
   font-weight: 600;
-  padding: 12px 0.75rem;
-}
-.btn-appointment a{
+  padding: 12px 0.75rem !important;
+} */
+/* .btn-appointment a{
   color: #000;
-}
-.dentists-content span{
+} */
+/* .dentists-content span{
   font-family: "Barlow", sans-serif;
   font-style: italic;
   font-size: 12px;
@@ -203,89 +202,77 @@
   text-align: end;
   position: relative;
   display: block;
-}
-.dentists-load-wrapper {
+} */
+/* .dentists-load-wrapper {
   margin-top: 35px;
-}
+} */
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .contnent-1-txt {
     width: 100%;
   }
-}
+} */
 /* schedule section */
-.schedule-data-section {
+/* .schedule-data-section {
   background-color: #000;
   padding: 50px 0px;
   position: relative;
-}
-.vector3-img{
+} */
+/* .vector3-img{
   position: absolute;
   z-index: 0;
   top:-6%;
-}
-.schedule-data-section .row{
+} */
+/* .schedule-data-section .row{
   margin: 0px auto 0px;
   z-index: 1;
   position: relative;
-}
+} */
 /* .schedule-data-content-2 .px-md-2{
   padding-left: .3rem !important;
   padding-right: .3rem !important;
 } */
-.schedule-data-title {
+/* .schedule-data-title {
   letter-spacing: 0.03em;
-}
-.schedule-data-subtitle {
+} */
+/* .schedule-data-subtitle {
   line-height: 45px !important;
   color: #fff !important;
   width:75%;
   font-size: 32px !important;
-}
+} */
 .schedule-data-content h1 img{
   height: 8px !important;
   width: 80px !important;
   position: relative;
 }
-.schedule-data-content p {
-  font-size: 14px;
-  font-weight: 400;
+/* .schedule-data-content p {
   line-height: 24px;
   margin-top: 10px;
   margin-bottom: 10px;
-}
-.schedule-data-content-2 p {
+} */
+/* .schedule-data-content-2 p {
   padding-bottom: 15px;
-  /* font-size: 16px; */
-}
-.schedule-data-link {
+} */
+/* .schedule-data-link {
   background-color: rgba(26, 26, 26, 1);
   padding: 0px 0px;
   border-radius: 25px;
-}
-.schedule-data-link div img {
+} */
+/* .schedule-data-link div img {
   width: 25%;
-}
-.schedule-data-link h3,
+} */
+/* .schedule-data-link h3,
 .bg-schedule h3 {
   font-family: "Gilda Display", serif;
   font-size: 25px;
   font-weight: 400;
-  /* background: linear-gradient(
-      259.34deg,
-      #dcad81 0%,
-      #d8a97c 25%,
-      #ffd2a4 50%,
-      #d8a97c 75%,
-      #dcad81 100%
-    )
-    text; */
   color: #FBE9D0;
   text-align: center;
   letter-spacing: 0.03em;
-}
+} */
 
-.bg-schedule {
+/* .bg-schedule {
   background-image: url("../bg-schedule.webp");
   background-position: center;
   background-repeat: no-repeat;
@@ -298,24 +285,24 @@
   z-index: 1;
   border-radius: 15px;
   padding: 15px 0px;
-}
-.schedule-data-icon {
+} */
+/* .schedule-data-icon {
   width: 30%;
   left: -4px;
   position: relative;
-}
-.bg-schedule p {
+} */
+/* .bg-schedule p {
   font-family: "Barlow", sans-serif;
   font-size: 18px;
   font-weight: 500;
   letter-spacing: 0.03em;
   text-align: center;
-}
-.schedule-data-content-2 .col-sm-5:last-child {
+} */
+/* .schedule-data-content-2 .col-sm-5:last-child {
   margin-top: 10px !important;
   width: 34%;
-}
-.btn-call {
+} */
+/* .btn-call {
   background-color: rgba(26, 26, 26, 1);
   color: #fff;
   border-radius: 12px;
@@ -324,54 +311,51 @@
   font-size: 16px;
   font-weight: 700;
   padding: 0.3rem 0.55rem;
-}
-.btn-call b {
+} */
+/* .btn-call b {
   color: #000;
-}
-.schedule-data-content-2 .callus-btn-wrapper i {
+} */
+/* .schedule-data-content-2 .callus-btn-wrapper i {
   background-color: #000;
   color: #fff;
   padding: 8px;
   border-radius: 50%;
   transform: rotate(-40deg);
   font-size: 20px;
-}
-.schedule-data-content-2 .callus-btn-wrapper i::before {
+} */
+/* .schedule-data-content-2 .callus-btn-wrapper i::before {
   color:#FBE9D0;
-}
-.arrow-icon {
+} */
+/* .arrow-icon {
   padding: 15px;
   background-color: #000;
-}
+} */
 /* find section */
-.find-section {
-  background-color: #000;
-  padding: 50px 0;
-}
-.find-section-title {
+
+/* .find-section-title {
   line-height: 25px;
-}
+} */
 .text_vec_gallery{
   height: 5px;
   width: 40px;
   display: flex;
   margin: 0px auto 15px;
 }
-.find-section-subtitle {
+/* .find-section-subtitle {
   color: #fff;
   font-family: "Gilda Display", serif;
   font-weight: 400;
   font-size: 38px;
   line-height: 45px;
-}
-.find-section-description {
-  /* font-family: "Barlow", sans-serif;
+} */
+/* .find-section-description {
+  font-family: "Barlow", sans-serif;
   font-size: 16px;
   font-weight: 600;
   line-height: 28px;
-  color: rgba(102, 102, 102, 1); */
+  color: rgba(102, 102, 102, 1);
   padding: 0px 61px;
-}
+} */
 .aon-inputicon-box .form-control{
   border: none;
   border-radius: 15px;
@@ -439,26 +423,20 @@
 /* .register_wrapper img{
   position: relative;
 } */
-.getInTouch-btn{
-  border-radius: 10px;
+/* .getInTouch-btn{
   border: none;
   padding: .6rem 1.25rem;
   font-size: 15px;
-}
-.getInTouch-btn a{
+} */
+/* .getInTouch-btn a{
   color: #000;
-}
-.vector1-img{
+} */
+/* .vector1-img{
   position: absolute;
   z-index: -1;
   bottom: 20%;
-}
-.vector2-img{
-  right: 0%;
-  position: absolute;
-  z-index: -1;
-  top:12%;
-}
+} */
+
 
 /* @media(min-width:2800px){
   .register_wrapper p{
@@ -468,13 +446,13 @@
   }
 } */
 @media (min-width: 576px) {
-  .working-section .row {
+  /* .working-section .row {
     --bs-gutter-x: 1.1rem !important;
-  }
+  } */
   /* dentists section */
-  .dentists-content-2 {
+  /* .dentists-content-2 {
     margin-top: 2.3rem !important;
-  }
+  } */
   .aon-inputicon-box .form-select{
     font-size: 14px;
   }
@@ -482,64 +460,64 @@
     font-size: 14px !important;
   }
 }
-@media(min-width:992px){
+/* @media(min-width:992px){
   .dentists-content-2 .col-12{
    width:30%;
   }
-}
-@media(max-width:1400px){
+} */
+/* @media(max-width:1400px){
   .bg-schedule{
     top:62.5%;
     right:10px;
   }
-}
+} */
 @media (max-width: 1200px) {
   /* .working-main-wrapper {
     height: 420px;
   } */
-  .dentists-content {
+  /* .dentists-content {
     border-radius: 35px;
     padding: 20px;
-  }
-  .dentists-content-title {
+  } */
+  /* .dentists-content-title {
     font-size: 20px;
-  }
-  .dentists-content img{
+  } */
+  /* .dentists-content img{
     height: 250px;
-  }
-  .dentists-content-1 {
+  } */
+  /* .dentists-content-1 {
     gap: 50px;
-  }
+  } */
   /* schedule section */
-  .bg-schedule {
+  /* .bg-schedule {
     top: 62.6%;
     width: 39%;
     height: auto;
     right: 5px;
-  }
-  .schedule-data-subtitle {
+  } */
+  /* .schedule-data-subtitle {
     font-size: 30px !important;
     line-height: 50px !important;
     width:88%;
-  }
-  .schedule-data-content p {
+  } */
+  /* .schedule-data-content p {
     font-size: 12px;
     margin-bottom: 20px;
-  }
-  .btn-call {
+  } */
+  /* .btn-call {
     padding: 0.5rem 0.75rem;
-  }
-  .schedule-data-content-2 .col-sm-5:last-child {
+  } */
+  /* .schedule-data-content-2 .col-sm-5:last-child {
     margin-top: 0px !important;
     padding: 0.5rem 0.75rem;
     width:36%;
-  }
-  .schedule-data-link h3{
+  } */
+  /* .schedule-data-link h3{
     font-size: 20px;
-  }
-  .btn-call b {
+  } */
+  /* .btn-call b {
     font-size: 18px;
-  }
+  } */
   /* .schedule-data-content-2 .callus-btn-wrapper i {
     padding: 15px;
   } */
@@ -552,22 +530,22 @@
   /* .register_wrapper p{
     font-size: 14px;
   } */
-  .vector2-img{
+  /* .vector2-img{
     top:9%;
-  }
+  } */
 }
-@media (max-width: 1024px) {
+/* @media (max-width: 1024px) {
   .bg-schedule {
     top: 60%;
   }
-}
-@media (max-width: 1014px) {
+} */
+/* @media (max-width: 1014px) {
   .bg-schedule {
     top: 54%;
     width: 38%;
     right: 8px;
   }
-}
+} */
 @media (max-width: 991px) {
   /* .working-main-content{
     margin: 18px auto;
@@ -593,15 +571,15 @@
     padding: 20px;
   }
   /* dentist section */
-  .dentists-content-1 {
+  /* .dentists-content-1 {
     gap: 0px;
-  }
-  .dentists-content-1 p{
+  } */
+  /* .dentists-content-1 p{
     width:64%;
-  }
-  .dentists-content-1 .form{
+  } */
+  /* .dentists-content-1 .form{
     width: 30% !important;
-  }
+  } */
   .dentists-content-1 .dropdown .btn {
     width: 150px;
   }
@@ -610,48 +588,48 @@
   }
 
   /* schedule section */
-  .vector3-img{
+  /* .vector3-img{
     top:11.5%;
-  }
-  .schedule-data-icon {
+  } */
+  /* .schedule-data-icon {
     left: -1px;
-  }
-  .schedule-data-subtitle {
+  } */
+  /* .schedule-data-subtitle {
     font-size: 25px !important;
     line-height: 40px !important;
     margin-top: 0px;
     width:100%;
-  }
-  .schedule-data-content-2 .callus-btn-wrapper i{
+  } */
+  /* .schedule-data-content-2 .callus-btn-wrapper i{
     padding: 7px;
     font-size: 16px;
-  }
-  .schedule-data-content p {
+  } */
+  /* .schedule-data-content p {
     margin-bottom: 0px;
     font-size: 12px;
     line-height: 18px;
-  }
-  .bg-schedule {
+  } */
+  /* .bg-schedule {
     top: 62%;
     width: 37%;
     right: 9px;
-  }
+  } */
   /* .schedule-data-link h3, */
-  .bg-schedule h3 {
+  /* .bg-schedule h3 {
     font-size: 28px;
-  }
-  .schedule-data-content-2 .col-sm-5:last-child {
-    /* margin-top: 20px !important; */
+  } */
+  /* .schedule-data-content-2 .col-sm-5:last-child {
+    margin-top: 20px !important;
     width: 49%;
-  }
-  .btn-call {
+  } */
+  /* .btn-call {
     border-radius: 12px;
     padding: 6px 9px !important;
     margin-top:10px !important;
-  }
-  .schedule-data-link {
+  } */
+  /* .schedule-data-link {
     border-radius: 15px;
-  }
+  } */
   .text_vec2{
     height: auto !important;
     width: 80px !important;
@@ -672,15 +650,15 @@
   /* .register_wrapper img{
     height: 42%;
   } */
-  .register_wrapper{
+  /* .register_wrapper{
     padding: 60px 0px 70px;
-  }
+  } */
 }
-@media(max-width:900px){
+/* @media(max-width:900px){
   .bg-schedule{
     top: 57%;
   }
-}
+} */
 @media (max-width: 767px) {
   /* .working-main-wrapper {
     height: 340px;
@@ -703,96 +681,85 @@
   .working-main-content .col-sm-5:last-child {
     margin-top: 0px !important;
   }
-  
-
-  .dentists_title {
+  /* .dentists_title {
     font-size: 22px;
-  }
+  } */
 
-  .dentists_subtitle {
+  /* .dentists_subtitle {
     font-size: 36px;
-  }
+  } */
 
   /* dentist section */
-  .dentists_subtitle {
+  /* .dentists_subtitle {
     line-height: normal;
-    /* margin-top: 18px; */
     margin-bottom: 21px;
-  }
-  .dentists-content-1 {
+  } */
+  /* .dentists-content-1 {
     flex-direction: column !important;
     gap: 20px;
-  }
+  } */
   .dentists-content-1 .dropdown,
   .dentists-content-1 .dropdown .btn {
     width: 100%;
   }
-  .dentists-content-1 p {
+  /* .dentists-content-1 p {
     font-size: 15px;
     line-height: 25px;
     width: 100%;
-  }
-  .dentists-content-1 .form{
+  } */
+  /* .dentists-content-1 .form{
     width: 100% !important;
-  }
-  .dentists-content-2 {
+  } */
+  /* .dentists-content-2 {
     gap: 25px;
-  }
-  .dentists-content {
+  } */
+  /* .dentists-content {
     border-radius: 40px;
-  }
+  } */
   /* schedule section */
-  .schedule-data-section{
+  /* .schedule-data-section{
     padding: 40px 0px 35px;
-  }
-  .schedule-data-section .row{
+  } */
+  /* .schedule-data-section .row{
     margin: 0px auto;
-  }
-  .schedule-data-content-img1 {
+  } */
+  /* .schedule-data-content-img1 {
     display: none;
-  }
-  .schedule-data-subtitle {
+  } */
+  /* .schedule-data-subtitle {
     font-size: 35px !important;
-  }
-  .schedule-data-content-2 {
+  } */
+  /* .schedule-data-content-2 {
     justify-content: center;
-  }
-  .schedule-data-content-2 .col-sm-5:last-child {
+  } */
+  /* .schedule-data-content-2 .col-sm-5:last-child {
     margin-top: 0px !important;
-  }
-  .schedule-data-content-2 .col-sm-6 {
+  } */
+  /* .schedule-data-content-2 .col-sm-6 {
     margin-bottom: 22px;
-  }
-  .btn-call {
-    /* background: linear-gradient(
-      259.34deg,
-      #dcad81 0%,
-      #d8a97c 25%,
-      #ffd2a4 50%,
-      #d8a97c 75%,
-      #dcad81 100%
-    ) !important; */
+  } */
+  /* .btn-call {
     border-radius: 15px;
     margin: 15px auto;
-  }
+  } */
   /* .btn-call b {
     color: #000 !important;
   } */
-  .schedule-data-content-2 .callus-btn-wrapper i {
+  /* .schedule-data-content-2 .callus-btn-wrapper i {
     padding: 13px;
-  }
-  .schedule-data-content p {
+  } */
+  /* .schedule-data-content p {
     font-size: 14px;
     margin-bottom: 10px;
-  }
+  } */
   /* find section */
-  .find-section-subtitle{
+  /* .find-section-subtitle{
     font-size: 35px;
     line-height: 40px;
-  }
-  .find-section-description{
+  } */
+  /* .find-section-description{
     padding: 0px;
-  }
+  } */
   .aon-search2-form.no-p-lr{
     padding: 15px 0 !important;
   }
@@ -804,9 +771,9 @@
     left:0%;
   }
   /* registraion section */
-  .register_wrapper{
+  /* .register_wrapper{
     padding: 45px 0px 95px;
-  }
+  } */
   /* .register_wrapper h3{
     font-size: 24px;
     line-height: 38px;
@@ -823,14 +790,14 @@
     height: 330px;
   } */
 
-  .dentists_title {
+  /* .dentists_title {
     font-size: 20px;
-  }
+  } */
 
-  .dentists_subtitle {
+  /* .dentists_subtitle {
     font-size: 20px;
     line-height: 40px;
-  }
+  } */
   /* .working-main-title {
     font-size: 18px;
   } */
@@ -846,70 +813,68 @@
     margin: 25px auto;
   } */
   /* dentists section */
-  .dentists_subtitle {
-    /* margin-top:12px; */
+  /* .dentists_subtitle {
     margin-bottom: 10px;
     line-height: normal !important;
-  }
-  .dentists-content .card-body p {
+  } */
+  /* .dentists-content .card-body p {
     font-size: 14px;
-  }
-  .dentists-content-2 {
+  } */
+  /* .dentists-content-2 {
     margin-top: 2rem !important;
-  }
+  } */
   .dentists-load-wrapper{
     margin-top: 10px;
   }
-  .dentists-content {
+  /* .dentists-content {
     border-radius: 30px;
     padding: 22px;
-  }
-  .vector2-img{
+  } */
+  /* .vector2-img{
     top:7%;
-    /* right: -10%; */
-  }
+  } */
   /* schedule data section */
-  .schedule-data-section{
+  /* .schedule-data-section{
     padding: 40px 0px;
-  }
-  .schedule-data-section .row{
+  } */
+  /* .schedule-data-section .row{
     margin: 5px auto 5px;
-  }
-  .schedule-data-subtitle {
+  } */
+  /* .schedule-data-subtitle {
     font-size: 24px;
-  }
-  .schedule-data-content .text_vec2{
+  } */
+  /* .schedule-data-content .text_vec2{
     height: 8px !important;
     width: 90px !important;
     margin-bottom: 20px !important;
     position: relative;
-  }
-  .schedule-data-content-2 .callus-btn-wrapper {
+  } */
+  /* .schedule-data-content-2 .callus-btn-wrapper {
     width: 50% !important;
   }
   .schedule-data-content-2 .callus-btn-wrapper i {
     padding: 8px;
-  }
-  .schedule-data-content-2{
+  } */
+  /* .schedule-data-content-2{
     --bs-gutter-x: 1.3rem;
-  }
-  .btn-call {
+  } */
+  /* .btn-call {
     border-radius: 12px;
     margin: 5px auto;
-  }
-  .schedule-data-title{
+  } */
+  /* .schedule-data-title{
     font-size: 20px;
-  }
+  } */
   /* find section */
-  .find-section-subtitle{
+  /* .find-section-subtitle{
     font-size: 30px;
     line-height: 40px;
     margin-bottom: 0px;
-  }
-  .find-section-description{
+  } */
+  /* .find-section-description{
     font-size: 14px !important;
     line-height: 24px !important;
-  }
+  } */
   .aon-search2-left{
     margin-bottom: 0px !important;
   }
@@ -939,125 +904,5 @@
   } */
   .register_wrapper{
     padding: 30px 0px 150px;
-  }
-}
-
-
-/* ----------------------- Testimonial section ---------------------- */
-/* testimonial img */
-.new-testimonial-section{
-  padding: 50px 0px;
-}
-.testimonial-vector-img{
-  position: absolute;
-  z-index: -1;
-  top: 14%;
-}
-.myswiper {
-  width: 100%;
-  max-width: 100%;
-  padding: 20px 0px;
-  overflow: visible !important;
-}
-.swiper-wrapper {
-  display: flex;
-}
-.testimonial-slide{
-  background: #000;
-  box-shadow: 0px 0px 20px rgba(255,255,255,0.35);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  border-radius: 15px;
-  padding: 20px 20px 60px;
-  position: relative;
-}
-.testimonial-slide img{
-  width: 20%;
-  margin: 30px 0px 0px;
-}
-/* .swiper-slide {
-  background: #2d2d2d;
-  text-align: center;
-  font-size: 18px;
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  height: 300px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  opacity: 0.5;
-  position: relative;
-} */
-.swiper-slide-active {
-  transform: translateY(-15px);
-  opacity: 1;
-  margin-bottom: 10px !important;
-}
-.reviewName {
-  position: relative;
-  font-family: "Barlow Condensed", sans-serif;
-  font-weight: 500;
-  font-size: 22px;
-  color: #fff;
-}
-.reviewContent {
-  position: relative;
-  font-family: "Barlow", sans-serif;
-  font-weight: 500;
-  font-size: 15px;
-  padding: 0 18px;
-  margin-bottom: 10px;
-  color: #fff;
-}
-.testimonial_subcontent{
-  width: 64%;
-  color: #fff;
-  font-weight: 500;
-}
-.stars {
-  position: relative;
-  color: #f1c40f;
-  font-size: 18px;
-  margin-bottom: 15px;
-}
-.quote2-img{
-  position: absolute;
-  top: -2%;
-  width:12% !important;
-  left:5%;
-}
-.quote1-img{
-  position: absolute;
-  bottom: 4%;
-  width:12% !important;
-  right:5%;
-}
-@media(max-width:991px){
-  .testimonial_subcontent{
-    width:80%;
-  }
-  /* .testimonial-vector-img{
-    top:10%;
-  } */
-}
-@media(max-width:767px){
-  .testimonial_subcontent{
-    width:100%;
-    font-size: 15px;
-  }
-  .testimonial-vector-img{
-    top:20%;
-  }
-}
-@media(max-width:576px){
-  .testimonial-vector-img {
-    top: 50%;
-  }
-  .testimonial_subcontent{
-    width:100%;
-    font-size: 14px;
   }
 }
