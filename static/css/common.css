@@ -5,6 +5,7 @@
     --white:#fff;
     --black:#000;
     --gray:#cec2c2;
+    --bg-content-color: rgba(34,34,34,0.6);
     --light-gray:rgba(255, 255, 255, 0.8);
     --bg-content:rgba(52,52,52,0.6);
     --font-Barlow:"Barlow", sans-serif;
@@ -40,6 +41,7 @@
     font-weight: var(--fw-600) !important;
     transition: background 2s ease-in-out;
     border-radius: 8px;
+    border: none;
 }
 .bat:focus,.bat:hover,.btn::before{
     background: linear-gradient(30deg,#636363 0%,#9B9B9B 20%,#B1B1B1 36%,#E1E1E1 50%,#B1B1B1 62%,#9B9B9B 75%,#636363 100%) !important;
@@ -53,7 +55,7 @@
 }
 .text-header{
     font-family: var(--font-Barlow-Condensed);
-    font-size: 24px;
+    font-size: 20px;
     font-weight: var(--fw-600);
     letter-spacing: 0.03em;
 }
@@ -61,7 +63,7 @@
     color: var(--white);
     font-family: var(--font-Glida-Display);
     font-weight: var(--fw-400);
-    font-size: 36px;
+    font-size: 30px;
     line-height: 58px;
 }
 .text-subcontent{
@@ -72,7 +74,7 @@
     letter-spacing: 0.3px;
 }
 .btn{
-    padding: 8px 12px; 
+    padding: 3px 29px; 
     transition: background 0.3s; 
 }
 .btn a{

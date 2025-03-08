@@ -21,13 +21,23 @@
     /* font-weight: bold; */
 }
 
+.breadcrumbs-path  {
+    color: white;
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+.breadcrumbs-path a {
+    color: white;
+}
+
 @media (max-width: 575px) {
     .breadcrumbs-title{
         font-size: 20px;
     }
 }
 .blog-page-wrapper .breadcrumbs-title{
-    width:7%;
+    width:20%;
 }
 .breadcrumbs-section img{
     height: 8px;

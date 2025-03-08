@@ -128,7 +128,7 @@
 }
 /* image card */
 .mainImageCard {
-  margin: 40px 0px 20px;
+  margin: 40px 0px 0px;
 }
 .Discover_Group {
   padding: 40px 90px;
@@ -267,7 +267,7 @@
 }
 .working-main-content {
   margin: 35px auto;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
 }
 /* main content */
 .working-main-wrapper {
@@ -473,12 +473,12 @@
 
 /* ---------------------- Register Section ----------------- */
 .registration_section {
-  margin: 20px auto 40px;
+  margin: 30px auto 40px;
 }
 .register_wrapper {
   background-color: rgba(34,34,34,0.6);
   border-radius: 30px;
-  padding: 80px 0px 90px;
+  padding: 70px 0px 100px;
 }
 .register_content {
   position: relative;
@@ -487,30 +487,47 @@
   font-size: 29px !important;
 }
 .register_wrapper p {
-  z-index: 1;
+  /* z-index: 1;
   width: 80.33%;
   padding-bottom: 0px;
   padding-top: 12px;
   left: 8.5%;
-  top: 33%;
+  top: 33%; */
+  position: relative;
+  padding-top: 5px;
+  margin-bottom: 18px;
 }
 .getInTouch-btn {
   border: none;
   padding: 0.6rem 1.25rem !important;
   font-size: 15px;
+  z-index: 1;
+  position: relative;
 }
 .tooth-bg {
   position: absolute;
-  top: 0%;
-  left: 0%;
+  top: -16%;
+  left: -21%;
+  right: 0%;
   padding-left: 211px;
   opacity: 0.4;
+  display: flex;
+  justify-content: center;
+  width: 60%;
+  margin: auto;
+  align-items: center;
+  max-width: none;
 }
-@media (min-width: 2800px) {
+/* @media (min-width: 2800px) {
   .register_wrapper p {
     width: 90%;
     left: 5%;
     top: 37%;
+  }
+} */
+@media (min-width: 2800px) {
+  .tooth-bg {
+    width: 50%;
   }
 }
 @media (max-width: 1200px) {
@@ -605,7 +622,7 @@
   width: 65%;
 }
 .dentists-content-1 .form-select {
-  background-color: rgba(45, 45, 45, 1) !important;
+  background-color: var(--bg-content-color) !important;
   border-radius: 15px;
   padding: 0.4rem 1.1rem;
   border: none !important;
@@ -630,8 +647,9 @@
 }
 .dentists-content {
   padding: 18px;
-  background-color: rgba(45, 45, 45, 1);
+  background-color: var(--bg-content-color);
   border-radius: 25px;
+  z-index: 1;
 }
 .dentists-content img {
   width: 100%;
@@ -649,6 +667,16 @@
 .dentists-content span {
   font-style: italic;
   font-size: 12px;
+}
+@media (max-width: 2400px)  {
+  .vector3-img {
+    left: 10%;
+  }
+}
+@media (max-width: 2600px)  {
+  .vector3-img {
+    left: 0%;
+  }
 }
 @media (min-width: 992px) {
   .dentists-content-2 .col-12 {
@@ -698,6 +726,9 @@
   }
   .dentists-content {
     border-radius: 40px;
+  }
+  .dentists-content-1 p{
+    width: 100%;
   }
 }
 @media (max-width: 576px) {
@@ -916,12 +947,12 @@
 }
 /* ------------------ Schedule Data Section ----------------- */
 .schedule-data-section {
-  padding: 70px 0px 70px !important;
+  padding: 30px 0px 30px !important;
 }
 .vector3-img {
   position: absolute;
   z-index: 0;
-  top: 3%;
+  top: 12%;
 }
 .schedule-data-section .row {
   margin: 0px auto 0px;
@@ -950,7 +981,7 @@
 .bg-schedule h3 {
   font-family: "Gilda Display", serif;
   font-size: 25px;
-  color: #fbe9d0;
+  /* color: #fbe9d0; */
   letter-spacing: 0.03em;
 }
 .bg-schedule p {
@@ -975,9 +1006,11 @@
   width: 34%;
 }
 .schedule-data-link {
-  background-color: rgba(26, 26, 26, 1);
+  background-color: var(--bg-content-color);
   padding: 0px 0px;
   border-radius: 25px;
+  z-index: 1;
+  position: relative;
 }
 .schedule-data-link div img {
   width: 25%;
@@ -1007,11 +1040,17 @@
   }
 }
 @media (max-width: 1200px) {
+  .vector3-img {
+    top: 16%;
+  }
   .bg-schedule {
     top: 62.6%;
     width: 39%;
     height: auto;
     right: 5px;
+  }
+  .schedule-data-section {
+    padding: 30px 0 30px !important;
   }
   .schedule-data-subtitle {
     font-size: 30px !important;
@@ -1029,6 +1068,7 @@
   }
   .schedule-data-link h3 {
     font-size: 20px;
+    text-align: center;
   }
   .btn-call {
     padding: 0.5rem 0.75rem;
@@ -1039,19 +1079,19 @@
 }
 @media (max-width: 1024px) {
   .bg-schedule {
-    top: 60%;
+    top: 63%;
   }
 }
 @media (max-width: 1014px) {
   .bg-schedule {
-    top: 54%;
-    width: 38%;
+    /* top: 63%; */
+    width: 38.4%;
     right: 8px;
   }
 }
 @media (max-width: 991px) {
   .vector3-img {
-    top: 11.5%;
+    top: 16.5%;
   }
   .bg-schedule {
     top: 62%;
@@ -1061,10 +1101,10 @@
   .schedule-data-icon {
     left: -1px;
   }
-  .schedule-data-link h3,
+  /* .schedule-data-link h3,
   .bg-schedule h3 {
     font-size: 28px;
-  }
+  } */
   .schedule-data-subtitle {
     font-size: 25px !important;
     line-height: 40px !important;
@@ -1093,12 +1133,15 @@
 }
 @media (max-width: 900px) {
   .bg-schedule {
-    top: 57%;
+    top: 64%;
   }
 }
 @media (max-width: 768px) {
+  .vector3-img {
+    top: 28%;
+  }
   .schedule-data-section {
-    padding: 40px 0px 35px !important;
+    padding: 10px 0px 5px !important;
   }
   .schedule-data-section .row {
     margin: 0px auto;
@@ -1129,7 +1172,7 @@
 }
 @media (max-width: 576px) {
   .schedule-data-section {
-    padding: 40px 0px !important;
+    padding:  0px !important;
   }
   .schedule-data-section .row {
     margin: 5px auto 5px;
@@ -1162,7 +1205,7 @@
 .floating-images img {
   width: 140px;
   height: 170px;
-  border-radius: 15px;
+  /* border-radius: 15px; */
   box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3);
   object-fit: cover;
   position: absolute;
@@ -1372,7 +1415,7 @@
 }
 @media (max-width: 576px) {
   .gallery-container {
-    padding-top: 120px !important;
+    padding-top: 100px !important;
   }
   .gallery-container .d-flex {
     margin-bottom: 40px !important;
@@ -1416,9 +1459,9 @@
 
 
 /*-------------------- Tesimonial section ----------------- */
-.new-testimonial-section{
+/* .new-testimonial-section{
     padding: 50px 0px;
-}
+} */
 .testimonial-vector-img{
     position: absolute;
     z-index: -1;
@@ -1434,6 +1477,7 @@
     display: flex;
 }
 .testimonial-slide{
+    background-color: #000;
     box-shadow: 0px 0px 20px rgba(255,255,255,0.35);
     align-items: center;
     text-align: center;
@@ -1460,10 +1504,11 @@
     position: relative;
     font-family: "Barlow", sans-serif;
     font-weight: 500;
-    font-size: 15px;
-    padding: 0 18px;
+    font-size: 13px;
+    padding: 0px;
     margin-bottom: 10px;
-    color: #fff;
+    height: 180px;
+    /* color: #fff; */
 }
 .testimonial_subcontent{
     width: 64%;
@@ -1486,9 +1531,38 @@
     width:12% !important;
     right:5%;
 }
+@media(max-width:1200px){
+  .testimonial-slide {
+    padding: 20px 10px 60px;
+  }
+  .reviewContent {
+    height: 190px;
+  }
+  .stars {
+    margin-bottom: 8px;
+  }
+  .reviewName {
+    font-size: 20px;
+  }
+
+}
+@media(max-width:1024px){
+  .testimonial-slide {
+    padding: 20px 15px 60px;
+  }
+  .reviewContent{
+    font-size: 14px;
+    height: 160px;
+  }
+
+}
 @media(max-width:991px){
     .testimonial_subcontent{
       width:80%;
+    }
+    .reviewContent {
+      font-size: 13px;
+      height: 190px;
     }
 }
 @media(max-width:767px){
@@ -1499,6 +1573,12 @@
     .testimonial-vector-img{
       top:20%;
     }
+    .reviewContent {
+      height: 155px;
+    }
+    .reviewName {
+      font-size: 18px;
+    }
 }
 @media(max-width:576px){
     .testimonial-vector-img {
@@ -1508,6 +1588,18 @@
       width:100%;
       font-size: 14px;
     }
+    .reviewContent {
+      height: 128px;
+    }
+    /* .reviewName {
+      font-size: 18px;
+    } */
+}
+
+@media(max-width:500px){
+  .reviewContent {
+    height: 168px;
+  }
 }
 
 /* ---------------------- find section -------------------- */

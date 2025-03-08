@@ -6,6 +6,7 @@
 
 {% endblock css %} {% block body %}
 <link rel="stylesheet" href="{% static 'css/contact.css' %}" />
+<link rel="stylesheet" href="{% static 'css/common.css' %}" />
 <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -24,15 +25,15 @@
         </a>
         <a href="/"><i class="fa fa-solid fa-xmark cnacel_btn" ></i></a>
         
-        <div class="request-content d-block">
+        <div class="request-content text-center d-block">
           <h2 class="pt-4">Request consultation</h2>
           <p class="mb-0 cool">Please enter the details below for a call back.</p>
 
           <form method="post" class="aon-login-form login-form form ">
             {% csrf_token %}
-            <div class="row justify-content-center">
+            <div class="row text-center justify-content-center">
               <div class="col-lg-6">
-                <label class="form-label">First Name</label>
+                {% comment %} <label class="form-label">First Name</label> {% endcomment %}
                 <div class="inputicon-box">
                   <input
                     class="form-control"
@@ -45,7 +46,7 @@
                 </div>
               </div>
               <div class="col-lg-6">
-                <label class="form-label">Last Name</label>
+                {% comment %} <label class="form-label">Last Name</label> {% endcomment %}
                 <div class="inputicon-box">
                   <input
                     class="form-control"
@@ -58,7 +59,7 @@
                 </div>
               </div>
               <div class="col-lg-6">
-                <label class="form-label">Phone Number</label>
+                {% comment %} <label class="form-label">Phone Number</label> {% endcomment %}
                 <div class="inputicon-box">
                   <input
                     class="form-control"
@@ -71,7 +72,7 @@
                 </div>
               </div>
               <div class="col-lg-6">
-                <label class="form-label">Email</label>
+                {% comment %} <label class="form-label">Email</label> {% endcomment %}
                 <div class="inputicon-box">
                   <input
                     class="form-control"
@@ -93,7 +94,7 @@
                 <label class="mb-0 form-label">By submitting, you agree to receive SMS or emails via the provided channel.</label>
               </div>
               <div class="col-lg-3 col-md-4 col-sm-5 col-6">
-                    <button type="submit" class="btn request-button w-100 bat">submit</button>
+                    <button type="submit" class=" request-button  bat">submit</button>
               </div>
             </div>
           </form>

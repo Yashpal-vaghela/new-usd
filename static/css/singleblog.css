@@ -57,15 +57,12 @@
 .single-page-main-content p{
     color: #cec2c2;
 }
-
-
 .single-blog-img-wrapper-content p:last-child{
     margin-bottom: 0px;
 }
-
 /* single blog content2 */
 .single-blog-content2{
-    background-color: rgba(52, 52, 52, 0.6);
+    background-color: var(--bg-content-color);
     border-radius: 25px;
     padding: 20px 25px;
     position: relative;
@@ -74,7 +71,7 @@
     color:#fff;
     font-family: "Gilda Display", serif;
     font-weight: 500;
-    font-size: 32px;
+    font-size: 20px;
 }
 .single-blog-content2 img{
     border-radius: 8px;
@@ -108,7 +105,7 @@
 }
 .category-content{
     font-family: "Barlow", sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
     color: #fff;
     background-color: #000;
@@ -126,7 +123,7 @@
 }
 .tag-wrapper ul li{
     font-family: "Gilda Display", serif;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 30px;
 }

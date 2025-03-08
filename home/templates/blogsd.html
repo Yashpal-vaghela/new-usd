@@ -107,7 +107,8 @@
 <div class="single-blog-wrapper">
   <section class="breadcrumbs-section">
     <div class="container">
-      <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool">Blog</h1>
+      <div class="breadcrumbs-path"> <a href="{% url 'home:home' %}"> HOME </a> &nbsp; <i class=" fa fa-solid fa-angles-right"></i> &nbsp; <a href="{% url 'home:blogs' %}"> BLOGS </a> </div>
+      <h1 class=" breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool fs-4">{{blog.breadcrumb}}</h1>
     </div>
   </section>
   <section class="single-blog-content py-5">
@@ -166,7 +167,7 @@
             <div class="category-wrapper">
               <h2
                 class="single-blog-content2-title cool d-inline-block"
-                style="font-size: 30px"
+               
               >
                 Categories
               </h2>
@@ -188,7 +189,7 @@
             <div class="tag-wrapper">
               <h2
                 class="single-blog-content2-title cool d-inline-block"
-                style="font-size: 30px"
+                
               >
                 Tag
               </h2>

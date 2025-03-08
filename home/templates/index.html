@@ -83,7 +83,7 @@
   </section>
 
   <!-- BANNER SECTION END -->
-  <section class="Developer_Section pt-50" style="background-color:#222">
+  <section class="Developer_Section pt-50" >
     <div class="container">
       <div class="row">
         <!-- Left Column -->
@@ -133,7 +133,7 @@
         class="row working-main-content justify-content-lg-center justify-content-center gap-md-0"
       >
         <div class="col-lg-4 col-md-6 col-sm-10 col-12">
-          <div class="card working-main-wrapper card_1">
+          <div class="card working-main-wrapper card_1" data-aos="fade-right" data-aos-duration="1500" data-aos-delay="50">
             <div
               class=" mx-auto my-lg-4 mt-4 mb-3 d-flex align-items-center justify-content-center "
             >
@@ -158,7 +158,7 @@
           </div>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-10 col-12">
-          <div class="card working-main-wrapper card_2">
+          <div class="card working-main-wrapper card_2" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
             <div
               class=" mx-auto my-lg-4 mt-4 mb-3 d-flex align-items-center justify-content-center"
             >
@@ -182,7 +182,7 @@
           </div>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-10 col-12">
-          <div class="card working-main-wrapper card_3">
+          <div class="card working-main-wrapper card_3" data-aos="fade-left" data-aos-duration="1500" data-aos-delay="150">
             <div
               class=" mx-auto my-lg-4 mt-4 mb-3 d-flex align-items-center justify-content-center "
             >
@@ -260,7 +260,7 @@
           <h2 class="text-header  text-center cool">REGISTRATION</h2>
           <h3 class="text-header-subtitle">Want to Schedule Your Smile Design Appointment Easily?</h3>
           <p class="text-center  text-subcontent">Transform your smile and boost your confidence. Our network of Ultimate Smile Designers is ready to provide you with personalized dental solutions. If you're aiming for a radiant smile, our experts are here to guide you every step of the way. Should you require a more tailored approach, don't hesitate to get in touch with us.</p>
-          <img src="{% static 'toothbg.png'%}" class=" img-fluid tooth-bg" />
+          <img src="{% static 'toothbg1.png'%}" class=" img-fluid tooth-bg" />
           <button class="btn getInTouch-btn bat my-1"><a href="/account/dentist">GET IN TOUCH</a></button>
         </div>
       </div>
@@ -269,7 +269,7 @@
 
   <section class="dentists-section position-relative pt-50">
     <img src="{% static 'vector2.svg'%}" class="position-absolute vector2-img img-fluid"/>
-     <div class="container">
+     <div class="container pt-4 pb-2">
        <h1 class="text-center cool dentists_title position-relative text-header mb-0">Dentists</h1>
        <h2 class="dentists_subtitle text-header-subtitle">Best Dentist Near Me</h2>
        <div class="dentists-content-1 d-flex align-items-end justify-content-between">
@@ -296,7 +296,7 @@
                </select>
          </form>
        </div>
-       <div class="row dentists-content-2 mt-5 pb-4 justify-content-center " id="dentist-list">
+       <div class="row dentists-content-2 mt-5 pb-4 justify-content-center " id="dentist-list" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
         {% for ie in data %}
          <div class="col-lg-4 col-md-6 col-sm-10 col-12">
            <div class="card dentists-content justify-content-center">
@@ -326,57 +326,56 @@
   </section>
 
   <section class="smile_step_Section text-center pt-50">
-    <div class="container">
+    <div class="container pt-1 pt-sm-3 pb-sm-4 pb-0">
       <div class="inner_smile_step_section">
         <h2 class="registrayion_small text-header cool  mb-0">Creating Smiles</h2>
         <h3 class="registration_heading  text-header-subtitle"> We are Crafting Beautiful Smiles for a Brighter Future.</h3>
       </div>
       
-      <div class="all_step">
+      <div class="all_step pb-sm-3 pb-0">
         <div class="step_left text-sm-start text-center d-flex align-items-center ">
-          <div class="step_image_content position-relative">
+          <div class="step_image_content position-relative" data-aos="zoom-in" data-aos-duration="1500" >
           <p class="step_number step_number_left"> 01 </p>
           <img  src="{% static 'step1.png' %}"  class="step_image img-fluid"  loading="lazy"  alt="Smile Step Group 1"  />
         </div>
-          <div class="step_content">
+          <div class="step_content" data-aos="fade-left" data-aos-duration="1500">
             <p class="step_head white font-Glida-display">Find Your Ultimate Smile Designer</p>
             <p class="step_text font-Barlow">Explore our extensive directory to discover a skilled Ultimate Smile Designer near you, one who aligns with your smile aspirations and dental needs.</p>
           </div>
         </div>
 
         <div class="step_right text-sm-end text-center d-flex align-items-center justify-content-sm-end justify-content-center ">
-          
-          <div class="step_content_right order-1">
-            <p class="step_head white font-Glida-display">Find Your Ultimate Smile Designer</p>
-            <p class="step_text font-Barlow">Explore our extensive directory to discover a skilled Ultimate Smile Designer near you, one who aligns with your smile aspirations and dental needs.</p>
+          <div class="step_content_right order-1" data-aos="fade-right" data-aos-duration="1500">
+            <p class="step_head white font-Glida-display">Customize Your Smile Journey</p>
+            <p class="step_text font-Barlow">Select the perfect time for your appointment and embark on a personalized journey to achieve the smile that best fits your personality and desires.</p>
           </div>
-          <div class="step_image_content order-0 order-md-1 order-lg-1 ">
+          <div class="step_image_content order-0 order-md-1 order-lg-1 " data-aos="zoom-in" data-aos-duration="1500" >
           <p class="step_number step_number_right"> 02 </p>
-          <img  src="{% static 'step2.png' %}"  class="step_image img-fluid "  loading="lazy"  alt="Smile Step Group 1"  />
+          <img  src="{% static 'step2.webp' %}"  class="step_image img-fluid opacity-07 "  loading="lazy"  alt="Smile Step Group 1"  />
         </div>
         </div>
 
         <div class="step_left">
-          <div class="step_image_content">
+          <div class="step_image_content" data-aos="zoom-in" data-aos-duration="1500" >
           <p class="step_number step_number_left"> 03 </p>
           <img  src="{% static 'step3.png' %}"  class="step_image img-fluid"  loading="lazy"  alt="Smile Step Group 1"  />
         </div>
-          <div class="step_content">
-            <p class="step_head white font-Glida-display">Find Your Ultimate Smile Designer</p>
-            <p class="step_text font-Barlow">Explore our extensive directory to discover a skilled Ultimate Smile Designer near you, one who aligns with your smile aspirations and dental needs.</p>
+          <div class="step_content" data-aos="fade-left" data-aos-duration="1500" >
+            <p class="step_head white font-Glida-display">Your Perfect Smile, Ready to Shine</p>
+            <p class="step_text font-Barlow">Feel your perfect ready to shine smile with our expert ultimate smile designers and advanced digital equipment's.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="schedule-data-section position-relative pt-50" style="background-color:#222">
-    <img src="{% static 'vector3.png' %}" class="vector3-img img-fluid" />
-    <div class="container">
+  <section class="schedule-data-section position-relative pt-50" >
+    <img src="{% static 'vector31.svg' %}" class="vector3-img img-fluid" />
+    <div class="container py-sm-5 py-4">
       <div class="row position-relative justify-content-center">
         <div class="schedule-data-content-img1 col-xl-4 col-lg-5 col-md-6 px-md-1 position-relative">
           <img src="{% static 'filter-Subtract.webp' %}" class="img-fluid" />
-          <div class="bg-schedule">
+          <div class="bg-schedule text-center" data-aos="fade-up" data-aos-duration="1500">
             <div class="d-flex align-items-center justify-content-center">
               <img
                 src="{% static 'Frame.svg' %}"
@@ -384,7 +383,7 @@
                 alt="dentists"
               />
             </div>
-            <h3 class="text-center fw-400 mb-md-1 mb-1">432+</h3>
+            <h3 class="text-center fw-400 mb-md-1 mb-1 cool">432+</h3>
             <p class="text-center fw-500 mb-md-2 mb-0">Dentists</p>
           </div>
         </div>
@@ -398,8 +397,8 @@
             never far from achieving your perfect smile.
           </p>
           <div class="schedule-data-content-2 row pt-lg-3 pt-sm-4 pt-md-3 pt-3">
-            <div class="col-lg-4 col-sm-6 col-6 d-lg-none d-md-none d-sm-block">
-              <div class="schedule-data-link">
+            <div class="col-lg-4 col-sm-6 col-6 d-lg-none d-md-none d-sm-block" data-aos="fade-up" data-aos-duration="1500">
+              <div class="schedule-data-link text-center">
                 <div
                   class="d-flex justify-content-center align-items-center mx-auto"
                 >
@@ -410,14 +409,14 @@
                     style="width: 23.35%"
                   />
                 </div>
-                <h3 class="mb-1">432+</h3>
+                <h3 class="mb-1 cool">432+</h3>
                 <p class="text-center mb-0">Dentists</p>
               </div>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-6 px-xl-3 px-lg-2 px-md-2">
-              <div class="schedule-data-link">
+            <div class="col-lg-4 col-md-4 col-sm-6 col-6 px-xl-3 px-lg-2 px-md-2" data-aos="fade-up" data-aos-duration="1500">
+              <div class="schedule-data-link text-center">
                 <div
-                  class="d-flex justify-content-center align-items-center mx-auto"
+                  class="d-flex justify-content-center align-items-center mx-auto text-center"
                 >
                   <img
                     src="{% static 'smile-makeover.svg'%}"
@@ -425,12 +424,12 @@
                     alt="smile-makeover"
                   />
                 </div>
-                <h3 class="mb-1 text-center">12k+</h3>
+                <h3 class="mb-1 text-center cool">12k+</h3>
                 <p class="text-center mb-0">Smile Makeover</p>
               </div>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-6 px-xl-3 px-lg-2 px-md-2">
-              <div class="schedule-data-link">
+            <div class="col-lg-4 col-md-4 col-sm-6 col-6 px-xl-3 px-lg-2 px-md-2" data-aos="fade-up" data-aos-duration="1500">
+              <div class="schedule-data-link text-center">
                 <div
                   class="d-flex justify-content-center align-items-center mx-auto"
                 >
@@ -440,12 +439,12 @@
                     alt="smile-makeover"
                   />
                 </div>
-                <h3 class="mb-1 text-center">25k+</h3>
+                <h3 class="mb-1 text-center cool">25k+</h3>
                 <p class="text-center mb-0">Cities</p>
               </div>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-6 px-xl-3 px-lg-2 px-md-2">
-              <div class="schedule-data-link">
+            <div class="col-lg-4 col-md-4 col-sm-6 col-6 px-xl-3 px-lg-2 px-md-2" data-aos="fade-up" data-aos-duration="1500">
+              <div class="schedule-data-link text-center">
                 <div
                   class="d-flex justify-content-center align-items-center mx-auto"
                 >
@@ -455,11 +454,11 @@
                     alt="smile-makeover"
                   />
                 </div>
-                <h3 class="mb-1 text-center">15k+</h3>
+                <h3 class="mb-1 text-center cool">15k+</h3>
                 <p class="text-center mb-0">Experience Years</p>
               </div>
             </div>
-            <div class="col-lg-4 col-md-5 col-sm-5 col-6 px-md-3 callus-btn-wrapper">
+            <div class="col-lg-4 col-md-5 col-sm-5 col-6 px-md-3 callus-btn-wrapper" data-aos="zoom-in" data-aos-duration="1500">
               <a href="tel:+918469888877">
                 <button
                   class="d-flex w-100 fs-16 font-Barlow align-items-center justify-content-center btn btn-call bat">
@@ -574,21 +573,21 @@
 
   <section class="gallery-section">
     <div class="container position-relative">
-      <div class="gallery-container" style="padding-top:140px">
-          <div class="floating-images position-relative w-100 d-flex justify-content-center ">
-              <img src="{% static 'gallery1.png' %}" alt="Before & After">
+      <div class="gallery-container mt-xl-4" style="padding-top:130px">
+          <div class="floating-images position-relative w-100 d-flex justify-content-center " data-aos="fade-down" data-aos-duration="1500">
+              <img src="{% static 'step2.webp' %}" alt="Before & After">
               <img src="{% static 'gallery2.png' %}" alt="Before & After">
               <img src="{% static 'gallery4.png' %}" alt="Before & After">
               <img src="{% static 'gallery11.png' %}" alt="Before & After">
               <img src="{% static 'gallery3.png' %}" alt="Before & After">
               <img src="{% static 'gallery4.png' %}" alt="Before & After">
-              <img src="{% static 'gallery2.png' %}" alt="Before & After">
+              <img src="{% static 'step2.webp' %}" alt="Before & After">
               <img src="{% static 'gallery11.png' %}" alt="Before & After">
               <img src="{% static 'gallery4.png' %}" alt="Before & After">
               <img src="{% static 'gallery2.png' %}" alt="Before & After">
               <img src="{% static 'gallery3.png' %}" alt="Before & After">
           </div>
-          <div class="d-flex justify-content-center" style="margin-top:100px;margin-bottom:70px">
+          <div class="d-flex justify-content-center" style="margin-top:100px;margin-bottom:70px" data-aos="zoom-in" data-aos-duration="1500">
             <img src="{% static 'vector4.svg' %}" class="img-fluid" style="width:67%" />
           </div>
           <div class="gallery-text text-center">
@@ -596,25 +595,43 @@
               <h2 class="text-header-subtitle mb-0 mt-0">Before & After Smile Transformations</h2>
               <p>Explore our gallery to see the remarkable transformations achieved through our Ultimate Smile Design services. Witness the power of expert smile design in enhancing confidence and creating beautiful smiles with these before-and-after showcases.</p>
               <button class="bat btn btn-gallery">
-                <a href="#">Explore Our Gallery</a>
+                <a href="/gallery/">Explore Our Gallery</a>
               </button>
           </div>
       </div>
     </div>
   </section>
 
-  <section class="new-testimonial-section pt-50 position-relative" style="background-color:#222">
+  <section class="new-testimonial-section pt-50 position-relative" style="background-color:#000">
     <img src="{% static 'vector5.svg' %}" class="testimonial-vector-img img-fluid" />
-    <div class="container overflow-hidden">
+    <div class="container pt-sm-4 pb-sm-5 pt-3 pb-3 overflow-hidden">
       <h1 class="text-center position-relative text-header mb-0 cool">TESTIMONIALS</h1>
       <h2 class="text-header-subtitle">What People Say</h2>
-      <p class="mb-0 fw-500 white testimonial_subcontent">
+      <p class="mb-0 fw-500 testimonial_subcontent">
         Discover the stories of transformation and joy from our patients who have experienced remarkable smile makeovers with our Ultimate Smile Designers.
       </p>
       <div class="swiper-container mt-5">
         <div class="swiper myswiper">
           <div class="swiper-wrapper">
-            <div class="swiper-slide  testimonial-slide">
+            {% for ie in review %}
+              <div class="swiper-slide testimonial-slide">
+                <img src="{% static 'quote2.png' %}" class="quote2-img img-fluid" />
+                <img src="{% static 'avtar-img.png' %}" class="img-fluid" />
+                <div class="stars">
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                </div>
+                <div style="padding-bottom:0px">
+                <p class="reviewContent">{{ie.review}}</p>
+                <h2 class="reviewName">{{ie.doctor_name}}</h2>
+                </div>
+                <img src="{% static 'quote1.png' %}" class="quote1-img img-fluid" />
+              </div>
+            {% endfor %}
+            {% comment %} <div class="swiper-slide  testimonial-slide">
               <img src="{% static 'quote2.png' %}" class="quote2-img img-fluid" />
               <img src="{% static 'avtar-img.png' %}" class="img-fluid" />
                <div class="stars">
@@ -707,7 +724,7 @@
               </div>
               <img src="{% static 'quote1.png' %}" class="quote1-img img-fluid" />
             </div>
-          </div>
+          </div> {% endcomment %}
         </div>
       </div>
     </div>
@@ -860,7 +877,7 @@
         professionals near you.
       </p>
       <form
-        class="row form justify-content-between py-4"
+        class="row form justify-content-between py-3 py-sm-4"
         method="GET"
         action="/search-all-usd/"
       >

@@ -14,6 +14,7 @@
 <div class="page-content">
   <section class="breadcrumbs-section contactus-breadcrumbs-section">
     <div class="container">
+      <div class="breadcrumbs-path"> <a href="{% url 'home:home' %}"> HOME </a> <i class=" fa fa-solid fa-angles-right"></i> FIND DENTIST</div>
       <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool">Find Dentist</h1>
       {% comment %} <img src="{% static 'Group 291.svg' %}" class="find-dentist-img img-fluid" /> {% endcomment %}
     </div>
@@ -110,7 +111,7 @@
               <div class="card-body text-end">
                 <h2 class="text-start">{{ie.name}}</h2>
                 <p class="text-start mb-0">{{ie.city}}</p>
-                <button class="btn bookAppoinment-btn w-100 bat">
+                <button class="btn bookAppoinment-btn mt-3 w-100 bat">
                   <a href="/account/dentist/">Book Appointment</a>
                 </button>
                 <span class="cool d-inline-block">ADE Verified Dentist</span>
@@ -129,7 +130,11 @@
         </div>
         <div class="col-lg-4 col-md-12 col-sm-12 col-12 mb-4">
           <div class="dentist-content2">
-            {% if ie.iframe %} {{ie.iframe | safe}} {% else %}
+            {% if ie.iframe %}
+            <div style="filter: invert(90%) hue-rotate(180deg); width: 100%; height: 450px;">
+             {{ie.iframe | safe}} 
+            </div>
+             {% else %}
             <p class="d-flex align-items-center justify-content-center h-100">
               No Location Available
             </p>
