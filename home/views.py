@@ -53,10 +53,10 @@ def home(request):
     search_message = None
 
     reviews = [
-        {id:1,'doctor_name':'DR JAYDEEP MALI','review':"I appreciate ADE for your assistance and support in my every case Thanks for being there whenever I needed Mr. Hemal, Mr. Hitesh and Anilbhai a helping hand, You always knew just what I needed."},
-        {id:2,'doctor_name':'Dr kavan Doshi','review':'Excellent dental lab! The quality of their work is outstanding, and the team is very professional and reliable. They always deliver on time and are great to work with. Highly recommend for any dental practice!'},
-        {id:3,'doctor_name':'Dr Amit','review':"I am sending my work since almost 6 years and im very much satisfied excellent work quality,very supportive, customer friendly and professional staff,quick delivery"},
-        {id:4,'doctor_name':'Dr. Shilpa Chhajer','review':"I came across with the advance lab in recent years, the work quality is superior, lab staff is easily accessible, and regarding scan appointments, they try to give earliest appointment, Thank you"},
+        {id:1,'doctor_name':'Dr Priyanka Sharma','review':"I never imagined my smile could look this great. The entire process was smooth and tailored to my needs. I'm so grateful to the team and my smile designer!"},
+        {id:2,'doctor_name':'Dr Anjali Mehta','review':'My experience was beyond my expectations. The attention to detail and personalized care I received was truly outstanding. Highly recommend!'},
+        {id:3,'doctor_name':'Dr Rahul Kumar','review':"The transformation has been incredible. I feel more confident and love my new smile. Thank you to my dentist for such an amazing experience!"},
+        {id:4,'doctor_name':'Dr Ankita V','review':"I had the pleasure of working with Advance Dental Lab for over 8 years. It is such a joy to have a lab that can provide helpful and successful alternative options for extremely difficult cases and export level quality . Ultimate smile Designing is best. Support Digital dentistry . They have skilled technicians to provide Fast work. Ultimate smile designer"},
         {id:5,'doctor_name':'Dr.Manali Rajyguru','review':'The bestest lab i have worked with in my 14years of practice.  each n every crown they deliver is perfect. no adjustments no high points.support team is also best.  Anilbhai gives humble ans anytime u call.scan facilities they started is best thing. vishalbhai provide good service always on time and finishes scan within 10 to 15 mins.overall satisfied with all the work n services.'}
     ]
 
@@ -367,7 +367,5 @@ def sitemap(request):
 def robots(request):
     return render(request, 'robots.txt', content_type='text')   
     
-    
 def thankyou(request):
-    
     return render(request, 'pthankyou.html')

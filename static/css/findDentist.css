@@ -61,11 +61,11 @@
   color: rgb(255, 255, 255, 0.7) !important;
 }
 .searchbar-box-wrapper select option {
-  background-color: rgba(34, 34, 34, 0.6);;
+  background-color: rgba(34,34,34,0.98);
   color: #fff;
 }
 .searchbar-box-wrapper select option:hover {
-  background-color: #fff !important;
+  background-color: var(--bg-content-color) !important;
   color: #222 !important;
 }
 .searchbar-box-wrapper img {
@@ -118,9 +118,9 @@
     font-weight: 600;
     font-size: 16px;
 }
-.dentist-content .card-body .bookAppoinment-btn a{
+/* .dentist-content .card-body .bookAppoinment-btn a{
     color: #222;
-}
+} */
 .dentist-content .card-body{
   background-color: transparent;
   padding: 12px 5px 0px;

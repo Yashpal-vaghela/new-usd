@@ -118,7 +118,7 @@
   position: relative;
   background-color: rgba(34, 34, 34, 0.6);
 }
-.request-img-section img{
+.request-img-section .usd-logo-img{
   background-image: linear-gradient(#000 29%,rgba(20,20,20,1) 41%);
   padding: 0 45px;
   position: absolute;
@@ -222,6 +222,7 @@ text-align: center;
   background: var(--text-gradient) text !important;
   color: transparent;
 }
+
 .inputicon-box i::after{
   content: "";
   position: absolute;

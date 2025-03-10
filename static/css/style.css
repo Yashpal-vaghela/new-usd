@@ -8854,12 +8854,14 @@ body[class*="active-"] .cs-message-panel {
   color: black;
   background: linear-gradient(130deg, #C3942F 0%, #D89C27 18%, #DFC86F 37%, #E7DC96 50%, #DFC86F 64%, #D89C27 82%, #C99C30 100%) !important;
 }
-
+.site-pagination ul li{
+  margin: 0px 6px ;
+}
 .site-pagination .pagination>li>a,
 .site-pagination .pagination>li>span {
-  margin: 0px 5px;
+  /* margin: 0px 6px; */
   border: none;
-  border-radius: 30px !important;
+  /* border-radius: 30px !important; */
   padding: 5px 2px;
   min-width: 36px;
   background-color: transparent;
@@ -19929,7 +19931,6 @@ input[placeholder],
   font-size: 15px !important;
   font-weight: 600;
   padding: 10px 20px;
-  background: linear-gradient(130deg, #636363 0%, #9B9B9B 20%, #B1B1B1 36%, #E1E1E1 50%, #B1B1B1 62%, #9B9B9B 75%, #636363 100%) !important;
   color: #000;
 }
 .header-buttons p {
@@ -20095,7 +20096,7 @@ input[placeholder],
   }
 .Doctor_photo_card {
   display: inline-block;
-  background-color: #2D2D2D;
+  background-color: var(--bg-content-color);
   padding: 20px;
   max-width: 422px;
   border-radius: 25px;
@@ -20116,7 +20117,7 @@ input[placeholder],
 }
 .Doctor_Detail_Card {
   position: relative;
-  background-color: #2D2D2D;
+  background-color: var(--bg-content-color);
   margin-top: 50px;
   padding: 40px;
   border-radius: 25px;
@@ -20151,7 +20152,7 @@ input[placeholder],
   width: 100%;
   padding: 20px;
   border-radius: 25px;
-  background-color: #2D2D2D;
+  background-color: var(--bg-content-color);
 }
 .Loc-subtext {
   display: inline-block;

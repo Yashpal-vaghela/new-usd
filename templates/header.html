@@ -74,7 +74,7 @@
                         <!--    <i class="feather-user"></i> Sign In-->
                         <!--</a>-->
                         <!--Add Listing up-->
-                        <a href="{% url 'account:dentist' %}" class="aon-add-listing m-l20 header-buttons bat">
+                        <a href="{% url 'account:dentist' %}" class="aon-add-listing m-l20 header-buttons bat" onClick="localStorage.removeItem('selectedDoctor')">
                             <p class="">For Patients</p>   
                           </a>
                           <a href="https://dentist.ultimatesmiledesign.com/" target="_blank" class="bat aon-add-listing m-l20 header-buttons ">

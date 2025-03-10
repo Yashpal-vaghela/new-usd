@@ -21,7 +21,7 @@
     <div class="container">
       <div class="request-img-section d-flex justify-content-center mx-auto">
         <a href="/" style="display:contents">
-          <img class="img-fluid" src="{% static 'usdlog.png' %}" />
+          <img class="img-fluid usd-logo-img" src="{% static 'usdlog.png' %}" alt="logo-img"/>
         </a>
         <a href="/"><i class="fa fa-solid fa-xmark cnacel_btn" ></i></a>
         
@@ -71,6 +71,7 @@
                   <i class="fa-solid fa-phone"></i>
                 </div>
               </div>
+              
               <div class="col-lg-6">
                 {% comment %} <label class="form-label">Email</label> {% endcomment %}
                 <div class="inputicon-box">
@@ -84,6 +85,8 @@
                   <i class="fa-solid fa-envelope"></i>
                 </div>
               </div>
+              <div class="row" id="doctor-info">
+              </div>
               <div class="col-12 d-flex align-items-center">
                 <input
                   class="form-check-input"
@@ -93,6 +96,7 @@
                 />
                 <label class="mb-0 form-label">By submitting, you agree to receive SMS or emails via the provided channel.</label>
               </div>
+
               <div class="col-lg-3 col-md-4 col-sm-5 col-6">
                     <button type="submit" class=" request-button  bat">submit</button>
               </div>
@@ -107,6 +111,53 @@
 {% endblock body %} {% block js %}
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  const doctordata = JSON.parse(localStorage.getItem('selectedDoctor'));
+   console.log("window",window,doctordata)
+   if(doctordata !== null){
+      if(doctordata.name && doctordata.city){
+        document.getElementById("doctor-info").innerHTML =
+        `
+        <div class="col-lg-6 ps-0">
+          <div class="inputicon-box">
+            <input
+              class="form-control"
+              name="phone"
+              type="text"
+              placeholder="Phone Number"
+              required
+              value="${doctordata.name}"
+              readonly
+            />
+            <i class="fa-solid fa-user-doctor"></i>
+          </div>
+        </div>
+        <div class="col-lg-6 pe-0">
+          <div class="inputicon-box">
+            <input
+              class="form-control"
+              name="phone"
+              type="text"
+              placeholder="Phone Number"
+              required
+              value="${doctordata.city}"
+              readonly
+            />
+            <i class="fa-solid fa-location-dot"></i>
+          </div>
+        </div>
+        `
+      }else{
+        document.getElementById("doctor-info").style.display = "none !important";
+      }
+   } else{
+     document.getElementById("doctor-info").classList.add('d-none')
+   }
+   
+})
+
+</script>
 {% if messages %}
 <script>
   {% for message in messages %}
@@ -119,4 +170,5 @@
   });
   {% endfor %}
 </script>
+
 {% endif %} {% endblock js %}

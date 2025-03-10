@@ -487,12 +487,6 @@
   font-size: 29px !important;
 }
 .register_wrapper p {
-  /* z-index: 1;
-  width: 80.33%;
-  padding-bottom: 0px;
-  padding-top: 12px;
-  left: 8.5%;
-  top: 33%; */
   position: relative;
   padding-top: 5px;
   margin-bottom: 18px;
@@ -506,10 +500,10 @@
 }
 .tooth-bg {
   position: absolute;
-  top: -16%;
-  left: -21%;
+  top: 22%;
+  left: 0%;
   right: 0%;
-  padding-left: 211px;
+  /* padding-left: 211px; */
   opacity: 0.4;
   display: flex;
   justify-content: center;
@@ -668,14 +662,14 @@
   font-style: italic;
   font-size: 12px;
 }
-@media (max-width: 2400px)  {
+@media (min-width: 2400px){
   .vector3-img {
     left: 10%;
   }
 }
-@media (max-width: 2600px)  {
+@media (min-width: 2600px){
   .vector3-img {
-    left: 0%;
+    left: 25%;
   }
 }
 @media (min-width: 992px) {
@@ -758,48 +752,37 @@
 }
 
 /* ---------------------- smile step section ---------------------- */
-
 .smile_step_Section {
   background-color: #000000;
   padding: 50px 0px;
   text-align: center;
 }
-
 .inner_smile_step_section {
   width: 100%;
-
 }
-
 .smile_step_Section .registration_heading {
   position: relative;
 }
 .step_image_content {
   position: relative;
 }
-
 .step_head {
   font-family: "Gilda Display", serif;
   font-size: 22px;
   color: #FFFFFF;
 }
-
 .step_content {
   padding-left: 50px;
 }
-
 .step_content_right {
   padding-right: 50px;
 }
-
 .step_left {
-  
   text-align: left;
   display: flex;
   align-items: center;
   margin-top: 40px;
 }
-
-
 .step_number {
   font-size: 100px;
   font-weight: bold;
@@ -807,41 +790,31 @@
   position: absolute; 
   z-index: 10;
 }
-
 .step_number_left {
   color: rgba(216,156,39, 0.9);
   top: -30%;
   left: 1%;
 }
-
 .step_number_right {
   color: rgba(255,255,255, 0.9);
   top: -30%;
   right: 1%;
 }
-
 .step_image {
-  
   height: 300px;
   width: 240px;
 }
-
-
 .step_text {
   font-family: "Barlow", sans-serif;
   width: 500px;
 }
-
-
 .step_right {
-  
   text-align: right;
   justify-content: right;
   display: flex;
   align-items: center;
   margin-top: 40px;
 }
-
 .registrayion_small {
   font-family: "Barlow Condensed", sans-serif;
   display: block;
@@ -852,9 +825,7 @@
   letter-spacing: 0.03em;
   display: inline-block;
   position: relative;
-  
 }
-
 .registration_heading {
   font-family: "Gilda Display", serif;
   font-size: 36px;
@@ -863,7 +834,6 @@
   margin-bottom: 20px;
   line-height: 1.4 !important;
 }
-
 @media (min-width: 601px) and (max-width: 992px) { 
   .step_number {
     font-size: 80px;
@@ -871,44 +841,32 @@
   .step_text {
     width: 350px;
   }
-
-
-  
   .step_image {
-  
     height: 250px;
     width: 200px;
   }
 }
-
 @media (max-width: 768px) { 
   .step_number {
     font-size: 80px;
   }
-
   .step_image {
-  
     height: 250px;
     width: 200px;
   }
   .step_text {
     width: 250px;
   }
-  
   .smile_step_Section .registration_heading{
     width: 100%;
   }
- 
-
 }
-
 @media (max-width: 576px) {
   .step_head {
     font-family: "Gilda Display", serif;
     font-size: 18px;
     color: #FFFFFF;
   }
-
   .step_left {
     flex-direction: column;
     justify-content: center;
@@ -921,7 +879,6 @@
     padding-top: 20px;
     padding-left: 0px;
   }
-  
   .step_content_right {
     padding-top: 20px;
     padding-right: 0px;
@@ -929,21 +886,17 @@
   .step_text {
     width: 100%;
   }
-
   .step_right {
     flex-direction: column;
     justify-content: center;
     text-align: center;
   }
-
   .smile_step_Section .text_vec{
     margin-bottom: 20px;
   }
-
   .registration_heading {
     font-size: 20px;
   }
-  
 }
 /* ------------------ Schedule Data Section ----------------- */
 .schedule-data-section {
@@ -977,8 +930,8 @@
   left: -4px;
   position: relative;
 }
-.schedule-data-link h3,
-.bg-schedule h3 {
+.schedule-data-link .h3,
+.bg-schedule .h3 {
   font-family: "Gilda Display", serif;
   font-size: 25px;
   /* color: #fbe9d0; */
@@ -998,11 +951,11 @@
   font-size: 14px;
   margin-top: 10px;
   margin-bottom: 10px;
-  padding-bottom: 15px;
+  padding-bottom: 20px;
   line-height: 24px;
 }
 .schedule-data-content-2 .col-sm-5:last-child {
-  margin-top: 10px !important;
+  margin-top: 20px !important;
   width: 34%;
 }
 .schedule-data-link {
@@ -1360,7 +1313,6 @@
   }
   .floating-images img:nth-child(6) {
     right: 0%;
-    filter: saturate(0.5);
   }
   .floating-images img:nth-child(7) {
     right: 0%;
@@ -1544,7 +1496,6 @@
   .reviewName {
     font-size: 20px;
   }
-
 }
 @media(max-width:1024px){
   .testimonial-slide {
@@ -1554,7 +1505,6 @@
     font-size: 14px;
     height: 160px;
   }
-
 }
 @media(max-width:991px){
     .testimonial_subcontent{
@@ -1591,11 +1541,7 @@
     .reviewContent {
       height: 128px;
     }
-    /* .reviewName {
-      font-size: 18px;
-    } */
 }
-
 @media(max-width:500px){
   .reviewContent {
     height: 168px;

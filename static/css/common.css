@@ -74,8 +74,13 @@
     letter-spacing: 0.3px;
 }
 .btn{
-    padding: 3px 29px; 
+    padding: 8px 12px; 
     transition: background 0.3s; 
+}
+.btn:active,
+.btn:focus,
+.btn:hover{
+    box-shadow: none !important;
 }
 .btn a{
     color: #000;
@@ -90,7 +95,9 @@
 .fw-600{
     font-weight: var(--fw-600);
 }
-
+.fw-700{
+    font-weight: 700;
+}
 /* font-size */
 .fs-24{
     font-size: 24px;;

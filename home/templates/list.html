@@ -111,8 +111,10 @@
               <div class="card-body text-end">
                 <h2 class="text-start">{{ie.name}}</h2>
                 <p class="text-start mb-0">{{ie.city}}</p>
-                <button class="btn bookAppoinment-btn mt-3 w-100 bat">
-                  <a href="/account/dentist/">Book Appointment</a>
+                <button class="btn bookAppoinment-btn mt-3 w-100 bat" onclick="BookAppoinment({{ie.id}},'{{ie.name}}','{{ie.city}}')">
+                  Book Appointment
+                  {% comment %} <a href="#">Book Appointment</a> {% endcomment %}
+                  {% comment %} <a href="/account/dentist/" >Book Appointment</a> {% endcomment %}
                 </button>
                 <span class="cool d-inline-block">ADE Verified Dentist</span>
               </div>
@@ -131,7 +133,7 @@
         <div class="col-lg-4 col-md-12 col-sm-12 col-12 mb-4">
           <div class="dentist-content2">
             {% if ie.iframe %}
-            <div style="filter: invert(90%) hue-rotate(180deg); width: 100%; height: 450px;">
+            <div style="filter: invert(90%) hue-rotate(180deg); width: 100%; height: 380px;">
              {{ie.iframe | safe}} 
             </div>
              {% else %}
@@ -151,4 +153,17 @@
 </div>
 <!-- Content END-->
 
-{% endblock body %} {% block js %}{% endblock js %}
+{% endblock body %} {% block js %}
+<script>
+  function BookAppoinment(id,name,city){
+    console.log("sdf",id,name,city)
+    const doctordata = {
+      id:id,
+      name:name,
+      city:city
+    }
+    localStorage.setItem('selectedDoctor',JSON.stringify(doctordata));
+    window.location.href="/account/dentist/";
+  }
+</script>
+{% endblock js %}
