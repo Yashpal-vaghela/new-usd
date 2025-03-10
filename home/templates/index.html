@@ -919,7 +919,7 @@
 </div>
 
 {% endblock body %} {% block js %}
-<script>
+{% comment %} <script>
   $(document).ready(function () {
     var sync1 = $("#sync1");
     var sync2 = $("#sync2");
@@ -1028,7 +1028,7 @@
       ],
     });
   });
-</script>
+</script> {% endcomment %}
 <script>
     document.getElementById("cityDropdown").addEventListener("change", function () {
         let form = document.getElementById("searchForm");
@@ -1081,6 +1081,7 @@
     const mySwiper = new Swiper(".myswiper", {
       loop: true,
       centeredSlides: true,
+      autoplay: true,
       slidesPerView: 'auto', // Adjusts based on container size
       spaceBetween: 40,
       speed: 800, // Smooth transition
