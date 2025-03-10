@@ -803,6 +803,7 @@
 .step_image {
   height: 300px;
   width: 240px;
+  border-radius: 12px;
 }
 .step_text {
   font-family: "Barlow", sans-serif;

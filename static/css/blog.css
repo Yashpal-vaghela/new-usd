@@ -218,7 +218,7 @@
 }
 @media(min-width:1400px) and (max-width:1599px){
     .read-more{
-        bottom: 4%;
+        bottom: 1%;
     } 
 }
 @media(min-width:1200px) and (max-width:1400px){
