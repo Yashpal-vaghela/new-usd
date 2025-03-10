@@ -144,14 +144,14 @@
                 <h2 class="blog-content-title">Recent Blog</h2>
                 <div class="blog-content-wrapper align-items-center row justify-content-center mx-auto pb-5">
                     {% if first_blog %}
-                      <div class="col-lg-6 col-md-6 col-sm-11 position-relative mx-auto">
+                      <div class="col-lg-6 col-md-6 col-sm-11 position-relative mx-auto first-blog-content">
                             <div class="blog-icon-content1 d-flex align-items-center mx-auto">
                                 <span class="me-5"><img src="{% static 'calender.svg' %}" class="icon-img me-2 img-fluid" />{{first_blog.published}}</span>
                                 <span><img src="{% static 'user1.svg'%}" class="icon-img me-2 img-fluid" />By {{first_blog.author}}</span>
                             </div>
-                            <h2 class="blog-content-title1">{{first_blog.title}}</h2>
+                            <h2 class="blog-content-title1"><a href="{% url 'home:blogsd' first_blog.slug %}">{{first_blog.title}}</a> </h2>
                             <p class="blog-content-subtitle">{{first_blog.description}}</p>
-                            <span class="read-more">Read More</span>
+                            <span class="read-more"><a href="{% url 'home:blogsd' first_blog.slug %}">Read More</a></span>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-11 mx-auto">
                             <img src="{{first_blog.blog_banner_lg.url}}" class="img-fluid" 
