@@ -309,11 +309,23 @@
                     showCancelButton: false,
                     confirmButtonText: "Yes",
                     denyButtonText: "No",
+                    customClass: {
+                        popup: "custom-swal-popup",
+                        title: "custom-swal-title",
+                        confirmButton: "custom-swal-confirm",
+                        denyButton: "custom-swal-deny",
+                    },
                 }).then((result) => {
                     if (result.isConfirmed) {
                         window.location.reload();
                     } else if (result.isDenied) {
-                        Swal.fire("Location not updated", "", "info");
+                        Swal.fire(title: "Location not updated",
+                        icon: "info",
+                        customClass: {
+                            popup: "custom-info-popup",
+                            title: "custom-info-title",
+                            confirmButton: "custom-info-button",
+                        },);
                     }
                 });
             }, 5000);

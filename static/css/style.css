@@ -20298,3 +20298,13 @@ input[placeholder],
   font-size: 15px !important;
   display: inline-block;
 }
+
+.custom-swal-popup {
+  background-color: #000 !important;
+  color: white !important;
+}
+
+.custom-info-popup {
+  background-color: #000 !important;
+  color: white !important;
+}
