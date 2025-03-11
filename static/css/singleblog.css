@@ -1,3 +1,5 @@
+
+
 .single-blog-content{
     background-color: #000;
 }
@@ -126,4 +128,18 @@
     font-size: 16px;
     font-weight: 400;
     line-height: 30px;
+}
+
+@media(max-width:576px){
+    .single-blog-wrapper .breadcrumbs-section .container{
+        top:60% !important;
+    }
+    .single-blog-wrapper .breadcrumbs-title {
+        font-size: 18px !important;
+        line-height: 30px !important;
+    }
+    .single-blog-title{
+        font-size: 18px;
+        line-height: 1.6;
+    }
 }

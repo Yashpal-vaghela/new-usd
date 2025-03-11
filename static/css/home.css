@@ -368,7 +368,8 @@
 }
 @media (max-width: 576px) {
   .working-section {
-    padding: 30px 0px 15px !important;
+    padding: 30px 0px 0px !important;
+    margin: 20px auto 10px !important;
   }
   .working_title {
     margin-bottom: 0px !important;
@@ -532,8 +533,6 @@
   }
   .register_wrapper p {
     font-size: 14px;
-    left: 9.5%;
-    top: 36%;
   }
 }
 @media (max-width: 991px) {
@@ -543,12 +542,12 @@
   .register_wrapper h3 {
     font-size: 26px !important;
   }
-  .register_wrapper p {
+  /* .register_wrapper p {
     line-height: 22px;
     width: 100%;
     left: 0%;
     top: 38%;
-  }
+  } */
   .register_wrapper img {
     height: 42%;
   }
@@ -561,21 +560,21 @@
     font-size: 24px !important;
     line-height: 38px;
   }
-  .register_wrapper p {
+  /* .register_wrapper p {
     width: 86%;
     left: 6.5%;
     top: 40%;
-  }
+  } */
   .register_wrapper img {
     height: 58%;
   }
 }
 @media (max-width: 576px) {
   .register_wrapper {
-    padding: 30px 0px 150px;
+    padding: 35px 0px 40px;
   }
   .registration_section {
-    padding: 35px 0px 35px !important;
+    padding: 10px 0px 35px !important;
     margin: 15px auto 20px;
   }
   .register_wrapper h3 {
@@ -585,15 +584,11 @@
   }
   .register_wrapper p {
     font-size: 13px;
-    width: 90%;
-    left: 4.5%;
-    display: flex;
-    padding-top: 15px;
-    line-height: inherit;
-    top: 42%;
+    line-height: 20px;
   }
   .register_wrapper img {
-    height: 80%;
+    height: 48%;
+    top:32%;
   }
 }
 
@@ -727,7 +722,7 @@
 }
 @media (max-width: 576px) {
   .dentists-section {
-    padding: 40px 0px 20px !important;
+    padding: 25px 0px 20px !important;
   }
   .vector2-img {
     top: 7%;
