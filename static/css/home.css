@@ -630,8 +630,8 @@
   margin-bottom: 15px;
 }
 .dentists-content-2 .col-12 {
-  padding-left: 1.3rem !important;
-  padding-right: 1.3rem !important;
+  padding-left: 1.1rem !important;
+  padding-right: 1.1rem !important;
 }
 .dentists-content {
   padding: 18px;
@@ -641,7 +641,7 @@
 }
 .dentists-content img {
   width: 100%;
-  height: 250px;
+  height: 300px;
   border-radius: 18px;
   display: flex;
   margin: auto;

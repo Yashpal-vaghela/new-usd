@@ -20308,3 +20308,11 @@ input[placeholder],
   background-color: #000 !important;
   color: white !important;
 }
+.custom-info-popup {
+  background-color: rgba(34,34,34,0.8) !important;
+  color: white !important;
+}
+div:where(.swal2-container) div:where(.swal2-popup) { 
+  background-color: rgba(34,34,34,0.8) !important; 
+  color: #fff !important;
+}
