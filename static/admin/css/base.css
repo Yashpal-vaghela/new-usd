@@ -102,6 +102,13 @@ body {
     font-family: 'Barlow', sans-serif;
     color: var(--body-fg);
     background: var(--body-bg);
+    overflow-x: hidden;
+
+
+}
+
+.container {
+    overflow-x: hidden;
 }
 
 /* LINKS */

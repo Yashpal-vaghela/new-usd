@@ -12,6 +12,7 @@
   width: 16% !important;
 }
 
+
 .contact-section {
   background-color: #000;
 }
@@ -301,8 +302,13 @@ text-align: center;
     width: 36%;
   }
 }
+@media (min-width: 576px) and (max-width: 10000px ){
+  .usd-2-logo {
+    display: none;
+  }
+}
+@media (min-width: 576px) and (max-width:991px ){
 
-@media(max-width:991px){
   .contactus-breadcrumbs-section img {
     width: 25% !important;
   }
@@ -396,12 +402,18 @@ text-align: center;
 }
 
 @media(max-width:576px){
+
+  .request-img-section .usd-logo-img{
+   
+    display: none;
+  }
   .contactus-breadcrumbs-section img {
     width: 30% !important;
   }
   .contact-info-content{
     gap:10px
   }
+  
   .contact-info-img{
     width: 16%;
     height: 70px;
@@ -434,9 +446,12 @@ text-align: center;
   .request-img-section{
     padding: 40px 15px 35px;
   }
+ 
   .request-img-section img{
     padding: 0px 20px;
+    width: 45%;
     top:-3.8%;
+    
   }
   .request-content h2{
     font-size: 28px;

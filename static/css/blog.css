@@ -6,6 +6,12 @@
     width: 100%;
     height: 350px;
 }
+
+@media (max-width: 575px) {
+    .breadcrumbs-section {
+        background-position: right !important;
+    }
+}
 .breadcrumbs-section .container{
     position: relative;
     top:65%;

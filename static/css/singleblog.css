@@ -132,7 +132,7 @@
 
 @media(max-width:576px){
     .single-blog-wrapper .breadcrumbs-section .container{
-        top:60% !important;
+        top:40% !important;
     }
     .single-blog-wrapper .breadcrumbs-title {
         font-size: 18px !important;

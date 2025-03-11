@@ -24,10 +24,10 @@
 <div class="page-content">
   <!-- BANNER SECTION START -->
   <section class="Banner_Section position-relative pt-50">
-    <div class="container">
+    <div class="">
       <div class="row ">
-        <div class="main-body-section text-center">
-          <div class="text-center banner_main_txt position-relative">
+        <div class="main-body-section text-center container">
+          <div class="text-center banner_main_txt position-relative container">
             <!-- tooth Images -->
             <img src="{% static 'usdBannerTeeth2.png' %}" class="banner-teeth-2 bg_1 img-fluid" loading="lazy" alt="Smile Step Group 1" />
             <!-- Banner Text -->
@@ -36,29 +36,32 @@
           </div>
           <!-- data-aos="fade-down" data-aos-duration="1500" data-aos-delay="0" -->
            <!-- Search Functionality -->
-          <div class="aon-banner-search d-none d-md-inline-block  position-relative" style="margin-top: 30px; background-color: #2D2D2D" >
-            <form class="aon-search2-form aon-search2-form-area" action="{% url 'home:search_all_usd' %}" method="GET"> 
-              {% csrf_token %}
-              <div class="d-flex">
-                <img src="{% static 'personG.svg' %}" class="img-fluid"  alt="location" width="25" height="25"/>
-                <input type="text" class="  banner-txt-field" placeholder="Enter Doctor's Name" name="q" id="doctor-search" style=" ">
+            <div class="container">
+              <div class="aon-banner-search d-none d-md-inline-block  position-relative " style="margin-top: 30px; background-color: #2D2D2D" >
+                <form class="aon-search2-form aon-search2-form-area" action="{% url 'home:search_all_usd' %}" method="GET"> 
+                  {% csrf_token %}
+                  <div class="d-flex">
+                    <img src="{% static 'personG.svg' %}" class="img-fluid"  alt="location" width="25" height="25"/>
+                    <input type="text" class="  banner-txt-field" placeholder="Enter Doctor's Name" name="q" id="doctor-search" style=" ">
+                  </div>
+                  <div class="d-flex">
+                    <img  src="{% static 'process-1.svg' %}"  class="img-fluid pl-2"  alt="location"  width="25"  height="25" />
+                    <select class=" banner-form" name="city" id="location-select" style="">
+                      <option value="" selected>Select City</option>
+                        {% for city in cities %}
+                        <option value="{{ city.id }}" style="color: white">{{ city.city }}</option>
+                        {% endfor %}
+                    </select>
+                  </div>
+                  <div class="aon-search2-right ">
+                    <div class="aon-search2-col aon-search-btn">
+                        <button class="submit_banner_btn bat" type="submit">Find</button>
+                    </div>
+                  </div>
+                </form>
               </div>
-              <div class="d-flex">
-                <img  src="{% static 'process-1.svg' %}"  class="img-fluid pl-2"  alt="location"  width="25"  height="25" />
-                <select class=" banner-form" name="city" id="location-select" style="">
-                  <option value="" selected>Select City</option>
-                    {% for city in cities %}
-                    <option value="{{ city.id }}" style="color: white">{{ city.city }}</option>
-                    {% endfor %}
-                </select>
-              </div>
-              <div class="aon-search2-right">
-                <div class="aon-search2-col aon-search-btn">
-                    <button class="submit_banner_btn bat" type="submit">Find</button>
-                </div>
-              </div>
-            </form>
-          </div>
+            </div>
+          
           <!-- USD MAin Banner Teeth Image -->
           <img  src="{% static 'usdBannerTeeth1.webp' %}"  class=" img-fluid"  loading="lazy"  alt="Smile Step Group 1" />
         </div>
@@ -458,12 +461,12 @@
                 <p class="text-center mb-0">Experience Years</p>
               </div>
             </div>
-            <div class="col-lg-4 col-md-5 col-sm-5 col-6 px-md-3 callus-btn-wrapper" data-aos="zoom-in" data-aos-duration="1500">
+            <div class="col-lg-4 col-md-5 col-sm-6 col-6 px-md-3 callus-btn-wrapper" data-aos="zoom-in" data-aos-duration="1500">
               <a href="tel:+918469888877">
                 <button
                   class="d-flex w-100 fs-16 font-Barlow align-items-center justify-content-center btn btn-call bat">
                   <b>Call Us</b>
-                  <i class="ms-4 white ms-sm-3 ms-lg-3 fa-solid fa-arrow-right-long"></i>
+                  <i class="ms-2 white  fa-solid fa-arrow-right-long"></i>
                 </button>
               </a>
             </div>

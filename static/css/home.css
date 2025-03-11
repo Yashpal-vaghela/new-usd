@@ -587,8 +587,7 @@
     line-height: 20px;
   }
   .register_wrapper img {
-    height: 48%;
-    top:32%;
+    display: none;
   }
 }
 
@@ -1389,6 +1388,9 @@
   .floating-images img:nth-child(11) {
     top: 82px;
     left: 3%;
+  }
+  .gallery-text{
+    bottom:-4%;
   }
   .gallery-text h3{
     font-size: 16px;
