@@ -46,10 +46,12 @@
               alt=""
               class="img-fluid Doctor_photo"
             />
-             <div class="bat appoint_btn" onclick="BookAppoinment({{data.id}},'{{data.profile.name}}','{{data.city}}')">Book Appointment</div>
+             
             {% else %}
+            
             <img src="{% static 'noimage-team.webp' %}" alt="Image" />
             {% endif %}
+            <div class="bat appoint_btn" onclick="BookAppoinment('{{data.id}}','{{data.profile.name}}','{{data.city}}')">Book Appointment</div>
 
            
           </div>
