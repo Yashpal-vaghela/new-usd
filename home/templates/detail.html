@@ -46,11 +46,12 @@
               alt=""
               class="img-fluid Doctor_photo"
             />
+             <div class="bat appoint_btn" onclick="BookAppoinment({{data.id}},'{{data.profile.name}}','{{data.city}}')">Book Appointment</div>
             {% else %}
             <img src="{% static 'noimage-team.webp' %}" alt="Image" />
             {% endif %}
 
-            <div class="bat appoint_btn">Book Appointment</div>
+           
           </div>
 
           <!-- doctor detail card -->
@@ -137,4 +138,18 @@
     </div>
   </div>
 </div>
-{% endblock body %} {% block js %} {% endblock js %}
+{% endblock body %} 
+{% block js %}
+<script>
+  function BookAppoinment(id,name,city){
+    console.log("sdf",id,name,city)
+    const doctordata = {
+      id:id,
+      name:name,
+      city:city
+    }
+    localStorage.setItem('selectedDoctor',JSON.stringify(doctordata));
+    window.location.href="/account/dentist/";
+  }
+</script>
+{% endblock %}

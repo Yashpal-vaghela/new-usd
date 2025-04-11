@@ -179,7 +179,7 @@ def search_all_usd(request):
 
     # Filter by search query if provided
     if query:
-        data1 = data1.filter(name__icontains=query)
+        sorted_doctors = data1.filter(name__icontains=query)
 
     # Check if the query returned results
     if not data1.exists():

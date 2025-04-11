@@ -136,7 +136,11 @@
   font-size: 25px;
   color: rgba(255, 255, 255, 0.5);
 }
-
+@media(max-width:991px){
+  .request-img-section .usd-logo-img{
+    top: -2.8%;
+  }
+}
 @media (max-width: 767px) {
   .cnacel_btn {
     right:4%;
@@ -180,6 +184,7 @@ text-align: center;
   margin-bottom: 3px;
   margin-left: 4px;
 }
+
 .inputicon-box{
   position: relative;
 }
@@ -399,10 +404,18 @@ text-align: center;
   .aon-login-form{
     padding: 20px 20px;
   }
+  .request-img-section .usd-logo-img {
+    top: -1.8%;
+  }
 }
 
 @media(max-width:576px){
-
+  #doctor-info .pe-sm-0{
+    padding-right: 0px  !important;
+  }
+  #doctor-info .ps-sm-0{
+    padding-left: 0px  !important;
+  }
   .request-img-section .usd-logo-img{
    
     display: none;

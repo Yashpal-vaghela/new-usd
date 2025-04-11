@@ -51,6 +51,9 @@
   font-size: 15px;
   padding: 0px 7px 0px 10px;
 }
+input:-internal-autofill-selected{
+  background-color: rgba(34, 34, 34, 0.6) !important;
+}
 .searchbar-box-wrapper input:focus,
 .searchbar-box-wrapper select:focus {
   background-color: transparent;
