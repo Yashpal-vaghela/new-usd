@@ -53,11 +53,11 @@ def home(request):
     search_message = None
 
     reviews = [
-        {id:1,'doctor_name':'Dr Priyanka Sharma','review':"I never imagined my smile could look this great. The entire process was smooth and tailored to my needs. I'm so grateful to the team and my smile designer!"},
-        {id:2,'doctor_name':'Dr Anjali Mehta','review':'My experience was beyond my expectations. The attention to detail and personalized care I received was truly outstanding. Highly recommend!'},
-        {id:3,'doctor_name':'Dr Rahul Kumar','review':"The transformation has been incredible. I feel more confident and love my new smile. Thank you to my dentist for such an amazing experience!"},
-        {id:4,'doctor_name':'Dr Ankita V','review':"I had the pleasure of working with Advance Dental Lab for over 8 years. It is such a joy to have a lab that can provide helpful and successful alternative options for extremely difficult cases and export level quality . Ultimate smile Designing is best. Support Digital dentistry . They have skilled technicians to provide Fast work. Ultimate smile designer"},
-        {id:5,'doctor_name':'Dr.Manali Rajyguru','review':'The bestest lab i have worked with in my 14years of practice.  each n every crown they deliver is perfect. no adjustments no high points.support team is also best.  Anilbhai gives humble ans anytime u call.scan facilities they started is best thing. vishalbhai provide good service always on time and finishes scan within 10 to 15 mins.overall satisfied with all the work n services.'}
+        {id:1,'doctor_name':'Dr. Priyanka Sharma','review':"I never imagined my smile could look this great. The entire process was smooth and tailored to my needs. I'm so grateful to the team and my smile designer!"},
+        {id:2,'doctor_name':'Dr. Anjali Mehta','review':'My experience was beyond my expectations. The attention to detail and personalized care I received was truly outstanding. Highly recommend!'},
+        {id:3,'doctor_name':'Dr. Rahul Kumar','review':"The transformation has been incredible. I feel more confident and love my new smile. Thank you to my dentist for such an amazing experience!"},
+        {id:4,'doctor_name':'Dr. Ankita V','review':"I had the pleasure of working with Advance Dental Lab for over 8 years. It is such a joy to have a lab that can provide helpful and successful alternative options for extremely difficult cases and export level quality . Ultimate smile Designing is best. Support Digital dentistry . They have skilled technicians to provide Fast work. Ultimate smile designer"},
+        {id:5,'doctor_name':'Dr. Manali Rajyguru','review':'The bestest lab i have worked with in my 14years of practice.  each n every crown they deliver is perfect. no adjustments no high points.support team is also best.  Anilbhai gives humble ans anytime u call.scan facilities they started is best thing. vishalbhai provide good service always on time and finishes scan within 10 to 15 mins.overall satisfied with all the work n services.'}
     ]
 
     # Check for city in request; if not found, check session
@@ -174,7 +174,7 @@ def search_all_usd(request):
         # If user location is not available, return the doctors as they are
         sorted_doctors = list(data1)
     
-    print(sorted_doctors)
+    # print(sorted_doctors)
 
 
     # Filter by search query if provided
@@ -253,7 +253,8 @@ def find_dentist(request):
         except City.DoesNotExist:
             search_message = f"No Ultimate Designers Found in {city_name}."
             data1 = Dentist.objects.all().order_by('name')
-
+    print("dentist",data1,"data",data)
+    
     # Pagination
     paginator = Paginator(data1, 6)  # 12 dentists per page
     page = request.GET.get('page', 1)
@@ -340,7 +341,7 @@ def blogsd(request, pk):
      'data2':data2,
      'relatedBlog':related_blog
     }
-    print("relatedBlog",related_blog)
+    # print("relatedBlog",related_blog)
     return render(request, 'blogsd.html', context)
 
 def contact(request):
@@ -353,7 +354,7 @@ def contact(request):
             return redirect('home:thankyou')
         else:
             messages.error(request, 'Your query is not sent! Try Again.')
-            print(form.errors)
+            # print(form.errors)
         
         # If the form is invalid, stay on the contact page
         return redirect(request.META.get('HTTP_REFERER', 'contact'))
