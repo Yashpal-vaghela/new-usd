@@ -305,7 +305,7 @@
            <div class="card dentists-content justify-content-center">
              <a href="{% url 'home:find_dentist_d' ie.slug %}">
                {% if ie.profile %}
-                 <img src="{{ ie.profile.url }}" class="img-fluid" alt={{ ie.name }} />
+                 <img src="{{ ie.profile.url }}" class="img-fluid" alt= "{{ ie.name }}" />
                {% else %}
                 <img src="{% static 'noimage-team.webp' %}" class="img-fluid" alt="Image" />
                {% endif %}

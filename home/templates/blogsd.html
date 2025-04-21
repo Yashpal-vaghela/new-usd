@@ -129,7 +129,7 @@
               alt="single-blog-img"
             />
             <div class="single-blog-date">Post date: {{blog.published}}</div>
-          </div>
+          </div>  
           <div class="single-page-main-content mt-5">
             {{blog.content|safe}}
           </div>
@@ -141,28 +141,22 @@
             <input type="text" class="form-control" placeholder="Search" />
 
             <div class="row align-items-center mt-3 mb-4">
-            {% for ie in relatedBlog %}
+              {% for ie in relatedBlog %}
                 <div class="col-lg-5 my-3">
-                <div class="single-blog-related-img">
-                  <img src="{{ie.blog_banner_sm.url}}" class="mb-0 img-fluid" />
+                  <div class="single-blog-related-img">
+                    <img src="{{ie.blog_banner_sm.url}}" class="mb-0 img-fluid" alt="{{ ie.h1 }}"/>
+                  </div>
                 </div>
-  
-              </div>
-              <div class="col-lg-7 mt-2 mb-2 single-blog-related-content">
-                <h3 class="mb-2">
-                  Steps to Take Before Getting a Cosmetic Dental Procedure
-                </h3>
-                <div class="d-flex">
-                  <img
-                    src="{% static 'calender.svg' %}"
-                    class="pe-2 mb-0 img-fluid"
-                    style="width:25px"
-                  />
-                  <span>Jan. 22, 2025</span>
+                <div class="col-lg-7 mt-2 mb-2 single-blog-related-content">
+                  <h3 class="mb-2">
+                    <a href="{% url 'home:blogsd' ie.slug %}">{{ ie.h1 }}</a>
+                  </h3>
+                  <div class="d-flex">
+                    <img src="{% static 'calender.svg' %}" class="pe-2 mb-0 img-fluid" style="width:25px" />
+                    <span>{{ ie.published|date:"b. d, Y" }}</span>
+                  </div>
                 </div>
-              </div>
-            {% endfor %}
-             
+              {% endfor %}
             </div>
             <div class="category-wrapper">
               <h2

@@ -143,7 +143,7 @@ CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
 #config
-CKEDITOR_CONFIGS = {
+CKEDITOR_CONFIGS = {    
     'default': {
         # 'skin': 'moono',
         # 'skin': 'office2013',
