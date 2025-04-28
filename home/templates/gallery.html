@@ -61,6 +61,26 @@
                                         <img src="{{ data1.3.image.url }}" alt="single-image-2" class="vertical-Image" />
                                     </div>
                                 {% endif %}
+                                {% if forloop.counter == 10 and data1|length > 1%}
+                                    <div class="image-item single-image" style="display: flex; justify-content: flex-end; gap: 80px; flex-wrap: wrap;" data-aos="zoom-in-left" data-aos-duration="1500" data-aos-delay="0">
+                                        <img src="{{ data1.4.image.url }}" alt="single-image-2" class="vertical-Image" />
+                                    </div>
+                                {% endif %}
+                                {% if forloop.counter == 12 and data1|length > 1%}
+                                    <div class="image-item single-image" style="display: flex; justify-content: flex-end; gap: 80px; flex-wrap: wrap;" data-aos="zoom-in-left" data-aos-duration="1500" data-aos-delay="0">
+                                        <img src="{{ data1.5.image.url }}" alt="single-image-2" class="vertical-Image" />
+                                    </div>
+                                {% endif %}
+                                {% if forloop.counter == 14 and data1|length > 1%}
+                                    <div class="image-item single-image" style="display: flex; justify-content: flex-end; gap: 80px; flex-wrap: wrap;" data-aos="zoom-in-left" data-aos-duration="1500" data-aos-delay="0">
+                                        <img src="{{ data1.6.image.url }}" alt="single-image-2" class="vertical-Image" />
+                                    </div>
+                                {% endif %}
+                                {% if forloop.counter == 16 and data1|length > 1%}
+                                    <div class="image-item single-image" style="display: flex; justify-content: flex-end; gap: 80px; flex-wrap: wrap;" data-aos="zoom-in-left" data-aos-duration="1500" data-aos-delay="0">
+                                        <img src="{{ data1.7.image.url }}" alt="single-image-2" class="vertical-Image" />
+                                    </div>
+                                {% endif %}
                                 {% endfor %}   
                             </div>
                         </div>
