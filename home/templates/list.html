@@ -21,8 +21,7 @@
   </section>
   <section class="searchbar-wrap">
     <div class="container pt-4">
-      <div class="searchInfo-content-wrapper mb-5">
-        {% comment %} <h2 class="searchInfo-title text-header">Dentist</h2> {% endcomment %}
+      {% comment %} <div class="searchInfo-content-wrapper mb-5">
         {% if noshow %}
         <h2 class="searchInfo-subtitle">
           Ultimate Smile Designers found in Surat
@@ -36,7 +35,7 @@
           Book appointments with minimum wait-time & verified dentist details
         </p>
         {% endif %} {% endif %}
-      </div>
+      </div> {% endcomment %}
 
       <form
         class="row form d-flex mb-5"
@@ -75,14 +74,12 @@
           <button class="btn w-100 search-button mt-0 bat" type="submit">Search</button>
         </div>
         <div class="col-lg-2 col-md-6 col-sm-6 col-12">
-          <div
-            class="d-flex align-items-center justify-content-center searchbar-button-wrapper bat"
-          >
+          <button class="d-flex align-items-center justify-content-center searchbar-button-wrapper btn w-100 bat">
             <a href="tel:+918488888877">
               <img src="{% static 'call.svg' %}" class="img-fluid" />
               <span>Customer Support</span>
             </a>
-          </div>
+          </button>
         </div>
       </form>
     </div>

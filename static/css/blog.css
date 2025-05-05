@@ -9,9 +9,25 @@
 
 @media (max-width: 575px) {
     .breadcrumbs-section {
-        background-position: right !important;
+        /* background-position: right !important; */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 100%;
+        height: 200px;
     }
-}
+    .breadcrumbs-title{
+        font-size: 20px !important;
+        line-height: 30px;
+    }
+    .breadcrumbs-path{
+        margin-bottom: 0px !important;
+    }
+    .breadcrumbs-section .container{
+        top: 55% !important;
+    }
+    
+}   
 .breadcrumbs-section .container{
     position: relative;
     top:65%;
@@ -30,11 +46,7 @@
 .breadcrumbs-path a {
     color: white;
 }
-@media (max-width: 575px) {
-    .breadcrumbs-title{
-        font-size: 20px;
-    }
-}
+
 .breadcrumbs-section img{
     height: 8px;
     width: 75px;

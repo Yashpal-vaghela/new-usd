@@ -13,21 +13,22 @@
         </div>
         {% for city in cities %}
           <div class="col-lg-3 col-md-4 col-6 col-sm-6  square-card-wrapper">
-             <div class="square-card position-relative w-100">
-              <img
-                src="{% static 'bg_loc.svg' %}"
-                class="bgloc"
-                loading="lazy"
-                alt="Location Icon"
-              />
-              <div class="square-card-content">
-                <h4 class="city_txt cool">
-                  <a href="{% url 'home:search_all_usd' %}?city={{ city.id }}"
-                    >{{ city.city }}</a>
-                </h4>
-                <p class="Designer_txt mb-0">{{ city.countdr }} - Smile Designers</p>
+            <a href="{% url 'home:search_all_usd' %}?city={{ city.id }}">
+              <div class="square-card position-relative w-100">
+                <img
+                  src="{% static 'bg_loc.svg' %}"
+                  class="bgloc"
+                  loading="lazy"
+                  alt="Location Icon"
+                />
+                <div class="square-card-content">
+                  <h4 class="city_txt cool">
+                    {{ city.city }}
+                  </h4>
+                  <p class="Designer_txt mb-0">{{ city.countdr }} - Smile Designers</p>
+                </div>
               </div>
-            </div>
+            </a>  
           </div>
         {% endfor %}
       </div>

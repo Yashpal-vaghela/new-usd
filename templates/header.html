@@ -42,10 +42,20 @@
                         </li>                                                                
                         <li class=""><a href="{% url 'home:contact' %}"><span {% if request.path == '/contact/' %}class="heasder_active cool"{% endif %}> Contact</span></a>                          
                         </li> 
-                        <li class="hea-shrink-btn"><a href="{% url 'account:dentist' %}" class="bat text-center hea-shrink-btn-inner">
-                        For Patients</a></li>
-                        <li class="hea-shrink-btn"><a href="https://dentist.ultimatesmiledesign.com/" target="_blank" class="bat text-center hea-shrink-btn-inner">
-                        For Dentist</a></li>
+                        <li class="hea-shrink-btn">
+                            <form action="{% url 'account:dentist' %}" method="get">
+                                <button type="submit" class="bat text-center hea-shrink-btn-inner">
+                                    For Patients
+                                </button>
+                            </form>
+                        </li>
+                        <li class="hea-shrink-btn">
+                            <form action="https://dentist.ultimatesmiledesign.com/" method="get" target="_blank">
+                                <button type="submit" class="bat text-center hea-shrink-btn-inner">
+                                    For Dentist
+                                </button>
+                            </form>
+                        </li>
                 
                     </ul>
 
@@ -78,7 +88,6 @@
                             <p class="">For Patients</p>   
                           </a>
                           <a href="https://dentist.ultimatesmiledesign.com/" target="_blank" class="bat aon-add-listing m-l20 header-buttons ">
-                      
                              <p class="">For Dentist</p>
                           </a>
 

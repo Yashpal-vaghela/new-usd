@@ -46,6 +46,16 @@
 .bat:focus,.bat:hover,.btn::before{
     background: linear-gradient(30deg,#636363 0%,#9B9B9B 20%,#B1B1B1 36%,#E1E1E1 50%,#B1B1B1 62%,#9B9B9B 75%,#636363 100%) !important;
 }
+.bat-form{
+    background: var(--button-gradient) !important;
+    font-weight: var(--fw-600) !important;
+    transition: background 2s ease-in-out;
+    border-radius: 8px;
+    border: none;
+}
+.bat-form:focus,.bat-from:hover,.btn-from::before{
+    background: linear-gradient(30deg,#636363 0%,#9B9B9B 20%,#B1B1B1 36%,#E1E1E1 50%,#B1B1B1 62%,#9B9B9B 75%,#636363 100%) !important;
+}
 /* text-header */
 .white{
     color:var(--white);
@@ -143,6 +153,10 @@
 @media(max-width:576px){
     .bat{
       border-radius: 8px;
+      width: 85%;
+    }
+    .bat-form{
+        border-radius: 8px;
     }
     .text-header{
         font-size: 18px;
