@@ -62,10 +62,11 @@
               name="city"
               placeholder="Select Location"
               aria-label="Default select example"
+              onchange="this.form.submit()" 
             >
               <option value="">Select Location</option>
               {% for ie in a_city %}
-              <option value="{{ie.id}}">{{ie.city}}</option>
+              <option value="{{ie.id}}" {% if city == ie.id|stringformat:"s" %}selected{% endif %}>{{ie.city}}</option>
               {% endfor %}
             </select>
           </div>
