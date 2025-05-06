@@ -13,7 +13,7 @@
         </div>
         {% for city in cities %}
           <div class="col-lg-3 col-md-4 col-6 col-sm-6  square-card-wrapper">
-            <a href="{% url 'home:search_all_usd' %}?city={{ city.id }}">
+            <a href="{% url 'home:search_all_usd' city.city|slugify %}">
               <div class="square-card position-relative w-100">
                 <img
                   src="{% static 'bg_loc.svg' %}"

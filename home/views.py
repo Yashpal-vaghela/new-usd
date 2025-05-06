@@ -108,45 +108,46 @@ def smile_step(request):
     gallery = Gallery.objects.all().order_by("?")
     return render(request, 'smile_step.html', {'gallery':gallery,})
 
-def search_all_usd(request):
+def search_all_usd(request, city_name=None):
     """
     Handles the search functionality for dentists.
-    Allows filtering by city (from request or session) and search query (name).
-    Supports pagination.
+    Allows filtering by city name (from URL), or city ID (from GET), or session.
+    Supports pagination and location-based sorting.
     """
 
     city = None
-    city_id = request.GET.get('city', '').strip()
     query = request.GET.get('q', '').strip()
-    data1 = Dentist.objects.all().order_by('name')  # Default queryset
+    city_id = request.GET.get('city', '').strip()
+    data1 = Dentist.objects.all().order_by('name')
     search_message = None
 
-    # print(data1[0].iframe)
-    # iframe_link = data1[0].iframe
-    # match = re.search(r"!2d(-?\d+\.\d+)!3d(-?\d+\.\d+)", iframe_link)
-    # longitude = match.group(1)
-    # latitude = match.group(2)
-    # print("long",longitude, "lat", latitude)
     user_latitude = request.session.get('latitude')
     user_longitude = request.session.get('longitude')
 
-    # Check for city in request; if not found, check session
-    if not city_id:
-        city_name = request.session.get('city')
-        if city_name:
+    # Priority: city_id from GET > city_name from URL > session city
+    if city_id:
+        city = get_object_or_404(City, id=city_id)
+        data1 = data1.filter(city=city)
+        city_name = city.city  # Update city_name from DB
+    elif city_name:
+        try:
+            city = City.objects.get(city__iexact=city_name.replace("-", " "))
+            data1 = data1.filter(city=city)
+        except City.DoesNotExist:
+            search_message = f"No Ultimate Designers Found in {city_name}."
+    else:
+        session_city = request.session.get('city')
+        if session_city:
             try:
-                city = City.objects.get(city=city_name)
+                city = City.objects.get(city=session_city)
                 data1 = data1.filter(city=city)
+                city_name = city.city
             except City.DoesNotExist:
-                search_message = f"No Ultimate Designers Found in {city_name}."
+                search_message = f"No Ultimate Designers Found in {session_city}."
         else:
             search_message = "No city selected."
 
-    else:
-        # Filter by city from request
-        city = get_object_or_404(City, id=city_id)
-        data1 = data1.filter(city=city)
-
+    # Location-based sorting
     if user_latitude and user_longitude:
         doctors_with_location = []
         doctors_without_location = []
@@ -157,36 +158,26 @@ def search_all_usd(request):
                 if match:
                     doctor_longitude = float(match.group(1))
                     doctor_latitude = float(match.group(2))
-
-                    # Calculate distance if user location is available
                     doctor_distance = geodesic((user_latitude, user_longitude), (doctor_latitude, doctor_longitude)).km
                     doctors_with_location.append((doctor_distance, doctor))
                 else:
                     doctors_without_location.append(doctor)
             else:
                 doctors_without_location.append(doctor)
-        # Sort doctors by distance (nearest first)
+
         doctors_with_location.sort(key=lambda x: x[0])
-        # Combine sorted doctors with those that don't have location info
         sorted_doctors = [doc for _, doc in doctors_with_location] + doctors_without_location
-
     else:
-        # If user location is not available, return the doctors as they are
         sorted_doctors = list(data1)
-    
-    # print(sorted_doctors)
 
-
-    # Filter by search query if provided
+    # Apply search query
     if query:
         sorted_doctors = data1.filter(name__icontains=query)
 
-    # Check if the query returned results
     if not data1.exists():
         search_message = "No Ultimate Designers Found Based On Your Query."
 
-    # Pagination
-    paginator = Paginator(sorted_doctors, 12)  # 12 dentists per page
+    paginator = Paginator(sorted_doctors, 12)
     page = request.GET.get('page', 1)
 
     try:
@@ -201,11 +192,13 @@ def search_all_usd(request):
         'data': data,
         'search_message': search_message,
         'query': query,
-        'city': city or request.session.get('city') or 'all',
-        'total': len(data)
+        'city': city.city if city else 'all',
+        'total': len(data),
+        'city_name': city_name,
     }
-    
+
     return render(request, 'list.html', context)
+
 
 def all_usd(request):
     """

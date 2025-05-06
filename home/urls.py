@@ -14,6 +14,7 @@ urlpatterns = [
     path('robots.txt',views.robots, name='robots'),
     path('all-usd/', views.all_usd, name='all_usd'),
     path('search-all-usd/', views.search_all_usd, name='search_all_usd'),
+    path('search-all-usd/<slug:city_name>/', views.search_all_usd, name='search_all_usd'),
     path('receive_location/', views.receive_location, name='receive_location'),
     path('locations/', views.location_view, name='locations'),
     # path('smile_step/', views.smile_step, name='smile_step'),

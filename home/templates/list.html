@@ -15,7 +15,7 @@
   <section class="breadcrumbs-section contactus-breadcrumbs-section">
     <div class="container">
       <div class="breadcrumbs-path"> <a href="{% url 'home:home' %}"> HOME </a> <i class=" fa fa-solid fa-angles-right"></i> FIND DENTIST</div>
-      <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool">Find Dentist</h1>
+      <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool">Dentist in {{ city_name|default:"your city" }}</h1>
       {% comment %} <img src="{% static 'Group 291.svg' %}" class="find-dentist-img img-fluid" /> {% endcomment %}
     </div>
   </section>
@@ -60,13 +60,15 @@
             <select
               class="form-select"
               name="city"
-              placeholder="Select Location"
-              aria-label="Default select example"
+              {% comment %} placeholder="" {% endcomment %}
+              aria-label="Select Location"
               onchange="this.form.submit()" 
             >
               <option value="">Select Location</option>
               {% for ie in a_city %}
-              <option value="{{ie.id}}" {% if city == ie.id|stringformat:"s" %}selected{% endif %}>{{ie.city}}</option>
+              <option value="{{ ie.id }}" {% if city == ie.id|stringformat:"s" %}selected{% endif %}>
+                {{ ie.city }}
+              </option>
               {% endfor %}
             </select>
           </div>
