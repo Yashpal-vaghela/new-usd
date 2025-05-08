@@ -8890,7 +8890,12 @@ body[class*="active-"] .cs-message-panel {
 }
 
 .aon-footer-bottom-area {
-  border-top: 2px dashed  #DCAD81;
+  background: 
+  linear-gradient(#000,#000) padding-box,
+  repeating-linear-gradient(90deg, #C3942F, #D89C27 4px, transparent 3px, transparent 7px) border-box;
+  /* background: var(--text-gradient) border-box; */
+  /* border-image: linear-gradient(130deg, #C3942F 0%, #D89C27 18%, #DFC86F 37%, #E7DC96 50%, #DFC86F 64%, #D89C27 82%, #C99C30 100%) 1 ; */
+  border-top: 2px dashed transparent;
   color: #6b6b6b;
   padding-top: 30px;
 }
@@ -20114,6 +20119,7 @@ input[placeholder],
   border-radius: 12.5px;
   text-align: center;
   padding: 8px 0px;
+  cursor: pointer;
 }
 .Doctor_Detail_Card {
   position: relative;
@@ -20132,6 +20138,9 @@ input[placeholder],
 .Doctor-Text {
   font-family: "Barlow", sans-serif;
   color: white;
+}
+.Doctor-Text h2{
+  color:#fff;
 }
 .Doctor-City {
   font-size: 20px;
@@ -20230,6 +20239,7 @@ input[placeholder],
   width: 365px; 
   height: 450px; 
   object-fit: cover;
+  border-radius: 10px;
 }
 .image-item:hover {
   transform: scale(1.05);
