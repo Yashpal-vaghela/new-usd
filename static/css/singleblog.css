@@ -94,6 +94,9 @@
     font-weight: 400;
     line-height: 24px;
 }
+.single-blog-related-content h3 a{
+    color: #fff;
+}
 .single-blog-related-content span{
     color: #fff;
     font-size: 12px;
@@ -141,5 +144,11 @@
     .single-blog-title{
         font-size: 18px;
         line-height: 1.6;
+    }
+    .single-blog-date{
+        position: relative;
+        left: auto;
+        bottom: -26px;
+
     }
 }

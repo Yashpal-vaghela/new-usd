@@ -368,8 +368,8 @@
 }
 @media (max-width: 576px) {
   .working-section {
-    padding: 30px 0px 0px !important;
-    margin: 20px auto 10px !important;
+    padding: 20px 0px 0px !important;
+    margin: 0px auto 10px !important;
   }
   .working_title {
     margin-bottom: 0px !important;
@@ -1131,6 +1131,9 @@
   .schedule-data-content-2 {
     --bs-gutter-x: 1.3rem;
   }
+  .btn-call b {
+    font-size: 16px;
+  }
   .btn-call {
     border-radius: 12px;
     margin: 5px auto;
@@ -1562,7 +1565,7 @@
 .searchbar-box-wrapper1{
     height: 50px;
     background-color:  rgba(247, 245, 240, 1);
-    border-radius: 15px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     padding: 22px 15px;

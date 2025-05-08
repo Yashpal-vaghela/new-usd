@@ -274,7 +274,7 @@
         margin-bottom: 1rem;
     }
     .read-more{
-        bottom: 6%;
+        bottom: 2%;
     }
     .blog-content-details p{
         font-size: 16px;
@@ -398,5 +398,9 @@
     .blog-content-subtitle{
         font-size: 16px;
         line-height: 22px;
+    }
+    .blog-content-details-card img{
+        border-top-left-radius: 0px !important;
+        border-top-right-radius: 0px !important;
     }
 }
