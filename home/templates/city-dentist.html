@@ -1,0 +1,100 @@
+{% extends 'base.html' %} {% load static %} {% block header %}{% endblock header %} {% block css %}
+
+<style>
+  .circular-image {
+    width: 100px !important; /* Adjust size as needed */
+    height: 100px !important; /* Adjust size as needed */
+    border-radius: 50% !important;
+    object-fit: cover !important; /* Ensures the image covers the circle area without distortion */
+  }
+</style>
+
+{% endblock css %} {% block body %}
+
+<div class="page-content">
+  <section class="breadcrumbs-section contactus-breadcrumbs-section">
+    <div class="container">
+      <div class="breadcrumbs-path"> <a href="{% url 'home:home' %}"> HOME </a> <i class=" fa fa-solid fa-angles-right"></i> FIND DENTIST</div>
+      <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool">Ultimate Smile Designers</h1>
+      {% comment %} <img src="{% static 'Group 291.svg' %}" class="find-dentist-img img-fluid" /> {% endcomment %}
+    </div>
+  </section>
+  <section class="dentist-section">
+    <div class="container">
+      {% if data %}
+      <div class="row mt-4 mt-md-4 mt-sm-5">
+        {% for ie in data %}
+        <div class="col-lg-3 col-md-4 col-sm-4 col-12 mb-4">
+          <div class="dentist-content">
+            <div class="card">
+              <a href="{% url 'home:find_dentist_d' ie.slug %}">
+                {% if ie.profile %}
+                <img
+                  src="{{ ie.profile.url }}"
+                  class="img-fluid"
+                  alt="{{ ie.name }}"
+                />
+                {% else %}
+                <img src="{% static 'noimage-team.webp' %}" alt="Image" />
+                {% endif %}
+              </a>
+
+              <div class="card-body text-end">
+                <h2 class="text-start">{{ie.name}}</h2>
+                <p class="text-start mb-0">{{ie.city}}</p>
+                <button class="btn bookAppoinment-btn mt-3 w-100 bat" onclick="BookAppoinment({{ie.id}},'{{ie.name}}','{{ie.city}}')">
+                  Book Appointment
+                  {% comment %} <a href="#">Book Appointment</a> {% endcomment %}
+                  {% comment %} <a href="/account/dentist/" >Book Appointment</a> {% endcomment %}
+                </button>
+                <span class="cool d-inline-block">ADE Verified Dentist</span>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5 col-md-8 col-sm-8 col-12 mb-4">
+          <div class="dentist-content1">
+            <h2 class="mt-3 cool d-inline-block">{{ie.name}}</h2>
+            <h3>{{ie.city}}</h3>
+            <p>{{ie.bio}}</p>
+            <p class="cool profile_btn"><a href="{% url 'home:find_dentist_d' ie.slug %}">View Profile <i class="fa-solid fa-angles-right" style="font-size:12px"></i></a></p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-12 col-sm-12 col-12 mb-4">
+          <div class="dentist-content2">
+            {% if ie.iframe %}
+            <div style="filter: invert(90%) hue-rotate(180deg); width: 100%; height: 380px;">
+             {{ie.iframe | safe}} 
+            </div>
+             {% else %}
+            <p class="d-flex align-items-center justify-content-center h-100">
+              No Location Available
+            </p>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %} {% include 'pagination.html' %}
+      </div>
+      {% else %}
+      <h3 class="d-flex justify-content-center text-white">Not Found in {{city}}</h3>
+      {% endif %}
+    </div>
+  </section>
+</div>
+<!-- Content END-->
+
+{% endblock body %} {% block js %}
+<script>
+  function BookAppoinment(id,name,city){
+    console.log("sdf",id,name,city)
+    const doctordata = {
+      id:id,
+      name:name,
+      city:city
+    }
+    localStorage.setItem('selectedDoctor',JSON.stringify(doctordata));
+    window.location.href="/account/dentist/";
+  }
+</script>
+{% endblock js %}

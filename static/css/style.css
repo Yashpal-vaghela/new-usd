@@ -3885,11 +3885,11 @@ button.scroltop {
   border: none;
   
 }
-
+/* 
 
 .sf-sb-btn-footer:hover {
   color: white;
-}
+} */
 
 .sf-news-l-form input[placeholder], [placeholder], [placeholder] {
   color: #fff !important;

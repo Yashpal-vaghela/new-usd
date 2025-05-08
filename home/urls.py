@@ -12,11 +12,9 @@ urlpatterns = [
     path('thank-you/', views.thankyou, name='thankyou'),
     path('sitemap.xml',views.sitemap, name='sitemap'),
     path('robots.txt',views.robots, name='robots'),
-    path('all-usd/', views.all_usd, name='all_usd'),
     path('search-all-usd/', views.search_all_usd, name='search_all_usd'),
-    path('search-all-usd/<slug:city_name>/', views.search_all_usd, name='search_all_usd'),
+    path('best-dentist/<slug:city_name>/', views.search_city_dentists, name='search_city_dentists'),
     path('receive_location/', views.receive_location, name='receive_location'),
     path('locations/', views.location_view, name='locations'),
     # path('smile_step/', views.smile_step, name='smile_step'),
-
 ] 

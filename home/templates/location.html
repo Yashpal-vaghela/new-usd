@@ -1,10 +1,62 @@
 {% load static %}
   <section class="location-section pt-50" >
     <div class="container">
+      <div class="text-center">
+        <p class="find-section-title text-header text-center mb-0 cool">Find</p>
+        <h3 class="find-section-subtitle  text-header-subtitle text-center">
+          Find Ultimate Smile Designers
+        </h3>
+      </div>
+      <p
+        class="text-subcontent find-section-description text-center my-sm-3 my-md-4 my-lg-4 my-2">
+        Explore our network of Ultimate Smile Designers across various cities to
+        find the perfect match for your smile transformation journey. Whether
+        you're looking for a local expert or considering options in a different
+        city, our directory makes it easy to connect with top-rated dental
+        professionals near you.
+      </p>
+      <form
+        class="row form justify-content-between py-3 py-sm-4"
+        method="GET"
+        action="/search-all-usd/"
+      >
+        <div class="col-lg-5 col-md-6">
+          <div class="searchbar-box-wrapper1">
+            <img class="img-fluid" src="{% static 'searchG.svg' %}" />
+            <input
+              class="form-control sf-form-control"
+              name="q"
+              type="text"
+              placeholder="Search doctors, clinics, hospitals, etc."
+              style="background-color: rgba(247, 245, 240, 1)"
+            />
+          </div>
+        </div>
+        <div class="col-lg-5 col-md-6">
+          <div class="searchbar-box-wrapper1">
+            <img class="img-fluid" src="{% static 'process-1.svg' %}" />
+            <select
+              class="form-select"
+              name="city"
+              aria-label="Default select example"
+            >
+              <option value="">Select Location</option>
+              {% for ie in a_city %}
+              <option value="{{ie.id}}">{{ie.city}}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-12">
+          <button class="w-100 aon-search2-btn site-button bat fw-900" type="submit">
+            Search
+          </button>
+        </div>
+      </form>
       <div class="row pt-3 pt-sm-5 pb-0">
         <div class="col-lg-6 col-md-8 col-12">
-          <h2 class="text-header text-start position-relative mb-0 cool">Locations </h2>
-          <h3 class="text-header-subtitle">Top Searched Locations</h3>
+          <p class="text-header text-start position-relative mb-0 cool">Locations</p>
+          <h4 class="text-header-subtitle">Top Searched Locations</h4>
           <p class="Loc-description text-subcontent">
             Discover the leading destinations where patients connect with our
             network of Ultimate Smile Designers. Our platform helps you find
@@ -13,7 +65,7 @@
         </div>
         {% for city in cities %}
           <div class="col-lg-3 col-md-4 col-6 col-sm-6  square-card-wrapper">
-            <a href="{% url 'home:search_all_usd' city.city|slugify %}">
+            <a href="{% url 'home:search_city_dentists' city.city|slugify %}">
               <div class="square-card position-relative w-100">
                 <img
                   src="{% static 'bg_loc.svg' %}"
@@ -22,9 +74,9 @@
                   alt="Location Icon"
                 />
                 <div class="square-card-content">
-                  <h4 class="city_txt cool">
+                  <p class="city_txt cool">
                     {{ city.city }}
-                  </h4>
+                  </p>
                   <p class="Designer_txt mb-0">{{ city.countdr }} - Smile Designers</p>
                 </div>
               </div>

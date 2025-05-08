@@ -199,6 +199,75 @@ def search_all_usd(request, city_name=None):
 
     return render(request, 'list.html', context)
 
+def search_city_dentists(request, city_name):
+    """
+    Displays the list of dentists specific to a given city using city-dentist.html template.
+    """
+
+    query = request.GET.get('q', '').strip()
+    user_latitude = request.session.get('latitude')
+    user_longitude = request.session.get('longitude')
+
+    city = None
+    search_message = None
+
+    try:
+        city = City.objects.get(city__iexact=city_name.replace("-", " "))
+        data1 = Dentist.objects.filter(city=city).order_by('name')
+    except City.DoesNotExist:
+        data1 = Dentist.objects.none()
+        search_message = f"No Ultimate Designers Found in {city_name}."
+
+    # Location-based sorting if available
+    if user_latitude and user_longitude:
+        doctors_with_location = []
+        doctors_without_location = []
+
+        for doctor in data1:
+            if doctor.iframe:
+                match = re.search(r"!2d(-?\d+\.\d+)!3d(-?\d+\.\d+)", doctor.iframe)
+                if match:
+                    doctor_longitude = float(match.group(1))
+                    doctor_latitude = float(match.group(2))
+                    distance = geodesic((user_latitude, user_longitude), (doctor_latitude, doctor_longitude)).km
+                    doctors_with_location.append((distance, doctor))
+                else:
+                    doctors_without_location.append(doctor)
+            else:
+                doctors_without_location.append(doctor)
+
+        doctors_with_location.sort(key=lambda x: x[0])
+        sorted_doctors = [doc for _, doc in doctors_with_location] + doctors_without_location
+    else:
+        sorted_doctors = list(data1)
+
+    # Apply search query if provided
+    if query:
+        sorted_doctors = [doc for doc in sorted_doctors if query.lower() in doc.name.lower()]
+
+    if not data1.exists():
+        search_message = f"No Ultimate Designers Found in {city.city if city else city_name}."
+
+    paginator = Paginator(sorted_doctors, 12)
+    page = request.GET.get('page', 1)
+
+    try:
+        data = paginator.page(page)
+    except PageNotAnInteger:
+        data = paginator.page(1)
+    except EmptyPage:
+        data = paginator.page(paginator.num_pages)
+
+    context = {
+        'data': data,
+        'city': city.city if city else city_name,
+        'city_name': city_name,
+        'query': query,
+        'search_message': search_message,
+    }
+
+    return render(request, 'city-dentist.html', context)
+
 
 def all_usd(request):
     """

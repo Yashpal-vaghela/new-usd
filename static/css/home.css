@@ -1553,6 +1553,7 @@
 }
 .find-section-title {
     line-height: 25px;
+    text-align: center !important;
 }
 .find-section-description{
     padding: 0px 61px;
