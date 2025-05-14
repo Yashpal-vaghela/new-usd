@@ -75,8 +75,8 @@
                             <i class="feather-lock"></i> Logout
                         </a>
                         <a href="{% url 'account:dentist' %}" class="site-button aon-add-listing m-l20" >
-                            <i class="fa fa-map-marker"></i>
-                         
+                            {% comment %} <i class="fa fa-map-marker"></i> {% endcomment %}
+                            <i class="fa-solid fa-location-dot"></i>
                             {{city}}
                         </a> 
                         {% else %}

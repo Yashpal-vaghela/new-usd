@@ -10,31 +10,31 @@ All JavaScript fuctions Start
 
 	/*Submot contact form*/
 
-	jQuery(document).on('submit', 'form.contact-form', function(e){
-		e.preventDefault();
-		var form = jQuery(this);
-		/* sending message */
-		jQuery.ajax({
-			url: 'https://aonetheme.com/mfine/contact-form.php',
-			data: form.serialize() + "&action=contactform",
-			type: 'POST',
-			dataType: 'JSON',
-			beforeSend: function() {
-				jQuery('.alert').remove();
-				jQuery('.loading-area').show();
-			},
+	// jQuery(document).on('submit', 'form.contact-form', function(e){
+	// 	e.preventDefault();
+	// 	var form = jQuery(this);
+	// 	/* sending message */
+	// 	jQuery.ajax({
+	// 		url: 'https://aonetheme.com/mfine/contact-form.php',
+	// 		data: form.serialize() + "&action=contactform",
+	// 		type: 'POST',
+	// 		dataType: 'JSON',
+	// 		beforeSend: function() {
+	// 			jQuery('.alert').remove();
+	// 			jQuery('.loading-area').show();
+	// 		},
 
-			success:function(data){
-				jQuery('.loading-area').hide();
-				if(data['success']){
-				jQuery("<div class='alert alert-success'>"+data['message']+"</div>").insertBefore('form.contact-form');
-				jQuery('.alert-success').delay(20000).fadeOut(500);
-				}else{
-				jQuery("<div class='alert alert-danger'>"+data['message']+"</div>").insertBefore('form.contact-form');
-				}
-			}
-		});
-	});	
+	// 		success:function(data){
+	// 			jQuery('.loading-area').hide();
+	// 			if(data['success']){
+	// 			jQuery("<div class='alert alert-success'>"+data['message']+"</div>").insertBefore('form.contact-form');
+	// 			jQuery('.alert-success').delay(20000).fadeOut(500);
+	// 			}else{
+	// 			jQuery("<div class='alert alert-danger'>"+data['message']+"</div>").insertBefore('form.contact-form');
+	// 			}
+	// 		}
+	// 	});
+	// });	
 
 // popovers initialization - on hover
 	// Image Popover = jquery.prettyPhoto.js ================= // 	
