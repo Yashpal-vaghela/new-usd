@@ -41,17 +41,15 @@ class Dentist(models.Model):
     og_site = models.CharField(max_length = 156,blank=True, null=True)
 
     user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='User', blank=True, null=True )    
-
     city = models.ForeignKey(City, on_delete=models.CASCADE,blank=True, null=True)   
-    state = models.CharField(max_length=300,blank=True, null=True)
-      
-    profile  = models.ImageField(upload_to="SEO",blank=True, null=True)
+    state = models.CharField(max_length=300,blank=True, null=True)  
     
     name = models.CharField(max_length=300)
     title = models.CharField(max_length=300)
     sub_title = models.CharField(max_length=300,blank=True, null=True)
     email = models.CharField(max_length=300, blank=True, null=True)
     contact = models.CharField(max_length=300)
+    clinic_name = models.CharField(max_length=300,blank=True, null=True)
     bio = models.TextField(max_length=1300,blank=True, null=True)
     address = models.TextField(max_length = 15622, blank=True, null=True)
     education = RichTextUploadingField(blank=True, null=True)
@@ -62,10 +60,9 @@ class Dentist(models.Model):
     Adaligner = models.CharField(max_length=300, default='1')
     USD_box = models.CharField(max_length=300, default='1')
     delivered_date = models.DateField( blank=True, null=True)
-
     specializations = models.ManyToManyField(Specializations, null=True, blank=True)
     iframe = models.TextField(max_length=1300,blank=True, null=True)
-
+    profile  = models.ImageField(upload_to="SEO",blank=True, null=True)
     status = models.BooleanField(default=False)
     treding = models.BooleanField(default=False)
     in_home = models.BooleanField(default=False)
@@ -86,6 +83,7 @@ class Dentist(models.Model):
 
     def __str__(self):
         return self.name
+    
 class PatientReview(models.Model):
     dentist = models.ForeignKey(Dentist, on_delete=models.CASCADE, related_name='reviews')
     patient_name = models.CharField(max_length=300)
