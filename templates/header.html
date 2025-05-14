@@ -34,7 +34,7 @@
                         <li class=""><a href="{% url 'home:home' %}"><span {% if request.path == '/' %}class="heasder_active cool"{% endif %}> Home</span>
                         </a>
                         </li> 
-                        <li class=""><a href={% url 'home:search_all_usd' %}><span {% if request.path == '/certified-dentists/' %}class="heasder_active cool"{% endif %}> Find Dentist</span></a>
+                        <li class=""><a href={% url 'home:search_all_usd' %}><span {% if request.path == '/search-all-usd/' %}class="heasder_active cool"{% endif %}> Find Dentist</span></a>
                         </li> 
                         <li class=""><a href="{% url 'home:gallery' %}"><span {% if request.path == '/gallery/' %}class="heasder_active cool"{% endif %}> Gallery</span></a>
                         </li> 
@@ -75,8 +75,8 @@
                             <i class="feather-lock"></i> Logout
                         </a>
                         <a href="{% url 'account:dentist' %}" class="site-button aon-add-listing m-l20" >
-                            {% comment %} <i class="fa fa-map-marker"></i> {% endcomment %}
-                            <i class="fa-solid fa-location-dot"></i>
+                            <i class="fa fa-map-marker"></i>
+                         
                             {{city}}
                         </a> 
                         {% else %}
