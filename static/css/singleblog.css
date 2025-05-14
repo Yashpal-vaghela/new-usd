@@ -60,11 +60,11 @@
     color: transparent !important;
     margin-right: 5px;
 }
-/* .single-page-main-content h2{
+.single-page-main-content h2{
     font-size: 1.6rem;
     color: #fff;
     line-height: 30px;
-} */
+}
 .single-page-main-content h3{
     font-family: "Barlow Condensed", serif;
     font-weight: 500;
