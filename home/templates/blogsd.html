@@ -25,9 +25,13 @@
               class="img-fluid"
               alt="single-blog-img"
             />
-            <div class="single-blog-date">Post date: {{blog.published}}</div>
+            <div class="d-sm-flex d-block justify-content-between my-3">
+            <div class="single-blog-date"><span>Post date :</span> {{blog.published}}</div>
+            <div class="single-blog-authorName"><span>Author :</span> {{blog.author}}</div>
+              
+            </div>
           </div>  
-          <div class="single-page-main-content mt-5">
+          <div class="single-page-main-content mt-4 mt-sm-5">
             {{blog.content|safe}}
           </div>
         </div>
