@@ -116,7 +116,7 @@
       <div class="row">
         <div class="col-lg-8">
           <div class="single-blog-page position-relative">
-            <h2 class="single-blog-title">{{blog.h1}}</h2>
+            {% comment %} <h2 class="single-blog-title">{{blog.h1}}</h2> {% endcomment %}
             <h3 class="single-blog-author d-flex">
             <img src="{% static 'user1.svg' %}" class=" img-fluid" style="width:18px" />&nbsp; By &nbsp;
               {% comment %} <i class="feather-user"></i>By &nbsp; {% endcomment %}
@@ -136,7 +136,7 @@
         </div>
         <div class="col-lg-4">
           <div class="single-blog-content2">
-            <h2 class="single-blog-content2-title  cool d-inline-block">Blog</h2>
+            <h2 class="single-blog-content2-title  cool d-inline-block">Related Blogs</h2>
             {% comment %} <img src="{% static 'text_vec_light.svg' %}" class="img-fluid" /> {% endcomment %}
             <input type="text" class="form-control" placeholder="Search" />
 

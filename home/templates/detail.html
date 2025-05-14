@@ -10,7 +10,7 @@
         <i class="fa fa-solid fa-angles-right"></i> &nbsp;{{data.name}}
       </div>
       <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool fs-3">
-        {{data.name}}
+        {{data.name}} - Dentist in {{data.city}}
       </h1>
       {% comment %}
       <img
@@ -58,16 +58,16 @@
 
           <!-- doctor detail card -->
           <div class="Doctor_Detail_Card">
-            <h2 class="Doctor_Name cool">{{data.name}}</h2>
-            <div class="Doctor-City Doctor-Text">
+            <h2 class="Doctor_Name cool">About {{data.name}}</h2>
+            {% comment %} <div class="Doctor-City Doctor-Text">
               {% if data.city %} {{data.city.city}} {% else %} India {% endif %}
-            </div>
+            </div> {% endcomment %}
 
             <div class="Doctor-Text mt-2">{{data.bio}}</div>
 
             <h3 class="Doctor-subtext cool">Education Training</h3>
             <ul class="Education_list Doctor-Text">
-              {{data.education|safe}}
+              {{data.education|safe}} 
             </ul>
 
             <h3 class="Doctor-subtext cool">Experience</h3>
@@ -91,9 +91,6 @@
 
           <!--Location-->
           <div class="aon-docLocation-wrap" id="aon-locations-area">
-            {% comment %}
-            <h3 class="mb-4"><span class="cool">Location</span></h3>
-            {% endcomment %}
             <div class="sf-doc-location">
               <div class="row">
                 <div class="col-lg-8">

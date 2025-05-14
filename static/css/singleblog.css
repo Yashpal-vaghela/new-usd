@@ -39,11 +39,16 @@
     bottom: -4.5%;
     left: 13%;
 }
+.single-page-main-content h2{
+    font-size: 1.6rem;
+    color: #fff;
+    line-height: 30px;
+}
 .single-page-main-content h3{
     font-family: "Barlow Condensed", serif;
     font-weight: 500;
     font-size: 20px;
-    line-height: 33.6px;
+    line-height: 30px;
     background: linear-gradient(130deg, #C3942F 0%, #D89C27 18%, #DFC86F 37%, #E7DC96 50%, #DFC86F 64%, #D89C27 82%, #C99C30 100%) !important;
   /* background: linear-gradient(259.34deg, #DCAD81 0%, #D8A97C 25%, #FFD2A4 50%, #D8A97C 75%, #DCAD81 100%) !important; */
   -webkit-background-clip: text !important;
@@ -95,7 +100,16 @@
     line-height: 24px;
 }
 .single-blog-related-content h3 a{
-    color: #fff;
+    font-family: "Barlow Condensed", serif;
+    font-weight: 500;
+    font-size: 18px;
+    background: linear-gradient(130deg, #C3942F 0%, #D89C27 18%, #DFC86F 37%, #E7DC96 50%, #DFC86F 64%, #D89C27 82%, #C99C30 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  color: transparent !important;
+  background-color: #2d2d2d !important;
+  display: inline-block;
 }
 .single-blog-related-content span{
     color: #fff;

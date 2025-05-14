@@ -141,7 +141,7 @@
     <section class="blog-content" style="background-color:#000">
         <div class="container pt-3">
             {% if not page_obj.has_previous %}
-                <h2 class="blog-content-title">Recent Blog</h2>
+                <h2 class="blog-content-title">Latest Blog</h2>
                 <div class="blog-content-wrapper align-items-center row justify-content-center mx-auto pb-5">
                     {% if first_blog %}
                       <div class="col-lg-6 col-md-6 col-sm-11 position-relative mx-auto first-blog-content">
@@ -149,7 +149,7 @@
                                 <span class="me-5"><img src="{% static 'calender.svg' %}" class="icon-img me-2 img-fluid" />{{first_blog.published}}</span>
                                 <span><img src="{% static 'user1.svg'%}" class="icon-img me-2 img-fluid" />By {{first_blog.author}}</span>
                             </div>
-                            <h2 class="blog-content-title1"><a href="{% url 'home:blogsd' first_blog.slug %}">{{first_blog.title}}</a> </h2>
+                            <h3 class="blog-content-title1"><a href="{% url 'home:blogsd' first_blog.slug %}">{{first_blog.title}}</a> </h3>
                             <p class="blog-content-subtitle">{{first_blog.description}}</p>
                             <span class="read-more"><a href="{% url 'home:blogsd' first_blog.slug %}">Read More</a></span>
                         </div>
@@ -176,7 +176,7 @@
                 </div>
             {% endif %}
               
-            <h2 class="blog-content-title">All Blog</h2>
+            <h2 class="blog-content-title">All Blogs</h2>
             <div class="row align-items-center justify-content-center pb-5">
                 {% if is_frist_page%}
                     {% for blog in current_blog %}
@@ -189,9 +189,9 @@
                                             {% comment %} <h4 class="card-text">
                                                 <a href="{% url 'home:blogsd' blog.slug %}">{{blog.title}}</a>
                                             </h4> {% endcomment %}
-                                            <p class="card-text"> 
+                                            <h3 class="card-text"> 
                                                 <a href="{% url 'home:blogsd' blog.slug %}">{{blog.title}}</a> 
-                                            </p>
+                                            </h3>
                                             <div class="mb-md-3 mb-4">
                                                 <img src="{% static 'user1.svg'%}" class="icon-img me-1 img-fluid" />
                                                 <span>By <a href="#" title="Posts by admin" rel="author">{{blog.author}}</a></span><br/>
@@ -210,9 +210,9 @@
                                     <img src="{{ blog.blog_banner_lg.url }}" class="card-img-top img-fluid" />
                                     <div class="blog-content-details position-relative card-body">
                                             <div class="blog_date">{{ blog.published|date:'j M' }}</div>
-                                            <p class="card-text"> 
+                                            <h3 class="card-text fw-400"> 
                                                 <a href="{% url 'home:blogsd' blog.slug %}">{{ blog.title }}</a> 
-                                            </p>
+                                            </h3>
                                             <div class="mb-md-3 mb-4">
                                                 <img src="{% static 'user1.svg' %}" class="icon-img me-1 img-fluid" />
                                                 <span>By <a href="#" title="Posts by admin" rel="author">{{ blog.author }}</a></span><br/>

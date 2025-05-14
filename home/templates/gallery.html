@@ -1,6 +1,20 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block seo %}    
+<title>Before & After Transformation Gallery | Ultimate Smile Design</title>
+<meta name="description" content="Explore our before & after smile design photo gallery showcasing stunning smile makeovers that highlight our commitment to aesthetic excellence." />
+<link rel="canonical" href="https://ultimatesmiledesign.com/gallery/" />
+<meta property="og:locale" content="en_IN" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Before & After Transformation Gallery | Ultimate Smile Design" />
+<meta property="og:description" content="Explore our before & after smile design photo gallery showcasing stunning smile makeovers that highlight our commitment to aesthetic excellence." />
+<meta property="og:url" content="https://ultimatesmiledesign.com/gallery/" />
+{% comment %} <meta property="og:site_name" content="@ultimatesmiledesign" /> {% endcomment %}
+{% comment %} <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:description" content="Explore our before & after smile design photo gallery showcasing stunning smile makeovers that highlight our commitment to aesthetic excellence." />
+<meta name="twitter:title" content="Before & After Transformation Gallery | Ultimate Smile Design" /> {% endcomment %}
 
+{% endblock seo %}
 {% block header %}
 {% endblock header %}
 
@@ -99,7 +113,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const imageGrid = document.getElementById('imageGrid');
-        const introSection = document.querySelector(".intro-section");
+        const introSection = document.querySelector(".intro-section0");
         const allImages = Array.from(imageGrid.children);
         let imageIndex = allImages.length;
         let imagesLoaded = false; 

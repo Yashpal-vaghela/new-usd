@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Location, City, Specializations, Dentist, Image, Rating, Category, Tags, Author, Blog, Team, Testimonials, Gallery, Hgallery, Contact, UserSubmission
+from .models import Location, City, Specializations, Dentist, Image, Rating, Category, Tags, Author, Blog, Team, Testimonials, Gallery, Hgallery, Contact, UserSubmission, PatientReview
 
 class DentistAdmin(admin.ModelAdmin):
     list_display = ('name', 'city', 'contact', 'status')
@@ -28,6 +28,11 @@ class ContactAdmin(admin.ModelAdmin):
     search_fields = ('name', 'email', 'phone')
     list_filter = ('date',)
 
+class PatientReviewAdmin(admin.ModelAdmin):
+    list_display = ('patient_name', 'dentist', 'rating', 'created_at')
+    search_fields = ('patient_name', 'dentist__name')
+    list_filter = ('rating', 'created_at')
+
 admin.site.register(Location)
 admin.site.register(City)
 admin.site.register(Specializations)
@@ -44,3 +49,4 @@ admin.site.register(Gallery)
 admin.site.register(Hgallery)
 admin.site.register(Contact, ContactAdmin)
 admin.site.register(UserSubmission)
+admin.site.register(PatientReview, PatientReviewAdmin) 

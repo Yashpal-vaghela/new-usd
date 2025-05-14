@@ -389,7 +389,7 @@ def blogs(request):
 def blogsd(request, pk):
     blog = Blog.objects.get(slug=pk)
     data2 = Blog.objects.all().order_by('-id')
-    related_blog = Blog.objects.all().order_by('-id')[:3]
+    related_blog = Blog.objects.all().order_by('-id')[1:4]
     unique_tags = blog.tag.all()
     unique_categories = blog.category.all()
     

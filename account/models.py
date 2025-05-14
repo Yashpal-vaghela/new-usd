@@ -63,10 +63,6 @@ class Dentist(models.Model):
     USD_box = models.CharField(max_length=300, default='1')
     delivered_date = models.DateField( blank=True, null=True)
 
-
-
-    
-
     specializations = models.ManyToManyField(Specializations, null=True, blank=True)
     iframe = models.TextField(max_length=1300,blank=True, null=True)
 
@@ -90,6 +86,15 @@ class Dentist(models.Model):
 
     def __str__(self):
         return self.name
+class PatientReview(models.Model):
+    dentist = models.ForeignKey(Dentist, on_delete=models.CASCADE, related_name='reviews')
+    patient_name = models.CharField(max_length=300)
+    review = models.TextField(max_length=2000)
+    rating = models.PositiveIntegerField(default=5)  # Optional: scale of 1-5
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.patient_name} - {self.dentist.name}"
 
 class Image(models.Model):
     dentist = models.ForeignKey(Dentist, on_delete=models.CASCADE)    

@@ -70,6 +70,10 @@
   line-height: 1.4;
   position:relative
 }
+.contact-text{
+  font-size: 22px !important;
+  font-family: 'Gilda Display';
+}
 .contact-info-wrapper p a{
   color: #cec2c2;
 }

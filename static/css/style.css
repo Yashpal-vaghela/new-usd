@@ -8926,6 +8926,8 @@ body[class*="active-"] .cs-message-panel {
   margin-bottom: 10px;
   font-size: 24px;
   position: relative;
+  font-family: 'Mulish serif';
+  font-weight: 700;
 }
 
 /* .aon-f-title:after { position:absolute; left:0px; bottom:0px; content: ""; width:60px; height: 2px; background: #ad8545; display: table; } */
@@ -20141,13 +20143,14 @@ input[placeholder],
   font-family: "Barlow Condensed", sans-serif;
   display: inline-block;
   font-size: 25px;
-  font-weight: 600;
+  font-weight: 500 !important;
 }
 .Doctor-Text {
   font-family: "Barlow", sans-serif;
   color: white;
 }
-.Doctor-Text h2{
+.Doctor-Text h2,
+.Doctor_Detail_Card h2{
   color:#fff;
 }
 .Doctor-City {

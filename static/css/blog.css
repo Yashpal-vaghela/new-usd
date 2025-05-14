@@ -186,15 +186,19 @@
     text-align: center;
     line-height: 28px;
 }
-.blog-content-details p{
-    margin-top: 25px;
-}
-.blog-content-details p a{
+.blog-content-details p,
+.blog-content-details h3
+a{
     color: #fff;
     display: block;
     height: 95px;
+    margin-top: 30px;
+    font-size: 20px;
+    line-height: 34px;
+    font-family: 'Gilda Display';
 }
 .first-blog-content h2 a,
+.first-blog-content h3 a,
 .first-blog-content span a{
     color: #fff;
 }
