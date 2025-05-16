@@ -1,4 +1,17 @@
-{% extends 'base.html' %} {% load static %} {% block header %} {% endblock header %} {% block css %} {% endblock css %} {% block body %}
+{% extends 'base.html' %} {% load static %} {% block header %} {% endblock header %} 
+{% block css %} 
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+{% endblock css %} 
+{% block body %}
 <!-- Content -->
 <div class="page-content" style="border-top: 1px solid #ddd">
   <section class="breadcrumbs-section contactus-breadcrumbs-section">
@@ -89,6 +102,72 @@
             </div>
           </div>
 
+          <div class="dentist-review-section pt-50 position-relative" >
+            <div class="container">
+              <h3 class="Loc-subtext cool">Review</h3>
+                <div class="row justify-content-center">
+                  <div class="col-lg-10 col-12 review-content-wrapper">
+                    <div class="swiper-container">
+                      <div class="swiper review-swiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                              <div class="review-card card">
+                                <h2 class="review-title mb-2  text-center">Mr.Yashpal</h2>
+                                <div class="stars cool text-center mb-2">
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>  
+                                </div>
+                                <p class="review-description text-center">
+                                  Dr. Apeksha Maheshwari is one of the top Dentist in Bhatar, Surat. She has done BDS. She has helped numerous patients in her 9 years of experience as a Dentist. You can consult Dr. Apeksha Maheshwari at Maheshwari Dental & Orthodontic Clinic in Bhatar, Surat. You can freely conversation in English, Hindi, Gujarati with Dr. Apeksha Maheshwari. Dr. Apeksha Maheshwari offers best medical services like Consultation, Basic Dental Care, Dental Ceramics, Dental Services, Preventive Dental Treatments and many more.
+                                </p>
+                              </div>
+                            </div>
+                            <div class="swiper-slide">
+                              <div class="review-card card">
+                                <h2 class="review-title mb-2  text-center">Review 2</h2>
+                                <div class="stars cool text-center mb-2">
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>  
+                                </div>
+                                <p class="review-description text-center">
+                                  Dr. Apeksha Maheshwari is one of the top Dentist in Bhatar, Surat. She has done BDS. She has helped numerous patients in her 9 years of experience as a Dentist. You can consult Dr. Apeksha Maheshwari at Maheshwari Dental & Orthodontic Clinic in Bhatar, Surat. You can freely conversation in English, Hindi, Gujarati with Dr. Apeksha Maheshwari. Dr. Apeksha Maheshwari offers best medical services like Consultation, Basic Dental Care, Dental Ceramics, Dental Services, Preventive Dental Treatments and many more.
+                                </p>
+                              </div>
+                            </div>
+                            <div class="swiper-slide">
+                              <div class="review-card card">
+                                <h2 class="review-title mb-2  text-center">Review 3</h2>
+                                <div class="stars cool text-center mb-2">
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>  
+                                </div>
+                                <p class="review-description text-center">
+                                  Dr. Apeksha Maheshwari is one of the top Dentist in Bhatar, Surat. She has done BDS. She has helped numerous patients in her 9 years of experience as a Dentist. You can consult Dr. Apeksha Maheshwari at Maheshwari Dental & Orthodontic Clinic in Bhatar, Surat. You can freely conversation in English, Hindi, Gujarati with Dr. Apeksha Maheshwari. Dr. Apeksha Maheshwari offers best medical services like Consultation, Basic Dental Care, Dental Ceramics, Dental Services, Preventive Dental Treatments and many more.
+                                </p>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                       <!-- Pagination Dots -->
+                        <div class="swiper-pagination"></div>
+
+                        <!-- Navigation Buttons -->
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
           <!--Location-->
           <div class="aon-docLocation-wrap" id="aon-locations-area">
             <div class="sf-doc-location">
@@ -150,5 +229,28 @@
     localStorage.setItem('selectedDoctor',JSON.stringify(doctordata));
     window.location.href="/account/dentist/";
   }
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded",function () {
+    const mySwiper = new Swiper(".review-swiper",{
+      loop:true,
+      centeredSlides:true,
+      spaceBetween:20,
+      speed:800,
+      effect: "slide",
+      grabCursor:true,
+      slidesPerView:1,
+      observeParents:true,
+      observer:true,
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        dynamicBullets: true,
+      },
+    })
+  })
 </script>
 {% endblock %}

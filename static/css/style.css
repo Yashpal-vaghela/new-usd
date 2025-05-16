@@ -20185,6 +20185,89 @@ input[placeholder],
 .address_dr {
   margin-bottom: 20px;
 }
+/* review section in dentist page */
+.dentist-review-section{
+  display:block;
+  position: relative;
+  color: #fff;
+}
+.review-content-wrapper{
+    width: 100%;
+    padding:20px 50px;
+    border-radius: 25px;
+   /* background-color: var(--bg-content-color); */
+}
+.review-content-wrapper .swiper-container{
+  width:80%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  margin: auto;
+}
+
+.review-card{
+  padding: 30px 50px;
+  background-color: #000;
+  border-radius: 25px;
+}
+.review-title{
+  font-size:24px;
+  color:#fff;
+  font-weight: 600;
+}
+.review-content-wrapper .swiper-container .swiper-button-prev{
+  left: var(--swiper-navigation-sides-offset, 12%);
+}
+.review-content-wrapper .swiper-container .swiper-button-next{
+  right: var(--swiper-navigation-sides-offset, 12%);
+}
+.review-content-wrapper .swiper-container .swiper-button-prev,.review-content-wrapper .swiper-container .swiper-button-next{
+  background-color: #000;
+  border-radius: 10px;
+  width: 40px;
+  box-shadow: 0px -2px 10px rgba(255, 255, 255, 0.25)
+}
+/* .review-swiper .swiper-button-prev{
+  left: var(--swiper-navigation-sides-offset, 40px);
+} */
+.review-content-wrapper .swiper-container .swiper-button-prev::after,
+.review-content-wrapper .swiper-container .swiper-button-next::after{
+  font-size: 18px;
+  background-color: #000;
+  font-weight: 900;
+  background: var(--text-gradient) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  color: transparent !important;
+  
+}
+.review-card .stars{
+  width: max-content;
+  margin: auto;
+}
+.review-content-wrapper .swiper-container .swiper-pagination-bullet{
+  background-color: #fff !important;
+}
+.review-content-wrapper .swiper-container .swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-next {
+  transform: scale(.77) !important;
+}
+.review-content-wrapper .swiper-container .swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-next-next {
+  transform: scale(.55) !important;
+}
+.review-content-wrapper .swiper-container .swiper-pagination-bullets.swiper-pagination-horizontal{
+  bottom: var(--swiper-pagination-bottom, 50px) !important;
+}
+.review-content-wrapper .swiper-container .swiper-pagination-bullet-active{
+  background: var(--text-gradient) !important;
+}
+
+@media(max-width:991px){
+  .review-card{
+    padding: 20px 20px;
+  }
+}
+/* .review-card  */
 @media (max-width: 875px) {
   .bg_detail_vec1 {
     top: -14%;
@@ -20211,6 +20294,25 @@ input[placeholder],
   }
   .Doctor-Text {
     font-size: 14px;
+  }
+  .dentist-review-section{
+    display: contents;
+  }
+  .review-title{
+    font-size: 22px;
+  }
+  .review-card .stars{
+    font-size: 16px;
+  }
+  .review-card{
+    padding: 10px 10px;
+  }
+  .review-content-wrapper{
+    padding: 20px 0px;
+  }
+  .review-content-wrapper .swiper-container .swiper-pagination-bullets.swiper-pagination-horizontal{
+    bottom:var(--swiper-pagination-bottom,28%) !important;
+    left:46.5%;
   }
 }
 

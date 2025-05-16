@@ -14,7 +14,7 @@
         background-repeat: no-repeat;
         background-size: cover;
         width: 100%;
-        height: 200px;
+        height: 250px;
     }
     .breadcrumbs-title{
         font-size: 20px !important;
@@ -406,5 +406,8 @@ a{
     .blog-content-details-card img{
         border-top-left-radius: 0px !important;
         border-top-right-radius: 0px !important;
+    }
+    .breadcrumbs-title{
+        line-height: 35px;
     }
 }
