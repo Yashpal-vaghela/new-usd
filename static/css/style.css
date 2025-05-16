@@ -20105,7 +20105,8 @@ input[placeholder],
     position: absolute;
     top: -8%;
     left: 0%;
-    height: 800px;
+    height: 600px;
+    width: 100%;
     object-fit: cover;
     z-index: -1;
   }
