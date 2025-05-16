@@ -7,11 +7,12 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from account.models import *
-from account.forms import ContactForm
+from home.forms import ContactForm
 from django.db.models import Q
 from django.core.paginator import Paginator
 from hm.pre import get_location_info
 from geopy.distance import geodesic
+from home.forms import UserSubmissionForm
 import re
 
 @csrf_exempt  # This bypasses CSRF protection for demonstration purposes only
@@ -299,41 +300,41 @@ def all_usd(request):
     }
     return render(request, 'list.html', context)
 
-def find_dentist(request):
-    """
-    Displays dentists for the city stored in the session.
-    If no city is found in the session, shows all dentists.
-    """
-    city_name = request.GET.get('city') or request.session.get('city', '')
-    data1 = Dentist.objects.all().order_by('name')  # Default queryset
-    search_message = None
+# def find_dentist(request):
+#     """
+#     Displays dentists for the city stored in the session.
+#     If no city is found in the session, shows all dentists.
+#     """
+#     city_name = request.GET.get('city') or request.session.get('city', '')
+#     data1 = Dentist.objects.all().order_by('name')  # Default queryset
+#     search_message = None
 
-    if city_name:
-        try:
-            city = City.objects.get(city=city_name)
-            data1 = Dentist.objects.filter(city=city).order_by('name')
-        except City.DoesNotExist:
-            search_message = f"No Ultimate Designers Found in {city_name}."
-            data1 = Dentist.objects.all().order_by('name')
-    print("dentist",data1,"data",data)
+#     if city_name:
+#         try:
+#             city = City.objects.get(city=city_name)
+#             data1 = Dentist.objects.filter(city=city).order_by('name')
+#         except City.DoesNotExist:
+#             search_message = f"No Ultimate Designers Found in {city_name}."
+#             data1 = Dentist.objects.all().order_by('name')
+#     print("dentist",data1,"data",data)
     
-    # Pagination
-    paginator = Paginator(data1, 6)  # 12 dentists per page
-    page = request.GET.get('page', 1)
+#     # Pagination
+#     paginator = Paginator(data1, 6)  # 12 dentists per page
+#     page = request.GET.get('page', 1)
 
-    try:
-        data = paginator.page(page)
-    except PageNotAnInteger:
-        data = paginator.page(1)
-    except EmptyPage:
-        data = paginator.page(paginator.num_pages)
+#     try:
+#         data = paginator.page(page)
+#     except PageNotAnInteger:
+#         data = paginator.page(1)
+#     except EmptyPage:
+#         data = paginator.page(paginator.num_pages)
 
-    context = {
-        'data': data,
-        'search_message': search_message,
-        'city_name': city_name,
-    }
-    return render(request, 'list.html', context)
+#     context = {
+#         'data': data,
+#         'search_message': search_message,
+#         'city_name': city_name,
+#     }
+#     return render(request, 'list.html', context)
 
 def find_dentist_d(request, pk):
     data = Dentist.objects.get(slug=pk)
@@ -430,3 +431,26 @@ def robots(request):
     
 def thankyou(request):
     return render(request, 'pthankyou.html')
+
+def dentist(request):
+    if request.method == 'POST':
+        form = UserSubmissionForm(request.POST)
+        if form.is_valid():
+            # Save the form data to the database
+            user_submission = form.save()
+
+            # Create a success message to display as a popup
+            messages.success(request, f"Form submitted successfully! Thank you, {user_submission.first_name} {user_submission.last_name}.")
+
+            # Redirect to the Thank You page
+            return redirect('home:thankyou')  # Assuming 'home:thankyou' is the URL for the Thank You page
+        else:
+            # Handle form errors
+            return render(request, 'request.html', {'form': form, 'error_message': 'Please correct the errors below.'})
+    else:
+        form = UserSubmissionForm()
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'request.html', context)

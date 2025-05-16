@@ -1,4 +1,18 @@
-{% extends 'base.html' %} {% load static %} {% block header %} {% endblock header %} 
+{% extends 'base.html' %} {% load static %} 
+{% block seo%}
+<title>{{data.name}} - Smile Design Expert Dentist in {{data.city}}</title>
+<meta name="description" content="Explore {{data.name}}'s profile, a smile design expert and best dentist in {{data.city}}. {{data.name}} provides comprehensive dental and cosmetic smile solutions." />
+<link rel="canonical" href="https://ultimatesmiledesign.com/certified-dentists/{{data.slug}}/" />
+<meta property="og:locale" content="en_IN" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="{{data.name}} - Smile Design Expert Dentist in {{data.city}}" />
+<meta property="og:description" content="Explore {{data.name}}'s profile, a smile design expert and best dentist in {{data.city}}. {{data.name}} provides comprehensive dental and cosmetic smile solutions." />
+<meta property="og:url" content="https://ultimatesmiledesign.com/certified-dentists/{{data.slug}}/" />
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{data.name}} - Smile Design Expert Dentist in {{data.city}}">
+<meta name="twitter:description" content="Explore {{data.name}}'s profile, a smile design expert and best dentist in {{data.city}}. {{data.name}} provides comprehensive dental and cosmetic smile solutions."/>
+{% endblock seo%}
+{% block header %} {% endblock header %} 
 {% block css %} 
 <link
   rel="stylesheet"
@@ -101,8 +115,8 @@
               </div>
             </div>
           </div>
-
-          <div class="dentist-review-section pt-50 position-relative" >
+          <!--review card start-->
+          {% comment %} <div class="dentist-review-section pt-50 position-relative" >
             <div class="container">
               <h3 class="Loc-subtext cool">Review</h3>
                 <div class="row justify-content-center">
@@ -167,7 +181,8 @@
                   </div>
                 </div>
             </div>
-          </div>
+          </div> {% endcomment %}
+          <!--review card end-->
           <!--Location-->
           <div class="aon-docLocation-wrap" id="aon-locations-area">
             <div class="sf-doc-location">
@@ -220,14 +235,14 @@
 {% block js %}
 <script>
   function BookAppoinment(id,name,city){
-    console.log("sdf",id,name,city)
+    //console.log("sdf",id,name,city)
     const doctordata = {
       id:id,
       name:name,
       city:city
     }
     localStorage.setItem('selectedDoctor',JSON.stringify(doctordata));
-    window.location.href="/account/dentist/";
+    window.location.href="/consult-with-dentist/";
   }
 </script>
 <script>

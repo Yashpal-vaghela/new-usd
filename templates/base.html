@@ -7,21 +7,13 @@
 	<!-- META -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="keywords" content="" />
-    <meta name="author" content="" />
-    <meta name="robots" content="" />    
-    <meta name="description" content="" />
-    
+    <!-- MOBILE SPECIFIC -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    {% block seo %} {% endblock %}	
     <!-- FAVICONS ICON -->
     <link rel="icon" href="{% static 'log.png' %}" type="image/x-icon" />
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'favicon.png' %}" />
-    
-    <!-- PAGE TITLE HERE -->
-    <title>Find Ultimate Smile Designers - By ADE</title>
-    
-    <!-- MOBILE SPECIFIC -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">	
-    
+
     <!-- BOOTSTRAP STYLE SHEET -->
     <link  href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <!-- FONTAWESOME STYLE SHEET -->
@@ -140,7 +132,7 @@
                                     <li><a href="https://advancedentalexport.com/about-us/" target="_blank" class="hover-link">About ADE</a></li>
                                     <li><a href="{% url 'home:search_all_usd' %}" class="hover-link">Find Dentists</a></li>
                                     <li><a href="{% url 'home:contact' %}" class="hover-link">Contact Us</a></li>
-                                    <li><a target="_blank" href="{% url 'account:dentist' %}" class="hover-link">Consultation</a></li>
+                                    <li><a target="_blank" href="{% url 'home:dentist' %}" class="hover-link">Consultation</a></li>
                                 </ul>
                             </div>
                         </div>

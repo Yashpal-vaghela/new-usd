@@ -1,10 +1,26 @@
-{% extends 'base.html' %} {% load static %} {% block header %} {% endblock header %} {% block css %} {% endblock css %} {% block body %} {% load static %}
+{% extends 'base.html' %} {% load static %} 
+{% block seo%}
+<title>{{blog.title}}</title>
+<meta name="description" content="{{blog.description}}" />
+<link rel="canonical" href="{{blog.canonical}}" />
+<meta property="og:locale" content="en_IN" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="{{blog.title}}" />
+<meta property="og:description" content="{{blog.description}}" />
+<meta property="og:url" content="{{blog.canonical}}" />
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{blog.title}}">
+<meta name="twitter:description" content="{{blog.description}}"/>
+{% endblock seo%}
+{% block header %} {% endblock header %} 
+{% block css %} {% endblock css %} 
+{% block body %}
 
 <!-- Content -->
 <div class="single-blog-wrapper">
   <section class="breadcrumbs-section">
     <div class="container">
-      <div class="breadcrumbs-path"> <a href="{% url 'home:home' %}"> HOME </a> &nbsp; <i class=" fa fa-solid fa-angles-right"></i> &nbsp; <a href="{% url 'home:blogs' %}"> BLOGS </a> </div>
+      <div class="breadcrumbs-path"> <a href="{% url 'home:home' %}"> Home </a> &nbsp; <i class=" fa fa-solid fa-angles-right"></i> &nbsp; <a href="{% url 'home:blogs' %}"> Blogs </a> </div>
       <h1 class=" breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool fs-4">{{blog.breadcrumb}}</h1>
     </div>
   </section>
@@ -14,11 +30,11 @@
         <div class="col-lg-8">
           <div class="single-blog-page position-relative">
             {% comment %} <h2 class="single-blog-title">{{blog.h1}}</h2> {% endcomment %}
-            <h3 class="single-blog-author d-flex">
+            {% comment %} <h3 class="single-blog-author d-flex">
             <img src="{% static 'user1.svg' %}" class=" img-fluid" style="width:18px" />&nbsp; By &nbsp;
-              {% comment %} <i class="feather-user"></i>By &nbsp; {% endcomment %}
+              <i class="feather-user"></i>By &nbsp; 
               <a href="#" title="" rel="">{{blog.author}}</a>
-            </h3>
+            </h3> {% endcomment %}
            
             <img
               src="{{blog.blog_banner_sm.url}}"

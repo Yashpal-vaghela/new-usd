@@ -1,8 +1,17 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block header %}
-
+{% extends 'base.html' %}{% load static %}{% block header %}
+{% block seo%}
+<title>Smile Design & Smile Makeover Blogs | Read Your Smile</title>
+<meta name="description" content="Explore expert articles on smile design, smile makeovers, and oral health. Stay informed with the latest trends and tips from Ultimate Smile Design's blog." />
+<link rel="canonical" href="https://ultimatesmiledesign.com/blogs/" />
+<meta property="og:locale" content="en_IN" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Smile Design & Smile Makeover Blogs | Read Your Smile" />
+<meta property="og:description" content="Explore expert articles on smile design, smile makeovers, and oral health. Stay informed with the latest trends and tips from Ultimate Smile Design's blog." />
+<meta property="og:url" content="https://ultimatesmiledesign.com/blogs/" />
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Smile Design & Smile Makeover Blogs | Read Your Smile">
+<meta name="twitter:description" content="Explore expert articles on smile design, smile makeovers, and oral health. Stay informed with the latest trends and tips from Ultimate Smile Design's blog."/>
+{% endblock seo%}
 {% endblock header %}
 
 {% block css %}
@@ -15,7 +24,7 @@
 <div class="blog-page-wrapper">
     <section class="breadcrumbs-section">
         <div class="container">
-            <div class="breadcrumbs-path"> <a href="{% url 'home:home' %}"> HOME </a> &nbsp;<i class=" fa fa-solid fa-angles-right"></i> &nbsp;BLOGS</div>
+            <div class="breadcrumbs-path"> <a href="{% url 'home:home' %}"> Home </a> &nbsp;<i class=" fa fa-solid fa-angles-right"></i> &nbsp;Blogs</div>
             <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool">Blogs</h1>
             {% comment %} <img src="{% static 'text_vec.svg' %}" class="img-fluid" /> {% endcomment %}
         </div>

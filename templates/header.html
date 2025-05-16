@@ -43,7 +43,7 @@
                         <li class=""><a href="{% url 'home:contact' %}"><span {% if request.path == '/contact/' %}class="heasder_active cool"{% endif %}> Contact</span></a>                          
                         </li> 
                         <li class="hea-shrink-btn">
-                            <form action="{% url 'account:dentist' %}" method="get">
+                            <form action="{% url 'home:dentist' %}" method="get">
                                 <button type="submit" class="bat text-center hea-shrink-btn-inner">
                                     For Patients
                                 </button>
@@ -74,7 +74,7 @@
                         <a href="" class="site-button-link aon-btn-signup m-l20" >
                             <i class="feather-lock"></i> Logout
                         </a>
-                        <a href="{% url 'account:dentist' %}" class="site-button aon-add-listing m-l20" >
+                        <a href="{% url 'home:dentist' %}" class="site-button aon-add-listing m-l20" >
                             <i class="fa fa-map-marker"></i>
                          
                             {{city}}
@@ -84,7 +84,7 @@
                         <!--    <i class="feather-user"></i> Sign In-->
                         <!--</a>-->
                         <!--Add Listing up-->
-                        <a href="{% url 'account:dentist' %}" class="aon-add-listing m-l20 header-buttons bat" onClick="localStorage.removeItem('selectedDoctor')">
+                        <a href="{% url 'home:dentist' %}" class="aon-add-listing m-l20 header-buttons bat" onClick="localStorage.removeItem('selectedDoctor')">
                             <p class="">For Patients</p>   
                           </a>
                           <a href="https://dentist.ultimatesmiledesign.com/" target="_blank" class="bat aon-add-listing m-l20 header-buttons ">

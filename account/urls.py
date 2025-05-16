@@ -3,8 +3,6 @@ from . import views
 app_name='account'
 urlpatterns = [
     path('', views.singup, name='singup'),
-    path('dentist/', views.dentist, name='dentist'),
-    
     path('dentist-request/', views.dentistreq, name='dentistreq'),
     path('patient-dashboard/', views.customer, name='customer'),
     path('patient-review/', views.patient_review, name='patient_review'),

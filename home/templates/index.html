@@ -1,4 +1,21 @@
-{% extends 'base.html' %} {% load static %} {% block header %} {% endblock header %} {% block css %}
+{% extends 'base.html' %} {% load static %} 
+
+{% block header %} 
+{% endblock header %} 
+{% block seo%}
+<title>Ultimate Smile Design | Custom Smile Design by Expert Dentists</title>
+<meta name="description" content="Experience custom smile designing with Ultimate Smile Design. Connect with expert dentists across cities and book your personalized smile makeover appointment." />
+<link rel="canonical" href="https://ultimatesmiledesign.com/" />
+<meta property="og:locale" content="en_IN" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Ultimate Smile Design | Custom Smile Design by Expert Dentists" />
+<meta property="og:description" content="Experience custom smile designing with Ultimate Smile Design. Connect with expert dentists across cities and book your personalized smile makeover appointment." />
+<meta property="og:url" content="https://ultimatesmiledesign.com/" />
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ultimate Smile Design | Custom Smile Design by Expert Dentists">
+<meta name="twitter:description" content="Experience custom smile designing with Ultimate Smile Design. Connect with expert dentists across cities and book your personalized smile makeover appointment.">
+{% endblock seo%}
+{% block css %}
 <!-- Owl Carousel CSS -->
 <link
   rel="stylesheet"
@@ -19,7 +36,8 @@
   }
   /* Apply margin only for mobile view (up to 768px width) */
 </style>
-{% endblock css %} {% block body %}
+{% endblock css %}
+{% block body %}
 <!-- CONTENT START -->
 <div class="page-content">
   <!-- BANNER SECTION START -->
@@ -74,7 +92,7 @@
             <img src="{% static 'banner_vec.png' %}" class="banner_vector img-fluid" loading="lazy" alt="Smile Step Group 1" />   
           </div>
           <div class="banner_buttons">
-            <a href="{% url 'account:dentist' %}" target="_blank" class="bat banner_btn ">
+            <a href="{% url 'home:dentist' %}" target="_blank" class="bat banner_btn ">
               For Patients</a>            
             <a href="https://dentist.ultimatesmiledesign.com/" target="_blank" class="bat banner_btn ">
               For Dentist</a>
@@ -247,7 +265,7 @@
           tailored approach, don't hesitate to get in touch with us.
         </p>
         <div class="loc-button-container">
-          <button class="bat loc_btn" onclick="window.location.href='{% url 'account:dentist' %}';">Get in Touch</button>
+          <button class="bat loc_btn" onclick="window.location.href='{% url 'home:dentist' %}';">Get in Touch</button>
         </div>
       </div>
     </div>

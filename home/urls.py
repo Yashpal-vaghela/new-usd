@@ -3,8 +3,9 @@ from . import views
 app_name='home'
 urlpatterns = [
     path('', views.home, name='home'),
-    path('find-dentist/', views.find_dentist, name='find_dentist'),
+    # path('find-dentist/', views.find_dentist, name='find_dentist'),
     path('gallery/', views.gallery, name='gallery'),
+    path('consult-with-dentist/', views.dentist, name='dentist'),
     path('certified-dentists/<str:pk>/', views.find_dentist_d, name='find_dentist_d'),
     path('blogs/', views.blogs, name='blogs'),
     path('blogs/<str:pk>/', views.blogsd, name='blogsd'),
