@@ -1,11 +1,30 @@
-{% extends 'base.html' %} {% load static %} {% block header %}{% endblock header %} {% block css %}
+{% extends 'base.html' %} {% load static %}{% block header %}
+{% block seo%}
+<title>Top Dentists in {{city_name}} - List of Professional Dentists Near You</title>
+<meta name="description" content=" Explore a comprehensive list of the best dentists in {{city_name}}. Find qualified dental professionals, clinics, and specialists near you for all your oral health needs." />
+<link rel="canonical" href="https://ultimatesmiledesign.com/" />
+<meta property="og:image" content="{% static 'feature-usd.webp'%}">
+<meta property="og:image:secure_url" content="{% static 'feature-usd.webp'%}">
+<meta property="og:image:type" content="image/webp" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="en_IN" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Top Dentists in {{city_name}} - List of Professional Dentists Near You" />
+<meta property="og:description" content=" Explore a comprehensive list of the best dentists in {{city_name}}. Find qualified dental professionals, clinics, and specialists near you for all your oral health needs." />
+<meta property="og:url" content="https://ultimatesmiledesign.com/" />
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Top Dentists in {{city_name}} - List of Professional Dentists Near You">
+<meta name="twitter:description" content=" Explore a comprehensive list of the best dentists in {{city_name}}. Find qualified dental professionals, clinics, and specialists near you for all your oral health needs.">
+{% endblock seo%}
+{% endblock header %} {% block css %}
 
 <style>
   .circular-image {
-    width: 100px !important; /* Adjust size as needed */
-    height: 100px !important; /* Adjust size as needed */
+    width: 100px !important;
+    height: 100px !important; 
     border-radius: 50% !important;
-    object-fit: cover !important; /* Ensures the image covers the circle area without distortion */
+    object-fit: cover !important;
   }
 </style>
 

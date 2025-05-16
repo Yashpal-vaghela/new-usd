@@ -3,6 +3,10 @@
 <title>{{data.name}} - Smile Design Expert Dentist in {{data.city}}</title>
 <meta name="description" content="Explore {{data.name}}'s profile, a smile design expert and best dentist in {{data.city}}. {{data.name}} provides comprehensive dental and cosmetic smile solutions." />
 <link rel="canonical" href="https://ultimatesmiledesign.com/certified-dentists/{{data.slug}}/" />
+<meta property="og:image" content="{{data.profile.url}}">
+<meta property="og:image:secure_url" content="{{data.profile.url}}">
+<meta property="og:image:width" content="600" />
+<meta property="og:image:height" content="600" />
 <meta property="og:locale" content="en_IN" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="{{data.name}} - Smile Design Expert Dentist in {{data.city}}" />
@@ -44,7 +48,7 @@
         src="{% static 'Group 291.svg' %}"
         class="find-dentist-img img-fluid"
       />
-      {% endcomment %}
+      {% endcomment %}  
     </div>
   </section>
 
@@ -54,7 +58,7 @@
     style="padding-top: 40px"
   >
     <img
-      src="{% static 'doc_detail_vec.svg' %}"
+      src="{% static 'group-new.svg' %}"
       class="img-fluid bg_detail_vec1"
       loading="lazy"
       alt="background vector"
@@ -70,7 +74,7 @@
             {% if data.profile %}
             <img
               src="{{data.profile.url}}"
-              alt=""
+              alt="{{data.name}} - Dentist in {{data.city}}"
               class="img-fluid Doctor_photo"
             />
              

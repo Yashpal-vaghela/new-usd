@@ -3,6 +3,10 @@
 <title>{{blog.title}}</title>
 <meta name="description" content="{{blog.description}}" />
 <link rel="canonical" href="{{blog.canonical}}" />
+<meta property="og:image" content="{{blog.blog_banner_sm.url}}">
+<meta property="og:image:secure_url" content="{{blog.blog_banner_sm.url}}">
+<meta property="og:image:width" content="1280" />
+<meta property="og:image:height" content="720" />
 <meta property="og:locale" content="en_IN" />
 <meta property="og:type" content="article" />
 <meta property="og:title" content="{{blog.title}}" />
@@ -39,7 +43,7 @@
             <img
               src="{{blog.blog_banner_sm.url}}"
               class="img-fluid"
-              alt="single-blog-img"
+              alt="{{blog.breadcrumb}}"
             />
             <div class="d-sm-flex d-block justify-content-between my-3">
             <div class="single-blog-date"><span>Post date :</span> {{blog.published}}</div>
@@ -69,7 +73,7 @@
                     <a href="{% url 'home:blogsd' ie.slug %}">{{ ie.h1 }}</a>
                   </h3>
                   <div class="d-flex">
-                    <img src="{% static 'calender.svg' %}" class="pe-2 mb-0 img-fluid" style="width:25px" />
+                    <img src="{% static 'calender.svg' %}" class="pe-2 mb-0 img-fluid" style="width:25px" alt/>
                     <span>{{ ie.published|date:"b. d, Y" }}</span>
                   </div>
                 </div>
