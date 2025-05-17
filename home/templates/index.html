@@ -321,6 +321,7 @@
        </div>
        <div class="row dentists-content-2 mt-5 pb-4 justify-content-center " id="dentist-list" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
         {% for ie in data %}
+        {% comment %} {{ie.slug}} {% endcomment %}
          <div class="col-lg-4 col-md-6 col-sm-10 mb-md-3 mb-0 col-12">
            <div class="card dentists-content justify-content-center">
              <a href="{% url 'home:find_dentist_d' ie.slug %}">
@@ -336,7 +337,7 @@
                </p>
                <p class="mb-2 font-Barlow white fs-14 fw-500 text-start">{{ie.city}}</p>
                <button class="btn  btn-appointment bat w-100 my-2">
-                 <a href="/consult-with-dentist/">Book Appointment</a>
+                 <a href="/consult-with-dentist/" onclick="BookAppoinment('{{ie.id}}','{{ie.name}}','{{ie.city}}')">Book Appointment</a>
                </button>
                <span class="cool font-Barlow fw-500 text-end position-relative mb-0">ADE Verified Dentist</span>
              </div>
@@ -998,6 +999,18 @@
   });
 </script> {% endcomment %}
 <script>
+  function BookAppoinment(id,name,city){
+    //console.log("sdf",id,name,city)
+    const doctordata = {
+      id:id,
+      name:name,
+      city:city
+    }
+    localStorage.setItem('selectedDoctor',JSON.stringify(doctordata));
+    window.location.href="/consult-with-dentist/";
+  }
+</script>
+<script>
     document.getElementById("cityDropdown").addEventListener("change", function () {
         let form = document.getElementById("searchForm");
         let formData = new FormData(form);
@@ -1080,5 +1093,4 @@
     offset: 100,
   });
 </script>
-
 {% endblock js %}

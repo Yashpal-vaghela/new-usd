@@ -1,4 +1,4 @@
-{% extends 'base2.html' %} {% load static %} {% block header %} {% endblock header %} {% block css %}
+{% extends 'base.html' %} {% load static %} {% block header %} {% endblock header %} {% block css %}
 <link
   href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
   rel="stylesheet"
@@ -17,17 +17,23 @@
 
 
 <div class="page-content" >
+<section class="breadcrumbs-section">
+        <div class="container">
+            <div class="breadcrumbs-path"> <a href="/"> Home </a> <i class=" fa fa-solid fa-angles-right"></i>Consult with dentist </div>
+            <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool">Consult with dentist</h1>
+        </div>
+    </section>
   <section class="request-section d-flex justify-content-center align-items-center"  >
     <div class="container">
       <div class="request-img-section d-flex justify-content-center mx-auto">
-        <a href="/" style="display:contents">
+        {% comment %} <a href="/" style="display:contents">
           <img class="img-fluid usd-logo-img" src="{% static 'usdlog.png' %}" alt="logo-img"/>
-        </a>
-        <a href="/"><i class="fa fa-solid fa-xmark cnacel_btn" ></i></a>
+        </a> {% endcomment %}
+        {% comment %} <a href="/"><i class="fa fa-solid fa-xmark cnacel_btn" ></i></a> {% endcomment %}
         
         <div class="request-content text-center d-block">
           <img class="img-fluid usd-2-logo" src="{% static 'usdlog.png' %}" alt="logo-img"/>
-          <h2 class="pt-4"></h2>
+          {% comment %} <h2 class="pt-4"></h2> {% endcomment %}
           <p class="mb-0 cool">Please enter the details below for a call back.</p>
 
           <form method="post" class="aon-login-form login-form form ">
@@ -120,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function(){
       if(doctordata.name && doctordata.city){
         document.getElementById("doctor-info").innerHTML =
         `
-        <div class="col-lg-6 ps-0  pe-sm-0">
+        <div class="col-lg-6 ps-0">
           <div class="inputicon-box">
             <input
               class="form-control"
@@ -134,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function(){
             <i class="fa-solid fa-user-doctor"></i>
           </div>
         </div>
-        <div class="col-lg-6 pe-0 ps-sm-0">
+        <div class="col-lg-6 pe-0">
           <div class="inputicon-box">
             <input
               class="form-control"
