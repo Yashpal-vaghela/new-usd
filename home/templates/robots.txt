@@ -6,5 +6,6 @@ Disallow: /contact/*
 Disallow: /all-usd/*
 Disallow: /blogs/*?*
 Disallow: /cartified-dentists/city/*?
+Disallow: /cartified-dentists/*?
 Disallow: /find-dentist/*
 Sitemap: https://ultimatesmiledesign.com/sitemap.xml
