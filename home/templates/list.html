@@ -188,25 +188,27 @@
 </script>
 <script>
     var a = JSON.parse(localStorage.getItem('selectedDoctor')); 
-
-    if(a === null){
-      setTimeout(() => {
-                Swal.fire({
-                    title: "Customize Search Based On Location",
-                    showDenyButton: true,
-                    showCancelButton: false,
-                    confirmButtonText: "Yes",
-                    denyButtonText: "No",
-                    customClass: {
-                        popup: "custom-swal-popup" },
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.reload();
-                    } else if (result.isDenied) {
-                        Swal.fire("Location not updated", "", "info");
-                    }
-                });
-      }, 1000);
-    }
+    document.addEventListener("DOMContentLoaded",function() {
+        if(a === null && window.location.search == ""){
+          setTimeout(() => {
+                    Swal.fire({
+                        title: "Customize Search Based On Location",
+                        showDenyButton: true,
+                        showCancelButton: false,
+                        confirmButtonText: "Yes",
+                        denyButtonText: "No",
+                        customClass: {
+                            popup: "custom-swal-popup" },
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.reload();
+                        } else if (result.isDenied) {
+                            Swal.fire("Location not updated", "", "info");
+                        }
+                    });
+          }, 1000);
+        }
+    })
+    
 </script>
 {% endblock js %}
