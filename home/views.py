@@ -118,6 +118,16 @@ def search_all_usd(request, city_name=None):
 
     city = None
     query = request.GET.get('q', '').strip()
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        results = []
+
+        if query:
+            matching_doctor = Dentist.objects.filter(Q(name__icontains=query)).distinct()[:5]
+            results=[{'name':dentist.name,'id':dentist.id,'slug':dentist.slug} for dentist in matching_doctor]
+            return JsonResponse({'results':results})
+        return JsonResponse({'results': []})
+    
     city_id = request.GET.get('city', '').strip()
     data1 = Dentist.objects.all().order_by('name')
     search_message = None
@@ -187,6 +197,7 @@ def search_all_usd(request, city_name=None):
         data = paginator.page(1)
     except EmptyPage:
         data = paginator.page(paginator.num_pages)
+    
 
     context = {
         'sorted_doctors': sorted_doctors,

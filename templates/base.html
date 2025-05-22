@@ -306,6 +306,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         window.location.reload();
+                        localStorage.setItem('permission_access',JSON.parse(true))
                     } else if (result.isDenied) {
                         Swal.fire("Location not updated", "", "info");
                     }

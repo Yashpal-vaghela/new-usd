@@ -82,7 +82,7 @@
             
             <img src="{% static 'noimage-team.webp' %}" alt="Image" />
             {% endif %}
-            <div class="bat appoint_btn" onclick="BookAppoinment('{{data.id}}','{{data.name}}','{{data.city}}')">Book Appointment</div>
+            <div class="bat w-100 appoint_btn" onclick="BookAppoinment('{{data.id}}','{{data.name}}','{{data.city}}')">Book Appointment</div>
 
            
           </div>
@@ -119,10 +119,83 @@
               </div>
             </div>
           </div>
-          <!--review card start-->
-          {% comment %} <div class="dentist-review-section pt-50 position-relative" >
+
+            <div class="dentist-review-section pt-50 position-relative" >
             <div class="container">
-              <h3 class="Loc-subtext cool">Review</h3>
+              <h3 class="Loc-subtext cool">Patients Testimonials</h3>
+                <div class="row align-items-center justify-content-center">
+                <div class="col-lg-4">
+                  {% comment %} <img src="{% static 'review-img1.jpg' %}" class="img-fluid" / {% endcomment %}
+                  <img src="{% static 'a5.png' %}" class="img-fluid" />
+                </div>
+                  <div class="col-lg-8 col-12 review-content-wrapper">
+                    <div class="swiper-container">
+                      <div class="swiper review-swiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                              <div class="review-card card">
+                                <div class="stars cool text-start mb-2">
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>  
+                                </div>
+                                <p class="review-description text-start">
+                                  Dr. Apeksha Maheshwari is one of the top Dentist in Bhatar, Surat. She has done BDS. She has helped numerous patients in her 9 years of experience as a Dentist. You can consult Dr. Apeksha Maheshwari at Maheshwari Dental & Orthodontic Clinic in Bhatar, Surat. You can freely conversation in English, Hindi, Gujarati with Dr. Apeksha Maheshwari. Dr. Apeksha Maheshwari offers best medical services like Consultation, Basic Dental Care, Dental Ceramics, Dental Services, Preventive Dental Treatments and many more.
+                                </p>
+                                 <h4 class="review-title mb-2  text-start">Mr.Yashpal</h4>
+                              </div>
+                            </div>
+                            <div class="swiper-slide">
+                              <div class="review-card card">
+                                <div class="stars cool text-start mb-2">
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>  
+                                </div>
+                                <p class="review-description text-start">
+                                  Dr. Apeksha Maheshwari is one of the top Dentist in Bhatar, Surat. She has done BDS. She has helped numerous patients in her 9 years of experience as a Dentist. You can consult Dr. Apeksha Maheshwari at Maheshwari Dental & Orthodontic Clinic in Bhatar, Surat. You can freely conversation in English, Hindi, Gujarati with Dr. Apeksha Maheshwari. Dr. Apeksha Maheshwari offers best medical services like Consultation, Basic Dental Care, Dental Ceramics, Dental Services, Preventive Dental Treatments and many more.
+                                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur temporibus veniam harum placeat sequi perferendis delectus ratione culpa molestiae, sed dolorem ipsum. Et libero hic nam deleniti aspernatur quo velit!
+                                </p>
+                                <h4 class="review-title mb-2  text-start">Review 2</h4>
+                              </div>
+                            </div>
+                            <div class="swiper-slide">
+                              <div class="review-card card">
+                                <div class="stars cool text-start mb-2">
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>  
+                                </div>
+                                <p class="review-description text-start">
+                                  Dr. Apeksha Maheshwari is one of the top Dentist in Bhatar, Surat. She has done BDS. She has helped numerous patients in her 9 years of experience as a Dentist. You can consult Dr. Apeksha Maheshwari at Maheshwari Dental & Orthodontic Clinic in Bhatar, Surat. You can freely conversation in English, Hindi, Gujarati with Dr. Apeksha Maheshwari. Dr. Apeksha Maheshwari offers best medical services like Consultation, Basic Dental Care, Dental Ceramics, Dental Services, Preventive Dental Treatments and many more.
+                                </p>
+                                <h4 class="review-title mb-2  text-start">Review 3</h4>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                       <!-- Pagination Dots -->
+                        <div class="swiper-pagination"></div>
+
+                        <!-- Navigation Buttons -->
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div> 
+
+          <!--review card start-->
+           {% comment %} <div class="dentist-review-section pt-50 position-relative" >
+            <div class="container">
+              <h3 class="Loc-subtext cool">Patients Testimonials</h3>
                 <div class="row justify-content-center">
                   <div class="col-lg-10 col-12 review-content-wrapper">
                     <div class="swiper-container">
@@ -130,7 +203,7 @@
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
                               <div class="review-card card">
-                                <h2 class="review-title mb-2  text-center">Mr.Yashpal</h2>
+                                <h4 class="review-title mb-2  text-center">Mr.Yashpal</h4>
                                 <div class="stars cool text-center mb-2">
                                   <i class="fa-solid fa-star"></i>
                                   <i class="fa-solid fa-star"></i>
@@ -145,7 +218,7 @@
                             </div>
                             <div class="swiper-slide">
                               <div class="review-card card">
-                                <h2 class="review-title mb-2  text-center">Review 2</h2>
+                                <h4 class="review-title mb-2  text-center">Review 2</h4>
                                 <div class="stars cool text-center mb-2">
                                   <i class="fa-solid fa-star"></i>
                                   <i class="fa-solid fa-star"></i>
@@ -160,7 +233,7 @@
                             </div>
                             <div class="swiper-slide">
                               <div class="review-card card">
-                                <h2 class="review-title mb-2  text-center">Review 3</h2>
+                                <h4 class="review-title mb-2  text-center">Review 3</h4>
                                 <div class="stars cool text-center mb-2">
                                   <i class="fa-solid fa-star"></i>
                                   <i class="fa-solid fa-star"></i>
@@ -185,7 +258,7 @@
                   </div>
                 </div>
             </div>
-          </div> {% endcomment %}
+          </div>  {% endcomment %}
           <!--review card end-->
           <!--Location-->
           <div class="aon-docLocation-wrap" id="aon-locations-area">

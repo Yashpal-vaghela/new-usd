@@ -63,16 +63,21 @@
         action="{% url 'home:search_all_usd' %}"
       >
         {% csrf_token %}
-        <div class="col-lg-4 col-md-6 col-12">
+        <div class="col-lg-4 col-md-6 col-12 position-relative">
           <div class="searchbar-box-wrapper">
-            <img class="img-fluid" src="{% static 'searchG.svg' %}" />
+            <img class="img-fluid" src="{% static 'searchG.svg' %}" id="searchicon-Img" />
+            <i class="fa-solid fa-xmark fs-5 d-none" id="closebutton"></i>
             <input
-              name="q"
-              type="text"
               class="form-control w-100"
+              type="text"
+              id="searchInput"
+              onchange="searchDoctor(event)"
+              oninput="searchDoctor(event)" 
               placeholder="Search doctors, clinics, hospitals, etc."
+              name="q"
             />
           </div>
+          <div id="suggestions"></div>
         </div>
         <div class="col-lg-4 col-md-6 col-12">
           <div class="searchbar-box-wrapper">
@@ -172,8 +177,74 @@
   </section>
 </div>
 <!-- Content END-->
+{% endblock body %}
+{% block js %}
+<script>
+    function searchDoctor(event){
+      let a = document.getElementById("closebutton")
+      let b = document.getElementById("searchicon-Img")
+      if(event.target.value === ""){
+          const suggestionBox = document.getElementById("suggestions")
+          document.getElementById('suggestions').innerHtml = '';
+          a.classList.add("d-none");
+          a.classList.remove("d-block")
+          b.classList.add("d-block")
+          b.classList.remove("d-none")
+          suggestionBox.classList.add("d-none");
+      }else{
+          const suggestionBox = document.getElementById("suggestions")
+          a.classList.add("d-block")
+          a.classList.remove("d-none")
+          b.classList.add("d-none")
+          b.classList.remove("d-block")
+          suggestionBox.classList.remove("d-none");
+      }
+      const query = document.getElementById('searchInput').value;
+      if(query.length < 2){
+        document.getElementById('suggestions').innerHtml = '';
+        return;
+      }
+      fetch(`/certified-dentists/?q=${encodeURIComponent(query)}`,{headers:{
+          'X-Requested-With': 'XMLHttpRequest'
+      }})
+      .then(response => response.json())
+      .then(data => {
+        console.log("data",data)
+        const suggestionBox = document.getElementById('suggestions');
+        suggestionBox.innerHTML = '';
+        if(data.results.length == 0){
+          const div = document.createElement('p');
+          div.textContent = "Not found Doctor data !";
+					div.style.cursor = 'pointer';
+          suggestionBox.appendChild(div);
+        }else{
+          data.results.forEach(doctor => {
+              const div = document.createElement('a');
+              div.href= `/certified-dentists/${doctor.slug}/`;
+              div.textContent = doctor.name;
+              div.style.padding = '5px 10px';
+              div.style.borderBottom = '1px solid #ccc';
+              div.style.cursor = 'pointer';
+              suggestionBox.appendChild(div);
+        	});
+        }
+      })
+    }
+    document.getElementById('closebutton').addEventListener('click',function(){
+        const input = document.getElementById('searchInput')
+        input.value = '';
 
-{% endblock body %} {% block js %}
+        const closeBtn = document.getElementById('closebutton')
+        const searchIcon = document.getElementById("searchicon-Img")
+        closeBtn.classList.add("d-none");
+        closeBtn.classList.remove("d-block");
+        searchIcon.classList.add("d-block");
+        searchIcon.classList.remove("d-none");
+
+        const suggestionBox = document.getElementById('suggestions');
+        suggestionBox.innerHTML = '';
+	  })
+</script>
 <script>
   function BookAppoinment(id,name,city){
     //console.log("sdf",id,name,city)
@@ -187,27 +258,93 @@
   }
 </script>
 <script>
-    var a = JSON.parse(localStorage.getItem('selectedDoctor')); 
-    document.addEventListener("DOMContentLoaded",function() {
-        if(a === null && window.location.search == ""){
-          setTimeout(() => {
-                    Swal.fire({
-                        title: "Customize Search Based On Location",
-                        showDenyButton: true,
-                        showCancelButton: false,
-                        confirmButtonText: "Yes",
-                        denyButtonText: "No",
-                        customClass: {
-                            popup: "custom-swal-popup" },
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.reload();
-                        } else if (result.isDenied) {
-                            Swal.fire("Location not updated", "", "info");
-                        }
-                    });
-          }, 1000);
+  var x = document.getElementById("demo");
+
+    function getLocation() {
+        if (navigator.geolocation) {
+          console.log("navigator",navigator,navigator.geolocation)
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
         }
+    }
+     function showPosition(position) {
+        x.innerHTML =
+            "Latitude: " + position.coords.latitude + 
+            "<br>Longitude: " + position.coords.longitude;
+         var a = JSON.parse(localStorage.getItem('permission_access')); 
+         console.log("a",a)
+        if (sessionStorage.getItem("latitude") !== null && a === true) {
+            console.log("Session data exists!");
+        } else {
+            // Store latitude and longitude in sessionStorage
+            sessionStorage.setItem("latitude", position.coords.latitude);
+            sessionStorage.setItem("longitude", position.coords.longitude);
+
+            var latitude = sessionStorage.getItem("latitude");
+            var longitude = sessionStorage.getItem("longitude");
+
+            if (latitude && longitude) {
+                // Send the location data to the server
+                $.ajax({
+                    url: "/receive_location/", // URL of your Django view
+                    type: "POST",
+                    data: {
+                        latitude: latitude,
+                        longitude: longitude,
+                        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(), // CSRF token is required for POST requests
+                    },
+                    success: function (response) {
+                        console.log("Data sent to server:", response);
+
+                        // Check if the server returned city and state
+                        if (response.status === "success") {
+                            const city = response.city || "unknown";
+                            const state = response.state || "unknown";
+
+                            // Store city and state in sessionStorage or localStorage
+                            sessionStorage.setItem("city", city);
+                            sessionStorage.setItem("state", state);
+
+                            // Optionally store in localStorage
+                            localStorage.setItem("city", city);
+                            localStorage.setItem("state", state);
+
+                            console.log("City and State saved:", { city, state });
+                        } else {
+                            console.error("Failed to retrieve city and state.");
+                        }
+                    },
+                    error: function (error) {
+                        console.error("Error sending data:", error);
+                    },
+                });
+            }
+
+            // Display confirmation dialog after storing location
+            setTimeout(() => {
+                Swal.fire({
+                    title: "Customize Search Based On Location",
+                    showDenyButton: true,
+                    showCancelButton: false,
+                    confirmButtonText: "Yes",
+                    denyButtonText: "No",
+                    customClass: {
+                        popup: "custom-swal-popup"                    },
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                      localStorage.setItem('permission_access',JSON.parse(true))
+                    } else if (result.isDenied) {
+                        Swal.fire("Location not updated", "", "info");
+                    }
+                });
+            }, 1000);
+        }
+    }
+   
+    document.addEventListener("DOMContentLoaded",function() {
+      console.log("location")
+       getLocation();
     })
     
 </script>
