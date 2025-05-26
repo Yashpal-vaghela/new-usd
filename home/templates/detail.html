@@ -106,7 +106,7 @@
 
             <h3 class="Doctor-subtext cool">Specializations</h3>
             <div class="row">
-              <div class="col-md-4 col-sm-6 mb-4">
+              <div class="col-md-4 col-sm-6 mb-1">
                 <div class="aon-insuranc-list">
                   <ul class="Doctor-Text">
                     {% for ie in data.specializations.all %}
@@ -116,16 +116,95 @@
                 </div>
               </div>
             </div>
+
+            <h3 class="Loc-subtext cool mb-3">Patients Testimonials</h3>
+            <div class="dentist-review-section row align-items-start justify-content-center">
+                  <div class="col-lg-8 col-12 review-content-wrapper order-lg-1 order-2">
+                    <div class="swiper-container">
+                      <div class="swiper review-swiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                              <div class="review-card card">
+                                <div class="quote-img d-flex justify-content-center align-items-center">
+                                  <img  src="{% static 'quote.png' %}" class="img-fluid" />
+                                </div>
+                                <h4 class="review-title mb-2  text-start">Mr.Yashpal</h4>
+                                <div class="stars cool text-start mb-2">
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>  
+                                </div>
+                                <p class="review-description text-start">
+                                  Dr. Apeksha Maheshwari is one of the top Dentist in Bhatar, Surat. She has done BDS. She has helped numerous patients in her 9 years of experience as a Dentist. You can consult Dr. Apeksha Maheshwari at Maheshwari Dental & Orthodontic Clinic in Bhatar, Surat. You can freely conversation in English, Hindi, Gujarati with Dr. Apeksha Maheshwari. Dr. Apeksha Maheshwari offers best medical services like Consultation, Basic Dental Care, Dental Ceramics, Dental Services, Preventive Dental Treatments and many more.
+                                </p>
+                              </div>
+                            </div>
+                            <div class="swiper-slide">
+                              <div class="review-card card">
+                                <div class="quote-img d-flex justify-content-center align-items-center">
+                                  <img  src="{% static 'quote.png' %}" class="img-fluid" />
+                                </div>
+                                <h4 class="review-title mb-2  text-start">Review 2</h4>
+                                <div class="stars cool text-start mb-2">
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>  
+                                </div>
+                                <p class="review-description text-start">
+                                  Dr. Apeksha Maheshwari is one of the top Dentist in Bhatar, Surat. She has done BDS. She has helped numerous patients in her 9 years of experience as a Dentist. You can consult Dr. Apeksha Maheshwari at Maheshwari Dental & Orthodontic Clinic in Bhatar, Surat. You can freely conversation in English, Hindi, Gujarati with Dr. Apeksha Maheshwari. Dr. Apeksha Maheshwari offers best medical services like Consultation, Basic Dental Care, Dental Ceramics, Dental Services, Preventive Dental Treatments and many more.
+                                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur temporibus veniam harum placeat sequi perferendis delectus ratione culpa molestiae, sed dolorem ipsum. Et libero hic nam deleniti aspernatur quo velit!
+                                </p>
+                              </div>
+                            </div>
+                            <div class="swiper-slide">
+                              <div class="review-card card">
+                                <div class="quote-img d-flex justify-content-center align-items-center">
+                                  <img  src="{% static 'quote.png' %}" class="img-fluid" />
+                                </div>
+                                <h4 class="review-title mb-2  text-start">Review 3</h4>
+                                <div class="stars cool text-start mb-2">
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>  
+                                </div>
+                                <p class="review-description text-start">
+                                  Dr. Apeksha Maheshwari is one of the top Dentist in Bhatar, Surat. She has done BDS. She has helped numerous patients in her 9 years of experience as a Dentist. You can consult Dr. Apeksha Maheshwari at Maheshwari Dental & Orthodontic Clinic in Bhatar, Surat. You can freely conversation in English, Hindi, Gujarati with Dr. Apeksha Maheshwari. Dr. Apeksha Maheshwari offers best medical services like Consultation, Basic Dental Care, Dental Ceramics, Dental Services, Preventive Dental Treatments and many more.
+                                </p>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                        <!-- Navigation Buttons -->
+                        <div class="swiper-button-prev custom-prev">
+                            <img src="{% static 'review-prev.png' %}" alt="Prev" class="img-fluid" />
+                        </div>
+                        <div class="swiper-button-next custom-next">
+                            <img src="{% static 'review-next.png' %}" alt="Next" class="img-fluid" />
+                        </div> 
+                    </div>
+                  </div>
+                  <div class="col-lg-4 position-relative order-lg-2 order-1">
+                    <img src="{% static 'review-img.webp' %}" class="img-fluid review-img" />
+                    <div class="review-vector">
+                        <img src="{% static 'review-vector.svg'%}" class="img-fluid" />
+                    </div>
+                  </div>
+            </div>
           </div>
 
-            <div class="dentist-review-section pt-50 position-relative" >
+          {% comment %} <div class="dentist-review-section pt-50 position-relative" >
             <div class="container">
               <h3 class="Loc-subtext cool">Patients Testimonials</h3>
                 <div class="row align-items-center justify-content-center">
-                <div class="col-lg-4">
-                  {% comment %} <img src="{% static 'review-img1.jpg' %}" class="img-fluid" / {% endcomment %}
-                  <img src="{% static 'a5.png' %}" class="img-fluid" />
-                </div>
+                  <div class="col-lg-4">
+                    <img src="{% static 'a5.png' %}" class="img-fluid" />
+                  </div>
                   <div class="col-lg-8 col-12 review-content-wrapper">
                     <div class="swiper-container">
                       <div class="swiper review-swiper">
@@ -188,7 +267,7 @@
                   </div>
                 </div>
             </div>
-          </div> 
+          </div>  {% endcomment %}
 
           <!--review card start-->
            {% comment %} <div class="dentist-review-section pt-50 position-relative" >
@@ -259,7 +338,7 @@
           </div>  {% endcomment %}
           <!--review card end-->
           <!--Location-->
-          <div class="aon-docLocation-wrap" id="aon-locations-area">
+          <div class="aon-docLocation-wrap mt-3 mt-sm-0" id="aon-locations-area">
             <div class="sf-doc-location">
               <div class="row">
                 <div class="col-lg-8">
@@ -271,7 +350,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 mt-3 mt-sm-0">
                   <h3 class="Loc-subtext cool">Photo Gallery</h3>
                   <div class="details_card">
                     <div class="aon-find-doctors-wrap">
