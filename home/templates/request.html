@@ -1,4 +1,20 @@
-{% extends 'base.html' %} {% load static %} {% block header %} {% endblock header %} {% block css %}
+{% extends 'base.html' %} {% load static %} {% block header %} 
+{% block seo %}
+<title>Consult with Dentist - Personalized Dental Advice in Minutes</title>
+<meta name="description" content="Book a one-on-one consultation with certified dentists at Advance Dental Export. Get expert guidance on your dental restoration and treatment. Schedule now!" />
+<link rel="canonical" href="https://ultimatesmiledesign.com/consult-with-dentist/" />
+<meta property="og:image" content="{% static 'feature-usd.webp' %}">
+<meta property="og:image:secure_url" content="{% static 'feature-usd.webp' %}">
+<meta property="og:image:type" content="image/webp" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="en_IN" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Consult with Dentist - Personalized Dental Advice in Minutes" />
+<meta property="og:description" content="Book a one-on-one consultation with certified dentists at Advance Dental Export. Get expert guidance on your dental restoration and treatment. Schedule now!" />
+<meta property="og:url" content="https://ultimatesmiledesign.com/consult-with-dentist/" />
+{% endblock seo %}
+{% endblock header %} {% block css %}
 <link
   href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
   rel="stylesheet"
@@ -19,8 +35,8 @@
 <div class="page-content" >
 <section class="breadcrumbs-section">
         <div class="container">
-            <div class="breadcrumbs-path"> <a href="/"> Home </a> <i class=" fa fa-solid fa-angles-right"></i>Consult with dentist </div>
-            <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool">Consult with dentist</h1>
+            <div class="breadcrumbs-path"> <a href="/"> Home&nbsp;</a> <i class=" fa fa-solid fa-angles-right"></i>&nbsp; Consult With Dentist </div>
+            <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool">Consult with Expert Dentist Today</h1>
         </div>
     </section>
   <section class="request-section d-flex justify-content-center align-items-center"  >
@@ -177,5 +193,13 @@ document.addEventListener('DOMContentLoaded', function(){
   });
   {% endfor %}
 </script>
-
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "url": "https://ultimatesmiledesign.com/consult-with-dentist/",
+  "name": "Consult with Dentist - Personalized Dental Advice in Minutes",
+  "description": "Book a one-on-one consultation with certified dentists at Advance Dental Export. Get expert guidance on your dental restoration and treatment. Schedule now!"
+}
+</script>
 {% endif %} {% endblock js %}

@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% load static %}{% block header %}
 {% block seo%}
 <title>Top Dentists in {{city_name}} - List of Professional Dentists Near You</title>
-<meta name="description" content=" Explore a comprehensive list of the best dentists in {{city_name}}. Find qualified dental professionals, clinics, and specialists near you for all your oral health needs." />
+<meta name="description" content="Explore a comprehensive list of the best dentists in {{city_name}}. Find qualified dental professionals, clinics, and specialists near you for all your oral health needs." />
 <link rel="canonical" href="https://ultimatesmiledesign.com/certified-dentists/city/{{city_name}}/" />
 <meta property="og:image" content="{% static 'feature-usd.webp'%}">
 <meta property="og:image:secure_url" content="{% static 'feature-usd.webp'%}">
@@ -119,5 +119,14 @@
     localStorage.setItem('selectedDoctor',JSON.stringify(doctordata));
     window.location.href="/consult-with-dentist/";
   }
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "url": "https://ultimatesmiledesign.com/certified-dentists/city/{{city_name}}/",
+  "name": "Top Dentists in {{city_name}} - List of Professional Dentists Near You",
+  "description": "Explore a comprehensive list of the best dentists in {{city_name}}. Find qualified dental professionals, clinics, and specialists near you for all your oral health needs."
+}
 </script>
 {% endblock js %}

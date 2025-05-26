@@ -337,7 +337,7 @@
                </p>
                <p class="mb-2 font-Barlow white fs-14 fw-500 text-start">{{ie.city}}</p>
                <button class="btn  btn-appointment bat w-100 my-2">
-                 <a href="/consult-with-dentist/" onclick="BookAppoinment('{{ie.id}}','{{ie.name}}','{{ie.city}}')">Book Appointment</a>
+                 <a href="/consult-with-dentist/" onclick="BookAppoinment('{{ie.name}}','{{ie.city}}')">Book Appointment</a>
                </button>
                <span class="cool font-Barlow fw-500 text-end position-relative mb-0">ADE Verified Dentist</span>
              </div>
@@ -999,10 +999,9 @@
   });
 </script> {% endcomment %}
 <script>
-  function BookAppoinment(id,name,city){
+  function BookAppoinment(name,city){
     //console.log("sdf",id,name,city)
     const doctordata = {
-      id:id,
       name:name,
       city:city
     }
@@ -1092,5 +1091,22 @@
   AOS.init({
     offset: 100,
   });
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Ultimate Smile Design | Custom Smile Design by Expert Dentists",
+  "url": "https://ultimatesmiledesign.com/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "url": "https://ultimatesmiledesign.com/",
+  "name": "Ultimate Smile Design | Custom Smile Design by Expert Dentists",
+  "description": "Experience custom smile designing with Ultimate Smile Design. Connect with expert dentists across cities and book your personalized smile makeover appointment."
+}
 </script>
 {% endblock js %}

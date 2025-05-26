@@ -125,4 +125,103 @@
   </section>
 </div>
 <!-- Content END-->
-{% endblock body %} {% block js %} {% endblock js %}
+{% endblock body %} {% block js %} 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "url": "{{blog.canonical}}",
+  "name": "{{blog.title}}",
+  "description": "{{blog.description}}"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "url":"{{blog.canonical}}",
+  "headline": "{{blog.title}}",
+  "description": "{{blog.description}}",
+  "image": [
+    "{{blog.blog_banner_sm.url}}"
+  ],
+  "author": {
+    "@type": "Organization",
+    "name": "Ultimate Smile Design",
+    "url": "https://ultimatesmiledesign.com/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ultimate Smile Design",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ultimatesmiledesign.com/static/usdlog.png"
+    }
+  },
+  "datePublished": "{{ blog.published|date:"Y-m-d" }}T10:00:00+05:30",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{blog.canonical}}"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ultimatesmiledesign.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blogs",
+      "item": "https://ultimatesmiledesign.com/blogs/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "{{blog.title}}",
+      "item": "{{blog.canonical}}"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "{{blog.title}}",
+  "description": "{{blog.description}}",
+  "url":"{{blog.canonical}}",
+  "image": "{{blog.blog_banner_sm.url}}",
+  "author": {
+    "@type": "Organization",
+    "name": "Ultimate Smile Design",
+    "url": "https://ultimatesmiledesign.com/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ultimatesmiledesign.com/static/usdlog.png"
+    }
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ultimate Smile Design",
+    "url" : "https://ultimatesmiledesign.com/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ultimatesmiledesign.com/static/usdlog.png"
+    }
+  },
+  "datePublished": "{{ blog.published|date:"Y-m-d" }}T10:00:00+05:30",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{blog.canonical}}"
+  }
+}
+</script>
+{% endblock js %}

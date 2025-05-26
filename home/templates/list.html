@@ -136,7 +136,7 @@
               <div class="card-body text-end">
                 {% comment %} <h2 class="text-start">{{ie.name}}</h2>
                 <p class="text-start mb-0">{{ie.city}}</p> {% endcomment %}
-                <button class="btn bookAppoinment-btn mt-3 w-100 bat" onclick="BookAppoinment({{ie.id}},'{{ie.name}}','{{ie.city}}')">
+                <button class="btn bookAppoinment-btn mt-3 w-100 bat" onclick="BookAppoinment('{{ie.name}}','{{ie.city}}')">
                   Book Appointment
                   {% comment %} <a href="#">Book Appointment</a> {% endcomment %}
                   {% comment %} <a href="/account/dentist/" >Book Appointment</a> {% endcomment %}
@@ -246,10 +246,9 @@
 	  })
 </script>
 <script>
-  function BookAppoinment(id,name,city){
+  function BookAppoinment(name,city){
     //console.log("sdf",id,name,city)
     const doctordata = {
-      id:id,
       name:name,
       city:city
     }

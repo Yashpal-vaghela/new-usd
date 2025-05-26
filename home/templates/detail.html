@@ -82,9 +82,7 @@
             
             <img src="{% static 'noimage-team.webp' %}" alt="Image" />
             {% endif %}
-            <div class="bat w-100 appoint_btn" onclick="BookAppoinment('{{data.id}}','{{data.name}}','{{data.city}}')">Book Appointment</div>
-
-           
+            <div class="bat w-100 appoint_btn" onclick="BookAppoinment('{{data.name}}','{{data.city}}')">Book Appointment</div>
           </div>
 
           <!-- doctor detail card -->
@@ -311,10 +309,9 @@
 {% endblock body %} 
 {% block js %}
 <script>
-  function BookAppoinment(id,name,city){
+  function BookAppoinment(name,city){
     //console.log("sdf",id,name,city)
     const doctordata = {
-      id:id,
       name:name,
       city:city
     }
@@ -344,5 +341,67 @@
       },
     })
   })
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Dentist",
+  "name": "{{data.name}} - Dentist in {{data.city}}",
+  "description": "Explore {{data.name}}'s profile, a smile design expert and best dentist in {{data.city}}. {{data.name}} provides comprehensive dental and cosmetic smile solutions.",
+  {% if data.profile.url%}
+  "image": [
+    "{{data.profile.url}}"
+  ],
+  {% endif %}
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "{{data.address}}",
+    "addressLocality": "{{data.city}}",
+    "addressRegion": "{{data.state}}",
+    "addressCountry": "IN"
+  },
+  "url": "https://ultimatesmiledesign.com/certified-dentists/{{data.slug}}/"
+}
+
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "{{data.name}} - Dentist in {{data.city}}",
+  "description": "Explore {{data.name}}'s profile, a smile design expert and best dentist in {{data.city}}. {{data.name}} provides comprehensive dental and cosmetic smile solutions.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "{{data.address}}",
+    "addressLocality": "{{data.city}}",
+    "addressRegion": "{{data.state}}",
+    "addressCountry": "IN"
+  },
+  "url": "https://ultimatesmiledesign.com/certified-dentists/{{data.slug}}/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "mainEntity": {
+    "@type": "Dentist",
+    "name": "{{data.name}} - {{data.city}}",
+    "description": "Explore {{data.name}}'s profile, a smile design expert and best dentist in {{data.city}}. {{data.name}} provides comprehensive dental and cosmetic smile solutions.",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "{{data.address}}",
+      "addressLocality": "{{data.city}}",
+      "addressRegion": "{{data.state}}",
+      "addressCountry": "IN"
+    },
+    "url": "https://ultimatesmiledesign.com/certified-dentists/{{data.slug}}/",
+    "medicalSpecialty": [
+      {% for specialization in data.specializations.all %}
+        "{{ specialization }}"{% if not forloop.last %},{% endif %}
+      {% endfor %}
+    ]
+  }
+}
 </script>
 {% endblock %}
