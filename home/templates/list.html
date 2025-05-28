@@ -209,7 +209,7 @@
       }})
       .then(response => response.json())
       .then(data => {
-        console.log("data",data)
+       // console.log("data",data)
         const suggestionBox = document.getElementById('suggestions');
         suggestionBox.innerHTML = '';
         if(data.results.length == 0){
@@ -342,9 +342,53 @@
     }
    
     document.addEventListener("DOMContentLoaded",function() {
-      console.log("location")
+      // console.log("location")
        getLocation();
     })
     
+</script>
+<script type="application/ld+json">
+
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Find Best Dentist Near You in Your City",
+  "provider": {
+    "@type": "Organization",
+    "name": "Ultimate Smile Design",
+    "url": "https://ultimatesmiledesign.com/"
+  },
+  "areaServed": {
+    "@type": "Place",
+    "name": "India",
+    "address": {
+      "@type": "PostalAddress"
+      "addressCountry": "India"
+    }
+  },
+  "description": "Searching for the best dentists near you? Discover top dentists in your city offering exceptional dental services, patient-focused care, and flexible scheduling near your location.",
+  "url": "https://ultimatesmiledesign.com/certified-dentists/"
+}
+
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ultimatesmiledesign.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Certified Dentists",
+      "item": "https://ultimatesmiledesign.com/certified-dentists/"
+    }
+  ]
+}
 </script>
 {% endblock js %}

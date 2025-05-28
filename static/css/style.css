@@ -20220,6 +20220,7 @@ input[placeholder],
   /* background-color: #000; */
   background-color: transparent;
   border-radius: 25px;
+  border: 0px;
 }
 .review-title{
   font-size:24px;

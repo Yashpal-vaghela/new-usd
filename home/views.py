@@ -350,9 +350,11 @@ def all_usd(request):
 def find_dentist_d(request, pk):
     data = Dentist.objects.get(slug=pk)
     gallery = Gallery.objects.all().order_by("?")[:10]
+    reviews = data.reviews.all().order_by('-created_at')
     context = {
         'data':data,
         'gallery':gallery,
+        'reviews':reviews,
     }
     return render(request, 'detail.html', context)
 
