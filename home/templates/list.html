@@ -39,6 +39,13 @@
       {% comment %} <img src="{% static 'Group 291.svg' %}" class="find-dentist-img img-fluid" /> {% endcomment %}
     </div>
   </section>
+  <div id="location-fallback-message" class="text-center py-5 text-white d-none">
+      <span class="fw-500 fs-4 cool mb-2">Missing One Step to Your Ultimate Smile</span>
+      <p class="mx-auto text-center" style="max-width: 700px;">We can't access your location. Share your location access to find a certified Ultimate Smile Designer dentists near you and transform your ordinary smile into ultimate smile.</p>
+      <button onclick="requestLocationAccess()" class="btn mt-3 bat text-black">
+        Allow Location Access
+    </button>
+  </div>
   <section class="searchbar-wrap">
     <div class="container pt-4">
       {% comment %} <div class="searchInfo-content-wrapper mb-5">
@@ -259,22 +266,22 @@
 <script>
   var x = document.getElementById("demo");
 
-    function getLocation() {
+    function getLocation(manual = false) {
         if (navigator.geolocation) {
-          console.log("navigator",navigator,navigator.geolocation)
-            navigator.geolocation.getCurrentPosition(showPosition);
+          //console.log("navigator",navigator,navigator.geolocation)
+            navigator.geolocation.getCurrentPosition((position) => showPosition(position, manual), handleLocationError);
         } else {
-            x.innerHTML = "Geolocation is not supported by this browser.";
+            showFallbackMessage();
         }
     }
-     function showPosition(position) {
+     function showPosition(position, manual = false) {
         x.innerHTML =
             "Latitude: " + position.coords.latitude + 
             "<br>Longitude: " + position.coords.longitude;
          var a = JSON.parse(localStorage.getItem('permission_access')); 
-         console.log("a",a)
+         //console.log("a",a)
         if (sessionStorage.getItem("latitude") !== null && a === true) {
-            console.log("Session data exists!");
+            //console.log("Session data exists!");
         } else {
             // Store latitude and longitude in sessionStorage
             sessionStorage.setItem("latitude", position.coords.latitude);
@@ -294,7 +301,7 @@
                         csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(), // CSRF token is required for POST requests
                     },
                     success: function (response) {
-                        console.log("Data sent to server:", response);
+                        //console.log("Data sent to server:", response);
 
                         // Check if the server returned city and state
                         if (response.status === "success") {
@@ -309,9 +316,7 @@
                             localStorage.setItem("city", city);
                             localStorage.setItem("state", state);
 
-                            console.log("City and State saved:", { city, state });
-                        } else {
-                            console.error("Failed to retrieve city and state.");
+                            //console.log("City and State saved:", { city, state });
                         }
                     },
                     error: function (error) {
@@ -319,33 +324,66 @@
                     },
                 });
             }
-
-            // Display confirmation dialog after storing location
+            if (manual){
+              localStorage.setItem('permission_access', JSON.stringify(true));
+              location.reload();
+            } else{
+              // Display confirmation dialog after storing location
             setTimeout(() => {
                 Swal.fire({
-                    title: "Customize Search Based On Location",
-                    showDenyButton: true,
+                    title: "Allow Your Location for Nearest Smile Designers.",
                     showCancelButton: false,
-                    confirmButtonText: "Yes",
-                    denyButtonText: "No",
+                    confirmButtonText: "Allow",
+                    showCloseButton: true,
                     customClass: {
-                        popup: "custom-swal-popup"                    },
+                        popup: "custom-swal-popup" },
                 }).then((result) => {
                     if (result.isConfirmed) {
                       localStorage.setItem('permission_access',JSON.parse(true))
-                    } else if (result.isDenied) {
-                        Swal.fire("Location not updated", "", "info");
+                      location.reload();
+                    } else if(result.dismiss === Swal.DismissReason.close){
+                      console.log("User clicked close. Location access denied.")
+                      const message = document.getElementById("location-fallback-message");
+                      const form = document.querySelector(".searchbar-wrap");
+                      const dentistSection = document.querySelector(".dentist-section");
+
+                      if (message) message.classList.remove("d-none");
+                      if (form) form.classList.add("d-none");
+                      if (dentistSection) dentistSection.classList.add("d-none");
                     }
                 });
             }, 1000);
+            } 
         }
     }
-   
+    // Fallback if user denies location
+    function handleLocationError(error) {
+      console.warn("Location access denied or unavailable.");
+      showFallbackMessage();
+    }
+
+    function showFallbackMessage() {
+      const message = document.getElementById("location-fallback-message");
+      const form = document.querySelector(".searchbar-wrap");
+      const dentistSection = document.querySelector(".dentist-section");
+
+      if (message) message.classList.remove("d-none");
+      if (form) form.classList.add("d-none");
+      if (dentistSection) dentistSection.classList.add("d-none");
+    }
     document.addEventListener("DOMContentLoaded",function() {
       // console.log("location")
        getLocation();
     })
     
+</script>
+<script>
+  function requestLocationAccess() {
+    const message = document.getElementById("location-fallback-message");
+    if (message) message.classList.add("d-none");
+
+    getLocation(true);
+  }
 </script>
 <script type="application/ld+json">
 
