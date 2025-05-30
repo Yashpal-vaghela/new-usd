@@ -185,8 +185,32 @@ def search_all_usd(request, city_name=None):
     if query:
         sorted_doctors = data1.filter(name__icontains=query)
 
-    if not data1.exists():
-        search_message = "No Ultimate Designers Found Based On Your Query."
+    if not data1.exists() and city and city.latitude and city.longitude:
+    # Fallback to nearest city with dentists
+        user_location = (city.latitude, city.longitude)
+
+        # Get all other cities with known coordinates and at least 1 dentist
+        nearby_cities = City.objects.exclude(id=city.id).exclude(latitude__isnull=True, longitude__isnull=True)
+
+        # List of tuples: (distance, city)
+        nearby_city_distances = []
+
+        for c in nearby_cities:
+            if Dentist.objects.filter(city=c).exists():
+                dist = geodesic(user_location, (c.latitude, c.longitude)).km
+                nearby_city_distances.append((dist, c))
+
+        # Sort by distance
+        nearby_city_distances.sort(key=lambda x: x[0])
+
+        if nearby_city_distances:
+            nearest_city = nearby_city_distances[0][1]
+            city = nearest_city  # update current city context
+            city_name = nearest_city.city
+            data1 = Dentist.objects.filter(city=nearest_city)
+            search_message = f"No Ultimate Designers Found in {user_location[0]}, {user_location[1]}. Showing nearest city: {nearest_city.city}, {nearest_city.state}."
+        else:
+            search_message = "No Ultimate Designers Found Nearby."
 
     paginator = Paginator(sorted_doctors, 12)
     page = request.GET.get('page', 1)

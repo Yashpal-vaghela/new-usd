@@ -122,6 +122,15 @@
 
   <section class="dentist-section">
     <div class="container">
+      {% if city != "all" %}
+      <div class="row mb-4">
+        <div class="col-12">
+          <p class="text-white text-center fs-5">
+            Top-rated smile designer dentists in <span class="cool">{{ city }}</span>, personally verified for your perfect smile—scroll, choose, and book appointment with confidence.
+          </p>
+        </div>
+      </div>
+      {% endif %}
       {% if data %}
       <div class="row mt-4 mt-md-4 mt-sm-5">
         {% for ie in data %}

@@ -1,6 +1,9 @@
 from django.db import models
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import User
+from geopy.geocoders import Nominatim
+from geopy.exc import GeocoderTimedOut
+
 # Create your models here.
 class Location(models.Model):
     state = models.CharField(max_length=300)
@@ -14,11 +17,27 @@ class Location(models.Model):
 class City(models.Model):
     state = models.ForeignKey(Location, on_delete=models.CASCADE)    
     city = models.CharField(max_length=300)
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
+
     def __str__(self):
         return str(self.city)
 
     def countdr(self):
         return Dentist.objects.filter(city=self.id).count()
+    
+    def save(self, *args, **kwargs):
+        if not self.latitude or not self.longitude:
+            try:
+                geolocator = Nominatim(user_agent="account")
+                location = geolocator.geocode(f"{self.city}, {self.state}, India")
+                if location:
+                    self.latitude = location.latitude
+                    self.longitude = location.longitude
+            except GeocoderTimedOut:
+                pass  # Optionally retry or handle timeout
+        super().save(*args, **kwargs)
+
 
 class Specializations(models.Model):
     name = models.CharField(max_length=300)
