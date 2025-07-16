@@ -1,11 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /account/dentist/*
-Disallow: /gallery/*
-Disallow: /contact/*
-Disallow: /all-usd/*
-Disallow: /blogs/*?*
-Disallow: /cartified-dentists/city/*?
-Disallow: /cartified-dentists/*?
-Disallow: /find-dentist/*
+Disallow: thank-you/
 Sitemap: https://ultimatesmiledesign.com/sitemap.xml

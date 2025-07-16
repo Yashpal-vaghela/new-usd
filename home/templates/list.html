@@ -42,7 +42,7 @@
   <div id="location-fallback-message" class="text-center py-5 text-white d-none">
       <span class="fw-500 fs-4 cool mb-2">Missing One Step to Your Ultimate Smile</span>
       <p class="mx-auto text-center" style="max-width: 700px;">We can't access your location. Share your location access to find a certified Ultimate Smile Designer dentists near you and transform your ordinary smile into ultimate smile.</p>
-      <button onclick="requestLocationAccess()" class="btn mt-3 bat text-black">
+      <button type="button" onclick="requestLocationAccess()" class="btn mt-3 bat text-black">
         Allow Location Access
     </button>
   </div>
@@ -351,7 +351,7 @@
                       localStorage.setItem('permission_access',JSON.parse(true))
                       location.reload();
                     } else if(result.dismiss === Swal.DismissReason.close){
-                      console.log("User clicked close. Location access denied.")
+                      //console.log("User clicked close. Location access denied.")
                       const message = document.getElementById("location-fallback-message");
                       const form = document.querySelector(".searchbar-wrap");
                       const dentistSection = document.querySelector(".dentist-section");
@@ -392,6 +392,7 @@
     if (message) message.classList.add("d-none");
 
     getLocation(true);
+    location.reload();
   }
 </script>
 <script type="application/ld+json">

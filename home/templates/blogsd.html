@@ -24,8 +24,14 @@
 <div class="single-blog-wrapper">
   <section class="breadcrumbs-section">
     <div class="container">
-      <div class="breadcrumbs-path"> <a href="{% url 'home:home' %}"> Home </a> &nbsp; <i class=" fa fa-solid fa-angles-right"></i> &nbsp; <a href="{% url 'home:blogs' %}"> Blogs </a> </div>
-      <h1 class=" breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool fs-4">{{blog.breadcrumb}}</h1>
+      <div class="breadcrumbs-path"> 
+        <a href="{% url 'home:home' %}"> Home </a> 
+        &nbsp; <i class=" fa fa-solid fa-angles-right"></i> 
+        &nbsp; <a href="{% url 'home:blogs' %}"> Blogs </a> 
+        &nbsp; <i class=" fa fa-solid fa-angles-right"></i>
+        &nbsp; <a href="{% url 'home:blogs' %}">{{blog.h1}}</a>
+      </div>
+      <h1 class=" breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool fs-4">{{blog.h1}}</h1>
     </div>
   </section>
   <section class="single-blog-content py-5">
@@ -74,7 +80,7 @@
                   </h3>
                   <div class="d-flex">
                     <img src="{% static 'calender.svg' %}" class="pe-2 mb-0 img-fluid" style="width:25px" alt/>
-                    <span>{{ ie.published|date:"b. d, Y" }}</span>
+                    <span>{{ ie.published|date:"M d, Y" }}</span>
                   </div>
                 </div>
               {% endfor %}

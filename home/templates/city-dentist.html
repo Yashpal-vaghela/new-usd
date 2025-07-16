@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% load static %}{% block header %}
 {% block seo%}
-<title>Top Dentists in {{city_name}} - List of Professional Dentists Near You</title>
-<meta name="description" content="Explore a comprehensive list of the best dentists in {{city_name}}. Find qualified dental professionals, clinics, and specialists near you for all your oral health needs." />
+<title>Top Dentists in {{city_name | capfirst}} - List of Professional Dentists Near You</title>
+<meta name="description" content="Explore a comprehensive list of the best dentists in {{city_name | capfirst}}. Find qualified dental professionals, clinics, and specialists near you for all your oral health needs." />
 <link rel="canonical" href="https://ultimatesmiledesign.com/certified-dentists/city/{{city_name}}/" />
 <meta property="og:image" content="{% static 'feature-usd.webp'%}">
 <meta property="og:image:secure_url" content="{% static 'feature-usd.webp'%}">
@@ -10,12 +10,12 @@
 <meta property="og:image:height" content="630" />
 <meta property="og:locale" content="en_IN" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Top Dentists in {{city_name}} - List of Professional Dentists Near You" />
-<meta property="og:description" content=" Explore a comprehensive list of the best dentists in {{city_name}}. Find qualified dental professionals, clinics, and specialists near you for all your oral health needs." />
+<meta property="og:title" content="Top Dentists in {{city_name | capfirst}} - List of Professional Dentists Near You" />
+<meta property="og:description" content=" Explore a comprehensive list of the best dentists in {{city_name | capfirst}}. Find qualified dental professionals, clinics, and specialists near you for all your oral health needs." />
 <meta property="og:url" content="https://ultimatesmiledesign.com/certified-dentists/city/{{city_name}}/" />
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Top Dentists in {{city_name}} - List of Professional Dentists Near You">
-<meta name="twitter:description" content=" Explore a comprehensive list of the best dentists in {{city_name}}. Find qualified dental professionals, clinics, and specialists near you for all your oral health needs.">
+<meta name="twitter:title" content="Top Dentists in {{city_name | capfirst}} - List of Professional Dentists Near You">
+<meta name="twitter:description" content=" Explore a comprehensive list of the best dentists in {{city_name | capfirst}}. Find qualified dental professionals, clinics, and specialists near you for all your oral health needs.">
 {% endblock seo%}
 {% endblock header %} {% block css %}
 
