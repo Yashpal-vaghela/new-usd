@@ -392,6 +392,34 @@
       </div>
     </div>
   </section>
+  
+  <section class="usd-studio-section">
+    <div class="container">
+        <div class="usd-title-wrapper">
+          <div class="usd-title-img">
+            <img  src="{% static 'title.png' %}" class="img-fluid" />
+          </div>
+          <img src="{% static 'usd-title-img1.png' %}" class="img-fluid usd-left-title-img" />
+          <img src="{% static 'usd-title-img2.png' %}" class="img-fluid usd-right-title-img" />
+        </div>
+        <div class="usd-floating-images position-relative">
+          <a href="#">
+            
+          </a>
+            {% comment %} <img src="{% static 'home-gallery/home-gallery1.webp' %}" alt="Before & After">
+            <img src="{% static 'home-gallery/home-gallery10.webp' %}" alt="Before & After">
+            <img src="{% static 'home-gallery/home-gallery6.webp' %}" alt="Before & After">
+            <img src="{% static 'home-gallery/home-gallery11.webp' %}" alt="Before & After">
+            <img src="{% static 'home-gallery/home-gallery4.webp' %}" alt="Before & After">
+            <img src="{% static 'home-gallery/home-gallery5.webp' %}" alt="Before & After">
+            <img src="{% static 'home-gallery/home-gallery7.webp' %}" alt="Before & After">
+            <img src="{% static 'home-gallery/home-gallery12.webp' %}" alt="Before & After">
+            <img src="{% static 'home-gallery/home-gallery9.webp' %}" alt="Before & Aft0er">
+            <img src="{% static 'home-gallery/home-gallery8.webp' %}" alt="Before & After">
+            <img src="{% static 'home-gallery/home-gallery3.webp' %}" alt="Before & After"> {% endcomment %}
+        </div>
+    </div>
+  </section>
 
   <section class="schedule-data-section position-relative pt-50" >
     <img src="{% static 'vector31.svg' %}" class="vector3-img img-fluid" />
@@ -434,7 +462,7 @@
                   />
                 </div>
                 <p class="mb-0 cool fs-4"><b> <span class="counter">432 </span>+ </b></p>
-                <p class="text-center mb-0">Dentists</p>
+                <p class="text-center mb-0 pb-2">Dentists</p>
               </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-6 col-6 px-xl-3 px-lg-2 px-md-2" data-aos="fade-up" data-aos-duration="1500">
@@ -444,12 +472,12 @@
                 >
                   <img
                     src="{% static 'smile-makeover.svg'%}"
-                    class="mt-4 mb-3 img-fluid"
+                    class="mt-4 mb-3 pt-1 img-fluid"
                     alt="smile-makeover"
                   />
                 </div>
                 <p class="mb-0 text-center cool fs-4 fw-600"> <span class="counter">12 </span>K+</p>
-                <p class="text-center mb-0">Smile Makeover</p>
+                <p class="text-center mb-0 pb-2">Smile Makeover</p>
               </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-6 col-6 px-xl-3 px-lg-2 px-md-2" data-aos="fade-up" data-aos-duration="1500">
@@ -464,7 +492,7 @@
                   />
                 </div>
                 <p class="mb-0 text-center cool fs-4 fw-600"> <span class="counter">25</span>K+</p>
-                <p class="text-center mb-0">Cities</p>
+                <p class="text-center mb-0 pb-2">Cities</p>
               </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-6 col-6 px-xl-3 px-lg-2 px-md-2" data-aos="fade-up" data-aos-duration="1500">
@@ -479,7 +507,7 @@
                   />
                 </div>
                 <p class="mb-0 text-center cool fs-4 fw-600"> <span class="counter">15</span>K+</p>
-                <p class="text-center mb-0">Experience Years</p>
+                <p class="text-center mb-0 pb-2">Experience Years</p>
               </div>
             </div>
             <div class="col-lg-4 col-md-5 col-sm-6 col-6 mt-sm-3 mt-0 px-md-3 callus-btn-wrapper" data-aos="zoom-in" data-aos-duration="1500">
@@ -611,7 +639,7 @@
               <img src="{% static 'home-gallery/home-gallery8.webp' %}" alt="Before & After">
               <img src="{% static 'home-gallery/home-gallery3.webp' %}" alt="Before & After">
           </div>
-          <div class="d-flex justify-content-center" style="margin-top:100px;margin-bottom:70px" data-aos="zoom-in" data-aos-duration="1500">
+          <div class="d-flex justify-content-center" style="margin-top:100px;margin-bottom:40px" data-aos="zoom-in" data-aos-duration="1500">
             <img src="{% static 'vector4.svg' %}" class="img-fluid" style="width:67%" />
           </div>
           <div class="gallery-text text-center">
@@ -629,9 +657,9 @@
   <section class="new-testimonial-section pt-50 position-relative" style="background-color:#000">
     <img src="{% static 'vector5.svg' %}" class="testimonial-vector-img img-fluid" />
     <div class="container pt-sm-4 pb-sm-5 pt-3 pb-3 overflow-hidden">
-      <p class="text-center position-relative text-header mb-0 cool">TESTIMONIALS</p>
-      <h2 class="text-header-subtitle">Stories Behind the Smiles</h2>
-      <p class="mb-0 fw-500 testimonial_subcontent">
+      <p class="text-center position-relative text-header mb-0 cool d-table m-auto">TESTIMONIALS</p>
+      <h2 class="text-header-subtitle text-center">Stories Behind the Smiles</h2>
+      <p class="mb-0 fw-500 testimonial_subcontent text-center text-center d-flex m-auto">
         Discover the stories of transformation and joy from our patients who have experienced remarkable smile makeovers with our Ultimate Smile Designers.
       </p>
       <div class="swiper-container mt-5">
@@ -639,119 +667,28 @@
           <div class="swiper-wrapper">
             {% for ie in review %}
               <div class="swiper-slide testimonial-slide">
-                <img src="{% static 'quote2.png' %}" class="quote2-img img-fluid" />
-                <img src="{% static 'avtar-img.png' %}" class="img-fluid" />
-                <div class="stars">
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
+                <div class="card">
+                  <div class="card-header bg-transparent border-0 p-0">
+                      <p class="reviewName">{{ie.doctor_name}}</p>
+                  </div>
+                  <div class="card-body border-0 p-0">
+                      <p class="reviewContent">{{ie.review}}</p>
+                  </div>
+                  <div class="card-footer bg-transparent border-0 p-0">
+                      <div class="stars">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                      </div>
+                  </div>
                 </div>
-                <div style="padding-bottom:0px">
-                <p class="reviewContent">{{ie.review}}</p>
-                <p class="reviewName">{{ie.doctor_name}}</p>
-                </div>
-                <img src="{% static 'quote1.png' %}" class="quote1-img img-fluid" />
               </div>
             {% endfor %}
-            {% comment %} <div class="swiper-slide  testimonial-slide">
-              <img src="{% static 'quote2.png' %}" class="quote2-img img-fluid" />
-              <img src="{% static 'avtar-img.png' %}" class="img-fluid" />
-               <div class="stars">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-              </div>
-              <div style="padding-bottom:0px">
-              <p class="reviewContent">I never imagined my smile could look this great. The entire
-                process was smooth and tailored to my needs. I'm so grateful to
-                the team and my smile designer!</p>
-              <h2 class="reviewName">Jay Patel</h2>
-              </div>
-              <img src="{% static 'quote1.png' %}" class="quote1-img img-fluid" />
-            </div>
-              <div class="swiper-slide testimonial-slide">
-              <img src="{% static 'quote2.png' %}" class="quote2-img img-fluid" />
-              <img src="{% static 'avtar-img.png' %}" class="img-fluid" />
-               <div class="stars">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-              </div>
-              <div style="padding-bottom:0px">
-              <p class="reviewContent">I never imagined my smile could look this great. The entire
-                process was smooth and tailored to my needs. I'm so grateful to
-                the team and my smile designer!</p>
-              <h2 class="reviewName">Jay Patel</h2>
-              </div>
-              <img src="{% static 'quote1.png' %}" class="quote1-img img-fluid" />
-            </div>
-
-            <div class="swiper-slide testimonial-slide">
-              <img src="{% static 'quote2.png' %}" class="quote2-img img-fluid" />
-              <img src="{% static 'avtar-img.png' %}" class="img-fluid" />
-               <div class="stars">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-              </div>
-              <div style="padding-bottom:0px">
-              <p class="reviewContent">I never imagined my smile could look this great. The entire
-                process was smooth and tailored to my needs. I'm so grateful to
-                the team and my smile designer!</p>
-              <h2 class="reviewName">Jay Patel</h2>
-              </div>
-              <img src="{% static 'quote1.png' %}" class="quote1-img img-fluid" />
-            </div>
-
-           <div class="swiper-slide testimonial-slide">
-              <img src="{% static 'quote2.png' %}" class="quote2-img img-fluid" />
-              <img src="{% static 'avtar-img.png' %}" class="img-fluid" />
-               <div class="stars">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-              </div>
-              <div style="padding-bottom:0px">
-              <p class="reviewContent">I never imagined my smile could look this great. The entire
-                process was smooth and tailored to my needs. I'm so grateful to
-                the team and my smile designer!</p>
-              <h2 class="reviewName">Jay Patel</h2>
-              </div>
-              <img src="{% static 'quote1.png' %}" class="quote1-img img-fluid" />
-            </div>
-
-             <div class="swiper-slide testimonial-slide">
-              <img src="{% static 'quote2.png' %}" class="quote2-img img-fluid" />
-              <img src="{% static 'avtar-img.png' %}" class="img-fluid" />
-               <div class="stars">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-              </div>
-              <div style="padding-bottom:0px">
-              <p class="reviewContent">I never imagined my smile could look this great. The entire
-                process was smooth and tailored to my needs. I'm so grateful to
-                the team and my smile designer!</p>
-              <h2 class="reviewName">Jay Patel</h2>
-              </div>
-              <img src="{% static 'quote1.png' %}" class="quote1-img img-fluid" />
-            </div>
-          </div> {% endcomment %}
+          </div>
         </div>
       </div>
-    </div>
   </section>
 
   {% comment %} <section class="testimonials-section beforeAndAfter_Section1">
@@ -1058,14 +995,19 @@
 </script>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
+    const totalslides = document.querySelectorAll(".myswiper .swiper-slide").length;
+    const enableLoop = totalslides > 2;
+
+    console.log("totalslides", totalslides, "loop:", enableLoop);
+
     const mySwiper = new Swiper(".myswiper", {
       loop: true,
       centeredSlides: true,
-      autoplay: true,
-      slidesPerView: 'auto', // Adjusts based on container size
+      autoplay: false,
+      slidesPerView: 'auto',
       spaceBetween: 40,
-      speed: 800, // Smooth transition
-      effect: "slide", // Ensure smooth sliding
+      speed: 800, 
+      effect: "slide", 
       grabCursor: true,
       observer: true,
       observeParents: true,
@@ -1079,8 +1021,8 @@
           spaceBetween: 40,
         },
         1024: {
-          slidesPerView: 3,
-           spaceBetween: 50,
+          slidesPerView:3,
+          spaceBetween: 40,
         },
       },
     });

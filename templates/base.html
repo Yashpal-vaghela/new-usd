@@ -129,10 +129,70 @@
         {% block body %}
             
         {% endblock body %}
-            
+        {% comment %} {% include 'footer.html' %} {% endcomment %}
 
         <!-- FOOTER START -->
-        <footer class="site-footer footer-light" >
+        <footer class="new-footer">
+            <div class="container">
+                <div class="container">
+                <div class="row footer-links mb-3">
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-4 footer-link">
+                        <a href="https://advancedentalexport.com/about-us/" target="_blank">About ADE <img src="{% static 'footer-link-img.svg'%}" class="px-1 px-sm-2 img-fluid"></img></a>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-4 footer-link">
+                        <a href="{% url 'home:search_all_usd' %}">All Dentists <img src="{% static 'footer-link-img.svg'%}" class="px-2 img-fluid"></img></a>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-4 footer-link">
+                        <a href="https://advancedentalexport.com/ad-implant/" target="_blank">ADE Implant <img src="{% static 'footer-link-img.svg'%}" class="px-2 img-fluid"></img></a>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-5 col-5 footer-link">
+                        <a href="https://advancedentalexport.com/zirconia-crown/" target="_blank">Advance Zirconia <img src="{% static 'footer-link-img.svg'%}" class="px-2 img-fluid"></img></a>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-7 footer-link">
+                        <a href="https://advancedentalexport.com/aesthetic-maxima/" target="_blank">Aesthetic Maxima-Emax <img src="{% static 'footer-link-img.svg'%}" class="px-2 img-fluid"></img></a>
+                    </div>
+                </div>
+                    {% comment %} <ul class="footer-links mb-3">
+                        <li class="footer-link"><a href="#">About ADE <img src="{% static 'footer-link-img.svg'%}" class="px-2 img-fluid"></img></a></li>
+                        <li class="footer-link"><a href="#">All Dentists <img src="{% static 'footer-link-img.svg'%}" class="px-2 img-fluid"></img></a></li>
+                        <li class="footer-link"><a href="#">ADE Implant <img src="{% static 'footer-link-img.svg'%}" class="px-2 img-fluid"></img></a></li>
+                        <li class="footer-link"><a href="#">Advance Zirconia <img src="{% static 'footer-link-img.svg'%}" class="px-2 img-fluid"></img></a></li>
+                        <li class="footer-link"><a href="#">Aesthetic Maxima-Emax <img src="{% static 'footer-link-img.svg'%}" class="px-2 img-fluid"></img></a></li>
+                    </ul> {% endcomment %}
+                </div>
+            
+                <div class="new-footer-content">
+                    <div class="overlay">
+                        <div class="container">
+                            <h2 class="new-footer-letter-title mt-2 mt-sm-0 mb-sm-3 mb-lg-4 mb-2">Subscribe Our Newsletter</h2>
+                            <form>
+                                <div class="new-footer-letter-wrapper">  
+                                    <input type="text" class="form-control" placeholder="Enter Your Email"></input>
+                                    <button type="submit" class="sf-sb-btn-footer bat">Submit</button>
+                                </div>
+                            </form>
+                            <div class="new-footer-logo">
+                                <img src="{% static 'usdlog.png'%}" class="img-fluid" alt="usdlogo"></img>
+                            </div>
+                            <div class="new-footer-social-links container pb-2">
+                                <ul class="footer-links">
+                                    <li class="footer-link"><a href="https://www.instagram.com/ultimatesmiledesigningbyade?igsh=MWVuOThwb2dqeHlpMQ==">Instagram <img src="{% static 'footer-link-img.svg'%}" class="px-2 img-fluid"></img></a></li>
+                                    <li class="footer-link"><a href="https://www.facebook.com/profile.php?id=61560203902716&mibextid=ZbWKwL">Facebook <img src="{% static 'footer-link-img.svg'%}" class="px-2 img-fluid"></img></a></li>
+                                    <li class="footer-link"><a href="https://www.linkedin.com/company/ultimate-smile-designing-by-ade">Linked <img src="{% static 'footer-link-img.svg'%}" class="px-2 img-fluid"></img></a></li>
+                                </ul>
+                            </div>
+                    
+                        </div>
+                        <div class="new-footer-bottom">
+                            <h3 class="new-footer-copyright mb-0">Copyright 2025 | Advance Dental Export. All Rights Resevred</h3>
+                        </div>
+                
+                    </div>
+                </div>
+            </div>
+        </footer>
+        
+        {% comment %} <footer class="site-footer footer-light" >
             <!-- FOOTER NEWSLETTER START -->  
             <div class="footer-top-newsletter">
                 <div class="container">
@@ -193,13 +253,9 @@
                             <div class="sf-site-link sf-widget-categories">
                                 <p class="aon-f-title cool">Products Link</p>
                                 <ul class="foo-links">
-                                    
                                     <li><a target="_blank" href="https://advancedentalexport.com/ad-abutments/" class="hover-link">AD-Implant</a></li>
                                     <li><a target="_blank" href="https://advancedentalexport.com/zirconia-crown/" class="hover-link">Advance Zirconia</a></li>
                                     <li><a target="_blank" href="https://advancedentalexport.com/aesthetic-maxima/" class="hover-link">Aesthetic Maxima-Emax</a></li>
-                                    {% comment %} <li><a target="_blank" href="https://advancedentalexport.com/digital-crown-bridge/" class="hover-link">Digital Crowns & Bridges</a></li> {% endcomment %}
-                                    
-                                    {% comment %} <li><a target="_blank" href="https://ultimatesmiledesign.com/" class="hover-link">Back to Home</a></li> {% endcomment %}
                                 </ul>
                             </div>
                         </div>
@@ -216,13 +272,13 @@
                 <div class="container">
                     <div class="aon-footer-bottom-area">
                     	<div class="aon-foo-copyright">
-                        	{% comment %} <span class="cool">Copyright 2024 | Advance Dental Export. All Rights Reserved |  Developed & Managed by <a href="https://vinkdesigns.com/">Vink Designs</a></span> {% endcomment %}
                             <span class="cool">Copyright 2025 | Advance Dental Export. All Rights Resevred </span>
                         </div>
                     </div>
                 </div>   
             </div>      
-        </footer>
+        </footer> {% endcomment %}
+
         <!-- FOOTER END -->
 
         <!-- BUTTON TOP START -->
