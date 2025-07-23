@@ -46,6 +46,7 @@
         Allow Location Access
     </button>
   </div>
+
   <section class="searchbar-wrap">
     <div class="container pt-4">
       {% comment %} <div class="searchInfo-content-wrapper mb-5">
@@ -195,6 +196,7 @@
 <!-- Content END-->
 {% endblock body %}
 {% block js %}
+<!--Search Script-->
 <script>
     function searchDoctor(event){
       let a = document.getElementById("closebutton")
@@ -261,6 +263,7 @@
         suggestionBox.innerHTML = '';
 	  })
 </script>
+<!--Book Appointment-->
 <script>
   function BookAppoinment(name,city){
     //console.log("sdf",id,name,city)
@@ -272,6 +275,7 @@
     window.location.href="/consult-with-dentist/";
   }
 </script>
+<!--Location Access-->
 <script>
   var x = document.getElementById("demo");
 
@@ -369,6 +373,21 @@
     function handleLocationError(error) {
       console.warn("Location access denied or unavailable.");
       showFallbackMessage();
+
+      const lat = sessionStorage.getItem("latitude");
+      const lng = sessionStorage.getItem("longitude");
+
+      if(!lat || !lng){
+        setTimeout(()=>{
+          showPermissionModal();
+        },1500)
+      }
+    }
+    function showPermissionModal() {
+      document.getElementById("browser-permission-modal").classList.remove("d-none");
+    }
+    function closePermissionModal() {
+      document.getElementById("browser-permission-modal").classList.add("d-none");
     }
 
     function showFallbackMessage() {

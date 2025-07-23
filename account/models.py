@@ -86,8 +86,8 @@ class Dentist(models.Model):
     treding = models.BooleanField(default=False)
     in_home = models.BooleanField(default=False)
 
-    lat =  models.TextField(max_length=1300,blank=True, null=True)
-    long =  models.TextField(max_length=1300,blank=True, null=True)
+    lat = models.FloatField(blank=True, null=True)
+    long = models.FloatField(blank=True, null=True)
     schema = models.TextField(max_length = 15622, blank=True, null=True)
 
 
