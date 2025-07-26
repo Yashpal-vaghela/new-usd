@@ -46,7 +46,14 @@
         Allow Location Access
     </button>
   </div>
-
+  <div id="browser-permission-helper" class="text-center py-5 text-white d-none">
+    <span class="fw-500 fs-4 cool mb-2 d-block">Location Access Blocked</span>
+    <p class="mx-auto text-center" style="max-width: 700px;">
+      You’ve blocked location access. To proceed, please enable location from your browser settings.
+      <br><strong>Click the lock icon 🔒 near the address bar → Site settings → Allow location</strong>
+    </p>
+    <img src="{% static 'images/location-permission-guide.png' %}" class="img-fluid mt-3" alt="Enable location from browser settings" style="max-width: 500px;" />
+  </div>
   <section class="searchbar-wrap">
     <div class="container pt-4">
       {% comment %} <div class="searchInfo-content-wrapper mb-5">
@@ -276,7 +283,7 @@
   }
 </script>
 <!--Location Access-->
-<script>
+{% comment %} <script>
   var x = document.getElementById("demo");
 
     function getLocation(manual = false) {
@@ -404,16 +411,209 @@
        getLocation();
     })
     
-</script>
+</script>  {% endcomment %}
+
+<script>
+  var x = document.getElementById("demo");
+
+  function getLocation(manual = false) {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => showPosition(position, manual),
+        handleLocationError
+      );
+    } else {
+      showFallbackMessage();
+    }
+  }
+
+  function showPosition(position, manual = false) {
+    x.innerHTML =
+      "Latitude: " + position.coords.latitude +
+      "<br>Longitude: " + position.coords.longitude;
+
+    const a = JSON.parse(localStorage.getItem('permission_access'));
+
+    if (sessionStorage.getItem("latitude") !== null && a === true) {
+      return;
+    }
+
+    if (manual) {
+      localStorage.setItem('permission_access', JSON.stringify(true));
+      storeLocation(position.coords);
+      location.reload();
+    } else {
+      setTimeout(() => {
+        Swal.fire({
+          title: "Allow Your Location for Nearest Smile Designers.",
+          showCancelButton: false,
+          confirmButtonText: "Allow",
+          showCloseButton: true,
+          customClass: {
+            popup: "custom-swal-popup"
+          },
+        }).then((result) => {
+          if (result.isConfirmed) {
+            localStorage.setItem('permission_access', JSON.stringify(true));
+            storeLocation(position.coords); // ✅ Now triggers full flow
+            location.reload();
+          } else if (result.dismiss === Swal.DismissReason.close) {
+            const message = document.getElementById("location-fallback-message");
+            const form = document.querySelector(".searchbar-wrap");
+            const dentistSection = document.querySelector(".dentist-section");
+
+            if (message) message.classList.remove("d-none");
+            if (form) form.classList.add("d-none");
+            if (dentistSection) dentistSection.classList.add("d-none");
+          }
+        });
+      }, 1000);
+    }
+  }
+
+  function storeLocation(coords) {
+    const latitude = coords.latitude;
+    const longitude = coords.longitude;
+
+    sessionStorage.setItem("latitude", latitude);
+    sessionStorage.setItem("longitude", longitude);
+
+    $.ajax({
+      url: "/receive_location/",
+      type: "POST",
+      data: {
+        latitude: latitude,
+        longitude: longitude,
+        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+      },
+      success: function (response) {
+        if (response.status === "success") {
+          const city = response.city || "unknown";
+          const state = response.state || "unknown";
+
+          sessionStorage.setItem("city", city);
+          sessionStorage.setItem("state", state);
+
+          localStorage.setItem("city", city);
+          localStorage.setItem("state", state);
+
+          // ✅ Show nearest dentists now that we have city/state
+          if (typeof showNearestDentists === "function") {
+            showNearestDentists(city, state);
+          } else {
+            console.warn("showNearestDentists(city, state) is not defined.");
+          }
+        }
+      },
+      error: function (error) {
+        console.error("Error sending data:", error);
+      },
+    });
+  }
+
+  function handleLocationError(error) {
+    console.warn("Location access denied or unavailable.");
+    showFallbackMessage();
+
+    const lat = sessionStorage.getItem("latitude");
+    const lng = sessionStorage.getItem("longitude");
+
+    if (!lat || !lng) {
+      setTimeout(() => {
+        showPermissionModal();
+      }, 1500);
+    }
+  }
+
+  function showPermissionModal() {
+    document.getElementById("browser-permission-modal").classList.remove("d-none");
+  }
+
+  function closePermissionModal() {
+    document.getElementById("browser-permission-modal").classList.add("d-none");
+  }
+
+  function showFallbackMessage() {
+    const message = document.getElementById("location-fallback-message");
+    const form = document.querySelector(".searchbar-wrap");
+    const dentistSection = document.querySelector(".dentist-section");
+
+    if (message) message.classList.remove("d-none");
+    if (form) form.classList.add("d-none");
+    if (dentistSection) dentistSection.classList.add("d-none");
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    getLocation();
+  });
+</script> 
+
+
 <script>
   function requestLocationAccess() {
     const message = document.getElementById("location-fallback-message");
     if (message) message.classList.add("d-none");
 
-    getLocation(true);
-    location.reload();
+    const csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]')?.value;
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+
+          sessionStorage.setItem("latitude", latitude);
+          sessionStorage.setItem("longitude", longitude);
+
+          // ✅ Try fetching city/state using backend API
+          $.ajax({
+            url: "/receive_location/",
+            type: "POST",
+            data: {
+              latitude: latitude,
+              longitude: longitude,
+              csrfmiddlewaretoken: csrfToken,
+            },
+            success: function (response) {
+              if (response.status === "success" && response.city && response.state) {
+                sessionStorage.setItem("city", response.city);
+                sessionStorage.setItem("state", response.state);
+                localStorage.setItem("city", response.city);
+                localStorage.setItem("state", response.state);
+                localStorage.setItem("permission_access", JSON.stringify(true));
+
+                location.reload();
+              } else {
+                console.warn("City/State not returned. Showing fallback.");
+                showPermissionReminder(); 
+              }
+            },
+            error: function (xhr) {
+              console.error("AJAX error:", xhr);
+              showPermissionReminder();  
+            },
+          });
+        },
+        function (error) {
+          if (error.code === error.PERMISSION_DENIED) {
+            showPermissionReminder();  
+          } else {
+            alert("Location access failed. Please try again.");
+          }
+        },
+        { timeout: 10000 }
+      );
+    } else {
+      showPermissionReminder(); 
+    }
+  }
+
+  function showPermissionReminder() {
+    const reminder = document.getElementById("browser-permission-helper");
+    if (reminder) reminder.classList.remove("d-none");
   }
 </script>
+
 <script type="application/ld+json">
 
 {

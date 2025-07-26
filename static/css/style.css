@@ -5818,3 +5818,32 @@ div:where(.swal2-container) div:where(.swal2-popup) {
     }
 }
 
+.permission-helper-wrapper {
+  background-color: #1c1c1c;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 30px 20px;
+  margin: 30px auto;
+  max-width: 720px;
+  box-shadow: 0 0 25px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+
+.permission-helper-wrapper h4 {
+  color: #ffffff;
+  font-size: 1.5rem;
+}
+
+.permission-helper-wrapper p {
+  color: #ccc;
+  font-size: 1rem;
+  max-width: 600px;
+  margin: auto;
+}
+
+.permission-helper-wrapper .helper-img {
+  margin-top: 20px;
+  border-radius: 8px;
+  max-height: 300px;
+  box-shadow: 0 0 10px rgba(255,255,255,0.1);
+}
