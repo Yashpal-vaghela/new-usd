@@ -10,6 +10,7 @@ class BlogAdmin(admin.ModelAdmin):
     list_display = ('h1', 'author', 'published', 'status')
     search_fields = ('h1', 'author__name', 'keyword')
     list_filter = ('status', 'category', 'published')
+    exclude = ('blog_banner_lg_alt', 'blog_banner_sm_alt', 'image_alt')
 
 class AuthorAdmin(admin.ModelAdmin):
     list_display = ('name', 'position')

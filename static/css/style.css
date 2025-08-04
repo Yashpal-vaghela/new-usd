@@ -5577,6 +5577,45 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   background-color: #000;
   margin-top: -4px;
 }
+.footer-link a {
+  perspective: 1000px;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.footer-link a span {
+  position: relative;
+  display: inline-block;
+  transition: transform 0.3s ease;
+  transform-origin: 50% 0;
+  transform-style: preserve-3d;
+}
+
+/* Back face (appears on hover) */
+.footer-link a span::before {
+  content: attr(data-hover); 
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  color: #fff;
+  transform: rotateX(-90deg);
+  transform-origin: 50% 0;
+  transition: color 0.5s;
+}
+
+/* Flip on hover */
+.footer-link a:hover span,
+.footer-link a:focus span {
+  transform: rotateX(90deg) translateY(-22px);
+}
+
+.footer-link a:hover span::before,
+.footer-link a:focus span::before {
+  color: #fff;
+}
 /* .new-footer-content{
   background-image: url("../footer-bg1.png");
   width:100%;

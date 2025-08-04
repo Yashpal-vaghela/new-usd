@@ -45,7 +45,9 @@ class CityDentistSitemap(Sitemap):
     def items(self):
         return City.objects.all()
     def location(self, obj):
-        return reverse('home:search_city_dentists', args=[obj.city])
+        city_name = obj.city
+        city_name = city_name[0].lower() + city_name[1:] if city_name else ''
+        return reverse('home:search_city_dentists', args=[city_name])
     
 class DentistDetailsSitemap(Sitemap):
     priority = 0.6

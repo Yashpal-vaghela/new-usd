@@ -50,9 +50,7 @@
                             <span class="read-more"><a href="{% url 'home:blogsd' first_blog.slug %}">Read More</a></span>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-11 mx-auto">
-                            <img src="{{first_blog.blog_banner_lg.url}}" class="img-fluid" 
-                            {% comment %} style="border-radius:10px" {% endcomment %}
-                            />
+                            <img src="{{first_blog.blog_banner_lg.url}}" class="img-fluid" alt="{{first_blog.blog_banner_lg_alt}}"/>
                         </div>
                     {% endif %}
                     {% comment %} {% for blog in first_blog %}
@@ -79,7 +77,7 @@
                         {% if forloop.counter <= 4 and blog.status %}
                             <div class="col-lg-4 col-md-6 mb-md-4 mb-lg-4   d-md-block">
                                 <div class="blog-content-details-card card">
-                                    <img src="{{blog.blog_banner_lg.url}}" class="card-img-top img-fluid" />
+                                    <img src="{{blog.blog_banner_lg.url}}" class="card-img-top img-fluid" alt="{{blog.blog_banner_sm_alt}}"/>
                                         <div class="blog-content-details position-relative card-body">
                                             <div class="blog_date">{{blog.published|date:'j M'}}</div>
                                             {% comment %} <h4 class="card-text">
@@ -103,7 +101,7 @@
                         {% if blog.status %}
                             <div class="col-lg-4 col-md-6 mb-md-4 mb-lg-4 d-md-block blog-wrapper">
                                 <div class="blog-content-details-card card">
-                                    <img src="{{ blog.blog_banner_lg.url }}" class="card-img-top img-fluid" />
+                                    <img src="{{ blog.blog_banner_lg.url }}" class="card-img-top img-fluid" alt="{{blog.blog_banner_sm_alt}}"/>
                                     <div class="blog-content-details position-relative card-body">
                                             <div class="blog_date">{{ blog.published|date:'j M' }}</div>
                                             <h3 class="card-text fw-400"> 

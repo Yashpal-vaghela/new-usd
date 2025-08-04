@@ -52,6 +52,7 @@ def home(request):
     query = request.GET.get('q', '').strip()
     data1 = Dentist.objects.all().order_by('name')  # Default queryset
     search_message = None
+    city_name = city.city if 'city' in locals() and city else 'Surat'
 
     reviews = [
         {id:1,'doctor_name':'Dr. Priyanka Sharma','review':"I never imagined my smile could look this great. The entire process was smooth and tailored to my needs. I'm so grateful to the team and my smile designer!"},
@@ -63,15 +64,11 @@ def home(request):
 
     # Check for city in request; if not found, check session
     if not city_id:
-        city_name = request.session.get('city','Surat')
-        if city_name:
             try:
-                city = City.objects.get(city=city_name)
+                city = City.objects.get(city__iexact='Surat')
                 data1 = data1.filter(city=city)
             except City.DoesNotExist:
-                search_message = f"No Ultimate Designers Found in {city_name}."
-        else:
-            search_message = "No city selected."
+                search_message = f"No Ultimate Designers Found in Surat."
 
     else:
         # Filter by city from request
@@ -97,7 +94,8 @@ def home(request):
       'search_message': search_message,
       'query': query,
       'city': city_id or request.session.get('city'),
-      'review': reviews
+      'review': reviews,
+      'city_name': city_name,
     }
     return render(request, 'index.html', context)
 

@@ -1442,7 +1442,7 @@
   align-items: center;
   text-align: left;
   border-radius: 0px;
-  padding: 10px;
+  padding: 20px;
   transform: scale(0.9) !important;
 }
 .testimonial-slide .card {
@@ -1874,9 +1874,7 @@
   .reviewContent {
     font-size: 15px;
   }
-  .swiper-bg-grident{
-    background-image: none;
-  }
+  
 }
 @media (max-width: 576px) {
   .new-testimonial-section {
@@ -1894,6 +1892,9 @@
   }
   .reviewContent {
     height: 320px;
+  }
+  .swiper-bg-grident{
+    background-image: none;
   }
   .myswiper .swiper-slide-active .reviewContent {
     height: 320px;

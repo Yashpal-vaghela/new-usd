@@ -478,9 +478,10 @@
           },
         }).then((result) => {
           if (result.isConfirmed) {
-            localStorage.setItem('permission_access', JSON.stringify(true));
-            storeLocation(position.coords); // ✅ Now triggers full flow
-            location.reload();
+            // localStorage.setItem('permission_access', JSON.stringify(true));
+            // storeLocation(position.coords);
+            // location.reload();
+            requestLocationAccess();
           } else if (result.dismiss === Swal.DismissReason.close) {
             const message = document.getElementById("location-fallback-message");
             const form = document.querySelector(".searchbar-wrap");
@@ -571,7 +572,6 @@
     getLocation();
   });
 </script> 
-
 
 <script>
   function requestLocationAccess() {
@@ -740,7 +740,6 @@
   });
 </script>
 
-
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -755,7 +754,7 @@
     "@type": "Place",
     "name": "India",
     "address": {
-      "@type": "PostalAddress"
+      "@type": "PostalAddress",
       "addressCountry": "India"
     }
   },

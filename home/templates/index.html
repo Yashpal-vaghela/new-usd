@@ -294,7 +294,7 @@
     <img src="{% static 'vector2.svg'%}" class="position-absolute vector2-img img-fluid"/>
      <div class="container pt-4 pb-2">
        <p class="text-center cool dentists_title position-relative text-header mb-0">Dentists</p>
-       <h2 class="dentists_subtitle text-header-subtitle">Best Dentist Near Me - ADE Verified</h2>
+       <h2 class="dentists_subtitle text-header-subtitle">Best Dentist Near Me {{ city_name }}- ADE Verified</h2>
        <div class="dentists-content-1 d-flex align-items-end justify-content-between">
          <p class="mb-0 text-subcontent">
            Discover trusted dental professionals via Ultimate Smile Designers.
@@ -1156,9 +1156,9 @@
         let form = document.getElementById("searchForm");
         let formData = new FormData(form);
         let url = form.getAttribute("action") + "?" + new URLSearchParams(formData).toString();
-    
+      
         fetch(url, {
-            method: "GET",  // Use GET since the Django view expects it
+            method: "GET",
         })
         .then(response => response.text())
         .then(data => {
@@ -1168,6 +1168,16 @@
 
             if (newContent) {
                 document.getElementById("dentist-list").innerHTML = newContent.innerHTML;
+            }
+
+            let selectedCityName = document.getElementById("cityDropdown").options[
+                document.getElementById("cityDropdown").selectedIndex
+            ].text;
+
+            if (selectedCityName && selectedCityName !== "Select Location") {
+                document.querySelector(".dentists_subtitle").textContent = `Best Dentist Near ${selectedCityName} - ADE Verified`;
+            } else {
+                document.querySelector(".dentists_subtitle").textContent = `Best Dentists Near You - ADE Verified`;
             }
         })
         .catch(error => console.error("Error:", error));
@@ -1203,12 +1213,10 @@
     const totalslides = document.querySelectorAll(".myswiper .swiper-slide").length;
     const enableLoop = totalslides > 2;
 
-    console.log("totalslides", totalslides, "loop:", enableLoop);
-
     const mySwiper = new Swiper(".myswiper", {
       loop: true,
       centeredSlides: true,
-      autoplay: true,
+      autoplay: false,
       slidesPerView: 'auto',
       spaceBetween: 40,
       speed: 800, 

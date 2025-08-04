@@ -163,14 +163,16 @@ class Blog(models.Model):
     og_card = models.CharField(max_length = 156)
     og_site = models.CharField(max_length = 156)
     image  = models.ImageField(upload_to="SEO")
-    
+    image_alt = models.CharField(max_length=156, blank=True, null=True)
     category = models.ManyToManyField(Category)
     tag  = models.ManyToManyField(Tags)
     updated  = models.DateField(auto_now=True)
     
 
     blog_banner_lg = models.ImageField(upload_to="Page Data", blank=True, null=True)
+    blog_banner_lg_alt = models.CharField(max_length=156, blank=True, null=True)
     blog_banner_sm = models.ImageField(upload_to="Page Data", blank=True, null=True)
+    blog_banner_sm_alt = models.CharField(max_length=156, blank=True, null=True)
     
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     published  = models.DateField()
@@ -181,6 +183,18 @@ class Blog(models.Model):
     
     def __str__(self):
         return self.h1
+    
+    def save(self, *args, **kwargs):
+        if not self.blog_banner_lg_alt and self.title:
+            self.blog_banner_lg_alt = self.title
+
+        if not self.blog_banner_sm_alt and self.title:
+            self.blog_banner_sm_alt = self.title
+
+        if not self.image_alt and self.title:
+            self.image_alt = self.title
+
+        super().save(*args, **kwargs)
 
 
 class Team(models.Model):   
