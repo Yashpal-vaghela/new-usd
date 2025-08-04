@@ -710,7 +710,7 @@
                 <p class="text-center mb-0 pb-2">Experience Years</p>
               </div>
             </div>
-            <div class="col-lg-4 col-md-5 col-sm-6 col-6 mt-sm-3 mt-0 px-md-3 callus-btn-wrapper" data-aos="zoom-in" data-aos-duration="1500">
+            <div class="col-lg-4 col-md-6 col-sm-6 col-6 mt-sm-3 mt-0 px-md-3 callus-btn-wrapper" data-aos="zoom-in" data-aos-duration="1500">
               <a href="tel:+918469888877">
                 <button
                   class="d-flex w-100 fs-16 font-Barlow align-items-center justify-content-center btn btn-call bat">
@@ -863,10 +863,13 @@
         Discover the stories of transformation and joy from our patients who have experienced remarkable smile makeovers with our Ultimate Smile Designers.
       </p>
       <div class="swiper-bg-grident"></div>
-      <div class="swiper-container mt-5">
+      
+      <div class="swiper-container mt-sm-5 mt-0">
+         
         <div class="swiper myswiper">
+         <div class="border-frame"></div>
           <div class="swiper-wrapper">
-            
+        
             {% for ie in review %}
               <div class="swiper-slide testimonial-slide">
                 <div class="card">
@@ -1223,6 +1226,10 @@
           spaceBetween: 40,
         },
         1024: {
+          slidesPerView:3,
+          spaceBetween: 20,
+        },
+        1200: {
           slidesPerView:3,
           spaceBetween: 40,
         },
