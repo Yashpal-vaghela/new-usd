@@ -1572,15 +1572,15 @@
 
 .border-frame {
   position: absolute;
-  inset: 0; /* replaces top/left/right/bottom */
+  inset: 0; 
   margin: auto;
-  width: 31%; /* responsive: 90% of the swiper-slide width */
-  height: 98%; /* responsive height */
+  width: 31%; 
+  height: 98%; 
   z-index: 9999;
   border: 3px solid;
   /* border-image-source: linear-gradient(128deg, #C3942E 1%,  13%, transparent 36%, transparent 37%, #c3942f 47%, transparent 63%, transparent 87%, transparent 85%, #c99c30 100%); */
   border-image-source: linear-gradient(
-    129deg,
+    130deg,
     #c3942f 1%,
     transparent 12%,
     transparent 28%,
@@ -1701,6 +1701,23 @@
   width: 12% !important;
   right: 5%;
 }
+@media(min-width:1650px) and (max-width:2799px){
+  .border-frame{
+    width:31.3%;
+    border-image-source: linear-gradient(
+    130deg,
+    #c3942f 1%,
+    transparent 12%,
+    transparent 28%,
+    transparent 38%,
+    #c3942f 50%,
+    transparent 63%,
+    transparent 78%,
+    transparent 87%,
+    #c99c30 100%
+  );
+  }
+}
 @media (max-width: 1200px) {
   @keyframes smallBig {
     0% {
@@ -1738,29 +1755,44 @@
     margin-bottom: 0.5rem;
   }
   .border-frame {
-    width: 40%;
-    height: 87%;
-    top: -8.5%;
+    width: 32%;
+    height: 96%;
+    top: -0.5%;
+    border-image-source: linear-gradient(
+      125deg,
+      #c3942f 1%,
+      transparent 12%,
+      transparent 28%,
+      transparent 38%,
+      #c3942f 51%,
+      transparent 62%,
+      transparent 84%,
+      transparent 89%,
+      #c99c30 100%
+    );
+  }
+  .swiper-bg-grident{
+    background-size: 100% 100%;
   }
 }
-@media (max-width: 1024px) {
+@media (max-width: 1025px) {
   .testimonial-slide {
     padding: 20px 15px 60px;
   }
   .reviewContent {
-    font-size: 14px;
-    height: 160px;
+    font-size: 12px;
+    height: 185px;
   }
   .myswiper .swiper-slide-active .reviewContent {
     height: 200px;
   }
   .border-frame {
-    width: 48.3%;
-    height: 85%;
-    top: -10.5%;
+    width: 47%;
+    height: 83%;
+    top: -11.5%;
     z-index: 0;
     border-image-source: linear-gradient(
-      139deg,
+      143deg,
       #c3942f 1%,
       #000 15%,
       #000 32%,
@@ -1782,10 +1814,10 @@
     height: 190px;
   }
   .border-frame {
-    width: 47.6%;
+    width: 45.6%;
     /* height: 85%; */
     border-image-source: linear-gradient(
-      129deg,
+      134deg,
       #c3942f 1%,
       #000 15%,
       #000 32%,
@@ -1821,11 +1853,12 @@
     height: 240px;
   }
   .border-frame {
-    width: 80.5%;
-    height: 84.5%;
+    width: 67.5%;
+    height: 84%;
     left: 0.5%;
-    top: -9.8%;
-    border-image-source: linear-gradient(
+    top: -10.8%;
+    border-image-source: linear-gradient(133deg, #c3942e 1%, #000 15%, #000 36%, #000 35%, #c3942f 49%, #000 63%, #000 87%, #000 85%, #c99c30 100%);
+    /* border-image-source: linear-gradient(
       140deg,
       #c3942e 1%,
       #000 13%,
@@ -1836,17 +1869,20 @@
       #000 87%,
       #000 85%,
       #c99c30 100%
-    );
+    ); */
   }
   .reviewContent {
     font-size: 15px;
   }
+  .swiper-bg-grident{
+    background-image: none;
+  }
 }
 @media (max-width: 576px) {
-  .new-testimonial-section{
+  .new-testimonial-section {
     padding: 25px 0px 0px !important;
   }
-  .testimonial-slide{
+  .testimonial-slide {
     padding: 20px 15px 10px;
   }
   .testimonial-vector-img {
@@ -1863,12 +1899,12 @@
     height: 320px;
   }
   .border-frame {
-    width: 98%;
-    height: 88%;
-    top: -8.4%;
+    width: 97.5%;
+    height: 95%;
+    top: 0%;
     left: 0.2%;
     border-image-source: linear-gradient(
-      128deg,
+      134deg,
       #c3942e 1%,
       transparent 13%,
       transparent 36%,
@@ -1880,6 +1916,14 @@
       #c99c30 100%
     );
     /* border-image-source: linear-gradient(128deg, #C3942E 1%, #000 13%, #000 36%, #000 37%, #c3942f 47%, #000 63%, #000 87%, #000 85%, #c99c30 100%); */
+  }
+  .new-testimonial-section .swiper-container{
+    margin-top: 25px !important;
+  }
+}
+@media(max-width:480px){
+  .border-frame{
+     border-image-source: linear-gradient(128deg, #c3942e 1%, transparent 13%, transparent 36%, transparent 37%, #c3942f 47%, transparent 63%, transparent 87%, transparent 85%, #c99c30 100%);
   }
 }
 /* @media (max-width: 500px) {
