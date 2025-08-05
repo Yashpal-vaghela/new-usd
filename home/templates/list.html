@@ -60,10 +60,10 @@
       <img src="{% static 'resetlocation-img2.png' %}" class="resetlocation-img2 d-none m-auto img-fluid" id="Resetlocation-img2" />
       <img src="{% static 'resetlocation-img3.png' %}" class="resetlocation-img3 d-none m-auto img-fluid" id="Resetlocation-img3" />
       <div class="new-browser-btn-wrapper justify-content-between mx-5 d-flex">
-        <button type="button" onclick="handlePrevButton()" class="btn my-3 bat d-flex justify-content-center text-black" style="width:12%">
+        <button type="button" onclick="handlePrevButton()" class="btn btn-next my-3 bat d-flex justify-content-center text-black" >
           <img src="{% static 'back-arrow.svg' %}" class="mx-2 arrow-img img-fluid" />  Back 
         </button>
-        <button type="button" onclick="handleNextButton()" class="btn my-3 bat d-flex justify-content-center text-black" style="width:12%">
+        <button type="button" onclick="handleNextButton()" class="btn btn-prev my-3 bat d-flex justify-content-center text-black" >
           Next <img src="{% static 'next-arrow.svg' %}" class="mx-2 arrow-img img-fluid" />
         </button>
       </div>
@@ -711,6 +711,7 @@
       nextButton.classList.add("justify-content-center");
       nextButton.classList.remove("ms-auto");
     } else {
+      nextButton.innerHTML = 'Next <img src="{% static 'next-arrow.svg' %}" class="mx-2 arrow-img img-fluid" />';
       nextButton.classList.add("d-flex");
       nextButton.classList.add("justify-content-end");
       nextButton.classList.add("ms-auto");
