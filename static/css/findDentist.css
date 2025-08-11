@@ -71,11 +71,12 @@ input:-internal-autofill-selected{
   background-color: var(--bg-content-color) !important;
   color: #222 !important;
 }
-.searchbar-box-wrapper img ,.searchbar-box-wrapper i{
+.searchbar-box-wrapper svg ,.searchbar-box-wrapper i{
   color: #777;
   border-right: 1.5px solid rgba(177, 177, 177, 1);
   padding: 5px 8px 5px 0px;
-  width: 8%;
+  width: 10%;
+  height: 30px;
 }
 .searchbar-box-wrapper i{
   padding: 3px 10px 3px 0px;
@@ -93,8 +94,8 @@ input:-internal-autofill-selected{
   border-radius: 8px;
   padding: 9px 8px;
 }
-.searchbar-button-wrapper img{
-  width: 10%;
+.searchbar-button-wrapper svg{
+  width: 12%;
   margin-bottom: 2px;
 }
 .searchbar-button-wrapper span{
@@ -264,7 +265,7 @@ input:-internal-autofill-selected{
   .searchbar-button-wrapper{
     padding: 8px 12px;
   }
-  .searchbar-button-wrapper img{
+  .searchbar-button-wrapper svg{
     width: 11%;
     margin-right: 8px;
   }
@@ -292,7 +293,7 @@ input:-internal-autofill-selected{
   .searchInfo-content-wrapper .searchInfo-subtitle{
     font-size: 32px;
   }
-  .searchbar-box-wrapper img{
+  .searchbar-box-wrapper svg{
     width: 6%;
   }
   /* dentist section */
@@ -315,7 +316,7 @@ input:-internal-autofill-selected{
   }
 }
 @media(max-width:576px){
-  .searchbar-box-wrapper img{
+  .searchbar-box-wrapper svg{
     width: 8%;
   }
   /* dentist section */
@@ -351,7 +352,7 @@ input:-internal-autofill-selected{
   }
 }
 @media(max-width:500px){
-  .searchbar-box-wrapper img{
+  .searchbar-box-wrapper svg{
     width: 9%;
   }
 }
