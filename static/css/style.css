@@ -5577,6 +5577,14 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   background-color: #000;
   margin-top: -4px;
 }
+.new-footer .footer-links .footer-link a svg {
+  height: 20px;
+  width: auto; /* keeps proportions */
+  margin-top: 5px;
+  background-color: transparent; /* remove background if any */
+  display: inline-block;
+}
+
 .footer-link a {
   perspective: 1000px;
   display: inline-block;
@@ -5893,7 +5901,11 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   }
   .new-footer .footer-links .footer-link a img{
     margin-top: -2px;
-    height:8px;
+    height: 8px;
+  }
+  .new-footer .footer-links .footer-link a svg{
+    margin-top: 5px;
+    height: 15px;
   }
 }
 @media (max-width: 576px) {

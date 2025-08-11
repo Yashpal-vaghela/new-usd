@@ -128,11 +128,11 @@
   transition: background 0.3s;
 }
 .new-browser-btn-wrapper .btn-next {
-  padding: 8px 24px 8px 14px;
-  /* width: 15%; */
+  padding: 8px 20px 8px 15px;
+  width:10.5%;
 }
 .new-browser-btn-wrapper .btn-prev {
-  padding: 8px 14px 8px 24px;
+  padding: 8px 20px 8px 15px;
   width:10.5%;
 }
 
@@ -184,6 +184,9 @@
   .new-browser-btn-wrapper .btn-prev {
     width: 12.7%;
   }
+  .new-browser-btn-wrapper .btn-next {
+    width: 12.7%;
+  }
 }
 @media (max-width: 991px) {
   .text-header-subtitle {
@@ -191,6 +194,9 @@
     line-height: 44px;
   }
    .new-browser-btn-wrapper .btn-prev {
+    width: 18%;
+  }
+  .new-browser-btn-wrapper .btn-next {
     width: 18%;
   }
 }
@@ -207,7 +213,12 @@
     line-height: 24px;
   }
    .new-browser-btn-wrapper .btn-prev {
-    width: 25.5%;
+    width: 25%;
+    padding-right: 12px;
+  }
+  .new-browser-btn-wrapper .btn-next {
+    width: 25%;
+    padding-left: 12px;
   }
 }
 @media (max-width: 576px) {
@@ -217,12 +228,12 @@
   }
   .new-browser-btn-wrapper .btn-next {
     padding: 6px 20px 6px 10px;
-    width: auto;
+    width: 25%;
     border-radius: 6px;
   }
   .new-browser-btn-wrapper .btn-prev {
     padding: 6px 10px 6px 20px;
-    width: 33%;
+    width: 25%;
     border-radius: 6px;
   }
 
@@ -243,6 +254,9 @@
 }
 @media(max-width:480px){
   .new-browser-btn-wrapper .btn-prev {
-    width: 42%;
+    width: 40%;
+  }
+  .new-browser-btn-wrapper .btn-next {
+    width: 40%;
   }
 }

@@ -39,7 +39,6 @@
       <i class=" fa fa-solid fa-angles-right"></i> &nbsp; {{city_name | capfirst}}
       </div>
       <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool">Ultimate Smile Designers in {{city_name | capfirst}}</h1>
-      {% comment %} <img src="{% static 'Group 291.svg' %}" class="find-dentist-img img-fluid" /> {% endcomment %}
     </div>
   </section>
   <section class="dentist-section">
@@ -55,7 +54,7 @@
                 <img
                   src="{{ ie.profile.url }}"
                   class="img-fluid"
-                  alt="{{ ie.name }}"
+                  alt="{{ ie.alt_text }}"
                 />
                 {% else %}
                 <img src="{% static 'noimage-team.webp' %}" alt="Image" />

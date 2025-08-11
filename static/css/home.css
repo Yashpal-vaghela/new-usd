@@ -604,11 +604,15 @@
   z-index: -1;
   top: 12%;
 }
+/* .vector2-img svg{
+  right: 0%;
+  top: 12%;
+} */
 .vector1-img {
-  position: absolute;
   z-index: -1;
   bottom: 20%;
 }
+
 .dentists-content-1 p {
   width: 65%;
 }
@@ -1986,14 +1990,15 @@
   background-color: #fff !important;
   color: #222 !important;
 }
-.searchbar-box-wrapper1 img {
+.searchbar-box-wrapper1 svg {
   color: #777;
   border-right: 1px solid rgba(177, 177, 177, 1);
   padding: 2px 9px 2px 0px;
   width: 6%;
+  height: 30px;
 }
 @media (max-width: 991px) {
-  .searchbar-box-wrapper1 img {
+  .searchbar-box-wrapper1 svg {
     width: 8.3%;
   }
 }
@@ -2005,7 +2010,7 @@
   .find-section-description {
     padding: 0px;
   }
-  .searchbar-box-wrapper1 img {
+  .searchbar-box-wrapper1 svg {
     width: 5.5%;
   }
 }
@@ -2018,7 +2023,7 @@
     font-size: 14px !important;
     line-height: 24px !important;
   }
-  .searchbar-box-wrapper1 img {
+  .searchbar-box-wrapper1 svg {
     width: 6.5%;
   }
 }
@@ -2026,7 +2031,7 @@
   .searchbar-box-wrapper1 i {
     padding: 5px 8px 5px 0px;
   }
-  .searchbar-box-wrapper1 img {
+  .searchbar-box-wrapper1 svg {
     width: 7.5%;
   }
 }

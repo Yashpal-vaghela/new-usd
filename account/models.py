@@ -82,6 +82,7 @@ class Dentist(models.Model):
     specializations = models.ManyToManyField(Specializations, null=True, blank=True)
     iframe = models.TextField(max_length=1300,blank=True, null=True)
     profile  = models.ImageField(upload_to="SEO",blank=True, null=True)
+    alt_text = models.CharField(max_length=255, blank=True, null=True, help_text="Alternative text for the image")
     status = models.BooleanField(default=False)
     treding = models.BooleanField(default=False)
     in_home = models.BooleanField(default=False)
@@ -223,13 +224,14 @@ class Testimonials(models.Model):
 
 class Gallery(models.Model):   
     image  = models.ImageField(upload_to="SEO")
-    
+    alt_text = models.CharField(max_length=255, blank=True, null=True, help_text="Alternative text for the image")
  
     def __str__(self):
         return str(self.id)
 
 class Hgallery(models.Model):
     image = models.ImageField(upload_to="SEO")
+    alt_text = models.CharField(max_length=255, blank=True, null=True, help_text="Alternative text for the image")
 
     def __str__(self):
         return str(self.id)

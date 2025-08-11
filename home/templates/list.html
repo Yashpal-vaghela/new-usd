@@ -54,29 +54,29 @@
   </div>
   <div class="new-browser-wrapper d-none m-auto justify-content-center text-center py-5" id="browser-permission-helper" style="display:'flex'">
     <div class="container">
-      <span class="fw-600 fs-4 cool mb-2 d-inline-block" style="font-family: 'Gilda Display', serif">Missing One Step to Your Ultimate Smile</span>
-      <p class="mx-auto text-center text-white" style="max-width: 700px;">We can't access your location. Share your location access to find a certified Ultimate Smile Designer dentists near you and transform your ordinary smile into ultimate smile.</p>
-      <img src="{% static 'resetlocation-img1.png' %}" class="resetlocation-img1 d-block m-auto img-fluid" id="Resetlocation-img1" />
-      <img src="{% static 'resetlocation-img2.png' %}" class="resetlocation-img2 d-none m-auto img-fluid" id="Resetlocation-img2" />
-      <img src="{% static 'resetlocation-img3.png' %}" class="resetlocation-img3 d-none m-auto img-fluid" id="Resetlocation-img3" />
+      <span class="fw-600 fs-4 cool mb-2 d-inline-block" style="font-family: 'Gilda Display', serif">Your Browser’s Location Access is Disabled</span>
+      <p class="mx-auto text-center text-white" style="max-width: 700px;">To find certified Ultimate Smile Designer dentists near you, please enable your location. Follow the steps below to reset your browser’s location permissions.</p>
+      <div class="step-wrapper text-center mb-5" id="step-1">
+        <p class="text-white fs-5">Step 1: Click the padlock icon next to the website address in your browser’s address bar.</p>
+        <img src="{% static 'resetlocation-img1.png' %}" class="resetlocation-img1 m-auto img-fluid" id="Resetlocation-img1" />
+      </div>
+      <div class="step-wrapper text-center mb-5 d-none" id="step-2">
+        <p class="text-white fs-5">Step 2: In the permissions dropdown, find the <strong>location </strong>option.</p>
+        <img src="{% static 'resetlocation-img2.png' %}" class="resetlocation-img2 m-auto img-fluid" id="Resetlocation-img2" />
+      </div>
+      <div class="step-wrapper text-center mb-5 d-none" id="step-3">
+        <p class="text-white fs-5">Step 3: Change the location setting to <strong>Allow</strong> or <strong>Enable Access<steong></p>
+        <img src="{% static 'resetlocation-img3.png' %}" class="resetlocation-img3 m-auto img-fluid" id="Resetlocation-img3" />
+      </div>
       <div class="new-browser-btn-wrapper justify-content-between mx-5 d-flex">
         <button type="button" onclick="handlePrevButton()" class="btn btn-next my-3 bat d-flex justify-content-center text-black" >
-          <img src="{% static 'back-arrow.svg' %}" class="mx-2 arrow-img img-fluid" />  Back 
+          <img src="{% static 'back-arrow.svg' %}" class="mx-2 arrow-img img-fluid" /> Back 
         </button>
         <button type="button" onclick="handleNextButton()" class="btn btn-prev my-3 bat d-flex justify-content-center text-black" >
           Next <img src="{% static 'next-arrow.svg' %}" class="mx-2 arrow-img img-fluid" />
         </button>
       </div>
     </div>
-  </div>
-  
-  <div id="browser-permission-helper" class="text-center py-5 text-white d-none">
-    <span class="fw-500 fs-4 cool mb-2 d-block">Location Access Blocked</span>
-    <p class="mx-auto text-center" style="max-width: 700px;">
-      You’ve blocked location access. To proceed, please enable location from your browser settings.
-      <br><strong>Click the lock icon 🔒 near the address bar → Site settings → Allow location</strong>
-    </p>
-    <img src="{% static 'images/location-permission-guide.png' %}" class="img-fluid mt-3" alt="Enable location from browser settings" style="max-width: 500px;" />
   </div>
   <section class="searchbar-wrap">
     <div class="container pt-4">
@@ -174,7 +174,7 @@
                 <img
                   src="{{ ie.profile.url }}"
                   class="img-fluid"
-                  alt="{{ ie.name }}"
+                  alt="{{ ie.alt_text }}"
                 />
                 {% else %}
                 <img src="{% static 'noimage-team.webp' %}" alt="Image" />
@@ -676,70 +676,71 @@
   }
 </script>
 <script>
-  const imageIds = ["Resetlocation-img1", "Resetlocation-img2", "Resetlocation-img3"];
+  const stepIds = ["step-1", "step-2", "step-3"];
   let currentIndex = 0;
 
-  function updateImageDisplay() {
-    imageIds.forEach((id, index) => {
-      const img = document.getElementById(id);
-      if (index === currentIndex) {
-        img.classList.remove("d-none");
-        img.classList.add("d-block");
-      } else {
-        img.classList.add("d-none");
-        img.classList.remove("d-block");
+  function updateStepDisplay() {
+    stepIds.forEach((id, index) => {
+      const stepElement = document.getElementById(id);
+      if (stepElement) {
+        if (index === currentIndex) {
+          stepElement.classList.remove("d-none");
+        } else {
+          stepElement.classList.add("d-none");
+        }
       }
     });
 
-    // Handle button visibility
+    // Handle Prev button visibility
     const prevButton = document.querySelector("button[onclick='handlePrevButton()']");
-    const nextButton = document.querySelector("button[onclick='handleNextButton()']");
-    
-    console.log("prevbutton",prevButton,"nextBurron",nextButton);
-
-    if (currentIndex === 0) {
-      prevButton.classList.remove("d-flex")
-      prevButton.classList.add("d-none");
-    } else {
-      prevButton.classList.add("d-flex");
-      prevButton.classList.remove("d-none");
+    if (prevButton) {
+      prevButton.classList.toggle("d-none", currentIndex === 0);
     }
 
-    if (currentIndex === imageIds.length - 1) {
-      nextButton.innerText = "Finish"
-      nextButton.classList.remove("justify-content-end");
-      nextButton.classList.add("justify-content-center");
-      nextButton.classList.remove("ms-auto");
-    } else {
-      nextButton.innerHTML = 'Next <img src="{% static 'next-arrow.svg' %}" class="mx-2 arrow-img img-fluid" />';
-      nextButton.classList.add("d-flex");
-      nextButton.classList.add("justify-content-end");
-      nextButton.classList.add("ms-auto");
-      nextButton.classList.remove("justify-content-center");
-      nextButton.classList.remove("d-none");
+    // Handle Next button label and styling
+    const nextButton = document.querySelector("button[onclick='handleNextButton()']");
+    if (nextButton) {
+      if (currentIndex === stepIds.length - 1) {
+        nextButton.textContent = "Finish";
+        nextButton.classList.remove("justify-content-end", "ms-auto");
+        nextButton.classList.add("justify-content-center");
+      } else {
+        nextButton.innerHTML = 'Next <img src="{% static 'next-arrow.svg' %}" class="mx-2 arrow-img img-fluid" alt="Next arrow" />';
+        nextButton.classList.add("d-flex", "justify-content-end", "ms-auto");
+        nextButton.classList.remove("justify-content-center");
+      }
     }
   }
 
   function handlePrevButton() {
     if (currentIndex > 0) {
       currentIndex--;
-      updateImageDisplay();
+      updateStepDisplay();
     }
   }
 
   function handleNextButton() {
-    if (currentIndex < imageIds.length - 1) {
+    if (currentIndex < stepIds.length - 1) {
       currentIndex++;
-      updateImageDisplay();
-    }else{
+      updateStepDisplay();
+    } else {
       location.reload();
     }
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    updateImageDisplay();
+    // Hide all steps initially
+    stepIds.forEach(id => {
+      const stepElement = document.getElementById(id);
+      if (stepElement) {
+        stepElement.classList.add("d-none");
+      }
+    });
+    // Then show the first step
+    updateStepDisplay();
   });
 </script>
+
 
 <script type="application/ld+json">
 {
