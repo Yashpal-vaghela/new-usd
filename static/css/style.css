@@ -5675,8 +5675,8 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   justify-content: space-between;
   align-items: center;
   padding: 8px;
-  background: rgba(23, 23, 23, 1);
-  /* background: rgba(33, 33, 33, 1); */
+  /* background: rgba(23, 23, 23, 1); */
+  background: rgba(33, 33, 33, 1);
   border-radius: 15px;
 }
 .new-footer-letter-wrapper .form-control {
@@ -5693,7 +5693,7 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 }
 .new-footer-social-links {
   width: 60%;
-  padding: 10px 80px 10px !important;
+  padding: 6px 80px 10px !important;
 }
 .new-footer-social-links .footer-links .footer-link a {
   color: #fff;
@@ -5910,18 +5910,20 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 }
 @media (max-width: 576px) {
   .new-footer{
-    background-size: 100% 500px;
-    background: url('../footer-bg.png') no-repeat bottom/cover, rgba(0, 0, 0, 1);
+    /* background-size: 100% 500px; */
+    /* background: url('../footer-bg.png') no-repeat bottom/cover, rgba(0, 0, 0, 1); */
     background-size: 100% auto;
+    background-image: none;
   }
   .new-footer-content .overlay{
-    background-image: url("../mobile-footerbg2.png");
+    background-image: url("../toothbg4.png");
     width:100%;
     height:100%;
     background-repeat: no-repeat;
     background-position: center;
     position: relative;
     border-radius: 15px;
+    background-size: 100% 100%;
   }
   .new-footer-content .container:first-child{
     padding: 10px 0px;
@@ -5931,7 +5933,8 @@ div:where(.swal2-container) div:where(.swal2-popup) {
     background-position: center;
   } */
   .new-footer-logo {
-    margin: 3% auto 5%;
+    margin: 10% auto 12%;
+    width:58%;
   }
   .new-footer-letter-wrapper .form-control {
     width: 100%;
@@ -5943,9 +5946,14 @@ div:where(.swal2-container) div:where(.swal2-popup) {
     font-size: 14px;
   } 
   .new-footer-bottom {
-    padding: 10px 0px;
-    border-top: 2px dashed #c3942f;
-    width:97%;
+    padding: 10px 0px 8px;
+    width: 70%;
+    /* border-top: 2px dashed #c3942f; */
+    /* width:97%; */
+  }
+  .new-footer-letter-wrapper{
+    padding: 6px  7px;
+    border-radius: 10px;
   }
   .new-footer-copyright {
     font-size: 12px;
@@ -5962,11 +5970,14 @@ div:where(.swal2-container) div:where(.swal2-popup) {
     padding: 20px 0px;
   }
   .new-footer-content .container{
-    padding: 5px 0px 0px !important;
+    padding: 5px 0px 3px !important;
   }
   /* .new-footer .container{
       padding: 0px 5px;
     } */
+  .new-footer .footer-links .footer-link{
+    margin-bottom: 0px;
+  }
   .new-footer .footer-links {
     gap: 0rem;
     justify-content: space-between;
@@ -5978,10 +5989,26 @@ div:where(.swal2-container) div:where(.swal2-popup) {
     font-size: 16px;
   }
   .new-footer-content .overlay .container {
-    width: 95%;
+    width: 92%;
   }
   .new-footer .new-footer-social-links .footer-links {
-    gap: 1rem;
+    gap: 0rem;
+    padding-bottom: 0px !important;
+  }
+}
+@media(max-width:480px){
+  .new-footer .footer-links .footer-link{
+    margin-bottom: 6px;
+  }
+  .new-footer-logo{
+    margin: 12% auto 12%;
+    width:60%;
+  }
+  .new-footer-social-links .footer-link{
+    margin-bottom: 0px !important;
+  }
+  .new-footer-social-links .container{
+    padding: 8px 0px 0px !important;
   }
 }
 
