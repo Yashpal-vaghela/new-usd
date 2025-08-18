@@ -135,7 +135,9 @@
   padding: 8px 20px 8px 15px;
   width:10.5%;
 }
-
+.new-browser-btn-wrapper .btn-finish{
+  padding: 8px 15px;
+}
 .btn:active,
 .btn:focus,
 .btn:hover {
@@ -178,6 +180,12 @@
 }
 .font-Glida-display {
   font-family: var(--font-Glida-Display);
+}
+.btn-next svg{
+  margin-right: 5px;
+}
+.btn-prev svg{
+  margin-left: 5px;
 }
 /* media query  */
 @media(max-width:1200px){
@@ -228,15 +236,14 @@
   }
   .new-browser-btn-wrapper .btn-next {
     padding: 6px 20px 6px 10px;
-    width: 25%;
+    width: 27%;
     border-radius: 6px;
   }
   .new-browser-btn-wrapper .btn-prev {
     padding: 6px 10px 6px 20px;
-    width: 25%;
+    width: 27%;
     border-radius: 6px;
   }
-
   .bat-form {
     border-radius: 8px;
   }
@@ -254,9 +261,16 @@
 }
 @media(max-width:480px){
   .new-browser-btn-wrapper .btn-prev {
-    width: 40%;
+    width: 43%;
   }
   .new-browser-btn-wrapper .btn-next {
-    width: 40%;
+    width: 43%;
+  }
+  .new-browser-btn-wrapper .btn-finish{
+    width: 43%;
+    padding: 6px 0px;
+  }
+  .text-header-subtitle{
+    font-size: 20px;
   }
 }

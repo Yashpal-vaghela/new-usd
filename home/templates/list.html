@@ -46,11 +46,13 @@
     </div>
   </section>
   <div id="location-fallback-message" class="text-center py-5 text-white d-none">
-      <span class="fw-500 fs-4 cool mb-2">Missing One Step to Your Ultimate Smile</span>
-      <p class="mx-auto text-center" style="max-width: 700px;">We can't access your location. Share your location access to find a certified Ultimate Smile Designer dentists near you and transform your ordinary smile into ultimate smile.</p>
-      <button type="button" onclick="requestLocationAccess()" class="btn mt-3 bat text-black">
-        Allow Location Access
-    </button>
+    <div class="container">
+        <span class="fw-500 fs-4 cool mb-2">Missing One Step to Your Ultimate Smile</span>
+        <p class="mx-auto text-center" style="max-width: 700px;">We can't access your location. Share your location access to find a certified Ultimate Smile Designer dentists near you and transform your ordinary smile into ultimate smile.</p>
+        <button type="button" onclick="requestLocationAccess()" class="btn mt-3 bat text-black">
+          Allow Location Access
+        </button>
+    </div>
   </div>
   <div class="new-browser-wrapper d-none m-auto justify-content-center text-center py-5" id="browser-permission-helper" style="display:'flex'">
     <div class="container">
@@ -69,13 +71,17 @@
         <img src="{% static 'resetlocation-img3.png' %}" class="resetlocation-img3 m-auto img-fluid" id="Resetlocation-img3" alt="How to enable location access in google chrome?"/>
       </div>
       <div class="new-browser-btn-wrapper justify-content-between mx-5 d-flex">
-        <button type="button" onclick="handlePrevButton()" class="btn btn-next my-3 bat d-flex justify-content-center text-black" >
-          <svg class="mx-2 arrow-img img-fluid" width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <button type="button" onclick="handlePrevButton()" class="btn btn-next my-3 me-auto bat d-flex justify-content-center align-items-center text-black" >
+          {% comment %} <svg class="mx-2 arrow-img img-fluid" width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M1.21975 8.46053L6.46975 3.21053C6.6112 3.07392 6.80065 2.99832 6.9973 3.00003C7.19395 3.00174 7.38206 3.08061 7.52111 3.21967C7.66017 3.35873 7.73905 3.54684 7.74076 3.74348C7.74246 3.94013 7.66687 4.12958 7.53025 4.27103L3.5605 8.24078H16.75C16.9489 8.24078 17.1397 8.3198 17.2803 8.46045C17.421 8.60111 17.5 8.79187 17.5 8.99078C17.5 9.1897 17.421 9.38046 17.2803 9.52111C17.1397 9.66177 16.9489 9.74078 16.75 9.74078H3.5605L7.53025 13.7105C7.60188 13.7797 7.65902 13.8625 7.69833 13.954C7.73763 14.0455 7.75832 14.1439 7.75919 14.2435C7.76005 14.3431 7.74108 14.4418 7.70337 14.534C7.66566 14.6262 7.60997 14.7099 7.53955 14.7803C7.46913 14.8507 7.38539 14.9064 7.29322 14.9442C7.20104 14.9819 7.10228 15.0008 7.0027 15C6.90312 14.9991 6.8047 14.9784 6.7132 14.9391C6.62169 14.8998 6.53894 14.8427 6.46975 14.771L1.21975 9.52103C1.07915 9.38039 1.00016 9.18966 1.00016 8.99078C1.00016 8.79191 1.07915 8.60118 1.21975 8.46053Z" fill="black"/>
+          </svg> {% endcomment %}
+          <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.21975 8.46053L6.46975 3.21053C6.6112 3.07392 6.80065 2.99832 6.9973 3.00003C7.19395 3.00174 7.38206 3.08061 7.52111 3.21967C7.66017 3.35873 7.73905 3.54684 7.74076 3.74348C7.74246 3.94013 7.66687 4.12958 7.53025 4.27103L3.5605 8.24078H16.75C16.9489 8.24078 17.1397 8.3198 17.2803 8.46045C17.421 8.60111 17.5 8.79187 17.5 8.99078C17.5 9.1897 17.421 9.38046 17.2803 9.52111C17.1397 9.66177 16.9489 9.74078 16.75 9.74078H3.5605L7.53025 13.7105C7.60188 13.7797 7.65902 13.8625 7.69833 13.954C7.73763 14.0455 7.75832 14.1439 7.75919 14.2435C7.76005 14.3431 7.74108 14.4418 7.70337 14.534C7.66566 14.6262 7.60997 14.7099 7.53955 14.7803C7.46913 14.8507 7.38539 14.9064 7.29322 14.9442C7.20104 14.9819 7.10228 15.0008 7.0027 15C6.90312 14.9991 6.8047 14.9784 6.7132 14.9391C6.62169 14.8998 6.53894 14.8427 6.46975 14.771L1.21975 9.52103C1.07915 9.38039 1.00016 9.18966 1.00016 8.99078C1.00016 8.79191 1.07915 8.60118 1.21975 8.46053Z" fill="black"/>
           </svg>
+          {% comment %} <img src="{% static 'back-arrow.svg' %}" class="mx-2 arrow-img img-fluid" alt="back arrow" /> {% endcomment %}
           Back 
         </button>
-        <button type="button" onclick="handleNextButton()" class="btn btn-prev my-3 bat d-flex justify-content-center text-black" >
+        <button type="button" onclick="handleNextButton()" class="btn btn-prev my-3 ms-auto  bat d-flex align-items-center justify-content-center text-black" >
           Next 
           <svg class="mx-2 arrow-img img-fluid" width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M17.7803 8.46053L12.5302 3.21053C12.3888 3.07392 12.1993 2.99832 12.0027 3.00003C11.8061 3.00174 11.6179 3.08061 11.4789 3.21967C11.3398 3.35873 11.261 3.54684 11.2592 3.74348C11.2575 3.94013 11.3331 4.12958 11.4698 4.27103L15.4395 8.24078H2.25C2.05109 8.24078 1.86032 8.3198 1.71967 8.46045C1.57902 8.60111 1.5 8.79187 1.5 8.99078C1.5 9.1897 1.57902 9.38046 1.71967 9.52111C1.86032 9.66177 2.05109 9.74078 2.25 9.74078H15.4395L11.4698 13.7105C11.3981 13.7797 11.341 13.8625 11.3017 13.954C11.2624 14.0455 11.2417 14.1439 11.2408 14.2435C11.2399 14.3431 11.2589 14.4418 11.2966 14.534C11.3343 14.6262 11.39 14.7099 11.4605 14.7803C11.5309 14.8507 11.6146 14.9064 11.7068 14.9442C11.799 14.9819 11.8977 15.0008 11.9973 15C12.0969 14.9991 12.1953 14.9784 12.2868 14.9391C12.3783 14.8998 12.4611 14.8427 12.5302 14.771L17.7803 9.52103C17.9209 9.38039 17.9998 9.18966 17.9998 8.99078C17.9998 8.79191 17.9209 8.60118 17.7803 8.46053Z" fill="black"/>
@@ -212,7 +218,7 @@
       <div class="row mb-4">
         <div class="col-12">
           <p class="text-white text-center fs-5">
-            Top-rated smile designer dentists in <span class="cool">{{ city }}</span>, personally verified for your perfect smile—scroll, choose, and book appointment with confidence.
+            Top-rated smile designer dentists in <span class="cool">{{ city }}</span>,<br/> personally verified for your perfect smile—scroll, choose, and book appointment with confidence.
           </p>
         </div>
       </div>
@@ -605,7 +611,11 @@
   }
 
   function showPermissionModal() {
-    document.getElementById("browser-permission-modal").classList.remove("d-none");
+    const a = document.getElementById("browser-permission-modal");
+    if(a !== null ){
+      a.classList.remove("d-none");
+    }
+  //  document.getElementById("browser-permission-modal").classList.remove("d-none");
   }
 
   function closePermissionModal() {
@@ -724,6 +734,7 @@
       image3.classList.remove("d-none")
     }
   } {% endcomment %}
+
   function showPermissionReminder() {
     const reminder = document.getElementById("browser-permission-helper");
     if (reminder) reminder.classList.remove("d-none");
@@ -754,14 +765,17 @@
     // Handle Next button label and styling
     const nextButton = document.querySelector("button[onclick='handleNextButton()']");
     if (nextButton) {
+      console.log("curre",currentIndex,stepIds.length,stepIds.length -1)
       if (currentIndex === stepIds.length - 1) {
         nextButton.textContent = "Finish";
-        nextButton.classList.remove("justify-content-end", "ms-auto");
+        nextButton.classList.remove("justify-content-end");
         nextButton.classList.add("justify-content-center");
+        nextButton.classList.add("btn-finish");
       } else {
-        nextButton.innerHTML = 'Next <img src="{% static 'next-arrow.svg' %}" class="mx-2 arrow-img img-fluid" alt="Next arrow" />';
-        nextButton.classList.add("d-flex", "justify-content-end", "ms-auto");
-        nextButton.classList.remove("justify-content-center");
+        nextButton.innerHTML = 'Next <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.7803 8.46053L12.5302 3.21053C12.3888 3.07392 12.1993 2.99832 12.0027 3.00003C11.8061 3.00174 11.6179 3.08061 11.4789 3.21967C11.3398 3.35873 11.261 3.54684 11.2592 3.74348C11.2575 3.94013 11.3331 4.12958 11.4698 4.27103L15.4395 8.24078H2.25C2.05109 8.24078 1.86032 8.3198 1.71967 8.46045C1.57902 8.60111 1.5 8.79187 1.5 8.99078C1.5 9.1897 1.57902 9.38046 1.71967 9.52111C1.86032 9.66177 2.05109 9.74078 2.25 9.74078H15.4395L11.4698 13.7105C11.3981 13.7797 11.341 13.8625 11.3017 13.954C11.2624 14.0455 11.2417 14.1439 11.2408 14.2435C11.2399 14.3431 11.2589 14.4418 11.2966 14.534C11.3343 14.6262 11.39 14.7099 11.4605 14.7803C11.5309 14.8507 11.6146 14.9064 11.7068 14.9442C11.799 14.9819 11.8977 15.0008 11.9973 15C12.0969 14.9991 12.1953 14.9784 12.2868 14.9391C12.3783 14.8998 12.4611 14.8427 12.5302 14.771L17.7803 9.52103C17.9209 9.38039 17.9998 9.18966 17.9998 8.99078C17.9998 8.79191 17.9209 8.60118 17.7803 8.46053Z" fill="black"/></svg>';
+        nextButton.classList.add("d-flex",  "ms-auto");
+       /* nextButton.classList.remove("justify-content-center"); */
+        nextButton.classList.remove("btn-finish");
       }
     }
   }

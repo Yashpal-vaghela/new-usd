@@ -20,8 +20,8 @@
         font-size: 20px !important;
         line-height: 30px;
     }
-    .breadcrumbs-path{
-        margin-bottom: 0px !important;
+    .single-blog-wrapper .breadcrumbs-path{
+        margin-bottom: 15px !important;
     }
     .breadcrumbs-section .container{
         top: 55% !important;
@@ -116,10 +116,11 @@
 .blog-content-details-card{
     color: #fff;
     background-color: var(--bg-content-color);
-    border:1px solid;
+    border:1.5px solid;
     border-image-source: linear-gradient(130deg, #C3942F 0%, #D89C27 18%, #DFC86F 37%, #E7DC96 50%, #DFC86F 64%, #D89C27 82%, #C99C30 100%) !important;
+    /* border-image-source: linear-gradient(130deg, #C3942F 0%, #D89C27 18%, #DFC86F 37%, #E7DC96 50%, #DFC86F 64%, #D89C27 82%, #C99C30 100%) !important; */
     border-image-slice: 1;  
-    border-image-width: 1px;
+    border-image-width: 1.5px;
     border-radius: 0px;
 }
 .blog-content-details-card img{
@@ -130,7 +131,7 @@
     font-weight: 400;
     font-size: 20px;
     font-family: "Gilda Display", serif;
-    border-image-source: linear-gradient(130deg, #C3942F 0%, #D89C27 18%, #DFC86F 37%, #E7DC96 50%, #DFC86F 64%, #D89C27 82%, #C99C30 100%) !important;
+    border-image-source: linear-gradient(95deg, #C3942F 0%, #D89C27 18%, #DFC86F 37%, #E7DC96 50%, #DFC86F 64%, #D89C27 82%, #C99C30 100%) !important;
     border-image-slice: 1;
     border-bottom: 2px solid;
     margin: 16px 16px 40px;
@@ -181,7 +182,7 @@
     font-size: 20px;
     font-family: "Gilda Display", serif;
     position: absolute;
-    top: -26.5%;
+    top: -24.5%;
     border-radius: 0px;
     text-align: center;
     line-height: 28px;
@@ -409,5 +410,23 @@ a{
     }
     .breadcrumbs-title{
         line-height: 35px;
+    }
+    .blog_date{
+        top:-21%;
+        width:63px;
+        height: 63px;
+        padding: 6px;
+        font-size: 16px;
+        line-height: 24px;
+    }
+    .blog-content-details .read-more1{
+        bottom: -6.5%;
+    }
+    .blog-content-details .card-text a{
+        font-size: 18px;
+        line-height: 32px;
+    }
+    .breadcrumbs-path{
+        margin-bottom: 10px;
     }
 }

@@ -120,6 +120,12 @@
     right: -4%;
   }
 }
+@media(max-width:480px){
+  .banner_main_txt{
+    margin-top: 5px;
+    margin-bottom: 0px;
+  }
+}
 
 /* ------------------------------Devloper section --------------------- */
 .Developer_Section {
@@ -395,6 +401,11 @@
     line-height: 24px;
   }
 }
+@media(max-width:480px){
+  .working-section{
+    padding: 5px 0px 0px !important;
+  }
+}
 
 /* ---------------------location Section ------------------------ */
 .location-subtitle {
@@ -471,7 +482,11 @@
     font-size: 13px;
   }
 }
-
+@media(max-width:480px){
+  .location-section{
+    padding: 10px 0px 0px !important;
+  }
+}
 /* ---------------------- Register Section ----------------- */
 .registration_section {
   margin: 30px auto 40px;
@@ -593,7 +608,11 @@
     display: none;
   }
 }
-
+@media(max-width:480px){
+  .register_wrapper{
+    padding: 25px 0px 30px;
+  }
+}
 /*--------------------------- Dentist Section ----------------------- */
 .dentists-section {
   background-color: rgb(216, 156, 39, 0.44);
@@ -744,7 +763,8 @@
   }
   /* main content */
   .dentists-content-2 {
-    margin-top: 2rem !important;
+    margin-top: 1.8rem !important;
+    gap:20px;
   }
   .dentists-content {
     border-radius: 30px;
@@ -1157,10 +1177,21 @@
   .schedule-data-content-2 .callus-btn-wrapper i {
     padding: 8px;
   }
+  .schedule-data-link svg{
+    width:50%;
+  }
 }
 @media(max-width:480px){
   .user-icon-svg{
       width:45%
+  }
+  .schedule-data-content-2 .col-6:nth-child(1) .schedule-data-link{
+    height: 100%;
+  }
+  .schedule-data-section .container,
+  .schedule-data-content{
+    padding-left: 2px;
+    padding-right: 2px;
   }
 }
 /* ----------------------- gallery section ------------------------- */
@@ -1432,7 +1463,36 @@
     font-size: 12px;
   }
 }
-
+@media(max-width:480px){
+  .gallery-container{
+    padding-top: 50px !important;
+  }
+  .gallery-container .d-flex{
+    margin-top: 0px !important;
+  }
+  .gallery-text {
+    bottom: -15%;
+  }
+  .gallery-text h2{
+    line-height: 35px;
+  }
+  .floating-images img{
+    width:90px;
+    height: 120px;
+  }
+  .floating-images img:nth-child(2),.floating-images img:nth-child(11){
+    left:0%;
+  }
+  .floating-images img:nth-child(6),.floating-images img:nth-child(7){
+    right:0%;
+  }
+  .floating-images img:nth-child(11),.floating-images img:nth-child(7){
+    top:72px;
+  }
+  .floating-images img:nth-child(4){
+    left:34.8%;
+  }
+}
 /*-------------------- Tesimonial section ----------------- */
 /* .new-testimonial-section{
     padding: 50px 0px;
@@ -1593,9 +1653,8 @@
   height: 98%; 
   z-index: 9999;
   border: 3px solid;
-  /* border-image-source: linear-gradient(128deg, #C3942E 1%,  13%, transparent 36%, transparent 37%, #c3942f 47%, transparent 63%, transparent 87%, transparent 85%, #c99c30 100%); */
   border-image-source: linear-gradient(
-    130deg,
+    125deg,
     #c3942f 1%,
     transparent 12%,
     transparent 28%,
@@ -1615,6 +1674,18 @@
   color: #fff;
   top: -2%;
 }
+ /* .border-frame{
+  background-image: url("../border-frame.png");
+  background-position: center;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  width:100%;
+  height:100%;
+  position: absolute;
+  z-index: 9999;
+  inset: 0;
+  text-align: center;
+} */
 .swiper-bg-grident {
   background-image: url("../swiper-bg-grident17.png");
   width: 100%;
@@ -1899,6 +1970,9 @@
   .testimonial-slide {
     padding: 20px 15px 10px;
   }
+  .testimonial-slide .card{
+    padding: 6px 12px;
+  }
   .testimonial-vector-img {
     top: 50%;
   }
@@ -1907,13 +1981,14 @@
     font-size: 14px;
   }
   .reviewContent {
-    height: 320px;
+    height: 300px;
+    font-size: 14px;
   }
   .swiper-bg-grident{
     background-image: none;
   }
   .myswiper .swiper-slide-active .reviewContent {
-    height: 320px;
+    height: 290px;
   }
   .border-frame {
     width: 96.5%;
@@ -1937,10 +2012,14 @@
   .new-testimonial-section .swiper-container{
     margin-top: 25px !important;
   }
+  
 }
 @media(max-width:480px){
   .border-frame{
      border-image-source: linear-gradient(125deg, #c3942e 1%, transparent 13%, transparent 36%, transparent 37%, #c3942f 52%, transparent 63%, transparent 87%, transparent 85%, #c99c30 100%);
+  }
+  .new-testimonial-section{
+    padding: 65px 0px 0px !important;
   }
 }
 /* @media (max-width: 500px) {
@@ -2044,7 +2123,10 @@
     padding: 5px 8px 5px 0px;
   }
   .searchbar-box-wrapper1 svg {
-    width: 7.5%;
+    width: 10%;
+  }
+  .searchbar-box-wrapper1 input, .searchbar-box-wrapper1 select{
+    padding: 0px 7px 0px 7px;
   }
 }
 

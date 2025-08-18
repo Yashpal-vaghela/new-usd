@@ -1,164 +1,298 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block seo %}    
+{% extends 'base.html' %} {% load static %} {% block seo %}
 <title>Before & After Transformation Gallery | Ultimate Smile Design</title>
-<meta name="description" content="Explore our before & after smile design photo gallery showcasing stunning smile makeovers that highlight our commitment to aesthetic excellence." />
+<meta
+  name="description"
+  content="Explore our before & after smile design photo gallery showcasing stunning smile makeovers that highlight our commitment to aesthetic excellence."
+/>
 <link rel="canonical" href="https://ultimatesmiledesign.com/gallery/" />
-<meta property="og:image" content="{% static 'feature-usd.webp' %}">
-<meta property="og:image:secure_url" content="{% static 'feature-usd.webp' %}">
+<meta property="og:image" content="{% static 'feature-usd.webp' %}" />
+<meta
+  property="og:image:secure_url"
+  content="{% static 'feature-usd.webp' %}"
+/>
 <meta property="og:image:type" content="image/webp" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:locale" content="en_IN" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Before & After Transformation Gallery | Ultimate Smile Design" />
-<meta property="og:description" content="Explore our before & after smile design photo gallery showcasing stunning smile makeovers that highlight our commitment to aesthetic excellence." />
+<meta
+  property="og:title"
+  content="Before & After Transformation Gallery | Ultimate Smile Design"
+/>
+<meta
+  property="og:description"
+  content="Explore our before & after smile design photo gallery showcasing stunning smile makeovers that highlight our commitment to aesthetic excellence."
+/>
 <meta property="og:url" content="https://ultimatesmiledesign.com/gallery/" />
-{% comment %} <meta property="og:site_name" content="@ultimatesmiledesign" /> {% endcomment %}
-{% comment %} <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:description" content="Explore our before & after smile design photo gallery showcasing stunning smile makeovers that highlight our commitment to aesthetic excellence." />
-<meta name="twitter:title" content="Before & After Transformation Gallery | Ultimate Smile Design" /> {% endcomment %}
-
-{% endblock seo %}
-{% block header %}
-{% endblock header %}
-
-{% block css %}
-{% endblock css %}
-
-{% block body %}
-{% load static %}
+{% comment %} <meta property="og:site_name" content="@ultimatesmiledesign" /> {%
+endcomment %} {% comment %}
+<meta name="twitter:card" content="summary_large_image" />
+<meta
+  name="twitter:description"
+  content="Explore our before & after smile design photo gallery showcasing stunning smile makeovers that highlight our commitment to aesthetic excellence."
+/>
+<meta
+  name="twitter:title"
+  content="Before & After Transformation Gallery | Ultimate Smile Design"
+/>
+{% endcomment %}
+ {% endblock seo %} 
+ {% block header %} {% endblock header %} 
+ {% block css %} {% endblock css %} {% block body %} {% load static %}
 
 <!-- Content -->
 <div class="page-content">
-    <section class="breadcrumbs-section">
-        <div class="container">
-            <div class="breadcrumbs-path"> <a href="{% url 'home:home' %}"> Home </a> <i class=" fa fa-solid fa-angles-right"></i> Gallery </div>
-            <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool">Gallery</h1>
-        </div>
-    </section>
-    <!-- Search Bar -->
-    {% comment %} {% include 'searchbar.html' %} {% endcomment %}
-    <!-- Search Bar End -->   
-
-    <!-- PRODUCT DETAILS -->
-    <div class="container ">
-        <div class="row m-b30">
-            <div class="col-lg-12 col-md-12 m-b30">
-                <div class="p-4">
-                    <div class="wt-box wt-product-gallery">
-                       
-                        <div class="image-container" >
-                            <div class="image-grid" id="imageGrid" >
-                                {% for ie in data %}
-                                <div class="image-item col-12" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="0">
-                                    <img src="{{ ie.image.url }}" alt="Image">
-                                </div>
-                                {% if forloop.counter == 2 and data1|length > 0 %}
-                                {% comment %} {% for ie1 in data1%} {% endcomment %}
-                                <div class="image-item single-image" style="display: flex; justify-content: flex-start; gap: 80px; flex-wrap: wrap; " data-aos="zoom-in-right" data-aos-duration="1500" data-aos-delay="0">
-                                    <img src="{{ data1.0.image.url }}" alt="single-image" class="vertical-Image" />
-                                </div>
-                                {% comment %} {% endfor %} {% endcomment %}
-                                {% endif %}
-                                {% if forloop.counter == 4 and data1|length > 1%}
-                                    <div class="image-item single-image" style="display: flex; justify-content: flex-end; gap: 80px; flex-wrap: wrap;" data-aos="zoom-in-left" data-aos-duration="1500" data-aos-delay="0">
-                                        <img src="{{ data1.1.image.url }}" alt="single-image-2" class="vertical-Image" />
-                                    </div>
-                                {% endif %}
-                                {% if forloop.counter == 6 and data1|length > 1%}
-                                    <div class="image-item single-image" style="display: flex; justify-content: flex-start; gap: 80px; flex-wrap: wrap; " data-aos="zoom-in-right" data-aos-duration="1500" data-aos-delay="0">
-                                        <img src="{{ data1.2.image.url }}" alt="single-image-2" class="vertical-Image" />
-                                    </div>
-                                {% endif %}
-                                {% if forloop.counter == 8 and data1|length > 1%}
-                                    <div class="image-item single-image" style="display: flex; justify-content: flex-end; gap: 80px; flex-wrap: wrap;" data-aos="zoom-in-left" data-aos-duration="1500" data-aos-delay="0">
-                                        <img src="{{ data1.3.image.url }}" alt="single-image-2" class="vertical-Image" />
-                                    </div>
-                                {% endif %}
-                                {% if forloop.counter == 10 and data1|length > 1%}
-                                    <div class="image-item single-image" style="display: flex; justify-content: flex-start; gap: 80px; flex-wrap: wrap;" data-aos="zoom-in-left" data-aos-duration="1500" data-aos-delay="0">
-                                        <img src="{{ data1.4.image.url }}" alt="single-image-2" class="vertical-Image" />
-                                    </div>
-                                {% endif %}
-                                {% if forloop.counter == 12 and data1|length > 1%}
-                                    <div class="image-item single-image" style="display: flex; justify-content: flex-end; gap: 80px; flex-wrap: wrap;" data-aos="zoom-in-left" data-aos-duration="1500" data-aos-delay="0">
-                                        <img src="{{ data1.5.image.url }}" alt="single-image-2" class="vertical-Image" />
-                                    </div>
-                                {% endif %}
-                                {% if forloop.counter == 14 and data1|length > 1%}
-                                    <div class="image-item single-image" style="display: flex; justify-content: flex-start; gap: 80px; flex-wrap: wrap;" data-aos="zoom-in-left" data-aos-duration="1500" data-aos-delay="0">
-                                        <img src="{{ data1.6.image.url }}" alt="single-image-2" class="vertical-Image" />
-                                    </div>
-                                {% endif %}
-                                {% if forloop.counter == 16 and data1|length > 1%}
-                                    <div class="image-item single-image" style="display: flex; justify-content: flex-end; gap: 80px; flex-wrap: wrap;" data-aos="zoom-in-left" data-aos-duration="1500" data-aos-delay="0">
-                                        <img src="{{ data1.7.image.url }}" alt="single-image-2" class="vertical-Image" />
-                                    </div>
-                                {% endif %}
-                                {% endfor %}   
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div> 
-        </div>
+  <section class="breadcrumbs-section">
+    <div class="container">
+      <div class="breadcrumbs-path">
+        <a href="{% url 'home:home' %}"> Home </a>
+        <i class="fa fa-solid fa-angles-right"></i> Gallery
+      </div>
+      <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool">
+        Gallery
+      </h1>
     </div>
-    <!-- PRODUCT DETAILS -->  
+  </section>
+  <!-- Search Bar -->
+  {% comment %} {% include 'searchbar.html' %} {% endcomment %}
+  <!-- Search Bar End -->
+
+  <!-- PRODUCT DETAILS -->
+  <div class="container">
+    <div class="row m-b30">
+      <div class="col-lg-12 col-md-12 m-b30">
+        <div class="p-4">
+          <div class="wt-box wt-product-gallery">
+            <div class="image-container">
+              <div class="image-grid" id="imageGrid">
+                {% for ie in data %}
+                <div
+                  class="image-item col-12"
+                  data-aos="fade-up"
+                  data-aos-duration="1500"
+                  data-aos-delay="0"
+                >
+                  <img src="{{ ie.image.url }}" alt="Image" />
+                </div>
+                {% if forloop.counter == 2 and data1|length > 0 %} {% comment %}
+                {% for ie1 in data1%} {% endcomment %}
+                <div
+                  class="image-item single-image"
+                  style="
+                    display: flex;
+                    justify-content: flex-start;
+                    gap: 80px;
+                    flex-wrap: wrap;
+                  "
+                  data-aos="zoom-in-right"
+                  data-aos-duration="1500"
+                  data-aos-delay="0"
+                >
+                  <img
+                    src="{{ data1.0.image.url }}"
+                    alt="single-image"
+                    class="vertical-Image"
+                  />
+                </div>
+                {% comment %} {% endfor %} {% endcomment %} 
+                {% endif %}
+                {% if forloop.counter == 4 and data1|length > 1%}
+                <div
+                  class="image-item single-image"
+                  style="
+                    display: flex;
+                    justify-content: flex-end;
+                    gap: 80px;
+                    flex-wrap: wrap;
+                  "
+                  data-aos="zoom-in-left"
+                  data-aos-duration="1500"
+                  data-aos-delay="0"
+                >
+                  <img
+                    src="{{ data1.1.image.url }}"
+                    alt="single-image-2"
+                    class="vertical-Image"
+                  />
+                </div>
+                {% endif %} 
+                {% if forloop.counter == 6 and data1|length > 1%}
+                <div
+                  class="image-item single-image"
+                  style="
+                    display: flex;
+                    justify-content: flex-start;
+                    gap: 80px;
+                    flex-wrap: wrap;
+                  "
+                  data-aos="zoom-in-right"
+                  data-aos-duration="1500"
+                  data-aos-delay="0"
+                >
+                  <img
+                    src="{{ data1.2.image.url }}"
+                    alt="single-image-2"
+                    class="vertical-Image"
+                  />
+                </div>
+                {% endif %}
+                {% if forloop.counter == 8 and data1|length > 1%}
+                <div
+                  class="image-item single-image"
+                  style="
+                    display: flex;
+                    justify-content: flex-end;
+                    gap: 80px;
+                    flex-wrap: wrap;
+                  "
+                  data-aos="zoom-in-left"
+                  data-aos-duration="1500"
+                  data-aos-delay="0"
+                >
+                  <img
+                    src="{{ data1.3.image.url }}"
+                    alt="single-image-2"
+                    class="vertical-Image"
+                  />
+                </div>
+                {% endif %} 
+                {% if forloop.counter == 10 and data1|length > 1%}
+                <div
+                  class="image-item single-image"
+                  style="
+                    display: flex;
+                    justify-content: flex-start;
+                    gap: 80px;
+                    flex-wrap: wrap;
+                  "
+                  data-aos="zoom-in-left"
+                  data-aos-duration="1500"
+                  data-aos-delay="0"
+                >
+                  <img
+                    src="{{ data1.4.image.url }}"
+                    alt="single-image-2"
+                    class="vertical-Image"
+                  />
+                </div>
+                {% endif %} 
+                {% if forloop.counter == 12 and data1|length > 1%}
+                <div
+                  class="image-item single-image"
+                  style="
+                    display: flex;
+                    justify-content: flex-end;
+                    gap: 80px;
+                    flex-wrap: wrap;
+                  "
+                  data-aos="zoom-in-left"
+                  data-aos-duration="1500"
+                  data-aos-delay="0"
+                >
+                  <img
+                    src="{{ data1.5.image.url }}"
+                    alt="single-image-2"
+                    class="vertical-Image"
+                  />
+                </div>
+                {% endif %}
+                {% if forloop.counter == 14 and data1|length > 1%}
+                <div
+                  class="image-item single-image"
+                  style="
+                    display: flex;
+                    justify-content: flex-start;
+                    gap: 80px;
+                    flex-wrap: wrap;
+                  "
+                  data-aos="zoom-in-left"
+                  data-aos-duration="1500"
+                  data-aos-delay="0"
+                >
+                  <img
+                    src="{{ data1.6.image.url }}"
+                    alt="single-image-2"
+                    class="vertical-Image"
+                  />
+                </div>
+                {% endif %}
+                {% if forloop.counter == 16 and data1|length > 1%}
+                <div
+                  class="image-item single-image"
+                  style="
+                    display: flex;
+                    justify-content: flex-end;
+                    gap: 80px;
+                    flex-wrap: wrap;
+                  "
+                  data-aos="zoom-in-left"
+                  data-aos-duration="1500"
+                  data-aos-delay="0"
+                >
+                  <img
+                    src="{{ data1.7.image.url }}"
+                    alt="single-image-2"
+                    class="vertical-Image"
+                  />
+                </div>
+                {% endif %} 
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- PRODUCT DETAILS -->
 </div>
 <!-- Content END-->
-{% endblock body %}
-
-{% block js %}
+{% endblock body %} {% block js %}
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const imageGrid = document.getElementById('imageGrid');
-        const introSection = document.querySelector(".intro-section0");
-        const allImages = Array.from(imageGrid.children);
-        let imageIndex = allImages.length;
-        let imagesLoaded = false; 
-        let lastScrollTop = 0;
-        window.addEventListener("scroll", function () {
-            let scrollTop = window.scrollY;
-
-            if (scrollTop > 100 && scrollTop > lastScrollTop) {
-                introSection.style.opacity = "0";
-                setTimeout(() => {
-                    introSection.style.display = "none";
-                }, 300);
-            } else if (scrollTop <600 ){
-                introSection.style.display = "flex";
-                setTimeout(() => {
-                    introSection.style.opacity = "1";
-                }, 100);
-            }
-            lastScrollTop = scrollTop;
-        });
-
-        function loadNextImages() {
-            if (imagesLoaded) return;
+  document.addEventListener("DOMContentLoaded", function () {
+    const imageGrid = document.getElementById("imageGrid");
+    const introSection = document.querySelector(".intro-section0");
+    const allImages = Array.from(imageGrid.children);
+    let imageIndex = allImages.length;
+    let imagesLoaded = false;
+    let lastScrollTop = 0;
+    if (introSection !== null) {
+      window.addEventListener("scroll", function () {
+        let scrollTop = window.scrollY;
             
-            for (let i = 0; i < 2; i++) {
-                if (imageIndex >= allImages.length) break;
-                const nextImage = allImages[imageIndex % allImages.length].cloneNode(true);
-                imageGrid.appendChild(nextImage);
-                imageIndex++;
-            }
+        if (scrollTop > 100 && scrollTop > lastScrollTop) {
+          introSection.style.opacity = "0";
+          setTimeout(() => {
+            introSection.style.display = "none";
+          }, 300);
+        } else if (scrollTop < 600) {
+          introSection.style.display = "flex";
+          setTimeout(() => {
+            introSection.style.opacity = "1";
+          }, 100);
         }
-        const items = imageGrid.querySelectorAll('.image-item');
-            items.forEach((item) => {
-                if (item.classList.contains('single-image')) {
-                    item.style.gridColumn = "span 2";
-                }
-            });
-        document.getElementById('imageContainer').addEventListener('scroll', function () {
-            // Check if scrolled near the bottom
-            if (this.scrollTop + this.clientHeight >= this.scrollHeight - 100) {
-                loadNextImages();
-            }
-        });
-    });
+        lastScrollTop = scrollTop;
+      });
+      function loadNextImages() {
+        if (imagesLoaded) return;
+
+        for (let i = 0; i < 2; i++) {
+          if (imageIndex >= allImages.length) break;
+          const nextImage =
+            allImages[imageIndex % allImages.length].cloneNode(true);
+          imageGrid.appendChild(nextImage);
+          imageIndex++;
+        }
+      }
+      const items = imageGrid.querySelectorAll(".image-item");
+      items.forEach((item) => {
+        if (item.classList.contains("single-image")) {
+          item.style.gridColumn = "span 2";
+        }
+      });
+       
+    }
+  });
 </script>
 
 <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
@@ -168,13 +302,13 @@
   });
 </script>
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "url": "https://ultimatesmiledesign.com/gallery/",
-  "name": "Before & After Transformation Gallery | Ultimate Smile Design",
-  "description": "Explore our before & after smile design photo gallery showcasing stunning smile makeovers that highlight our commitment to aesthetic excellence."
-}
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "url": "https://ultimatesmiledesign.com/gallery/",
+    "name": "Before & After Transformation Gallery | Ultimate Smile Design",
+    "description": "Explore our before & after smile design photo gallery showcasing stunning smile makeovers that highlight our commitment to aesthetic excellence."
+  }
 </script>
 
 {% endblock js %}

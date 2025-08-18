@@ -222,4 +222,25 @@
         padding: 10px;
         white-space: nowrap;
     } */
+     .single-blog-authorName{
+        padding: 8px 25px;
+     }
+     .single-page-main-content h2{
+        font-size: 1.3rem;
+        line-height: 35px;
+     }
+     .single-page-main-content h3{
+        font-size: 18px;
+        letter-spacing: 0.5px;
+     }
+     .single-page-main-content h3 strong{
+        font-weight: 700;
+     }
+     .single-blog-content2{
+        border-radius: 15px;
+        padding: 20px 15px;
+     }
+     .category-content{
+        padding: 10px 35px;
+     }
 }
