@@ -203,6 +203,7 @@ input:-internal-autofill-selected{
     padding: 20px;
     margin-bottom: 0px;
     color:#000;
+    font-weight: bold;
 }
 #suggestions a{
   display: inline-block;

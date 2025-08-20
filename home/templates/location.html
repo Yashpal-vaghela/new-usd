@@ -1,161 +1,315 @@
 {% load static %}
-  <section class="location-section pt-50" >
-    <div class="container">
-      <div class="text-center">
-        <p class="find-section-title text-header text-center mb-0 cool">Find</p>
-        <h2 class="find-section-subtitle  text-header-subtitle text-center">
-          Find Ultimate Smile Designers
-        </h2>
-      </div>
-      <p
-        class="text-subcontent find-section-description text-center my-sm-3 my-md-4 my-lg-4 my-2">
-        Explore our network of Ultimate Smile Designers across various cities to
-        find the perfect match for your smile transformation journey. Whether
-        you're looking for a local expert or considering options in a different
-        city, our directory makes it easy to connect with top-rated dental
-        professionals near you.
-      </p>
-      <form
-        class="row gap-3  gap-sm-0 form justify-content-between py-3 py-sm-4"
-        method="GET"
-        action="/certified-dentists/"
-      >
-        <div class="col-lg-5 col-md-6 mb-sm-3 mb-lg-0">
-          <div class="searchbar-box-wrapper1">
-            <svg class="img-fluid" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10.0269 1.76909C7.84116 1.77275 5.74597 2.64267 4.2004 4.18824C2.65483 5.73381 1.78491 7.829 1.78125 10.0148C1.78308 12.2024 2.65196 14.3 4.19753 15.8482C5.7431 17.3964 7.83932 18.2688 10.0269 18.2743C11.9671 18.2743 13.7548 17.5918 15.1683 16.4623L18.6017 19.8957C18.7757 20.0574 19.0055 20.1455 19.243 20.1413C19.4804 20.1371 19.7071 20.0411 19.8752 19.8734C20.0434 19.7057 20.14 19.4793 20.1448 19.2419C20.1496 19.0044 20.0622 18.7743 19.9009 18.6L16.4675 15.1631C17.6402 13.7047 18.2794 11.8896 18.2795 10.0182C18.2795 5.47271 14.5724 1.76909 10.0269 1.76909ZM10.0269 3.60531C13.5816 3.60531 16.4433 6.46358 16.4433 10.0148C16.4433 13.5659 13.5816 16.4415 10.0269 16.4415C6.47227 16.4415 3.61401 13.5763 3.61401 10.0217C3.61401 6.46704 6.47227 3.60531 10.0269 3.60531Z" fill="url(#paint0_linear_1624_6752)"/>
-            <defs>
-            <linearGradient id="paint0_linear_1624_6752" x1="7.9002" y1="1.76562" x2="19.7549" y2="3.95459" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#C3942F"/>
-            <stop offset="0.234" stop-color="#D89C27"/>
-            <stop offset="0.449" stop-color="#E7DC96"/>
-            <stop offset="0.669" stop-color="#DFC86F"/>
-            <stop offset="0.849" stop-color="#D89C27"/>
-            <stop offset="1" stop-color="#C99C30"/>
-            </linearGradient>
-            </defs>
-            </svg> 
-            <input
-              class="form-control sf-form-control"
-              name="q"
-              type="text"
-              placeholder="Search doctors, clinics, hospitals, etc."
-              style="background-color: rgba(247, 245, 240, 1)"
+<section class="location-section pt-50">
+  <div class="container">
+    <div class="text-center">
+      <p class="find-section-title text-header text-center mb-0 cool">Find</p>
+      <h2 class="find-section-subtitle text-header-subtitle text-center">
+        Find Ultimate Smile Designers
+      </h2>
+    </div>
+    <p
+      class="text-subcontent find-section-description text-center my-sm-3 my-md-4 my-lg-4 my-2"
+    >
+      Explore our network of Ultimate Smile Designers across various cities to
+      find the perfect match for your smile transformation journey. Whether
+      you're looking for a local expert or considering options in a different
+      city, our directory makes it easy to connect with top-rated dental
+      professionals near you.
+    </p>
+    <form
+      class="row gap-3 gap-sm-0 form justify-content-between py-3 py-sm-4"
+      method="GET"
+      action="/certified-dentists/"
+    >
+      <div class="col-lg-5 col-md-6 mb-sm-3 mb-lg-0">
+        <div class="searchbar-box-wrapper1">
+          <svg
+            class="img-fluid"
+            id="searchicon-Img"
+            width="22"
+            height="22"
+            viewBox="0 0 22 22"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M10.0269 1.76909C7.84116 1.77275 5.74597 2.64267 4.2004 4.18824C2.65483 5.73381 1.78491 7.829 1.78125 10.0148C1.78308 12.2024 2.65196 14.3 4.19753 15.8482C5.7431 17.3964 7.83932 18.2688 10.0269 18.2743C11.9671 18.2743 13.7548 17.5918 15.1683 16.4623L18.6017 19.8957C18.7757 20.0574 19.0055 20.1455 19.243 20.1413C19.4804 20.1371 19.7071 20.0411 19.8752 19.8734C20.0434 19.7057 20.14 19.4793 20.1448 19.2419C20.1496 19.0044 20.0622 18.7743 19.9009 18.6L16.4675 15.1631C17.6402 13.7047 18.2794 11.8896 18.2795 10.0182C18.2795 5.47271 14.5724 1.76909 10.0269 1.76909ZM10.0269 3.60531C13.5816 3.60531 16.4433 6.46358 16.4433 10.0148C16.4433 13.5659 13.5816 16.4415 10.0269 16.4415C6.47227 16.4415 3.61401 13.5763 3.61401 10.0217C3.61401 6.46704 6.47227 3.60531 10.0269 3.60531Z"
+              fill="url(#paint0_linear_1624_6752)"
             />
-          </div>
+            <defs>
+              <linearGradient
+                id="paint0_linear_1624_6752"
+                x1="7.9002"
+                y1="1.76562"
+                x2="19.7549"
+                y2="3.95459"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stop-color="#C3942F" />
+                <stop offset="0.234" stop-color="#D89C27" />
+                <stop offset="0.449" stop-color="#E7DC96" />
+                <stop offset="0.669" stop-color="#DFC86F" />
+                <stop offset="0.849" stop-color="#D89C27" />
+                <stop offset="1" stop-color="#C99C30" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <i class="fa-solid fa-xmark fs-5 d-none" id="closebutton"></i>
+          <input
+            class="form-control sf-form-control"
+            name="q"
+            type="text"
+            id="searchInput"
+            placeholder="Search doctors, clinics, hospitals, etc."
+            onchange="searchDoctor(event)"
+            oninput="searchDoctor(event)"
+            style="background-color: rgba(247, 245, 240, 1)"
+          />
+          <div id="suggestions"></div>
         </div>
-        <div class="col-lg-5 col-md-6 mb-sm-3 mb-lg-0">
-          <div class="searchbar-box-wrapper1">
-            <svg class="img-fluid" width="75" height="75" viewBox="0 0 75 75" fill="none" xmlns="http://www.w3.org/2000/svg">
+      </div>
+      <div class="col-lg-5 col-md-6 mb-sm-3 mb-lg-0">
+        <div class="searchbar-box-wrapper1">
+          <svg
+            class="img-fluid"
+            width="75"
+            height="75"
+            viewBox="0 0 75 75"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <g clip-path="url(#clip0_2531_1226)">
-            <path d="M37.2982 5.8057C36.4956 5.7999 35.841 6.44577 35.8352 7.24693C35.8294 8.0481 36.4738 8.70268 37.2764 8.70848C38.0776 8.71429 38.7322 8.06987 38.738 7.2687C38.7438 6.46754 38.0994 5.81296 37.2982 5.8057ZM37.2322 14.5139C31.6282 14.4741 27.0388 18.9951 26.9964 24.5973C26.9542 30.1992 31.4776 34.7908 37.0798 34.833L37.1576 34.8333C42.7241 34.8333 47.2734 30.3259 47.3155 24.7497C47.3578 19.148 42.8345 14.5561 37.2322 14.5139ZM37.1573 31.9307L37.1015 31.9304C33.0999 31.9002 29.8688 28.6204 29.899 24.619C29.9291 20.6357 33.1784 17.4162 37.1547 17.4162L37.2104 17.4165C41.212 17.4467 44.4431 20.7266 44.4129 24.7279C44.3827 28.7112 41.1335 31.9307 37.1573 31.9307ZM43.4885 6.90644C42.7335 6.63851 41.9035 7.03401 41.6355 7.78961C41.3678 8.5452 41.7633 9.37467 42.5187 9.64259C48.9116 11.9084 53.1722 17.9971 53.1211 24.7935C53.1151 25.595 53.76 26.2497 54.5616 26.2558H54.5728C55.369 26.2558 56.0178 25.6131 56.0239 24.8153C56.0842 16.7823 51.0466 9.58526 43.4885 6.90644Z" fill="url(#paint0_linear_2531_1226)"/>
-            <path d="M46.0599 54.6364C55.7135 42.2103 61.7465 35.7306 61.8279 24.8591C61.9301 11.1808 50.8296 0 37.1523 0C23.6346 0 12.5841 10.9475 12.4813 24.489C12.3983 35.6553 18.5433 42.1261 28.2636 54.6343C18.5937 56.0793 12.4813 59.7103 12.4813 64.1514C12.4813 67.1263 15.2311 69.7958 20.2243 71.6681C24.769 73.3724 30.7817 74.311 37.1546 74.311C43.5275 74.311 49.5402 73.3724 54.0849 71.6681C59.0781 69.7957 61.8279 67.1262 61.8279 64.1512C61.8279 59.7126 55.7212 56.0825 46.0599 54.6364ZM15.3839 24.5109C15.4745 12.5618 25.2242 2.90278 37.1526 2.90278C49.2222 2.90278 59.0153 12.7705 58.9253 24.8375C58.8481 35.1618 52.4501 41.5242 42.2356 54.8397C40.4137 57.2136 38.7406 59.458 37.1568 61.6535C35.5777 59.4567 33.9379 57.2525 32.0887 54.8388C21.452 40.9659 15.3053 35.0843 15.3839 24.5109ZM37.1546 71.4083C24.6943 71.4083 15.3839 67.5771 15.3839 64.1514C15.3839 61.6109 20.9497 58.4016 30.308 57.2902C32.3766 60.0045 34.1903 62.4704 35.9691 64.9888C36.103 65.1784 36.2804 65.3331 36.4865 65.4399C36.6925 65.5468 36.9212 65.6026 37.1533 65.6028H37.1546C37.3865 65.6028 37.615 65.5472 37.8211 65.4407C38.0271 65.3342 38.2046 65.1799 38.3387 64.9907C40.1006 62.5051 41.9639 59.9784 44.0149 57.2918C53.3645 58.4043 58.9253 61.6126 58.9253 64.1515C58.9252 67.5771 49.6149 71.4083 37.1546 71.4083Z" fill="url(#paint1_linear_2531_1226)"/>
+              <path
+                d="M37.2982 5.8057C36.4956 5.7999 35.841 6.44577 35.8352 7.24693C35.8294 8.0481 36.4738 8.70268 37.2764 8.70848C38.0776 8.71429 38.7322 8.06987 38.738 7.2687C38.7438 6.46754 38.0994 5.81296 37.2982 5.8057ZM37.2322 14.5139C31.6282 14.4741 27.0388 18.9951 26.9964 24.5973C26.9542 30.1992 31.4776 34.7908 37.0798 34.833L37.1576 34.8333C42.7241 34.8333 47.2734 30.3259 47.3155 24.7497C47.3578 19.148 42.8345 14.5561 37.2322 14.5139ZM37.1573 31.9307L37.1015 31.9304C33.0999 31.9002 29.8688 28.6204 29.899 24.619C29.9291 20.6357 33.1784 17.4162 37.1547 17.4162L37.2104 17.4165C41.212 17.4467 44.4431 20.7266 44.4129 24.7279C44.3827 28.7112 41.1335 31.9307 37.1573 31.9307ZM43.4885 6.90644C42.7335 6.63851 41.9035 7.03401 41.6355 7.78961C41.3678 8.5452 41.7633 9.37467 42.5187 9.64259C48.9116 11.9084 53.1722 17.9971 53.1211 24.7935C53.1151 25.595 53.76 26.2497 54.5616 26.2558H54.5728C55.369 26.2558 56.0178 25.6131 56.0239 24.8153C56.0842 16.7823 51.0466 9.58526 43.4885 6.90644Z"
+                fill="url(#paint0_linear_2531_1226)"
+              />
+              <path
+                d="M46.0599 54.6364C55.7135 42.2103 61.7465 35.7306 61.8279 24.8591C61.9301 11.1808 50.8296 0 37.1523 0C23.6346 0 12.5841 10.9475 12.4813 24.489C12.3983 35.6553 18.5433 42.1261 28.2636 54.6343C18.5937 56.0793 12.4813 59.7103 12.4813 64.1514C12.4813 67.1263 15.2311 69.7958 20.2243 71.6681C24.769 73.3724 30.7817 74.311 37.1546 74.311C43.5275 74.311 49.5402 73.3724 54.0849 71.6681C59.0781 69.7957 61.8279 67.1262 61.8279 64.1512C61.8279 59.7126 55.7212 56.0825 46.0599 54.6364ZM15.3839 24.5109C15.4745 12.5618 25.2242 2.90278 37.1526 2.90278C49.2222 2.90278 59.0153 12.7705 58.9253 24.8375C58.8481 35.1618 52.4501 41.5242 42.2356 54.8397C40.4137 57.2136 38.7406 59.458 37.1568 61.6535C35.5777 59.4567 33.9379 57.2525 32.0887 54.8388C21.452 40.9659 15.3053 35.0843 15.3839 24.5109ZM37.1546 71.4083C24.6943 71.4083 15.3839 67.5771 15.3839 64.1514C15.3839 61.6109 20.9497 58.4016 30.308 57.2902C32.3766 60.0045 34.1903 62.4704 35.9691 64.9888C36.103 65.1784 36.2804 65.3331 36.4865 65.4399C36.6925 65.5468 36.9212 65.6026 37.1533 65.6028H37.1546C37.3865 65.6028 37.615 65.5472 37.8211 65.4407C38.0271 65.3342 38.2046 65.1799 38.3387 64.9907C40.1006 62.5051 41.9639 59.9784 44.0149 57.2918C53.3645 58.4043 58.9253 61.6126 58.9253 64.1515C58.9252 67.5771 49.6149 71.4083 37.1546 71.4083Z"
+                fill="url(#paint1_linear_2531_1226)"
+              />
             </g>
             <defs>
-            <linearGradient id="paint0_linear_2531_1226" x1="36.6686" y1="5.80566" x2="55.407" y2="9.26804" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#C3942F"/>
-            <stop offset="0.234" stop-color="#D89C27"/>
-            <stop offset="0.449" stop-color="#E7DC96"/>
-            <stop offset="0.669" stop-color="#DFC86F"/>
-            <stop offset="0.849" stop-color="#D89C27"/>
-            <stop offset="1" stop-color="#C99C30"/>
-            </linearGradient>
-            <linearGradient id="paint1_linear_2531_1226" x1="28.9237" y1="-6.06967e-07" x2="61.3779" y2="3.98219" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#C3942F"/>
-            <stop offset="0.234" stop-color="#D89C27"/>
-            <stop offset="0.449" stop-color="#E7DC96"/>
-            <stop offset="0.669" stop-color="#DFC86F"/>
-            <stop offset="0.849" stop-color="#D89C27"/>
-            <stop offset="1" stop-color="#C99C30"/>
-            </linearGradient>
-            <clipPath id="clip0_2531_1226">
-            <rect width="74.3111" height="74.3111" fill="white"/>
-            </clipPath>
+              <linearGradient
+                id="paint0_linear_2531_1226"
+                x1="36.6686"
+                y1="5.80566"
+                x2="55.407"
+                y2="9.26804"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stop-color="#C3942F" />
+                <stop offset="0.234" stop-color="#D89C27" />
+                <stop offset="0.449" stop-color="#E7DC96" />
+                <stop offset="0.669" stop-color="#DFC86F" />
+                <stop offset="0.849" stop-color="#D89C27" />
+                <stop offset="1" stop-color="#C99C30" />
+              </linearGradient>
+              <linearGradient
+                id="paint1_linear_2531_1226"
+                x1="28.9237"
+                y1="-6.06967e-07"
+                x2="61.3779"
+                y2="3.98219"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stop-color="#C3942F" />
+                <stop offset="0.234" stop-color="#D89C27" />
+                <stop offset="0.449" stop-color="#E7DC96" />
+                <stop offset="0.669" stop-color="#DFC86F" />
+                <stop offset="0.849" stop-color="#D89C27" />
+                <stop offset="1" stop-color="#C99C30" />
+              </linearGradient>
+              <clipPath id="clip0_2531_1226">
+                <rect width="74.3111" height="74.3111" fill="white" />
+              </clipPath>
             </defs>
-            </svg> 
-            <select
-              class="form-select"
-              name="city"
-              aria-label="Default select example"
-            >
-              <option value="">Select Location</option>
-              {% for ie in a_city %}
-              <option value="{{ie.id}}">{{ie.city}}</option>
-              {% endfor %}
-            </select>
-          </div>
+          </svg>
+          <select
+            class="form-select"
+            name="city"
+            aria-label="Default select example"
+          >
+            <option value="">Select Location</option>
+            {% for ie in a_city %}
+            <option value="{{ie.id}}">{{ie.city}}</option>
+            {% endfor %}
+          </select>
         </div>
-        <div class="col-lg-2 col-md-12">
-          <button class="w-100 aon-search2-btn site-button bat fw-900" type="submit">
-            Search
-          </button>
-        </div>
-      </form>
-      <div class="row pt-3 pt-sm-5 pb-0">
-        <div class="col-lg-6 col-md-8 col-12">
-          <p class="text-header text-start position-relative mb-0 cool">Locations</p>
-          <h3 class="text-header-subtitle">Top Searched Locations</h3>
-          <p class="Loc-description text-subcontent">
-            Discover the leading destinations where patients connect with our
-            network of Ultimate Smile Designers. Our platform helps you find
-            expert dentists across various prime locations.
-          </p>
-        </div>
-        {% for city in cities %}
-          <div class="col-lg-3 col-md-4 col-6 col-sm-6  square-card-wrapper">
-            <a href="{% url 'home:search_city_dentists' city.city|slugify %}">
-              <div class="square-card position-relative w-100">
-                {% comment %} <img
-                  src="{% static 'bg_loc.svg' %}"
-                  class="bgloc"
-                  loading="lazy"
-                  alt="Location Icon"
-                /> {% endcomment %}
-                  <svg class="bgloc img-fluid" width="218" height="218" viewBox="0 0 218 218" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g clip-path="url(#clip0_934_23469)">
-                  <path d="M109.416 17.0323C107.061 17.0153 105.141 18.91 105.124 21.2604C105.107 23.6107 106.997 25.531 109.352 25.548C111.702 25.565 113.623 23.6746 113.64 21.3242C113.657 18.9739 111.766 17.0536 109.416 17.0323ZM109.222 42.5789C92.7822 42.4622 79.3185 55.7249 79.1942 72.1597C79.0703 88.5937 92.3403 102.064 108.775 102.188L109.003 102.189C125.333 102.189 138.679 88.9654 138.803 72.6068C138.927 56.1737 125.657 42.7028 109.222 42.5789ZM109.002 93.6733L108.839 93.6724C97.0997 93.5839 87.6209 83.962 87.7094 72.2236C87.7976 60.538 97.33 51.0933 108.995 51.0933L109.158 51.0941C120.898 51.1827 130.376 60.8045 130.288 72.5429C130.199 84.2286 120.667 93.6733 109.002 93.6733ZM127.576 20.2615C125.361 19.4755 122.926 20.6357 122.14 22.8524C121.354 25.069 122.515 27.5023 124.731 28.2883C143.485 34.9352 155.984 52.7973 155.834 72.7354C155.817 75.0866 157.709 77.0073 160.06 77.0252H160.093C162.429 77.0252 164.332 75.1398 164.35 72.7993C164.527 49.2335 149.749 28.1202 127.576 20.2615Z" fill="#2B2B2B"/>
-                  <path d="M135.123 160.282C163.443 123.828 181.141 104.819 181.38 72.9263C181.68 32.7992 149.115 -0.000976562 108.991 -0.000976562C69.3354 -0.000976562 36.9172 32.115 36.6157 71.8405C36.3722 104.598 54.3994 123.581 82.9149 160.276C54.5471 164.515 36.6157 175.167 36.6157 188.195C36.6157 196.922 44.6826 204.754 59.3308 210.246C72.6634 215.246 90.3023 217.999 108.998 217.999C127.694 217.999 145.333 215.246 158.665 210.246C173.313 204.753 181.38 196.922 181.38 188.195C181.38 175.173 163.465 164.524 135.123 160.282ZM45.131 71.9048C45.3966 36.8505 73.9986 8.51468 108.992 8.51468C144.4 8.51468 173.129 37.4628 172.865 72.8628C172.638 103.15 153.869 121.816 123.904 160.878C118.559 167.842 113.651 174.427 109.004 180.867C104.372 174.423 99.5613 167.956 94.1364 160.876C62.9325 120.178 44.9002 102.923 45.131 71.9048ZM108.998 209.484C72.4441 209.484 45.131 198.245 45.131 188.195C45.131 180.742 61.4589 171.327 88.9125 168.067C94.9812 176.03 100.302 183.264 105.52 190.652C105.913 191.208 106.433 191.662 107.038 191.975C107.642 192.289 108.313 192.452 108.994 192.453H108.998C109.678 192.453 110.349 192.29 110.953 191.977C111.557 191.665 112.078 191.212 112.472 190.657C117.641 183.365 123.107 175.953 129.123 168.072C156.552 171.335 172.865 180.747 172.865 188.195C172.865 198.245 145.552 209.484 108.998 209.484Z" fill="#2B2B2B"/>
-                  </g>
-                  <defs>
-                  <clipPath id="clip0_934_23469">
-                  <rect width="218.001" height="218.001" fill="white" transform="translate(0 -0.000976562)"/>
-                  </clipPath>
-                  </defs>
-                  </svg>
-                <div class="square-card-content">
-                  <p class="city_txt cool mb-1">
-                    {{ city.city }}
-                  </p>
-                  <p class="Designer_txt mb-0">{{ city.countdr }} - Smile Designers</p>
-                </div>
-              </div>
-            </a>  
-          </div>
-        {% endfor %}
       </div>
+      <div class="col-lg-2 col-md-12">
+        <button
+          class="w-100 aon-search2-btn site-button bat fw-900"
+          type="submit"
+        >
+          Search
+        </button>
+      </div>
+    </form>
+    <div class="row pt-3 pt-sm-5 pb-0">
+      <div class="col-lg-6 col-md-8 col-12">
+        <p class="text-header text-start position-relative mb-0 cool">
+          Locations
+        </p>
+        <h3 class="text-header-subtitle">Top Searched Locations</h3>
+        <p class="Loc-description text-subcontent">
+          Discover the leading destinations where patients connect with our
+          network of Ultimate Smile Designers. Our platform helps you find
+          expert dentists across various prime locations.
+        </p>
+      </div>
+      {% for city in cities %}
+      <div class="col-lg-3 col-md-4 col-6 col-sm-6 square-card-wrapper">
+        <a href="{% url 'home:search_city_dentists' city.city|slugify %}">
+          <div class="square-card position-relative w-100">
+            {% comment %}
+            <img
+              src="{% static 'bg_loc.svg' %}"
+              class="bgloc"
+              loading="lazy"
+              alt="Location Icon"
+            />
+            {% endcomment %}
+            <svg
+              class="bgloc img-fluid"
+              width="218"
+              height="218"
+              viewBox="0 0 218 218"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g clip-path="url(#clip0_934_23469)">
+                <path
+                  d="M109.416 17.0323C107.061 17.0153 105.141 18.91 105.124 21.2604C105.107 23.6107 106.997 25.531 109.352 25.548C111.702 25.565 113.623 23.6746 113.64 21.3242C113.657 18.9739 111.766 17.0536 109.416 17.0323ZM109.222 42.5789C92.7822 42.4622 79.3185 55.7249 79.1942 72.1597C79.0703 88.5937 92.3403 102.064 108.775 102.188L109.003 102.189C125.333 102.189 138.679 88.9654 138.803 72.6068C138.927 56.1737 125.657 42.7028 109.222 42.5789ZM109.002 93.6733L108.839 93.6724C97.0997 93.5839 87.6209 83.962 87.7094 72.2236C87.7976 60.538 97.33 51.0933 108.995 51.0933L109.158 51.0941C120.898 51.1827 130.376 60.8045 130.288 72.5429C130.199 84.2286 120.667 93.6733 109.002 93.6733ZM127.576 20.2615C125.361 19.4755 122.926 20.6357 122.14 22.8524C121.354 25.069 122.515 27.5023 124.731 28.2883C143.485 34.9352 155.984 52.7973 155.834 72.7354C155.817 75.0866 157.709 77.0073 160.06 77.0252H160.093C162.429 77.0252 164.332 75.1398 164.35 72.7993C164.527 49.2335 149.749 28.1202 127.576 20.2615Z"
+                  fill="#2B2B2B"
+                />
+                <path
+                  d="M135.123 160.282C163.443 123.828 181.141 104.819 181.38 72.9263C181.68 32.7992 149.115 -0.000976562 108.991 -0.000976562C69.3354 -0.000976562 36.9172 32.115 36.6157 71.8405C36.3722 104.598 54.3994 123.581 82.9149 160.276C54.5471 164.515 36.6157 175.167 36.6157 188.195C36.6157 196.922 44.6826 204.754 59.3308 210.246C72.6634 215.246 90.3023 217.999 108.998 217.999C127.694 217.999 145.333 215.246 158.665 210.246C173.313 204.753 181.38 196.922 181.38 188.195C181.38 175.173 163.465 164.524 135.123 160.282ZM45.131 71.9048C45.3966 36.8505 73.9986 8.51468 108.992 8.51468C144.4 8.51468 173.129 37.4628 172.865 72.8628C172.638 103.15 153.869 121.816 123.904 160.878C118.559 167.842 113.651 174.427 109.004 180.867C104.372 174.423 99.5613 167.956 94.1364 160.876C62.9325 120.178 44.9002 102.923 45.131 71.9048ZM108.998 209.484C72.4441 209.484 45.131 198.245 45.131 188.195C45.131 180.742 61.4589 171.327 88.9125 168.067C94.9812 176.03 100.302 183.264 105.52 190.652C105.913 191.208 106.433 191.662 107.038 191.975C107.642 192.289 108.313 192.452 108.994 192.453H108.998C109.678 192.453 110.349 192.29 110.953 191.977C111.557 191.665 112.078 191.212 112.472 190.657C117.641 183.365 123.107 175.953 129.123 168.072C156.552 171.335 172.865 180.747 172.865 188.195C172.865 198.245 145.552 209.484 108.998 209.484Z"
+                  fill="#2B2B2B"
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_934_23469">
+                  <rect
+                    width="218.001"
+                    height="218.001"
+                    fill="white"
+                    transform="translate(0 -0.000976562)"
+                  />
+                </clipPath>
+              </defs>
+            </svg>
+            <div class="square-card-content">
+              <p class="city_txt cool mb-1">{{ city.city }}</p>
+              <p class="Designer_txt mb-0">
+                {{ city.countdr }} - Smile Designers
+              </p>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- JavaScript for Hiding Extra Rows Dynamically -->
-  <script>
-    function updateCardDisplay() {
-      let cards = document.querySelectorAll(".square-card-wrapper");
-      let maxCards;
-      if (window.innerWidth >= 992) {
-        maxCards = 6;
-      } else if (window.innerWidth >= 768) {
-        maxCards = 4;
-      } else {
-        maxCards = 2;
-      }
-      cards.forEach((card, index) => {
-        if (index >= maxCards) {
-          card.style.display = "none";
-        } else {
-          card.style.display = "block";
-        }
-      });
+<!-- JavaScript for Hiding Extra Rows Dynamically -->
+<script>
+  function updateCardDisplay() {
+    let cards = document.querySelectorAll(".square-card-wrapper");
+    let maxCards;
+    if (window.innerWidth >= 992) {
+      maxCards = 6;
+    } else if (window.innerWidth >= 768) {
+      maxCards = 4;
+    } else {
+      maxCards = 2;
     }
-    document.addEventListener("DOMContentLoaded", updateCardDisplay);
-    window.addEventListener("resize", updateCardDisplay);
-  </script>
+    cards.forEach((card, index) => {
+      if (index >= maxCards) {
+        card.style.display = "none";
+      } else {
+        card.style.display = "block";
+      }
+    });
+  }
+  document.addEventListener("DOMContentLoaded", updateCardDisplay);
+  window.addEventListener("resize", updateCardDisplay);
+</script>
+<script>
+  function searchDoctor(event) {
+    let a = document.getElementById("closebutton");
+    let b = document.getElementById("searchicon-Img");
+    if (event.target.value === "") {
+      const suggestionBox = document.getElementById("suggestions");
+      document.getElementById("suggestions").innerHtml = "";
+      a.classList.add("d-none");
+      a.classList.remove("d-block");
+      b.classList.add("d-block");
+      b.classList.remove("d-none");
+      suggestionBox.classList.add("d-none");
+    } else {
+      const suggestionBox = document.getElementById("suggestions");
+      a.classList.add("d-block");
+      a.classList.remove("d-none");
+      b.classList.add("d-none");
+      b.classList.remove("d-block");
+      suggestionBox.classList.remove("d-none");
+    }
+    const query = document.getElementById("searchInput").value;
+    if (query.length < 2) {
+      document.getElementById("suggestions").innerHtml = "";
+      return;
+    }
+    fetch(`/?q=${encodeURIComponent(query)}`, {
+      headers: {
+        "X-Requested-With": "XMLHttpRequest",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        /* console.log("data",data); */
+        const suggestionBox = document.getElementById("suggestions");
+        suggestionBox.innerHTML = "";
+        if (data.length == 0) {
+          const div = document.createElement("p");
+          div.textContent = "Not found Doctor data !";
+          div.style.cursor = "pointer";
+          suggestionBox.appendChild(div);
+        } else {
+          data.forEach((doctor) => {
+           const div = document.createElement("a");
+            if (doctor.type === "dentist") {
+              div.href = `/certified-dentists/${doctor.slug}/`;
+              div.textContent = doctor.name;
+              div.style.padding = "5px 10px";
+              div.style.borderBottom = "1px solid #ccc";
+              div.style.cursor = "pointer";
+              suggestionBox.appendChild(div);
+            } else {
+              div.href = `/certified-dentists/${doctor.slug}/`;
+              div.textContent = doctor.clinic_name;
+              div.style.padding = "5px 10px";
+              div.style.borderBottom = "1px solid #ccc";
+              div.style.cursor = "pointer";
+              suggestionBox.appendChild(div);
+            } 
+          });
+        }
+      })
+      .catch((err) => console.error("Fetch error:", err));
+  }
+  document.getElementById("closebutton").addEventListener("click", function () {
+    const input = document.getElementById("searchInput");
+    input.value = "";
+
+    const closeBtn = document.getElementById("closebutton");
+    const searchIcon = document.getElementById("searchicon-Img");
+    closeBtn.classList.add("d-none");
+    closeBtn.classList.remove("d-block");
+    searchIcon.classList.add("d-block");
+    searchIcon.classList.remove("d-none");
+
+    const suggestionBox = document.getElementById("suggestions");
+    suggestionBox.innerHTML = "";
+  });
+</script>
