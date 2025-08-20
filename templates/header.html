@@ -28,19 +28,27 @@
                 <!-- MAIN Vav -->
                 <div class="d-inline-block nav-animation header-nav navbar-collapse collapse   flex-1">
                     
-                    <ul class=" nav navbar-nav">
-                        
-                        <li class=""><a href="{% url 'home:home' %}"><span {% if request.path == '/' %}class="heasder_active cool"{% endif %}> Home</span>
+                    <ul class="nav navbar-nav">
+                        <a href="{% url 'home:home' %}">
+                            <li class=""><span {% if request.path == '/' %}class="heasder_active cool"{% endif %}> Home</span>
+                            </li> 
                         </a>
-                        </li> 
-                        <li class=""><a href={% url 'home:search_all_usd' %}><span {% if '/certified-dentists/' in request.path %}class="heasder_active cool"{% endif %}> Find Dentist</span></a>
-                        </li> 
-                        <li class=""><a href="{% url 'home:gallery' %}"><span {% if request.path == '/gallery/' %}class="heasder_active cool"{% endif %}> Gallery</span></a>
-                        </li> 
-                        <li class=""><a href="{% url 'home:blogs' %}"><span class="blogs"{% if request.path == '/blogs/' %}class="heasder_active cool"{% endif %} id="blogs"> Blogs</span></a>
-                        </li>                                                                
-                        <li class=""><a href="{% url 'home:contact' %}"><span {% if request.path == '/contact/' %}class="heasder_active cool"{% endif %}> Contact</span></a>                          
-                        </li> 
+                        <a href={% url 'home:search_all_usd' %}>
+                            <li class=""><span {% if '/certified-dentists/' in request.path %}class="heasder_active cool"{% endif %}> Find Dentist</span>
+                            </li> 
+                        </a>
+                        <a href="{% url 'home:gallery' %}">
+                            <li class=""><span {% if request.path == '/gallery/' %}class="heasder_active cool"{% endif %}> Gallery</span>
+                            </li> 
+                        </a>
+                        <a href="{% url 'home:blogs' %}">
+                            <li class=""><span class="blogs"{% if request.path == '/blogs/' %}class="heasder_active cool"{% endif %} id="blogs"> Blogs</span>
+                            </li>                                                                
+                        </a>
+                        <a href="{% url 'home:contact' %}">
+                            <li class=""><span {% if request.path == '/contact/' %}class="heasder_active cool"{% endif %}> Contact</span>                       
+                            </li> 
+                        </a>   
                         <li class="hea-shrink-btn">
                             <form action="{% url 'home:dentist' %}" method="get">
                                 <button type="submit" class="bat text-center hea-shrink-btn-inner">
@@ -55,7 +63,6 @@
                                 </button>
                             </form>
                         </li>
-                
                     </ul>
 
                 </div>
