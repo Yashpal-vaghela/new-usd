@@ -183,6 +183,9 @@
 .login-form .row .col-lg-6 {
   margin-bottom: 30px;
 }
+.login-form .row .col-lg-12{
+  margin-bottom: 30px;
+}
 .login-form .form-label {
   color: #fff;
   font-weight: 400;
@@ -365,6 +368,9 @@
   .login-form .row .col-lg-6 {
     margin-bottom: 20px;
   }
+  .login-form .row .col-lg-12{
+    margin-bottom: 20px;  
+  }
   .login-form .row .col-12 label {
     font-size: 14px;
   }
@@ -416,6 +422,9 @@
     font-size: 14px;
   }
   .login-form .row .col-lg-6 {
+    margin-bottom: 16px;
+  }
+  .login-form .row .col-lg-12{
     margin-bottom: 16px;
   }
   .aon-login-form {
