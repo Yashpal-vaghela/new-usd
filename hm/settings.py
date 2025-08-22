@@ -209,7 +209,8 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
-
+RECAPTCHA_SITE_KEY = "6LeNfq4rAAAAAMBnNy3uLYynCo2hDdx6vkuMfDl7"
+RECAPTCHA_SECRET_KEY = "6LeNfq4rAAAAAPM7U4LVTLif735LUSoLuYjEbBo_"
 # SMTP
 # EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST ='smtp.gmail.com' 

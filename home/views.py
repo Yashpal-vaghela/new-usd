@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from account.models import *
@@ -483,6 +484,19 @@ def blogsd(request, pk):
 def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
+
+        recaptcha_response = request.POST.get('g-recaptcha-response')
+        data = {
+            'secret' : settings.RECAPTCHA_SECRET_KEY,
+            'response' : recaptcha_response
+        }
+        r = request.post('https://www.google.com/recaptcha/api/siteverify', data = data)
+        result = r.json()
+
+        if not result.get('success'):
+            messages.error(request, 'Invalid reCAPTCHA. Please try again.')
+            return redirect(request.META.get('HTTP_REFERER','contact'))
+        
         if form.is_valid():
             form.save()
             messages.success(request, 'Your data is sent successfully.')
@@ -495,7 +509,9 @@ def contact(request):
         # If the form is invalid, stay on the contact page
         return redirect(request.META.get('HTTP_REFERER', 'contact'))
 
-    context = {}
+    context = {
+        "RECAPTCHA_SITE_KEY": settings.RECAPTCHA_SITE_KEY
+    }
     return render(request, 'contact.html', context)
 def sitemap(request):
     return render(request, 'sitemap.xml', content_type='text/xml')
@@ -510,6 +526,19 @@ def thankyou(request):
 def dentist(request):
     if request.method == 'POST':
         form = UserSubmissionForm(request.POST)
+
+        recaptcha_response = request.POST.get('g-reecaptcha-response')
+        data = {
+            "secret" : settings.RECAPTCHA_SECRET_KEY,
+            "response" : recaptcha_response,
+        }
+        r = request.post("https://www.google.com/recaptcha/api/siteverify", data=data)
+        result = r.json()
+
+        if not result.get("success"):
+            messages.error(request, "Invalid reCAPTCHA. Please try again.")
+            return redirect(request.META.get("HTTP_REFERER","dentist"))
+        
         if form.is_valid():
             # Save the form data to the database
             user_submission = form.save()
@@ -520,6 +549,7 @@ def dentist(request):
             # Redirect to the Thank You page
             return redirect('home:thankyou')  # Assuming 'home:thankyou' is the URL for the Thank You page
         else:
+            messages.error(request, "Something went wrong! Please check your details.")
             # Handle form errors
             return render(request, 'request.html', {'form': form, 'error_message': 'Please correct the errors below.'})
     else:

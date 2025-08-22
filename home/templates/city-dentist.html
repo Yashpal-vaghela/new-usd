@@ -108,12 +108,10 @@
 
 {% endblock body %} {% block js %}
 <script>
-  function BookAppoinment(id,name,city){
-    console.log("sdf",id,name,city)
+  function BookAppoinment(id,name){
     const doctordata = {
       id:id,
       name:name,
-      city:city
     }
     localStorage.setItem('selectedDoctor',JSON.stringify(doctordata));
     window.location.href="/consult-with-dentist/";

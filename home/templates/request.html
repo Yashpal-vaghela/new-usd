@@ -163,35 +163,21 @@ document.addEventListener('DOMContentLoaded', function(){
   const doctordata = JSON.parse(localStorage.getItem('selectedDoctor'));
    console.log("window",window,doctordata)
    if(doctordata !== null){
-      if(doctordata.name && doctordata.city){
+      if(doctordata.name){
         document.getElementById("doctor-info").innerHTML =
         `
         <div class="col-lg-6 ps-0">
           <div class="inputicon-box">
             <input
               class="form-control"
-              name="phone"
+              name="doctor_name"
               type="text"
-              placeholder="Phone Number"
+              placeholder="Doctor Name"
               required
               value="${doctordata.name}"
               readonly
             />
             <i class="fa-solid fa-user-doctor"></i>
-          </div>
-        </div>
-        <div class="col-lg-6 pe-0">
-          <div class="inputicon-box">
-            <input
-              class="form-control"
-              name="phone"
-              type="text"
-              placeholder="Phone Number"
-              required
-              value="${doctordata.city}"
-              readonly
-            />
-            <i class="fa-solid fa-location-dot"></i>
           </div>
         </div>
         `

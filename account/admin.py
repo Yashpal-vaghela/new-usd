@@ -25,7 +25,7 @@ class TestimonialsAdmin(admin.ModelAdmin):
     search_fields = ('name', 'position')
 
 class ContactAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'phone', 'date', 'subject', 'message')
+    list_display = ('name', 'email', 'phone','city', 'date', 'subject', 'message')
     search_fields = ('name', 'email', 'phone')
     list_filter = ('date',)
 

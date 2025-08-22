@@ -244,7 +244,7 @@
               <div class="card-body text-end">
                 {% comment %} <h2 class="text-start">{{ie.name}}</h2>
                 <p class="text-start mb-0">{{ie.city}}</p> {% endcomment %}
-                <button class="btn bookAppoinment-btn mt-3 w-100 bat" onclick="BookAppoinment('{{ie.name}}','{{ie.city}}')">
+                <button class="btn bookAppoinment-btn mt-3 w-100 bat" onclick="BookAppoinment('{{ie.name}}')">
                   Book Appointment
                   {% comment %} <a href="#">Book Appointment</a> {% endcomment %}
                   {% comment %} <a href="/account/dentist/" >Book Appointment</a> {% endcomment %}
@@ -356,11 +356,10 @@
 </script>
 <!--Book Appointment-->
 <script>
-  function BookAppoinment(name,city){
+  function BookAppoinment(name){
     //console.log("sdf",id,name,city)
     const doctordata = {
       name:name,
-      city:city
     }
     localStorage.setItem('selectedDoctor',JSON.stringify(doctordata));
     window.location.href="/consult-with-dentist/";

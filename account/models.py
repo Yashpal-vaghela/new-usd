@@ -240,6 +240,7 @@ class Contact(models.Model):
     name =models.CharField(max_length = 1256,blank=True, null=True)
     email = models.CharField(max_length = 1256,blank=True, null=True)
     phone = models.CharField(max_length = 156)
+    city = models.CharField(max_length = 156,blank=True, null=True)
     subject = models.CharField(max_length = 156)
     message =RichTextUploadingField()
     date = models.DateTimeField(auto_now_add=True)
@@ -254,6 +255,9 @@ class UserSubmission(models.Model):
     last_name = models.CharField(max_length=50)
     phone = models.CharField(max_length=15)
     email = models.EmailField()
+    city = models.CharField(max_length=100, blank=True, null=True)
+    message = models.TextField(blank=True, null=True)
+    doctor_name = models.CharField(max_length=100, blank=True, null=True)
     agree_to_terms = models.BooleanField(default=False)
 
     def __str__(self):

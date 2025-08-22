@@ -10,11 +10,13 @@ class ContactForm(forms.ModelForm):
 class UserSubmissionForm(forms.ModelForm):
     class Meta:
         model = UserSubmission
-        fields = ['first_name', 'last_name', 'phone', 'email', 'agree_to_terms']
+        fields = ['first_name', 'last_name', 'phone', 'email', 'city', 'message', 'agree_to_terms']
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control ', 'placeholder': 'First Name'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control ', 'placeholder': 'Last Name'}),
             'phone': forms.TextInput(attrs={'class': 'form-control ', 'placeholder': 'Phone'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
+            'city' : forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'City'}),
+            'message' : forms.TextInput(attrs={'class':'form-control','placeholder': 'Message'}),
             'agree_to_terms': forms.CheckboxInput(attrs={'id': 'td33'}),
         }

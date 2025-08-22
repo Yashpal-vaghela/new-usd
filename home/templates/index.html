@@ -446,7 +446,7 @@
                </p>
                <p class="mb-2 font-Barlow white fs-14 fw-500 text-start">{{ie.city}}</p>
                <button class="btn  btn-appointment bat w-100 my-2">
-                 <a href="/consult-with-dentist/" onclick="BookAppoinment('{{ie.name}}','{{ie.city}}')">Book Appointment</a>
+                 <a href="/consult-with-dentist/" onclick="BookAppoinment('{{ie.name}}')">Book Appointment</a>
                </button>
                <span class="cool font-Barlow fw-500 text-end position-relative mb-0">ADE Verified Dentist</span>
              </div>
@@ -1285,7 +1285,6 @@
     //console.log("sdf",id,name,city)
     const doctordata = {
       name:name,
-      city:city
     }
     localStorage.setItem('selectedDoctor',JSON.stringify(doctordata));
     window.location.href="/consult-with-dentist/";

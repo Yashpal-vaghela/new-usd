@@ -69,7 +69,16 @@
               required
             />
           </div>
-          <div class="col-lg-12 mb-4">
+          <div class="col-lg-6 mb-4">
+            <input
+              type="text"
+              name="city"
+              placeholder="City"
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="col-lg-6 mb-4">
             <input
               type="text"
               name="subject"
@@ -89,6 +98,7 @@
             ></textarea>
           </div>
           <div class="col-md-12">
+            <div class="g-recaptcha mb-3" data-sitekey="{{ RECAPTCHA_SITE_KEY }}"></div>
             <button class="btn btn-submit d-flex mx-auto bat" type="submit">submit</button>
           </div>
         </div>
@@ -217,7 +227,7 @@
 </div>
 <!-- Content END-->
 {% endblock body %} {% block js %}
-
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
   // Function to display SweetAlert based on Django messages
   {% if messages %}
