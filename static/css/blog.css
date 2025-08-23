@@ -26,8 +26,12 @@
     .breadcrumbs-section .container{
         top: 55% !important;
     }
-    
 }   
+@media(max-width:420px){
+    .breadcrumbs-section .container{
+        top:47% !important;
+    }
+}
 .breadcrumbs-section .container{
     position: relative;
     top:65%;

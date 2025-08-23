@@ -535,6 +535,8 @@
           customClass: {
             popup: "custom-swal-popup"
           },
+          allowOutsideClick:false,
+          allowEscapeKey:false,
         }).then((result) => {
           if (result.isConfirmed) {
             // localStorage.setItem('permission_access', JSON.stringify(true));
