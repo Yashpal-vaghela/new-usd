@@ -54,7 +54,7 @@ def home(request):
     data1 = Dentist.objects.all().order_by('name')  # Default queryset
     search_message = None
     city_name = city.city if 'city' in locals() and city else 'Surat'
-   
+    query = request.GET.get("q",'').strip()
     # mix filter doctor name or clinic name
     # if request.headers.get('x-requested-with') == 'XMLHttpRequest':
     #     results = []
@@ -63,6 +63,33 @@ def home(request):
     #         print("matching_doctor",matching_doctor)
     #         results = [{'name': dentist.name, 'id': dentist.id, 'slug': dentist.slug ,'clinic_name':dentist.clinic_name} for dentist in matching_doctor]
     #     return JsonResponse({'results': results})
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        suggestion = []
+        if query:
+            # search doctors by name
+            doctor_matches = Dentist.objects.filter(name__icontains=query)
+
+            # search clinices by clinic name
+            clinic_matches = Dentist.objects.filter(clinic_name__icontains=query)
+
+            # Perpare response
+            for doc in doctor_matches:
+                suggestion.append({
+                    'type':"dentist",
+                    'id':doc.id,
+                    'name':doc.name,
+                    'slug':doc.slug
+                })
+            
+            for clinic in clinic_matches:
+                suggestion.append({
+                    "type": "clinic",
+                    "id": clinic.id,
+                    "clinic_name": clinic.clinic_name,
+                    "slug": clinic.slug
+                })
+            return JsonResponse(suggestion, safe=False)
+
 
     reviews = [
         {id:1,'doctor_name':'Dr. Priyanka Sharma','review':"I never imagined my smile could look this great. The entire process was smooth and tailored to my needs. I'm so grateful to the team and my smile designer!"},
