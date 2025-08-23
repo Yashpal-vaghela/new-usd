@@ -54,7 +54,7 @@ def home(request):
     data1 = Dentist.objects.all().order_by('name')  # Default queryset
     search_message = None
     city_name = city.city if 'city' in locals() and city else 'Surat'
-    query = request.GET.get("q",'').strip()
+   
     # mix filter doctor name or clinic name
     # if request.headers.get('x-requested-with') == 'XMLHttpRequest':
     #     results = []
@@ -63,33 +63,7 @@ def home(request):
     #         print("matching_doctor",matching_doctor)
     #         results = [{'name': dentist.name, 'id': dentist.id, 'slug': dentist.slug ,'clinic_name':dentist.clinic_name} for dentist in matching_doctor]
     #     return JsonResponse({'results': results})
-    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        suggestion = []
-        if query:
-            # search doctors by name
-            doctor_matches = Dentist.objects.filter(name__icontains=query)
 
-            # search clinices by clinic name
-            clinic_matches = Dentist.objects.filter(clinic_name__icontains=query)
-
-            # Perpare response
-            for doc in doctor_matches:
-                suggestion.append({
-                    'type':"dentist",
-                    'id':doc.id,
-                    'name':doc.name,
-                    'slug':doc.slug
-                })
-            
-            for clinic in clinic_matches:
-                suggestion.append({
-                    "type": "clinic",
-                    "id": clinic.id,
-                    "clinic_name": clinic.clinic_name,
-                    "slug": clinic.slug
-                })
-            return JsonResponse(suggestion, safe=False)
-        
     reviews = [
         {id:1,'doctor_name':'Dr. Priyanka Sharma','review':"I never imagined my smile could look this great. The entire process was smooth and tailored to my needs. I'm so grateful to the team and my smile designer!"},
         {id:2,'doctor_name':'Dr. Anjali Mehta','review':'My experience was beyond my expectations. The attention to detail and personalized care I received was truly outstanding. Highly recommend!'},
@@ -147,14 +121,36 @@ def smile_step(request):
 def search_all_usd(request, city_name=None):
     city = None
     query = request.GET.get('q', '').strip()
-
+    
     # AJAX search (for autocomplete or live suggestions)
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        results = []
+        suggestion = []
         if query:
-            matching_doctor = Dentist.objects.filter(Q(name__icontains=query)).distinct()[:5]
-            results = [{'name': dentist.name, 'id': dentist.id, 'slug': dentist.slug} for dentist in matching_doctor]
-        return JsonResponse({'results': results})
+            # search doctors by name
+            doctor_matches = Dentist.objects.filter(name__icontains=query)
+
+            # search clinices by clinic name
+            clinic_matches = Dentist.objects.filter(clinic_name__icontains=query)
+
+            # matching_doctor = Dentist.objects.filter(Q(name__icontains=query)).distinct()[:5]
+            # results = [{'name': dentist.name, 'id': dentist.id, 'slug': dentist.slug} for dentist in matching_doctor]
+          # Perpare response
+            for doc in doctor_matches:
+                suggestion.append({
+                    'type':"dentist",
+                    'id':doc.id,
+                    'name':doc.name,
+                    'slug':doc.slug
+                })
+            
+            for clinic in clinic_matches:
+                suggestion.append({
+                    "type": "clinic",
+                    "id": clinic.id,
+                    "clinic_name": clinic.clinic_name,
+                    "slug": clinic.slug
+                })
+        return JsonResponse(suggestion, safe=False)
 
     city_id = request.GET.get('city', '').strip()
     data1 = Dentist.objects.all().order_by('name')
@@ -414,6 +410,36 @@ def find_dentist_d(request, pk):
     data = Dentist.objects.get(slug=pk)
     gallery = Gallery.objects.all().order_by("?")[:10]
     reviews = data.reviews.all().order_by('-created_at')
+    query = request.GET.get("q",'').strip()
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        suggestion = []
+        if query:
+            # search doctors by name
+            doctor_matches = Dentist.objects.filter(name__icontains=query)
+            
+            # search clinices by clinic name
+            clinic_matches = Dentist.objects.filter(clinic_name__icontains=query)
+            
+            # Perpare response
+            for doc in doctor_matches:
+                suggestion.append({
+                    'type':"dentist",
+                    "id":doc.id,
+                    'name':doc.name,
+                    'slug':doc.slug
+                })
+                
+            for clinic in clinic_matches:
+                suggestion.append({
+                    "type": "clinic",
+                    "id": clinic.id,
+                    "clinic_name": clinic.clinic_name,
+                    "slug": clinic.slug
+                })
+
+            return JsonResponse(suggestion, safe=False)
+        
     context = {
         'data':data,
         'gallery':gallery,

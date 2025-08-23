@@ -321,23 +321,33 @@
        // console.log("data",data)
         const suggestionBox = document.getElementById('suggestions');
         suggestionBox.innerHTML = '';
-        if(data.results.length == 0){
+        if(data.length == 0){
           const div = document.createElement('p');
           div.textContent = "Not found Doctor data !";
 					div.style.cursor = 'pointer';
           suggestionBox.appendChild(div);
         }else{
-          data.results.forEach(doctor => {
-              const div = document.createElement('a');
+          data.forEach(doctor => {
+            const div = document.createElement('a');
+            if(doctor.type === "dentist"){
               div.href= `/certified-dentists/${doctor.slug}/`;
               div.textContent = doctor.name;
               div.style.padding = '5px 10px';
               div.style.borderBottom = '1px solid #ccc';
               div.style.cursor = 'pointer';
               suggestionBox.appendChild(div);
+            } else{
+              div.href = `/certified-dentists/${doctor.slug}/`;
+              div.textContent = doctor.clinic_name;
+              div.style.padding = "5px 10px";
+              div.style.borderBottom = "1px solid #ccc";
+              div.style.cursor = "pointer";
+              suggestionBox.appendChild(div);
+            }
         	});
         }
       })
+      .catch((err)=>console.error("Fetch error:",err));
     }
     document.getElementById('closebutton').addEventListener('click',function(){
         const input = document.getElementById('searchInput')
