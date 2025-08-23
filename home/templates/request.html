@@ -161,34 +161,35 @@
 <script>
 document.addEventListener('DOMContentLoaded', function(){
   const doctordata = JSON.parse(localStorage.getItem('selectedDoctor'));
-   console.log("window",window,doctordata)
-   if(doctordata !== null){
-      if(doctordata.name){
-        document.getElementById("doctor-info").innerHTML =
-        `
-        <div class="col-lg-6 ps-0">
-          <div class="inputicon-box">
-            <input
-              class="form-control"
-              name="doctor_name"
-              type="text"
-              placeholder="Doctor Name"
-              required
-              value="${doctordata.name}"
-              readonly
-            />
-            <i class="fa-solid fa-user-doctor"></i>
-          </div>
+  console.log("window", window, doctordata);
+
+  if(doctordata !== null && doctordata.name){
+    document.getElementById("doctor-info").innerHTML = `
+      <div class="col-lg-6 ps-0">
+        <div class="inputicon-box">
+          <!-- Hidden input: actually submitted -->
+          <input
+            type="hidden"
+            name="doctor_name"
+            value="${doctordata.name}"
+          />
+
+          <!-- Visible input: only for display -->
+          <input
+            class="form-control"
+            type="text"
+            value="${doctordata.name}"
+            readonly
+          />
+          <i class="fa-solid fa-user-doctor"></i>
         </div>
-        `
-      }else{
-        document.getElementById("doctor-info").style.display = "none !important";
-      }
-   } else{
-     document.getElementById("doctor-info").classList.add('d-none')
-   }
-   
-})
+      </div>
+    `;
+  } else {
+    document.getElementById("doctor-info").classList.add('d-none');
+  }
+});
+
 
 </script>
 {% if messages %}

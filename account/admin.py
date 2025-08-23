@@ -1,7 +1,8 @@
 from django.contrib import admin
+from import_export.admin import ImportExportModelAdmin
 from .models import Location, City, Specializations, Dentist, Image, Rating, Category, Tags, Author, Blog, Team, Testimonials, Gallery, Hgallery, Contact, UserSubmission, PatientReview
 
-class DentistAdmin(admin.ModelAdmin):
+class DentistAdmin(ImportExportModelAdmin):
     list_display = ('name', 'city', 'contact', 'status')
     search_fields = ('name', 'city__city', 'contact')
     list_filter = ('status', 'city')
@@ -33,6 +34,11 @@ class PatientReviewAdmin(admin.ModelAdmin):
     list_display = ('patient_name', 'dentist', 'rating', 'created_at')
     search_fields = ('patient_name', 'dentist__name')
     list_filter = ('rating', 'created_at')
+
+class UserSubmissionAdmin(admin.ModelAdmin):
+    list_display = ('first_name', 'last_name', 'phone', 'email', 'city', 'doctor_name', 'created_at')
+    search_fields = ('first_name', 'last_name', 'phone', 'email', 'doctor_name')
+    list_filter = ('city', 'doctor_name', 'created_at')
 
 admin.site.register(Location)
 admin.site.register(City)

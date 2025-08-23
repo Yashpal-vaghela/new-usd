@@ -15,7 +15,7 @@ from hm.pre import get_location_info
 from geopy.distance import geodesic
 from home.forms import UserSubmissionForm
 import re
-
+import requests
 @csrf_exempt  # This bypasses CSRF protection for demonstration purposes only
 def receive_location(request):
     if request.method == 'POST':
@@ -513,10 +513,10 @@ def contact(request):
 
         recaptcha_response = request.POST.get('g-recaptcha-response')
         data = {
-            'secret' : settings.RECAPTCHA_SECRET_KEY,
-            'response' : recaptcha_response
+            'secret': settings.RECAPTCHA_SECRET_KEY,
+            'response': recaptcha_response,
         }
-        r = request.post('https://www.google.com/recaptcha/api/siteverify', data = data)
+        r = requests.post("https://www.google.com/recaptcha/api/siteverify", data=data)  # <-- FIXED
         result = r.json()
 
         if not result.get('success'):
@@ -526,14 +526,10 @@ def contact(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Your data is sent successfully.')
-            # Redirect to the thank you page after form submission
             return redirect('home:thankyou')
         else:
             messages.error(request, 'Your query is not sent! Try Again.')
-            # print(form.errors)
-        
-        # If the form is invalid, stay on the contact page
-        return redirect(request.META.get('HTTP_REFERER', 'contact'))
+            return redirect(request.META.get('HTTP_REFERER', 'contact'))
 
     context = {
         "RECAPTCHA_SITE_KEY": settings.RECAPTCHA_SITE_KEY
@@ -553,35 +549,35 @@ def dentist(request):
     if request.method == 'POST':
         form = UserSubmissionForm(request.POST)
 
-        recaptcha_response = request.POST.get('g-reecaptcha-response')
+        # reCAPTCHA validation
+        recaptcha_response = request.POST.get('g-recaptcha-response')
         data = {
-            "secret" : settings.RECAPTCHA_SECRET_KEY,
-            "response" : recaptcha_response,
+            "secret": settings.RECAPTCHA_SECRET_KEY,
+            "response": recaptcha_response,
         }
-        r = request.post("https://www.google.com/recaptcha/api/siteverify", data=data)
+        r = requests.post("https://www.google.com/recaptcha/api/siteverify", data=data)
         result = r.json()
 
         if not result.get("success"):
             messages.error(request, "Invalid reCAPTCHA. Please try again.")
-            return redirect(request.META.get("HTTP_REFERER","dentist"))
-        
+            return redirect(request.META.get("HTTP_REFERER", "dentist"))
+
         if form.is_valid():
-            # Save the form data to the database
-            user_submission = form.save()
-
-            # Create a success message to display as a popup
-            messages.success(request, f"Form submitted successfully! Thank you, {user_submission.first_name} {user_submission.last_name}.")
-
-            # Redirect to the Thank You page
-            return redirect('home:thankyou')  # Assuming 'home:thankyou' is the URL for the Thank You page
+            user_submission = form.save()  # doctor_name is handled by form
+            messages.success(
+                request,
+                f"Form submitted successfully! Thank you, {user_submission.first_name} {user_submission.last_name}."
+            )
+            form = UserSubmissionForm()
+            return redirect('home:thankyou')
         else:
             messages.error(request, "Something went wrong! Please check your details.")
-            # Handle form errors
-            return render(request, 'request.html', {'form': form, 'error_message': 'Please correct the errors below.'})
+            return render(
+                request,
+                'request.html',
+                {'form': form, 'error_message': 'Please correct the errors below.'}
+            )
     else:
         form = UserSubmissionForm()
 
-    context = {
-        'form': form,
-    }
-    return render(request, 'request.html', context)
+    return render(request, 'request.html', {'form': form})
