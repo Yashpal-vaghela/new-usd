@@ -263,7 +263,12 @@ class UserSubmission(models.Model):
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
-    
+class DentistRedirect(models.Model):
+    old_slug = models.SlugField(unique=True)
+    city = models.ForeignKey(City, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.old_slug} → {self.city.city}"    
     
     
     

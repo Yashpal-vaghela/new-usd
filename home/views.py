@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect ,get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
 from django.contrib import messages
 from django.conf import settings
@@ -434,29 +434,39 @@ def all_usd(request):
 #     return render(request, 'list.html', context)
 
 def find_dentist_d(request, pk):
-    data = Dentist.objects.get(slug=pk)
+    try:
+        # Try to get Dentist by slug
+        data = Dentist.objects.get(slug=pk)
+    except Dentist.DoesNotExist:
+        # If not found, check DentistRedirect
+        redirect_entry = get_object_or_404(DentistRedirect, old_slug=pk)
+        city = redirect_entry.city  
+
+        # Check if city still has active dentists
+        if Dentist.objects.filter(city=city).exists():
+            city_name = city.city  # <-- using City model's "city" field
+            return redirect(f"/certified-dentists/city/{city_name}/", permanent=True)
+        else:
+            # No dentists in this city → fallback to main certified dentists page
+            return redirect("/certified-dentists/", permanent=True)
+
     gallery = Gallery.objects.all().order_by("?")[:10]
     reviews = data.reviews.all().order_by('-created_at')
-    query = request.GET.get("q",'').strip()
+    query = request.GET.get("q", '').strip()
 
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         suggestion = []
         if query:
-            # search doctors by name
             doctor_matches = Dentist.objects.filter(name__icontains=query)
-            
-            # search clinices by clinic name
             clinic_matches = Dentist.objects.filter(clinic_name__icontains=query)
-            
-            # Perpare response
+
             for doc in doctor_matches:
                 suggestion.append({
-                    'type':"dentist",
-                    "id":doc.id,
-                    'name':doc.name,
-                    'slug':doc.slug
+                    'type': "dentist",
+                    "id": doc.id,
+                    'name': doc.name,
+                    'slug': doc.slug
                 })
-                
             for clinic in clinic_matches:
                 suggestion.append({
                     "type": "clinic",
@@ -466,11 +476,11 @@ def find_dentist_d(request, pk):
                 })
 
             return JsonResponse(suggestion, safe=False)
-        
+
     context = {
-        'data':data,
-        'gallery':gallery,
-        'reviews':reviews,
+        'data': data,
+        'gallery': gallery,
+        'reviews': reviews,
     }
     return render(request, 'detail.html', context)
 
