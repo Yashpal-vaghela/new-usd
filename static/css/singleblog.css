@@ -81,7 +81,7 @@
     color: #fff;
 }
 .single-page-main-content table {
-    width: 100%;
+    width: 100% !important;
     border-collapse: collapse;
     margin: 20px 0;
     background-color: #111;
