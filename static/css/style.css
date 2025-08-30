@@ -5412,6 +5412,9 @@ input[placeholder],
   .Doctor-Text {
     font-size: 14px;
   }
+  .aon-insuranc-list .Doctor-Text{
+    padding-left: 20px;
+  }
   .dentist-review-section {
     --bs-gutter-x: 0.5rem;
   }
@@ -5503,9 +5506,12 @@ input[placeholder],
   z-index: 0;
 }
 .single-image {
-  grid-column: span 1;
+  grid-column: span 2;
   max-width: 100%;
 }
+/* .image-grid > .image-item:nth-child(3n) {
+  grid-column: 1 / -1;
+} */
 @media (max-width: 975px) {
   .image-grid {
     display: flex;
@@ -6068,3 +6074,20 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   max-height: 300px;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
+
+/* Fix Lightbox2 for mobile */
+/* .lb-outerContainer {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+.lb-image {
+  width: 100% !important;
+  height: auto !important;
+  max-height: 90vh !important; 
+}
+
+.lb-dataContainer {
+  font-size: 14px !important;
+} */
