@@ -209,6 +209,9 @@
         /* left: auto;
         bottom: -26px; */
     }
+    .single-page-main-content th, .single-page-main-content td{
+        padding: 12px 10px;
+    }
     /* .single-page-main-content table {
         width: 100%;
         font-size: 14px;
@@ -243,4 +246,14 @@
      .category-content{
         padding: 10px 35px;
      }
+}
+@media(max-width:420px){
+    .single-blog-content .container{
+        padding-right:var(--bs-gutter-x, .5rem);
+        padding-left: var(--bs-gutter-x,.5rem);
+    }
+    .single-page-main-content th, .single-page-main-content td{
+        padding: 12px 6px;
+        font-size: 13px;
+    }
 }
