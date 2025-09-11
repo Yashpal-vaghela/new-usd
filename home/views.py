@@ -8,7 +8,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from account.models import *
-from home.forms import ContactForm
+from home.forms import ContactForm, DentistConnectForm
 from django.db.models import Q
 from django.core.paginator import Paginator
 from hm.pre import get_location_info
@@ -572,6 +572,34 @@ def contact(request):
         "RECAPTCHA_SITE_KEY": settings.RECAPTCHA_SITE_KEY
     }
     return render(request, 'contact.html', context)
+def dentist_connect(request):
+    if request.method == 'POST':
+        form = DentistConnectForm(request.POST)
+
+        recaptcha_response = request.POST.get('g-recaptcha-response')
+        data = {
+            'secret' : settings.RECAPTCHA_SECRET_KEY,
+            'response' : recaptcha_response,     
+        }
+        r = requests.post("https://www.google.com/recaptcha/api/siteverify", data=data)
+        result = r.json()
+
+        if not result.get('success'):
+            messages.error(request, 'Invalid reCAPTCHA. Please try again.')
+            return redirect(request.META.get('HTTP_REFERER','dentist-connect'))
+        
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your data has been submitted successfully!')
+            return redirect('home:thankyou')
+        
+        else:
+            messages.error(request, 'Something went wrong! Please try again.')
+            return redirect(request.META.get('HTTP_REFERER', 'dentist-connect'))
+    context = {
+        "RECAPTCHA_SITE_KEY": settings.RECAPTCHA_SITE_KEY
+    }
+    return render(request, 'dentist-connect.html', context)
 def sitemap(request):
     return render(request, 'sitemap.xml', content_type='text/xml')
 

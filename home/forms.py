@@ -5,6 +5,10 @@ class ContactForm(forms.ModelForm):
         model = Contact
         fields= '__all__'
         
+class DentistConnectForm(forms.ModelForm):
+    class Meta:
+        model = Dentist
+        fields= '__all__'
         
         
 class UserSubmissionForm(forms.ModelForm):

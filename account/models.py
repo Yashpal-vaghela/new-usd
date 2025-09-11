@@ -246,9 +246,19 @@ class Contact(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
+        return self.name or self.email or f"Contact #{self.id}"
+        
+class DentistConnect(models.Model):
+    name = models.CharField(max_length=1256, null=True, blank=True)
+    email = models.CharField(max_length = 180,blank=True, null=True) 
+    phone = models.CharField(max_length=156)  
+    clinic_name= models.CharField(max_length=2084, blank=True, null=True)
+    city = models.CharField(max_length=1084, blank=True, null=True)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
         return self.name
-        
-        
+      
 
 class UserSubmission(models.Model):
     first_name = models.CharField(max_length=50)
