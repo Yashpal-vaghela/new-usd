@@ -504,7 +504,7 @@
     </div>
   </section>
   
-  {% comment %} <section class="usd-studio-section overflow-hidden">
+  <section class="usd-studio-section overflow-hidden">
       <div class="usd-title-wrapper usd_shadow_1cu">
           <div class="usd_shadow_1mt"  style="image-rendering: pixelated; flex-shrink: 0; fill: rgba(0, 0, 0, 1); color: rgba(0, 0, 0, 1);">
             <div class="usd_shadow_svg_container" style="width:100%; height:100%; aspect-ratio:inherit">
@@ -688,55 +688,167 @@
           </div>
           <div class="usd_shadow_ssr_variant">
             <a href="#" class="usd_shadow_oal2">
-                <div class="" style="position:absolute; border-radius:inherit;inset:0;">
-                  <img  src="{% static 'title.png' %}" class="img-fluid" width="432" height="420" alt="usd social logo" style="display:block;width: 100%;height: 100%;border-radius: inherit;object-position: center center;object-fit: fill;" />
+                <div class="usd-title-img-wrapper" >
+                  <img  src="{% static 'title.png' %}" class="usd-studio-title-img img-fluid" width="432" height="420" alt="usd social logo"/>
                 </div>
             </a>
           </div>
       </div>
-      <div class="usd-floating-images position-absolute d-none">
+      <div class="usd-floating-images position-relative">
           <div class="container">
-            <a href="#" class="usd-img-wrapper">
-              <img src="{% static 'usd-img8.png' %}" srcset="{% static 'usd-img8.png' %}" class="usd-img1 img-fluid" alt="usd-img1" />
+            <a href=" https://www.instagram.com/reel/C94bjw2yWj6/" class="usd-img-wrapper usd-img-wrapper-1">
+              <video   
+                id="usdVideo"
+                autoplay
+                loop
+                muted
+                playsinline  
+                class="usd-img1 img-fluid" 
+                alt="usd-img1"
+                sizes="calc(100vw * 0.0875)"
+                onerror="handleVideoError(this)"
+                onstalled="handleVideoError(this)"
+                data-fallback="{% static 'usd-videoImg1.jpg'%}"
+              >
+                <source src="https://daedzhbgqwmn0.cloudfront.net/reel-8.mp4" type="video/mp4"></source>
+              </video>
               <div class="usd-bg-shadow"></div>
+               {% comment %} <img src="{% static 'usd-img2.png' %}" alt="usd-img1 fallback" class="usd-img1-fallback img-fluid" style="display:none;"> {% endcomment %}
             </a>
-            <a href="#" class="usd-img-wrapper" >
-              <img src="{% static 'usd-img1.png' %}" srcset="{% static 'usd-img1.png' %}" class="usd-img2 img-fluid" alt="usd-img2" width="408" height="640" sizes="calc(100vw * 0.0967)" />
+            <a href="https://www.instagram.com/reel/DNQcAreKk4A/" class="usd-img-wrapper" >
+              <video   
+                autoplay
+                loop
+                muted
+                playsinline  
+                class="usd-img2 img-fluid" 
+                alt="usd-img2"
+                data-fallback="{% static 'usd-videoImg2.jpg'%}"
+              >
+                <source src="https://daedzhbgqwmn0.cloudfront.net/reel-2.mp4" type="video/mp4"></source>
+              </video>
             </a>
-            <a href="#" class="usd-img-wrapper">
-              <img src="{% static 'usd-img2.png' %}" srcset="{% static 'usd-img2.png' %}" class="usd-img3 img-fluid" alt="usd-img3" />
+            <a href="https://www.instagram.com/reel/DKmhQ8gyGd3/" class="usd-img-wrapper">
+              <video 
+                autoplay
+                loop
+                muted
+                playsinline  
+                class="usd-img3 img-fluid" 
+                alt="usd-img3"
+                data-fallback="{% static 'usd-videoImg3.jpg'%}"
+              >
+                <source src="https://daedzhbgqwmn0.cloudfront.net/reel-9.mp4" type="video/mp4"></source>
+              </video>
+              {% comment %} <img src="{% static 'usd-img2.png' %}" srcset="{% static 'usd-img2.png' %}" class="usd-img3 img-fluid" alt="usd-img3" /> {% endcomment %}
             </a>
-            <a href="#" class="usd-img-wrapper">
-              <img src="{% static 'usd-img3.png' %}" srcset="{% static 'usd-img3.png' %}" class="usd-img4 img-fluid" alt="usd-img4" />
+            <a href="https://www.instagram.com/reel/DBQ-063KXmf/" class="usd-img-wrapper ">
+              <video   
+                autoplay
+                loop
+                muted
+                playsinline  
+                class="usd-img4 img-fluid" 
+                alt="usd-img4"
+                data-fallback="{% static 'usd-videoImg4.jpg'%}"
+              >
+                <source src="https://daedzhbgqwmn0.cloudfront.net/reel-4.mp4" type="video/mp4"></source>
+              </video>
+              {% comment %} <img src="{% static 'usd-img3.png' %}" srcset="{% static 'usd-img3.png' %}" class="usd-img4 img-fluid" alt="usd-img4" /> {% endcomment %}
             </a>
-            <a href="#" class="usd-img-wrapper">
-              <img src="{% static 'usd-img7.png' %}" srcset="{% static 'usd-img7.png' %}" class="usd-img5 img-fluid" alt="usd-img5" />
+            <a href="https://www.instagram.com/reel/DG2uNjSS7AT/" class="usd-img-wrapper">
+              <video  
+                autoplay
+                loop
+                muted
+                playsinline  
+                class="usd-img5 img-fluid" 
+                alt="usd-img5"
+                data-fallback="{% static 'usd-videoImg5.jpg'%}"
+              >
+                <source src="https://daedzhbgqwmn0.cloudfront.net/reel-3.mp4" type="video/mp4"></source>
+              </video>
+              <div class="usd-bg-shadow"></div>
+              {% comment %} <img src="{% static 'usd-img7.png' %}" srcset="{% static 'usd-img7.png' %}" class="usd-img5 img-fluid" alt="usd-img5" /> {% endcomment %}
             </a>
-            <a href="#" class="usd-img-wrapper">
-              <img src="{% static 'usd-img5.png' %}" srcset="{% static 'usd-img5.png' %}" class="usd-img6 img-fluid" alt="usd-img6" />
-               <div class="usd-bg-shadow"></div>
+            <a href="https://www.instagram.com/reel/C-H-Qm2KwU5/" class="usd-img-wrapper">
+              <video
+                autoplay
+                loop
+                muted
+                playsinline  
+                class="usd-img6 img-fluid" 
+                alt="usd-img6"
+                data-fallback="{% static 'usd-videoImg6.jpg'%}"
+              >
+                <source src="https://daedzhbgqwmn0.cloudfront.net/reel-5.mp4" type="video/mp4"></source>
+              </video>
+              <div class="usd-bg-shadow"></div>
+              {% comment %} <img src="{% static 'usd-img5.png' %}" srcset="{% static 'usd-img5.png' %}" class="usd-img6 img-fluid" alt="usd-img6" /> {% endcomment %}
             </a>
-            <a href="#" class="usd-img-wrapper">
-              <img src="{% static 'usd-img4.png' %}" srcset="{% static 'usd-img4.png' %}" class="usd-img7 img-fluid" alt="usd-img7" />
+            <a href="https://www.instagram.com/reel/C8HMFoeKigC/" class="usd-img-wrapper">
+              <video  
+                autoplay
+                loop
+                muted
+                playsinline  
+                class="usd-img7 img-fluid" 
+                alt="usd-img7"
+                data-fallback="{% static 'usd-videoImg7.jpg'%}"
+              >
+                <source src="https://daedzhbgqwmn0.cloudfront.net/reel-1.mp4" type="video/mp4"></source>
+              </video>
+              {% comment %} <img src="{% static 'usd-img4.png' %}" srcset="{% static 'usd-img4.png' %}" class="usd-img7 img-fluid" alt="usd-img7" /> {% endcomment %}
             </a>
-            <a href="#" class="usd-img-wrapper">
-              <img src="{% static 'usd-img7.png' %}" srcset="{% static 'usd-img7.png' %}" class="usd-img8 img-fluid" alt="usd-img8" />
+            <a href=" https://www.instagram.com/reel/DKwrEzaqRoZ/" class="usd-img-wrapper">
+              <video   
+                autoplay
+                loop
+                muted
+                playsinline  
+                class="usd-img8 img-fluid" 
+                alt="usd-img8"
+                data-fallback="{% static 'usd-videoImg8.jpg'%}"
+              >
+                <source src="https://daedzhbgqwmn0.cloudfront.net/reel-6.mp4" type="video/mp4"></source>
+              </video>
             </a>
-            <a href="#" class="usd-img-wrapper">
-              <img src="{% static 'usd-img6.png' %}" srcset="{% static 'usd-img6.png' %}" class="usd-img9 img-fluid" alt="usd-img9" />
+            <a href="https://www.instagram.com/reel/DNkgB1EIQZo/" class="usd-img-wrapper ">
+              <video  
+                autoplay
+                loop
+                muted
+                playsinline  
+                class="usd-img9 img-fluid" 
+                alt="usd-img9"
+                data-fallback="{% static 'usd-videoImg9.jpg'%}"
+              >
+                <source src="https://daedzhbgqwmn0.cloudfront.net/reel-7.mp4" type="video/mp4"></source>
+              </video>
             </a>
-            <a href="#" class="usd-img-wrapper">
-              <img src="{% static 'usd-img4.png' %}" srcset="{% static 'usd-img4.png' %}" class="usd-img10 img-fluid" alt="usd-img10" />
+            <a href="https://www.instagram.com/reel/DM-PS3tKjpt/ " class="usd-img-wrapper ">
+              <video 
+                autoplay
+                loop
+                muted
+                playsinline  
+                class="usd-img9 img-fluid" 
+                alt="usd-img9"
+                data-fallback="{% static 'usd-videoImg10.jpg'%}"
+              >
+                <source src="https://daedzhbgqwmn0.cloudfront.net/reel-10.mp4" type="video/mp4"></source>
+              </video>
+              <div class="usd-bg-shadow"></div>
             </a>
           </div>
       </div>
-  </section> {% endcomment %}
+  </section> 
 
   <section class="schedule-data-section position-relative pt-50" >
       <svg class="vector3-img img-fluid" width="1900" height="729" viewBox="0 0 1900 729" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M1481.35 0.476273C1555.96 0.268105 1792.3 19.6194 1901.55 44.724L1901.55 203.456C1829.93 160.674 1642.19 138.689 1557.27 133.044C1272.46 99.1755 1074.07 248.466 1010.47 327.345C855.7 518.436 689.456 615.823 625.68 640.631C386.493 765.767 108.899 729.908 0 696.336V537.242C126.628 588.223 324.209 570.665 407.171 555.513C561.513 558.722 816.475 303.428 924.663 175.38C1110.98 17.4447 1406.74 0.684441 1481.35 0.476273Z" fill="#FBE9D0" fill-opacity="0.31"/>
       </svg>
-    <div class="container py-sm-5 py-4">
+    <div class="container py-sm-5 py-4 pt-0">
       <div class="row position-relative justify-content-center">
         <div class="schedule-data-content-img1 col-xl-4 col-lg-5 col-md-6 px-md-1 position-relative">
           <img src="{% static 'filter-Subtract.webp' %}" class="img-fluid" alt="Call Now to Schedule Smile Design Consultation with Best Dentist Near You Image"/>
@@ -802,7 +914,6 @@
                   <path d="M47.6534 17.9907L46.9908 17.6332C46.5303 17.3813 46.152 17.0023 45.901 16.5414L45.5387 15.8797C45.3754 15.5808 45.1345 15.3313 44.8415 15.1576C44.5485 14.9839 44.214 14.8923 43.8734 14.8926C43.5328 14.8913 43.1982 14.9818 42.9047 15.1545C42.6112 15.3272 42.3695 15.5757 42.2052 15.8739L41.8429 16.5366C41.5923 16.9994 41.2136 17.3802 40.7521 17.6332L40.0904 17.9945C39.7917 18.1578 39.5424 18.3985 39.3688 18.6914C39.1951 18.9842 39.1035 19.3184 39.1035 19.6588C39.1035 19.9993 39.1951 20.3335 39.3688 20.6263C39.5424 20.9191 39.7917 21.1598 40.0904 21.3232L40.753 21.6864C41.2139 21.9376 41.5927 22.3163 41.8438 22.7772L42.2062 23.4389C42.3693 23.7379 42.6099 23.9874 42.9028 24.1612C43.1956 24.3351 43.5299 24.4269 43.8705 24.427C44.211 24.4269 44.5453 24.3352 44.8383 24.1615C45.1313 23.9878 45.3721 23.7386 45.5357 23.4399L45.8981 22.7763C46.1495 22.3161 46.5277 21.9378 46.9879 21.6864L47.6505 21.3241C47.9492 21.1608 48.1985 20.9201 48.3721 20.6273C48.5458 20.3344 48.6374 20.0003 48.6374 19.6598C48.6374 19.3194 48.5458 18.9852 48.3721 18.6924C48.1985 18.3995 47.9492 18.1588 47.6505 17.9955L47.6534 17.9907ZM46.0618 19.9824C45.2759 20.411 44.6298 21.0567 44.2008 21.8424L43.9102 22.5041L43.5479 21.8434C43.1192 21.0572 42.4731 20.4111 41.6869 19.9824L41.0243 19.6918L41.6859 19.3295C42.4722 18.9005 43.1185 18.2545 43.5479 17.4685L43.8385 16.8059L44.2008 17.4675C44.6301 18.2533 45.276 18.8992 46.0618 19.3285L46.7244 19.6191L46.0618 19.9824Z" fill="white"/>
                   <path d="M7.71875 13.7656C8.25378 13.7656 8.6875 13.3319 8.6875 12.7969C8.6875 12.2618 8.25378 11.8281 7.71875 11.8281C7.18372 11.8281 6.75 12.2618 6.75 12.7969C6.75 13.3319 7.18372 13.7656 7.71875 13.7656Z" fill="white"/>
                   </svg>
-
                 </div>
                 <p class="mb-0 text-center cool fs-4 fw-600"> <span class="counter">12 </span>K+</p>
                 <p class="text-center mb-0 pb-2">Smile Makeover</p>
@@ -1355,12 +1466,12 @@
     const mySwiper = new Swiper(".myswiper", {
       loop: true,
       centeredSlides: true,
-      autoplay: true,
+      autoplay: false,
       slidesPerView: 'auto',
       spaceBetween: 40,
       speed: 800, 
       effect: "slide", 
-      grabCursor: true,
+      grabCursor: true, 
       observer: true,
       observeParents: true,
       breakpoints: {
@@ -1389,6 +1500,48 @@
   AOS.init({
     offset: 100,
   });
+</script>
+{% comment %} <script>
+document.addEventListener('DOMContentLoaded',function(){
+  const video = document.getElementById('usdVideo');
+  const fallbackImage = document.getElementById('fallbackImage');
+  console.log("video",video)
+
+  video.addEventListener('error',function(){
+    console.warn("Video Failed to load,showing fallback image.");
+
+    video.style.display = 'none';
+
+    fallbackImage.style.display = 'block';
+  })
+})
+</script> {% endcomment %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll("video").forEach(video => {
+    let fallbackImg = document.createElement("img");
+    fallbackImg.src = video.getAttribute("data-fallback");
+    fallbackImg.alt = video.getAttribute("alt") + " fallback";
+    fallbackImg.className = video.className;  
+    fallbackImg.style.display = "none";
+
+    // insert fallback image right after video
+    video.parentNode.insertBefore(fallbackImg, video.nextSibling);
+
+    // If video can play, do nothing
+    video.oncanplay = () => {
+      video.setAttribute("data-loaded", "true");
+    };
+
+    // Timeout: if video fails after 4 seconds, show fallback
+    setTimeout(() => {
+      if (!video.getAttribute("data-loaded")) {
+        video.style.display = "none";
+        fallbackImg.style.display = "block";
+      }
+    }, 4000);
+  });
+});
 </script>
 <script type="application/ld+json">
 {
