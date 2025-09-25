@@ -563,6 +563,49 @@ def contact(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Your data is sent successfully.')
+            # return redirect('home:thankyou')
+            full_name = request.POST.get("name", "").strip()
+            first_name, last_name = (full_name.split(" ", 1) + [""])[:2]
+
+            payload = {
+                "firstName": first_name or "Visitor",
+                "lastName": last_name,
+                "designation": "",
+                "email": request.POST.get("email", ""),
+                "countryCode": "91",
+                "mobile": request.POST.get("phone", ""),
+                "phoneCountryCode": "91",
+                "phone": request.POST.get("phone", ""),
+                "expectedRevenue": "0",
+                "description": request.POST.get("message", ""),
+                "companyName": "",
+                "companyState": "",
+                "companyStreet": "",
+                "companyCity": request.POST.get("city", ""),
+                "companyCountry": "India",
+                "companyPincode": "",
+                "leadPriority": "1",
+            }
+            headers = {
+                "Content-Type": "application/json",
+                "authToken": "79atXvY2ZVZXs32Tbnw89A==.icG8H90dELRwyW3euMFdTg==", 
+                "timeZone": "Asia/Calcutta",  
+            }
+            try:
+                crm_response = requests.post(
+                    "https://crm.my-company.app/api/v1/lead/webhook",
+                    json=payload,
+                    headers=headers,
+                    timeout=10,
+                )
+                crm_response.raise_for_status()
+                messages.success(
+                    request,
+                    "Thanks for contacting the Ultimate Smile Design Team. We will get back to you shortly."
+                )
+            except requests.exceptions.RequestException as e:
+                messages.warning(request, f"Form saved but CRM sync failed: {str(e)}")
+
             return redirect('home:thankyou')
         else:
             messages.error(request, 'Your query is not sent! Try Again.')
@@ -572,6 +615,7 @@ def contact(request):
         "RECAPTCHA_SITE_KEY": settings.RECAPTCHA_SITE_KEY
     }
     return render(request, 'contact.html', context)
+
 def dentist_connect(request):
     if request.method == 'POST':
         form = DentistConnectForm(request.POST)
