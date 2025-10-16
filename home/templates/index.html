@@ -21,19 +21,7 @@
 <meta name="twitter:description" content="Experience custom smile designing with Ultimate Smile Design. Connect with expert dentists across cities and book your personalized smile makeover appointment.">
 {% endblock seo%}
 {% block css %}
-<!-- Owl Carousel CSS -->
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
-/>
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
-/>
-
 <!-- Owl Carousel JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <link rel="stylesheet" href="{% static 'css/service.css' %}" />
 <style>
   #sync1 .item {
@@ -195,11 +183,23 @@
     </div>
   </section>
 
-  <section class="working-section text-center pt-50">
+  <section class="working-section text-center pt-50 position-relative">
     <div class="container">
+   
+    
       <p class="working_title position-relative text-header mb-0 text-center cool">WORKING PROCESS </p>
      
       <h2 class="working_subtitle text-header-subtitle mb-0">How Our Platform Works</h2>
+      
+      <div class="wp-ribbons" aria-hidden="true">
+        <div class="wp-ribbon wp-r1">
+          <div class="wp-track" data-text="100% Money Back Guarantee."></div>
+        </div>
+        <div class="wp-ribbon wp-r2">
+          <div class="wp-track" data-text="100% Money Back Guarantee."></div>
+        </div>
+      </div>
+
       <div
         class="row working-main-content justify-content-lg-center justify-content-center gap-md-0"
       >
@@ -341,51 +341,10 @@
   </section>
   {% include "location.html" %}
 
-  {% comment %} <section class="registration_Patient">
-    <img
-      src="{% static 'bg_vec.svg' %}"
-      class="vec_one"
-      loading="lazy"
-      alt="care Icon"
-    />
-    <img
-      src="{% static 'bg_vec.svg' %}"
-      class="vec_two"
-      loading="lazy"
-      alt="care Icon"
-    />
-    <div class="container">
-      <div class="inner_card text-center">
-        <h2 class="registrayion_small text-center">Registration</h2>
-        <img
-          src="{% static 'text_vec.svg' %}"
-          class="text_vec"
-          loading="lazy"
-          alt="text vector"
-          style="width: 136px; height: 10px"
-        />
-        <h3 class="registration_heading text-header-subtitle">
-          Want to Schedule Your Smile <br />
-          Design Appointment Easily?
-        </h3>
-        <p class="registration_subtext">
-          Transform your smile and boost your confidence. Our network of
-          Ultimate Smile Designers is ready to provide you with personalized
-          dental solutions. If you're aiming for a radiant smile, our experts
-          are here to guide you every step of the way. Should you require a more
-          tailored approach, don't hesitate to get in touch with us.
-        </p>
-        <div class="loc-button-container">
-          <button class="bat loc_btn" onclick="window.location.href='{% url 'home:dentist' %}';">Get in Touch</button>
-        </div>
-      </div>
-    </div>
-  </section> {% endcomment %}
-
   <section class="registration_section text-center pt-50">
     <div class="container">
       <div class="row register_wrapper justify-content-center position-relative overflow-hidden">
-        <div class="col-lg-9 col-md-10 col-12 text-center">
+        <div class="col-xl-9 col-lg-10 col-md-10 col-12 text-center">
           <p class="text-header  text-center cool">REGISTRATION</p>
           <h2 class="text-header-subtitle">Want to Schedule Your Smile Design Appointment Easily?</h2>
           <p class="text-center  text-subcontent">Transform your smile and boost your confidence. Our network of Ultimate Smile Designers is ready to provide you with personalized dental solutions. If you're aiming for a radiant smile, our experts are here to guide you every step of the way. Should you require a more tailored approach, don't hesitate to get in touch with us.</p>
@@ -534,12 +493,12 @@
                       y2="56.7463"
                       gradientUnits="userSpaceOnUse"
                     >
-                      <stop offset="8.12%"  stop-color="#C3942F" stop-opacity="0" />
+                      <stop offset="0.12%"  stop-color="#C3942F" stop-opacity="0.2" />
                       <stop offset="41.31%" stop-color="#D89C27" />
                       <stop offset="53.42%" stop-color="#E7DC96" />
                       <stop offset="65.82%" stop-color="#DFC86F" />
                       <stop offset="75.96%" stop-color="#D89C27" />
-                      <stop offset="84.47%" stop-color="#C99C30" />
+                      <stop offset="100.47%" stop-color="#C99C30" />
                     </linearGradient>
                 </defs>
               </svg>
@@ -603,11 +562,6 @@
               </svg>
             </div>
           </div>
-          {% comment %} <img src="data:image/svg+xml;utf8,
-                <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'>
-                  <path d='M0.348633 0.0664062C20.2313 20.7109 48.598 55.5778 69.7216 106.792C103.788 189.418' stroke='black' fill='none' stroke-width='2'/>
-                </svg>" 
-                alt="SVG Path Image"> {% endcomment %}
           <div class="usd_shadow_16e" style="image-rendering: pixelated; flex-shrink: 0; fill: rgba(0, 0, 0, 1); color: rgba(0, 0, 0, 1);">
             <div class="usd_shadow_svg_container" style="width: 100%; height: 100%; aspect-ratio: inherit">
               <svg style="width: 100%; height: 100%" viewBox="0 0 102 350" preserveAspectRatio="none" width="100%" height="100%">
@@ -981,104 +935,6 @@
     </div>
   </section>
 
-  {% comment %} <section class="registration_Doctor">
-    <div class="container">
-      <div class="inner_card_doctor text-center">
-        <img
-          src="{% static 'bg_vec2.svg' %}"
-          class="vec2_two"
-          loading="lazy"
-          alt="vector "
-        />
-        <img
-          src="{% static 'bg_vec2.svg' %}"
-          class="vec2_one"
-          loading="lazy"
-          alt="vector "
-        />
-        <h2 class="registrayion_small text-center">Registration</h2>
-        <img
-          src="{% static 'text_vec.svg' %}"
-          class="text_vec position-relative"
-          loading="lazy"
-          alt="text vector"
-          style="width: 110px; height: 12px"
-        />
-        <p class="registration_heading position-relative">
-          Are You a Dentist Interested in <br />
-          Attracting New Patients?
-        </p>
-        <p class="Doctor_subtext">
-          <img
-            src="{% static 'point_grey.svg' %}"
-            class="point"
-            loading="lazy"
-            alt="Point"
-          />Join our exclusive network of Ultimate Smile Designers.
-        </p>
-        <p class="Doctor_subtext">
-          <img
-            src="{% static 'point_grey.svg' %}"
-            class="point"
-            loading="lazy"
-            alt="Point"
-          />Connect with patients looking for top-notch smile transformations.
-        </p>
-        <p class="Doctor_subtext">
-          <img
-            src="{% static 'point_grey.svg' %}"
-            class="point"
-            loading="lazy"
-            alt="Point"
-          />Showcase your expertise and grow your practice with our platform.
-        </p>
-        <div class="loc-button-container">
-        <a href="https://dentist.ultimatesmiledesign.com/">
-          <button class="bat loc_btn">List Your Practice With Us</button>
-        </a>
-        </div>
-      </div>
-    </div>
-  </section> {% endcomment %}
-
-  {% comment %} <section class="beforeAndAfter_Section">
-    <div class="container">
-      <h2 class="registrayion_small" style="padding-left: 5px">Gallery</h2>
-      <img
-        src="{% static 'text_vec.svg' %}"
-        class="text_vec1"
-        loading="lazy"
-        alt="text vector"
-      />
-      <h3 class="registration_heading text-header-subtitle mb-3">
-        Before & After Smile Transformations
-      </h3>
-      <p class="Discover_subtext mb-0">
-        Explore our gallery to see the remarkable transformations achieved
-        through our Ultimate Smile Design services. Witness the power of expert
-        smile design in enhancing confidence and creating beautiful smiles with
-        these before-and-after showcases.
-      </p>
-      <div class="swiper-container">
-        <div class="swiper Beforeswiper">
-          <div class="swiper-wrapper">
-            {% for ie in gallery %}
-            <div class="swiper-slide">
-              <img
-                src="{{ie.image.url}}"
-                alt="Slide 1"
-                class="BAImg"
-                loading="lazy"
-              />
-            </div>
-            {% endfor %}
-          </div>
-        </div>
-        <div class="swiper-pagination"></div>
-      </div>
-    </div>
-  </section> {% endcomment %}
-
   <section class="gallery-section">
     <div class="container position-relative">
       <div class="gallery-container mt-xl-4" style="padding-top:130px">
@@ -1113,10 +969,6 @@
   </section>
 
   <section class="new-testimonial-section pt-50 position-relative" style="background-color:#000">
-    {% comment %} <img src="{% static 'vector5.svg' %}" class="testimonial-vector-img img-fluid" /> {% endcomment %}
-    {% comment %} <svg width="1900" height="848" viewBox="0 0 1900 848" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M1481.45 3.44366C1554.29 -10.9523 1790.84 41.7662 1900 69.925V258.373C1828.43 210.387 1640.84 185.727 1556 179.395C1271.42 141.406 1073.19 308.859 1009.64 397.334C855 611.674 688.892 720.91 625.168 748.736C386.177 889.096 108.81 848.874 0 811.218V632.768C126.525 689.952 323.944 670.258 406.839 653.262C561.054 656.861 815.807 370.508 923.907 226.882C1110.07 49.7317 1373.17 4.11046 1481.45 3.44366Z" fill="#222222" fill-opacity="0.71" stroke="black"/>
-    </svg> {% endcomment %}
     <div class="container pt-sm-4 pb-sm-5 pt-3 pb-3 overflow-hidden">
       <p class="text-center position-relative text-header mb-0 cool d-table m-auto">TESTIMONIALS</p>
       <h2 class="text-header-subtitle text-center">Stories Behind the Smiles</h2>
@@ -1156,260 +1008,70 @@
         </div>
       </div>
   </section>
-
-  {% comment %} <section class="testimonials-section beforeAndAfter_Section1">
-    <div class="container">
-      <h2 class="registrayion_small">Testimonials</h2>
-      <img
-        src="{% static 'text_vec.svg' %}"
-        class="text_vec"
-        loading="lazy"
-        alt="text vector"
-      />
-      <h3 class="registration_heading text-header-subtitle" style="color: #fff">What People Say</h3>
-      <p class="Discover_subtext" style="color: white">
-        Discover the stories of transformation and joy from our patients who
-        have experienced remarkable smile makeovers with our Ultimate Smile
-        Designers.
-      </p>
-      <div class="swiper-container">
-        <div class="swiper myswiper">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <img
-                src="{% static 'Quotes.svg' %}"
-                class="bgreviw"
-                loading="lazy"
-                alt="Quotes"
-              />
-              <p class="reviewName">Priyanka Sharma</p>
-              <div class="reviewContent">
-                I never imagined my smile could look this great. The entire
-                process was smooth and tailored to my needs. I'm so grateful to
-                the team and my smile designer!
-              </div>
-              <div class="stars">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <img
-                src="{% static 'Quotes.svg' %}"
-                class="bgreviw"
-                loading="lazy"
-                alt="Quotes"
-              />
-              <p class="reviewName">Priyanka Sharma</p>
-              <div class="reviewContent">
-                I never imagined my smile could look this great. The entire
-                process was smooth and tailored to my needs. I'm so grateful to
-                the team and my smile designer!
-              </div>
-              <div class="stars">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-              </div>
-            </div>
-
-            <div class="swiper-slide">
-              <img
-                src="{% static 'Quotes.svg' %}"
-                class="bgreviw"
-                loading="lazy"
-                alt="Quotes"
-              />
-              <p class="reviewName">Priyanka Sharma</p>
-              <div class="reviewContent">
-                I never imagined my smile could look this great. The entire
-                process was smooth and tailored to my needs. I'm so grateful to
-                the team and my smile designer!
-              </div>
-              <div class="stars">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-              </div>
-            </div>
-
-            <div class="swiper-slide">
-              <img
-                src="{% static 'Quotes.svg' %}"
-                class="bgreviw"
-                loading="lazy"
-                alt="Quotes"
-              />
-              <p class="reviewName">Priyanka Sharma</p>
-              <div class="reviewContent">
-                I never imagined my smile could look this great. The entire
-                process was smooth and tailored to my needs. I'm so grateful to
-                the team and my smile designer!
-              </div>
-              <div class="stars">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-              </div>
-            </div>
-
-            <div class="swiper-slide">
-              <img
-                src="{% static 'Quotes.svg' %}"
-                class="bgreviw"
-                loading="lazy"
-                alt="Quotes"
-              />
-              <p class="reviewName">Priyanka Sharma</p>
-              <div class="reviewContent">
-                I never imagined my smile could look this great. The entire
-                process was smooth and tailored to my needs. I'm so grateful to
-                the team and my smile designer!
-              </div>
-              <div class="stars">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>   {% endcomment %}
 </div>
-
 {% endblock body %} {% block js %}
-{% comment %} <script>
-  $(document).ready(function () {
-    var sync1 = $("#sync1");
-    var sync2 = $("#sync2");
-    var slidesPerPage = 5; // globally define number of elements per page
-    var syncedSecondary = true;
-
-    sync1
-      .owlCarousel({
-        items: 4, // Default number of items on larger screens
-        slideSpeed: 2000,
-        nav: true,
-        autoplay: true,
-        dots: true,
-        loop: true,
-        responsiveRefreshRate: 200,
-        navText: [
-          '<i class="fa fa-chevron-left"></i>',
-          '<i class="fa fa-chevron-right"></i>',
-        ],
-        responsive: {
-          0: {
-            items: 1, // Show 1 item on mobile devices (0px to 768px)
-          },
-          768: {
-            items: 2, // Optional: Show 2 items on tablets or larger
-          },
-          992: {
-            items: 3,
-          },
-          1000: {
-            items: 4, // Default to 3 items on larger screens
-          },
-        },
-      })
-      .on("changed.owl.carousel", syncPosition);
-
-    sync2
-      .on("initialized.owl.carousel", function () {
-        sync2.find(".owl-item").eq(0).addClass("current");
-      })
-      .owlCarousel({
-        items: slidesPerPage,
-        dots: false,
-        nav: false,
-        margin: 15,
-        smartSpeed: 200,
-        slideSpeed: 500,
-        slideBy: slidesPerPage, // alternatively you can slide by 1
-        responsiveRefreshRate: 100,
-      })
-      .on("changed.owl.carousel", syncPosition2);
-
-    function syncPosition(el) {
-      var count = el.item.count - 1;
-      var current = Math.round(el.item.index - el.item.count / 2 - 0.5);
-
-      if (current < 0) {
-        current = count;
-      }
-      if (current > count) {
-        current = 0;
-      }
-
-      sync2
-        .find(".owl-item")
-        .removeClass("current")
-        .eq(current)
-        .addClass("current");
-      var onscreen = sync2.find(".owl-item.active").length - 1;
-      var start = sync2.find(".owl-item.active").first().index();
-      var end = sync2.find(".owl-item.active").last().index();
-
-      if (current > end) {
-        sync2.data("owl.carousel").to(current, 100, true);
-      }
-      if (current < start) {
-        sync2.data("owl.carousel").to(current - onscreen, 100, true);
-      }
-    }
-
-    function syncPosition2(el) {
-      if (syncedSecondary) {
-        var number = el.item.index;
-        sync1.data("owl.carousel").to(number, 100, true);
-      }
-    }
-
-    sync2.on("click", ".owl-item", function (e) {
-      e.preventDefault();
-      var number = $(this).index();
-      sync1.data("owl.carousel").to(number, 300, true);
-    });
-  });
-
-  $(document).ready(function () {
-    $(".aon-med-testimonial2-area .owl-carousel").owlCarousel({
-      items: 1, // Show one testimonial at a time
-      loop: true, // Enable looping
-      autoplay: true, // Auto-play enabled
-      autoplayTimeout: 2000, // 5-second auto-slide
-      nav: true, // Navigation arrows
-      dots: true, // Dots navigation
-      navText: [
-        '<i class="fa fa-chevron-left"></i>',
-        '<i class="fa fa-chevron-right"></i>',
-      ],
-    });
-  });
-</script> {% endcomment %}
 <script>
   function BookAppoinment(name,city){
-    //console.log("sdf",id,name,city)
     const doctordata = {
       name:name,
     }
     localStorage.setItem('selectedDoctor',JSON.stringify(doctordata));
     window.location.href="/consult-with-dentist/";
   }
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.wp-track').forEach(track => {
+    let phrase = track.getAttribute('data-text') || '';
+    if (!phrase.trim()) return;
+
+    // ✅ Automatically wrap "100%" inside <b> tags
+    phrase = phrase.replace(/(100%)/gi, '<b>$1</b>');
+
+    const seg = document.createElement('div');
+    seg.className = "mq-seg";
+
+    const unit = () => {
+      const span = document.createElement('span');
+      span.className = 'mq-item';
+      span.innerHTML = phrase; // supports HTML tags (including <b>)
+      return span;
+    };
+
+    const targetWidth = Math.max(window.innerWidth, track.clientWidth) + 200;
+    let tmpWidth = 0;
+    const measurer = document.createElement('div');
+    measurer.style.visibility = 'hidden';
+    measurer.style.position = 'absolute';
+    measurer.style.whiteSpace = 'nowrap';
+    measurer.style.left = '-9999px';
+    track.appendChild(measurer);
+
+    while (tmpWidth < targetWidth) {
+      const it = unit();
+      measurer.appendChild(it.cloneNode(true));
+      tmpWidth = measurer.getBoundingClientRect().width;
+      seg.appendChild(it);
+    }
+    measurer.remove();
+
+    const inner = document.createElement('div');
+    inner.className = 'mq-inner';
+    const seg2 = seg.cloneNode(true);
+
+    track.innerHTML = '';
+    track.appendChild(inner);
+    inner.appendChild(seg);
+    inner.appendChild(seg2);
+
+    const segWidth = inner.firstElementChild.getBoundingClientRect().width;
+    track.style.setProperty('--mq-seg-w', segWidth + 'px');
+
+    const pxPerSec = 120;
+    const duration = Math.max(12, Math.round(segWidth / pxPerSec));
+    track.style.setProperty('--mq-duration', duration + 's');
+  });
+});
 </script>
 <script>
     document.getElementById("cityDropdown").addEventListener("change", function () {
@@ -1514,21 +1176,6 @@
     offset: 100,
   });
 </script>
-{% comment %} <script>
-document.addEventListener('DOMContentLoaded',function(){
-  const video = document.getElementById('usdVideo');
-  const fallbackImage = document.getElementById('fallbackImage');
-  console.log("video",video)
-
-  video.addEventListener('error',function(){
-    console.warn("Video Failed to load,showing fallback image.");
-
-    video.style.display = 'none';
-
-    fallbackImage.style.display = 'block';
-  })
-})
-</script> {% endcomment %}
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll("video").forEach(video => {
@@ -1555,6 +1202,42 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 4000);
   });
 });
+</script>
+<script>
+(function(){
+  const tracks = document.querySelectorAll('.wp-track');
+  if(!tracks.length) return;
+
+  tracks.forEach(track=>{
+    const phrase = track.getAttribute('data-text') || '';
+    // measure once using a hidden span
+    const probe = document.createElement('span');
+    probe.style.visibility='hidden';
+    probe.style.whiteSpace='nowrap';
+    probe.textContent = phrase;
+    track.appendChild(probe);
+    const phraseW = probe.getBoundingClientRect().width || 200;
+    track.removeChild(probe);
+
+    // fill with enough copies to cover ~2x viewport width (for scrolling safety)
+    const needed = Math.ceil((window.innerWidth * 2) / phraseW) + 2;
+    track.innerHTML = ''; // clear ::before/::after approach
+    const span = document.createElement('span');
+    span.style.whiteSpace='nowrap';
+    span.style.background='inherit';
+    span.style.webkitBackgroundClip='text';
+    span.style.backgroundClip='text';
+    span.style.color='transparent';
+
+    let buf = '';
+    for(let i=0;i<needed;i++) buf += phrase;
+    span.textContent = buf;
+    track.appendChild(span);
+
+    // If you want live scrolling, uncomment:
+    // track.style.animationPlayState = 'running';
+  });
+})();
 </script>
 <script type="application/ld+json">
 {
