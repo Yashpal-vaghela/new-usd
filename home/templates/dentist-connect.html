@@ -46,26 +46,26 @@
     </div>
   </section>
 
-  <section class="dentist-connect-section text-center py-5">
+  <section class="dentist-connect-section text-center pt-5 pb-0 py-sm-5">
     <div class="container px-lg-5">
       <h1 class="contact-title cool">Become an Ultimate Smile Designer – Certified Dentist</h1>
       <p class='dentist-subtitle'>Take the next step toward becoming an Ultimate Smile Designer – register now and get certified.</p>
-      <form class="dentist-connect-form form mt-4 mb-5 my-sm-5" action="{% url 'home:dentist_connect' %}" method="post">
+      <form class="dentist-connect-form form mt-4 mb-4 my-sm-5" action="{% url 'home:dentist_connect' %}" method="post">
         {% csrf_token %}
         <div class="container row justify-content-center mx-auto">
-          <div class="col-lg-12 mb-5">
+          <div class="col-lg-12 mb-4 mb-sm-5">
             <input type="text" name="name" placeholder="Full Name" class="form-control" required />
           </div>
-          <div class="col-lg-6 mb-5">
+          <div class="col-lg-6 mb-4 mb-sm-5">
             <input type="email" name="email" placeholder="Email" class="form-control" required />
           </div>
-          <div class="col-lg-6 mb-5">
+          <div class="col-lg-6 mb-4 mb-sm-5">
             <input type="number" name="phone" placeholder="Phone" class="form-control" required />
           </div>
-          <div class="col-lg-6 mb-5">
+          <div class="col-lg-6 mb-4 mb-sm-5">
             <input type="text" name="clinic_name" placeholder="Clinic Name" class="form-control" required />
           </div>
-          <div class="col-lg-6 mb-5">
+          <div class="col-lg-6 mb-3 mb-sm-5">
             <input type="text" name="city" placeholder="City" class="form-control" required />
           </div>
           <div class="col-md-12 mt-2">
@@ -84,7 +84,7 @@
     </div>
   </section>
   
-    <section class="usd-studio-section overflow-hidden">
+  <section class="usd-studio-section overflow-hidden">
       
       <div class="container usd-studio-tittle-wrapper text-center">
         <p class="usd-studio-small text-header cool  mb-0">Exclusive Smile Journeys</p>

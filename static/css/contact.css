@@ -598,6 +598,9 @@
   .login-form .row .col-12 .form-check-input {
     width: 1.3rem;
   }
+  .dentist-connect-section .container{
+    width: 100%;
+  }
 }
 @media (max-width: 500px) {
   .breadcrumbs-section .container {
