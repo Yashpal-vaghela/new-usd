@@ -180,6 +180,7 @@ class Blog(models.Model):
     content = RichTextUploadingField()
     active = True
     edits = RichTextUploadingField( blank=True, null=True)
+    schema = models.TextField( blank=True, null=True)
     
     
     def __str__(self):
