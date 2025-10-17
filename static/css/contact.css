@@ -52,6 +52,89 @@
 .btn-submit:focus {
   box-shadow: none;
 }
+.dentist-connect-section {
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+}
+.dentist-subtitle {
+  color: #ccc;
+  font-size: 1rem;
+  margin-bottom: 2.5rem;
+}
+.dentist-connect-form input {
+  width: 100%;
+  padding: 12px 8px;
+  font-size: 15px;
+  color: #fff;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.918);
+  border-radius: 0%;
+  transition: border-color 0.3s ease;
+}
+
+.dentist-connect-form input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+.dentist-connect-form .form-control {
+  
+  color: #fff !important;
+}
+.dentist-connect-form input:focus {
+  outline: none;
+  background-color: #000;
+  border-bottom: 1px solid #c7a041;
+}
+.connect-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  color: #fff;
+  padding: 10px 25px 10px 20px;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 400;
+  min-width: 190px;
+  text-transform: none;
+}
+
+.connect-btn .arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid rgba(255, 255, 255, 0.6);
+  padding-left: 15px;
+  margin-left: 15px;
+  transition: transform 0.3s ease;
+}
+
+.connect-btn:hover {
+  background: linear-gradient(
+    30deg,
+    #636363 0%,
+    #9b9b9b 20%,
+    #b1b1b1 36%,
+    #e1e1e1 50%,
+    #b1b1b1 62%,
+    #9b9b9b 75%,
+    #636363 100%
+  ) !important;
+  font-weight: 400;
+  color: #000;
+}
+
+.connect-btn:hover .arrow svg path {
+  fill: #000;
+}
+.connect-btn:hover .arrow {
+  border-left-color: #000;
+  transform: translateX(5px); /* adds subtle slide effect */
+}
 .contact-info-wrapper h2 {
   font-size: 22px;
   color: transparent !important;
@@ -623,5 +706,10 @@
   
   .aon-login-form{
     padding: 10px 10px 0px;
+  }
+}
+@media (max-width: 480px) {
+  .g-recaptcha {
+    transform: scale(0.75); /* Smaller phones */
   }
 }

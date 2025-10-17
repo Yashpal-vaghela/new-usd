@@ -635,6 +635,53 @@ def dentist_connect(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Your data has been submitted successfully!')
+        
+            # --- Prepare CRM Payload ---
+            full_name = request.POST.get("name", "").strip()
+            first_name, last_name = (full_name.split(" ", 1) + [""])[:2]
+
+            payload = {
+                "firstName": first_name or "Visitor",
+                "lastName": last_name,
+                "designation": request.POST.get("designation", ""),
+                "email": request.POST.get("email", ""),
+                "countryCode": "91",
+                "mobile": request.POST.get("phone", ""),
+                "phoneCountryCode": "91",
+                "phone": request.POST.get("phone", ""),
+                "expectedRevenue": "0",
+                "description": request.POST.get("message", ""),
+                "companyName": request.POST.get("clinic_name", ""),
+                "companyState": request.POST.get("state", ""),
+                "companyStreet": "",
+                "companyCity": request.POST.get("city", ""),
+                "companyCountry": "India",
+                "companyPincode": "",
+                "leadPriority": "1",
+            }
+
+            headers = {
+                "Content-Type": "application/json",
+                "authToken": "79atXvY2ZVZXs32Tbnw89A==.icG8H90dELRwyW3euMFdTg==", 
+                "timeZone": "Asia/Calcutta",
+            }
+
+            # --- Send to CRM ---
+            try:
+                crm_response = requests.post(
+                    "https://crm.my-company.app/api/v1/lead/webhook",
+                    json=payload,
+                    headers=headers,
+                    timeout=10,
+                )
+                crm_response.raise_for_status()
+                messages.success(
+                    request,
+                    "Thanks for connecting with Ultimate Smile Design. Our team will reach out shortly!"
+                )
+            except requests.exceptions.RequestException as e:
+                messages.warning(request, f"Data saved but CRM sync failed: {str(e)}")
+
             return redirect('home:thankyou')
         
         else:
@@ -644,6 +691,7 @@ def dentist_connect(request):
         "RECAPTCHA_SITE_KEY": settings.RECAPTCHA_SITE_KEY
     }
     return render(request, 'dentist-connect.html', context)
+
 def sitemap(request):
     return render(request, 'sitemap.xml', content_type='text/xml')
 

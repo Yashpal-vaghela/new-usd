@@ -7,7 +7,7 @@ class ContactForm(forms.ModelForm):
         
 class DentistConnectForm(forms.ModelForm):
     class Meta:
-        model = Dentist
+        model = DentistConnect
         fields= '__all__'
         
         

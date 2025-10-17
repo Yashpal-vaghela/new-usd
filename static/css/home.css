@@ -2555,7 +2555,7 @@ body {
     padding-bottom: 16.5%;
   }
   .usd-floating-images {
-    margin-top: 17%;
+    margin-top: 3%;
   }
   .usd-img-wrapper:nth-child(1) {
     margin-top: 10%;
@@ -2833,7 +2833,7 @@ body {
     height: 70%;
   }
   .usd-floating-images {
-    margin-top: 13%;
+    margin-top: -0.5%;
   }
   .usd-img-wrapper:nth-child(1) {
     left: 35%;
@@ -2964,7 +2964,7 @@ body {
     width: 34%;
   }
   .usd-floating-images {
-    margin-top: 22%;
+    margin-top: 1%;
   }
   .usd-img-wrapper:nth-child(1) {
     width: 14%;
@@ -3262,9 +3262,9 @@ body {
     display: none;
   }
   .usd-img-wrapper:nth-child(7) {
-    width: 19%;
-    left: 31%;
-    margin-top: 62.5%;
+    width: 24%;
+    left: 26%;
+    margin-top: 72%;
   }
   .usd-img-wrapper:nth-child(8) {
     width: 24%;
