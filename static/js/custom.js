@@ -55,12 +55,6 @@ All JavaScript fuctions Start
         jQuery('#datepicker').datepicker();  
    } 
     
-    jQuery('.aon-scrolling-nav li').on('click', function() {
-        jQuery(this).addClass('active').siblings().removeClass('active');
-    });  
-
-    jQuery('.scrollbar-inner').scrollbar();
-    
 
 // Video responsive function by = custom.js ========================= //	
 	function video_responsive(){	
@@ -125,178 +119,178 @@ All JavaScript fuctions Start
 	}    
         
 // Product Slider function by = owl.carousel.js
-	function shop_style1_slider(){
-		jQuery('.shop-style1-slider').owlCarousel({
-			rtl: false,
-			loop:false,
-			margin:30,
-			nav:true,
-			dots: false,
-			items:1,
-			navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
-			responsive:{
-				0:{
-					items:1
-				},
-				480:{
-					items:2
-				},		
-				991:{
-					items:2
-				},
-				1200:{
-					items:4
-				}
-			}			
-		})
-	}	
+	// function shop_style1_slider(){
+	// 	jQuery('.shop-style1-slider').owlCarousel({
+	// 		rtl: false,
+	// 		loop:false,
+	// 		margin:30,
+	// 		nav:true,
+	// 		dots: false,
+	// 		items:1,
+	// 		navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
+	// 		responsive:{
+	// 			0:{
+	// 				items:1
+	// 			},
+	// 			480:{
+	// 				items:2
+	// 			},		
+	// 			991:{
+	// 				items:2
+	// 			},
+	// 			1200:{
+	// 				items:4
+	// 			}
+	// 		}			
+	// 	})
+	// }	
     
 
  	// Test Booked Two Carousel function by = owl.js
-    function aon_booked_test_carousel(){
-        jQuery('.aon-booked-test-carousel').owlCarousel({
-            loop:true,
-            margin:30,
-            center: false,
-            nav:true,
-            dots: false,
-            navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
-            responsive:{
-                0:{
-                    items:1,
-                    center:false,
-                },
-                767:{
-                    items:2
-                },
-                1024:{
-                    items:3,
-                },
-				1366:{
-                    items:5,
-                },
+    // function aon_booked_test_carousel(){
+    //     jQuery('.aon-booked-test-carousel').owlCarousel({
+    //         loop:true,
+    //         margin:30,
+    //         center: false,
+    //         nav:true,
+    //         dots: false,
+    //         navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
+    //         responsive:{
+    //             0:{
+    //                 items:1,
+    //                 center:false,
+    //             },
+    //             767:{
+    //                 items:2
+    //             },
+    //             1024:{
+    //                 items:3,
+    //             },
+	// 			1366:{
+    //                 items:5,
+    //             },
 
-            }
-        });
-    } 
+    //         }
+    //     });
+    // } 
     
  	// Booked Appointment Carousel function by = owl.js
-    function aon_book_appoint_carousel(){
-        jQuery('.aon-book-appoint-carousel').owlCarousel({
-            loop:true,
-            margin:30,
-            center: false,
-            nav:true,
-            dots: false,
-            navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
-            responsive:{
-                0:{
-                    items:1,
-                    center:false,
-                },
-                 600:{
-                    items:2
-                },               
-                767:{
-                    items:2
-                },
-                 991:{
-                    items:2,
-                },
-                1200:{
-                    items:2,
-                },                
-                1400:{
-                    items:3,
-                },
-            }
-        });
-    }     
+    // function aon_book_appoint_carousel(){
+    //     jQuery('.aon-book-appoint-carousel').owlCarousel({
+    //         loop:true,
+    //         margin:30,
+    //         center: false,
+    //         nav:true,
+    //         dots: false,
+    //         navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
+    //         responsive:{
+    //             0:{
+    //                 items:1,
+    //                 center:false,
+    //             },
+    //              600:{
+    //                 items:2
+    //             },               
+    //             767:{
+    //                 items:2
+    //             },
+    //              991:{
+    //                 items:2,
+    //             },
+    //             1200:{
+    //                 items:2,
+    //             },                
+    //             1400:{
+    //                 items:3,
+    //             },
+    //         }
+    //     });
+    // }     
     
    
     
     	// Povider Profile Video Slider function by = owl.js
-		function aon_provider_video_slider(){
-			jQuery('.aon-provi-video-slider').owlCarousel({
-				loop:true,
-				margin:30,
-				center: false,
-				nav:true,
-				dots: false,
-				navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
-                responsive:{
-					0:{
-						items:1,
-						center:false,
-					},
-					767:{
-						items:2
-					},
-					991:{
-						items:1,
-					},
+	// 	function aon_provider_video_slider(){
+	// 		jQuery('.aon-provi-video-slider').owlCarousel({
+	// 			loop:true,
+	// 			margin:30,
+	// 			center: false,
+	// 			nav:true,
+	// 			dots: false,
+	// 			navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
+    //             responsive:{
+	// 				0:{
+	// 					items:1,
+	// 					center:false,
+	// 				},
+	// 				767:{
+	// 					items:2
+	// 				},
+	// 				991:{
+	// 					items:1,
+	// 				},
 
 
-				}
-			});
-	   }    
+	// 			}
+	// 		});
+	//    }    
     
 	// Health Concern Carousel function by = owl.js
-		function aon_health_concer_carousel(){
-			jQuery('.aon-health-concer-carousel').owlCarousel({
-				loop:true,
-				margin:30,
-				center: false,
-				nav:true,
-				dots: false,
-				navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
-				responsive:{
-					0:{
-						items:1,
-						center:false,
-					},
-					767:{
-						items:2
-					},
-					1024:{
-						items:3,
-					},
-					1366:{
-						items:5,
-					},
+	// 	function aon_health_concer_carousel(){
+	// 		jQuery('.aon-health-concer-carousel').owlCarousel({
+	// 			loop:true,
+	// 			margin:30,
+	// 			center: false,
+	// 			nav:true,
+	// 			dots: false,
+	// 			navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
+	// 			responsive:{
+	// 				0:{
+	// 					items:1,
+	// 					center:false,
+	// 				},
+	// 				767:{
+	// 					items:2
+	// 				},
+	// 				1024:{
+	// 					items:3,
+	// 				},
+	// 				1366:{
+	// 					items:5,
+	// 				},
 
-				}
-			});
-	}    
+	// 			}
+	// 		});
+	// }    
 
     
 	// Health checkup Carousel function by = owl.js
-	function aon_health_checkup_carousel(){
-		jQuery('.aon-health-checkup-carousel').owlCarousel({
-			loop:true,
-			margin:30,
-			center: false,
-			nav:true,
-			dots: false,
-			navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
-			responsive:{
-				0:{
-					items:1,
-					center:false,
-				},
-				767:{
-					items:2
-				},
-				1024:{
-					items:3,
-				},
-				1366:{
-					items:4,
-				},
+	// function aon_health_checkup_carousel(){
+	// 	jQuery('.aon-health-checkup-carousel').owlCarousel({
+	// 		loop:true,
+	// 		margin:30,
+	// 		center: false,
+	// 		nav:true,
+	// 		dots: false,
+	// 		navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
+	// 		responsive:{
+	// 			0:{
+	// 				items:1,
+	// 				center:false,
+	// 			},
+	// 			767:{
+	// 				items:2
+	// 			},
+	// 			1024:{
+	// 				items:3,
+	// 			},
+	// 			1366:{
+	// 				items:4,
+	// 			},
 
-			}
-		});
-	}
+	// 		}
+	// 	});
+	// }
 	    
     
     
@@ -551,265 +545,265 @@ All JavaScript fuctions Start
  
     
 	// Categories carousel function by = owl.js
-    function categories_carousel_owl (){
-        jQuery('.categories-carousel-owl').owlCarousel({
-            loop:true,
-            margin:30,
-            center: true,
-            nav:true,
-            dots: false,
-            navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
-            responsive:{
-                0:{
-                    items:1,
-                    center:false,
-                },
-                480:{
-                    items:3
-                },			
-                767:{
-                    items:3
-                },
-                1024:{
-                    items:5,
-                    center:true
-                },
+    // function categories_carousel_owl (){
+    //     jQuery('.categories-carousel-owl').owlCarousel({
+    //         loop:true,
+    //         margin:30,
+    //         center: true,
+    //         nav:true,
+    //         dots: false,
+    //         navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
+    //         responsive:{
+    //             0:{
+    //                 items:1,
+    //                 center:false,
+    //             },
+    //             480:{
+    //                 items:3
+    //             },			
+    //             767:{
+    //                 items:3
+    //             },
+    //             1024:{
+    //                 items:5,
+    //                 center:true
+    //             },
 
-            }
-        });
-    }
+    //         }
+    //     });
+    // }
     
     
 	// Featurd Provider Carousel function by = owl.js
-    function featurd_provider_carousel (){
-        jQuery('.aon-featurd-provider-carousel').owlCarousel({
-            loop:true,
-            margin:20,
-            nav:true,
-            dots: false,
-            navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
-            responsive:{
-                0:{
-                    items:1
-                },
-                600:{
-                    items:2
-                },			
-                1000:{
-                    items:2
-                },
-                1200:{
-                    items:3
-                }
-            }
-        });    
-    }
+    // function featurd_provider_carousel (){
+    //     jQuery('.aon-featurd-provider-carousel').owlCarousel({
+    //         loop:true,
+    //         margin:20,
+    //         nav:true,
+    //         dots: false,
+    //         navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
+    //         responsive:{
+    //             0:{
+    //                 items:1
+    //             },
+    //             600:{
+    //                 items:2
+    //             },			
+    //             1000:{
+    //                 items:2
+    //             },
+    //             1200:{
+    //                 items:3
+    //             }
+    //         }
+    //     });    
+    // }
     
     
 	// Featurd Provider Two Carousel function by = owl.js
-	function aon_vendor_provider_two_carousel() {
-		jQuery('.aon-vendor-provider-two-carousel').owlCarousel({
-			loop:true,
-			margin:20,
-			nav:true,
-			dots: false,
-			navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
-			responsive:{
-				0:{
-					items:1
-				},
-				600:{
-					items:2
-				},			
-				1000:{
-					items:2
-				},
-				1200:{
-					items:3
-				}
-			}
-		});
-	}    
+	// function aon_vendor_provider_two_carousel() {
+	// 	jQuery('.aon-vendor-provider-two-carousel').owlCarousel({
+	// 		loop:true,
+	// 		margin:20,
+	// 		nav:true,
+	// 		dots: false,
+	// 		navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
+	// 		responsive:{
+	// 			0:{
+	// 				items:1
+	// 			},
+	// 			600:{
+	// 				items:2
+	// 			},			
+	// 			1000:{
+	// 				items:2
+	// 			},
+	// 			1200:{
+	// 				items:3
+	// 			}
+	// 		}
+	// 	});
+	// }    
     
     
     
  	// Testimonials Carousel function by = slick.js
-    function slick_testimonials_carousel(){   
-        jQuery('.slick-testimonials-carousel').slick({
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            arrows: false,
-            fade: false,
-            asNavFor: '.slick-testimonials-thumbnails',
-         });
+    // function slick_testimonials_carousel(){   
+    //     jQuery('.slick-testimonials-carousel').slick({
+    //         slidesToShow: 1,
+    //         slidesToScroll: 1,
+    //         arrows: false,
+    //         fade: false,
+    //         asNavFor: '.slick-testimonials-thumbnails',
+    //      });
 
-         jQuery('.slick-testimonials-thumbnails').slick({
-            slidesToShow:3,
-            slidesToScroll:1,
-            centerMode: true,
-            asNavFor: '.slick-testimonials-carousel',
-            dots: false,
-            focusOnSelect: true,
-            responsive: [
-            {
-              breakpoint: 1200,
-              settings: {
-                slidesToShow:2
-              },
-              breakpoint:767,
-              settings: {
-                slidesToShow:1
-              }
-            }
-          ]
-         });
+    //      jQuery('.slick-testimonials-thumbnails').slick({
+    //         slidesToShow:3,
+    //         slidesToScroll:1,
+    //         centerMode: true,
+    //         asNavFor: '.slick-testimonials-carousel',
+    //         dots: false,
+    //         focusOnSelect: true,
+    //         responsive: [
+    //         {
+    //           breakpoint: 1200,
+    //           settings: {
+    //             slidesToShow:2
+    //           },
+    //           breakpoint:767,
+    //           settings: {
+    //             slidesToShow:1
+    //           }
+    //         }
+    //       ]
+    //      });
     
-    }
+    // }
     
 	// testimonial Carousel function by = owl.js
-    function aon_med_testimonial(){    
-        jQuery('.aon-med-testimonial').owlCarousel({
-            loop:true,
-            margin:30,
-            items:1,
-            nav:true,
-            dots: false,
-            navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
-        });
-    }
+    // function aon_med_testimonial(){    
+    //     jQuery('.aon-med-testimonial').owlCarousel({
+    //         loop:true,
+    //         margin:30,
+    //         items:1,
+    //         nav:true,
+    //         dots: false,
+    //         navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
+    //     });
+    // }
 
 	// testimonial Carousel function by = owl.js
-    function aon_med_testimonial2(){    
-        jQuery('.aon-med-testimonial2').owlCarousel({
-            loop:true,
-            margin:30,
-            items:1,
-            nav:true,
-            dots: false,
-            navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
-        });
-    }
+    // function aon_med_testimonial2(){    
+    //     jQuery('.aon-med-testimonial2').owlCarousel({
+    //         loop:true,
+    //         margin:30,
+    //         items:1,
+    //         nav:true,
+    //         dots: false,
+    //         navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
+    //     });
+    // }
     
    	// Related Provider Sidebar Carousel function by = owl.js
-    function aon_related_provi_sidebar (){    
-        jQuery('.aon-related-provi-sidebar').owlCarousel({
-            loop:true,
-            margin:0,
-            items:1,
-            nav:true,
-            dots: false,
-            navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
-        });
-    }
+    // function aon_related_provi_sidebar (){    
+    //     jQuery('.aon-related-provi-sidebar').owlCarousel({
+    //         loop:true,
+    //         margin:0,
+    //         items:1,
+    //         nav:true,
+    //         dots: false,
+    //         navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
+    //     });
+    // }
 
 	// Job Related Provider Sidebar Carousel function by = owl.js
-    function aon_recentpost_carousel (){    
-        jQuery('.aon-recentpost-carousel').owlCarousel({
-            loop:true,
-            margin:0,
-            items:1,
-            nav:true,
-            dots: false,
-            navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
-        });
-    }
+    // function aon_recentpost_carousel (){    
+    //     jQuery('.aon-recentpost-carousel').owlCarousel({
+    //         loop:true,
+    //         margin:0,
+    //         items:1,
+    //         nav:true,
+    //         dots: false,
+    //         navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
+    //     });
+    // }
     
    	// Testimonials Two Carousel function by = owl.js
-    function testimonials_two_carousel_owl (){
-        jQuery('.testimonials-two-carousel-owl').owlCarousel({
-            loop:true,
-            margin:0,
-            center: true,
-            nav:true,
-            dots: false,
-            navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
-            responsive:{
-                0:{
-                    items:1,
-                    center:false,
-                },
-                767:{
-                    items:2
-                },
-                1024:{
-                    items:3,
-                    center:true
-                },
+    // function testimonials_two_carousel_owl (){
+    //     jQuery('.testimonials-two-carousel-owl').owlCarousel({
+    //         loop:true,
+    //         margin:0,
+    //         center: true,
+    //         nav:true,
+    //         dots: false,
+    //         navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
+    //         responsive:{
+    //             0:{
+    //                 items:1,
+    //                 center:false,
+    //             },
+    //             767:{
+    //                 items:2
+    //             },
+    //             1024:{
+    //                 items:3,
+    //                 center:true
+    //             },
 
-            }
-        });
-    } 
+    //         }
+    //     });
+    // } 
     
     
 // Video Gallery Carousel function by = owl.js
-    function aon_video_carousel (){   
-	jQuery('.aon-video-carousel').owlCarousel({
-        loop:true,
-		margin:30,
-		nav:true,
-		dots: false,
-		navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
-		responsive:{
-			0:{
-				items:1,
-			},
-			480:{
-				items:2
-			},			
-			767:{
-				items:3
-			}
-		}
-	});    
+//     function aon_video_carousel (){   
+// 	jQuery('.aon-video-carousel').owlCarousel({
+//         loop:true,
+// 		margin:30,
+// 		nav:true,
+// 		dots: false,
+// 		navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
+// 		responsive:{
+// 			0:{
+// 				items:1,
+// 			},
+// 			480:{
+// 				items:2
+// 			},			
+// 			767:{
+// 				items:3
+// 			}
+// 		}
+// 	});    
     
-}
+// }
     
     
-	jQuery('.aon-ow-provi-related').owlCarousel({
-        loop:true,
-		margin:20,
-		nav:true,
-		dots: false,
-		navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
-		responsive:{
-			0:{
-				items:1
-			},
-			600:{
-				items:2
-			},			
-			1000:{
-				items:2
-			},
-			1200:{
-				items:3
-			}
-		}
-	});	 
+	// jQuery('.aon-ow-provi-related').owlCarousel({
+    //     loop:true,
+	// 	margin:20,
+	// 	nav:true,
+	// 	dots: false,
+	// 	navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
+	// 	responsive:{
+	// 		0:{
+	// 			items:1
+	// 		},
+	// 		600:{
+	// 			items:2
+	// 		},			
+	// 		1000:{
+	// 			items:2
+	// 		},
+	// 		1200:{
+	// 			items:3
+	// 		}
+	// 	}
+	// });	 
 	
 	
-		jQuery('.owl-caty-carousel').owlCarousel({
-        loop:true,
-		margin:30,
-		nav:true,
-		dots: false,
-		navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
-		responsive:{
-			0:{
-				items:1,
-                center:false,
-			},
-			480:{
-				items:2
-			},			
-			767:{
-				items:3
-			},
-            1024:{
-                items:4
-            }
-		}
-	});     
+	// 	jQuery('.owl-caty-carousel').owlCarousel({
+    //     loop:true,
+	// 	margin:30,
+	// 	nav:true,
+	// 	dots: false,
+	// 	navText: ['<span class="ar-left"></span>', '<span class="ar-right"></span>'],
+	// 	responsive:{
+	// 		0:{
+	// 			items:1,
+    //             center:false,
+	// 		},
+	// 		480:{
+	// 			items:2
+	// 		},			
+	// 		767:{
+	// 			items:3
+	// 		},
+    //         1024:{
+    //             items:4
+    //         }
+	// 	}
+	// });     
 
 	
     // > TouchSpin box function by  = jquery.bootstrap-touchspin.js =============== // 
@@ -1026,20 +1020,20 @@ All JavaScript fuctions Start
         block_feedback_slide(),  
         
         // Product Slider function by = owl.carousel.js
-	    shop_style1_slider(),  
+	    // shop_style1_slider(),  
             
         // Test Booked Two Carousel function by = owl.js
-        aon_booked_test_carousel(),
+        // aon_booked_test_carousel(),
         // Booked Appointment Carousel function by = owl.js
-        aon_book_appoint_carousel(),          
+        // aon_book_appoint_carousel(),          
             
     	// Povider Profile Video Slider function by = owl.js
-		aon_provider_video_slider(),
+		// aon_provider_video_slider(),
 	    // Health Concern Carousel function by = owl.js
-		aon_health_concer_carousel(),
+		// aon_health_concer_carousel(),
             
 	    // Health checkup Carousel function by = owl.js
-	    aon_health_checkup_carousel()           
+	    // aon_health_checkup_carousel()           
         
         // Bootstrap Slider function by  = bootstrap-slider.min.js   
         Bootstrap_Slider(),
@@ -1069,29 +1063,29 @@ All JavaScript fuctions Start
         //  Search Panel function by = custom.js
         search_filter_panel()          
         // Categories carousel function by = owl.js
-        categories_carousel_owl(),
+        // categories_carousel_owl(),
         // Featurd Provider Carousel function by = owl.js
-        featurd_provider_carousel(),
+        // featurd_provider_carousel(),
             
         // Featurd Provider Two Carousel function by = owl.js
-        aon_vendor_provider_two_carousel(),
+        // aon_vendor_provider_two_carousel(),
         
         // Testimonials Carousel function by = slick.js
         slick_testimonials_carousel(),             
             
         // Related Provider Sidebar Carousel function by = owl.js
-        aon_related_provi_sidebar(),
+        // aon_related_provi_sidebar(),
 		// testimonial Carousel function by = owl.js
-		aon_med_testimonial(),
+		// aon_med_testimonial(),
 		// testimonial Carousel function by = owl.js
-		aon_med_testimonial2(),
+		// aon_med_testimonial2(),
 		// Job Related Provider Sidebar Carousel function by = owl.js
-		aon_recentpost_carousel (),         
+		// aon_recentpost_carousel (),         
             
         // Testimonials Two Carousel function by = owl.js
-        testimonials_two_carousel_owl (),       
+        // testimonials_two_carousel_owl (),       
         // Video Gallery Carousel function by = owl.js
-        aon_video_carousel (),        
+        // aon_video_carousel (),        
 		// > TouchSpin box function by  = jquery.bootstrap-touchspin.js 
 		input_number_vertical_form(),
 		//  Counter Section function by = counterup.min.js
@@ -1138,7 +1132,3 @@ All JavaScript fuctions Start
 	
 	
 })(window.jQuery);
-
-
-
-

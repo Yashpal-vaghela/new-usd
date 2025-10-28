@@ -3391,7 +3391,7 @@ body {
   padding: 15px 0;
   width: 105vw;
   --mq-seg-w: 100%;
-  --mq-duration: 20s;
+  --mq-duration: 35s !important;
   display: block;
   white-space: nowrap;
 }

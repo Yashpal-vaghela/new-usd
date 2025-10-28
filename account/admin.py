@@ -34,6 +34,10 @@ class DentistConnectAdmin(ImportExportModelAdmin):
     list_display = ('name', 'phone', 'clinic_name', 'city', 'date')
     search_fields = ('name', 'city', 'clinic_name')
     list_filter = ('date',)
+class DentistConnectNewAdmin(ImportExportModelAdmin):
+    list_display = ('name', 'phone', 'clinic_name', 'city', 'date')
+    search_fields = ('name', 'city', 'clinic_name')
+    list_filter = ('date',)
 
 class PatientReviewAdmin(admin.ModelAdmin):
     list_display = ('patient_name', 'dentist', 'rating', 'created_at')
@@ -64,6 +68,7 @@ admin.site.register(Gallery)
 admin.site.register(Hgallery)
 admin.site.register(Contact, ContactAdmin)
 admin.site.register(DentistConnect, DentistConnectAdmin)
+admin.site.register(DentistConnectNew, DentistConnectNewAdmin)
 admin.site.register(UserSubmission)
 admin.site.register(PatientReview, PatientReviewAdmin) 
 admin.site.register(DentistRedirect, DentistRedirectAdmin)

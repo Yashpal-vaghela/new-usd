@@ -57,7 +57,7 @@
                             </form>
                         </li>
                         <li class="hea-shrink-btn">
-                            <form action="https://dentist.ultimatesmiledesign.com/" method="get" target="_blank">
+                            <form action="{% url 'home:dentist_connect' %}" method="get">
                                 <button type="submit" class="bat text-center hea-shrink-btn-inner">
                                     For Dentist
                                 </button>
@@ -93,7 +93,7 @@
                         <a href="{% url 'home:dentist' %}" class="aon-add-listing m-l20 header-buttons bat" onClick="localStorage.removeItem('selectedDoctor')">
                             <p class="">For Patients</p>   
                           </a>
-                          <a href="https://dentist.ultimatesmiledesign.com/" target="_blank" class="bat aon-add-listing m-l20 header-buttons ">
+                          <a href="{% url 'home:dentist_connect' %}" class="bat aon-add-listing m-l20 header-buttons ">
                              <p class="">For Dentist</p>
                           </a>
 
