@@ -2777,7 +2777,7 @@ div.dataTables_wrapper div.dataTables_length select {
   padding-left: 55px;
 }
 .form-select {
-  height: 50px;
+  height: 35px;
   border-color: #e8edf1;
 }
 .form-select:focus {

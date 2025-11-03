@@ -626,7 +626,7 @@
 }
 .vector2-img {
   right: 0%;
-  z-index: -1;
+  z-index: 3;
   top: 12%;
 }
 /* .vector2-img svg{
@@ -634,7 +634,7 @@
   top: 12%;
 } */
 .vector1-img {
-  z-index: -1;
+  z-index: 3;
   bottom: 20%;
 }
 
@@ -780,6 +780,181 @@
     padding: 22px;
   }
 }
+/*--------------------------- New Dentist Section ----------------------- */
+.dentist-swiper-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.newdentistSwiper {
+  padding: 40px 0;
+}
+.newdentistSwiper .swiper-wrapper {
+  padding-left: 10px;
+  padding-right: 10px;
+  gap: 55px;
+}
+.newdentistSwiper .swiper-slide {
+  display: flex;
+  align-items: center;
+  margin-right: 0 !important;
+  box-sizing: border-box;
+}
+.newdentistSwiper .dentists-content {
+  padding: 15px;
+  background-color: var(--bg-content-color);
+  border-radius: 25px;
+  z-index: 1;
+}
+.newdentistSwiper .dentists-content img {
+  width: 95%;
+  height: auto;
+  border-radius: 18px;
+  display: flex;
+  margin: auto;
+}
+.newdentistSwiper .card {
+  width: 95%;
+  max-width: 380px;
+  height: 95%;
+  margin: 0 auto;
+}
+
+.newdentistSwiper .border-frame {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 30%;
+  height: 100%;
+  z-index: 1;
+  top: 0%;
+  background-image: url("../border-frame.webp");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  pointer-events: none;
+}
+.city-dropdown-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 15px;
+  background: transparent;
+  border: none;
+}
+
+.city-dropdown-wrapper::before,
+.city-dropdown-wrapper::after,
+.city-dropdown-wrapper span::before,
+.city-dropdown-wrapper span::after {
+  content: "";
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border: 2px solid #fff;
+}
+
+.city-dropdown-wrapper::before { 
+  top: 0; 
+  left: 0; 
+  border-right: none; 
+  border-bottom: none; 
+}
+.city-dropdown-wrapper::after { 
+  top: 0; 
+  right: 0; 
+  border-left: none; 
+  border-bottom: none; 
+}
+.city-dropdown-wrapper span::before { 
+  bottom: 0; 
+  left: 0; 
+  border-right: none; 
+  border-top: none; 
+}
+.city-dropdown-wrapper span::after { 
+  bottom: 0; 
+  right: 0; 
+  border-left: none; 
+  border-top: none; 
+}
+
+.city-select {
+  background: black;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+  padding-right: 35px;
+  padding-left: 0px;
+}
+
+.dropdown-arrow{
+  content: "";
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-left: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: translateY(-50%) rotate(315deg);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.newdentistSwiper .swiper-slide .card {
+  animation: smallBig2 2s ease-in-out forwards;
+}
+
+.newdentistSwiper .swiper-slide-prev .card {
+  z-index: 2;
+  animation: smallBig 2s ease-in-out forwards;
+}
+
+.newdentistSwiper .swiper-slide-active .card {
+  animation: smallBig1 2s ease-in-out forwards;
+}
+
+@keyframes smallBig {
+  0% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(0.9);
+  }
+}
+
+@keyframes smallBig1 {
+  0% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1.15);
+  }
+}
+
+@keyframes smallBig2 {
+  0% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(0.9);
+  }
+}
+
+@media (min-width: 1200px) {
+  .newdentistSwiper .swiper-slide {
+    width: auto !important;
+    flex: 0 0 auto !important;
+  }
+}  
+
 
 /* ---------------------- smile step section ---------------------- */
 .smile_step_Section {
@@ -977,6 +1152,9 @@
   line-height: 45px !important;
   width: 75%;
   font-size: 32px !important;
+}
+.schedule-data-title{
+  font-size: 20px !important;
 }
 .schedule-data-content p {
   font-size: 14px;
@@ -1303,7 +1481,7 @@
   font-size: 28px;
   margin: 10px 0;
 }
-.gallery-text p {
+.gallery-text .gallery-descripation {
   font-size: 16px;
   width: 80%;
   margin-left: auto;
