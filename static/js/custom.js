@@ -1071,7 +1071,7 @@ All JavaScript fuctions Start
         // aon_vendor_provider_two_carousel(),
         
         // Testimonials Carousel function by = slick.js
-        slick_testimonials_carousel(),             
+        // slick_testimonials_carousel(),             
             
         // Related Provider Sidebar Carousel function by = owl.js
         // aon_related_provi_sidebar(),

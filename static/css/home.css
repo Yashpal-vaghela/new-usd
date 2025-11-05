@@ -14,6 +14,13 @@
   z-index: 20;
   margin-bottom: 0px;
 }
+.banner_main_txt p{
+ animation:zoomIn 2s ease-in forwards;
+}
+.banner_main_txt .cool{
+  letter-spacing: 0.3px;
+  animation:zoomIn 3s ease-in forwards;
+}
 .banner-teeth-2 {
   position: absolute;
   height: 270px;
@@ -401,6 +408,7 @@
   .working-main-description {
     font-size: 14px;
     line-height: 24px;
+    letter-spacing: 0.5px;
   }
 }
 @media (max-width: 480px) {
@@ -452,7 +460,7 @@
 .city_txt {
   font-family: "Gilda Display", serif;
   font-size: 22px;
-  font-weight: 500;
+  font-weight: 600;
 }
 .Designer_txt {
   font-weight: 600;
@@ -607,8 +615,11 @@
     margin-top: 5px;
   }
   .register_wrapper p {
-    font-size: 13px;
-    line-height: 20px;
+    font-size: 14px;
+    line-height: 24px;
+  }
+  .register_wrapper .text-header{
+    letter-spacing: 0.5px;
   }
   .register_wrapper img {
     display: none;
@@ -626,7 +637,7 @@
 }
 .vector2-img {
   right: 0%;
-  z-index: 3;
+  z-index: 99;
   top: 12%;
 }
 /* .vector2-img svg{
@@ -634,10 +645,10 @@
   top: 12%;
 } */
 .vector1-img {
-  z-index: 3;
+  z-index: 99;
   bottom: 20%;
+  width: 8.5%;
 }
-
 .dentists-content-1 p {
   width: 65%;
 }
@@ -705,7 +716,11 @@
 }
 @media (max-width: 1200px) {
   .vector2-img {
-    top: 9%;
+    top: 7%;
+    z-index: 99;
+  }
+  .vector1-img{
+    width: 10%;
   }
   .dentists-content-1 {
     gap: 50px;
@@ -717,6 +732,11 @@
   }
   .dentists-content-title {
     font-size: 16px !important;
+  }
+}
+@media(max-width:1100px){
+  .vector1-img{
+    width:8%;
   }
 }
 @media (max-width: 991px) {
@@ -785,47 +805,57 @@
   position: relative;
   overflow: hidden;
 }
-
+.dentist-swiper-section .swiper-bg-grident {
+  background-size: 100% 100% !important;
+  z-index: 9;
+}
+.dentist-swiper-section .swiper-container{
+  position: relative;
+  /* z-index: 9; */
+}
 .newdentistSwiper {
   padding: 40px 0;
 }
 .newdentistSwiper .swiper-wrapper {
   padding-left: 10px;
   padding-right: 10px;
-  gap: 55px;
+  gap: 40px;
+  margin-top: 2% !important;
+  margin-bottom: 2% !important;
 }
 .newdentistSwiper .swiper-slide {
   display: flex;
   align-items: center;
-  margin-right: 0 !important;
+  /* margin-right: 0 !important; */
+  /* margin-left: -5px !important; */
   box-sizing: border-box;
 }
+
 .newdentistSwiper .dentists-content {
-  padding: 15px;
+  padding: 12px;
   background-color: var(--bg-content-color);
   border-radius: 25px;
   z-index: 1;
 }
 .newdentistSwiper .dentists-content img {
-  width: 95%;
+  /* width: 95%; */
   height: auto;
   border-radius: 18px;
   display: flex;
   margin: auto;
 }
 .newdentistSwiper .card {
-  width: 95%;
+  /* width: 95%;
   max-width: 380px;
-  height: 95%;
-  margin: 0 auto;
+  height: 95%; */
+  margin: 5% auto;
 }
-
 .newdentistSwiper .border-frame {
   position: absolute;
   inset: 0;
   margin: auto;
-  width: 30%;
-  height: 100%;
+  width: 36%;
+  /* height: 100%; */
   z-index: 1;
   top: 0%;
   background-image: url("../border-frame.webp");
@@ -833,6 +863,7 @@
   background-position: center;
   background-size: 100% 100%;
   pointer-events: none;
+  left:1.9%;
 }
 .city-dropdown-wrapper {
   position: relative;
@@ -843,7 +874,6 @@
   background: transparent;
   border: none;
 }
-
 .city-dropdown-wrapper::before,
 .city-dropdown-wrapper::after,
 .city-dropdown-wrapper span::before,
@@ -879,7 +909,6 @@
   border-left: none; 
   border-top: none; 
 }
-
 .city-select {
   background: black;
   border: none;
@@ -893,7 +922,6 @@
   padding-right: 35px;
   padding-left: 0px;
 }
-
 .dropdown-arrow{
   content: "";
   position: absolute;
@@ -907,20 +935,17 @@
   pointer-events: none;
   z-index: 3;
 }
-
 .newdentistSwiper .swiper-slide .card {
   animation: smallBig2 2s ease-in-out forwards;
 }
-
 .newdentistSwiper .swiper-slide-prev .card {
   z-index: 2;
   animation: smallBig 2s ease-in-out forwards;
 }
-
 .newdentistSwiper .swiper-slide-active .card {
-  animation: smallBig1 2s ease-in-out forwards;
+  animation: smallBig11 2s ease-in-out forwards;
+  border-radius: 0px;
 }
-
 @keyframes smallBig {
   0% {
     transform: scale(1.1);
@@ -929,16 +954,14 @@
     transform: scale(0.9);
   }
 }
-
-@keyframes smallBig1 {
+@keyframes smallBig11 {
   0% {
     transform: scale(0.9);
   }
   100% {
-    transform: scale(1.15);
+    transform: scale(1.1);
   }
 }
-
 @keyframes smallBig2 {
   0% {
     transform: scale(0.9);
@@ -947,13 +970,148 @@
     transform: scale(0.9);
   }
 }
-
-@media (min-width: 1200px) {
+@media(min-width:768px){
+  .newdentistSwiper .swiper-slide{
+    margin-right: 0 !important;
+  }
+}
+@media(min-width:1300px){
+  .newdentistSwiper .border-frame{
+    left:1.7%;
+    width: 36.2%;
+  }
+}
+@media(max-width:1200px){
+  .newdentistSwiper .border-frame{
+    left:2.4%;
+    width:36%;
+  }
+}
+@media(max-width:1200px) and (min-width:768px){
+  .newdentistSwiper .border-frame{
+    height: 100%;
+  }
+}
+@media(max-width:991px){
+  .newdentistSwiper .border-frame{
+    left:3%;
+    width:55%;
+  }
+  .newdentistSwiper .swiper-wrapper{
+    margin-top:2.5% !important;
+    margin-bottom: 2.5% !important;
+  }
+  .vector1-img{
+    width:12%;
+    z-index: 99;
+  }
+  .dentist-swiper-section .swiper-bg-grident{
+    background-size: 90% 100% !important;
+  }
+}
+@media(max-width:991px) and (min-width:768px){
+  .newdentistSwiper .swiper-slide-next{
+    margin-right: -3% !important;
+  }
+}
+@media(max-width:768px){
+  .newdentistSwiper .swiper-wrapper{
+    gap:0px;
+    /* margin-top: -3.5% !important; */
+  }
+  .vector1-img{
+    width:13.5%;
+  }
+  .dentist-swiper-section .swiper-bg-grident{
+    background-size: auto !important;
+  }
+  /* .newdentistSwiper .swiper-slide-next{
+    margin-right: 0% !important;
+  } */
+ @keyframes smallBig11 {
+  0% {
+    transform: scale(0.8);
+  }
+  100% {
+    transform: scale(0.9);
+  }
+}
+  /* .newdentistSwiper .swiper-slide{
+    margin-right: 3% !important;
+    margin-left:3% !important;
+  } */
+  /* .newdentistSwiper .swiper-slide{
+    width:80% !important;
+    margin-left: auto !important;
+    margin-right: auto  !important;
+  } */
+  .newdentistSwiper .card{
+    /* margin: 6% 4.6%; */
+    margin: 4.4% auto 4.4%;
+    /* margin: 6% 3.6% 6% 5.6%; */
+  }
+  .newdentistSwiper .border-frame{
+    width:95%;
+    left:4%;
+  }
+  .text-header-subtitle,
+  .testimonial_subcontent{
+    position: relative;
+    z-index: 99;
+  }
+}
+@media(max-width:576px){
+  .dentist-swiper-section{
+    padding: 15px 0px 20px !important;
+  }
+  .vector1-img{
+    width: 21%;
+    bottom:25%;
+  }
+  .vector2-img{
+    width:20%;  
+    top:8%;
+  }
+  .newdentistSwiper .border-frame{
+    width:90%;
+    left:-0.3%;
+  }
+  .newdentistSwiper .card{
+    /* margin: 7% 5% 7.5% 4.6%; */
+    margin: -3% 5% -3% 0%;
+  }
+ 
+  .dentist-swiper-section .swiper-container{
+    margin-top: 2rem !important;
+  }
+  .city-dropdown-wrapper{
+    padding: 5px 10px;
+  }
+  .city-dropdown-wrapper::before,
+  .city-dropdown-wrapper::after,
+  .city-dropdown-wrapper span::before,
+  .city-dropdown-wrapper span::after {
+    width: 12px;
+    height: 12px;
+  }
+  .newdentistSwiper .swiper-wrapper{
+    gap:0px;
+  }
+}
+@media(max-width:480px){
+  .newdentistSwiper .card{
+    margin: -3.5% 5.5% -3.5% -0.5%;
+  }
+  .newdentistSwiper .border-frame{
+    left:0%
+  }
+} 
+/* @media (min-width: 1200px) {
   .newdentistSwiper .swiper-slide {
     width: auto !important;
     flex: 0 0 auto !important;
   }
-}  
+}   */
 
 
 /* ---------------------- smile step section ---------------------- */
@@ -1275,7 +1433,8 @@
   }
   .schedule-data-content p {
     margin-bottom: 0px;
-    line-height: 18px;
+    line-height: 25px;
+    letter-spacing: 0.3px;
   }
   .schedule-data-content-2 .col-sm-5:last-child {
     width: 49%;
@@ -1649,6 +1808,10 @@
   .btn-gallery {
     font-size: 12px;
   }
+  .gallery-text .gallery-descripation{
+    width:100%;
+    font-size: 14px;
+  }
 }
 @media (max-width: 480px) {
   .gallery-container {
@@ -1897,6 +2060,7 @@
   position: absolute;
   z-index: 2;
   inset: 0;
+  /* background-color: #ffffff40; */
 }
 @keyframes smallBig {
   0% {
@@ -1922,7 +2086,6 @@
     transform: scale(0.9);
   }
 }
-
 /* @keyframes smallBig2{
   0%{
     transform: translateY(0px) scale(1);
@@ -2120,7 +2283,7 @@
 }
 @media (max-width: 767px) {
   .testimonial_subcontent {
-    width: 100%;
+    width: 100% !important;
     font-size: 15px;
   }
   .testimonial-vector-img {
@@ -2187,7 +2350,6 @@
     top: 50%;
   }
   .testimonial_subcontent {
-    width: 100%;
     font-size: 14px;
   }
   .reviewContent {
@@ -2247,9 +2409,9 @@
   .new-testimonial-section {
     padding: 65px 0px 0px !important;
   }
-  .reviewContent {
+  /* .reviewContent {
     font-size: 13px;
-  }
+  } */
 }
 /* @media (max-width: 500px) {
   .reviewContent {
@@ -3370,8 +3532,8 @@ body {
     margin-top: -15%;
   }
   .usd-studio-section {
-    padding-top: 10%;
-    padding-bottom: 50%;
+    padding-top: 2%;
+    padding-bottom: 52%;
   }
   .usd_shadow_1cu {
     top: 140px;

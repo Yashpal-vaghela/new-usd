@@ -44,35 +44,11 @@
             <img src="{% static 'usdBannerTeeth2.png' %}" class="banner-teeth-2 bg_1 img-fluid" loading="lazy" alt="Image of Single Teeth with Digital Lines for Smile Designing" />
             <!-- Banner Text -->
             <p class="position-relative mb-0">Nothing You Wear is More Important </p>
-            <p class="cool position-relative">Than Your Smile</p>
+            <p class="cool position-relative" >Than Your Smile</p>
           </div>
           <!-- data-aos="fade-down" data-aos-duration="1500" data-aos-delay="0" -->
            <!-- Search Functionality -->
-            {% comment %} <div class="container">
-              <div class="aon-banner-search d-none d-md-inline-block  position-relative " style="margin-top: 30px; background-color: #2D2D2D" >
-                <form class="aon-search2-form aon-search2-form-area" action="{% url 'home:search_all_usd' %}" method="GET"> 
-                  {% csrf_token %}
-                  <div class="d-flex">
-                    <img src="{% static 'personG.svg' %}" class="img-fluid"  alt="location" width="25" height="25"/>
-                    <input type="text" class="  banner-txt-field" placeholder="Enter Doctor's Name" name="q" id="doctor-search" style=" ">
-                  </div>
-                  <div class="d-flex">
-                    <img  src="{% static 'process-1.svg' %}"  class="img-fluid pl-2"  alt="location"  width="25"  height="25" />
-                    <select class=" banner-form" name="city" id="location-select" style="">
-                      <option value="" selected>Select City</option>
-                        {% for city in cities %}
-                        <option value="{{ city.id }}" style="color: white">{{ city.city }}</option>
-                        {% endfor %}
-                    </select>
-                  </div>
-                  <div class="aon-search2-right ">
-                    <div class="aon-search2-col aon-search-btn">
-                        <button class="submit_banner_btn bat" type="submit">Find</button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div> {% endcomment %}
+          
           
           <!-- USD MAin Banner Teeth Image -->
           <img  src="{% static 'usdBannerTeeth2.webp' %}"  class=" img-fluid mt-5"  loading="lazy"  alt="Ultimate Smile Design Image of a Full Arch Teeth in Dark Shade" />
@@ -80,19 +56,6 @@
         <!-- Left Column -->
         
         <!-- Right Column -->
-        {% comment %} <div class="col-lg-6 d-flex align-items-center flex-column" style="margin-top: 50px;">
-          <div class="banner_main_txt " data-aos="zoom-in-left" data-aos-duration="1500" data-aos-delay="300">
-            
-            <img src="{% static 'banner_vec.png' %}" class="banner_vector img-fluid" loading="lazy" alt="Smile Step Group 1" />   
-          </div>
-          <div class="banner_buttons">
-            <a href="{% url 'home:dentist' %}" target="_blank" class="bat banner_btn ">
-              For Patients</a>            
-            <a href="https://dentist.ultimatesmiledesign.com/" target="_blank" class="bat banner_btn ">
-              For Dentist</a>
-          </div>
-          </div>
-      </div>     {% endcomment %}
       </div>
     </div>
   </section>
@@ -210,14 +173,7 @@
               <svg class="smile_orange img-fluid" width="217" height="168" viewBox="0 0 217 168" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M193.995 1.05865C203.607 -1.77802 213.832 3.70803 215.353 13.614C218.84 36.3268 216.426 59.6556 208.196 81.3051C197.81 108.629 178.736 131.764 153.909 147.152C129.082 162.539 99.8771 169.328 70.786 166.472C47.7361 164.21 25.7695 155.992 6.98023 142.764C-1.2145 136.995 -1.57808 125.396 5.239 118.05C12.0661 110.693 23.5008 110.442 31.9927 115.792C44.7033 123.8 59.1656 128.796 74.2672 130.278C95.431 132.356 116.678 127.417 134.74 116.223C152.801 105.028 166.678 88.197 174.234 68.319C179.625 54.1349 181.586 38.9599 180.07 24.0137C179.057 14.0284 184.369 3.89945 193.995 1.05865Z" fill="#FBE9D0" fill-opacity="0.31"/>
               </svg>
-            {% comment %} <img  src="{% static 'sm-grey.svg' %}"  class="smile_orange"  loading="lazy"  alt="orage smile"  /> {% endcomment %}
             
-              {% comment %} <img
-                src="{% static 'process-1.svg' %}"
-                class="img-fluid"
-                alt="location"  
-                style="width: 60px; height: 60px;"
-              /> {% endcomment %}
                 <svg class="img-fluid" width="60" height="60" viewBox="0 0 75 75" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_2531_1226)">
                 <path d="M37.2982 5.8057C36.4956 5.7999 35.841 6.44577 35.8352 7.24693C35.8294 8.0481 36.4738 8.70268 37.2764 8.70848C38.0776 8.71429 38.7322 8.06987 38.738 7.2687C38.7438 6.46754 38.0994 5.81296 37.2982 5.8057ZM37.2322 14.5139C31.6282 14.4741 27.0388 18.9951 26.9964 24.5973C26.9542 30.1992 31.4776 34.7908 37.0798 34.833L37.1576 34.8333C42.7241 34.8333 47.2734 30.3259 47.3155 24.7497C47.3578 19.148 42.8345 14.5561 37.2322 14.5139ZM37.1573 31.9307L37.1015 31.9304C33.0999 31.9002 29.8688 28.6204 29.899 24.619C29.9291 20.6357 33.1784 17.4162 37.1547 17.4162L37.2104 17.4165C41.212 17.4467 44.4431 20.7266 44.4129 24.7279C44.3827 28.7112 41.1335 31.9307 37.1573 31.9307ZM43.4885 6.90644C42.7335 6.63851 41.9035 7.03401 41.6355 7.78961C41.3678 8.5452 41.7633 9.37467 42.5187 9.64259C48.9116 11.9084 53.1722 17.9971 53.1211 24.7935C53.1151 25.595 53.76 26.2497 54.5616 26.2558H54.5728C55.369 26.2558 56.0178 25.6131 56.0239 24.8153C56.0842 16.7823 51.0466 9.58526 43.4885 6.90644Z" fill="url(#paint0_linear_2531_1226)"/>
@@ -264,11 +220,6 @@
               class=" mx-auto my-lg-4 mt-4 mb-3 d-flex align-items-center justify-content-center"
               style="width: 60px; height: 60px;"
             >
-              {% comment %} <img
-                src="{% static 'process-2.svg' %}"
-                class="img-fluid"
-                alt="location"
-              /> {% endcomment %}
               <svg class="img-fluid" width="76" height="76" viewBox="0 0 76 76" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M19.7943 2.73145C17.6622 2.73145 15.9917 3.9734 15.9917 5.5589V8.66835H9.02311C7.80009 8.66977 6.62757 9.15625 5.76278 10.0211C4.89798 10.8859 4.41154 12.0584 4.41016 13.2814V68.6601C4.41212 69.8825 4.89888 71.0543 5.76367 71.9183C6.62846 72.7823 7.80065 73.2681 9.02311 73.2689H66.9814C68.2033 73.2676 69.3748 72.7815 70.2389 71.9175C71.1029 71.0535 71.5889 69.882 71.5903 68.6601V13.2814C71.5895 12.059 71.1037 10.8867 70.2397 10.0219C69.3757 9.1571 68.2039 8.67031 66.9814 8.66835H60.0085V5.5589C60.0085 3.9734 58.3394 2.73145 56.2101 2.73145C54.0778 2.73145 52.4074 3.9734 52.4074 5.5589V8.66835H41.8029V5.5589C41.8029 3.9734 40.1325 2.73145 38.0002 2.73145C35.868 2.73145 34.1976 3.9734 34.1976 5.5589V8.66835H23.5966V5.5589C23.5968 3.9734 21.9265 2.73145 19.7943 2.73145ZM18.3139 5.57617C18.3841 5.42406 18.9178 5.05367 19.7943 5.05367C20.6708 5.05367 21.2043 5.42406 21.2747 5.57617V8.66835H18.3139V5.57617ZM6.7318 23.1815H69.2681V57.7318H60.6129C60.3049 57.7318 60.0096 57.8542 59.7918 58.0719C59.5741 58.2897 59.4518 58.585 59.4518 58.8929V67.5486H9.02311C8.41567 67.5479 7.8333 67.3063 7.40383 66.8767C6.97436 66.4471 6.73288 65.8647 6.73238 65.2573L6.7318 23.1815ZM67.6255 60.0541L61.774 65.9062V60.0538L67.6255 60.0541ZM66.9814 70.9467H9.02311C8.53035 70.9464 8.05079 70.7874 7.65541 70.4934C7.26002 70.1993 6.96981 69.7857 6.82773 69.3139C7.50147 69.6801 8.25629 69.8715 9.02311 69.8705H60.6129C60.9208 69.8704 61.2162 69.7481 61.4341 69.5305L69.2685 61.6959V68.6601C69.2678 69.2664 69.0266 69.8477 68.5978 70.2764C68.1691 70.7051 67.5877 70.9461 66.9814 70.9467ZM54.7298 5.57617C54.799 5.4245 55.332 5.05439 56.2102 5.05439C57.086 5.05439 57.6181 5.4245 57.6864 5.57602V8.66835H54.73L54.7298 5.57617ZM36.5198 5.57617C36.5902 5.42421 37.1237 5.05367 38.0002 5.05367C38.8767 5.05367 39.4101 5.42406 39.4806 5.57617V8.66835H36.5198V5.57617ZM38.0002 15.9115C38.3082 15.9115 38.6035 15.7892 38.8213 15.5714C39.039 15.3537 39.1613 15.0583 39.1613 14.7504C39.1613 14.4425 39.039 14.1471 38.8213 13.9294C38.6035 13.7116 38.3082 13.5893 38.0002 13.5893C37.1271 13.5893 36.5924 13.2183 36.5198 13.0653V10.9906H52.4076V13.0839C52.4076 14.6694 54.0778 15.9114 56.2102 15.9114C56.5182 15.9114 56.8135 15.789 57.0313 15.5713C57.249 15.3535 57.3713 15.0582 57.3713 14.7503C57.3713 14.4423 57.249 14.147 57.0313 13.9292C56.8135 13.7115 56.5182 13.5891 56.2102 13.5891C55.3352 13.5891 54.8011 13.2185 54.7298 13.0659V10.9904H66.9814C67.5882 10.9917 68.1698 11.2335 68.5985 11.663C69.0271 12.0925 69.268 12.6745 69.2681 13.2813V20.8593H6.73238V13.2814C6.73299 12.6741 6.97453 12.0918 7.40399 11.6623C7.83344 11.2328 8.41574 10.9912 9.02311 10.9906H15.9919V13.0839C15.9919 14.6694 17.6622 15.9114 19.7946 15.9114C20.1025 15.9114 20.3979 15.789 20.6156 15.5713C20.8334 15.3535 20.9557 15.0582 20.9557 14.7503C20.9557 14.4423 20.8334 14.147 20.6156 13.9292C20.3979 13.7115 20.1025 13.5891 19.7946 13.5891C18.9214 13.5891 18.3867 13.2182 18.3142 13.0652V10.9906H34.1976V13.0839C34.1976 14.6694 35.868 15.9115 38.0002 15.9115ZM28.3357 36.9931H34.2439C34.5518 36.9931 34.8472 36.8707 35.0649 36.653C35.2827 36.4352 35.405 36.1399 35.405 35.832V30.6192C35.405 30.3112 35.2827 30.0159 35.0649 29.7981C34.8472 29.5804 34.5518 29.458 34.2439 29.458H28.3357C28.0278 29.458 27.7324 29.5804 27.5147 29.7981C27.2969 30.0159 27.1746 30.3112 27.1746 30.6192V35.832C27.1746 36.1399 27.2969 36.4352 27.5147 36.653C27.7324 36.8707 28.0278 36.9931 28.3357 36.9931ZM29.4968 31.7803H33.0828V34.6709H29.4968V31.7803ZM41.7566 36.9931H47.6646C47.9725 36.9931 48.2679 36.8707 48.4856 36.653C48.7034 36.4352 48.8257 36.1399 48.8257 35.832V30.6192C48.8257 30.3112 48.7034 30.0159 48.4856 29.7981C48.2679 29.5804 47.9725 29.458 47.6646 29.458H41.7566C41.4486 29.458 41.1533 29.5804 40.9355 29.7981C40.7178 30.0159 40.5955 30.3112 40.5955 30.6192V35.832C40.5955 36.1399 40.7178 36.4352 40.9355 36.653C41.1533 36.8707 41.4486 36.9931 41.7566 36.9931ZM42.9177 31.7803H46.5035V34.6709H42.9177V31.7803ZM14.9149 49.7474H20.827C21.1349 49.7474 21.4302 49.6251 21.648 49.4074C21.8657 49.1896 21.9881 48.8943 21.9881 48.5863V43.3776C21.9881 43.0696 21.8657 42.7743 21.648 42.5566C21.4302 42.3388 21.1349 42.2165 20.827 42.2165H14.9149C14.6069 42.2165 14.3116 42.3388 14.0938 42.5566C13.8761 42.7743 13.7538 43.0696 13.7538 43.3776V48.5863C13.7538 48.8943 13.8761 49.1896 14.0938 49.4074C14.3116 49.6251 14.6069 49.7474 14.9149 49.7474ZM16.076 44.5387H19.6658V47.4252H16.076V44.5387ZM28.3357 49.7474H34.2439C34.5518 49.7474 34.8472 49.6251 35.0649 49.4074C35.2827 49.1896 35.405 48.8943 35.405 48.5863V43.3776C35.405 43.0696 35.2827 42.7743 35.0649 42.5566C34.8472 42.3388 34.5518 42.2165 34.2439 42.2165H28.3357C28.0278 42.2165 27.7324 42.3388 27.5147 42.5566C27.2969 42.7743 27.1746 43.0696 27.1746 43.3776V48.5863C27.1746 48.8943 27.2969 49.1896 27.5147 49.4074C27.7324 49.6251 28.0278 49.7474 28.3357 49.7474ZM29.4968 44.5387H33.0828V47.4252H29.4968V44.5387ZM41.7566 49.7474H47.6646C47.9725 49.7474 48.2679 49.6251 48.4856 49.4074C48.7034 49.1896 48.8257 48.8943 48.8257 48.5863V43.3776C48.8257 43.0696 48.7034 42.7743 48.4856 42.5566C48.2679 42.3388 47.9725 42.2165 47.6646 42.2165H41.7566C41.4486 42.2165 41.1533 42.3388 40.9355 42.5566C40.7178 42.7743 40.5955 43.0696 40.5955 43.3776V48.5863C40.5955 48.8943 40.7178 49.1896 40.9355 49.4074C41.1533 49.6251 41.4486 49.7474 41.7566 49.7474ZM42.9177 44.5387H46.5035V47.4252H42.9177V44.5387ZM14.9149 62.5018H20.827C21.1349 62.5018 21.4302 62.3795 21.648 62.1617C21.8657 61.944 21.9881 61.6487 21.9881 61.3407V56.132C21.9881 55.824 21.8657 55.5287 21.648 55.3109C21.4302 55.0932 21.1349 54.9709 20.827 54.9709H14.9149C14.6069 54.9709 14.3116 55.0932 14.0938 55.3109C13.8761 55.5287 13.7538 55.824 13.7538 56.132V61.3407C13.7538 61.6487 13.8761 61.944 14.0938 62.1617C14.3116 62.3795 14.6069 62.5018 14.9149 62.5018ZM16.076 57.2931H19.6658V60.1796H16.076V57.2931ZM28.3357 62.5018H34.2439C34.5518 62.5018 34.8472 62.3795 35.0649 62.1617C35.2827 61.944 35.405 61.6487 35.405 61.3407V56.132C35.405 55.824 35.2827 55.5287 35.0649 55.3109C34.8472 55.0932 34.5518 54.9709 34.2439 54.9709H28.3357C28.0278 54.9709 27.7324 55.0932 27.5147 55.3109C27.2969 55.5287 27.1746 55.824 27.1746 56.132V61.3407C27.1746 61.6487 27.2969 61.944 27.5147 62.1617C27.7324 62.3795 28.0278 62.5018 28.3357 62.5018ZM29.4968 57.2931H33.0828V60.1796H29.4968V57.2931ZM14.9149 36.9931H20.827C21.1349 36.9931 21.4302 36.8707 21.648 36.653C21.8657 36.4352 21.9881 36.1399 21.9881 35.832V30.6192C21.9881 30.3112 21.8657 30.0159 21.648 29.7981C21.4302 29.5804 21.1349 29.458 20.827 29.458H14.9149C14.6069 29.458 14.3116 29.5804 14.0938 29.7981C13.8761 30.0159 13.7538 30.3112 13.7538 30.6192V35.832C13.7538 36.1399 13.8761 36.4352 14.0938 36.653C14.3116 36.8707 14.6069 36.9931 14.9149 36.9931ZM16.076 31.7803H19.6658V34.6709H16.076V31.7803ZM61.0856 42.2165H55.1774C54.8695 42.2165 54.5741 42.3388 54.3564 42.5566C54.1386 42.7743 54.0163 43.0696 54.0163 43.3776V48.5863C54.0163 48.8943 54.1386 49.1896 54.3564 49.4074C54.5741 49.6251 54.8695 49.7474 55.1774 49.7474H61.0856C61.3935 49.7474 61.6889 49.6251 61.9066 49.4074C62.1244 49.1896 62.2467 48.8943 62.2467 48.5863V43.3776C62.2467 43.0696 62.1244 42.7743 61.9066 42.5566C61.6889 42.3388 61.3935 42.2165 61.0856 42.2165ZM59.9245 47.4252H56.3385V44.5387H59.9245V47.4252ZM41.7566 62.5018H47.6646C47.9725 62.5018 48.2679 62.3795 48.4856 62.1617C48.7034 61.944 48.8257 61.6487 48.8257 61.3407V56.132C48.8257 55.824 48.7034 55.5287 48.4856 55.3109C48.2679 55.0932 47.9725 54.9709 47.6646 54.9709H41.7566C41.4486 54.9709 41.1533 55.0932 40.9355 55.3109C40.7178 55.5287 40.5955 55.824 40.5955 56.132V61.3407C40.5955 61.6487 40.7178 61.944 40.9355 62.1617C41.1533 62.3795 41.4486 62.5018 41.7566 62.5018ZM42.9177 57.2931H46.5035V60.1796H42.9177V57.2931ZM54.195 33.9568C54.0859 33.8495 53.9991 33.7218 53.9395 33.5809C53.88 33.44 53.8489 33.2887 53.848 33.1357C53.8471 32.9828 53.8764 32.8311 53.9343 32.6895C53.9921 32.5479 54.0774 32.4192 54.1852 32.3106C54.293 32.2021 54.4212 32.1159 54.5624 32.0571C54.7036 31.9982 54.855 31.9679 55.008 31.9677C55.161 31.9676 55.3125 31.9977 55.4538 32.0563C55.5951 32.1149 55.7234 32.2008 55.8314 32.3092L57.3255 33.7929L60.3641 30.2023C60.563 29.9672 60.8472 29.8208 61.1541 29.7953C61.461 29.7697 61.7655 29.8671 62.0005 30.066C62.2356 30.265 62.382 30.5491 62.4076 30.856C62.4332 31.1629 62.3358 31.4674 62.1368 31.7025L58.2859 36.2529C58.1822 36.3753 58.0544 36.475 57.9103 36.5455C57.7662 36.6161 57.6091 36.6561 57.4488 36.6629C57.4321 36.6629 57.4153 36.6639 57.3988 36.6639C57.0922 36.6639 56.798 36.5427 56.5805 36.3266L54.195 33.9568Z" fill="url(#paint0_linear_2531_1204)"/>
               <defs>
@@ -425,13 +376,13 @@
     <svg class="position-absolute vector2-img" width="182" height="102" viewBox="0 0 182 102" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M252.303 0.626375C263.192 3.17145 269.81 14.4522 264.85 24.4757C255.271 43.8377 240.436 60.9021 221.543 74.0489C196.63 91.3854 166.04 100.949 134.48 101.269C102.919 101.588 72.1364 92.6462 46.8661 75.818C27.7038 63.0572 12.5162 46.2979 2.53452 27.135C-2.63273 17.2149 3.75258 5.79743 14.5904 3.03139C24.5692 0.484594 34.6279 6.30972 39.724 15.2592C46.9657 27.9767 57.4221 39.1137 70.3749 47.7393C88.7591 59.9819 111.154 66.4873 134.114 66.2548C157.074 66.0222 179.329 59.0647 197.453 46.4523C210.218 37.5696 220.437 26.2286 227.411 13.3734C232.325 4.31599 242.269 -1.71877 252.303 0.626375Z" fill="#D89C27" fill-opacity="0.97"/>
     </svg>
-    <div class="container pt-sm-4 pb-sm-5 pt-3 pb-3 overflow-hidden">
+    <div class="container pt-sm-4 pb-sm-5 pt-3 pb-md-3 overflow-hidden">
       <p class="text-center dentists_title position-relative text-header mb-0 cool d-table m-auto">Dentists</p>
       <h2 class="dentists-subtitle text-header-subtitle text-center text-white">Best Dentists in {{ city_name }}</h2>
       <p class="mb-0 fw-500 testimonial_subcontent text-center d-flex m-auto w-75">
         Discover trusted dental professionals via Ultimate Smile Designers. Our platform connects you to expert dentists offering check-ups, cosmetic, and advanced procedures. Enjoy personalized, quality care for your smile with us.
       </p>
-      <!-- City Dropdown Centered -->
+     <!-- City Dropdown Centered -->
       <form id="searchForm" class="form position-relative d-table m-auto mt-4" method="GET" action="{% url 'home:home' %}">
         {% csrf_token %}
         <div class="city-dropdown-wrapper d-flex align-items-center justify-content-center">
@@ -452,37 +403,36 @@
         </div>
       </form>
       <!-- Gradient background -->
-      <div class="swiper-bg-grident"></div>
-
         <!-- Swiper Container -->
-        <div class="row dentists-content-2 mt-5 pb-4 justify-content-center " >
-          <div class="swiper newdentistSwiper">
-            {% comment %} <div class="border-frame"></div> {% endcomment %}
-            <div class="swiper-wrapper" id="dentist-list">
-              {% for ie in data1 %}
-              <div class="swiper-slide">
-                <div class="card dentists-content justify-content-center">
-                  <a href="{% url 'home:find_dentist_d' ie.slug %}">
-                    {% if ie.profile %}
-                      <img src="{{ ie.profile.url }}" class="img-fluid" alt= "{{ ie.name }}" />
-                    {% else %}
-                      <img src="{% static 'noimage-team.webp' %}" class="img-fluid" alt="Image" />
-                    {% endif %}
-                  </a>
-                  <div class="card-body pt-1 text-end px-0 pb-0">
-                    <p class="dentists-content-title fw-600 fs-20 font-Barlow   white text-start mb-0">
-                      {{ie.name}}
-                    </p>
-                    <p class="mb-2 font-Barlow white fs-14 fw-500 text-start">{{ie.city}}</p>
-                    <button class="btn  btn-appointment bat w-100 my-2">
-                      <a href="/consult-with-dentist/" onclick="BookAppoinment('{{ie.name}}')">Book Appointment</a>
-                    </button>
+        <div class="swiper-bg-grident"></div>
+        <div class="swiper-container mt-sm-0 mt-md-5 mt-2">
+            <div class="swiper newdentistSwiper">
+              <div class="border-frame"></div>
+              <div class="swiper-wrapper" id="dentist-list">
+                {% for ie in data1 %}
+                <div class="swiper-slide">
+                  <div class="card dentists-content justify-content-center">
+                    <a href="{% url 'home:find_dentist_d' ie.slug %}">
+                      {% if ie.profile %}
+                        <img src="{{ ie.profile.url }}" class="img-fluid" alt= "{{ ie.name }}" />
+                      {% else %}
+                        <img src="{% static 'noimage-team.webp' %}" class="img-fluid" alt="Image" />
+                      {% endif %}
+                    </a>
+                    <div class="card-body pt-1 text-end px-0 pb-0">
+                      <p class="dentists-content-title fw-600 fs-20 font-Barlow   white text-start mb-0">
+                        {{ie.name}}
+                      </p>
+                      <p class="mb-2 font-Barlow white fs-14 fw-500 text-start">{{ie.city}}</p>
+                      <button class="btn  btn-appointment bat w-100 my-2">
+                        <a href="/consult-with-dentist/" onclick="BookAppoinment('{{ie.name}}')">Book Appointment</a>
+                      </button>
+                    </div>
                   </div>
                 </div>
+                {% endfor %}
               </div>
-              {% endfor %}
             </div>
-          </div>
         </div>
     </div>
     <svg class="position-absolute vector1-img" width="158" height="168" viewBox="0 0 158 168" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -536,202 +486,10 @@
   </section>
   <!--Reels Section Start-->
   <section class="usd-studio-section overflow-hidden">
-      
       <div class="container usd-studio-tittle-wrapper text-center">
         <p class="usd-studio-small text-header cool  mb-0">Exclusive Smile Journeys</p>
         <h2 class="usd-studio-title  text-header-subtitle">Signature Smiles Crafted by Ultimate Smile Design</h2>
       </div>
-      {% comment %} <div class="usd-title-wrapper usd_shadow_1cu">
-          <div class="usd_svg_l1"  style="image-rendering: pixelated; flex-shrink: 0; fill: rgba(0, 0, 0, 1); color: rgba(0, 0, 0, 1);">
-            <div class="usd_shadow_svg_container" style="width:100%; height:100%; aspect-ratio:inherit">
-              <svg
-                style="width: 100%; height: 100%"
-                viewBox="0 0 109 109"
-                preserveAspectRatio="none"
-                width="100%"
-                height="100%"
-              > 
-                <path
-                  d="M104.85 0.19043C88.5797 9.33738 65.8538 24.5176 43.6795 48.5182C21.4337 72.6004 8.09434 96.5601 0.270508 113.527"
-                  stroke="url(#svg58189272_565_paint0_linear_444_3161)"
-                  stroke-width="3.47222"
-                  stroke-miterlimit="50"
-                ></path>
-                <defs>
-                    <linearGradient
-                      id="svg58189272_565_paint0_linear_444_3161"
-                      x1="-0.189117"
-                      y1="56.7463"
-                      x2="105.095"
-                      y2="56.7463"
-                      gradientUnits="userSpaceOnUse"
-                    >
-                      <stop offset="0.12%"  stop-color="#C3942F" stop-opacity="0.2" />
-                      <stop offset="41.31%" stop-color="#D89C27" />
-                      <stop offset="53.42%" stop-color="#E7DC96" />
-                      <stop offset="65.82%" stop-color="#DFC86F" />
-                      <stop offset="75.96%" stop-color="#D89C27" />
-                      <stop offset="100.47%" stop-color="#C99C30" />
-                    </linearGradient>
-                </defs>
-              </svg>
-            </div>
-          </div>
-          <div class="usd_svg_l2" style="image-rendering: pixelated; flex-shrink: 0; fill: rgba(0, 0, 0, 1); color: rgba(0, 0, 0, 1);">
-            <div class="usd_shadow_svg_container" style="width:100%;height:100%;aspect-ratio:inherit">
-              <svg style="width: 100%; height: 100%" viewBox="0 0 100 182" preserveAspectRatio="none" width="100%" height="100%">
-                <path
-                  d="M104.85 0.19043C88.5797 9.33738 65.8538 24.5176 43.6795 48.5182C21.4337 72.6004 8.09434 96.5601 0.270508 113.527"
-                  stroke="url(#svg58189272_565_paint0_linear_444_3161)"
-                  stroke-width="3.47222"
-                  stroke-miterlimit="10"
-                ></path>
-                <defs>
-                  <linearGradient
-                    id="svg-2012698338_616_paint0_linear_444_3162"
-                    x1="-0.217993"
-                    y1="83.6135"
-                    x2="56.9589"
-                    y2="83.6135"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop offset="0.12%" stop-color="#C3942F" stop-opacity="0.4" />
-                    <stop offset="31.31%" stop-color="#D89C27"  />
-                    <stop offset="53.42%" stop-color="#E7DC96" />
-                    <stop offset="65.82%" stop-color="#DFC86F" />
-                    <stop offset="75.96%" stop-color="#D89C27" />
-                    <stop offset="100.47%" stop-color="#C99C30" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
-          </div>
-          <div class="usd_svg_l3" style="image-rendering: pixelated; flex-shrink: 0; fill: rgba(0, 0, 0, 1); color: rgba(0, 0, 0, 1);">
-            <div class="usd_shadow_svg_container" style="width: 100%; height: 100%; aspect-ratio: inherit">
-              <svg style="width: 100%; height: 100%" viewBox="0 0 75 185" preserveAspectRatio="none" width="100%" height="100%">
-                <path
-                  d="M104.85 0.19043C88.5797 9.33738 65.8538 24.5176 43.6795 48.5182C21.4337 72.6004 8.09434 96.5601 0.270508 113.527"
-                  stroke="url(#svg58189272_565_paint0_linear_444_3161)"
-                  stroke-width="3.47222"
-                  stroke-miterlimit="10"
-                ></path>
-                <defs>
-                  <linearGradient
-                    id="svg1062752523_566_paint0_linear_444_3166"
-                    x1="0.141122"
-                    y1="90.8352"
-                    x2="71.3216"
-                    y2="90.8352"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop offset="0.12%" stop-color="#C3942F" stop-opacity="0" />
-                    <stop offset="60.31%" stop-color="#D89C27" stop-opacity="0.5" />
-                    <stop offset="70.42%" stop-color="#E7DC96" />
-                    <stop offset="75.82%" stop-color="#DFC86F" />
-                    <stop offset="84.96%" stop-color="#D89C27" />
-                    <stop offset="100.47%" stop-color="#C99C30" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
-          </div>
-          <div class="usd_svg_r3" style="image-rendering: pixelated; flex-shrink: 0; fill: rgba(0, 0, 0, 1); color: rgba(0, 0, 0, 1);">
-            <div class="usd_shadow_svg_container" style="width: 100%; height: 100%; aspect-ratio: inherit">
-              <svg style="width: 100%; height: 100%" viewBox="0 0 75 185" preserveAspectRatio="none" width="100%" height="100%">
-                <path
-                 d="M0.348633 0.0664062C20.2313 20.7109 48.598 55.5778 69.7216 106.792C103.788 189.418 98.7376 265.541 94.6398 160.046"
-                  stroke="url(#svg1250815804_565_paint0_linear_444_3163)"
-                  stroke-width="3.47222"
-                  stroke-miterlimit="10"
-                ></path>
-                <defs>
-                  <linearGradient
-                    id="svg1250815804_565_paint0_linear_444_3163"
-                    x1="-0.267241"
-                    y1="90.8352"
-                    x2="70.9132"
-                    y2="90.8352"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop offset="12.12%" stop-color="#C3942F" />
-                    <stop offset="20.31%" stop-color="#D89C27" />
-                    <stop offset="30.42%" stop-color="#E7DC96" />
-                    <stop offset="40.82%" stop-color="#DFC86F" />
-                    <stop offset="70.96%" stop-color="#D89C27" />
-                    <stop offset="100.47%" stop-color="#C99C30" stop-opacity="0.2"/>
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
-          </div>
-          <div class="usd_svg_r2" style="image-rendering: pixelated; flex-shrink: 0; fill: rgba(0, 0, 0, 1); color: rgba(0, 0, 0, 1);">
-            <div class="usd_shadow_svg_container" style="width: 100%; height: 100%; aspect-ratio: inherit">
-              <svg style="width: 100%; height: 100%" viewBox="0 0 102 350" preserveAspectRatio="none" width="100%" height="100%">
-                <path
-                  d="M0.348633 0.0664062C20.2313 20.7109 48.598 55.5778 69.7216 106.792C103.788 189.418 98.7376 265.541 94.6398 182.046"
-                  stroke="url(#svg641629864_548_paint0_linear_444_3164)"
-                  stroke-width="3.47222"
-                  stroke-miterlimit="10"
-                ></path>
-                <defs>
-                  <linearGradient
-                    id="svg641629864_548_paint0_linear_444_3164"
-                    x1="-0.141941"
-                    y1="149.329"
-                    x2="98.2903"
-                    y2="149.329"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop offset="12.12%" stop-color="#C3942F" />
-                    <stop offset="30.31%" stop-color="#D89C27" />
-                    <stop offset="45.42%" stop-color="#E7DC96" />
-                    <stop offset="50.82%" stop-color="#DFC86F" />
-                    <stop offset="65.96%" stop-color="#D89C27" stop-opacity="0.9" />
-                    <stop offset="94.47%" stop-color="#C99C30" stop-opacity="0" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
-          </div>
-          <div class="usd_svg_r1" style="image-rendering: pixelated; flex-shrink: 0; fill: rgba(0, 0, 0, 1); color: rgba(0, 0, 0, 1);">
-            <div class="usd_shadow_svg_container" style="width:100%; height: 100%; aspect-ratio: inherit">
-              <svg style="width: 100%; height: 100%" viewBox="0 0 102 290" preserveAspectRatio="none" width="100%" height="100%">
-                <path
-                  d="M0.348633 0.0664062C20.2313 20.7109 48.598 55.5778 69.7216 106.792C103.788 189.418 98.7376 265.541 94.6398 200.046"
-                  stroke="url(#svg641629864_548_paint0_linear_444_3165)"
-                  stroke-width="3.47222"
-                  stroke-miterlimit="10"
-                ></path>
-                <defs>
-                  <linearGradient
-                    id="svg641629864_548_paint0_linear_444_3165"
-                    x1="-0.141941"
-                    y1="90.329"
-                    x2="98.2903"
-                    y2="90.329"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop offset="12.12%" stop-color="#C3942F" />
-                    <stop offset="30.31%" stop-color="#D89C27" />
-                    <stop offset="45.42%" stop-color="#E7DC96" />
-                    <stop offset="50.82%" stop-color="#DFC86F" />
-                    <stop offset="75.96%" stop-color="#D89C27"  />
-                    <stop offset="92.47%" stop-color="#C99C30" stop-opacity="0.1" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
-          </div>
-          
-          <div class="usd_shadow_ssr_variant">
-            <a href="#" class="usd_shadow_oal2">
-                <div class="usd-title-img-wrapper" >
-                  <img  src="{% static 'title.png' %}" class="usd-studio-title-img img-fluid" width="432" height="420" alt="usd social logo"/>
-                </div>
-            </a>
-          </div>
-      </div> {% endcomment %}
-      
       <div class="usd-studio-wrapper position-relative">
         <canvas id="snow-canvas"></canvas>
         <div class="usd_studio_image usd-title-wrapper">
@@ -753,7 +511,7 @@
                   onstalled="handleVideoError(this)"
                   data-fallback="{% static 'usd-videoImg1.jpg'%}"
                 >
-                  <source src="https://daedzhbgqwmn0.cloudfront.net/reel-8.mp4" type="video/mp4"></source>
+                  <source src="https://daedzhbgqwmn0.cloudfront.net/reel-8.mp4" type="video/mp4">
                 </video>
                 <div class="usd-bg-shadow"></div>
               </a>
@@ -767,7 +525,7 @@
                   alt="usd-img2"
                   data-fallback="{% static 'usd-videoImg2.jpg'%}"
                 >
-                  <source src="https://daedzhbgqwmn0.cloudfront.net/reel-2.mp4" type="video/mp4"></source>
+                  <source src="https://daedzhbgqwmn0.cloudfront.net/reel-2.mp4" type="video/mp4">
                 </video>
               </a>
               <a href="https://www.instagram.com/reel/DKmhQ8gyGd3/" class="usd-img-wrapper">
@@ -780,7 +538,7 @@
                   alt="usd-img3"
                   data-fallback="{% static 'usd-videoImg3.jpg'%}"
                 >
-                  <source src="https://daedzhbgqwmn0.cloudfront.net/reel-9.mp4" type="video/mp4"></source>
+                  <source src="https://daedzhbgqwmn0.cloudfront.net/reel-9.mp4" type="video/mp4">
                 </video>
               </a>
               <a href="https://www.instagram.com/reel/DBQ-063KXmf/" class="usd-img-wrapper ">
@@ -793,7 +551,7 @@
                   alt="usd-img4"
                   data-fallback="{% static 'usd-videoImg4.jpg'%}"
                 >
-                  <source src="https://daedzhbgqwmn0.cloudfront.net/reel-4.mp4" type="video/mp4"></source>
+                  <source src="https://daedzhbgqwmn0.cloudfront.net/reel-4.mp4" type="video/mp4">
                 </video>
               </a>
               <a href="https://www.instagram.com/reel/DG2uNjSS7AT/" class="usd-img-wrapper">
@@ -806,7 +564,7 @@
                   alt="usd-img5"
                   data-fallback="{% static 'usd-videoImg5.jpg'%}"
                 >
-                  <source src="https://daedzhbgqwmn0.cloudfront.net/reel-3.mp4" type="video/mp4"></source>
+                  <source src="https://daedzhbgqwmn0.cloudfront.net/reel-3.mp4" type="video/mp4">
                 </video>
                 <div class="usd-bg-shadow"></div>
               </a>
@@ -820,7 +578,7 @@
                   alt="usd-img6"
                   data-fallback="{% static 'usd-videoImg6.jpg'%}"
                 >
-                  <source src="https://daedzhbgqwmn0.cloudfront.net/reel-5.mp4" type="video/mp4"></source>
+                  <source src="https://daedzhbgqwmn0.cloudfront.net/reel-5.mp4" type="video/mp4">
                 </video>
                 <div class="usd-bg-shadow"></div>
               </a>
@@ -834,7 +592,7 @@
                   alt="usd-img7"
                   data-fallback="{% static 'usd-videoImg7.jpg'%}"
                 >
-                  <source src="https://daedzhbgqwmn0.cloudfront.net/reel-1.mp4" type="video/mp4"></source>
+                  <source src="https://daedzhbgqwmn0.cloudfront.net/reel-1.mp4" type="video/mp4">
                 </video>
               </a>
               <a href=" https://www.instagram.com/reel/DKwrEzaqRoZ/" class="usd-img-wrapper">
@@ -847,7 +605,7 @@
                   alt="usd-img8"
                   data-fallback="{% static 'usd-videoImg8.jpg'%}"
                 >
-                  <source src="https://daedzhbgqwmn0.cloudfront.net/reel-6.mp4" type="video/mp4"></source>
+                  <source src="https://daedzhbgqwmn0.cloudfront.net/reel-6.mp4" type="video/mp4">
                 </video>
               </a>
               <a href="https://www.instagram.com/reel/DNkgB1EIQZo/" class="usd-img-wrapper ">
@@ -860,7 +618,7 @@
                   alt="usd-img9"
                   data-fallback="{% static 'usd-videoImg9.jpg'%}"
                 >
-                  <source src="https://daedzhbgqwmn0.cloudfront.net/reel-7.mp4" type="video/mp4"></source>
+                  <source src="https://daedzhbgqwmn0.cloudfront.net/reel-7.mp4" type="video/mp4">
                 </video>
               </a>
               <a href="https://www.instagram.com/reel/DM-PS3tKjpt/ " class="usd-img-wrapper ">
@@ -873,7 +631,7 @@
                   alt="usd-img9"
                   data-fallback="{% static 'usd-videoImg10.jpg'%}"
                 >
-                  <source src="https://daedzhbgqwmn0.cloudfront.net/reel-10.mp4" type="video/mp4"></source>
+                  <source src="https://daedzhbgqwmn0.cloudfront.net/reel-10.mp4" type="video/mp4">
                 </video>
                 <div class="usd-bg-shadow"></div>
               </a>
@@ -1184,7 +942,6 @@
       .catch(error => console.error("Error:", error));
   });
 </script>
-
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const totalslides = document.querySelectorAll(".myswiper .swiper-slide").length;
@@ -1225,82 +982,6 @@
     });
   });
 </script>
-{% comment %} <script>
-  document.addEventListener("DOMContentLoaded", function () {
-  // console.log("DOM Loaded");
-  const dropdown = document.getElementById("cityDropdown");
-    if (!dropdown) {
-    console.error("❌ cityDropdown not found!");
-    return;
-  }
-  console.log(" cityDropdown found, attaching event");
-
-  dropdown.addEventListener("change", function (e) {
-      e.preventDefault();
-      const cityValue = e.target.value;
-      console.log("City dropdown changed:", cityValue);
-
-      const form = document.getElementById("searchForm");
-      if (!form) {
-        console.error("searchForm not found!");
-        return;
-      }
-
-      // let form = document.getElementById("searchForm");
-      let formData = new FormData(form);
-      let url = form.getAttribute("action") + "?" + new URLSearchParams(formData).toString();
-
-        console.log("Fetching data from:", url);
-        fetch(url)
-          .then(response => response.text())
-          .then(data => {
-            console.log("Fetch completed, updating dentist list...");
-            let parser = new DOMParser();
-            let doc = parser.parseFromString(data, "text/html");
-            let newContent = doc.querySelector("#dentist-list");
-
-            if (newContent) {
-              document.getElementById("dentist-list").innerHTML = newContent.innerHTML;
-              console.log("Dentist list updated!");
-              initDentistSwiper();
-            }else {
-              console.warn(" No #dentist-list found in response!");
-            }
-
-            // console.log("Reinitializing Swiper...");
-            // initDentistSwiper();
-          })
-          .catch(error => console.error(" Error:", error));
-  });
-
-  function initDentistSwiper() {
-    if (window.dentistSwiper && window.dentistSwiper.destroy) {
-      window.dentistSwiper.destroy(true, true);
-    }
-
-    window.dentistSwiper = new Swiper(".newdentistSwiper", {
-      slidesPerView: 3,
-      spaceBetween: 30,
-      centeredSlides: true,
-      loop: true,
-      autoplay: {
-        delay: 3000,
-        disableOnInteraction: false,
-      },
-      speed: 4000,
-      freeMode: true,
-      freeModeMomentum: false,
-      on: {
-        init: () => console.log("Swiper initialized successfully"),
-        autoplayStart: () => console.log("Swiper autoplay started"),
-      },
-    });
-  }
-
-  // init swiper for first load
-  initDentistSwiper();
-});
-</script> {% endcomment %}
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   document.addEventListener("change", function (e) {
@@ -1355,16 +1036,51 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function initDentistSwiper() {
+    const swiperEl = document.querySelector(".newdentistSwiper .swiper-wrapper");
+    if(!swiperEl) return;
+
+    const slides = swiperEl.querySelectorAll(".swiper-slide");
+    const isMobile = (window.innerWidth <= 768);
+
+    const enableLoop = slides.length === 2 || slides.length === 3 || slides.length === 4 ? slides.length > 4 : true;
+    const a = (window.innerWidth >= 768) ? enableLoop : true;
+
+    console.log("Slides count:",slides.length,"enableloop",enableLoop,"enableloop1",a ,"window",window.innerWidth <= 768);
+
     window.dentistSwiper = new Swiper(".newdentistSwiper", {
-      slidesPerView: 3,
-      spaceBetween: 30,
+      slidesPerView: 'auto',
+      spaceBetween: 40,
       centeredSlides: true,
-      loop: true,
-      speed: 4000,
-      freeMode: true,
-      freeModeMomentum: false,
+      loop: a,
+      speed: 800,
+      effect:"slide",
+      freeMode:false,
+      grabCursor:false,
+      observer:true,
+      observeParents:true,
+      autoplay:{
+        delay:3000,
+        disableOnInteraction:false,
+      },
+      breakpoints:{
+        0:{slidesPerView:1,spaceBetween:40},
+        576:{slidesPerView:1,spaceBetween:40},
+        768:{slidesPerView:2},
+        991:{slidesPerView:2},
+        992:{slidesPerView:3},
+        1200:{slidesPerView:3,spaceBetween:40}
+      },
       on: {
-        init: () => console.log("Swiper initialized successfully"),
+        init: () => {
+          if(window.innerWidth >= 768){
+            console.log("Swiper initialized successfully");
+            if(slides.length === 2 || slides.length === 3 || slides.length === 4){
+                slides.forEach(slide=>slide.classList.remove('swiper-slide-active','swiper-slide-next'));
+                slides[0].classList.add('swiper-slide-active');
+                slides[1].classList.add('swiper-slide-next');
+            }
+          }
+        },
       },
     });
   }
@@ -1372,9 +1088,6 @@ document.addEventListener("DOMContentLoaded", function () {
   initDentistSwiper();
 });
 </script>
-
-
-
 <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
