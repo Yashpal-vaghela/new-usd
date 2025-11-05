@@ -819,9 +819,9 @@
 .newdentistSwiper .swiper-wrapper {
   padding-left: 10px;
   padding-right: 10px;
-  gap: 40px;
-  margin-top: 2% !important;
-  margin-bottom: 2% !important;
+  gap: 0px;
+  margin-top: 0.5% !important;
+  margin-bottom: 0.5% !important;
 }
 .newdentistSwiper .swiper-slide {
   display: flex;
@@ -829,6 +829,7 @@
   /* margin-right: 0 !important; */
   /* margin-left: -5px !important; */
   box-sizing: border-box;
+  padding: 30px;
 }
 
 .newdentistSwiper .dentists-content {
@@ -848,13 +849,13 @@
   /* width: 95%;
   max-width: 380px;
   height: 95%; */
-  margin: 5% auto;
+  margin: 0% auto;
 }
 .newdentistSwiper .border-frame {
   position: absolute;
   inset: 0;
   margin: auto;
-  width: 36%;
+  width: 30%;
   /* height: 100%; */
   z-index: 1;
   top: 0%;
@@ -970,15 +971,19 @@
     transform: scale(0.9);
   }
 }
-@media(min-width:768px){
+/* @media(min-width:768px){
   .newdentistSwiper .swiper-slide{
     margin-right: 0 !important;
   }
-}
+} */
 @media(min-width:1300px){
   .newdentistSwiper .border-frame{
-    left:1.7%;
-    width: 36.2%;
+    left:1.55%;
+    width: 31%;
+  }
+  .newdentistSwiper .swiper-wrapper {
+    margin-top: 0.8% !important;
+    margin-bottom: 0.8% !important;
   }
 }
 @media(max-width:1200px){
@@ -987,15 +992,21 @@
     width:36%;
   }
 }
-@media(max-width:1200px) and (min-width:768px){
+@media(max-width:1200px) and (min-width:992px){
   .newdentistSwiper .border-frame{
     height: 100%;
+  }
+}
+@media(max-width:991px) and (min-width:768px){
+ .newdentistSwiper .border-frame{
+    height: 93.5%;
   }
 }
 @media(max-width:991px){
   .newdentistSwiper .border-frame{
     left:3%;
-    width:55%;
+    width:46.5%;
+    
   }
   .newdentistSwiper .swiper-wrapper{
     margin-top:2.5% !important;
@@ -1007,6 +1018,17 @@
   }
   .dentist-swiper-section .swiper-bg-grident{
     background-size: 90% 100% !important;
+  }
+  .newdentistSwiper .swiper-slide{
+    padding: 20px;
+  }
+  @keyframes smallBig11 {
+    0% {
+      transform: scale(0.9);
+    }
+    100% {
+      transform: scale(1.05);
+    }
   }
 }
 @media(max-width:991px) and (min-width:768px){
@@ -1047,11 +1069,11 @@
   } */
   .newdentistSwiper .card{
     /* margin: 6% 4.6%; */
-    margin: 4.4% auto 4.4%;
+    margin: 1.8% auto 1.8%;
     /* margin: 6% 3.6% 6% 5.6%; */
   }
   .newdentistSwiper .border-frame{
-    width:95%;
+    width:87.5%;
     left:4%;
   }
   .text-header-subtitle,
@@ -1073,12 +1095,12 @@
     top:8%;
   }
   .newdentistSwiper .border-frame{
-    width:90%;
+    width:83%;
     left:-0.3%;
   }
   .newdentistSwiper .card{
     /* margin: 7% 5% 7.5% 4.6%; */
-    margin: -3% 5% -3% 0%;
+    margin: -8% 5% -8% 0%;
   }
  
   .dentist-swiper-section .swiper-container{
@@ -1100,10 +1122,11 @@
 }
 @media(max-width:480px){
   .newdentistSwiper .card{
-    margin: -3.5% 5.5% -3.5% -0.5%;
+    margin: -8.8% 5.5% -8.8% -0.5%;
   }
   .newdentistSwiper .border-frame{
-    left:0%
+    left:0%;
+    width: 82%;
   }
 } 
 /* @media (min-width: 1200px) {
