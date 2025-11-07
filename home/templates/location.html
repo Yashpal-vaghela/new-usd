@@ -2,13 +2,15 @@
 <section class="location-section pt-50">
   <div class="container">
     <div class="text-center">
-      <p class="find-section-title text-header text-center mb-0 cool">Find</p>
-      <h2 class="find-section-subtitle text-header-subtitle text-center">
+      <p class="find-section-title text-header text-center mb-0 cool" data-aos="fade-left" data-aos-duration="400">Find</p>
+      <h2 class="find-section-subtitle text-header-subtitle text-center" data-aos="fade-right" data-aos-duration="200">
         Find Ultimate Smile Designers
       </h2>
     </div>
     <p
       class="text-subcontent find-section-description text-center my-sm-3 my-md-4 my-lg-4 my-2"
+      data-aos="fade-up"
+      data-aos-duration="800"
     >
       Explore our network of Ultimate Smile Designers across various cities to
       find the perfect match for your smile transformation journey. Whether
@@ -20,6 +22,8 @@
       class="row gap-3 gap-sm-0 form justify-content-between py-3 py-sm-4"
       method="GET"
       action="/certified-dentists/"
+      data-aos="fade-up"
+      data-aos-duration="800"
     >
       <div class="col-lg-5 col-md-6 mb-sm-3 mb-lg-0">
         <div class="searchbar-box-wrapper1">
@@ -147,11 +151,11 @@
     </form>
     <div class="row pt-3 pt-sm-5 pb-0">
       <div class="col-lg-6 col-md-8 col-12">
-        <p class="text-header text-start position-relative mb-0 cool">
+        <p class="text-header text-start position-relative mb-0 cool" data-aos="fade-left" data-aos-duration="200">
           Locations
         </p>
-        <h3 class="text-header-subtitle">Top Searched Locations</h3>
-        <p class="Loc-description text-subcontent">
+        <h3 class="text-header-subtitle" data-aos="fade-left" data-aos-duration="300">Top Searched Locations</h3>
+        <p class="Loc-description text-subcontent" data-aos="fade-left" data-aos-duration="400">
           Discover the leading destinations where patients connect with our
           network of Ultimate Smile Designers. Our platform helps you find
           expert dentists across various prime locations.
@@ -200,8 +204,8 @@
                 </defs>
               </svg>
               <div class="square-card-content">
-                <p class="city_txt cool mb-1">{{ city.city }}</p>
-                <p class="Designer_txt mb-0">
+                <p class="city_txt cool mb-1" data-aos="zoom-out-down" data-aos-duration="600" >{{ city.city }}</p>
+                <p class="Designer_txt mb-0" data-aos="zoom-in-up" data-aos-duration="600">
                   {{ city.countdr }} - Smile Designers
                 </p>
               </div>

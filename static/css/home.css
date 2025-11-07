@@ -1,4 +1,7 @@
 /* -----------------------Banner section -------------------------- */
+.page-wraper{
+  overflow: hidden;
+}
 .Banner_Section {
   background-color: var(--black);
   overflow: hidden;
@@ -530,7 +533,7 @@
   left: 0%;
   right: 0%;
   /* padding-left: 211px; */
-  opacity: 0.4;
+  opacity: 0.4 !important;
   display: flex;
   justify-content: center;
   width: 60%;
