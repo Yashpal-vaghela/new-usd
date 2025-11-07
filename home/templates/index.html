@@ -420,8 +420,8 @@
                         {{ie.name}}
                       </p>
                       <p class="mb-2 font-Barlow white fs-14 fw-500 text-start">{{ie.city}}</p>
-                      <button class="btn  btn-appointment bat w-100 my-2">
-                        <a href="/consult-with-dentist/" onclick="BookAppoinment('{{ie.name}}')">Book Appointment</a>
+                      <button class="btn  btn-appointment bat w-100 my-2" onclick="BookAppoinment('{{ie.name}}')">
+                        Book Appointment
                       </button>
                     </div>
                   </div>
@@ -902,42 +902,6 @@
       const duration = Math.max(12, Math.round(segWidth / pxPerSec));
       track.style.setProperty('--mq-duration', duration + 's');
     });
-  });
-</script>
-<script>
-  document.getElementById("cityDropdown").addEventListener("change", function () {
-      let form = document.getElementById("searchForm");
-      let formData = new FormData(form);
-      let url = form.getAttribute("action") + "?" + new URLSearchParams(formData).toString();
-      console.log("fetching url",url)
-      fetch(url, {
-          method: "GET",
-      })
-      .then(response => response.text())
-      .then(data => {
-          let parser = new DOMParser();
-          let doc = parser.parseFromString(data, "text/html");
-          let newContent = doc.querySelector("#dentist-list");
-
-          if (newContent) {
-              document.getElementById("dentist-list").innerHTML = newContent.innerHTML;
-          }
-
-          // Update the subtitle text dynamically
-          let selectedCityName = document.getElementById("cityDropdown").options[
-              document.getElementById("cityDropdown").selectedIndex
-          ].text;
-
-          let subtitle = document.querySelector(".text-header-subtitle");
-          if (subtitle) {
-              if (selectedCityName && selectedCityName !== "Select Location") {
-                  subtitle.textContent = `Best Dentist Near ${selectedCityName}`;
-              } else {
-                  subtitle.textContent = `Best Dentist Near Me`;
-              }
-          }
-      })
-      .catch(error => console.error("Error:", error));
   });
 </script>
 <script>
