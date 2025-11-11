@@ -94,17 +94,20 @@ input:-internal-autofill-selected {
 .searchbar-button-wrapper {
   border-radius: 8px;
   padding: 9px 8px;
+  gap: 10px;
 }
 .searchbar-button-wrapper svg {
-  width: 12%;
-  margin-bottom: 2px;
+  width: 10%;
 }
 .searchbar-button-wrapper span {
   font-size: 15px;
   color: #222;
   font-weight: 600;
 }
-
+.certified-dentist-title{
+  font-family: "Barlow", sans-serif;
+  font-weight: 400 !important;
+}
 /* dentists section */
 .dentist-content {
   background-color: rgba(34, 34, 34, 0.6);
@@ -255,7 +258,10 @@ input:-internal-autofill-selected {
   }
 }
 @media (max-width: 991px) {
-  .searchbar-wrap .row .col-lg-4,
+  .certified-dentist-title{
+    font-size: 18px !important;
+  }
+  .searchbar-wrap .row .col-lg-5,
   .searchbar-wrap .row .col-lg-2 {
     margin-bottom: 20px;
   }
@@ -269,7 +275,7 @@ input:-internal-autofill-selected {
     padding: 8px 12px;
   }
   .searchbar-button-wrapper svg {
-    width: 11%;
+    width: 5%;
     margin-right: 8px;
   }
   .searchbar-button-wrapper span {
@@ -292,6 +298,9 @@ input:-internal-autofill-selected {
   }
 }
 @media (max-width: 768px) {
+  .certified-dentist-title {
+    font-size: 18px !important;
+  }
   .searchInfo-content-wrapper .searchInfo-title {
     font-size: 20px;
   }
@@ -323,8 +332,14 @@ input:-internal-autofill-selected {
   }
 }
 @media (max-width: 576px) {
+  .certified-dentist-title {
+    font-size: 16px !important;
+  }
   .searchbar-box-wrapper svg {
     width: 8%;
+  }
+  .searchbar-button-wrapper svg {
+    width: 5%;
   }
   /* dentist section */
   .searchInfo-content-wrapper .searchInfo-title {

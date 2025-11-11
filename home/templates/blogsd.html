@@ -17,7 +17,9 @@
 <meta name="twitter:description" content="{{blog.description}}"/>
 {% endblock seo%}
 {% block header %} {% endblock header %} 
-{% block css %} {% endblock css %} 
+{% block css %} 
+  <link rel="stylesheet" href="{% static 'css/singleblog.css' %}"/>
+{% endblock css %} 
 {% block body %}
 
 <!-- Content -->
@@ -228,7 +230,7 @@
     "name": "Ultimate Smile Design",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://ultimatesmiledesign.com/static/usdlog.png"
+      "url": "https://ultimatesmiledesign.com/static/usdlog.webp"
     }
   },
   "datePublished": "{{ blog.published|date:"Y-m-d" }}T10:00:00+05:30",
@@ -278,7 +280,7 @@
     "url": "https://ultimatesmiledesign.com/",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://ultimatesmiledesign.com/static/usdlog.png"
+      "url": "https://ultimatesmiledesign.com/static/usdlog.webp"
     }
   },
   "publisher": {
@@ -287,7 +289,7 @@
     "url" : "https://ultimatesmiledesign.com/",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://ultimatesmiledesign.com/static/usdlog.png"
+      "url": "https://ultimatesmiledesign.com/static/usdlog.webp"
     }
   },
   "datePublished": "{{ blog.published|date:"Y-m-d" }}T10:00:00+05:30",

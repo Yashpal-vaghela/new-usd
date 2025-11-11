@@ -18,17 +18,22 @@
 <meta name="twitter:description" content="Reach out to Ultimate Smile Design for inquiries about personalized smile makeovers. Contact us via phone, email, or visit our office to resolve your query.">
 {% endblock seo%}
 {% block header %}
+<!--JS/CSS that must be loaded before the page renders -->
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
 />
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-{% endblock header %} {% block css %} {% endblock css %} {% block body %}
+{% endblock header %} 
+{% block css %} 
+<link rel="stylesheet" href="{% static 'css/contact.css' %}" />
+{% endblock css %} 
+{% block body %}
 
 <!-- Content -->
 <div class="page-content">
-  <section class="breadcrumbs-section contactus-breadcrumbs-section">
+  <section class="breadcrumbs-section">
     <div class="container">
       <div class="breadcrumbs-path"> <a href="{% url 'home:home' %}"> Home </a> <i class=" fa fa-solid fa-angles-right"></i> Contact</div>
       <h1 class="breadcrumbs-title  mb-0 fw-bold cool " style="display: inline-block">Contact us</h1>
@@ -204,8 +209,8 @@
           </div>
           <div class="d-block align-items-center">
             <p class="cool d-inline-block contact-text">Phone Number</p>
-            <p>+91 84 88 88 88 77</p>
-            <p>+91 84 69 88 88 77</p>
+            <p><a href="tel:+91 8488888877" >+91 84 88 88 88 77</p>
+            <p><a href="tel:+91 8469888877" >+91 84 69 88 88 77</p>
             {% comment %} <p><a href="tel:+918488888877" >+91 84 88 88 88 77</a></p>
             <p><a href="tel:+918469888877" >+91 84 69 88 88 77</a></p> {% endcomment %}
           </div>
@@ -228,6 +233,7 @@
 <!-- Content END-->
 {% endblock body %} {% block js %}
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="{% static 'js/recaptcha-api.js' %}" async defer></script>
 <script>
   // Function to display SweetAlert based on Django messages
   {% if messages %}

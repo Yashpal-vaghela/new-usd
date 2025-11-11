@@ -5492,7 +5492,7 @@ input[placeholder],
   /* overflow-y: auto; */
   overflow: hidden;
   /* padding: 20px; */
-  background-image: url("../usdlog.png");
+  background-image: url("../usdlog.webp");
   background-size: 600px 180px;
   background-color: rgba(0, 0, 0, 0.4);
   background-blend-mode: multiply;
@@ -5529,7 +5529,7 @@ input[placeholder],
 }
 @media (max-width: 576px) {
   .image-container {
-    background-image: url("../usdlog.png");
+    background-image: url("../usdlog.webp");
     background-size: 73% auto;
     /* background-size: cover; */
     background-repeat: no-repeat;

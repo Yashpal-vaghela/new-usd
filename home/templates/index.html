@@ -22,8 +22,9 @@
 {% endblock seo%}
 {% block css %}
 <!-- Owl Carousel JS -->
-<link rel="stylesheet" href="{% static 'css/service.css' %}" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<link rel="preload" as="image" href="{% static 'smile-discover.webp' %}">
+<link rel="preload" as="image" href="{% static 'usdBannerTeeth1sub.webp' %}">
+<link rel="preload" as="image" href="{% static 'usdBannerTeeth2.webp' %}">
 <style>
   #sync1 .item {
     margin-right: 10px !important;
@@ -41,17 +42,15 @@
         <div class="main-body-section text-center container">
           <div class="text-center banner_main_txt position-relative container">
             <!-- tooth Images -->
-            <img src="{% static 'usdBannerTeeth2.png' %}" class="banner-teeth-2 bg_1 img-fluid" loading="lazy" alt="Image of Single Teeth with Digital Lines for Smile Designing" />
+            <img src="{% static 'usdBannerTeeth1sub.webp' %}" class="banner-teeth-2 bg_1 img-fluid" fetchpriority="high" alt="Image of Single Teeth with Digital Lines for Smile Designing" />
             <!-- Banner Text -->
             <p class="position-relative mb-0">Nothing You Wear is More Important </p>
             <p class="cool position-relative" >Than Your Smile</p>
           </div>
-          <!-- data-aos="fade-down" data-aos-duration="1500" data-aos-delay="0" -->
-           <!-- Search Functionality -->
           
-          
+        
           <!-- USD MAin Banner Teeth Image -->
-          <img  src="{% static 'usdBannerTeeth2.webp' %}"  class=" img-fluid mt-5"  loading="lazy"  alt="Ultimate Smile Design Image of a Full Arch Teeth in Dark Shade" />
+          <img  src="{% static 'usdBannerTeeth2.webp' %}"  class="img-fluid mt-5"  fetchpriority="high"  alt="Ultimate Smile Design Image of a Full Arch Teeth in Dark Shade" />
         </div>
         <!-- Left Column -->
         
@@ -63,10 +62,10 @@
   <!-- BANNER SECTION END -->
   <section class="Developer_Section pt-50" >
     <div class="container">
-      <div class="row">
+      <div class="row">   
         <!-- Left Column -->
         <div class="col-lg-5 mainImageCard position-relative order-0 order-lg-2">
-          <img  src="{% static 'smile-discover.webp' %}"  class="Discover_Group img-fluid"  loading="lazy"  alt="Girl showcasing radiant smile representing ideal results from expert Ultimate Smile Designers" data-aos="zoom-in-up"  data-aos-duration="800" />
+          <img  src="{% static 'smile-discover.webp' %}"  class="Discover_Group img-fluid"  fetchpriority="high"  alt="Girl showcasing radiant smile representing ideal results from expert Ultimate Smile Designers" />
           <svg class="usd_ring img-fluid" width="174" height="173" viewBox="0 0 174 173" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M93.6888 18.6859C92.6359 18.5876 91.7256 18.2958 90.9578 17.8104C90.2038 17.3262 89.6363 16.694 89.2553 15.9136C88.8893 15.1209 88.7525 14.2391 88.8449 13.2685L89.7351 3.91714C89.7416 3.84878 89.7674 3.79601 89.8123 3.75882C89.8722 3.70924 89.9363 3.68764 90.0047 3.69402L92.4045 3.91792C92.4728 3.9243 92.5249 3.95674 92.5608 4.01526C92.6115 4.06138 92.6337 4.11861 92.6272 4.18697L91.735 13.5588C91.6661 14.2834 91.8289 14.8917 92.2235 15.3837C92.6331 15.8633 93.2002 16.1369 93.925 16.2045C94.6497 16.2721 95.2517 16.1076 95.7309 15.7109C96.2251 15.3018 96.5066 14.735 96.5756 14.0104L97.4678 4.6386C97.4743 4.57024 97.5 4.51747 97.5449 4.48028C97.6048 4.4307 97.6689 4.4091 97.7373 4.41548L100.137 4.63938C100.205 4.64576 100.258 4.6782 100.293 4.73672C100.344 4.78283 100.366 4.84007 100.36 4.90843L99.4696 14.2598C99.3772 15.2304 99.0696 16.0707 98.5468 16.7805C98.0389 17.478 97.3621 17.9941 96.5163 18.329C95.6842 18.6651 94.7416 18.7841 93.6888 18.6859Z" fill="white"/>
           <path d="M101.243 19.6493C101.176 19.6343 101.12 19.6008 101.076 19.5487C101.048 19.4862 101.042 19.4215 101.057 19.3545L104.14 5.77446C104.155 5.7075 104.187 5.6584 104.237 5.62717C104.302 5.58553 104.369 5.57217 104.436 5.58708L106.788 6.11057C106.855 6.12549 106.903 6.1642 106.931 6.22672C106.976 6.27883 106.99 6.33837 106.975 6.40533L103.892 19.9854C103.877 20.0523 103.836 20.1066 103.77 20.1483C103.721 20.1795 103.663 20.1877 103.596 20.1727L101.243 19.6493Z" fill="white"/>
@@ -120,8 +119,6 @@
         <div
           class="px-0 col-lg-7 d-flex align-items-center flex-column justify-content-center"
           style="margin-top: 12px; margin-bottom: 18px; position: relative"
-          data-aos="fade-up"
-          data-aos-duration="1500"
         >
           <div class="step_card d-flex flex-row align-items-start">
             <div class="step_header">
@@ -300,7 +297,7 @@
           <p class="text-header  text-center cool" data-aos="fade-left" data-aos-duration="400" data-aos-delay="300">Registration</p>
           <h2 class="text-header-subtitle" data-aos="fade-right" data-aos-duration="400" data-aos-delay="400">Want to Schedule Your Smile Design Appointment Easily?</h2>
           <p class="text-center  text-subcontent" data-aos="fade-up" data-aos-duration="1000">Transform your smile and boost your confidence. Our network of Ultimate Smile Designers is ready to provide you with personalized dental solutions. If you're aiming for a radiant smile, our experts are here to guide you every step of the way. Should you require a more tailored approach, don't hesitate to get in touch with us.</p>
-          <img src="{% static 'toothbg1.png'%}" class=" img-fluid tooth-bg" alt="Ultimate Smile Design Vecctor Image of Teeth in Golden Shade" data-aos="zoom-in" data-aos-duration="1000"/>
+          <img src="{% static 'toothbg1.webp'%}" class=" img-fluid tooth-bg" alt="Ultimate Smile Design Vecctor Image of Teeth in Golden Shade" data-aos="zoom-in" data-aos-duration="1000"/>
           <button class="btn getInTouch-btn bat my-1" data-aos="zoom-in" data-aos-duration="1000"><a href="/consult-with-dentist/" >GET IN TOUCH</a></button>
         </div>
       </div>
@@ -450,7 +447,7 @@
         <div class="step_left text-sm-start text-center d-flex align-items-center ">
           <div class="step_image_content position-relative" data-aos="zoom-in" data-aos-duration="1500" >
           <p class="step_number step_number_left"> 01 </p>
-          <img  src="{% static 'step1.jpg' %}"  class="step_image img-fluid"  loading="lazy"  alt="Initial consultation step to begin your Ultimate Smile Design treatment planning process"  />
+          <img  src="{% static 'step1.webp' %}"  class="step_image img-fluid"  loading="lazy"  alt="Initial consultation step to begin your Ultimate Smile Design treatment planning process"  />
         </div>
           <div class="step_content" data-aos="fade-up" data-aos-duration="1500">
             <h3 class="step_head white font-Glida-display">Find Your Ultimate Smile Designer</h3>
@@ -472,7 +469,7 @@
         <div class="step_left">
           <div class="step_image_content" data-aos="zoom-in" data-aos-duration="1500" >
           <p class="step_number step_number_left"> 03 </p>
-          <img  src="{% static 'step3.jpg' %}"  class="step_image img-fluid"  loading="lazy"  alt="Final step confirming smile design schedule and treatment timeline with dental expert"  />
+          <img  src="{% static 'step3.webp' %}"  class="step_image img-fluid"  loading="lazy"  alt="Final step confirming smile design schedule and treatment timeline with dental expert"  />
         </div>
           <div class="step_content" data-aos="fade-up" data-aos-duration="1500" >
             <h3 class="step_head white font-Glida-display">Your Perfect Smile, Ready to Shine</h3>
@@ -491,7 +488,7 @@
       <div class="usd-studio-wrapper position-relative">
         <canvas id="snow-canvas"></canvas>
         <div class="usd_studio_image usd-title-wrapper">
-          <img src="{% static 'usd-studio-2.png'%}" class="usd-studio-img img-fluid" width="432" height="420"/>
+          <img src="{% static 'usd-studio-2.webp'%}" class="usd-studio-img img-fluid" width="432" height="420"/>
         </div>
         <div class="usd-floating-images position-relative">
             <div class="container">
@@ -1063,7 +1060,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
   AOS.init({
     offset: 100,
