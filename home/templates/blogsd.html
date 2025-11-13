@@ -3,8 +3,8 @@
 <title>{{blog.title}}</title>
 <meta name="description" content="{{blog.description}}" />
 <link rel="canonical" href="{{blog.canonical}}" />
-<meta property="og:image" content="{{blog.blog_banner_sm.url}}">
-<meta property="og:image:secure_url" content="{{blog.blog_banner_sm.url}}">
+<meta property="og:image" content="{{blog.image.url}}">
+<meta property="og:image:secure_url" content="{{blog.image.url}}">
 <meta property="og:image:width" content="1280" />
 <meta property="og:image:height" content="720" />
 <meta property="og:locale" content="en_IN" />
@@ -49,9 +49,9 @@
             </h3> {% endcomment %}
            
             <img
-              src="{{blog.blog_banner_sm.url}}"
+              src="{{blog.image.url}}"
               class="img-fluid"
-              alt="{{blog.blog_banner_sm_alt}}"
+              alt="{{blog.image_alt}}"
             />
             <div class="d-sm-flex d-block justify-content-between my-3">
             <div class="single-blog-date"><span>Post date :</span> {{blog.published}}</div>
@@ -73,7 +73,7 @@
               {% for ie in relatedBlog %}
                 <div class="col-lg-5 my-3">
                   <div class="single-blog-related-img">
-                    <img src="{{ie.blog_banner_sm.url}}" class="mb-0 img-fluid" alt="{{ ie.blog_banner_sm_alt }}"/>
+                    <img src="{{ie.image.url}}" class="mb-0 img-fluid" alt="{{ ie.image_alt }}"/>
                   </div>
                 </div>
                 <div class="col-lg-7 mt-2 mb-2 single-blog-related-content">
@@ -218,7 +218,7 @@
   "headline": "{{blog.title}}",
   "description": "{{blog.description}}",
   "image": [
-    "{{blog.blog_banner_sm.url}}"
+    "{{blog.image.url}}"
   ],
   "author": {
     "@type": "Organization",
@@ -273,7 +273,7 @@
   "headline": "{{blog.title}}",
   "description": "{{blog.description}}",
   "url":"{{blog.canonical}}",
-  "image": "{{blog.blog_banner_sm.url}}",
+  "image": "{{blog.image.url}}",
   "author": {
     "@type": "Organization",
     "name": "Ultimate Smile Design",

@@ -170,10 +170,10 @@ class Blog(models.Model):
     updated  = models.DateField(auto_now=True)
     
 
-    blog_banner_lg = models.ImageField(upload_to="Page Data", blank=True, null=True)
-    blog_banner_lg_alt = models.CharField(max_length=156, blank=True, null=True)
-    blog_banner_sm = models.ImageField(upload_to="Page Data", blank=True, null=True)
-    blog_banner_sm_alt = models.CharField(max_length=156, blank=True, null=True)
+    # blog_banner_lg = models.ImageField(upload_to="Page Data", blank=True, null=True)
+    # blog_banner_lg_alt = models.CharField(max_length=156, blank=True, null=True)
+    # blog_banner_sm = models.ImageField(upload_to="Page Data", blank=True, null=True)
+    # blog_banner_sm_alt = models.CharField(max_length=156, blank=True, null=True)
     
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     published  = models.DateField()
@@ -187,11 +187,11 @@ class Blog(models.Model):
         return self.h1
     
     def save(self, *args, **kwargs):
-        if not self.blog_banner_lg_alt and self.title:
-            self.blog_banner_lg_alt = self.title
+        # if not self.blog_banner_lg_alt and self.title:
+        #     self.blog_banner_lg_alt = self.title
 
-        if not self.blog_banner_sm_alt and self.title:
-            self.blog_banner_sm_alt = self.title
+        # if not self.blog_banner_sm_alt and self.title:
+        #     self.blog_banner_sm_alt = self.title
 
         if not self.image_alt and self.title:
             self.image_alt = self.title
