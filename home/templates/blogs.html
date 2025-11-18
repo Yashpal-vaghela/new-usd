@@ -2,7 +2,11 @@
 {% block seo%}
 <title>Smile Design & Smile Makeover Blogs | Read Your Smile</title>
 <meta name="description" content="Explore expert articles on smile design, smile makeovers, and oral health. Stay informed with the latest trends and tips from Ultimate Smile Design's blog." />
+{% if page_obj.number > 1 %}
+<link rel="canonical" href="https://ultimatesmiledesign.com/blogs/?page={{page_obj.number}}" />
+{% else %}
 <link rel="canonical" href="https://ultimatesmiledesign.com/blogs/" />
+{% endif %}
 <meta property="og:image" content="{% static 'feature-usd.webp' %}">
 <meta property="og:image:secure_url" content="{% static 'feature-usd.webp' %}">
 <meta property="og:image:type" content="image/webp" />
@@ -163,7 +167,7 @@
                             <div class="col-lg-4 col-md-6 mb-md-4 mb-lg-4   d-md-block">
                                 <div class="blog-content-details-card card">
                                     <img src="{{blog.image.url}}" class="card-img-top img-fluid" alt="{{blog.image_alt}}"/>
-                                        <div class="blog-content-details position-relative card-body">
+                                        <div class="blog-content-details position-relative card-body">  
                                             <div class="blog_date">{{blog.published|date:'j M'}}</div>
                                             {% comment %} <h4 class="card-text">
                                                 <a href="{% url 'home:blogsd' blog.slug %}">{{blog.title}}</a>
