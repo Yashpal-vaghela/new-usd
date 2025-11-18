@@ -121,6 +121,9 @@
 .single-blog-img-wrapper-content p:last-child{
     margin-bottom: 0px;
 }
+.sticky-sidebar {
+    transition: none;
+}
 /* single blog content2 */
 .single-blog-content2{
     background-color: var(--bg-content-color);
