@@ -243,7 +243,7 @@ class Contact(models.Model):
     phone = models.CharField(max_length = 156)
     city = models.CharField(max_length = 156,blank=True, null=True)
     subject = models.CharField(max_length = 156)
-    message =RichTextUploadingField()
+    message = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
@@ -281,6 +281,7 @@ class UserSubmission(models.Model):
     message = models.TextField(blank=True, null=True)
     doctor_name = models.CharField(max_length=100, blank=True, null=True)
     agree_to_terms = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -292,7 +293,17 @@ class DentistRedirect(models.Model):
     def __str__(self):
         return f"{self.old_slug} → {self.city.city}"    
     
-    
+class BeforeAfter(models.Model):
+    image = models.ImageField(upload_to="BeforeAfter")
+    alt_text = models.CharField(max_length=255, blank=True, null=True, help_text="Alternative text for the image")
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.id)
+
+
     
     
      

@@ -1,5 +1,6 @@
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
+from django.utils.html import format_html
 from .models import *
 
 class DentistAdmin(ImportExportModelAdmin):
@@ -52,6 +53,20 @@ class UserSubmissionAdmin(admin.ModelAdmin):
 class DentistRedirectAdmin(admin.ModelAdmin):
     list_display = ("old_slug", "city")
 
+class BeforeAfterAdmin(admin.ModelAdmin):
+    list_display = ("id", "image_preview", "alt_text", "created_at")
+    readonly_fields = ("image_preview",)
+    search_fields = ("alt_text",)
+
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html(
+                '<img src="{}" width="120" style="border-radius:5px;" />'.format(obj.image.url)
+            )
+        return "(No Image)"
+    
+    image_preview.short_description = "Preview"
+
 admin.site.register(Location)
 admin.site.register(City)
 admin.site.register(Specializations)
@@ -69,6 +84,7 @@ admin.site.register(Hgallery)
 admin.site.register(Contact, ContactAdmin)
 admin.site.register(DentistConnect, DentistConnectAdmin)
 admin.site.register(DentistConnectNew, DentistConnectNewAdmin)
-admin.site.register(UserSubmission)
+admin.site.register(UserSubmission, UserSubmissionAdmin)
 admin.site.register(PatientReview, PatientReviewAdmin) 
 admin.site.register(DentistRedirect, DentistRedirectAdmin)
+admin.site.register(BeforeAfter, BeforeAfterAdmin)

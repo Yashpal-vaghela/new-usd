@@ -31,172 +31,335 @@
         &nbsp; <i class=" fa fa-solid fa-angles-right"></i> 
         &nbsp; <a href="{% url 'home:blogs' %}"> Blogs </a> 
         &nbsp; <i class=" fa fa-solid fa-angles-right"></i>
-        &nbsp; <a href="{% url 'home:blogs' %}">{{blog.h1}}</a>
+        &nbsp; <br/><a class="breadcrumbs-title" href="{% url 'home:blogs' %}">{{blog.h1}}</a>
       </div>
-      <h1 class=" breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool fs-4">{{blog.h1}}</h1>
+      {% comment %} <h1 class=" breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool fs-4">{{blog.h1}}</h1> {% endcomment %}
     </div>
   </section>
   <section class="single-blog-content py-5">
     <div class="container">
       <div class="row">
         <div class="col-lg-8">
+          <h1 class="single-blog-main-title cool fw-bold mb-2">
+            {{blog.h1}}
+          </h1>
+          <div class="blog-meta text-center mb-4">
+            <span class="meta-item">
+              <svg class="img-fluid mb-0 celender-svg" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16.25 2.5H15C15 1.81083 14.4391 1.25 13.75 1.25C13.0608 1.25 12.5 1.81083 12.5 2.5H7.49996C7.49996 1.81083 6.93913 1.25 6.24996 1.25C5.56079 1.25 4.99996 1.81083 4.99996 2.5H3.74996C2.60121 2.5 1.66663 3.43458 1.66663 4.58333V16.6667C1.66663 17.8154 2.60121 18.75 3.74996 18.75H16.25C17.3987 18.75 18.3333 17.8154 18.3333 16.6667V4.58333C18.3333 3.43458 17.3987 2.5 16.25 2.5ZM13.3333 2.5C13.3381 2.39272 13.3841 2.29142 13.4617 2.2172C13.5393 2.14298 13.6426 2.10156 13.75 2.10156C13.8574 2.10156 13.9606 2.14298 14.0382 2.2172C14.1158 2.29142 14.1618 2.39272 14.1666 2.5V3.33333C14.1618 3.44062 14.1158 3.54191 14.0382 3.61614C13.9606 3.69036 13.8574 3.73178 13.75 3.73178C13.6426 3.73178 13.5393 3.69036 13.4617 3.61614C13.3841 3.54191 13.3381 3.44062 13.3333 3.33333V2.5ZM5.83329 2.5C5.83809 2.39272 5.88409 2.29142 5.9617 2.2172C6.03932 2.14298 6.14257 2.10156 6.24996 2.10156C6.35735 2.10156 6.4606 2.14298 6.53822 2.2172C6.61583 2.29142 6.66183 2.39272 6.66663 2.5V3.33333C6.66183 3.44062 6.61583 3.54191 6.53822 3.61614C6.4606 3.69036 6.35735 3.73178 6.24996 3.73178C6.14257 3.73178 6.03932 3.69036 5.9617 3.61614C5.88409 3.54191 5.83809 3.44062 5.83329 3.33333V2.5ZM2.49996 4.58333C2.49996 3.89417 3.06079 3.33333 3.74996 3.33333H4.99996C4.99996 4.0225 5.56079 4.58333 6.24996 4.58333C6.93913 4.58333 7.49996 4.0225 7.49996 3.33333H12.5C12.5 4.0225 13.0608 4.58333 13.75 4.58333C14.4391 4.58333 15 4.0225 15 3.33333H16.25C16.9391 3.33333 17.5 3.89417 17.5 4.58333V6.25H2.49996V4.58333ZM17.5 16.6667C17.5 17.3558 16.9391 17.9167 16.25 17.9167H3.74996C3.06079 17.9167 2.49996 17.3558 2.49996 16.6667V7.08333H17.5V16.6667Z" fill="url(#paint0_linear_178_299)"/>
+              <path d="M4.99996 11.6667H6.24996C6.70954 11.6667 7.08329 11.2929 7.08329 10.8333V9.58333C7.08329 9.12375 6.70954 8.75 6.24996 8.75H4.99996C4.54038 8.75 4.16663 9.12375 4.16663 9.58333V10.8333C4.16663 11.2929 4.54038 11.6667 4.99996 11.6667ZM4.99996 9.58333H6.24996L6.25079 10.8333H4.99996V9.58333ZM9.37496 11.6667H10.625C11.0845 11.6667 11.4583 11.2929 11.4583 10.8333V9.58333C11.4583 9.12375 11.0845 8.75 10.625 8.75H9.37496C8.91538 8.75 8.54163 9.12375 8.54163 9.58333V10.8333C8.54163 11.2929 8.91538 11.6667 9.37496 11.6667ZM9.37496 9.58333H10.625L10.6258 10.8333H9.37496V9.58333ZM13.75 11.6667H15C15.4595 11.6667 15.8333 11.2929 15.8333 10.8333V9.58333C15.8333 9.12375 15.4595 8.75 15 8.75H13.75C13.2904 8.75 12.9166 9.12375 12.9166 9.58333V10.8333C12.9166 11.2929 13.2904 11.6667 13.75 11.6667ZM13.75 9.58333H15L15.0008 10.8333H13.75V9.58333ZM4.99996 16.25H6.24996C6.70954 16.25 7.08329 15.8762 7.08329 15.4167V14.1667C7.08329 13.7071 6.70954 13.3333 6.24996 13.3333H4.99996C4.54038 13.3333 4.16663 13.7071 4.16663 14.1667V15.4167C4.16663 15.8762 4.54038 16.25 4.99996 16.25ZM4.99996 14.1667H6.24996L6.25079 15.4167H4.99996V14.1667ZM9.37496 16.25H10.625C11.0845 16.25 11.4583 15.8762 11.4583 15.4167V14.1667C11.4583 13.7071 11.0845 13.3333 10.625 13.3333H9.37496C8.91538 13.3333 8.54163 13.7071 8.54163 14.1667V15.4167C8.54163 15.8762 8.91538 16.25 9.37496 16.25ZM9.37496 14.1667H10.625L10.6258 15.4167H9.37496V14.1667ZM13.75 16.25H15C15.4595 16.25 15.8333 15.8762 15.8333 15.4167V14.1667C15.8333 13.7071 15.4595 13.3333 15 13.3333H13.75C13.2904 13.3333 12.9166 13.7071 12.9166 14.1667V15.4167C12.9166 15.8762 13.2904 16.25 13.75 16.25ZM13.75 14.1667H15L15.0008 15.4167H13.75V14.1667Z" fill="url(#paint1_linear_178_299)"/>
+              <defs>
+              <linearGradient id="paint0_linear_178_299" x1="7.22009" y1="1.25" x2="18.0119" y2="3.14906" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#C3942F"/>
+              <stop offset="0.234" stop-color="#D89C27"/>
+              <stop offset="0.449" stop-color="#E7DC96"/>
+              <stop offset="0.669" stop-color="#DFC86F"/>
+              <stop offset="0.849" stop-color="#D89C27"/>
+              <stop offset="1" stop-color="#C99C30"/>
+              </linearGradient>
+              <linearGradient id="paint1_linear_178_299" x1="8.05405" y1="8.75" x2="15.248" y2="10.8177" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#C3942F"/>
+              <stop offset="0.234" stop-color="#D89C27"/>
+              <stop offset="0.449" stop-color="#E7DC96"/>
+              <stop offset="0.669" stop-color="#DFC86F"/>
+              <stop offset="0.849" stop-color="#D89C27"/>
+              <stop offset="1" stop-color="#C99C30"/>
+              </linearGradient>
+              </defs>
+              </svg>
+              {{blog.published}}
+            </span>
+            <span class="meta-item">
+              <svg class="img-fluid mb-0 author-svg" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 0C7.09223 0 4.72656 2.36566 4.72656 5.27344C4.72656 8.18121 7.09223 10.5469 10 10.5469C12.9078 10.5469 15.2734 8.18121 15.2734 5.27344C15.2734 2.36566 12.9078 0 10 0ZM10 9.375C7.7384 9.375 5.89844 7.53504 5.89844 5.27344C5.89844 3.01184 7.7384 1.17188 10 1.17188C12.2616 1.17188 14.1016 3.01184 14.1016 5.27344C14.1016 7.53504 12.2616 9.375 10 9.375ZM16.5612 13.992C15.1174 12.5261 13.2035 11.7188 11.1719 11.7188H8.82812C6.79656 11.7188 4.88258 12.5261 3.43883 13.992C2.00215 15.4507 1.21094 17.3763 1.21094 19.4141C1.21094 19.7377 1.47328 20 1.79688 20H18.2031C18.5267 20 18.7891 19.7377 18.7891 19.4141C18.7891 17.3763 17.9979 15.4507 16.5612 13.992ZM2.40859 18.8281C2.70215 15.5045 5.46918 12.8906 8.82812 12.8906H11.1719C14.5308 12.8906 17.2979 15.5045 17.5914 18.8281H2.40859Z" fill="url(#paint0_linear_178_296)"/>
+              <defs>
+              <linearGradient id="paint0_linear_178_296" x1="7.06811" y1="-1.63359e-07" x2="18.5011" y2="1.85666" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#C3942F"/>
+              <stop offset="0.234" stop-color="#D89C27"/>
+              <stop offset="0.449" stop-color="#E7DC96"/>
+              <stop offset="0.669" stop-color="#DFC86F"/>
+              <stop offset="0.849" stop-color="#D89C27"/>
+              <stop offset="1" stop-color="#C99C30"/>
+              </linearGradient>
+              </defs>
+              </svg>
+              {{blog.author}}
+            </span>
+          </div>
           <div class="single-blog-page position-relative">
-            {% comment %} <h2 class="single-blog-title">{{blog.h1}}</h2> {% endcomment %}
-            {% comment %} <h3 class="single-blog-author d-flex">
-            <img src="{% static 'user1.svg' %}" class=" img-fluid" style="width:18px" />&nbsp; By &nbsp;
-              <i class="feather-user"></i>By &nbsp; 
-              <a href="#" title="" rel="">{{blog.author}}</a>
-            </h3> {% endcomment %}
-           
             <img
               src="{{blog.image.url}}"
               class="img-fluid"
               alt="{{blog.image_alt}}"
             />
-            <div class="d-sm-flex d-block justify-content-between my-3">
+            {% comment %} <div class="d-sm-flex d-block justify-content-between my-3">
             <div class="single-blog-date"><span>Post date :</span> {{blog.published}}</div>
             <div class="single-blog-authorName"><span>Author :</span> {{blog.author}}</div>
               
-            </div>
+            </div> {% endcomment %}
           </div>  
-          <div class="single-page-main-content mt-4 mt-sm-5">
+          <div class="single-page-main-content mt-4 mt-sm-5" id="blogContent">
             {{blog.content|safe}}
           </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="single-blog-content2 sticky-sidebar">
-              <h2 class="single-blog-content2-title  cool d-inline-block">Related Blogs</h2>
-              {% comment %} <img src="{% static 'text_vec_light.svg' %}" class="img-fluid" /> {% endcomment %}
-              {% comment %} <input type="text" class="form-control" placeholder="Search" /> {% endcomment %}
-
-              <div class="row align-items-center mt-3 mb-4">
-                {% for ie in relatedBlog %}
-                  <div class="col-lg-5 my-3">
-                    <div class="single-blog-related-img">
-                      <img src="{{ie.image.url}}" class="mb-0 img-fluid" alt="{{ ie.image_alt }}"/>
-                    </div>
+          <div class="author-section mt-5">
+            <div class="author-inner d-flex align-items-center">
+              <div class="author-image">
+                <img src="{% static 'author-usd-new.webp' %}" class="img-fluid desktop-img" alt="Author Image"/>
+                <img src="{% static 'tablet-screen.webp' %}" class="img-fluid mobile-img" alt="Tablet Screen"/>
+              </div>
+              <div class="author-content ms-4">
+                <div class="author-name">Haresh Savani</div>
+                <p class="author-role cool">Founder & CEO of Advance Dental Export</p>
+                <p class="author-bio">
+                  With over 20 years of unparalleled experience at the forefront of digital dental technology, I’m passionate about elevating dental care
+                  through state-of-the-art dental technologies. I remain dedicated to empowering dentists and practitioners by providing cutting-edge custom
+                  dental solutions that combine artistry, efficiency, and predictability, continuously exploring AI-driven design to shape the future of restorative
+                  dentistry.
+                </p>
+                <div class="author-social-links">
+                  <a href="https://www.facebook.com/haresh.savani.12/" class="social-icon" target="_blank" aria-label="Facebook">
+                    <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="0.5" y="0.5" width="23.1791" height="23.1791" rx="11.5896" fill="black"/>
+                    <rect x="0.5" y="0.5" width="23.1791" height="23.1791" rx="11.5896" stroke="url(#paint0_linear_76_465)"/>
+                    <path d="M14.6167 12.56H12.7277V18.2018H10.209V12.56H8.1437V10.2428H10.209V8.45458C10.209 6.43966 11.418 5.30626 13.2566 5.30626C14.1381 5.30626 15.07 5.48257 15.07 5.48257V7.47231H14.0374C13.0299 7.47231 12.7277 8.07678 12.7277 8.73163V10.2428H14.9693L14.6167 12.56Z" fill="white"/>
+                    <a href="https://www.facebook.com/haresh.savani.12/">
+                    <rect fill="black" fill-opacity="0" y="-0.967165" width="8.0597" height="14.8299"/>
+                    </a>
+                    <defs>
+                    <linearGradient id="paint0_linear_76_465" x1="8.05667" y1="-1.97493e-07" x2="23.6648" y2="2.88392" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#C3942F"/>
+                    <stop offset="0.234" stop-color="#D89C27"/>
+                    <stop offset="0.449" stop-color="#E7DC96"/>
+                    <stop offset="0.669" stop-color="#DFC86F"/>
+                    <stop offset="0.849" stop-color="#D89C27"/>
+                    <stop offset="1" stop-color="#C99C30"/>
+                    </linearGradient>
+                    </defs>
+                    </svg>
+                  </a>
+                  <a href="https://www.instagram.com/_hareshsavani_/" class="social-icon" target="_blank" aria-label="Instagram">
+                    <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="0.5" y="0.5" width="23.1791" height="23.1791" rx="11.5896" fill="black"/>
+                    <rect x="0.5" y="0.5" width="23.1791" height="23.1791" rx="11.5896" stroke="url(#paint0_linear_76_466)"/>
+                    <path d="M11.7314 8.85757C13.3181 8.85757 14.6278 10.1673 14.6278 11.754C14.6278 13.366 13.3181 14.6505 11.7314 14.6505C10.1195 14.6505 8.83494 13.366 8.83494 11.754C8.83494 10.1673 10.1195 8.85757 11.7314 8.85757ZM11.7314 13.643C12.764 13.643 13.5952 12.8119 13.5952 11.754C13.5952 10.7214 12.764 9.89022 11.7314 9.89022C10.6736 9.89022 9.8424 10.7214 9.8424 11.754C9.8424 12.8119 10.6987 13.643 11.7314 13.643ZM15.4086 8.75682C15.4086 9.13462 15.1064 9.43686 14.7286 9.43686C14.3508 9.43686 14.0486 9.13462 14.0486 8.75682C14.0486 8.37902 14.3508 8.07678 14.7286 8.07678C15.1064 8.07678 15.4086 8.37902 15.4086 8.75682ZM17.3228 9.43686C17.3732 10.3688 17.3732 13.1645 17.3228 14.0964C17.2724 15.0031 17.0709 15.7839 16.4161 16.4639C15.7612 17.1188 14.9553 17.3203 14.0486 17.3706C13.1167 17.421 10.3209 17.421 9.38904 17.3706C8.48232 17.3203 7.70154 17.1188 7.0215 16.4639C6.36665 15.7839 6.16516 15.0031 6.11479 14.0964C6.06441 13.1645 6.06441 10.3688 6.11479 9.43686C6.16516 8.53014 6.36665 7.72417 7.0215 7.06932C7.70154 6.41447 8.48232 6.21298 9.38904 6.1626C10.3209 6.11223 13.1167 6.11223 14.0486 6.1626C14.9553 6.21298 15.7612 6.41447 16.4161 7.06932C17.0709 7.72417 17.2724 8.53014 17.3228 9.43686ZM16.1139 15.0786C16.4161 14.3482 16.3405 12.5852 16.3405 11.754C16.3405 10.9481 16.4161 9.18499 16.1139 8.42939C15.9124 7.95085 15.5346 7.54786 15.056 7.37156C14.3004 7.06932 12.5374 7.14488 11.7314 7.14488C10.9002 7.14488 9.13717 7.06932 8.40676 7.37156C7.90303 7.57305 7.52523 7.95085 7.32374 8.42939C7.0215 9.18499 7.09706 10.9481 7.09706 11.754C7.09706 12.5852 7.0215 14.3482 7.32374 15.0786C7.52523 15.5824 7.90303 15.9602 8.40676 16.1617C9.13717 16.4639 10.9002 16.3884 11.7314 16.3884C12.5374 16.3884 14.3004 16.4639 15.056 16.1617C15.5346 15.9602 15.9375 15.5824 16.1139 15.0786Z" fill="white"/>
+                    <a href="https://www.instagram.com/_hareshsavani_">
+                    <rect fill="black" fill-opacity="0" y="-0.967165" width="11.2836" height="14.8299"/>
+                    </a>
+                    <defs>
+                    <linearGradient id="paint0_linear_76_466" x1="8.05667" y1="-1.97493e-07" x2="23.6648" y2="2.88392" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#C3942F"/>
+                    <stop offset="0.234" stop-color="#D89C27"/>
+                    <stop offset="0.449" stop-color="#E7DC96"/>
+                    <stop offset="0.669" stop-color="#DFC86F"/>
+                    <stop offset="0.849" stop-color="#D89C27"/>
+                    <stop offset="1" stop-color="#C99C30"/>
+                    </linearGradient>
+                    </defs>
+                    </svg>
+                  </a>
+                  <a href="https://in.linkedin.com/in/haresh-savani-67791b22" class="social-icon" target="_blank" aria-label="LinkedIn">
+                    <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="0.5" y="0.5" width="23.1791" height="23.1791" rx="11.5896" fill="black"/>
+                    <rect x="0.5" y="0.5" width="23.1791" height="23.1791" rx="11.5896" stroke="url(#paint0_linear_76_467)"/>
+                    <path d="M8.60826 16.5898H6.26591V9.05906H8.60826V16.5898ZM7.42449 8.0516C6.69408 8.0516 6.0896 7.42193 6.0896 6.66634C6.0896 5.93592 6.69408 5.33145 7.42449 5.33145C8.18008 5.33145 8.78456 5.93592 8.78456 6.66634C8.78456 7.42193 8.18008 8.0516 7.42449 8.0516ZM17.348 16.5898H15.0308V12.9378C15.0308 12.0563 15.0056 10.9481 13.7967 10.9481C12.5877 10.9481 12.4114 11.88 12.4114 12.8622V16.5898H10.0691V9.05906H12.3107V10.0917H12.3359C12.6633 9.51242 13.4189 8.88275 14.5523 8.88275C16.9198 8.88275 17.3732 10.4443 17.3732 12.4592V16.5898H17.348Z" fill="white"/>
+                    <a href="https://in.linkedin.com/in/haresh-savani-67791b22">
+                    <rect fill="black" fill-opacity="0" y="-0.967165" width="11.2836" height="14.8299"/>
+                    </a>
+                    <defs>
+                    <linearGradient id="paint0_linear_76_467" x1="8.05667" y1="-1.97493e-07" x2="23.6648" y2="2.88392" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#C3942F"/>
+                    <stop offset="0.234" stop-color="#D89C27"/>
+                    <stop offset="0.449" stop-color="#E7DC96"/>
+                    <stop offset="0.669" stop-color="#DFC86F"/>
+                    <stop offset="0.849" stop-color="#D89C27"/>
+                    <stop offset="1" stop-color="#C99C30"/>
+                    </linearGradient>
+                    </defs>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="before-after-section mt-5">
+            <h2 class="before-after-title cool">Smile Design Before & After</h2>
+            <div class="swiper beforeAfterSwiper mt-4">
+              <div class="swiper-wrapper">
+                {% for item in before_after_images %}
+                <div class="swiper-slide">  
+                  <div class="before-after-item">
+                    <img src="{{ item.image.url }}" class="img-fluid" alt="{{item.alt_text}}"/>
                   </div>
-                  <div class="col-lg-7 mt-2 mb-2 single-blog-related-content">
-                    <h3 class="mb-2">
-                      <a href="{% url 'home:blogsd' ie.slug %}">{{ ie.h1 }}</a>
-                    </h3>
-                    <div class="d-flex">
-                      <svg class="pe-2 mb-0 img-fluid" style="width:25px" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M19.4427 5.97162C19.3341 4.16522 17.8257 2.75 16.009 2.75H15.1245V2.0625C15.1245 1.88016 15.0521 1.7053 14.9232 1.57636C14.7942 1.44743 14.6194 1.375 14.437 1.375C14.2547 1.375 14.0798 1.44743 13.9509 1.57636C13.822 1.7053 13.7495 1.88016 13.7495 2.0625V2.75H8.24954V2.0625C8.24954 1.88016 8.1771 1.7053 8.04817 1.57636C7.91924 1.44743 7.74437 1.375 7.56204 1.375C7.3797 1.375 7.20483 1.44743 7.0759 1.57636C6.94697 1.7053 6.87454 1.88016 6.87454 2.0625V2.75H5.99007C4.173 2.75 2.66463 4.16522 2.55635 5.97162C2.3525 9.36925 2.35629 12.8157 2.56769 16.215C2.67494 17.9413 4.05785 19.3242 5.78416 19.4315C7.51425 19.5391 9.25672 19.5927 10.9992 19.5927C12.7413 19.5927 14.4841 19.5391 16.2142 19.4315C17.9405 19.3242 19.3234 17.9413 19.4307 16.215C19.6424 12.8174 19.6462 9.37131 19.4427 5.97162ZM18.0588 16.1298C18.0269 16.6311 17.8134 17.1035 17.4582 17.4587C17.1031 17.8139 16.6306 18.0274 16.1293 18.0592C12.7255 18.2707 9.27357 18.2707 5.86975 18.0592C5.36847 18.0274 4.896 17.8139 4.54083 17.4587C4.18565 17.1035 3.97214 16.6311 3.94029 16.1298C3.77915 13.5064 3.74278 10.8768 3.83132 8.25H18.1681C18.2547 10.8762 18.2214 13.5173 18.0588 16.1298ZM7.56204 5.5C7.74437 5.5 7.91924 5.42757 8.04817 5.29864C8.1771 5.1697 8.24954 4.99484 8.24954 4.8125V4.125H13.7495V4.8125C13.7495 4.99484 13.822 5.1697 13.9509 5.29864C14.0798 5.42757 14.2547 5.5 14.437 5.5C14.6194 5.5 14.7942 5.42757 14.9232 5.29864C15.0521 5.1697 15.1245 4.99484 15.1245 4.8125V4.125H16.009C17.0997 4.125 18.0052 4.97234 18.0701 6.05378C18.0863 6.32672 18.0932 6.60137 18.1066 6.875H3.8925C3.90625 6.60137 3.91279 6.32672 3.92894 6.05378C3.99391 4.97234 4.899 4.125 5.99007 4.125H6.87454V4.8125C6.87454 4.99484 6.94697 5.1697 7.0759 5.29864C7.20483 5.42757 7.3797 5.5 7.56204 5.5Z" fill="url(#paint0_linear_2875_1899)"/>
-                      <path d="M7.5625 12.375C8.13204 12.375 8.59375 11.9133 8.59375 11.3438C8.59375 10.7742 8.13204 10.3125 7.5625 10.3125C6.99296 10.3125 6.53125 10.7742 6.53125 11.3438C6.53125 11.9133 6.99296 12.375 7.5625 12.375Z" fill="url(#paint1_linear_2875_1899)"/>
-                      <path d="M11 12.375C11.5695 12.375 12.0312 11.9133 12.0312 11.3438C12.0312 10.7742 11.5695 10.3125 11 10.3125C10.4305 10.3125 9.96875 10.7742 9.96875 11.3438C9.96875 11.9133 10.4305 12.375 11 12.375Z" fill="url(#paint2_linear_2875_1899)"/>
-                      <path d="M7.5625 15.8125C8.13204 15.8125 8.59375 15.3508 8.59375 14.7812C8.59375 14.2117 8.13204 13.75 7.5625 13.75C6.99296 13.75 6.53125 14.2117 6.53125 14.7812C6.53125 15.3508 6.99296 15.8125 7.5625 15.8125Z" fill="url(#paint3_linear_2875_1899)"/>
-                      <path d="M14.4375 12.375C15.007 12.375 15.4688 11.9133 15.4688 11.3438C15.4688 10.7742 15.007 10.3125 14.4375 10.3125C13.868 10.3125 13.4062 10.7742 13.4062 11.3438C13.4062 11.9133 13.868 12.375 14.4375 12.375Z" fill="url(#paint4_linear_2875_1899)"/>
-                      <path d="M14.4375 15.8125C15.007 15.8125 15.4688 15.3508 15.4688 14.7812C15.4688 14.2117 15.007 13.75 14.4375 13.75C13.868 13.75 13.4062 14.2117 13.4062 14.7812C13.4062 15.3508 13.868 15.8125 14.4375 15.8125Z" fill="url(#paint5_linear_2875_1899)"/>
-                      <path d="M11 15.8125C11.5695 15.8125 12.0312 15.3508 12.0312 14.7812C12.0312 14.2117 11.5695 13.75 11 13.75C10.4305 13.75 9.96875 14.2117 9.96875 14.7812C9.96875 15.3508 10.4305 15.8125 11 15.8125Z" fill="url(#paint6_linear_2875_1899)"/>
-                      <defs>
-                      <linearGradient id="paint0_linear_2875_1899" x1="8.13284" y1="1.375" x2="19.2674" y2="3.31585" gradientUnits="userSpaceOnUse">
-                      <stop stop-color="#C3942F"/>
-                      <stop offset="0.234" stop-color="#D89C27"/>
-                      <stop offset="0.449" stop-color="#E7DC96"/>
-                      <stop offset="0.669" stop-color="#DFC86F"/>
-                      <stop offset="0.849" stop-color="#D89C27"/>
-                      <stop offset="1" stop-color="#C99C30"/>
-                      </linearGradient>
-                      <linearGradient id="paint1_linear_2875_1899" x1="7.21849" y1="10.3125" x2="8.54988" y2="10.5585" gradientUnits="userSpaceOnUse">
-                      <stop stop-color="#C3942F"/>
-                      <stop offset="0.234" stop-color="#D89C27"/>
-                      <stop offset="0.449" stop-color="#E7DC96"/>
-                      <stop offset="0.669" stop-color="#DFC86F"/>
-                      <stop offset="0.849" stop-color="#D89C27"/>
-                      <stop offset="1" stop-color="#C99C30"/>
-                      </linearGradient>
-                      <linearGradient id="paint2_linear_2875_1899" x1="10.656" y1="10.3125" x2="11.9874" y2="10.5585" gradientUnits="userSpaceOnUse">
-                      <stop stop-color="#C3942F"/>
-                      <stop offset="0.234" stop-color="#D89C27"/>
-                      <stop offset="0.449" stop-color="#E7DC96"/>
-                      <stop offset="0.669" stop-color="#DFC86F"/>
-                      <stop offset="0.849" stop-color="#D89C27"/>
-                      <stop offset="1" stop-color="#C99C30"/>
-                      </linearGradient>
-                      <linearGradient id="paint3_linear_2875_1899" x1="7.21849" y1="13.75" x2="8.54988" y2="13.996" gradientUnits="userSpaceOnUse">
-                      <stop stop-color="#C3942F"/>
-                      <stop offset="0.234" stop-color="#D89C27"/>
-                      <stop offset="0.449" stop-color="#E7DC96"/>
-                      <stop offset="0.669" stop-color="#DFC86F"/>
-                      <stop offset="0.849" stop-color="#D89C27"/>
-                      <stop offset="1" stop-color="#C99C30"/>
-                      </linearGradient>
-                      <linearGradient id="paint4_linear_2875_1899" x1="14.0935" y1="10.3125" x2="15.4249" y2="10.5585" gradientUnits="userSpaceOnUse">
-                      <stop stop-color="#C3942F"/>
-                      <stop offset="0.234" stop-color="#D89C27"/>
-                      <stop offset="0.449" stop-color="#E7DC96"/>
-                      <stop offset="0.669" stop-color="#DFC86F"/>
-                      <stop offset="0.849" stop-color="#D89C27"/>
-                      <stop offset="1" stop-color="#C99C30"/>
-                      </linearGradient>
-                      <linearGradient id="paint5_linear_2875_1899" x1="14.0935" y1="13.75" x2="15.4249" y2="13.996" gradientUnits="userSpaceOnUse">
-                      <stop stop-color="#C3942F"/>
-                      <stop offset="0.234" stop-color="#D89C27"/>
-                      <stop offset="0.449" stop-color="#E7DC96"/>
-                      <stop offset="0.669" stop-color="#DFC86F"/>
-                      <stop offset="0.849" stop-color="#D89C27"/>
-                      <stop offset="1" stop-color="#C99C30"/>
-                      </linearGradient>
-                      <linearGradient id="paint6_linear_2875_1899" x1="10.656" y1="13.75" x2="11.9874" y2="13.996" gradientUnits="userSpaceOnUse">
-                      <stop stop-color="#C3942F"/>
-                      <stop offset="0.234" stop-color="#D89C27"/>
-                      <stop offset="0.449" stop-color="#E7DC96"/>
-                      <stop offset="0.669" stop-color="#DFC86F"/>
-                      <stop offset="0.849" stop-color="#D89C27"/>
-                      <stop offset="1" stop-color="#C99C30"/>
-                      </linearGradient>
-                      </defs>
-                      </svg>
-
-                      <span>{{ ie.published|date:"M d, Y" }}</span>
-                    </div>
-                  </div>
+                </div>
                 {% endfor %}
-                <a href="{% url 'home:blogs' %}">
-                  <button class="btn view-all-blogs-btn mt-3 w-100 bat">
-                    Find More Blogs
-                  </button>
-                </a>
               </div>
-              <div class="category-wrapper">
-                <h2
-                  class="single-blog-content2-title cool d-inline-block"
-                
-                >
-                  Categories
-                </h2>
-                {% comment %} <img
-                  src="{% static 'text_vec_light1.svg' %}"
-                  class="category-img img-fluid"
-                /> {% endcomment %}
+              <div class="swiper-pagination"></div>
+            </div> 
+          </div>
+        </div>
+          <!--Related Blogs-->
+          <div class="col-lg-4">
+            <div class="sidebar-sticky-wrapper">
+              <div class="single-blog-content2 mb-3">
+                <h2 class="single-blog-content2-title  cool d-inline-block">Related Blogs</h2>
+                <div class="row align-items-center mb-4">
+                  {% for ie in relatedBlog %}
+                    <div class="col-lg-5 my-3">
+                      <div class="single-blog-related-img">
+                        <img src="{{ie.image.url}}" class="mb-0 img-fluid" alt="{{ ie.image_alt }}"/>
+                      </div>
+                    </div>
+                    <div class="col-lg-7 mt-2 mb-2 single-blog-related-content">
+                      <h3 class="mb-2">
+                        <a href="{% url 'home:blogsd' ie.slug %}">{{ ie.h1 }}</a>
+                      </h3>
+                      <div class="d-flex">
+                        <svg class="pe-2 mb-0 img-fluid" style="width:25px" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19.4427 5.97162C19.3341 4.16522 17.8257 2.75 16.009 2.75H15.1245V2.0625C15.1245 1.88016 15.0521 1.7053 14.9232 1.57636C14.7942 1.44743 14.6194 1.375 14.437 1.375C14.2547 1.375 14.0798 1.44743 13.9509 1.57636C13.822 1.7053 13.7495 1.88016 13.7495 2.0625V2.75H8.24954V2.0625C8.24954 1.88016 8.1771 1.7053 8.04817 1.57636C7.91924 1.44743 7.74437 1.375 7.56204 1.375C7.3797 1.375 7.20483 1.44743 7.0759 1.57636C6.94697 1.7053 6.87454 1.88016 6.87454 2.0625V2.75H5.99007C4.173 2.75 2.66463 4.16522 2.55635 5.97162C2.3525 9.36925 2.35629 12.8157 2.56769 16.215C2.67494 17.9413 4.05785 19.3242 5.78416 19.4315C7.51425 19.5391 9.25672 19.5927 10.9992 19.5927C12.7413 19.5927 14.4841 19.5391 16.2142 19.4315C17.9405 19.3242 19.3234 17.9413 19.4307 16.215C19.6424 12.8174 19.6462 9.37131 19.4427 5.97162ZM18.0588 16.1298C18.0269 16.6311 17.8134 17.1035 17.4582 17.4587C17.1031 17.8139 16.6306 18.0274 16.1293 18.0592C12.7255 18.2707 9.27357 18.2707 5.86975 18.0592C5.36847 18.0274 4.896 17.8139 4.54083 17.4587C4.18565 17.1035 3.97214 16.6311 3.94029 16.1298C3.77915 13.5064 3.74278 10.8768 3.83132 8.25H18.1681C18.2547 10.8762 18.2214 13.5173 18.0588 16.1298ZM7.56204 5.5C7.74437 5.5 7.91924 5.42757 8.04817 5.29864C8.1771 5.1697 8.24954 4.99484 8.24954 4.8125V4.125H13.7495V4.8125C13.7495 4.99484 13.822 5.1697 13.9509 5.29864C14.0798 5.42757 14.2547 5.5 14.437 5.5C14.6194 5.5 14.7942 5.42757 14.9232 5.29864C15.0521 5.1697 15.1245 4.99484 15.1245 4.8125V4.125H16.009C17.0997 4.125 18.0052 4.97234 18.0701 6.05378C18.0863 6.32672 18.0932 6.60137 18.1066 6.875H3.8925C3.90625 6.60137 3.91279 6.32672 3.92894 6.05378C3.99391 4.97234 4.899 4.125 5.99007 4.125H6.87454V4.8125C6.87454 4.99484 6.94697 5.1697 7.0759 5.29864C7.20483 5.42757 7.3797 5.5 7.56204 5.5Z" fill="url(#paint0_linear_2875_1899)"/>
+                        <path d="M7.5625 12.375C8.13204 12.375 8.59375 11.9133 8.59375 11.3438C8.59375 10.7742 8.13204 10.3125 7.5625 10.3125C6.99296 10.3125 6.53125 10.7742 6.53125 11.3438C6.53125 11.9133 6.99296 12.375 7.5625 12.375Z" fill="url(#paint1_linear_2875_1899)"/>
+                        <path d="M11 12.375C11.5695 12.375 12.0312 11.9133 12.0312 11.3438C12.0312 10.7742 11.5695 10.3125 11 10.3125C10.4305 10.3125 9.96875 10.7742 9.96875 11.3438C9.96875 11.9133 10.4305 12.375 11 12.375Z" fill="url(#paint2_linear_2875_1899)"/>
+                        <path d="M7.5625 15.8125C8.13204 15.8125 8.59375 15.3508 8.59375 14.7812C8.59375 14.2117 8.13204 13.75 7.5625 13.75C6.99296 13.75 6.53125 14.2117 6.53125 14.7812C6.53125 15.3508 6.99296 15.8125 7.5625 15.8125Z" fill="url(#paint3_linear_2875_1899)"/>
+                        <path d="M14.4375 12.375C15.007 12.375 15.4688 11.9133 15.4688 11.3438C15.4688 10.7742 15.007 10.3125 14.4375 10.3125C13.868 10.3125 13.4062 10.7742 13.4062 11.3438C13.4062 11.9133 13.868 12.375 14.4375 12.375Z" fill="url(#paint4_linear_2875_1899)"/>
+                        <path d="M14.4375 15.8125C15.007 15.8125 15.4688 15.3508 15.4688 14.7812C15.4688 14.2117 15.007 13.75 14.4375 13.75C13.868 13.75 13.4062 14.2117 13.4062 14.7812C13.4062 15.3508 13.868 15.8125 14.4375 15.8125Z" fill="url(#paint5_linear_2875_1899)"/>
+                        <path d="M11 15.8125C11.5695 15.8125 12.0312 15.3508 12.0312 14.7812C12.0312 14.2117 11.5695 13.75 11 13.75C10.4305 13.75 9.96875 14.2117 9.96875 14.7812C9.96875 15.3508 10.4305 15.8125 11 15.8125Z" fill="url(#paint6_linear_2875_1899)"/>
+                        <defs>
+                        <linearGradient id="paint0_linear_2875_1899" x1="8.13284" y1="1.375" x2="19.2674" y2="3.31585" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#C3942F"/>
+                        <stop offset="0.234" stop-color="#D89C27"/>
+                        <stop offset="0.449" stop-color="#E7DC96"/>
+                        <stop offset="0.669" stop-color="#DFC86F"/>
+                        <stop offset="0.849" stop-color="#D89C27"/>
+                        <stop offset="1" stop-color="#C99C30"/>
+                        </linearGradient>
+                        <linearGradient id="paint1_linear_2875_1899" x1="7.21849" y1="10.3125" x2="8.54988" y2="10.5585" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#C3942F"/>
+                        <stop offset="0.234" stop-color="#D89C27"/>
+                        <stop offset="0.449" stop-color="#E7DC96"/>
+                        <stop offset="0.669" stop-color="#DFC86F"/>
+                        <stop offset="0.849" stop-color="#D89C27"/>
+                        <stop offset="1" stop-color="#C99C30"/>
+                        </linearGradient>
+                        <linearGradient id="paint2_linear_2875_1899" x1="10.656" y1="10.3125" x2="11.9874" y2="10.5585" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#C3942F"/>
+                        <stop offset="0.234" stop-color="#D89C27"/>
+                        <stop offset="0.449" stop-color="#E7DC96"/>
+                        <stop offset="0.669" stop-color="#DFC86F"/>
+                        <stop offset="0.849" stop-color="#D89C27"/>
+                        <stop offset="1" stop-color="#C99C30"/>
+                        </linearGradient>
+                        <linearGradient id="paint3_linear_2875_1899" x1="7.21849" y1="13.75" x2="8.54988" y2="13.996" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#C3942F"/>
+                        <stop offset="0.234" stop-color="#D89C27"/>
+                        <stop offset="0.449" stop-color="#E7DC96"/>
+                        <stop offset="0.669" stop-color="#DFC86F"/>
+                        <stop offset="0.849" stop-color="#D89C27"/>
+                        <stop offset="1" stop-color="#C99C30"/>
+                        </linearGradient>
+                        <linearGradient id="paint4_linear_2875_1899" x1="14.0935" y1="10.3125" x2="15.4249" y2="10.5585" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#C3942F"/>
+                        <stop offset="0.234" stop-color="#D89C27"/>
+                        <stop offset="0.449" stop-color="#E7DC96"/>
+                        <stop offset="0.669" stop-color="#DFC86F"/>
+                        <stop offset="0.849" stop-color="#D89C27"/>
+                        <stop offset="1" stop-color="#C99C30"/>
+                        </linearGradient>
+                        <linearGradient id="paint5_linear_2875_1899" x1="14.0935" y1="13.75" x2="15.4249" y2="13.996" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#C3942F"/>
+                        <stop offset="0.234" stop-color="#D89C27"/>
+                        <stop offset="0.449" stop-color="#E7DC96"/>
+                        <stop offset="0.669" stop-color="#DFC86F"/>
+                        <stop offset="0.849" stop-color="#D89C27"/>
+                        <stop offset="1" stop-color="#C99C30"/>
+                        </linearGradient>
+                        <linearGradient id="paint6_linear_2875_1899" x1="10.656" y1="13.75" x2="11.9874" y2="13.996" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#C3942F"/>
+                        <stop offset="0.234" stop-color="#D89C27"/>
+                        <stop offset="0.449" stop-color="#E7DC96"/>
+                        <stop offset="0.669" stop-color="#DFC86F"/>
+                        <stop offset="0.849" stop-color="#D89C27"/>
+                        <stop offset="1" stop-color="#C99C30"/>
+                        </linearGradient>
+                        </defs>
+                        </svg>
 
-                <ul class="category-content mt-2">
-                  {% for category in cata %}
-                  <li><a href="#" style="color: #fff">{{category}}</a></li>
+                        <span>{{ ie.published|date:"M d, Y" }}</span>
+                      </div>
+                    </div>
                   {% endfor %}
-                </ul>
-                {% comment %}
-                <h4 class="category-content mt-2">Cosmetic Dentistry</h4>
-                {% endcomment %}
+                  <a href="{% url 'home:blogs' %}">
+                    <button class="btn view-all-blogs-btn mt-3 w-100 bat">
+                      Find More Blogs
+                    </button>
+                  </a>
+                </div>
               </div>
-
-              <div class="tag-wrapper">
-                <h2
-                  class="single-blog-content2-title cool d-inline-block"
-                  
-                >
-                  Tag
-                </h2>
-                {% comment %} <img
-                  src="{% static 'text_vec_light.svg' %}"
-                  class="tag-img img-fluid"
-                /> {% endcomment %}
-                <ul>
-                  {% for tag in tags %}
-                  <li>{{tag}}</li>
-                  {% endfor %}
-                </ul>
+              <!--Contact Form-->
+              <div class="single-blog-content2 pt-4">
+                <h2 class="single-blog-content2-title  cool d-inline-block">Contact Us</h2>
+                <form class="contact-form form mb-3 mt-3" action="{% url 'home:blogsd' blog.slug %}" method="post">
+                  {% csrf_token %}
+                    <div class="justify-content-center mx-auto">
+                      <div class="col-lg-12 mb-4">
+                        <input
+                          type="text"
+                          name="name"
+                          placeholder="Name"
+                          class="form-control"
+                          required
+                        />
+                      </div>
+                      <div class="col-lg-12 mb-4">
+                        <input
+                          type="email"
+                          name="email"
+                          placeholder="Email"
+                          class="form-control"
+                          required
+                        />
+                      </div>
+                      <div class="col-lg-12 mb-4">
+                        <input
+                          type="number"
+                          name="phone"
+                          placeholder="Phone"
+                          class="form-control"
+                          required
+                        />
+                      </div>
+                      <div class="col-lg-12 mb-4">
+                        <input
+                          type="text"
+                          name="city"
+                          placeholder="City"
+                          class="form-control"
+                          required
+                        />
+                      </div>
+                      <div class="col-lg-12 mb-4">
+                        <input
+                          type="text"
+                          name="subject"
+                          placeholder="Subject"
+                          class="form-control"
+                          required
+                        />
+                      </div>
+                      <div class="col-md-12 mb-4">
+                        <textarea
+                          type="message"
+                          name="message"
+                          placeholder="Message"
+                          class="form-control"
+                          rows="5"
+                          required
+                        ></textarea>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="g-recaptcha mb-3" data-sitekey="{{ RECAPTCHA_SITE_KEY }}"></div>
+                        <button class="btn btn-submit d-flex mx-auto bat" type="submit">submit</button>
+                      </div>
+                    </div>
+                </form>
               </div>
             </div>
           </div>
@@ -206,182 +369,222 @@
 </div>
 <!-- Content END-->
 {% endblock body %} {% block js %} 
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="{% static 'js/recaptcha-api.js' %}" async defer></script>
 <script>
-  (function () {
-    const sidebar = document.querySelector(".sticky-sidebar");
-    if (!sidebar) return;
+  document.addEventListener("DOMContentLoaded", function () {
+    new Swiper(".beforeAfterSwiper", {
+      slidesPerView: 3,
+      spaceBetween: 20,
+      loop: true,
 
-    const parentCol = sidebar.closest(".col-lg-4") || sidebar.parentElement;
-    const offsetTop = 100;
+      autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+      },
 
-    let originalWidth = null;
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
 
-    function lockWidth() {
-      originalWidth = parentCol.getBoundingClientRect().width;
-      sidebar.style.width = originalWidth + "px";
-    }
-
-    function resetWidth() {
-      originalWidth = null;
-      sidebar.style.width = "";
-    }
-
-    function onScroll() {
-      if (window.innerWidth < 992) {
-        sidebar.style.position = "";
-        sidebar.style.top = "";
-        sidebar.style.left = "";
-        resetWidth();
-        return;
+      breakpoints: {
+        0: { slidesPerView: 1 },
+        576: { slidesPerView: 1 },
+        768: { slidesPerView: 2 },
+        992: { slidesPerView: 3 } // Desktop show 3
       }
-
-      const rect = parentCol.getBoundingClientRect();
-      const parentTop = rect.top + window.scrollY;
-      const parentBottom = parentTop + parentCol.offsetHeight;
-
-      const scrollY = window.scrollY;
-      const sidebarHeight = sidebar.offsetHeight;
-
-      // Fix width every time for consistency
-      lockWidth();
-
-      // Condition: While within scrolling area
-      if (
-        scrollY + offsetTop > parentTop &&
-        scrollY + offsetTop + sidebarHeight < parentBottom
-      ) {
-        sidebar.style.position = "fixed";
-        sidebar.style.top = offsetTop + "px";
-        sidebar.style.left = parentCol.getBoundingClientRect().left + "px";
-      }
-
-      // Condition: When reaching the bottom of parent — BUT DO NOT MOVE UP
-      else if (scrollY + offsetTop + sidebarHeight >= parentBottom) {
-        sidebar.style.position = "absolute";
-        sidebar.style.top = "auto";      
-        sidebar.style.bottom = "0";      
-        sidebar.style.left = "0";
-        sidebar.style.width = originalWidth + "px";
-      }
-
-      // Initial state (before sticky starts)
-      else {
-        sidebar.style.position = "";
-        sidebar.style.top = "";
-        sidebar.style.left = "";
-        sidebar.style.bottom = "";
-        resetWidth();
-      }
-    }
-
-    function onResize() {
-      resetWidth();
-      setTimeout(onScroll, 50);
-    }
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onResize);
-    setTimeout(onScroll, 200);
-  })();
+    });
+  });
 </script>
+<script>
+(function () {
+  // Settings
+  const OFFSET = 100; // px from top when fixed
+  const EXTRA_BOTTOM_SPACE = 350;
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "url": "{{blog.canonical}}",
-  "name": "{{blog.title}}",
-  "description": "{{blog.description}}"
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "NewsArticle",
-  "url":"{{blog.canonical}}",
-  "headline": "{{blog.title}}",
-  "description": "{{blog.description}}",
-  "image": [
-    "{{blog.image.url}}"
-  ],
-  "author": {
-    "@type": "Organization",
-    "name": "Ultimate Smile Design",
-    "url": "https://ultimatesmiledesign.com/"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Ultimate Smile Design",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://ultimatesmiledesign.com/static/usdlog.webp"
+  function $(sel) { return document.querySelector(sel); }
+
+  function updateSidebar() {
+    if (window.innerWidth < 992) {
+      const sidebar = document.querySelector('.sidebar-sticky-wrapper');
+      if (sidebar) {
+        sidebar.style.position = 'static';
+        sidebar.style.top = '';
+        sidebar.style.width = '';
+      }
+      return;
     }
-  },
-  "datePublished": "{{ blog.published|date:"Y-m-d" }}T10:00:00+05:30",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "{{blog.canonical}}"
+    const left = $('.col-lg-8');
+    const rightCol = $('.col-lg-4');
+    const sidebar = document.querySelector('.sidebar-sticky-wrapper');
+
+    if (!left || !rightCol || !sidebar) return;
+
+    const container = left.parentElement;
+    if (!container) return;
+
+    // Measurements
+    const scrollY = window.scrollY || window.pageYOffset;
+    const sidebarHeight = sidebar.offsetHeight;
+    const leftTop = left.getBoundingClientRect().top + scrollY;
+    const leftHeight = left.offsetHeight;
+    const leftBottom = leftTop + leftHeight;
+
+    const containerTop = container.getBoundingClientRect().top + scrollY;
+    const containerHeight = container.offsetHeight;
+    const containerBottom = containerTop + containerHeight;
+
+    const stopReferenceBottom = Math.min(leftBottom, containerBottom)+ EXTRA_BOTTOM_SPACE;
+
+    if (sidebarHeight + OFFSET >= (stopReferenceBottom - containerTop)) {
+      sidebar.style.position = 'static';
+      sidebar.style.top = '';
+      sidebar.style.width = '';
+      return;
+    }
+
+    const stopAt = stopReferenceBottom - sidebarHeight - OFFSET;
+
+    if (scrollY + OFFSET < containerTop) {
+      sidebar.style.position = 'static';
+      sidebar.style.top = '';
+      sidebar.style.width = '';
+      return;
+    }
+
+    if (scrollY > stopAt) {
+      sidebar.style.position = 'absolute';
+      const topInsideContainer = (stopReferenceBottom - containerTop - sidebarHeight);
+      sidebar.style.top = topInsideContainer + 'px';
+      sidebar.style.width = rightCol.offsetWidth + 'px';
+      return;
+    }
+    sidebar.style.position = 'fixed';
+    sidebar.style.top = OFFSET + 'px';
+    sidebar.style.width = rightCol.offsetWidth + 'px';
   }
-}
+
+  window.addEventListener('scroll', updateSidebar, { passive: true });
+  window.addEventListener('resize', updateSidebar);
+  window.addEventListener('load', updateSidebar);
+  setTimeout(updateSidebar, 200);
+})();
+</script>
+
+<script>
+  // Function to display SweetAlert based on Django messages
+  {% if messages %}
+      {% for message in messages %}
+          Swal.fire({
+              position: "top-end",
+              icon: "{% if message.tags == 'success' %}success{% else %}error{% endif %}",
+              title: "{{ message }}",
+              showConfirmButton: false,
+              timer: 1500
+          });
+      {% endfor %}
+  {% endif %}
 </script>
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Home",
-      "item": "https://ultimatesmiledesign.com/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "Blogs",
-      "item": "https://ultimatesmiledesign.com/blogs/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 3,
-      "name": "{{blog.title}}",
-      "item": "{{blog.canonical}}"
-    }
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "{{blog.title}}",
-  "description": "{{blog.description}}",
-  "url":"{{blog.canonical}}",
-  "image": "{{blog.image.url}}",
-  "author": {
-    "@type": "Organization",
-    "name": "Ultimate Smile Design",
-    "url": "https://ultimatesmiledesign.com/",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://ultimatesmiledesign.com/static/usdlog.webp"
-    }
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Ultimate Smile Design",
-    "url" : "https://ultimatesmiledesign.com/",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://ultimatesmiledesign.com/static/usdlog.webp"
-    }
-  },
-  "datePublished": "{{ blog.published|date:"Y-m-d" }}T10:00:00+05:30",
-  "mainEntityOfPage": {
+  {
+    "@context": "https://schema.org",
     "@type": "WebPage",
-    "@id": "{{blog.canonical}}"
+    "url": "{{blog.canonical}}",
+    "name": "{{blog.title}}",
+    "description": "{{blog.description}}"
   }
-}
 </script>
-{{data.schema|safe}}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "url":"{{blog.canonical}}",
+    "headline": "{{blog.title}}",
+    "description": "{{blog.description}}",
+    "image": [
+      "{{blog.image.url}}"
+    ],
+    "author": {
+      "@type": "Organization",
+      "name": "Ultimate Smile Design",
+      "url": "https://ultimatesmiledesign.com/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Ultimate Smile Design",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://ultimatesmiledesign.com/static/usdlog.webp"
+      }
+    },
+    "datePublished": "{{ blog.published|date:"Y-m-d" }}T10:00:00+05:30",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "{{blog.canonical}}"
+    }
+  }
+</script>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://ultimatesmiledesign.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Blogs",
+        "item": "https://ultimatesmiledesign.com/blogs/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "{{blog.title}}",
+        "item": "{{blog.canonical}}"
+      }
+    ]
+  }
+</script>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "{{blog.title}}",
+    "description": "{{blog.description}}",
+    "url":"{{blog.canonical}}",
+    "image": "{{blog.image.url}}",
+    "author": {
+      "@type": "Organization",
+      "name": "Ultimate Smile Design",
+      "url": "https://ultimatesmiledesign.com/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://ultimatesmiledesign.com/static/usdlog.webp"
+      }
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Ultimate Smile Design",
+      "url" : "https://ultimatesmiledesign.com/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://ultimatesmiledesign.com/static/usdlog.webp"
+      }
+    },
+    "datePublished": "{{ blog.published|date:"Y-m-d" }}T10:00:00+05:30",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "{{blog.canonical}}"
+    }
+  }
+</script>
+<script>
+{{blog.schema|safe}}
+</script>
 {% endblock js %}

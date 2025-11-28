@@ -1,0 +1,162 @@
+:root {
+    --speed: 3s;
+    --border-size: 3px;
+    --portion: 20%;   /* Only 20% border visible */
+}
+
+.location-section {
+    position: relative;
+    background-color: var(--bg-content-color);
+    padding: 20px 0px 20px;
+    overflow: hidden;
+    margin: 40px 0px;
+}
+
+.location-section span {
+    position: absolute;
+    display: block;
+}
+
+/* BORDER VISIBILITY CONTROL */
+.location-section .b1,
+.location-section .b2,
+.location-section .b3,
+.location-section .b4 {
+    animation-play-state: paused;
+    opacity: 0;
+}
+
+/* When active → play animation + show */
+.location-section .run {
+    animation-play-state: running;
+    opacity: 1;
+}
+
+/* TOP border — only 20% width */
+.location-section .b1 {
+    top: 0;
+    left: -20%;
+    width: var(--portion);
+    height: var(--border-size);
+    background: linear-gradient(90deg, transparent, #c3942f, #e7dc96, #c3942f);
+    animation: anim1 var(--speed) linear infinite;
+}
+
+@keyframes anim1 {
+    0%   { left: -20%; }
+    100% { left: 100%; }
+}
+
+/* RIGHT border — 20% height */
+.location-section .b2 {
+    top: -40%;
+    right: 0;
+    width: var(--border-size);
+    height: 40%;
+    background: linear-gradient(180deg, transparent, #c3942f, #e7dc96, #c3942f);
+    animation: anim2 var(--speed) linear infinite;
+    animation-delay: calc(var(--speed) * 1);
+}
+
+@keyframes anim2 {
+    0%   { top: -40%; }
+    100% { top: 100%; }
+}
+
+/* BOTTOM border — only 20% width */
+.location-section .b3 {
+    bottom: 0;
+    right: -20%;
+    width: var(--portion);
+    height: var(--border-size);
+    background: linear-gradient(270deg, transparent, #c3942f, #e7dc96, #c3942f);
+    animation: anim3 var(--speed) linear infinite;
+    animation-delay: calc(var(--speed) * 2);
+}
+
+@keyframes anim3 {
+    0%   { right: -20%; }
+    100% { right: 100%; }
+}
+
+/* LEFT border — 20% height */
+.location-section .b4 {
+    bottom: -40%;
+    left: 0;
+    width: var(--border-size);
+    height: 40%;
+    background: linear-gradient(360deg, transparent, #c3942f, #e7dc96, #c3942f);
+    animation: anim4 var(--speed) linear infinite;
+    animation-delay: calc(var(--speed) * 3);
+}
+
+@keyframes anim4 {
+    0%   { bottom: -40%; }
+    100% { bottom: 100%; }
+}
+
+
+.location-section .container {
+    width: 100%;
+}
+.searchbar-custom-box-wrapper {
+  height: 50px;
+  background-color: rgb(14, 13, 13);
+  color: #fff;
+  border: #fff 1.5px solid;
+  border-radius: 10px !important;
+  display: flex;
+  align-items: center;
+  padding: 22px 15px;
+  position: relative;
+}
+
+.searchbar-custom-box-wrapper i {
+  padding: 3px 10px 3px 0px;
+  width: auto;
+  background: var(--text-gradient) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+.searchbar-custom-box-wrapper select{
+    flex: 1;
+    height: 20px;
+    background-color: transparent;
+    color: #fff !important;
+    filter: brightness(0) invert(1);
+    border: none;
+    outline: none;
+    font-size: 15px;
+    padding: 0px 7px 0px 10px;
+}
+.searchbar-custom-box-wrapper select option {
+    background-color: rgb(14, 13, 13);
+    color: #fff;
+}
+.searchbar-custom-box-wrapper select:focus {
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+.searchbar-custom-box-wrapper svg {
+    color: #777;
+    border-right: 1.5px solid rgba(177, 177, 177, 1);
+    padding: 2px 9px 2px 0px;
+    width: 6%;
+    height: 30px;
+}
+@media (max-width: 991px) {
+  .searchbar-box-wrapper1 svg {
+    width: 8.3%;
+  }
+}
+@media (max-width: 768px) {
+    .searchbar-custom-box-wrapper svg {
+        width: 7.5%;
+    }
+}
+@media (max-width: 576px){
+    .searchbar-custom-box-wrapper svg {
+        width: 10%;
+    }
+}
