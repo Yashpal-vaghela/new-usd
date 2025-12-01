@@ -6091,3 +6091,489 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 .lb-dataContainer {
   font-size: 14px !important;
 } */
+ 
+/* new dentist page design css code */
+.new-appoint_btn{
+  padding: 12px 12px;
+  text-align: center;
+  display: block;
+  font-size: 20px;
+  color:#fff;
+}
+.new-appoint_btn svg{
+    height: 25px;
+    width: auto;
+    margin-top: 5px;
+    background-color: transparent;
+    display: inline-block;
+}
+/* content2 */
+.dentists-name{
+  font-size: 42px;
+}
+.dentists-name,
+.dentists-city-name{
+  text-transform: uppercase;
+  font-weight: bold;
+  font-family: 'Barlow', sans-serif;
+  color:#fff;
+  letter-spacing: 0.5px;
+}
+.new-dentist-contain{
+  background: rgba(25, 25, 25, 1);
+  border-radius: 8px;
+  margin: 25px auto;
+}
+.new-dentist-content{
+  padding: 5px 0px;
+  margin: 10px 0px;
+  width:35%;
+  border-right: 1.8px solid #fff;
+}
+.new-dentist-content:last-child{
+  border: 0px;
+}
+.new-dentists-content-title{
+  color:#fff;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.2;
+  font-family: 'Barlow', sans-serif;
+  letter-spacing: 0.5px;
+  /* margin-bottom: 0px; */
+}
+.new-dentists-content-subtitle{
+  font-size: 26px;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 500;
+  line-height: normal;
+  margin-bottom: 0px;
+}
+.new-dentists-subtitle{
+  letter-spacing: 0.3px;
+}
+.testimonial-card{
+  background-color: rgba(13, 13, 13, 1);
+  border: 2px solid rgba(61, 61, 61, 1);
+  border-radius: 10px;
+}
+.gallerySwiper .swiper-wrapper{
+  padding-bottom: 30px;
+}
+.gallerySwiper .swiper-slide img{
+  border-radius: 10px;
+}
+.gallerySwiper .swiper-pagination-bullet{
+  /* width:20px;
+  border-radius: 10px; */
+  width:10px;
+  height: 10px;
+  background: rgb(255, 255, 255) !important;
+}
+.gallerySwiper .swiper-pagination{
+  display: flex !important;
+  width:100% !important;
+  justify-content: center;
+}
+.gallerySwiper .swiper-pagination-bullet-active{
+  width: 25px;
+  border-radius: 10px;
+  /* height: 1px; */
+}
+.gallerySwiper .swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-prev,
+.gallerySwiper .swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-next{
+  transform: scale(.88) !important;
+  display: block !important;
+}
+.gallerySwiper .swiper-pagination-bullets-dynamic .swiper-pagination-bullet{
+  transform: scale(.48);
+  display: none;
+  left:0px !important;
+}
+.gallerySwiper .swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-main {
+  transform: scale(1);
+  display: block !important;
+  left: 0px !important;
+}
+.gallerySwiper .swiper-pagination-bullet-active{
+  background: #fff !important;
+}
+.dentists-contact-section .form .dentist-inputicon-box .form-control{
+  background-color: #000 !important;
+  border: 1.5px solid rgba(255, 255, 255, 1);
+  padding-left: 48px;
+  border-radius: 8px;
+  color: #fff !important;
+  box-shadow: none;
+  background-clip: unset;
+  /* padding: 8px 5px 8px 40px; */
+}
+
+.dentist-inputicon-box{
+  position: relative;
+  width:100%;
+}
+.dentist-inputicon-box i,
+.dentist-inputicon-box svg{
+    position: absolute;
+    left: 2px;
+    top: 0;
+    width: 40px;
+    height: 50px;
+    z-index: 5;
+    line-height: 50px;
+    text-align: center;
+    background: linear-gradient(100.47deg, #C3942F 28.12%, #D89C27 41.31%, #E7DC96 53.42%, #DFC86F 65.82%, #D89C27 75.96%, #C99C30 84.47%) text !important;
+    color: transparent;
+    font-size: 19px;
+}
+.dentist-inputicon-box svg{
+  width: max-content !important;
+  height: max-content !important;
+  margin: 12px 0px;
+  padding: 0px 8px;
+  border-right: 1.5px solid #6b6b6b;
+  line-height: normal;
+}
+.dentist-inputicon-box i::after{
+  content: "";
+    position: absolute;
+    top: 17%;
+    right: 0px;
+    height: 62%;
+    width: 1px;
+    background: linear-gradient(259.34deg, #6b6b6b 0%, #6b6b6b 25%, #6b6b6b 50%, #6b6b6b 75%, #6b6b6b 100%);
+    /* border: 1px solid #6b6b6b */
+}
+@media(max-width:1200px){
+  .dentists-name{
+    font-size: 40px;
+  }
+}
+@media(max-width:991px){
+  .dentists-name{
+    font-size: 34px;
+    text-align: center;
+  }
+  .dentists-img{
+    border: 1px solid #fff;
+    border-radius: 10px;
+    max-width: 300px;
+  }
+  .dentists-city-name {
+    font-size: 22px;
+    text-align: center;
+  }
+  .new-appoint_btn{
+    padding: 8px 10px;
+    font-size: 18px;
+  }
+}
+@media(max-width:768px){
+  .dentists-name{
+    font-size: 30px;
+  }
+  .dentists-city-name{
+    font-size: 20px;
+  }
+  .new-dentists-content-title{
+    font-size: 18px;
+  }
+  .new-dentists-content-subtitle{
+    font-size: 24px;
+  }
+  .new-dentists-title{
+    font-size: 22px;
+  }
+  /* .new-dentists-subtitle{
+    font-size: 15px;
+  } */
+}
+@media(max-width:576px){
+  .new-dentists-title{
+    font-size: 20px;
+  }
+  .new-dentists-subtitle,
+  .dentists-location-section p{
+    font-size: 15px;
+  }
+  .new-dentists-title{
+    margin-bottom: 6px;
+  }
+  .dentists-gallery-section .new-dentists-title{
+    margin-bottom: 12px;
+  }
+  .gallerySwiper .swiper-slide img{
+    border-radius: 8px;
+  }
+}
+
+/* thank-you page new design */
+.thank-you-section{
+  padding: 0px 80px 0px;
+  margin: 6% auto 3%;
+  position: relative;
+}
+/* .thank-you-wrapper{
+  background-image: url("/static/Thankyou-bg3.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+  padding: 85px 0px 30px;
+  border-image-source:  linear-gradient(100.47deg, #C3942F 28.12%, #D89C27 41.31%, #DFC86F 53.42%, #E7DC96 65.82%, #DFC86F 75.96%, #D89C27 84.47%) !important;
+  border-image-slice:1;
+  border-image-width:2px;
+  border-radius: 25px;
+} */
+.thank-you-wrapper {
+  position: relative;
+  padding: 85px 0px 30px;
+  background-image: url("/static/Thankyou-bg3.png");
+  background-size: 100% 100%;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  /* overflow: hidden;  */
+}
+
+/* GOLDEN GRADIENT BORDER */
+.thank-you-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2px; /* border width */
+  border-radius: inherit; /* same 25px radius */
+  background: linear-gradient(
+    100deg,
+    #C3942F,
+    #D89C27,
+    #E7DC96,
+    #DFC86F,
+    #D89C27
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.thank-you-wrapper .usd-logo-img{
+  background-image: linear-gradient(#000 40%, transparent 31%);
+  padding: 0 45px;
+  position: absolute;
+  text-align: start;
+  top: -3.4%;
+  z-index: 1;
+  width: 40%;
+  left:30%
+}
+.thank-you-wrapper .thankyou-img{
+  display: flex;
+  margin: auto;
+  justify-content: center;
+}
+.thank-you-wrapper h2{
+   font-family: "Lato", sans-serif;
+   font-size: 28px;
+   letter-spacing: 0.5px;
+}
+.thank-you-wrapper .btn{
+  width: 40%;
+  padding: 12px 0;
+  text-align: center;
+  color: #d4af37; /* gold text */
+  font-size: 20px;
+  background: transparent; /* black background */
+  position: relative;
+  font-weight: 600;
+  letter-spacing: 1px;
+  display: block;
+  margin: auto;
+  background: linear-gradient(100.47deg, #C3942F 28.12%, #D89C27 41.31%, #E7DC96 53.42%, #DFC86F 65.82%, #D89C27 75.96%, #C99C30 84.47%);
+  background-clip: text;
+  color:transparent;
+  background-color: #2d2d2d;
+}
+.thank-you-wrapper .btn::before,
+.thank-you-wrapper .btn::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 3px; /* line thickness */
+  background: linear-gradient( 90deg,
+    transparent,
+    #d4af37,
+    #f7e08c,
+    #d4af37,
+    transparent
+  );
+}
+.thank-you-wrapper .btn::before{
+  top: 0;
+}
+.thank-you-wrapper .btn::after{
+  bottom: 0;
+}
+.thank-you-wrapper .btn:focus,
+.thank-you-wrapper .btn:hover{
+  box-shadow: none;
+}
+.social-media-wrapper{
+  text-align: center;
+}
+.social-media-wrapper h2{
+  background:linear-gradient(130deg, #c3942f 0%, #d89c27 18%, #dfc86f 37%, #e7dc96 50%, #dfc86f 64%, #d89c27 82%, #c99c30 100%) !important;
+  /* background: linear-gradient(100.47deg, #C3942F 28.12%, #D89C27 41.31%, #E7DC96 53.42%, #DFC86F 65.82%, #D89C27 75.96%, #C99C30 84.47%); */
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  color: transparent !important;
+  background-color: #2d2d2d !important;
+  display: inline-block;
+  font-family: "Lato", sans-serif;
+  font-size: 26px;
+  font-weight: 600;
+}
+@media(min-width:1400px){
+  .thank-you-wrapper p.text-center{
+    width:40% !important;
+  }
+}
+@media(max-width:1200px){
+  .thank-you-wrapper .usd-logo-img{
+    background-image: linear-gradient(#000 42%, transparent 31%);
+    top:-2.4%;
+  }
+}
+@media(max-width:992px){
+  .thank-you-wrapper .usd-logo-img{
+    width:45%;
+    left:28.5%;
+    top:-3.4%;
+  }
+  .thank-you-wrapper{
+    padding: 60px 0px 20px;
+  }
+  .thank-you-section{
+    padding: 40px 0px 20px;
+  }
+  .thank-you-wrapper p.text-center{
+    width:75% !important;
+    margin-bottom: 25px !important;
+  }
+  .thank-you-wrapper .btn{
+    margin-bottom: 25px !important;
+    padding: 8px 0px;
+    font-size: 18px;
+  }
+  .thank-you-wrapper .btn::before, .thank-you-wrapper .btn::after{
+    height: 2px;
+  }
+  .social-media-wrapper .social-media-content{
+    width:75% !important;
+  }
+  .thank-you-wrapper h2{
+    font-size: 26px;
+  }
+  .social-media-wrapper h2{
+    margin-bottom: 15px !important;
+    font-size: 24px;
+  }
+  .thank-you-wrapper{
+    height: auto;
+    background-size: cover;
+  }
+}
+@media(max-width:768px){
+  .thank-you-wrapper .usd-logo-img{
+    width:60%;
+    left:20%;
+    top:-3.8%;
+  }
+  .thank-you-wrapper{
+    padding: 60px 0px 20px;
+  }
+  .thank-you-wrapper .thankyou-img{
+    width:180px;
+    height:80px;
+  }
+  .thank-you-wrapper h2{
+    font-size: 24px;
+  }
+  .thank-you-wrapper .btn{
+    font-size: 16px;
+    margin-bottom: 15px !important;
+  }
+  .thank-you-wrapper p.text-center{
+    font-size: 15px;
+    width:85% !important;
+    margin-bottom: 20px !important;
+  }
+  .social-media-wrapper h2{
+    font-size: 20px;
+    margin-bottom: 12px !important;
+  }
+  .social-media-content img{
+    width:45%;
+  }
+}
+@media(max-width:576px){
+  .thank-you-wrapper .usd-logo-img{
+    width:70%;
+    left:14%;
+    top:-2.8%;
+  }
+  .thank-you-wrapper{
+    padding: 50px 0px 20px;
+  }
+  .thank-you-wrapper p.text-center{
+    margin-bottom: 25px !important;
+    width:90% !important;
+    font-size: 14px;
+  }
+  /* .social-media-wrapper .social-media-content{
+    gap:20px;
+  } */
+   .social-media-wrapper h2{
+    font-size: 18px;
+   }
+   .thank-you-wrapper .btn{
+      width: 55%;
+   }
+   .thank-you-wrapper h2{
+     font-size: 22px;
+   }
+}
+@media(max-width:480px){
+  .thank-you-wrapper{
+    padding: 40px 0px 20px;
+  }
+  .thank-you-wrapper .usd-logo-img{
+    width:75%;
+    left:12%;
+  }
+  .social-media-wrapper .social-media-content{
+    width: 90% !important;
+    --bs-gutter-x: 1rem;
+  }
+  .social-media-content img{
+    margin-bottom: 5px;
+  }
+  .social-media-content p {
+    font-size: 12px;
+    display: none;
+  }
+  .social-media-content img{
+    width:60%
+  }
+  .thank-you-wrapper h2{
+    font-size: 20px;
+    margin-bottom: 1rem !important;
+  }
+}
