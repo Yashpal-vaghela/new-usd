@@ -134,7 +134,7 @@
                                     By {{first_blog.author}}
                                 </span>
                             </div>
-                            <h3 class="blog-content-title1"><a href="{% url 'home:blogsd' first_blog.slug %}">{{first_blog.title}}</a> </h3>
+                            <h3 class="blog-content-title1"><a href="{% url 'home:blogsd' first_blog.slug %}">{{first_blog.h1}}</a> </h3>
                             <p class="blog-content-subtitle">{{first_blog.description}}</p>
                             <span class="read-more"><a href="{% url 'home:blogsd' first_blog.slug %}">Read More</a></span>
                         </div>
@@ -173,7 +173,7 @@
                                                 <a href="{% url 'home:blogsd' blog.slug %}">{{blog.title}}</a>
                                             </h4> {% endcomment %}
                                             <h3 class="card-text"> 
-                                                <a href="{% url 'home:blogsd' blog.slug %}">{{blog.title}}</a> 
+                                                <a href="{% url 'home:blogsd' blog.slug %}">{{blog.h1}}</a> 
                                             </h3>
                                             <div class="mb-md-3 mb-4">
                                                 {% comment %} <img src="{% static 'user1.svg'%}" class="icon-img me-1 img-fluid" /> {% endcomment %}

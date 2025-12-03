@@ -399,10 +399,11 @@
     }
     .author-inner img{
         width: 275px !important;
-        height: 300px;
+        height: 320px;
     }
     .author-name {
-        font-size: 35px;
+        font-size: 36px;
+        padding-top: 10px;
     }
 }
 @media(max-width:576px){
@@ -460,6 +461,17 @@
      .category-content{
         padding: 10px 35px;
      }
+     .single-page-main-content table {
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    }
+
+    .single-page-main-content table th,
+    .single-page-main-content table td {
+    white-space: nowrap;
+    }
 }
 @media(max-width:420px){
     .single-blog-content .container{

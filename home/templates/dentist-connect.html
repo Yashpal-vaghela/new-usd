@@ -16,6 +16,9 @@
 {% endblock seo %}
 
 {% block header %}
+{% block css%}
+<link rel="stylesheet" href="{% static 'css/contact.css' %}" />
+{% endblock css %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 {% endblock header %}
@@ -50,7 +53,7 @@
     <div class="container px-lg-5">
       <h1 class="contact-title cool">Become an Ultimate Smile Designer – Certified Dentist</h1>
       <p class='dentist-subtitle'>Take the next step toward becoming an Ultimate Smile Designer – register now and get certified.</p>
-      <form class="dentist-connect-form form mt-4 mb-4 my-sm-5" action="{% url 'home:dentist_connect' %}" method="post" onsubmit="handlesubmit(event)">
+      <form class="dentist-connect-form form mt-4 mb-4 my-sm-5" action="{% url 'home:dentist_connect' %}" id="dentistConnectForm" method="post" onsubmit="handlesubmit(event)">
         {% csrf_token %}
         <div class="container row justify-content-center mx-auto">
           <div class="col-lg-12 mb-4 mb-sm-5">
@@ -85,7 +88,7 @@
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header justify-content-center">
-                    <img src="{% static 'Thankyou-icon.png' %}" class="img-fluid" alt="thank-you-img">
+                    <img src="{% static 'Thankyou-icon.png' %}" class="img-fluid" alt="thank-you-img" />
                   </div>
                   <div class="modal-body">
                     <p class="mb-1">Your registration has been received successfully.</p>
@@ -95,26 +98,21 @@
                     <p>Our team will get in touch with you shortly with the next steps and program details.</p>
                     <p>Until then, stay tuned and get ready to elevate every smile you design!</p>
                     <div class="explore-button-wrapper d-flex align-items-center justify-content-between mx-auto mt-5 mb-4" >
-                      <button class="btn btn-default explore-button" onclick="handleExploreButton('social-media-content-wrapper')">Explore More 
-                        <svg class="mx-2" width="16" height="16" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M8.99995 14.1301C8.67735 14.1301 8.3548 14.007 8.10885 13.7611L0.369254 6.02146C-0.123085 5.52912 -0.123085 4.73087 0.369254 4.23873C0.861395 3.74659 1.65948 3.74659 2.15186 4.23873L8.99995 11.0872L15.8481 4.23897C16.3404 3.74683 17.1384 3.74683 17.6305 4.23897C18.1231 4.73111 18.1231 5.52936 17.6305 6.0217L9.89105 13.7614C9.64498 14.0072 9.32243 14.1301 8.99995 14.1301Z" fill="black"/>
-                        </svg>
-                      </button>
-                      <button class="btn btn-default">Okey</button>
+                      <button class="btn btn-default" id="closeThankYouBtn">Ok!</button>
                     </div>
-                    <div class="social-media-content-wrapper d-none" id="socialMediaContent">
+                    <div class="social-media-content-wrapper">
                       <h2 class="cool d-block">Social Media</h2>
                       <div class="social-icon-wrapper d-flex justify-content-between">
                         <div class="social-icon d-grid">
-                            <img src="{% static 'instagram-icon.png' %}" alt="instagram-icon" class="img-fluid mb-2">
+                            <img src="{% static 'instagram-icon.png' %}" alt="instagram-icon" class="img-fluid mb-2" />
                             <span>Instagram</span>
                         </div>
                         <div class="social-icon d-grid">
-                            <img src="{% static 'facebook-icon.png' %}" alt="instagram-icon" class="img-fluid mb-2">
+                            <img src="{% static 'facebook-icon.png' %}" alt="instagram-icon" class="img-fluid mb-2" />
                             <span>Facebook</span>
                         </div>
                         <div class="social-icon d-grid">
-                          <img src="{% static 'linkedin-icon.png' %}" alt="linked-icon" class="img-fluid mb-2">
+                          <img src="{% static 'linkedin-icon.png' %}" alt="linked-icon" class="img-fluid mb-2" />
                           <span>Linked In</span>
                         </div>
                       </div>
@@ -143,7 +141,7 @@
       <div class="usd-studio-wrapper position-relative">
         <canvas id="snow-canvas"></canvas>
         <div class="usd_studio_image usd-title-wrapper">
-          <img src="{% static 'usd-studio-2.png'%}" class="usd-studio-img img-fluid" width="432" height="420"/>
+          <img src="{% static 'usd-studio-2.webp'%}" class="usd-studio-img img-fluid" width="432" height="420"/>
         </div>
         <div class="usd-floating-images position-relative">
             <div class="container">
@@ -294,7 +292,7 @@
 
 {% block js %}
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<script>
+{% comment %} <script>
   {% if messages %}
       {% for message in messages %}
           Swal.fire({
@@ -306,58 +304,49 @@
           });
       {% endfor %}
   {% endif %}
+</script> {% endcomment %}
+<script>
+  function handlesubmit(event){
+    // console.log("submit",event)
+    event.preventDefault();
+
+    const form = event.target;
+    const formData = new FormData(form);
+    fetch(form.action, {
+      method: "POST",
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === "success"){
+        const modal = new bootstrap.Modal(document.getElementById('thankyouModal'));
+        modal.show();
+        form.reset();
+        // grecaptcha.reset();
+      } else{
+          Swal.fire({
+          icon: "error",
+          title: "Submission Failed",
+          text: data.message || "Something went wrong. Please try again.",
+          timer: 4000
+        });
+      }
+    })
+    .catch(()=> {
+        Swal.fire({
+        icon: "error",
+        title: "Network Error",
+        text: "Please check your connection and try again.",
+        timer: 4000
+      });
+    })
+
+  }
 </script>
 <script>
-function handleExploreButton(data){
-  const a = document.querySelector(".social-media-content-wrapper");
-  const c = document.querySelector(".explore-button svg");
-  if(a.classList.contains(data)){
-    if(a.classList.contains("d-flex")){
-      a.classList.add("d-none");
-      a.classList.remove("d-flex");
-      c.style.transform = "rotate(0deg)";
-      c.style.marginBottom = '0%';
-    }else{
-      a.classList.remove("d-none");
-      a.classList.add("d-flex");
-      c.style.transform = "rotate(180deg)"
-      c.style.marginBottom = "2.5%";
-    }
-  }else{
-    a.classList.add("d-none");
-    a.classList.remove("d-flex");
-    c.style.transform = "rotate(0deg)";
-    c.style.marginBottom = '0%';
-  }
-}
-function handlesubmit(event){
-  console.log("submit",event)
-  event.preventDefault();
-
-  const form = event.target;
-  const inputs = form.querySelectorAll("input[required]");
-  let allFilled = true;
-
-  // Check if all required fields are filled
-    inputs.forEach(input => {
-      if (!input.value.trim()) {
-        allFilled = false;
-        input.classList.add("is-invalid");
-      } else {
-        input.classList.remove("is-invalid");
-      }
-    });
-    if (allFilled) {
-      // ✅ Open modal if all inputs are filled
-      const modal = new bootstrap.Modal(document.getElementById('thankyouModal'));
-      modal.show();
-
-      // Optionally, submit after modal confirmation or automatically
-      // Example: auto submit after 2 seconds
-      // setTimeout(() => form.submit(), 2000);
-    } else {
-      alert("Please fill all required fields before submitting.");
-    }
-}
+document.getElementById("closeThankYouBtn").addEventListener("click", () => {
+  const modal = bootstrap.Modal.getInstance(document.getElementById("thankyouModal"));
+  modal.hide();
+});
 </script>
 {% endblock js %}

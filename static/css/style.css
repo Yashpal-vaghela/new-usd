@@ -6440,6 +6440,9 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   font-size: 26px;
   font-weight: 600;
 }
+.social-media-content p{
+  color:#fff;
+}
 @media(min-width:1400px){
   .thank-you-wrapper p.text-center{
     width:40% !important;

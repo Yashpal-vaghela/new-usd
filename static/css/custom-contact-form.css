@@ -48,3 +48,15 @@
     transition: 0.5s all ease;
     width: 10%;
 }
+@media(max-width:576px){
+  .contact-box {
+    padding: 30px 20px;
+  }
+  .contact-text {
+    font-size: 18px;
+    line-height: 1.4;
+  }
+  .new-contact-btn{
+    font-weight: 500;
+  }
+}
