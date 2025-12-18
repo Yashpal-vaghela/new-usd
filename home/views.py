@@ -14,8 +14,11 @@ from django.core.paginator import Paginator
 from hm.pre import get_location_info
 from geopy.distance import geodesic
 from home.forms import UserSubmissionForm
+from django.utils.safestring import mark_safe
+from django.template.loader import render_to_string
 import re
 import requests
+import random
 @csrf_exempt  # This bypasses CSRF protection for demonstration purposes only
 def receive_location(request):
     if request.method == 'POST':
@@ -43,126 +46,44 @@ def receive_location(request):
 
 
 # Create your views here.
-# def home(request):
-#     data1 = City.objects.all()[:10]
-#     dentist = Dentist.objects.all().order_by("?")[:6]
-#     gallery = Gallery.objects.all().order_by("?")
-#     cities = City.objects.all()
-    
-#     city_id = request.GET.get('city', '').strip()
-#     query = request.GET.get('q', '').strip()
-#     data1 = Dentist.objects.all().order_by('name')  # Default queryset
-#     search_message = None
-#     city_name = city.city if 'city' in locals() and city else 'Surat'
-#     query = request.GET.get("q",'').strip()
-#     # mix filter doctor name or clinic name
-#     # if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-#     #     results = []
-#     #     if query:
-#     #         matching_doctor = Dentist.objects.filter(Q(name__icontains=query) | Q(clinic_name__icontains=query)).distinct()[:5]
-#     #         print("matching_doctor",matching_doctor)
-#     #         results = [{'name': dentist.name, 'id': dentist.id, 'slug': dentist.slug ,'clinic_name':dentist.clinic_name} for dentist in matching_doctor]
-#     #     return JsonResponse({'results': results})
-#     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-#         suggestion = []
-#         if query:
-#             # search doctors by name
-#             doctor_matches = Dentist.objects.filter(name__icontains=query)
-
-#             # search clinices by clinic name
-#             clinic_matches = Dentist.objects.filter(clinic_name__icontains=query)
-
-#             # Perpare response
-#             for doc in doctor_matches:
-#                 suggestion.append({
-#                     'type':"dentist",
-#                     'id':doc.id,
-#                     'name':doc.name,
-#                     'slug':doc.slug
-#                 })
-            
-#             for clinic in clinic_matches:
-#                 suggestion.append({
-#                     "type": "clinic",
-#                     "id": clinic.id,
-#                     "clinic_name": clinic.clinic_name,
-#                     "slug": clinic.slug
-#                 })
-#             return JsonResponse(suggestion, safe=False)
-
-
-#     reviews = [
-#         {id:1,'doctor_name':'Dr. Priyanka Sharma','review':"I never imagined my smile could look this great. The entire process was smooth and tailored to my needs. I'm so grateful to the team and my smile designer!"},
-#         {id:2,'doctor_name':'Dr. Anjali Mehta','review':'My experience was beyond my expectations. The attention to detail and personalized care I received was truly outstanding. Highly recommend!'},
-#         {id:3,'doctor_name':'Dr. Rahul Kumar','review':"The transformation has been incredible. I feel more confident and love my new smile. Thank you to my dentist for such an amazing experience!"},
-#         {id:4,'doctor_name':'Dr. Ankita V','review':"I had the pleasure of working with Advance Dental Lab for over 8 years. It is such a joy to have a lab that can provide helpful and successful alternative options for extremely difficult cases and export level quality . Ultimate smile Designing is best. Support Digital dentistry . They have skilled technicians to provide Fast work. Ultimate smile designer"},
-#         {id:5,'doctor_name':'Dr. Manali Rajyguru','review':'The bestest lab i have worked with in my 14years of practice.  each n every crown they deliver is perfect. no adjustments no high points.support team is also best.  Anilbhai gives humble ans anytime u call.scan facilities they started is best thing. vishalbhai provide good service always on time and finishes scan within 10 to 15 mins.overall satisfied with all the work n services.'}
-#     ]
-
-#     # Check for city in request; if not found, check session
-#     if not city_id:
-#             try:
-#                 city = City.objects.get(city__iexact='Surat')
-#                 data1 = data1.filter(city=city)
-#             except City.DoesNotExist:
-#                 search_message = f"No Ultimate Designers Found in Surat."
-
-#     else:
-#         # Filter by city from request
-#         city = get_object_or_404(City, id=city_id)
-#         data1 = data1.filter(city=city)
-
-#     # Filter by search query if provided
-#     if query:
-#         data1 = data1.filter(name__icontains=query)
-
-#     # Check if the query returned results
-#     if not data1.exists():
-#         search_message = "No Ultimate Designers Found Based On Your Query."
-
-#     data = data1[:3] 
-
-#     context = {
-#       'data1':data1,
-#       'dentist':dentist,
-#       'gallery':gallery,
-#       'cities': cities,
-#       'data': data,
-#       'search_message': search_message,
-#       'query': query,
-#       'city': city_id or request.session.get('city'),
-#       'review': reviews,
-#       'city_name': city_name,
-#     }
-#     return render(request, 'index.html', context)
 def home(request):
-    # REMOVE CITY FILTER → load ALL dentists
-    data1 = Dentist.objects.all().order_by('name')
+    data1 = City.objects.all()[:10]
+    dentist = Dentist.objects.all().order_by("?")[:6]
     gallery = Gallery.objects.all().order_by("?")
-    cities = City.objects.annotate(
-        dentist_count=Count('dentist')
-    ).filter(dentist_count__gt=0).order_by('-dentist_count')[:6]
+    cities = City.objects.all()
+    
     city_id = request.GET.get('city', '').strip()
-    query = request.GET.get("q", '').strip()
+    query = request.GET.get('q', '').strip()
+    data1 = Dentist.objects.all().order_by('name')  # Default queryset
     search_message = None
-    # DEFAULT CITY NAME (for UI only, not filtering)
-    city_name = "Surat"
-    # AJAX suggestions
+    city_name = city.city if 'city' in locals() and city else 'Surat'
+    query = request.GET.get("q",'').strip()
+    # mix filter doctor name or clinic name
+    # if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+    #     results = []
+    #     if query:
+    #         matching_doctor = Dentist.objects.filter(Q(name__icontains=query) | Q(clinic_name__icontains=query)).distinct()[:5]
+    #         print("matching_doctor",matching_doctor)
+    #         results = [{'name': dentist.name, 'id': dentist.id, 'slug': dentist.slug ,'clinic_name':dentist.clinic_name} for dentist in matching_doctor]
+    #     return JsonResponse({'results': results})
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         suggestion = []
         if query:
-            # Search doctors by name
+            # search doctors by name
             doctor_matches = Dentist.objects.filter(name__icontains=query)
-            # Search clinics by clinic name
+
+            # search clinices by clinic name
             clinic_matches = Dentist.objects.filter(clinic_name__icontains=query)
-            # Prepare response
+
+            # Perpare response
             for doc in doctor_matches:
                 suggestion.append({
-                    'type': "dentist",
-                    'id': doc.id,
-                    'name': doc.name,
-                    'slug': doc.slug
+                    'type':"dentist",
+                    'id':doc.id,
+                    'name':doc.name,
+                    'slug':doc.slug
                 })
+            
             for clinic in clinic_matches:
                 suggestion.append({
                     "type": "clinic",
@@ -170,66 +91,148 @@ def home(request):
                     "clinic_name": clinic.clinic_name,
                     "slug": clinic.slug
                 })
-        return JsonResponse(suggestion, safe=False)
-    # SEARCH FILTER (dentist name only)
-    if query:
-        data1 = data1.filter(name__icontains=query)
-    # Show search message only if search applied
-    if query and not data1.exists():
-        search_message = "No Ultimate Designers Found Based On Your Query."
+            return JsonResponse(suggestion, safe=False)
+
+
     reviews = [
         {id:1,'doctor_name':'Dr. Priyanka Sharma','review':"I never imagined my smile could look this great. The entire process was smooth and tailored to my needs. I'm so grateful to the team and my smile designer!"},
         {id:2,'doctor_name':'Dr. Anjali Mehta','review':'My experience was beyond my expectations. The attention to detail and personalized care I received was truly outstanding. Highly recommend!'},
         {id:3,'doctor_name':'Dr. Rahul Kumar','review':"The transformation has been incredible. I feel more confident and love my new smile. Thank you to my dentist for such an amazing experience!"},
-        {id:4,'doctor_name':'Dr. Ankita V','review':"I had the pleasure of working with Advance Dental Lab for over 8 years. It is such a joy to have a lab that can provide helpful and successful alternative options for extremely difficult cases and export level quality . Ultimate smile Designing is best. Support Digital dentistry . They have skilled technicians to provide Fast work. Ultimate smile designer"},
-        {id:5,'doctor_name':'Dr. Manali Rajyguru','review':'The bestest lab i have worked with in my 14years of practice. each n every crown they deliver is perfect. no adjustments no high points.support team is also best. Anilbhai gives humble ans anytime u call.scan facilities they started is best thing. vishalbhai provide good service always on time and finishes scan within 10 to 15 mins.overall satisfied with all the work n services.'}
+        {id:4,'doctor_name':'Dr. Ankita V','review':"I had the pleasure of working with Advance Dental Lab for over 8 years. It is such a joy to have a lab that can provide helpful and successful alternative options for extremely difficult cases and export level quality . Ultimate smile Designing is best. Support Digital dentistry . They have skilled technicians to provide Fast work. Ultimate smile designer"},
+        {id:5,'doctor_name':'Dr. Manali Rajyguru','review':'The bestest lab i have worked with in my 14years of practice.  each n every crown they deliver is perfect. no adjustments no high points.support team is also best.  Anilbhai gives humble ans anytime u call.scan facilities they started is best thing. vishalbhai provide good service always on time and finishes scan within 10 to 15 mins.overall satisfied with all the work n services.'}
     ]
-    data1_list = [
-        { id:1,'doctor_name':'Dr. M Jaydev','city':'Hyderabad','image':"/media/SEO/Group_1000006053.png","slug":"dr-m-jaydev"},
-        { id:2,'doctor_name':'Dr. Janu Shah','city':'Ahmedabad','image':"/media/SEO/Group_1000006035.png","slug":"dr-janu-shah"},
-        { id:3,'doctor_name':'Dr. Alap D shah','city':'Ahmedabad','image':"/media/SEO/Group 1000006082.png","slug":"dr-alap-d-shah"},
-        { id:4,'doctor_name':'Dr. Moez Khakiani','city':'Mumbai','image':"/media/SEO/Group_1000006056.png","slug":"dr-moez-khakiani"},
-        { id:5,'doctor_name':'Dr. Abbas Noorani','city':'Ahmedabad','image':"/media/SEO/Group_1000006033.png","slug":"dr-abbas-noorani"},
-            # { id:6,'doctor_name':'Dr. Neerav Jhaveni','city':'Hyderabad','image':"/media/SEO/Group_1000006053.png"},
-        { id:7,'doctor_name':'Dr. Nitesh Motwani','city':'Mumbai','image':"/media/SEO/Group_1000006064.png","slug":"dr-nitesh-motwani"},
-            # { id:8,'doctor_name':'Dr. Janu Shah','city':'Ahmedabad','image':"/media/SEO/Group_1000006035.png"},
-            # { id:9,'doctor_name':'Dr. Pathik Patel','city':'Hyderabad','image':"/media/SEO/Group_1000006053.png"},
-        { id:10,'doctor_name':'Dr. Praneeth Kumar','city':'Gunturu','image':"/media/SEO/Group_1000006073.png","slug":"dr-praneeth-kumar"},
-        { id:11,'doctor_name':'Dr. Purvesh Chauhan','city':'Ahmedabad','image':"/media/SEO/Group_1000006031.png","slug":"dr-purvesh-chauhan"},
-            # { id:12,'doctor_name':'Dr. Rajesh Desai','city':'Hyderabad','image':"/media/SEO/Group_1000006053.png"},
-            # { id:13,'doctor_name':'Dr. Rajesh survashe','city':'Mumbai','image':"/media/SEO/Group_1000006064.png"},
-        { id:14,'doctor_name':'Dr. Ravi Shah','city':'Ahmedabad','image':"/media/SEO/Group_1000006032_ZxamElW.png","slug":"dr-ravi-shah"},
-        { id:15,'doctor_name':'Dr. Reuben Joseph','city':'Chennai','image':"/media/SEO/Group_1000006051.png","slug":"dr-reuben-joseph"},
-        { id:16,'doctor_name':'Dr. Rohan Bandi','city':'Mumbai','image':"/media/SEO/Group_1000006065.png","slug":"dr-rohan-bandi"},
-            # { id:17,'doctor_name':'Dr. Purvesh Chauhan','city':'Ahmedabad','image':"/media/SEO/Group_1000006031.png"},
-            # { id:18,'doctor_name':'Dr. M Jaydev','city':'Hyderabad','image':"/media/SEO/Group_1000006053.png"},
-            # { id:19,'doctor_name':'Dr. Praneeth Kumar','city':'Gunturu','image':"/media/SEO/Group_1000006073.png"},
-            # { id:20,'doctor_name':'Dr. Vanita Keshav','city':'Ahmedabad','image':"/media/SEO/Group_1000006031.png"},
-            # { id:21,'doctor_name':'Dr. Surangana Gupta','city':'Hyderabad','image':"/media/SEO/Group_1000006053.png"},
-        { id:22,'doctor_name':'Dr. Viren K Savani','city':'Surat','image':"/media/SEO/Group_1000005999.png","slug":"dr-viren-k-savani"},
-        { id:23,'doctor_name':'Dr. Anubhav Sood','city':'Palampur','image':"/media/SEO/Group_1000006077.png","slug":"dr-anubhav-sood"},
-            # { id:24,'doctor_name':'Dr. Apeksha Maheswari','city':'Hyderabad','image':"/media/SEO/Group_1000006053.png"},
-        { id:25,'doctor_name':'Dr. Ashok Mashru','city':'Bhavnagar','image':"/media/SEO/Group_1000006021.png","slug":"dr-ashok-mashru"},
-        { id:26,'doctor_name':'Dr. Bharat Katarmal','city':'Jamnagar','image':"/media/SEO/Group_1000006026.png","slug":"dr-bharat-katarmal"},
-        { id:27,'doctor_name':'Dr. Abhay Shukla','city':'Ambikapur','image':"/media/SEO/Group_1000006071.png","slug":"dr-abhay-shukla"},
-        { id:28,'doctor_name':'Dr. Deepika Dalal','city':'Mumbai','image':"/media/SEO/Group_1000006067.png","slug":"dr-deepika-dalal"},
-        { id:29,'doctor_name':'Dr. Abhishek Shah','city':'Surat','image':"/media/SEO/Group_1000006048_YzCRH0O.png","slug":"dr-abhishek-shah"},
-        { id:30,'doctor_name':'Dr. Digvijay Deshpande','city':'Sangli','image':"/media/SEO/Group_1000006014.png","slug":"dr-digvijay-deshpande"},
-        { id:31,'doctor_name':'Dr. Jay Patel','city':'Surat','image':"/media/SEO/Group_1000006055.png","slug":"dr-jay-patel"},
-        { id:32,'doctor_name':'Dr. Hetal Buch','city':'Rajkot','image':"/media/SEO/Group_1000006022.png","slug":"dr-hetal-buch"},
-    ]
-    # /media/SEO/Group_1000006032_ZxamElW.png
-    return render(request, 'index.html', {
-        'data1': data1,               # NOW contains ALL dentists
-        'data_list1':data1_list,
-        'gallery': gallery,
-        'cities': cities,
-        'search_message': search_message,
-        'query': query,
-        'city': city_id,              # only for UI dropdown
-        'review': reviews,
-        'city_name': city_name,
-    })
+
+    # Check for city in request; if not found, check session
+    if not city_id:
+            try:
+                city = City.objects.get(city__iexact='Surat')
+                data1 = data1.filter(city=city)
+            except City.DoesNotExist:
+                search_message = f"No Ultimate Designers Found in Surat."
+
+    else:
+        # Filter by city from request
+        city = get_object_or_404(City, id=city_id)
+        data1 = data1.filter(city=city)
+
+    # Filter by search query if provided
+    if query:
+        data1 = data1.filter(name__icontains=query)
+
+    # Check if the query returned results
+    if not data1.exists():
+        search_message = "No Ultimate Designers Found Based On Your Query."
+
+    data = data1[:3] 
+
+    context = {
+      'data1':data1,
+      'dentist':dentist,
+      'gallery':gallery,
+      'cities': cities,
+      'data': data,
+      'search_message': search_message,
+      'query': query,
+      'city': city_id or request.session.get('city'),
+      'review': reviews,      
+      'city_name': city_name,
+    }
+    return render(request, 'index.html', context)
+# def home(request):
+#     # REMOVE CITY FILTER → load ALL dentists
+#     data1 = Dentist.objects.all().order_by('name')
+#     gallery = Gallery.objects.all().order_by("?")
+#     cities = City.objects.annotate(
+#         dentist_count=Count('dentist')
+#     ).filter(dentist_count__gt=0).order_by('-dentist_count')[:6]
+#     city_id = request.GET.get('city', '').strip()
+#     query = request.GET.get("q", '').strip()
+#     search_message = None
+#     # DEFAULT CITY NAME (for UI only, not filtering)
+#     city_name = "Surat"
+#     # AJAX suggestions
+#     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+#         suggestion = []
+#         if query:
+#             # Search doctors by name
+#             doctor_matches = Dentist.objects.filter(name__icontains=query)
+#             # Search clinics by clinic name
+#             clinic_matches = Dentist.objects.filter(clinic_name__icontains=query)
+#             # Prepare response
+#             for doc in doctor_matches:
+#                 suggestion.append({
+#                     'type': "dentist",
+#                     'id': doc.id,
+#                     'name': doc.name,
+#                     'slug': doc.slug
+#                 })
+#             for clinic in clinic_matches:
+#                 suggestion.append({
+#                     "type": "clinic",
+#                     "id": clinic.id,
+#                     "clinic_name": clinic.clinic_name,
+#                     "slug": clinic.slug
+#                 })
+#         return JsonResponse(suggestion, safe=False)
+#     # SEARCH FILTER (dentist name only)
+#     if query:
+#         data1 = data1.filter(name__icontains=query)
+#     # Show search message only if search applied
+#     if query and not data1.exists():
+#         search_message = "No Ultimate Designers Found Based On Your Query."
+#     reviews = [
+#         {id:1,'doctor_name':'Dr. Priyanka Sharma','review':"I never imagined my smile could look this great. The entire process was smooth and tailored to my needs. I'm so grateful to the team and my smile designer!"},
+#         {id:2,'doctor_name':'Dr. Anjali Mehta','review':'My experience was beyond my expectations. The attention to detail and personalized care I received was truly outstanding. Highly recommend!'},
+#         {id:3,'doctor_name':'Dr. Rahul Kumar','review':"The transformation has been incredible. I feel more confident and love my new smile. Thank you to my dentist for such an amazing experience!"},
+#         {id:4,'doctor_name':'Dr. Ankita V','review':"I had the pleasure of working with Advance Dental Lab for over 8 years. It is such a joy to have a lab that can provide helpful and successful alternative options for extremely difficult cases and export level quality . Ultimate smile Designing is best. Support Digital dentistry . They have skilled technicians to provide Fast work. Ultimate smile designer"},
+#         {id:5,'doctor_name':'Dr. Manali Rajyguru','review':'The bestest lab i have worked with in my 14years of practice. each n every crown they deliver is perfect. no adjustments no high points.support team is also best. Anilbhai gives humble ans anytime u call.scan facilities they started is best thing. vishalbhai provide good service always on time and finishes scan within 10 to 15 mins.overall satisfied with all the work n services.'}
+#     ]
+#     data1_list = [
+#         { id:1,'doctor_name':'Dr. M Jaydev','city':'Hyderabad','image':"/media/SEO/Group_1000006053.png","slug":"dr-m-jaydev"},
+#         { id:2,'doctor_name':'Dr. Janu Shah','city':'Ahmedabad','image':"/media/SEO/Group_1000006035.png","slug":"dr-janu-shah"},
+#         { id:3,'doctor_name':'Dr. Alap D shah','city':'Ahmedabad','image':"/media/SEO/Group 1000006082.png","slug":"dr-alap-d-shah"},
+#         { id:4,'doctor_name':'Dr. Moez Khakiani','city':'Mumbai','image':"/media/SEO/Group_1000006056.png","slug":"dr-moez-khakiani"},
+#         { id:5,'doctor_name':'Dr. Abbas Noorani','city':'Ahmedabad','image':"/media/SEO/Group_1000006033.png","slug":"dr-abbas-noorani"},
+#             # { id:6,'doctor_name':'Dr. Neerav Jhaveni','city':'Hyderabad','image':"/media/SEO/Group_1000006053.png"},
+#         { id:7,'doctor_name':'Dr. Nitesh Motwani','city':'Mumbai','image':"/media/SEO/Group_1000006064.png","slug":"dr-nitesh-motwani"},
+#             # { id:8,'doctor_name':'Dr. Janu Shah','city':'Ahmedabad','image':"/media/SEO/Group_1000006035.png"},
+#             # { id:9,'doctor_name':'Dr. Pathik Patel','city':'Hyderabad','image':"/media/SEO/Group_1000006053.png"},
+#         { id:10,'doctor_name':'Dr. Praneeth Kumar','city':'Gunturu','image':"/media/SEO/Group_1000006073.png","slug":"dr-praneeth-kumar"},
+#         { id:11,'doctor_name':'Dr. Purvesh Chauhan','city':'Ahmedabad','image':"/media/SEO/Group_1000006031.png","slug":"dr-purvesh-chauhan"},
+#             # { id:12,'doctor_name':'Dr. Rajesh Desai','city':'Hyderabad','image':"/media/SEO/Group_1000006053.png"},
+#             # { id:13,'doctor_name':'Dr. Rajesh survashe','city':'Mumbai','image':"/media/SEO/Group_1000006064.png"},
+#         { id:14,'doctor_name':'Dr. Ravi Shah','city':'Ahmedabad','image':"/media/SEO/Group_1000006032_ZxamElW.png","slug":"dr-ravi-shah"},
+#         { id:15,'doctor_name':'Dr. Reuben Joseph','city':'Chennai','image':"/media/SEO/Group_1000006051.png","slug":"dr-reuben-joseph"},
+#         { id:16,'doctor_name':'Dr. Rohan Bandi','city':'Mumbai','image':"/media/SEO/Group_1000006065.png","slug":"dr-rohan-bandi"},
+#             # { id:17,'doctor_name':'Dr. Purvesh Chauhan','city':'Ahmedabad','image':"/media/SEO/Group_1000006031.png"},
+#             # { id:18,'doctor_name':'Dr. M Jaydev','city':'Hyderabad','image':"/media/SEO/Group_1000006053.png"},
+#             # { id:19,'doctor_name':'Dr. Praneeth Kumar','city':'Gunturu','image':"/media/SEO/Group_1000006073.png"},
+#             # { id:20,'doctor_name':'Dr. Vanita Keshav','city':'Ahmedabad','image':"/media/SEO/Group_1000006031.png"},
+#             # { id:21,'doctor_name':'Dr. Surangana Gupta','city':'Hyderabad','image':"/media/SEO/Group_1000006053.png"},
+#         { id:22,'doctor_name':'Dr. Viren K Savani','city':'Surat','image':"/media/SEO/Group_1000005999.png","slug":"dr-viren-k-savani"},
+#         { id:23,'doctor_name':'Dr. Anubhav Sood','city':'Palampur','image':"/media/SEO/Group_1000006077.png","slug":"dr-anubhav-sood"},
+#             # { id:24,'doctor_name':'Dr. Apeksha Maheswari','city':'Hyderabad','image':"/media/SEO/Group_1000006053.png"},
+#         { id:25,'doctor_name':'Dr. Ashok Mashru','city':'Bhavnagar','image':"/media/SEO/Group_1000006021.png","slug":"dr-ashok-mashru"},
+#         { id:26,'doctor_name':'Dr. Bharat Katarmal','city':'Jamnagar','image':"/media/SEO/Group_1000006026.png","slug":"dr-bharat-katarmal"},
+#         { id:27,'doctor_name':'Dr. Abhay Shukla','city':'Ambikapur','image':"/media/SEO/Group_1000006071.png","slug":"dr-abhay-shukla"},
+#         { id:28,'doctor_name':'Dr. Deepika Dalal','city':'Mumbai','image':"/media/SEO/Group_1000006067.png","slug":"dr-deepika-dalal"},
+#         { id:29,'doctor_name':'Dr. Abhishek Shah','city':'Surat','image':"/media/SEO/Group_1000006048_YzCRH0O.png","slug":"dr-abhishek-shah"},
+#         { id:30,'doctor_name':'Dr. Digvijay Deshpande','city':'Sangli','image':"/media/SEO/Group_1000006014.png","slug":"dr-digvijay-deshpande"},
+#         { id:31,'doctor_name':'Dr. Jay Patel','city':'Surat','image':"/media/SEO/Group_1000006055.png","slug":"dr-jay-patel"},
+#         { id:32,'doctor_name':'Dr. Hetal Buch','city':'Rajkot','image':"/media/SEO/Group_1000006022.png","slug":"dr-hetal-buch"},
+#     ]
+#     # /media/SEO/Group_1000006032_ZxamElW.png
+#     return render(request, 'index.html', {
+#         'data1': data1,               # NOW contains ALL dentists
+#         'data_list1':data1_list,
+#         'gallery': gallery,
+#         'cities': cities,
+#         'search_message': search_message,
+#         'query': query,
+#         'city': city_id,              # only for UI dropdown
+#         'review': reviews,
+#         'city_name': city_name,
+#     })
 
 
 def location_view(request):
@@ -545,8 +548,10 @@ def find_dentist_d(request, pk):
         else:
             # No dentists in this city → fallback to main certified dentists page
             return redirect("/certified-dentists/", permanent=True)
+    all_ids = list(Gallery.objects.values_list("id",flat=True))
 
-    gallery = Gallery.objects.all().order_by("?")[:10]
+    random_ids = random.sample(all_ids,min(5,len(all_ids)))
+    gallery = Gallery.objects.filter(id__in=random_ids)
     reviews = data.reviews.all().order_by('-created_at')
     query = request.GET.get("q", '').strip()
 
@@ -573,10 +578,25 @@ def find_dentist_d(request, pk):
 
             return JsonResponse(suggestion, safe=False)
 
+    if request.method == 'POST':
+        form = UserSubmissionForm(request.POST)
+
+        if form.is_valid():
+            user_submission = form.save()
+            messages.success(request,f"Form submitted successfully! Thank you, {user_submission.first_name} {user_submission.last_name}.")
+            form = UserSubmissionForm()
+            return redirect('home:thankyou')
+        else:
+            messages.error(request,"Something went wrong! Please check your details.")
+            return render(request,'detail.html',{'form':form,'error_message':'Please correct the errors below.'})
+    else:
+        form = UserSubmissionForm()
+
     context = {
         'data': data,
         'gallery': gallery,
         'reviews': reviews,
+        'form':form
     }
     return render(request, 'detail.html', context)
 
@@ -622,20 +642,208 @@ def blogs(request):
     # }
     # return render(request, 'blogs.html', context)
 
+# def blogsd(request, pk):
+#     blog = Blog.objects.get(slug=pk)
+#     data2 = Blog.objects.all().order_by('-id')
+#     related_blog = Blog.objects.all().order_by('-id')[1:4]
+#     unique_tags = blog.tag.all()
+#     unique_categories = blog.category.all()
+    
+   
+#     context = {
+#      'cata':unique_categories,
+#      'blog':blog,
+#      'tags':unique_tags,
+#      'data2':data2,
+#      'relatedBlog':related_blog
+#     }
+#     # print("relatedBlog",related_blog)
+#     return render(request, 'blogsd.html', context)
+
+def inject_multiple_sections(html_content, inserts):
+    # Remove tags → count words
+    text_only = re.sub('<[^<]+?>', '', html_content)
+    words = text_only.split()
+    total_words = len(words)
+
+    if total_words < 50:
+        return html_content
+
+    cutoffs = { int(total_words * pct): html for pct, html in inserts }
+
+    current = 0
+    result = ""
+    pending_blocks = {}
+    injected_blocks = set()
+    inside_table = False
+
+    tokens = re.split(r"(<[^>]+>)", html_content)
+
+    closing_tags = [
+        "</p>", "</ul>", "</ol>", "</li>", "</div>",
+        "</section>", "</br>", "</h1>", "</h2>", "</h3>",
+        "</h4>", "</table>"
+    ]
+
+    for token in tokens:
+
+        # CASE 1 → HTML TAG
+        if token.startswith("<"):
+
+            # Detect entering table
+            if token.lower().startswith("<table"):
+                inside_table = True
+
+            # Detect leaving table
+            if token.lower().startswith("</table"):
+                inside_table = False
+
+            result += token
+
+            # Try injection only if NOT inside table
+            if not inside_table:
+                for cutoff, html in list(pending_blocks.items()):
+                    if cutoff not in injected_blocks:
+                        if any(token.startswith(tag) for tag in closing_tags):
+                            result += html
+                            injected_blocks.add(cutoff)
+                            pending_blocks.pop(cutoff, None)
+
+        # CASE 2 → TEXT
+        else:
+            if token.strip():
+                for w in token.split():
+                    current += 1
+
+                    # Mark pending cutoff
+                    if current in cutoffs and current not in injected_blocks:
+                        pending_blocks[current] = cutoffs[current]
+
+                    result += w + " "
+            else:
+                result += token
+
+    return result
+
 def blogsd(request, pk):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+
+        # Validate Recaptcha
+        # recaptcha_response = request.POST.get('g-recaptcha-response')
+        # data = {
+        #     'secret': settings.RECAPTCHA_SECRET_KEY,
+        #     'response': recaptcha_response,
+        # }
+        # r = requests.post("https://www.google.com/recaptcha/api/siteverify", data=data)
+        # result = r.json()
+
+        # if not result.get('success'):
+        #     messages.error(request, 'Invalid reCAPTCHA. Please try again.')
+        #     return redirect(request.META.get('HTTP_REFERER', 'home:blogs'))
+
+        # Save Data + CRM Webhook
+        if form.is_valid():
+            form.save()
+
+            context_dict = {
+                "Name": request.POST.get("name", ""),
+                "Email": request.POST.get("email", ""),
+                "Phone": request.POST.get("phone", ""),
+                "City": request.POST.get("city", ""),
+                "Message": request.POST.get("message", ""),
+                "Page URL": request.META.get("HTTP_REFERER", "Not available")
+            }
+
+            # Send email to company
+            send_mail(
+                to_email="vaghela9632@gmail.com", 
+                subject=f"New Contact Form Submission from {context_dict['Name']}",
+                context_dict=context_dict
+            )
+            messages.success(request, 'Your data is sent successfully.')
+            full_name = request.POST.get("name", "").strip()
+            first_name, last_name = (full_name.split(" ", 1) + [""])[:2]
+
+            payload = {
+                "firstName": first_name or "Visitor",
+                "lastName": last_name,
+                "designation": "",
+                "email": request.POST.get("email", ""),
+                "countryCode": "91",
+                "mobile": request.POST.get("phone", ""),
+                "phoneCountryCode": "91",
+                "phone": request.POST.get("phone", ""),
+                "expectedRevenue": "0",
+                "description": request.POST.get("message", ""),
+                "companyName": "",
+                "companyState": "",
+                "companyStreet": "",
+                "companyCity": request.POST.get("city", ""),
+                "companyCountry": "India",
+                "companyPincode": "",
+                "leadPriority": "1",
+            }
+
+            headers = {
+                "Content-Type": "application/json",
+                "authToken": "79atXvY2ZVZXs32Tbnw89A==.icG8H90dELRwyW3euMFdTg==", 
+                "timeZone": "Asia/Calcutta",  
+            }
+
+            try:
+                crm_response = requests.post(
+                    "https://crm.my-company.app/api/v1/lead/webhook",
+                    json=payload,
+                    headers=headers,
+                    timeout=10,
+                )
+                crm_response.raise_for_status()
+                messages.success(
+                    request,
+                    "Thanks for contacting the Ultimate Smile Design Team. We will get back to you shortly."
+                )
+            except requests.exceptions.RequestException as e:
+                messages.warning(request, f"Form saved but CRM sync failed: {str(e)}")
+
+            return redirect('home:thankyou')
+        else:
+            messages.error(request, "Your query is not sent! Try again.")
+            return redirect(request.META.get('HTTP_REFERER', 'home:blogs'))
+        
+
     blog = Blog.objects.get(slug=pk)
     data2 = Blog.objects.all().order_by('-id')
     related_blog = Blog.objects.all().order_by('-id')[1:4]
+    before_after_images = BeforeAfter.objects.all().order_by('-id')
     unique_tags = blog.tag.all()
     unique_categories = blog.category.all()
-    
+
+    form_30_html = render_to_string("custom-search-form.html", {
+        "a_city": City.objects.all(),
+    })
+
+    section_70_html = render_to_string("custom-contact-form.html", {
+        "a_city": City.objects.all(),
+    })
+    blog.content = mark_safe(
+        inject_multiple_sections(
+            blog.content,
+            inserts=[
+                (0.30, form_30_html),
+                (0.70, section_70_html),
+            ]
+        )
+    )
    
     context = {
      'cata':unique_categories,
      'blog':blog,
      'tags':unique_tags,
      'data2':data2,
-     'relatedBlog':related_blog
+     'relatedBlog':related_blog,
+     'before_after_images':before_after_images,
+    #  'RECAPTCHA_SITE_KEY': settings.RECAPTCHA_SITE_KEY
     }
     # print("relatedBlog",related_blog)
     return render(request, 'blogsd.html', context)

@@ -387,7 +387,6 @@
             class="form-select city-select text-center"
             name="city"
             aria-label="Select Location">
-            {% comment %} <option value="">Select Location</option> {% endcomment %}
             {% for ie in a_city %}
             <option value="{{ie.id}}" {% if ie.city == "Surat" or city == ie.id|stringformat:"s" %}selected{% endif %}>
               {{ie.city}}
@@ -396,7 +395,7 @@
           </select>
           <div class="dropdown-arrow"></div>
         </div>
-      </form>
+      </form> 
       <!-- Gradient background -->
         <!-- Swiper Container -->
         <div class="swiper-bg-grident"></div>
@@ -415,12 +414,22 @@
                       {% endif %}
                     </a>
                     <div class="card-body pt-1 text-end px-0 pb-0">
-                      <p class="dentists-content-title fw-600 fs-20 font-Barlow   white text-start mb-0">
+                      <p class="dentists-content-title cool fw-600 fs-20 font-Barlow   white text-end mb-0">
                         {{ie.name}}
                       </p>
-                      <p class="mb-2 font-Barlow white fs-14 fw-500 text-start">{{ie.city}}</p>
-                      <button class="btn  btn-appointment bat w-100 my-2" onclick="BookAppoinment('{{ie.name}}')">
-                        Book Appointment
+                      <p class="mb-2 font-Barlow white fs-14 fw-500 text-end me-2">{{ie.city}}</p>
+                      <button class="btn  btn-appointment bat w-100 my-lg-3 my-4" onclick="BookAppoinment('{{ie.name}}')">
+                        Book Appointment 
+                        <svg class="ms-2 mb-1" width="14" height="14" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <g clip-path="url(#clip0_3628_3618)">
+                            <path d="M17.6054 0H3.38593C2.71703 0 2.1731 0.543935 2.1731 1.21283C2.1731 1.88172 2.71703 2.42566 3.38593 2.42566H14.6726L0.357532 16.7444C-0.116573 17.2185 -0.116573 17.9866 0.357532 18.4607C0.831638 18.9348 1.59976 18.9348 2.07387 18.4607L16.3889 4.14199V15.4286C16.3889 16.0975 16.9328 16.6415 17.6017 16.6415C18.2706 16.6415 18.8146 16.0975 18.8146 15.4286V1.21283C18.8182 0.543935 18.2743 0 17.6054 0Z" fill="white"/>
+                          </g>
+                          <defs>
+                            <clipPath id="clip0_3628_3618">
+                            <rect width="18.8172" height="18.8172" fill="white"/>
+                            </clipPath>
+                          </defs>
+                        </svg>
                       </button>
                     </div>
                   </div>
@@ -1021,7 +1030,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     window.dentistSwiper = new Swiper(".newdentistSwiper", {
       slidesPerView: 'auto',
-      spaceBetween: 40,
+      spaceBetween: 30,
       centeredSlides: true,
       loop: a,
       speed: 800,
@@ -1030,16 +1039,17 @@ document.addEventListener("DOMContentLoaded", function () {
       grabCursor:false,
       observer:true,
       observeParents:true,
+      // autoplay:false,
       autoplay:{
         delay:3000,
         disableOnInteraction:false,
       },
       breakpoints:{
-        0:{slidesPerView:1,spaceBetween:40},
-        576:{slidesPerView:1,spaceBetween:40},
+        0:{slidesPerView:1,spaceBetween:20},
+        576:{slidesPerView:1,spaceBetween:20},
         768:{slidesPerView:2},
         991:{slidesPerView:2},
-        992:{slidesPerView:3},
+        992:{slidesPerView:3,spaceBetween:30},
         1200:{slidesPerView:3,spaceBetween:40}
       },
       on: {

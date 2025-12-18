@@ -716,10 +716,24 @@
 }
 .dentists-content-title {
   line-height: 36px;
+  position: relative;
+  margin-top: -30%;
+  margin-right: 2%;
 }
 .btn-appointment {
   padding: 12px 0.75rem !important;
+  background: linear-gradient(101.58deg, rgba(99, 99, 99, 0.3) 0.97%, rgba(155, 155, 155, 0.3) 20.97%, rgba(177, 177, 177, 0.3) 37.13%, rgba(225, 225, 225, 0.3) 50.61%, rgba(177, 177, 177, 0.3) 62.82%, rgba(155, 155, 155, 0.3) 76.44%, rgba(99, 99, 99, 0.3) 100.96%) !important;
+  font-weight: var(--fw-600) !important;
+  transition: background 2s ease-in-out;
+  border-radius: 8px;
+  border: none;
+  color:#fff !important;
 }
+/* .btn-appointment:focus,
+.btn-appointment:hover,
+.btn-appointment::before{
+  background: linear-gradient(101.58deg, rgba(99, 99, 99, 0.3) 0.97%, rgba(155, 155, 155, 0.3) 20.97%, rgba(177, 177, 177, 0.3) 37.13%, rgba(225, 225, 225, 0.3) 50.61%, rgba(177, 177, 177, 0.3) 62.82%, rgba(155, 155, 155, 0.3) 76.44%, rgba(99, 99, 99, 0.3) 100.96%) !important;
+} */
 .dentists-content span {
   font-style: italic;
   font-size: 12px;
@@ -853,20 +867,20 @@
   /* margin-right: 0 !important; */
   /* margin-left: -5px !important; */
   box-sizing: border-box;
-  padding: 30px;
+  padding: 22px 25px 90px;
   z-index: 0;
 }
 
 .newdentistSwiper .dentists-content {
   padding: 12px;
-  background-color: var(--bg-content-color);
+  background-color: #000;
   border-radius: 25px;
   z-index: 1;
 }
 .newdentistSwiper .dentists-content img {
   /* width: 95%; */
   height: auto;
-  border-radius: 18px;
+  border-radius: 0px;
   display: flex;
   margin: auto;
 }
@@ -884,7 +898,7 @@
   /* height: 100%; */
   z-index: 1;
   top: 0%;
-  background-image: url("../border-frame.webp");
+  background-image: url("../border-frame2.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 100%;
@@ -964,6 +978,12 @@
 .newdentistSwiper .swiper-slide .card {
   animation: smallBig2 2s ease-in-out forwards;
 }
+.newdentistSwiper .card .card-body{
+  position: absolute;
+  z-index: 3;
+  width: 92.5%;
+  top:81%;
+}
 .newdentistSwiper .swiper-slide-prev .card {
   z-index: 2;
   animation: smallBig 2s ease-in-out forwards;
@@ -1004,7 +1024,7 @@
 @media(min-width:1300px){
   .newdentistSwiper .border-frame{
     left:1.55%;
-    width: 31%;
+    /* width: 31%; */
   }
   .newdentistSwiper .swiper-wrapper {
     margin-top: 0.8% !important;
@@ -1014,7 +1034,33 @@
 @media(max-width:1200px){
   .newdentistSwiper .border-frame{
     left:2.4%;
-    width:29%;
+    /* width:29%; */
+    width:32.5%;
+  }
+  .newdentistSwiper .swiper-slide{
+    padding: 20px 20px 82px;
+  }
+  .newdentistSwiper .dentists-content{
+    padding: 5px;
+  }
+  .btn-appointment{
+    margin-top: 12px !important;
+    margin-bottom: 12px !important;
+    padding: 8px 0.75rem !important;
+  }
+  .btn-appointment svg{
+    width:11px;
+    margin-bottom: 5px !important;
+  }
+  .newdentistSwiper .card .card-body{
+    top:79%;
+    width:96.5%;
+  }
+  .dentists-content-title{
+    margin-right: 3%;
+  }
+  .newdentistSwiper .card-body .dentists-content-title{
+    font-size: 18px !important;
   }
 }
 @media(max-width:1200px) and (min-width:992px){
@@ -1032,13 +1078,15 @@
 }
 @media(max-width:991px){
   .newdentistSwiper .border-frame{
-    left:3%;
-    width:46.5%;
-    
+    /* left:3%;
+    width:46.5%; */
+    left:-2.5%;
+    width:45.5%;
   }
   .newdentistSwiper .swiper-wrapper{
     margin-top:2.5% !important;
     margin-bottom: 2.5% !important;
+    margin-left: -3%;
   }
   .vector1-img{
     width:12%;
@@ -1048,7 +1096,14 @@
     background-size: 90% 100% !important;
   }
   .newdentistSwiper .swiper-slide{
-    padding: 20px;
+    padding: 20px 25px 75px;
+  }
+  .newdentistSwiper .card .card-body{
+    top:80%;
+  }
+  .btn-appointment{
+    margin-top: 16px !important;
+    margin-bottom: 16px !important;
   }
   @keyframes smallBig11 {
     0% {
@@ -1069,11 +1124,18 @@
     gap:0px;
     /* margin-top: -3.5% !important; */
   }
+  .newdentistSwiper .card .card-body{
+    top:84%;
+  }
   .vector1-img{
     width:13.5%;
   }
   .dentist-swiper-section .swiper-bg-grident{
-    background-size: auto !important;
+    /* background-size: auto !important; */
+    background-size: 100% 100% !important;
+  }
+  .btn-appointment{
+    padding: 10px 0.75rem !important;
   }
   /* .newdentistSwiper .swiper-slide-next{
     margin-right: 0% !important;
@@ -1083,7 +1145,7 @@
     transform: scale(0.8);
   }
   100% {
-    transform: scale(0.9);
+    transform: scale(0.95);
   }
 }
   /* .newdentistSwiper .swiper-slide{
@@ -1101,8 +1163,11 @@
     /* margin: 6% 3.6% 6% 5.6%; */
   }
   .newdentistSwiper .border-frame{
-    width:87.5%;
-    left:4%;
+    /* width:87.5%;
+    left:4%; */
+    width:65.5%;
+    left:-2%;
+    height: 88%;
   }
   .text-header-subtitle,
   .testimonial_subcontent{
@@ -1123,14 +1188,21 @@
     top:8%;
   }
   .newdentistSwiper .border-frame{
-    width:83%;
-    left:-0.3%;
+    width:73%;
+    /* left:-0.3%; */
+    left:-6%;
   }
   .newdentistSwiper .card{
     /* margin: 7% 5% 7.5% 4.6%; */
     margin: -8% 5% -8% 0%;
   }
- 
+  .newdentistSwiper .swiper-slide{
+    justify-content: center;
+    padding: 35px 25px 100px;
+  }
+   .newdentistSwiper .border-frame{
+    height: 94%;
+  }
   .dentist-swiper-section .swiper-container{
     margin-top: 2rem !important;
   }
@@ -1150,11 +1222,13 @@
 }
 @media(max-width:480px){
   .newdentistSwiper .card{
-    margin: -8.8% 5.5% -8.8% -0.5%;
+    /* margin: -8.8% 5.5% -8.8% -0.5%; */
+    margin: -8.8% 0% -8.8% -0.5%;
   }
   .newdentistSwiper .border-frame{
     left:0%;
-    width: 82%;
+    /* width: 82%; */
+    width:89%;
   }
 } 
 /* @media (min-width: 1200px) {
@@ -2390,6 +2464,22 @@
   }
   .reviewContent {
     font-size: 15px;
+  }
+  @keyframes smallBig {
+    0%{
+      transform: scale(0.95);
+    }
+    100%{
+      transform: scale(0.95);
+    }
+  }
+  @keyframes smallBig2 {
+    0%{
+      transform: scale(0.7);
+    }
+    100%{
+      transform: scale(0.8);
+    }
   }
 }
 @media (max-width: 576px) {

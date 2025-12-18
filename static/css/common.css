@@ -22,6 +22,7 @@
   );
   --white: #fff;
   --black: #000;
+  --gray1: #e5e0e0;
   --gray: #cec2c2;
   --bg-content-color: rgba(34, 34, 34, 0.6);
   --light-gray: rgba(255, 255, 255, 0.8);
@@ -34,6 +35,7 @@
   --fw-600: 600;
   --fw-700: 700;
   --fw-900: 900;
+  --new-button-gradient:linear-gradient(101.58deg, rgba(99, 99, 99, 0.3) 0.97%, rgba(155, 155, 155, 0.3) 20.97%, rgba(177, 177, 177, 0.3) 37.13%, rgba(225, 225, 225, 0.3) 50.61%, rgba(177, 177, 177, 0.3) 62.82%, rgba(155, 155, 155, 0.3) 76.44%, rgba(99, 99, 99, 0.3) 100.96%);
 }
 .pt-50 {
   padding: 25px 0px 30px;
@@ -96,6 +98,13 @@
     #636363 100%
   ) !important;
 }
+.new-bat{
+  background: var(--new-button-gradient) !important;
+  font-weight: var(--fw-600) !important;
+  transition: background 2s ease-in-out;
+  border-radius: 6px;
+  border: none;
+}
 /* text-header */
 .white {
   color: var(--white);
@@ -107,7 +116,7 @@
   font-family: var(--font-Barlow-Condensed);
   font-size: 20px;
   font-weight: var(--fw-600);
-  letter-spacing: 0.03em;
+  letter-spacing: 0.05em;
 }
 .text-header-subtitle {
   color: var(--white);
@@ -120,7 +129,7 @@
   font-family: var(--font-Barlow);
   font-weight: var(--fw-500);
   line-height: 28px;
-  color: var(--gray);
+  color: var(--gray1);
   letter-spacing: 0.3px;
 }
 .btn {
