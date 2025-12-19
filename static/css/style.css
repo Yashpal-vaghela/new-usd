@@ -6504,6 +6504,17 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   );
   /* border: 1px solid #6b6b6b */
 }
+@media(min-width:1300px){
+  /* .dentists-mobile-name.dentists-top{
+    width: 83%;
+  } */
+  .dentists-mobile-name{
+    width: 83%;
+  }
+  .new-appoint_btn{
+    width: 80% !important;
+  }
+}
 @media (min-width: 1200px) {
   .PatientReviewSwiper .swiper-pagination {
     display: none !important;
@@ -6562,7 +6573,11 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   }
   .dentists-mobile-name{
     left:8%;
-    bottom: 18.5%;
+    /* bottom: 18.5%; */
+    bottom: 24.5%;
+  }
+  .new-appoint_btn{
+    width: 100% !important;
   }
   .dentists-mobile-name h2{
     font-size: 22px;
