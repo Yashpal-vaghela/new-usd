@@ -16,6 +16,7 @@ from geopy.distance import geodesic
 from home.forms import UserSubmissionForm
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
+from .utils import send_mail
 import re
 import requests
 import random
@@ -47,25 +48,19 @@ def receive_location(request):
 
 # Create your views here.
 def home(request):
-    data1 = City.objects.all()[:10]
+    # data1 = City.objects.all()[:10]
     dentist = Dentist.objects.all().order_by("?")[:6]
     gallery = Gallery.objects.all().order_by("?")
-    cities = City.objects.all()
-    
+    cities = City.objects.annotate(
+        dentist_count=Count('dentist')
+    ).filter(dentist_count__gt=0).order_by('-dentist_count')[:6]
+
     city_id = request.GET.get('city', '').strip()
     query = request.GET.get('q', '').strip()
     data1 = Dentist.objects.all().order_by('name')  # Default queryset
     search_message = None
     city_name = city.city if 'city' in locals() and city else 'Surat'
     query = request.GET.get("q",'').strip()
-    # mix filter doctor name or clinic name
-    # if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-    #     results = []
-    #     if query:
-    #         matching_doctor = Dentist.objects.filter(Q(name__icontains=query) | Q(clinic_name__icontains=query)).distinct()[:5]
-    #         print("matching_doctor",matching_doctor)
-    #         results = [{'name': dentist.name, 'id': dentist.id, 'slug': dentist.slug ,'clinic_name':dentist.clinic_name} for dentist in matching_doctor]
-    #     return JsonResponse({'results': results})
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         suggestion = []
         if query:
@@ -123,14 +118,10 @@ def home(request):
     if not data1.exists():
         search_message = "No Ultimate Designers Found Based On Your Query."
 
-    data = data1[:3] 
-
     context = {
       'data1':data1,
-      'dentist':dentist,
       'gallery':gallery,
       'cities': cities,
-      'data': data,
       'search_message': search_message,
       'query': query,
       'city': city_id or request.session.get('city'),
@@ -240,9 +231,9 @@ def location_view(request):
     return render(request, 'location.html', {'data1': data1})
 
 
-def smile_step(request):
-    gallery = Gallery.objects.all().order_by("?")
-    return render(request, 'smile_step.html', {'gallery':gallery,})
+# def smile_step(request):
+#     gallery = Gallery.objects.all().order_by("?")
+#     return render(request, 'smile_step.html', {'gallery':gallery,})
 
 def search_all_usd(request, city_name=None):
     city = None
@@ -465,37 +456,6 @@ def search_city_dentists(request, city_name):
 
     return render(request, 'city-dentist.html', context)
 
-
-def all_usd(request):
-    """
-    Displays all dentists without filtering, with pagination.
-    If a city exists in the session, filters dentists by that city.
-    """
-    city_name = request.session.get('city', '')
-    data1 = Dentist.objects.all().order_by('name')  # Default queryset
-
-    if city_name:
-        try:
-            city = City.objects.get(city=city_name)
-            data1 = data1.filter(city=city)
-        except City.DoesNotExist:
-            pass  # If city doesn't exist, show all dentists
-
-    paginator = Paginator(data1, 32)  # 32 dentists per page
-    page = request.GET.get('page', 1)
-
-    try:
-        data = paginator.page(page)
-    except PageNotAnInteger:
-        data = paginator.page(1)
-    except EmptyPage:
-        data = paginator.page(paginator.num_pages)
-
-    context = {
-        'data': data,
-    }
-    return render(request, 'list.html', context)
-
 # def find_dentist(request):
 #     """
 #     Displays dentists for the city stored in the session.
@@ -583,7 +543,26 @@ def find_dentist_d(request, pk):
 
         if form.is_valid():
             user_submission = form.save()
-            messages.success(request,f"Form submitted successfully! Thank you, {user_submission.first_name} {user_submission.last_name}.")
+            context_dict = {
+                "Name": request.POST.get("name", "") + " " + request.POST.get("last_name", ""),
+                "Email": request.POST.get("email", ""),
+                "Phone": request.POST.get("phone", ""),
+                "City": request.POST.get("city", ""),
+                "Message": request.POST.get("message", ""),
+                "Doctor_name": request.POST.get("doctor_name", "").strip() or "NA",
+                "Page URL": request.META.get("HTTP_REFERER", "Not available")
+            }
+
+            # Send email to company
+            send_mail(
+                to_email="pambaliya96@gmail.com", 
+                subject=f"New Contact Form Submission from {context_dict['Name']}",
+                context_dict=context_dict
+            )
+            messages.success(
+                request,
+                f"Form submitted successfully! Thank you, {user_submission.first_name} {user_submission.last_name}."
+            )
             form = UserSubmissionForm()
             return redirect('home:thankyou')
         else:
@@ -622,43 +601,6 @@ def blogs(request):
         'page_obj': page_obj,
     }
     return render(request, 'blogs.html', context)
-    # per_page = request.GET.get('per_page', 3)  # Default to the first page
-    # try:
-    #     per_page = int(per_page)
-    # except ValueError:
-    #     per_page = 3  # Default to page 1 if invalid
-
-    # # Set per_page dynamically
-    # blog_list = Blog.objects.all().order_by('-published') # Get all blogs sorted by published date
-    # paginator = Paginator(blog_list, per_page)
-    # page_number = request.GET.get('page')
-    # page_obj = paginator.get_page(page_number)
-    # current_blog = Blog.objects.all().order_by('-id')[:1]  # Get the latest blog
-
-    # context = {
-    #     'page_obj': page_obj,
-    #     'current_blog': current_blog,
-    #     'is_first_page': page_number == 1
-    # }
-    # return render(request, 'blogs.html', context)
-
-# def blogsd(request, pk):
-#     blog = Blog.objects.get(slug=pk)
-#     data2 = Blog.objects.all().order_by('-id')
-#     related_blog = Blog.objects.all().order_by('-id')[1:4]
-#     unique_tags = blog.tag.all()
-#     unique_categories = blog.category.all()
-    
-   
-#     context = {
-#      'cata':unique_categories,
-#      'blog':blog,
-#      'tags':unique_tags,
-#      'data2':data2,
-#      'relatedBlog':related_blog
-#     }
-#     # print("relatedBlog",related_blog)
-#     return render(request, 'blogsd.html', context)
 
 def inject_multiple_sections(html_content, inserts):
     # Remove tags → count words
@@ -866,7 +808,22 @@ def contact(request):
         
         if form.is_valid():
             form.save()
-            messages.success(request, 'Your data is sent successfully.')
+            context_dict = {
+                "Name": request.POST.get("name", ""),
+                "Email": request.POST.get("email", ""),
+                "Phone": request.POST.get("phone", ""),
+                "City": request.POST.get("city", ""),
+                "Message": request.POST.get("message", ""),
+                "Page URL": request.META.get("HTTP_REFERER", "Not available")
+            }
+
+            # Send email to company
+            send_mail(
+                to_email="vaghela9632@gmail.com", 
+                subject=f"New Contact Form Submission from {context_dict['Name']}",
+                context_dict=context_dict
+            )
+            #messages.success(request, 'Your data is sent successfully.')
             # return redirect('home:thankyou')
             full_name = request.POST.get("name", "").strip()
             first_name, last_name = (full_name.split(" ", 1) + [""])[:2]
@@ -1028,6 +985,22 @@ def dentist(request):
 
         if form.is_valid():
             user_submission = form.save()  # doctor_name is handled by form
+            context_dict = {
+                "Name": request.POST.get("name", "") + " " + request.POST.get("last_name", ""),
+                "Email": request.POST.get("email", ""),
+                "Phone": request.POST.get("phone", ""),
+                "City": request.POST.get("city", ""),
+                "Message": request.POST.get("message", ""),
+                "Doctor_name": request.POST.get("doctor_name", "").strip() or "NA",
+                "Page URL": request.META.get("HTTP_REFERER", "Not available")
+            }
+
+            # Send email to company
+            send_mail(
+                to_email="tukadiyabhargav5@gmail.com", 
+                subject=f"New Contact Form Submission from {context_dict['Name']}",
+                context_dict=context_dict
+            )
             messages.success(
                 request,
                 f"Form submitted successfully! Thank you, {user_submission.first_name} {user_submission.last_name}."
@@ -1045,3 +1018,6 @@ def dentist(request):
         form = UserSubmissionForm()
 
     return render(request, 'request.html', {'form': form})
+
+def quicklinks(request):
+	return render(request,'quick-links.html')

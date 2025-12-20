@@ -123,9 +123,9 @@ input:-internal-autofill-selected {
 .dentist-content .card img {
   border-radius: 12px;
   width: 230px;
-  height: 230px;
+  /* height: 230px; */
   display: flex;
-  margin: auto;
+  margin: 8% auto auto;
 }
 .dentist-content .card-body .bookAppoinment-btn {
   border-radius: 8px;
@@ -139,7 +139,7 @@ input:-internal-autofill-selected {
 } */
 .dentist-content .card-body {
   background-color: transparent;
-  padding: 12px 5px 0px;
+  padding: 0px 5px 0px;
 }
 .dentist-content .card-body h2 {
   font-family: "Barlow", sans-serif;
@@ -174,8 +174,8 @@ input:-internal-autofill-selected {
   height: 100%;
 }
 .dentist-content1 h2 {
-  font-family: "Barlow Condensed", serif;
-  font-size: 30px;
+  /* font-family: "Barlow Condensed", serif; */
+  font-size: 28px;
 }
 .dentist-content1 p {
   font-size: 14px;
@@ -245,7 +245,10 @@ input:-internal-autofill-selected {
   }
   .dentist-content .card img {
     width: 200px;
-    height: 200px;
+    height: 240px;
+  }
+  .dentist-content {
+    padding: 10px;
   }
   .dentist-content1 h2 {
     font-size: 28px;
@@ -288,10 +291,13 @@ input:-internal-autofill-selected {
   .dentist-content .card-body p {
     font-size: 14px;
   }
-  .dentist-content,
+
   .dentist-content1,
   .dentist-content2 {
     padding: 12px;
+  }
+  .dentist-content{
+    padding: 8px;
   }
   .dentist-content2 iframe {
     border-radius: 12px;
@@ -330,6 +336,15 @@ input:-internal-autofill-selected {
   .dentist-content1 h3 {
     font-size: 14px;
   }
+  .dentist-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .dentist-content .card img {
+    width: 240px;
+    height: 40vh;
+  }
 }
 @media (max-width: 576px) {
   .certified-dentist-title {
@@ -360,14 +375,15 @@ input:-internal-autofill-selected {
   .dentist-section .row .col-10 {
     margin-bottom: 1.2rem !important;
   }
-
-  .dentist-content,
   .dentist-content1,
   .dentist-content2 {
     padding: 12px;
   }
+  .dentist-content{
+    padding: 0px 12px 12px;
+  }
   .dentist-content .card-body {
-    padding: 12px 12px;
+    padding: 0px 12px 12px;
   }
   .dentist-content .card-body .bookAppoinment-btn {
     padding: 9px 12px;

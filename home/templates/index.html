@@ -31,6 +31,7 @@
   }
   /* Apply margin only for mobile view (up to 768px width) */
 </style>
+<!--<link rel="stylesheet" href="{% static 'css/updated-home.css' %}"  /> -->
 {% endblock css %}
 {% block body %}
 <!-- CONTENT START -->
@@ -230,7 +231,7 @@
               </linearGradient>
               </defs>
               </svg>
-
+                
             </div>
             <div class="card-body">
               <h3 class="working-main-title mb-1 mb-lg-2">
@@ -249,7 +250,6 @@
             <div
               class=" mx-auto my-lg-4 mt-4 mb-3 d-flex align-items-center justify-content-center "
             >
-            {% comment %} <img  src="{% static 'sm-yellow.svg' %}"  class="smile_yellow"  loading="lazy"  alt="orage smile"  /> {% endcomment %}
               <svg  class="smile_yellow" width="267" height="102" viewBox="0 0 267 102" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M252.26 1.00613C263.163 3.5441 269.787 14.8414 264.798 24.8631C255.217 44.1122 240.398 61.0774 221.535 74.1528C196.621 91.4227 166.031 100.95 134.471 101.27C102.91 101.589 72.1278 92.6829 46.8581 75.921C27.7268 63.2309 12.5577 46.5702 2.57602 27.5203C-2.62067 17.6025 3.77112 6.16829 14.6227 3.40919C24.5858 0.875962 34.6231 6.68902 39.7266 15.613C46.9675 28.2746 57.4205 39.3625 70.3679 47.9508C88.7517 60.1452 111.146 66.6245 134.106 66.392C157.067 66.1596 179.321 59.2283 197.446 46.6644C210.206 37.8194 220.422 26.5278 227.397 13.7287C232.319 4.69653 242.241 -1.32589 252.26 1.00613Z" fill="#D89C27" fill-opacity="0.97"/>
               </svg>
@@ -266,12 +266,6 @@
               </linearGradient>
               </defs>
               </svg>
-              {% comment %} <img
-                src="{% static 'process-3.svg' %}"
-                class="img-fluid"
-                alt="location"
-                style="width: 60px; height: 60px;"
-              /> {% endcomment %}
             </div>
             <div class="card-body">
               <h3 class="working-main-title mb-1 mb-lg-2">
@@ -418,7 +412,7 @@
                         {{ie.name}}
                       </p>
                       <p class="mb-2 font-Barlow white fs-14 fw-500 text-end me-2">{{ie.city}}</p>
-                      <button class="btn  btn-appointment bat w-100 my-lg-3 my-4" onclick="BookAppoinment('{{ie.name}}')">
+                      <button class="btn  btn-appointment bat w-100 my-lg-4 my-4" onclick="BookAppoinment('{{ie.name}}')">
                         Book Appointment 
                         <svg class="ms-2 mb-1" width="14" height="14" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <g clip-path="url(#clip0_3628_3618)">
@@ -426,7 +420,7 @@
                           </g>
                           <defs>
                             <clipPath id="clip0_3628_3618">
-                            <rect width="18.8172" height="18.8172" fill="white"/>
+                            <rect width="18.8172" height="18.8172" fill="black"/>
                             </clipPath>
                           </defs>
                         </svg>
@@ -445,7 +439,7 @@
   </section>
 
   <!--Creating Smile section-->
-  <section class="smile_step_Section text-center pt-50">
+ <section class="smile_step_Section text-center pt-50">
     <div class="container pt-1 pt-sm-3 pb-sm-4 pb-0">
       <div class="inner_smile_step_section">
         <p class="registrayion_small text-header cool  mb-0" data-aos="fade-left" data-aos-duration="400" data-aos-delay="300">Creating Smiles</p>

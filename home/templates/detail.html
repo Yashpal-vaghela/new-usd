@@ -40,9 +40,9 @@
         <a href="{% url 'home:search_all_usd' %}">Certified Dentists </a> &nbsp;
         <i class="fa fa-solid fa-angles-right"></i> &nbsp;{{data.name}}
       </div>
-      <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool fs-3">
+      <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool">
         {{data.name}} - Dentist in {{data.city}}
-      </h1>
+      </h1> 
       {% comment %}
       <img
         src="{% static 'Group 291.svg' %}"
@@ -52,7 +52,7 @@
     </div>
   </section>
   <!-- Left & right section -->
-  <section class="new-dentist-section mb-5">
+  <section class="new-dentist-section mb-4 mb-md-5">
     <div class="container pt-5">
       <div class="row justify-content-center justify-content-md-center justify-content-lg-start align-items-center position-relative">
         <div class="col-lg-4 col-md-10 col-9 text-center position-relative">
@@ -66,7 +66,7 @@
           <img src="{% static 'noimage-team.webp' %}" alt="Image" />
           {% endif %}
           <div class="{% if data.education %} dentists-top {% endif %} dentists-mobile-name">
-            <h2 class="dentists-name d-block cool">{{data.name}}</h2>
+            <h2 class="dentists-name d-block cool font-Glida-display">{{data.name}}</h2>
             {% if data.education %}
               <p>Education Training -{{data.education|striptags}} 
                 {% comment %} {% with edu=data.education|striptags|linebreaksbr %}
@@ -78,7 +78,7 @@
                 {% endwith %} {% endcomment %}
                </p>
             {% endif %}
-            <h3 class="dentists-city-name d-inline-block d-none d-lg-none cool">Dentist in Surat</h3>
+            {% comment %} <h3 class="dentists-city-name d-inline-block d-none d-lg-none cool">Dentist in Surat</h3> {% endcomment %}
           </div>
           
           <div class="new-bat w-100 new-appoint_btn my-3"  onClick="BookAppoinment('{{data.name}}','{{data.city}}')">
@@ -107,8 +107,9 @@
         </div>
         <div class="col-lg-8 col-12">
           <div class="new-dentist-content-wrapper">
-            <h2 class="dentists-name d-none d-lg-block ">{{data.name}}</h2>
-            <h3 class="dentists-city-name cool d-none d-lg-inline-block">Dentist in Surat</h3>
+            {% comment %} <h2 class="dentists-name d-none d-lg-block ">{{data.name}}</h2> {% endcomment %}
+            <h2 class="new-dentists-title cool font-Glida-display">About {{data.name}}</h2>
+            <p class="new-dentists-subtitle text-white">{{data.bio}}</p>
             <div class="d-flex align-items-center gap-md-2 gap-1 justify-content-between new-dentist-contain mt-2 mb-4 my-md-4">
             
               <div class="new-dentist-content text-center">
@@ -150,17 +151,24 @@
                 </p>
               </div>
             </div>
-            <h3 class="new-dentists-title cool font-Barlow">About Me</h3>
-            <p class="new-dentists-subtitle text-white">{{data.bio}}</p>
           </div>
         </div>
       </div>
     </div>
   </section>
+  <section class="dentists-location-section mb-5">
+    <div class="container">
+      <h2 class="cool font-Glida-display new-dentists-title">Location</h2> 
+      <br />
+      <h3 class="new-dentists-content-title">{{data.clinic_name}}</h3>
+      <p class="text-white">{{data.address}}</p>
+      <div class="sf-doc-location-map grayscle-area">{{data.iframe|safe}}</div>
+    </div>
+  </section>
   <section class="patient-review-section ">
     <div class="container">
       <div class="d-flex justify-content-between align-items-center">
-        <h3 class='cool font-Barlow new-dentists-title'>Patient Testimonials</h3>
+        <h2 class='cool font-Glida-display new-dentists-title'>Patient Testimonials</h2>
         {% comment %} <img src="{% static 'google-verified-img.png'%}" class="google-verified-img img-fluid" width="150" height="150" alt="google-verified-img" /> {% endcomment %}
       </div>
       <div class="swiper PatientReviewSwiper mt-2 mb-4  mt-sm-3 mb-sm-4">
@@ -190,7 +198,7 @@
                         </svg>
                       {% endfor %}
                     </div>
-                    <h3>{{ review.patient_name }}</h3>
+                    <span class="patient-name">{{ review.patient_name }}</span>
                   </div>
                   {% comment %} <img src="{% static 'google-icon-img.png' %}" class="img-fluid" width="50" height="50" alt="google-view-img"/> {% endcomment %}
                   <img src="{% static 'google-icon.svg'%}" class="img-fluid" width="45" height="45" alt="google-view-img" />
@@ -203,16 +211,9 @@
       </div>
     </div>
   </section>
-  <section class="dentists-location-section mb-5">
-    <div class="container">
-      <h3 class="cool font-Barlow new-dentists-title">Location</h3>
-      <p class="text-white">{{data.address}}</p>
-      <div class="sf-doc-location-map grayscle-area">{{data.iframe|safe}}</div>
-    </div>
-  </section>
   <section class="dentists-gallery-section mb-4">
     <div class="container">
-      <h3 class="cool font-Barlow new-dentists-title">Photo gallery</h3>
+      <h3 class="cool font-Glida-display new-dentists-title">Photo Gallery</h3>
       <div class="swiper gallerySwiper">
         <div class="swiper-wrapper">
           {% for ie in gallery %}
@@ -235,7 +236,7 @@
     <div class="container">
       <img src="{% static 'usdlog.png'%}" class="img-fluid usd-logo-img" alt="usd-logo-img"/>
       <div class="dentists-request-wrapper">
-        <h2>Request consultation</h2>
+        <h2 class="font-Glida-display">Request Consultation</h2>
         <p class="cool">Please enter the details below for a call back.</p>
         <form method="post" class="form my-2 my-lg-4">
         {% csrf_token %}
@@ -439,292 +440,6 @@
       </div>
     </div>
   </section>
-  {% comment %} <section class="dentists-contact-section">
-    <div class="container">
-      <h3 class="cool font-Barlow mb-3 new-dentists-title">Book Appointment</h3>
-      <div class="row align-items-center">
-        <div class="col-lg-5 col-md-6 col-12 ">
-          {% if data.profile %}
-          <img
-            src="{{ data.profile.url }}"
-            alt="{{data.name}} - Dentist in {{data.city}}"
-            class="img-fluid mb-3 d-flex m-auto"
-          />
-          {% else %}
-          <img src="{% static 'noimage-team.webp' %}" alt="Image" />
-          {% endif %}
-        </div>
-        <div class="col-lg-7 col-md-6 col-12">
-          <form class="form">
-            <div
-              class="d-block d-sm-flex align-items-center justify-content-between gap-3 mb-4"
-            >
-              <div class="dentist-inputicon-box mb-3 mb-sm-0">
-                <input
-                  class="form-control w-100"
-                  name="first_name"
-                  type="text"
-                  placeholder="First Name"
-                  required
-                />
-                <svg width="24" height="24" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M11.675 14.375C7.7125 14.375 4.4875 11.15 4.4875 7.1875C4.4875 3.225 7.7125 0 11.675 0C15.6375 0 18.8625 3.225 18.8625 7.1875C18.8625 11.15 15.6375 14.375 11.675 14.375ZM11.675 1.875C8.75 1.875 6.3625 4.2625 6.3625 7.1875C6.3625 10.1125 8.75 12.5 11.675 12.5C14.6 12.5 16.9875 10.1125 16.9875 7.1875C16.9875 4.2625 14.6 1.875 11.675 1.875ZM22.4125 26.875C21.9 26.875 21.475 26.45 21.475 25.9375C21.475 21.625 17.075 18.125 11.675 18.125C6.275 18.125 1.875 21.625 1.875 25.9375C1.875 26.45 1.45 26.875 0.9375 26.875C0.425 26.875 0 26.45 0 25.9375C0 20.6 5.2375 16.25 11.675 16.25C18.1125 16.25 23.35 20.6 23.35 25.9375C23.35 26.45 22.925 26.875 22.4125 26.875Z" fill="url(#paint0_linear_3154_3544)"/>
-                  <defs>
-                    <linearGradient id="paint0_linear_3154_3544" x1="7.7804" y1="-2.19513e-07" x2="22.9763" y2="2.43948" gradientUnits="userSpaceOnUse">
-                      <stop stop-color="#C3942F"/>
-                      <stop offset="0.234" stop-color="#D89C27"/>
-                      <stop offset="0.449" stop-color="#E7DC96"/>
-                      <stop offset="0.669" stop-color="#DFC86F"/>
-                      <stop offset="0.849" stop-color="#D89C27"/>
-                      <stop offset="1" stop-color="#C99C30"/>
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </div>
-              <div class="dentist-inputicon-box mb-3 mb-sm-0">
-                <input
-                  class="form-control w-100"
-                  name="last_name"
-                  type="text"
-                  placeholder="Last Name"
-                  required
-                />
-                <svg width="24" height="24" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M11.675 14.375C7.7125 14.375 4.4875 11.15 4.4875 7.1875C4.4875 3.225 7.7125 0 11.675 0C15.6375 0 18.8625 3.225 18.8625 7.1875C18.8625 11.15 15.6375 14.375 11.675 14.375ZM11.675 1.875C8.75 1.875 6.3625 4.2625 6.3625 7.1875C6.3625 10.1125 8.75 12.5 11.675 12.5C14.6 12.5 16.9875 10.1125 16.9875 7.1875C16.9875 4.2625 14.6 1.875 11.675 1.875ZM22.4125 26.875C21.9 26.875 21.475 26.45 21.475 25.9375C21.475 21.625 17.075 18.125 11.675 18.125C6.275 18.125 1.875 21.625 1.875 25.9375C1.875 26.45 1.45 26.875 0.9375 26.875C0.425 26.875 0 26.45 0 25.9375C0 20.6 5.2375 16.25 11.675 16.25C18.1125 16.25 23.35 20.6 23.35 25.9375C23.35 26.45 22.925 26.875 22.4125 26.875Z" fill="url(#paint0_linear_3154_3544)"/>
-                  <defs>
-                    <linearGradient id="paint0_linear_3154_3544" x1="7.7804" y1="-2.19513e-07" x2="22.9763" y2="2.43948" gradientUnits="userSpaceOnUse">
-                      <stop stop-color="#C3942F"/>
-                      <stop offset="0.234" stop-color="#D89C27"/>
-                      <stop offset="0.449" stop-color="#E7DC96"/>
-                      <stop offset="0.669" stop-color="#DFC86F"/>
-                      <stop offset="0.849" stop-color="#D89C27"/>
-                      <stop offset="1" stop-color="#C99C30"/>
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </div>
-            </div>
-            <div
-              class="d-block d-sm-flex align-items-center justify-content-between gap-3 mb-4"
-            >
-              <div class="dentist-inputicon-box mb-3 mb-sm-0">
-                <input
-                  class="form-control"
-                  name="phone"
-                  type="text"
-                  placeholder="Phone Number"
-                  required=""
-                />
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 30 30"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g clip-path="url(#clip0_3154_3557)">
-                    <path
-                      d="M6.11305 19.942C9.07202 23.4791 12.634 26.264 16.6995 28.2346C18.2473 28.9681 20.3174 29.8384 22.6236 29.9876C22.7666 29.9938 22.9033 30 23.0463 30C24.5942 30 25.8375 29.4654 26.8507 28.3651C26.8569 28.3589 26.8694 28.3465 26.8756 28.334C27.2361 27.8989 27.6464 27.5073 28.0753 27.0908C28.3675 26.811 28.6659 26.5189 28.9518 26.2205C30.2759 24.8404 30.2759 23.0874 28.9394 21.7509L25.2034 18.0149C24.5693 17.356 23.8109 17.0079 23.0152 17.0079C22.2196 17.0079 21.4549 17.356 20.8022 18.0087L18.5768 20.2341C18.3716 20.116 18.1603 20.0104 17.9614 19.9109C17.7127 19.7866 17.4827 19.6685 17.2776 19.5379C15.251 18.2511 13.411 16.5727 11.6518 14.4157C10.7629 13.2905 10.1661 12.3456 9.7496 11.3821C10.3339 10.8537 10.881 10.3005 11.4094 9.75963C11.5958 9.56693 11.7886 9.37422 11.9813 9.18152C12.6526 8.51015 13.0132 7.73311 13.0132 6.94364C13.0132 6.15416 12.6588 5.37712 11.9813 4.70576L10.1288 2.85329C9.91122 2.63572 9.70609 2.42437 9.49473 2.2068C9.08445 1.78409 8.65553 1.34894 8.23281 0.957315C7.59253 0.329465 6.84036 0 6.04467 0C5.25519 0 4.4968 0.329465 3.83165 0.963531L1.50675 3.28844C0.661327 4.13386 0.18267 5.15955 0.0832087 6.34687C-0.0349016 7.83257 0.238617 9.41152 0.947278 11.3199C2.03514 14.2727 3.67625 17.0141 6.11305 19.942ZM1.59999 6.47741C1.67459 5.65064 1.99162 4.96063 2.58839 4.36386L4.90086 2.05139C5.26141 1.70327 5.65926 1.523 6.04467 1.523C6.42386 1.523 6.80928 1.70327 7.16361 2.06382C7.5801 2.44923 7.97173 2.85329 8.39444 3.28222C8.60579 3.49979 8.82337 3.71736 9.04094 3.94115L10.8934 5.79362C11.2788 6.17903 11.4777 6.57066 11.4777 6.95607C11.4777 7.34148 11.2788 7.73311 10.8934 8.11853C10.7007 8.31123 10.508 8.51015 10.3153 8.70286C9.73717 9.28719 9.19635 9.84045 8.59958 10.3688L8.5685 10.3999C8.05254 10.9159 8.13335 11.407 8.25768 11.7799C8.2639 11.7986 8.27011 11.811 8.27633 11.8297C8.75499 12.9797 9.42013 14.0738 10.4583 15.3792C12.3232 17.6792 14.2875 19.4633 16.4508 20.8371C16.7181 21.0112 17.0041 21.1479 17.2714 21.2847C17.52 21.409 17.75 21.5271 17.9552 21.6577C17.98 21.6701 17.9987 21.6826 18.0235 21.695C18.2287 21.8007 18.4276 21.8504 18.6265 21.8504C19.1238 21.8504 19.4471 21.5334 19.5527 21.4277L21.8777 19.1028C22.2382 18.7422 22.6298 18.5495 23.0152 18.5495C23.4877 18.5495 23.8731 18.8417 24.1155 19.1028L27.864 22.845C28.6099 23.591 28.6037 24.3991 27.8453 25.1886C27.5842 25.4683 27.3107 25.7356 27.0186 26.0153C26.5834 26.438 26.1296 26.8732 25.7193 27.3643C25.0045 28.1351 24.1528 28.4956 23.0525 28.4956C22.9469 28.4956 22.835 28.4894 22.7293 28.4832C20.6903 28.3527 18.7944 27.557 17.3708 26.8794C13.5043 25.0083 10.1101 22.3539 7.29415 18.9847C4.97546 16.1935 3.41516 13.5951 2.38325 10.8102C1.74297 9.1007 1.50053 7.7269 1.59999 6.47741Z"
-                      fill="url(#paint0_linear_3154_3557)"
-                    />
-                  </g>
-                  <defs>
-                    <linearGradient
-                      id="paint0_linear_3154_3557"
-                      x1="10.0151"
-                      y1="-2.45038e-07"
-                      x2="29.3125"
-                      y2="3.55211"
-                      gradientUnits="userSpaceOnUse"
-                    >
-                      <stop stop-color="#C3942F" />
-                      <stop offset="0.234" stop-color="#D89C27" />
-                      <stop offset="0.449" stop-color="#E7DC96" />
-                      <stop offset="0.669" stop-color="#DFC86F" />
-                      <stop offset="0.849" stop-color="#D89C27" />
-                      <stop offset="1" stop-color="#C99C30" />
-                    </linearGradient>
-                    <clipPath id="clip0_3154_3557">
-                      <rect width="30" height="30" fill="white" />
-                    </clipPath>
-                  </defs>
-                </svg>
-              </div>
-              <div class="dentist-inputicon-box mb-3 mb-sm-0">
-                <input
-                  class="form-control"
-                  name="email"
-                  type="email"
-                  placeholder="Email"
-                  required=""
-                />
-                <svg width="24" height="24" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M27.3633 4.45312H2.63672C1.1799 4.45312 0 5.64035 0 7.08984V22.9102C0 24.3683 1.18857 25.5469 2.63672 25.5469H27.3633C28.8079 25.5469 30 24.3732 30 22.9102V7.08984C30 5.64293 28.8248 4.45312 27.3633 4.45312ZM26.994 6.21094L16.8645 16.2871C16.3664 16.7852 15.7043 17.0594 15 17.0594C14.2957 17.0594 13.6336 16.7851 13.1339 16.2855L3.00598 6.21094H26.994ZM1.75781 22.5524V7.44873L9.35379 15.0047L1.75781 22.5524ZM3.00709 23.7891L10.6001 16.2444L11.8926 17.5301C12.7226 18.3601 13.8262 18.8172 15 18.8172C16.1738 18.8172 17.2774 18.3601 18.1058 17.5317L19.3999 16.2444L26.9929 23.7891H3.00709ZM28.2422 22.5524L20.6462 15.0047L28.2422 7.44873V22.5524Z" fill="url(#paint0_linear_3154_3560)"/>
-                  <defs>
-                  <linearGradient id="paint0_linear_3154_3560" x1="9.99623" y1="4.45312" x2="28.7294" y2="9.37591" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#C3942F"/>
-                  <stop offset="0.234" stop-color="#D89C27"/>
-                  <stop offset="0.449" stop-color="#E7DC96"/>
-                  <stop offset="0.669" stop-color="#DFC86F"/>
-                  <stop offset="0.849" stop-color="#D89C27"/>
-                  <stop offset="1" stop-color="#C99C30"/>
-                  </linearGradient>
-                  </defs>
-                </svg>
-
-              </div>
-            </div>
-            <div class="dentist-inputicon-box mb-4">
-              <input
-                class="form-control"
-                name="city"
-                type="text"
-                placeholder="Enter your city Name"
-                required=""
-              />
-              <svg width="24" height="24" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15.0001 0C8.88929 0 3.91797 4.97132 3.91797 11.0821C3.91797 13.0939 4.82019 15.2575 4.85799 15.3488C5.14939 16.0404 5.72436 17.1147 6.13896 17.7445L13.7374 29.2575C14.0483 29.7295 14.5086 30 15.0001 30C15.4916 30 15.9519 29.7295 16.2628 29.2581L23.8619 17.7445C24.2772 17.1147 24.8515 16.0404 25.1429 15.3488C25.1807 15.2581 26.0822 13.0945 26.0822 11.0821C26.0822 4.97132 21.1109 0 15.0001 0ZM23.9408 14.8429C23.6807 15.4628 23.1455 16.4622 22.7732 17.0267L15.1742 28.5404C15.0242 28.7679 14.9766 28.7679 14.8267 28.5404L7.22762 17.0267C6.85539 16.4622 6.32018 15.4622 6.06008 14.8422C6.049 14.8155 5.22175 12.824 5.22175 11.0821C5.22175 5.69035 9.60832 1.30378 15.0001 1.30378C20.3919 1.30378 24.7785 5.69035 24.7785 11.0821C24.7785 12.8266 23.9493 14.8233 23.9408 14.8429Z" fill="url(#paint0_linear_3154_3563)"/>
-                <path d="M14.9998 5.21582C11.7645 5.21582 9.13281 7.84815 9.13281 11.0828C9.13281 14.3175 11.7645 16.9499 14.9998 16.9499C18.2352 16.9499 20.8668 14.3175 20.8668 11.0828C20.8668 7.84815 18.2352 5.21582 14.9998 5.21582ZM14.9998 15.6461C12.4842 15.6461 10.4366 13.5991 10.4366 11.0828C10.4366 8.56654 12.4842 6.5196 14.9998 6.5196C17.5155 6.5196 19.5631 8.56654 19.5631 11.0828C19.5631 13.5991 17.5155 15.6461 14.9998 15.6461Z" fill="url(#paint1_linear_3154_3563)"/>
-                <defs>
-                  <linearGradient id="paint0_linear_3154_3563" x1="11.3033" y1="-2.45038e-07" x2="25.8286" y2="1.98285" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#C3942F"/>
-                    <stop offset="0.234" stop-color="#D89C27"/>
-                    <stop offset="0.449" stop-color="#E7DC96"/>
-                    <stop offset="0.669" stop-color="#DFC86F"/>
-                    <stop offset="0.849" stop-color="#D89C27"/>
-                    <stop offset="1" stop-color="#C99C30"/>
-                  </linearGradient>
-                  <linearGradient id="paint1_linear_3154_3563" x1="13.0427" y1="5.21582" x2="20.6173" y2="6.61538" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#C3942F"/>
-                    <stop offset="0.234" stop-color="#D89C27"/>
-                    <stop offset="0.449" stop-color="#E7DC96"/>
-                    <stop offset="0.669" stop-color="#DFC86F"/>
-                    <stop offset="0.849" stop-color="#D89C27"/>
-                    <stop offset="1" stop-color="#C99C30"/>
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
-            <div class="dentist-inputicon-box mb-5">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 30 30"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M2.69062 26.7751C2.22643 26.7726 1.78194 26.5871 1.4537 26.2589C1.12546 25.9307 0.939963 25.4862 0.9375 25.022V10.6032C0.939975 9.64175 1.32302 8.72035 2.00289 8.04048C2.68276 7.36062 3.60415 6.97757 4.56562 6.9751H21.675C22.6381 6.97509 23.5619 7.35704 24.2438 8.03718C24.9257 8.71732 25.31 9.64012 25.3125 10.6032V20.2126C25.3125 21.1757 24.9306 22.0995 24.2504 22.7814C23.5703 23.4633 22.6475 23.8476 21.6844 23.8501H7.41562C7.25356 23.8514 7.09606 23.9039 6.96562 24.0001L3.75 26.4282C3.44339 26.6548 3.07187 26.7765 2.69062 26.7751ZM4.56562 8.8501C4.10143 8.85256 3.65694 9.03805 3.3287 9.3663C3.00046 9.69454 2.81496 10.139 2.8125 10.6032V24.7876L5.84062 22.5001C6.29625 22.1617 6.84809 21.9778 7.41562 21.9751H21.675C22.1424 21.9751 22.5907 21.7894 22.9213 21.4589C23.2518 21.1283 23.4375 20.68 23.4375 20.2126V10.6032C23.435 10.139 23.2495 9.69454 22.9213 9.3663C22.5931 9.03805 22.1486 8.85256 21.6844 8.8501H4.56562Z"
-                  fill="url(#paint0_linear_3154_3567)"
-                />
-                <path
-                  d="M16.8184 16.4346C17.3361 16.4346 17.7559 16.0148 17.7559 15.4971C17.7559 14.9793 17.3361 14.5596 16.8184 14.5596C16.3006 14.5596 15.8809 14.9793 15.8809 15.4971C15.8809 16.0148 16.3006 16.4346 16.8184 16.4346Z"
-                  fill="url(#paint1_linear_3154_3567)"
-                />
-                <path
-                  d="M13.1816 16.4346C13.6994 16.4346 14.1191 16.0148 14.1191 15.4971C14.1191 14.9793 13.6994 14.5596 13.1816 14.5596C12.6639 14.5596 12.2441 14.9793 12.2441 15.4971C12.2441 16.0148 12.6639 16.4346 13.1816 16.4346Z"
-                  fill="url(#paint2_linear_3154_3567)"
-                />
-                <path
-                  d="M9.43164 16.4346C9.94941 16.4346 10.3691 16.0148 10.3691 15.4971C10.3691 14.9793 9.94941 14.5596 9.43164 14.5596C8.91387 14.5596 8.49414 14.9793 8.49414 15.4971C8.49414 16.0148 8.91387 16.4346 9.43164 16.4346Z"
-                  fill="url(#paint3_linear_3154_3567)"
-                />
-                <path
-                  d="M28.125 17.2876C27.8764 17.2876 27.6379 17.1888 27.4621 17.013C27.2863 16.8372 27.1875 16.5987 27.1875 16.3501V6.85322C27.185 6.38902 26.9995 5.94454 26.6713 5.6163C26.3431 5.28805 25.8986 5.10256 25.4344 5.1001H6.5625C6.31386 5.1001 6.0754 5.00133 5.89959 4.82551C5.72377 4.64969 5.625 4.41124 5.625 4.1626C5.625 3.91396 5.72377 3.6755 5.89959 3.49968C6.0754 3.32387 6.31386 3.2251 6.5625 3.2251H25.4344C26.3959 3.22757 27.3172 3.61061 27.9971 4.29048C28.677 4.97035 29.06 5.89174 29.0625 6.85322V16.3501C29.0625 16.5987 28.9637 16.8372 28.7879 17.013C28.6121 17.1888 28.3736 17.2876 28.125 17.2876Z"
-                  fill="url(#paint4_linear_3154_3567)"
-                />
-                <defs>
-                  <linearGradient
-                    id="paint0_linear_3154_3567"
-                    x1="9.05944"
-                    y1="6.9751"
-                    x2="24.5307"
-                    y2="10.4943"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop stop-color="#C3942F" />
-                    <stop offset="0.234" stop-color="#D89C27" />
-                    <stop offset="0.449" stop-color="#E7DC96" />
-                    <stop offset="0.669" stop-color="#DFC86F" />
-                    <stop offset="0.849" stop-color="#D89C27" />
-                    <stop offset="1" stop-color="#C99C30" />
-                  </linearGradient>
-                  <linearGradient
-                    id="paint1_linear_3154_3567"
-                    x1="16.5056"
-                    y1="14.5596"
-                    x2="17.716"
-                    y2="14.7832"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop stop-color="#C3942F" />
-                    <stop offset="0.234" stop-color="#D89C27" />
-                    <stop offset="0.449" stop-color="#E7DC96" />
-                    <stop offset="0.669" stop-color="#DFC86F" />
-                    <stop offset="0.849" stop-color="#D89C27" />
-                    <stop offset="1" stop-color="#C99C30" />
-                  </linearGradient>
-                  <linearGradient
-                    id="paint2_linear_3154_3567"
-                    x1="12.8689"
-                    y1="14.5596"
-                    x2="14.0793"
-                    y2="14.7832"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop stop-color="#C3942F" />
-                    <stop offset="0.234" stop-color="#D89C27" />
-                    <stop offset="0.449" stop-color="#E7DC96" />
-                    <stop offset="0.669" stop-color="#DFC86F" />
-                    <stop offset="0.849" stop-color="#D89C27" />
-                    <stop offset="1" stop-color="#C99C30" />
-                  </linearGradient>
-                  <linearGradient
-                    id="paint3_linear_3154_3567"
-                    x1="9.11891"
-                    y1="14.5596"
-                    x2="10.3293"
-                    y2="14.7832"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop stop-color="#C3942F" />
-                    <stop offset="0.234" stop-color="#D89C27" />
-                    <stop offset="0.449" stop-color="#E7DC96" />
-                    <stop offset="0.669" stop-color="#DFC86F" />
-                    <stop offset="0.849" stop-color="#D89C27" />
-                    <stop offset="1" stop-color="#C99C30" />
-                  </linearGradient>
-                  <linearGradient
-                    id="paint4_linear_3154_3567"
-                    x1="13.4346"
-                    y1="3.2251"
-                    x2="27.7253"
-                    y2="7.62593"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop stop-color="#C3942F" />
-                    <stop offset="0.234" stop-color="#D89C27" />
-                    <stop offset="0.449" stop-color="#E7DC96" />
-                    <stop offset="0.669" stop-color="#DFC86F" />
-                    <stop offset="0.849" stop-color="#D89C27" />
-                    <stop offset="1" stop-color="#C99C30" />
-                  </linearGradient>
-                </defs>
-              </svg>
-              <textarea
-                class="form-control h-100"
-                name="message"
-                type="text"
-                placeholder="Enter your message"
-                rows="4"
-              ></textarea>
-            </div>
-            <button class="btn btn-submit">Submit</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section> {% endcomment %}
   <!-- old find dentist page -->
 </div>
 {% endblock body %} 
@@ -739,29 +454,6 @@
     localStorage.setItem('selectedDoctor',JSON.stringify(doctordata));
     window.location.href="/consult-with-dentist/";
   }
-</script>
-<script>
-  document.addEventListener("DOMContentLoaded",function () {
-    const mySwiper = new Swiper(".review-swiper",{
-      loop:true,
-      centeredSlides:true,
-      spaceBetween:20,
-      speed:800,
-      effect: "slide",
-      grabCursor:true,
-      slidesPerView:1,
-      observeParents:true,
-      observer:true,
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      },
-      pagination: {
-        el: ".swiper-pagination",
-        dynamicBullets: true,
-      },
-    })
-  })
 </script>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
@@ -825,235 +517,6 @@
     });
   });
 </script>
-{% comment %} <script>
-document.addEventListener("DOMContentLoaded",function () {
-  const ReviewSwiper = new Swiper(".PatientReviewSwiper",{
-    loop:true,
-    centeredSlides:false,
-    spaceBetween:30,
-    speed:800,
-    effect:"slide",
-    slidesPerView:3,
-    observeParents:true,
-    observer:true,
-    navigation:{
-      nextEl:".swiper-button-next",
-      prevEl:".swiper-button-prev"
-    },
-    pagination:{
-      el: ".swiper-pagination",
-      dynamicBullets: true,
-    }
-    breakpoints: {
-      0: {
-        slidesPerView: 1,
-      },
-      576: {
-        sliderPreview: 2,
-      },
-      768: {
-        slidesPerView: 2,
-      },
-      991: {
-        slidesPerView: 2,
-      },
-      1200: {
-        slidesPerView: 3,
-      },
-    },
-  })
-})
-</script> {% endcomment %}
-{% comment %} <script>
-document.addEventListener("DOMContentLoaded", function () {
-
-  const swiperEl = document.querySelector(".PatientReviewSwiper");
-  if (!swiperEl) return;
-
-  const slides = swiperEl.querySelectorAll(".swiper-slide");
-  const totalSlides = slides.length;
-  const slidesPerView = 3;
-
-  // Hide pagination & navigation if slides are 3 or less
-  if (totalSlides <= slidesPerView) {
-    document.querySelector(".swiper-pagination")?.style.setProperty("display", "none");
-    document.querySelector(".swiper-button-next")?.style.setProperty("display", "none");
-    document.querySelector(".swiper-button-prev")?.style.setProperty("display", "none");
-  }
-
-  const ReviewSwiper = new Swiper(".PatientReviewSwiper", {
-    loop: totalSlides > slidesPerView,   // ✅ disable loop if not needed
-    centeredSlides: false,
-    spaceBetween: 30,
-    speed: 800,
-    effect: "slide",
-    slidesPerView: slidesPerView,
-    observeParents: true,
-    observer: true,
-    breakpoints: {
-      0: {
-        slidesPerView: 1,
-      },
-      576: {
-        sliderPreview: 2,
-      },
-      768: {
-        slidesPerView: 2,
-      },
-      991: {
-        slidesPerView: 2,
-      },
-      1200: {
-        slidesPerView: 3,
-      },
-    },
-    navigation: totalSlides > slidesPerView ? {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev"
-    } : false,
-
-    pagination: totalSlides > slidesPerView ? {
-      el: ".swiper-pagination",
-      dynamicBullets: true,
-    } : false
-  });
-
-});
-</script> {% endcomment %}
-{% comment %} <script>
-document.addEventListener("DOMContentLoaded", function () {
-
-  const swiperEl = document.querySelector(".PatientReviewSwiper");
-  if (!swiperEl) return;
-
-  const totalSlides = swiperEl.querySelectorAll(".swiper-slide").length;
-
-  // Condition: if slides are more than 3, show controls
-  let currentSlidesPerView = 3;
-
-  if(window.innerWidth < 768){
-    currentSlidesPerView = 1;
-  }else if(window.innerWidth < 1200){
-    currentSlidesPerView = 2;
-  }else {
-    currentSlidesPerView = 3;
-  }
-
-  const showControls = totalSlides > currentSlidesPerView;
-
-  // Hide pagination & arrows if slides are 3 or less
-  if (!showControls) {
-    document.querySelector(".swiper-pagination")?.style.setProperty("display", "none");
-    document.querySelector(".swiper-button-next")?.style.setProperty("display", "none");
-    document.querySelector(".swiper-button-prev")?.style.setProperty("display", "none");
-  }
-
-  const ReviewSwiper = new Swiper(".PatientReviewSwiper", {
-    loop: showControls,
-    centeredSlides: false,
-    spaceBetween: 30,
-    speed: 800,
-    effect: "slide",
-    slidesPerView: currentSlidesPerView,
-    observeParents: true,
-    observer: true,
-
-    navigation: showControls ? {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev"
-    } : false,
-
-    pagination: showControls ? {
-      el: ".swiper-pagination",
-      dynamicBullets: true,
-    } : false,
-
-    breakpoints: {
-      0: {
-        slidesPerView: 1,
-      },
-      576: {
-        slidesPerView: 2,
-      },
-      768: {
-        slidesPerView: 2,
-      },
-      991: {
-        slidesPerView: 2,
-      },
-      1200: {
-        slidesPerView: 3,
-      },
-    },
-  });
-
-});
-</script> {% endcomment %}
-{% comment %} <script>
-  document.addEventListener("DOMContentLoaded", function () {
-
-    // ✅ Reference function INSIDE same script
-    function getSlidesPerView() {
-      if (window.innerWidth < 768) return 1;
-      if (window.innerWidth < 1200) return 2;
-      return 3;
-    }
-
-    const swiperEl = document.querySelector(".PatientReviewSwiper");
-    if (!swiperEl) return;
-
-    const totalSlides = swiperEl.querySelectorAll(".swiper-slide").length;
-
-    let currentSlidesPerView = getSlidesPerView();
-    let showControls = totalSlides > currentSlidesPerView;
-
-    // Hide / Show pagination & arrows
-    function toggleControls(show) {
-      document.querySelector(".swiper-pagination")?.style.setProperty(
-        "display", show ? "block" : "none"
-      );
-      document.querySelector(".swiper-button-next")?.style.setProperty(
-        "display", show ? "flex" : "none"
-      );
-      document.querySelector(".swiper-button-prev")?.style.setProperty(
-        "display", show ? "flex" : "none"
-      );
-    }
-
-    toggleControls(showControls);
-
-    const ReviewSwiper = new Swiper(".PatientReviewSwiper", {
-      slidesPerView: currentSlidesPerView,
-      spaceBetween: 30,
-      speed: 800,
-      loop: showControls,
-      observer: true,
-      observeParents: true,
-
-      navigation: showControls ? {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      } : false,
-
-      pagination: showControls ? {
-        el: ".swiper-pagination",
-        dynamicBullets: true,
-      } : false,
-    });
-
-    // ✅ Update on resize
-    window.addEventListener("resize", function () {
-      currentSlidesPerView = getSlidesPerView();
-      showControls = totalSlides > currentSlidesPerView;
-
-      ReviewSwiper.params.slidesPerView = currentSlidesPerView;
-      ReviewSwiper.update();
-
-      toggleControls(showControls);
-    });
-
-  });
-</script> {% endcomment %}
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 

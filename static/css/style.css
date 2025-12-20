@@ -6119,7 +6119,6 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 }
 .dentists-name,
 .dentists-city-name {
-  text-transform: uppercase;
   font-weight: bold;
   font-family: "Barlow", sans-serif;
   color: #fff;
@@ -6173,6 +6172,13 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   font-family: "Barlow", sans-serif;
   letter-spacing: 0.5px;
   /* margin-bottom: 0px; */
+}
+.new-dentists-title {
+  font-size: 28px !important;
+}
+.patient-name {
+  font-size: 18px;
+  font-weight: 500;
 }
 .new-dentists-content-subtitle {
   font-size: 20px;
@@ -6576,6 +6582,9 @@ div:where(.swal2-container) div:where(.swal2-popup) {
     /* bottom: 18.5%; */
     bottom: 24.5%;
   }
+  .dentists-mobile-name.dentists-top{
+    bottom: 18%;
+  }
   .new-appoint_btn{
     width: 100% !important;
   }
@@ -6627,6 +6636,9 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   .dentists-mobile-name h2{
     text-align: end;
   }
+  .dentists-mobile-name.dentists-top{
+    bottom: 16.5%;
+  }
   .new-appoint_btn{
     width: 52% !important;
   }
@@ -6676,11 +6688,15 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   .dentists-mobile-name h2{
     font-size: 20px;
   }
+  .dentists-mobile-name.dentists-top{
+    width: 64%;
+    bottom: 17%;
+  }
   .dentists-mobile-name p{
     font-size: 16px;
   }
   .new-appoint_btn{
-    width: 58% !important;
+    width: 79% !important;
   }
 }
 @media (max-width: 576px) {
@@ -6770,10 +6786,24 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   .dentists-mobile-name{
     width: 94%;
     left:0%;
+    bottom: 0%;
+    margin: 0% auto 38%;
+  }
+  .dentists-mobile-name.dentists-top{
+    left: 13%;
+    width: 74%;
+    bottom: 0%;
+    margin: 0% auto 24%;
   }
   .dentists-mobile-name h2{
     margin-bottom: 5px;
-    font-size: 18px;
+    font-size: 20px;
+  }
+  .dentists-mobile-name.dentists-top h2{
+    font-size: 15px;
+  }
+  .dentists-mobile-name p{
+    font-size: 14px;
   }
   .new-appoint_btn{
     width: 100% !important;
@@ -6808,6 +6838,12 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   }
   .dentists-request-section .usd-logo-img{
     top:-1.5%;
+  }
+  .dentists-mobile-name.dentists-top{
+    left: 0%;
+    width: 93%;
+    bottom: 0%;
+    margin: 0% auto 18.5%;
   }
   /* .new-dentist-contain .new-dentists-content-title{
     font-size: 12px;

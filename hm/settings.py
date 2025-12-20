@@ -212,14 +212,13 @@ CKEDITOR_CONFIGS = {
 RECAPTCHA_SITE_KEY = "6LeNfq4rAAAAAMBnNy3uLYynCo2hDdx6vkuMfDl7"
 RECAPTCHA_SECRET_KEY = "6LeNfq4rAAAAAPM7U4LVTLif735LUSoLuYjEbBo_"
 # SMTP
-# EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST ='smtp.gmail.com' 
-# EMAIL_PORT= 587
-# EMAIL_USE_TLS= True
-# EMAIL_HOST_USER= 'masjnp2011@gmail.com'
-# EMAIL_HOST_PASSWORD='s'
-# ACCOUNT_EMAIL_VERIFICATION ='none'
-
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST ='localhost' 
+EMAIL_PORT= 25
+EMAIL_USE_TLS= True
+EMAIL_HOST_USER= 'support@ultimatesmiledesign.com'
+EMAIL_HOST_PASSWORD='ZpMB({j]ki!k'
+ACCOUNT_EMAIL_VERIFICATION ='none'
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST = 'mail.studyatmit.com'
 # EMAIL_USE_TLS = True
