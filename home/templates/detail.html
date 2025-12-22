@@ -31,7 +31,7 @@
 {% endblock css %} 
 {% block body %}
 <!-- Content -->
-<div class="page-content" style="border-top: 1px solid #ddd">
+<div class="page-content">
   <section class="breadcrumbs-section">
     <div class="container">
       <div class="breadcrumbs-path">
@@ -135,7 +135,7 @@
                     {% endwith %}
                   </p>
                 {% else %}
-                  <p class="new-dentists-content-subtitle cool">-</p>
+                  <p class="new-dentists-content-subtitle cool">NA</p>
                 {% endif %}
               
               </div>
@@ -145,7 +145,7 @@
                   {% if data.experience %}
                     {{ data.experience|striptags }}
                   {% else %}
-                    -
+                    NA
                   {% endif %}
                   {% comment %} {{data.experience|striptags}} {% endcomment %}
                 </p>
@@ -201,7 +201,13 @@
                     <span class="patient-name">{{ review.patient_name }}</span>
                   </div>
                   {% comment %} <img src="{% static 'google-icon-img.png' %}" class="img-fluid" width="50" height="50" alt="google-view-img"/> {% endcomment %}
-                  <img src="{% static 'google-icon.svg'%}" class="img-fluid" width="45" height="45" alt="google-view-img" />
+                  {% if review.reviewlink %}
+                    <a href="{{ review.reviewlink }}" target="_blank">
+                      <img src="{% static 'google-icon.svg'%}" class="img-fluid" width="45" height="45" alt="google-view-img" />
+                    </a>
+                  {% else %}
+                    <img src="{% static 'favicon_io/android-chrome-192x192.png'%}" class="img-fluid" width="50" height="50" alt="google-view-img" />
+                  {% endif %}
               </div>
             </div>
           </div>

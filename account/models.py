@@ -109,7 +109,8 @@ class PatientReview(models.Model):
     dentist = models.ForeignKey(Dentist, on_delete=models.CASCADE, related_name='reviews')
     patient_name = models.CharField(max_length=300)
     review = models.TextField(max_length=2000)
-    rating = models.PositiveIntegerField(default=5)  # Optional: scale of 1-5
+    reviewlink= models.URLField(max_length=2000, blank=True, null=True)
+    rating = models.PositiveIntegerField(default=5)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

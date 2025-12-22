@@ -166,7 +166,7 @@
         class="row working-main-content justify-content-lg-center justify-content-center gap-md-0"
       >
         <div class="col-lg-4 col-md-6 col-sm-10 col-12">
-          <div class="card working-main-wrapper card_1" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="50">
+          <div class="card working-main-wrapper card_1" data-aos="fade-up" data-aos-duration="500" data-aos-delay="50">
             <div class=" mx-auto my-lg-4 mt-4 mb-3 d-flex align-items-center justify-content-center ">
               <svg class="smile_orange img-fluid" width="217" height="168" viewBox="0 0 217 168" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M193.995 1.05865C203.607 -1.77802 213.832 3.70803 215.353 13.614C218.84 36.3268 216.426 59.6556 208.196 81.3051C197.81 108.629 178.736 131.764 153.909 147.152C129.082 162.539 99.8771 169.328 70.786 166.472C47.7361 164.21 25.7695 155.992 6.98023 142.764C-1.2145 136.995 -1.57808 125.396 5.239 118.05C12.0661 110.693 23.5008 110.442 31.9927 115.792C44.7033 123.8 59.1656 128.796 74.2672 130.278C95.431 132.356 116.678 127.417 134.74 116.223C152.801 105.028 166.678 88.197 174.234 68.319C179.625 54.1349 181.586 38.9599 180.07 24.0137C179.057 14.0284 184.369 3.89945 193.995 1.05865Z" fill="#FBE9D0" fill-opacity="0.31"/>
@@ -213,7 +213,7 @@
           </div>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-10 col-12">
-          <div class="card working-main-wrapper card_2" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
+          <div class="card working-main-wrapper card_2" data-aos="fade-up" data-aos-duration="500" data-aos-delay="100">
             <div
               class=" mx-auto my-lg-4 mt-4 mb-3 d-flex align-items-center justify-content-center"
               style="width: 60px; height: 60px;"
@@ -246,7 +246,7 @@
           </div>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-10 col-12">
-          <div class="card working-main-wrapper card_3" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="150">
+          <div class="card working-main-wrapper card_3" data-aos="fade-up" data-aos-duration="500" data-aos-delay="150">
             <div
               class=" mx-auto my-lg-4 mt-4 mb-3 d-flex align-items-center justify-content-center "
             >
@@ -416,7 +416,7 @@
                         Book Appointment 
                         <svg class="ms-2 mb-1" width="14" height="14" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <g clip-path="url(#clip0_3628_3618)">
-                            <path d="M17.6054 0H3.38593C2.71703 0 2.1731 0.543935 2.1731 1.21283C2.1731 1.88172 2.71703 2.42566 3.38593 2.42566H14.6726L0.357532 16.7444C-0.116573 17.2185 -0.116573 17.9866 0.357532 18.4607C0.831638 18.9348 1.59976 18.9348 2.07387 18.4607L16.3889 4.14199V15.4286C16.3889 16.0975 16.9328 16.6415 17.6017 16.6415C18.2706 16.6415 18.8146 16.0975 18.8146 15.4286V1.21283C18.8182 0.543935 18.2743 0 17.6054 0Z" fill="white"/>
+                            <path d="M17.6054 0H3.38593C2.71703 0 2.1731 0.543935 2.1731 1.21283C2.1731 1.88172 2.71703 2.42566 3.38593 2.42566H14.6726L0.357532 16.7444C-0.116573 17.2185 -0.116573 17.9866 0.357532 18.4607C0.831638 18.9348 1.59976 18.9348 2.07387 18.4607L16.3889 4.14199V15.4286C16.3889 16.0975 16.9328 16.6415 17.6017 16.6415C18.2706 16.6415 18.8146 16.0975 18.8146 15.4286V1.21283C18.8182 0.543935 18.2743 0 17.6054 0Z" fill="black"/>
                           </g>
                           <defs>
                             <clipPath id="clip0_3628_3618">
@@ -763,10 +763,10 @@
               </div>
             </div>
             <div class="col-lg-4 col-md-6 col-sm-6 col-6 mt-sm-3 mt-0 px-md-3 callus-btn-wrapper" data-aos="zoom-in" data-aos-duration="1500">
-              <a href="tel:+918469888877">
+              <a href="{% url 'home:contact' %}">
                 <button
                   class="d-flex w-100 fs-16 font-Barlow align-items-center justify-content-center btn btn-call bat">
-                  <b>Call Us</b>
+                  <b>Contact</b>
                   <i class="ms-2 white  fa-solid fa-arrow-right-long"></i>
                 </button>
               </a>
@@ -782,17 +782,17 @@
     <div class="container position-relative">
       <div class="gallery-container mt-xl-4" style="padding-top:130px">
           <div class="floating-images position-relative w-100 d-flex justify-content-center " data-aos="fade-down" data-aos-duration="1500">
-              <img src="{% static 'home-gallery/home-gallery1.webp' %}" alt="Ultimate Smile Design Service Final Result Image of Dental Prosthesis">
+              <img src="{% static 'home-gallery/before-1.webp' %}" alt="Ultimate Smile Design Service Final Result Image of Dental Prosthesis">
               <img src="{% static 'home-gallery/home-gallery10.webp' %}" alt="Real transformation gallery from customized dental treatment at Ultimate Smile Design studio">
-              <img src="{% static 'home-gallery/home-gallery6.webp' %}" alt="High-impact before-after visuals of confident smiles crafted by expert clinicians">
+              <img src="{% static 'home-gallery/before-4.webp' %}" alt="High-impact before-after visuals of confident smiles crafted by expert clinicians">
               <img src="{% static 'home-gallery/home-gallery11.webp' %}" alt="Stunning visual results from personalized smile design captured in patient gallery view">
-              <img src="{% static 'home-gallery/home-gallery4.webp' %}" alt="Clinical showcase highlighting artistic smile enhancement and real case outcomes">
+              <img src="{% static 'home-gallery/before-3.webp' %}" alt="Clinical showcase highlighting artistic smile enhancement and real case outcomes">
               <img src="{% static 'home-gallery/home-gallery5.webp' %}" alt="Patient journey from consultation to perfect smile in Ultimate Smile Design series">
-              <img src="{% static 'home-gallery/home-gallery7.webp' %}" alt="Image timeline of smile success stories from Ultimate Smile Design restorative care">
+              <img src="{% static 'home-gallery/before-5.webp' %}" alt="Image timeline of smile success stories from Ultimate Smile Design restorative care">
               <img src="{% static 'home-gallery/home-gallery12.webp' %}" alt="Authentic smile evolution captured in patient showcase at Ultimate Smile Design">
               <img src="{% static 'home-gallery/home-gallery9.webp' %}" alt="Gallery of restored smiles featuring aesthetic upgrades at Ultimate Smile Design center">
               <img src="{% static 'home-gallery/home-gallery8.webp' %}" alt="Smile makeover before-after display featuring real patient results at Ultimate Smile Design">
-              <img src="{% static 'home-gallery/home-gallery3.webp' %}" alt="Visible dental improvements through advanced treatment shown in patient image timeline">
+              <img src="{% static 'home-gallery/before-2.webp' %}" alt="Visible dental improvements through advanced treatment shown in patient image timeline">
           </div>
           <div class="d-flex justify-content-center" style="margin-top:100px; margin-bottom:40px" data-aos="zoom-in" data-aos-duration="1500">
             <svg class="img-fluid" style="width:67%" width="1089" height="426" viewBox="0 0 1089 426" fill="none" xmlns="http://www.w3.org/2000/svg">
