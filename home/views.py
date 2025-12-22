@@ -20,6 +20,9 @@ from .utils import send_mail
 import re
 import requests
 import random
+import threading
+from django.utils import timezone
+
 @csrf_exempt  # This bypasses CSRF protection for demonstration purposes only
 def receive_location(request):
     if request.method == 'POST':
@@ -44,7 +47,12 @@ def receive_location(request):
     
     return JsonResponse({'status': 'error'}, status=400)
 
-
+def send_contact_email_async(context_dict):
+    send_mail(
+        to_email="vaghela9632@gmail.com",  # company email
+        subject=f"New Contact Form Submission from {context_dict['Name']}",
+        context_dict=context_dict
+    )
 
 # Create your views here.
 def home(request):
@@ -543,27 +551,55 @@ def find_dentist_d(request, pk):
 
         if form.is_valid():
             user_submission = form.save()
-            context_dict = {
-                "Name": request.POST.get("name", "") + " " + request.POST.get("last_name", ""),
-                "Email": request.POST.get("email", ""),
-                "Phone": request.POST.get("phone", ""),
-                "City": request.POST.get("city", ""),
-                "Message": request.POST.get("message", ""),
-                "Doctor_name": request.POST.get("doctor_name", "").strip() or "NA",
+            current_datetime_ist = timezone.localtime(timezone.now())
+            formatted_datetime = current_datetime_ist.strftime("%d-%m-%Y %I:%M %p")
+            context_dict ={
+                "Name": user_submission.first_name + " " + user_submission.last_name,
+                "Email": user_submission.email,
+                "Phone": user_submission.phone,
+                "City": user_submission.city,
+                "Message": user_submission.message,
+                "Doctor_name": user_submission.doctor_name or "NA",
                 "Page URL": request.META.get("HTTP_REFERER", "Not available")
             }
 
             # Send email to company
-            send_mail(
-                to_email="pambaliya96@gmail.com", 
-                subject=f"New Contact Form Submission from {context_dict['Name']}",
-                context_dict=context_dict
-            )
-            messages.success(
-                request,
-                f"Form submitted successfully! Thank you, {user_submission.first_name} {user_submission.last_name}."
-            )
-            form = UserSubmissionForm()
+            threading.Thread(
+                target=send_contact_email_async,
+                args=(context_dict,),
+                daemon=True
+            ).start()
+
+            bikai_payload ={
+                "First_name": user_submission.first_name,
+                "Last_name": user_submission.last_name,
+                "Email": user_submission.email,
+                "Phone": user_submission.phone,
+                "Email": user_submission.email,
+                "City": user_submission.city,
+                "Message": user_submission.message,
+                "Doctor_name": user_submission.doctor_name,
+                "DateTime": formatted_datetime,
+            }
+            bikai_url ="https://bikapi.bikayi.app/chatbot/webhook/N8eHI9BWzqVPK7RnXu2xs5qIQt23?flow=webpatient3834"
+            headers ={
+                "Content-Type": "application/json",
+            }
+            try: 
+                crm_response = requests.post(
+                    bikai_url,
+                    json=bikai_payload,
+                    headers=headers,
+                    timeout=10,
+                )
+                crm_response.raise_for_status()
+            except requests.exceptions.RequestException as e:
+                messages.warning(request, f"Form saved but CRM sync failed: {str(e)}")
+            # messages.success(
+            #     request,
+            #     f"Form submitted successfully! Thank you, {user_submission.first_name} {user_submission.last_name}."
+            # )
+            # form = UserSubmissionForm()
             return redirect('home:thankyou')
         else:
             messages.error(request,"Something went wrong! Please check your details.")
@@ -686,65 +722,48 @@ def blogsd(request, pk):
 
         # Save Data + CRM Webhook
         if form.is_valid():
-            form.save()
-
+            submission = form.save()
+            current_datetime_ist = timezone.localtime(timezone.now())
+            formatted_datetime = current_datetime_ist.strftime("%d-%m-%Y %I:%M %p")
             context_dict = {
-                "Name": request.POST.get("name", ""),
-                "Email": request.POST.get("email", ""),
-                "Phone": request.POST.get("phone", ""),
-                "City": request.POST.get("city", ""),
-                "Message": request.POST.get("message", ""),
+                "Name": submission.name,
+                "Email":  submission.email,
+                "Phone": submission.phone,
+                "City": submission.city,
+                "Message": submission.message,
                 "Page URL": request.META.get("HTTP_REFERER", "Not available")
             }
-
-            # Send email to company
-            send_mail(
-                to_email="vaghela9632@gmail.com", 
-                subject=f"New Contact Form Submission from {context_dict['Name']}",
-                context_dict=context_dict
-            )
-            messages.success(request, 'Your data is sent successfully.')
-            full_name = request.POST.get("name", "").strip()
-            first_name, last_name = (full_name.split(" ", 1) + [""])[:2]
-
-            payload = {
-                "firstName": first_name or "Visitor",
-                "lastName": last_name,
-                "designation": "",
-                "email": request.POST.get("email", ""),
-                "countryCode": "91",
-                "mobile": request.POST.get("phone", ""),
-                "phoneCountryCode": "91",
-                "phone": request.POST.get("phone", ""),
-                "expectedRevenue": "0",
-                "description": request.POST.get("message", ""),
-                "companyName": "",
-                "companyState": "",
-                "companyStreet": "",
-                "companyCity": request.POST.get("city", ""),
-                "companyCountry": "India",
-                "companyPincode": "",
-                "leadPriority": "1",
+            threading.Thread(
+                target=send_contact_email_async,
+                args=(context_dict,),
+                daemon=True
+            ).start()
+            # messages.success(request, 'Your data is sent successfully.')
+            bikai_payload  ={
+               "Name": submission.name,
+               "Email": submission.email,
+               "Contact": submission.phone,
+               "City": submission.city,
+               "Subject": submission.subject,
+               "Message": submission.message,
+               "DateTime": formatted_datetime,
             }
-
+            bikai_url ="https://bikapi.bikayi.app/chatbot/webhook/N8eHI9BWzqVPK7RnXu2xs5qIQt23?flow=webleads3220"
             headers = {
                 "Content-Type": "application/json",
-                "authToken": "79atXvY2ZVZXs32Tbnw89A==.icG8H90dELRwyW3euMFdTg==", 
-                "timeZone": "Asia/Calcutta",  
             }
-
             try:
                 crm_response = requests.post(
-                    "https://crm.my-company.app/api/v1/lead/webhook",
-                    json=payload,
+                    bikai_url,
+                    json=bikai_payload,
                     headers=headers,
                     timeout=10,
                 )
                 crm_response.raise_for_status()
-                messages.success(
-                    request,
-                    "Thanks for contacting the Ultimate Smile Design Team. We will get back to you shortly."
-                )
+                # messages.success(
+                #     request,
+                #     "Thanks for contacting the Ultimate Smile Design Team. We will get back to you shortly."
+                # )
             except requests.exceptions.RequestException as e:
                 messages.warning(request, f"Form saved but CRM sync failed: {str(e)}")
 
@@ -794,76 +813,63 @@ def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
 
-        recaptcha_response = request.POST.get('g-recaptcha-response')
-        data = {
-            'secret': settings.RECAPTCHA_SECRET_KEY,
-            'response': recaptcha_response,
-        }
-        r = requests.post("https://www.google.com/recaptcha/api/siteverify", data=data)  # <-- FIXED
-        result = r.json()
+        # recaptcha_response = request.POST.get('g-recaptcha-response')
+        # data = {
+        #     'secret': settings.RECAPTCHA_SECRET_KEY,
+        #     'response': recaptcha_response,
+        # }
+        # r = requests.post("https://www.google.com/recaptcha/api/siteverify", data=data)  # <-- FIXED
+        # result = r.json()
 
-        if not result.get('success'):
-            messages.error(request, 'Invalid reCAPTCHA. Please try again.')
-            return redirect(request.META.get('HTTP_REFERER','contact'))
+        # if not result.get('success'):
+        #     messages.error(request, 'Invalid reCAPTCHA. Please try again.')
+        #     return redirect(request.META.get('HTTP_REFERER','contact'))
         
         if form.is_valid():
-            form.save()
+            submission = form.save()
+            current_datetime_ist = timezone.localtime(timezone.now())
+            formatted_datetime = current_datetime_ist.strftime("%d-%m-%Y %I:%M %p")
             context_dict = {
-                "Name": request.POST.get("name", ""),
-                "Email": request.POST.get("email", ""),
-                "Phone": request.POST.get("phone", ""),
-                "City": request.POST.get("city", ""),
-                "Message": request.POST.get("message", ""),
+                "Name": submission.name,
+                "Email":  submission.email,
+                "Phone": submission.phone,
+                "City": submission.city,
+                "Message": submission.message,
                 "Page URL": request.META.get("HTTP_REFERER", "Not available")
             }
+            threading.Thread(
+                target=send_contact_email_async,
+                args=(context_dict,),
+                daemon=True
+            ).start()
 
-            # Send email to company
-            send_mail(
-                to_email="vaghela9632@gmail.com", 
-                subject=f"New Contact Form Submission from {context_dict['Name']}",
-                context_dict=context_dict
-            )
             #messages.success(request, 'Your data is sent successfully.')
             # return redirect('home:thankyou')
-            full_name = request.POST.get("name", "").strip()
-            first_name, last_name = (full_name.split(" ", 1) + [""])[:2]
-
-            payload = {
-                "firstName": first_name or "Visitor",
-                "lastName": last_name,
-                "designation": "",
-                "email": request.POST.get("email", ""),
-                "countryCode": "91",
-                "mobile": request.POST.get("phone", ""),
-                "phoneCountryCode": "91",
-                "phone": request.POST.get("phone", ""),
-                "expectedRevenue": "0",
-                "description": request.POST.get("message", ""),
-                "companyName": "",
-                "companyState": "",
-                "companyStreet": "",
-                "companyCity": request.POST.get("city", ""),
-                "companyCountry": "India",
-                "companyPincode": "",
-                "leadPriority": "1",
+            bikai_payload  ={
+               "Name": submission.name,
+               "Email": submission.email,
+               "Contact": submission.phone,
+               "City": submission.city,
+               "Subject": submission.subject,
+               "Message": submission.message,
+               "DateTime": formatted_datetime,
             }
+            bikai_url ="https://bikapi.bikayi.app/chatbot/webhook/N8eHI9BWzqVPK7RnXu2xs5qIQt23?flow=webleads3220"
             headers = {
                 "Content-Type": "application/json",
-                "authToken": "79atXvY2ZVZXs32Tbnw89A==.icG8H90dELRwyW3euMFdTg==", 
-                "timeZone": "Asia/Calcutta",  
             }
             try:
                 crm_response = requests.post(
-                    "https://crm.my-company.app/api/v1/lead/webhook",
-                    json=payload,
+                    bikai_url,
+                    json=bikai_payload,
                     headers=headers,
                     timeout=10,
                 )
                 crm_response.raise_for_status()
-                messages.success(
-                    request,
-                    "Thanks for contacting the Ultimate Smile Design Team. We will get back to you shortly."
-                )
+                # messages.success(
+                #     request,
+                #     "Thanks for contacting the Ultimate Smile Design Team. We will get back to you shortly."
+                # )
             except requests.exceptions.RequestException as e:
                 messages.warning(request, f"Form saved but CRM sync failed: {str(e)}")
 
@@ -873,7 +879,7 @@ def contact(request):
             return redirect(request.META.get('HTTP_REFERER', 'contact'))
 
     context = {
-        "RECAPTCHA_SITE_KEY": settings.RECAPTCHA_SITE_KEY
+        # "RECAPTCHA_SITE_KEY": settings.RECAPTCHA_SITE_KEY
     }
     return render(request, 'contact.html', context)
 
@@ -984,28 +990,60 @@ def dentist(request):
         #     return redirect(request.META.get("HTTP_REFERER", "dentist"))
 
         if form.is_valid():
-            user_submission = form.save()  # doctor_name is handled by form
-            context_dict = {
-                "Name": request.POST.get("name", "") + " " + request.POST.get("last_name", ""),
-                "Email": request.POST.get("email", ""),
-                "Phone": request.POST.get("phone", ""),
-                "City": request.POST.get("city", ""),
-                "Message": request.POST.get("message", ""),
-                "Doctor_name": request.POST.get("doctor_name", "").strip() or "NA",
+            user_submission = form.save()
+            current_datetime_ist = timezone.localtime(timezone.now())
+            formatted_datetime = current_datetime_ist.strftime("%d-%m-%Y %I:%M %p")
+            context_dict ={
+                "Name": user_submission.first_name + " " + user_submission.last_name,
+                "Email": user_submission.email,
+                "Phone": user_submission.phone,
+                "City": user_submission.city,
+                "Message": user_submission.message,
+                "Doctor_name": user_submission.doctor_name or "NA",
                 "Page URL": request.META.get("HTTP_REFERER", "Not available")
             }
+            threading.Thread(
+                target=send_contact_email_async,
+                args=(context_dict,),
+                daemon=True
+            ).start()
 
+            bikai_payload ={
+                "First_name": user_submission.first_name,
+                "Last_name": user_submission.last_name,
+                "Email": user_submission.email,
+                "Phone": user_submission.phone,
+                "Email": user_submission.email,
+                "City": user_submission.city,
+                "Message": user_submission.message,
+                "Doctor_name": user_submission.doctor_name,
+                "DateTime": formatted_datetime,
+            }
             # Send email to company
-            send_mail(
-                to_email="tukadiyabhargav5@gmail.com", 
-                subject=f"New Contact Form Submission from {context_dict['Name']}",
-                context_dict=context_dict
-            )
-            messages.success(
-                request,
-                f"Form submitted successfully! Thank you, {user_submission.first_name} {user_submission.last_name}."
-            )
-            form = UserSubmissionForm()
+            # send_mail(
+            #     to_email="tukadiyabhargav5@gmail.com", 
+            #     subject=f"New Contact Form Submission from {context_dict['Name']}",
+            #     context_dict=context_dict
+            # )
+            bikai_url ="https://bikapi.bikayi.app/chatbot/webhook/N8eHI9BWzqVPK7RnXu2xs5qIQt23?flow=webpatient3834"
+            headers ={
+                "Content-Type": "application/json",
+            }
+            try: 
+                crm_response = requests.post(
+                    bikai_url,
+                    json=bikai_payload,
+                    headers=headers,
+                    timeout=10,
+                )
+                crm_response.raise_for_status()
+            # messages.success(
+            #     request,
+            #     f"Form submitted successfully! Thank you, {user_submission.first_name} {user_submission.last_name}."
+            # )
+            except requests.exceptions.RequestException as e:
+                messages.warning(request, f"Form saved but CRM sync failed: {str(e)}")
+            # form = UserSubmissionForm()
             return redirect('home:thankyou')
         else:
             messages.error(request, "Something went wrong! Please check your details.")

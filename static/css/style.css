@@ -6157,7 +6157,8 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   margin: 10px 0px;
   width: 35%;
   border-right: 1.8px solid #fff;
-  height: -webkit-fill-available;
+  /* height: -webkit-fill-available; */
+  height: 142px;
   display: flex;
   flex-direction: column;
 }
@@ -6174,7 +6175,7 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   /* margin-bottom: 0px; */
 }
 .new-dentists-title {
-  font-size: 28px !important;
+  font-size: 28px;
 }
 .patient-name {
   font-size: 18px;
@@ -6748,6 +6749,7 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   }
   .new-dentist-content {
     padding: 5px;
+    height: 110px;
   }
   .dentists-contact-section .form .dentist-inputicon-box .form-control {
     padding: 8px 12px 8px 40px;
@@ -6826,6 +6828,7 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   .new-dentist-content{
     padding: 0px;
     width: 45%;
+    height: 100px;
   }
   .new-dentist-content:last-child{
     width: 30%;
@@ -6843,7 +6846,7 @@ div:where(.swal2-container) div:where(.swal2-popup) {
     left: 0%;
     width: 93%;
     bottom: 0%;
-    margin: 0% auto 18.5%;
+    margin: 0% auto 29.5%;
   }
   /* .new-dentist-contain .new-dentists-content-title{
     font-size: 12px;

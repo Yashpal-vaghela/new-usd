@@ -126,6 +126,7 @@ input:-internal-autofill-selected {
   /* height: 230px; */
   display: flex;
   margin: 8% auto auto;
+
 }
 .dentist-content .card-body .bookAppoinment-btn {
   border-radius: 8px;
@@ -245,7 +246,7 @@ input:-internal-autofill-selected {
   }
   .dentist-content .card img {
     width: 200px;
-    height: 240px;
+    /* height: 240px; */
   }
   .dentist-content {
     padding: 10px;
@@ -302,6 +303,9 @@ input:-internal-autofill-selected {
   .dentist-content2 iframe {
     border-radius: 12px;
   }
+  .dentist-content .card img{
+    margin: 4% auto auto;
+  }
 }
 @media (max-width: 768px) {
   .certified-dentist-title {
@@ -322,10 +326,6 @@ input:-internal-autofill-selected {
   .dentist-content2 {
     padding: 8px;
   }
-  .dentist-content .card img {
-    width: 100%;
-    height: 25vh;
-  }
   .dentist-content .card-body .bookAppoinment-btn {
     padding: 4px 7px;
     font-size: 14px;
@@ -338,12 +338,14 @@ input:-internal-autofill-selected {
   }
   .dentist-content{
     display: flex;
-    align-items: center;
+    align-items: start;
     justify-content: center;
+    height: 100%;
   }
   .dentist-content .card img {
     width: 240px;
-    height: 40vh;
+    /* height: 40vh; */
+    height: 100%;
   }
 }
 @media (max-width: 576px) {
