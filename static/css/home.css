@@ -748,6 +748,7 @@
     left: 25%;
   }
 }
+
 @media (min-width: 992px) {
   .dentists-content-2 .col-12 {
     width: 30%;
@@ -894,7 +895,7 @@
   position: absolute;
   inset: 0;
   margin: auto;
-  width: 30%;
+  width: 30.5%;
   /* height: 100%; */
   z-index: 1;
   top: 0%;
@@ -982,7 +983,7 @@
   position: absolute;
   z-index: 3;
   width: 92.5%;
-  top:81%;
+  top:79%;
 }
 .newdentistSwiper .swiper-slide-prev .card {
   z-index: 2;
@@ -1016,11 +1017,6 @@
     transform: scale(0.9);
   }
 }
-/* @media(min-width:768px){
-  .newdentistSwiper .swiper-slide{
-    margin-right: 0 !important;
-  }
-} */
 @media(min-width:1300px){
   .newdentistSwiper .border-frame{
     left:1.55%;
@@ -1080,7 +1076,7 @@
   .newdentistSwiper .border-frame{
     /* left:3%;
     width:46.5%; */
-    left:-2.5%;
+    left:-2.9%;
     width:45.5%;
   }
   .newdentistSwiper .swiper-wrapper{
@@ -1091,6 +1087,7 @@
   .vector1-img{
     width:12%;
     z-index: 99;
+    bottom: 0%;
   }
   .dentist-swiper-section .swiper-bg-grident{
     background-size: 90% 100% !important;
@@ -1107,10 +1104,10 @@
   }
   @keyframes smallBig11 {
     0% {
-      transform: scale(0.9);
+      transform: scale(0.8);
     }
     100% {
-      transform: scale(1.05);
+      transform: scale(0.95);
     }
   }
 }
@@ -1180,7 +1177,7 @@
     padding: 15px 0px 20px !important;
   }
   .newdentistSwiper .card .card-body{
-    top:80.5% !important;
+    top:82.5% !important;
   }
   .btn-appointment{
     margin-top: 22px !important;
@@ -1188,7 +1185,7 @@
   }
   .vector1-img{
     width: 21%;
-    bottom:25%;
+    bottom:-10%;
   }
   .vector2-img{
     width:20%;  
@@ -1486,8 +1483,11 @@
 }
 @media (max-width: 1400px) {
   .bg-schedule {
-    top: 65.5%;
+    top: 63.5%;
     right: 10px;
+  }
+  .schedule-data-content p{
+    font-size: 13px;
   }
 }
 @media (max-width: 1200px) {
@@ -1535,9 +1535,23 @@
 }
 @media (max-width: 1014px) {
   .bg-schedule {
-    /* top: 63%; */
+    top: 0%;
     width: 38.4%;
     right: 8px;
+    margin-top: -4%;
+  }
+  .schedule-data-subtitle{
+    font-size: 22px !important;
+    line-height: 34px !important;
+  }
+  .schedule-data-content p{
+    line-height: 1.6;
+  }
+  .schedule-data-link{
+    border-radius: 15px;
+  }
+  .schedule-data-link svg{
+    width: 35px;
   }
 }
 @media (max-width: 991px) {
@@ -2520,19 +2534,6 @@
     height: 95%;
     top: 0%;
     left: 0.2%;
-    /* border-image-source: linear-gradient(
-      134deg,
-      #c3942e 1%,
-      transparent 13%,
-      transparent 36%,
-      transparent 37%,
-      #c3942f 47%,
-      transparent 63%,
-      transparent 87%,
-      transparent 85%,
-      #c99c30 100%
-    ); */
-    /* border-image-source: linear-gradient(128deg, #C3942E 1%, #000 13%, #000 36%, #000 37%, #c3942f 47%, #000 63%, #000 87%, #000 85%, #c99c30 100%); */
   }
   .myswiper {
     width: 75%;
@@ -2865,7 +2866,7 @@ body {
   background: linear-gradient(90.9999984327143deg, #0000, #0d080f);
   border-radius: 11px;
   flex: none;
-  left: 48%;
+  left: 47.6%;
   position: absolute;
   top: 47.5%;
   transform: translate(-50%, -50%);

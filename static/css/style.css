@@ -1261,7 +1261,7 @@ button.scroltop {
   padding: 6px 40px;
   border-radius: 10px;
   font-size: 18px;
-  font-weight: 600px;
+  font-weight: 600;
   border: none;
 }
 
@@ -6100,7 +6100,7 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   display: block;
   font-size: 20px;
   color: #fff;
-  width:90% !important;
+  width:100% !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6112,6 +6112,9 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   margin-top: 9px;
   background-color: transparent;
   display: inline-block;
+}
+.new-dentist-section .row{
+  --bs-gutter-x: 2rem;
 }
 /* content2 */
 .dentists-name {
@@ -6130,14 +6133,14 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   /* top:-14%; */
   /* left:6%; */
   bottom: 22.5%;
-  width:87%;
+  width:90%;
   display: flex;
   flex-direction: column;
   margin: auto;
   text-align: end;
 }
 .dentists-mobile-name.dentists-top{
-   bottom: 17.5%;
+   bottom: 17%;
 }
 .dentists-mobile-name  h2{
   font-size: 24px;
@@ -6156,11 +6159,26 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   padding: 5px 0px;
   margin: 10px 0px;
   width: 35%;
-  border-right: 1.8px solid #fff;
+  /* border-right: 1.8px solid #fff; */
   /* height: -webkit-fill-available; */
-  height: 142px;
+  /* height: 142px; */
+  height: auto;
   display: flex;
+  position: relative;
   flex-direction: column;
+  flex:1
+}
+.new-dentist-content::after{
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0%;
+  bottom: 3%;
+  width: 1.4px;
+  background: #fff;
+}
+.new-dentist-content:last-child::after{
+  width:0px;
 }
 .new-dentist-content:last-child {
   border: 0px;
@@ -6515,18 +6533,20 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   /* .dentists-mobile-name.dentists-top{
     width: 83%;
   } */
-  .dentists-mobile-name{
-    width: 83%;
+  /* .dentists-mobile-name{
+    width: 90.5%;
+  } */
+  .dentists-mobile-name.dentists-top{
+    bottom: 16%;
   }
-  .new-appoint_btn{
+  /* .new-appoint_btn{
     width: 80% !important;
-  }
+  } */
 }
 @media (min-width: 1200px) {
   .PatientReviewSwiper .swiper-pagination {
     display: none !important;
   }
- 
 }
 @media (max-width: 1200px) {
   .dentists-name {
@@ -6579,12 +6599,12 @@ div:where(.swal2-container) div:where(.swal2-popup) {
     top:-87px;
   }
   .dentists-mobile-name{
-    left:8%;
+    left:3%;
     /* bottom: 18.5%; */
     bottom: 24.5%;
   }
   .dentists-mobile-name.dentists-top{
-    bottom: 18%;
+    bottom: 18.5%;
   }
   .new-appoint_btn{
     width: 100% !important;
@@ -6634,11 +6654,15 @@ div:where(.swal2-container) div:where(.swal2-popup) {
     left:25%;
     bottom: 17.5%;
   }
+  .dentists-mobile-name.dentists-top{
+    bottom: 17%;
+  }
   .dentists-mobile-name h2{
     text-align: end;
+    font-size: 20px;
   }
-  .dentists-mobile-name.dentists-top{
-    bottom: 16.5%;
+  .dentists-mobile-name p{
+    font-size: 16px;
   }
   .new-appoint_btn{
     width: 52% !important;
@@ -6686,12 +6710,12 @@ div:where(.swal2-container) div:where(.swal2-popup) {
     width: 55%;
     left:21.5%;
   }
-  .dentists-mobile-name h2{
-    font-size: 20px;
-  }
   .dentists-mobile-name.dentists-top{
     width: 64%;
     bottom: 17%;
+  }
+  .dentists-mobile-name h2{
+    font-size: 20px;
   }
   .dentists-mobile-name p{
     font-size: 16px;
@@ -6744,6 +6768,9 @@ div:where(.swal2-container) div:where(.swal2-popup) {
     display: flex;
     align-items: center;
   }
+  .new-dentist-content::after{
+    bottom: 0%;
+  }
   .new-dentists-content-subtitle {
     font-size: 14px;
   }
@@ -6793,19 +6820,19 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   }
   .dentists-mobile-name.dentists-top{
     left: 13%;
-    width: 74%;
+    width: 81.5%;
     bottom: 0%;
-    margin: 0% auto 24%;
+    margin: 0% auto 23.5%;
   }
   .dentists-mobile-name h2{
     margin-bottom: 5px;
     font-size: 20px;
   }
   .dentists-mobile-name.dentists-top h2{
-    font-size: 15px;
+    font-size: 18px;
   }
   .dentists-mobile-name p{
-    font-size: 14px;
+    font-size: 16px;
   }
   .new-appoint_btn{
     width: 100% !important;
@@ -6815,7 +6842,9 @@ div:where(.swal2-container) div:where(.swal2-popup) {
     margin-top: 6px;
     width: 27px;
   }
-  
+  .dentists-gallery-section{
+    padding: 20px 0px 0px;
+  }
   /* .new-dentist-contain{
     display: block !important;
   }
@@ -6839,14 +6868,23 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   .dentists-request-wrapper h2{
     font-size: 22px;
   }
+  .dentists-mobile-name.dentists-top h2{
+    font-size: 16px;
+  }
+  .dentists-mobile-name p{
+    font-size: 14px;
+  }
   .dentists-request-section .usd-logo-img{
     top:-1.5%;
   }
   .dentists-mobile-name.dentists-top{
     left: 0%;
-    width: 93%;
+    width: 94%;
     bottom: 0%;
     margin: 0% auto 29.5%;
+  }
+  .new-dentist-section .row{
+        --bs-gutter-x: 1.5rem;
   }
   /* .new-dentist-contain .new-dentists-content-title{
     font-size: 12px;
@@ -7059,7 +7097,7 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   padding: 0 45px;
   position: absolute;
   text-align: start;
-  top: -3.4%;
+  top: -2.8%;
   z-index: 1;
   width: 40%;
   left: 30%;
@@ -7150,8 +7188,36 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   font-size: 26px;
   font-weight: 600;
 }
-.social-media-content p {
+.social-media-content  a img{
+  margin-bottom: 12px;
+}
+.social-media-content a p {
   color: #fff;
+  transition: transform 0.3s ease;
+  transform-origin: 50% 0;
+  transform-style: preserve-3d;
+  position: relative;
+}
+.social-media-content a p::before{
+    content: attr(data-hover);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    color: #fff;
+    transform: rotateX(-90deg);
+    transform-origin: 50% 0;
+    transition: color 0.5s;
+}
+.social-media-content a:hover p,
+.social-media-content a:focus p{
+  transform: rotateX(90deg) translateY(-22px);
+}
+.social-media-content a:hover p::before,
+.social-media-content a:focus p::before{
+  color:#fff;
 }
 @media (min-width: 1400px) {
   .thank-you-wrapper p.text-center {
@@ -7161,14 +7227,19 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 @media (max-width: 1200px) {
   .thank-you-wrapper .usd-logo-img {
     background-image: linear-gradient(#000 42%, transparent 31%);
-    top: -2.4%;
+    top: -2.2%;
+  }
+}
+@media(max-width:1024px){
+  .thank-you-wrapper .usd-logo-img {
+    padding: 0px 30px;
   }
 }
 @media (max-width: 992px) {
   .thank-you-wrapper .usd-logo-img {
     width: 45%;
     left: 28.5%;
-    top: -3.4%;
+    top: -3%;
   }
   .thank-you-wrapper {
     padding: 60px 0px 20px;
@@ -7208,7 +7279,7 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   .thank-you-wrapper .usd-logo-img {
     width: 60%;
     left: 20%;
-    top: -3.8%;
+    /* top: -3.8%; */
   }
   .thank-you-wrapper {
     padding: 60px 0px 20px;
@@ -7239,8 +7310,8 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 }
 @media (max-width: 576px) {
   .thank-you-wrapper .usd-logo-img {
-    width: 70%;
-    left: 14%;
+    width: 65%;
+    left: 17%;
     top: -2.8%;
   }
   .thank-you-wrapper {
@@ -7265,12 +7336,16 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   }
 }
 @media (max-width: 480px) {
+  .thank-you-section{
+    padding: 40px 0px 10px;
+  }
   .thank-you-wrapper {
     padding: 40px 0px 20px;
   }
   .thank-you-wrapper .usd-logo-img {
-    width: 75%;
-    left: 12%;
+    width: 70%;
+    left: 14.3%;
+    padding: 0px 20px;
   }
   .social-media-wrapper .social-media-content {
     width: 90% !important;
@@ -7278,7 +7353,7 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   }
   .social-media-content img {
     margin-bottom: 5px;
-  }
+  } 
   .social-media-content p {
     font-size: 12px;
     display: none;
@@ -7287,7 +7362,7 @@ div:where(.swal2-container) div:where(.swal2-popup) {
     width: 60%;
   }
   .thank-you-wrapper h2 {
-    font-size: 20px;
+    font-size: 18px;
     margin-bottom: 1rem !important;
   }
 }

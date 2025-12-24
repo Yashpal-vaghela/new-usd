@@ -295,7 +295,7 @@ input:-internal-autofill-selected {
 
   .dentist-content1,
   .dentist-content2 {
-    padding: 12px;
+    padding: 8px;
   }
   .dentist-content{
     padding: 8px;
@@ -379,7 +379,7 @@ input:-internal-autofill-selected {
   }
   .dentist-content1,
   .dentist-content2 {
-    padding: 12px;
+    padding: 0px 12px 12px;
   }
   .dentist-content{
     padding: 0px 12px 12px;

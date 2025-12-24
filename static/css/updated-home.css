@@ -196,7 +196,17 @@
     font-size: 30px;
     margin-top: 0px;
   }
+  .smile_orange{
+    width:170px;
+    bottom: 8%;
+    right: -4%;
+  }
+  .Discover_Group{
+    padding: 40px 55px;
+  }
+ 
 }
+
 @media (max-width: 992px) {
   .Developer_Section {
     padding: 20px 0px 15px !important;
@@ -213,7 +223,8 @@
     left: 18%;
   }
   .smile_orange {
-    right: 10%;
+    right: 13%;
+    width:200px;
   }
   .Discover_heading {
     font-size: 22px;
@@ -237,6 +248,7 @@
   .smile_orange {
     width: 150px;
     height: 133.33px;
+    right:6%;
   }
   .Discover_text {
     margin-bottom: 5px;
@@ -360,11 +372,15 @@
   }
 }
 @media (max-width: 992px) {
+  .working-section{
+    margin: 0px auto;
+    padding: 0px 0px 5px !important;
+  }
   .working-main-content {
     margin: 18px auto;
   }
   .working-main-content .col-sm-10 {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
   }
   /* main content */
   .working-main-wrapper {
@@ -385,6 +401,9 @@
   .working-main-content {
     gap: 25px;
     margin: 30px auto;
+  }
+  .working-main-content:last-child{
+    margin: 30px auto 15px;
   }
   /* main content */
   .working-main-wrapper {
@@ -583,7 +602,7 @@
 }
 @media (max-width: 991px) {
   .registration_section {
-    margin: 0px auto 40px;
+    margin: 0px auto 0px;
   }
   .register_wrapper {
     padding: 50px 0px 60px;
@@ -606,6 +625,9 @@
   }
 }
 @media (max-width: 768px) {
+  .registration_section{
+    padding: 25px 0px 20px !important;
+  }
   .register_wrapper {
     padding: 45px 0px 50px;
   }
@@ -631,7 +653,7 @@
     padding: 35px 0px 40px;
   }
   .registration_section {
-    padding: 10px 0px 35px !important;
+    padding: 10px 0px 15px !important;
     margin: 15px auto 20px;
   }
   .register_wrapper h3 {
@@ -748,6 +770,12 @@
     left: 25%;
   }
 }
+@media(min-width:1200px) and (max-width:1300px){
+  .btn-appointment{
+    margin-top: 15px !important;
+    margin-bottom: 10px !important;
+  }
+}
 @media (min-width: 992px) {
   .dentists-content-2 .col-12 {
     width: 30%;
@@ -773,7 +801,6 @@
     font-size: 16px !important;
   }
 }
-
 @media (max-width: 991px) {
   .vector2-img {
     width: 20%;
@@ -786,6 +813,12 @@
   }
   .dentists-content-1 .form {
     width: 30% !important;
+  }
+  .dentist-swiper-section{
+    padding: 25px 0px 95px !important;
+  }
+  .vector1-img{
+    bottom: -2%;
   }
 }
 @media (max-width: 768px) {
@@ -982,7 +1015,7 @@
   position: absolute;
   z-index: 3;
   width: 92.5%;
-  top:81%;
+  top:80%;
 }
 .newdentistSwiper .swiper-slide-prev .card {
   z-index: 2;
@@ -1049,7 +1082,7 @@
     margin-bottom: 5px !important;
   }
   .newdentistSwiper .card .card-body{
-    top:79%;
+    top:80%;
     width:96.5%;
   }
   .dentists-content-title{
@@ -1057,6 +1090,11 @@
   }
   .newdentistSwiper .card-body .dentists-content-title{
     font-size: 18px !important;
+  }
+}
+@media(max-width:1024px){
+  .newdentistSwiper .border-frame{
+    width:31.5%;
   }
 }
 @media(max-width:1200px) and (min-width:992px){
@@ -1069,14 +1107,15 @@
 }
 @media(max-width:991px) and (min-width:768px){
  .newdentistSwiper .border-frame{
-    height: 93.5%;
+    height: 84.5%;
+    width:41.5%;
   }
 }
 @media(max-width:991px){
   .newdentistSwiper .border-frame{
     /* left:3%;
     width:46.5%; */
-    left:-2.5%;
+    left:-2.9%;
     width:45.5%;
   }
   .newdentistSwiper .swiper-wrapper{
@@ -1095,18 +1134,26 @@
     padding: 20px 25px 75px;
   }
   .newdentistSwiper .card .card-body{
-    top:80%;
+    top:81%;
   }
   .btn-appointment{
     margin-top: 16px !important;
     margin-bottom: 16px !important;
   }
+   .newdentistSwiper .border-frame{
+    height: 84.5%;
+    width:41.5%;
+  }
+  .vector2-img{
+    top:4%;
+    width:18%;
+  }
   @keyframes smallBig11 {
     0% {
-      transform: scale(0.9);
+      transform: scale(0.8);
     }
     100% {
-      transform: scale(1.05);
+      transform: scale(0.95);
     }
   }
 }
@@ -1132,6 +1179,9 @@
   }
   .btn-appointment{
     padding: 10px 0.75rem !important;
+  }
+  .vector1-img{
+    bottom: -3%;
   }
   /* .newdentistSwiper .swiper-slide-next{
     margin-right: 0% !important;
@@ -1164,27 +1214,27 @@
 }
 @media(max-width:576px){
   .dentist-swiper-section{
-    padding: 15px 0px 20px !important;
+    padding: 15px 0px 110px !important;
   }
   .newdentistSwiper .card .card-body{
-    top:80.5% !important;
+    top:82.5% !important;
   }
   .btn-appointment{
     margin-top: 22px !important;
     margin-bottom: 12px !important;
   }
   .vector1-img{
-    width: 21%;
-    bottom:25%;
+    width: 18%;
+    bottom:-2.5%;
   }
   .vector2-img{
     width:20%;  
-    top:8%;
+    top:1%;
   }
   .newdentistSwiper .border-frame{
-    width:80%;
+    width:68%;
     /* left:-0.3%; */
-    left:-6%;
+    left:-6.5%;
     height: 92%;
   }
 
@@ -1213,6 +1263,16 @@
     gap:0px;
   }
 }
+@media(max-width:540px){
+  .newdentistSwiper .border-frame{
+    width:73%;
+  }
+}
+@media(max-width:500px){
+  .newdentistSwiper .border-frame{
+    width:80%;
+  }
+}
 @media(max-width:480px){
   .newdentistSwiper .card{
     /* margin: -8.8% 5.5% -8.8% -0.5%; */
@@ -1222,8 +1282,18 @@
     left:0%;
     /* width: 82%; */
     width:86.5%;
-    height: 92.6%;
+    height: 92%;
   }
+   .dentist-swiper-section{
+    padding: 15px 0px 80px !important;
+  }
+  .vector1-img{
+    bottom: -4.8%;
+  }   
+  .btn-appointment{
+    margin-top: 18px !important;
+    margin-bottom: 12px !important;
+  } 
 } 
 /* @media (min-width: 1200px) {
   .newdentistSwiper .swiper-slide {
@@ -1345,6 +1415,9 @@
   }
 }
 @media (max-width: 576px) {
+  .smile_step_Section{
+    padding: 25px 0px 0px !important;
+  }
   .step_head {
     font-family: "Gilda Display", serif;
     font-size: 18px;
@@ -1523,8 +1596,23 @@
 @media (max-width: 1014px) {
   .bg-schedule {
     /* top: 63%; */
+    top:0%;
     width: 38.4%;
     right: 8px;
+    margin-top: -4%;
+  }
+ .schedule-data-subtitle{
+    font-size: 22px !important;
+    line-height: 34px !important;
+  }
+  .schedule-data-content p{
+    line-height: 1.6;
+  }
+  .schedule-data-link{
+    border-radius: 15px;
+  }
+  .schedule-data-link svg{
+    width: 35px;
   }
 }
 @media (max-width: 991px) {
@@ -1532,14 +1620,16 @@
     top: 16.5%;
   }
   .bg-schedule {
-    top: 62%;
+    top: 60%;
     width: 37%;
     right: 9px;
   }
   .schedule-data-icon {
     left: -1px;
   }
-
+  .schedule-data-section{
+    padding: 50px 0px 0px !important;
+  }
   /* .schedule-data-link h3,
   .bg-schedule h3 {
     font-size: 28px;
@@ -1602,6 +1692,9 @@
   .schedule-data-content-2 .col-sm-6 {
     margin-bottom: 22px;
   }
+  .schedule-data-content-2 .col-sm-6:last-child{
+    margin-bottom: 0px;
+  }
   .btn-call {
     border-radius: 15px;
     margin: 15px auto;
@@ -1615,7 +1708,7 @@
 }
 @media (max-width: 576px) {
   .schedule-data-section {
-    padding: 0px !important;
+    padding: 0px 0px 45px !important;
   }
   .schedule-data-section .row {
     margin: 5px auto 5px;
@@ -1643,7 +1736,7 @@
     padding: 8px;
   }
   .schedule-data-link svg {
-    width: 50%;
+    width: 25%;
   }
 }
 @media (max-width: 480px) {
@@ -1882,6 +1975,9 @@
   }
   .btn-gallery {
     font-size: 14px;
+  }
+  .gallery-container .d-flex{
+    margin-bottom: 20px !important;
   }
 }
 @media (max-width: 576px) {
@@ -2404,6 +2500,7 @@
     z-index: 1;
     /* border-image-source: linear-gradient(140deg, #c3942f 1%, #000 13%, #000 32%, #000 36%, #c3942f 50%, #000 64%, #000 82%, #000 88%, #c99c30 100%); */
   }
+
 }
 @media (max-width: 767px) {
   .testimonial_subcontent {
@@ -2474,6 +2571,9 @@
     100%{
       transform: scale(0.8);
     }
+  }
+  .new-testimonial-section{
+    padding: 25px 0px 20px !important ;
   }
 }
 @media (max-width: 576px) {
@@ -2817,7 +2917,7 @@ body {
   background: linear-gradient(90.9999984327143deg, #0000, #0d080f);
   border-radius: 11px;
   flex: none;
-  left: 48%;
+  left: 47.6%;
   position: absolute;
   top: 47.5%;
   transform: translate(-50%, -50%);
@@ -3637,7 +3737,7 @@ body {
     margin-top: -15%;
   }
   .usd-studio-section {
-    padding-top: 2%;
+    padding-top: 6%;
     padding-bottom: 52%;
   }
   .usd_shadow_1cu {

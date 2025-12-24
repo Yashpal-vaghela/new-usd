@@ -52,10 +52,10 @@
     </div>
   </section>
   <!-- Left & right section -->
-  <section class="new-dentist-section mb-4 mb-md-5">
+  <section class="new-dentist-section mb-4 mb-md-4 pb-md-1">
     <div class="container pt-5">
       <div class="row justify-content-center justify-content-md-center justify-content-lg-start align-items-center position-relative">
-        <div class="col-lg-4 col-md-10 col-9 text-center position-relative">
+        <div class="col-lg-4 col-md-10 col-9 text-center position-relative mb-2 mb-lg-0">
           {% if data.profile %}
           <img
             src="{{ data.profile.url }}"
@@ -110,12 +110,17 @@
             {% comment %} <h2 class="dentists-name d-none d-lg-block ">{{data.name}}</h2> {% endcomment %}
             <h2 class="new-dentists-title cool font-Glida-display">About {{data.name}}</h2>
             <p class="new-dentists-subtitle text-white">{{data.bio}}</p>
-            <div class="d-flex align-items-center gap-md-2 gap-1 justify-content-between new-dentist-contain mt-2 mb-4 my-md-4">
+            <div class="d-flex align-items-stretch gap-md-2 gap-1 justify-content-between new-dentist-contain mt-2 mb-4 my-md-4">
             
               <div class="new-dentist-content text-center">
                 <h3 class="new-dentists-content-title">Specializations</h3>
+                
                 {% for ie in data.specializations.all%}
-                <p class="new-dentists-content-subtitle cool">{{ie}}</p>
+                  {% if ie %}
+                    <p class="new-dentists-content-subtitle cool">{{ie}}</p>
+                  {% else %}
+                    <p class="new-dentists-content-subtitle cool">NA</p>
+                  {% endif %}
                 {% endfor %}
               </div>
               

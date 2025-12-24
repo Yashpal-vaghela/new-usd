@@ -243,6 +243,10 @@
   .new-browser-btn-wrapper .btn-next {
     width: 12.7%;
   }
+  .text-subcontent{
+    font-size: 14px;
+    line-height: 24px;
+  }
 }
 @media (max-width: 991px) {
   .text-header-subtitle {
@@ -255,21 +259,24 @@
   .new-browser-btn-wrapper .btn-next {
     width: 18%;
   }
+  .breadcrumbs-title{
+    font-size: 28px;
+  }
+  
 }
 @media (max-width: 768px) {
   .breadcrumbs-title{
-    font-size: 30px;
+    font-size: 26px;
   }
   .text-header-subtitle {
     font-size: 28px;
+    margin-bottom: 0px;
   }
   .text-header {
     font-size: 22px;
   }
   .text-subcontent {
     margin-bottom: 10px;
-    font-size: 14px;
-    line-height: 24px;
   }
    .new-browser-btn-wrapper .btn-prev {
     width: 25%;
@@ -290,6 +297,7 @@
   }
   .breadcrumbs-title{
     line-height: 35px;
+    font-size: 22px;
   }
   .breadcrumbs-section .container{
     top: 55% !important;

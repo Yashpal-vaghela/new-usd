@@ -208,7 +208,9 @@
                   {% for ie in relatedBlog %}
                     <div class="col-lg-5 my-3">
                       <div class="single-blog-related-img">
-                        <img src="{{ie.image.url}}" class="mb-0 img-fluid" alt="{{ ie.image_alt }}"/>
+                        <a href="{% url 'home:blogsd' ie.slug %}">
+                          <img src="{{ie.image.url}}" class="mb-0 img-fluid" alt="{{ ie.image_alt }}"/>
+                        </a>
                       </div>
                     </div>
                     <div class="col-lg-7 mt-2 mb-2 single-blog-related-content">
@@ -297,7 +299,7 @@
               </div>
               <!--Contact Form-->
               <div class="single-blog-content2 pt-4">
-                <h2 class="single-blog-content2-title  cool d-inline-block">Contact Us</h2>
+                <h2 class="single-blog-content2-title cool d-inline-block">Contact Us</h2>
                 <form class="contact-form form mb-3 mt-3" action="{% url 'home:blogsd' blog.slug %}" method="post">
                   {% csrf_token %}
                     <div class="justify-content-center mx-auto">
