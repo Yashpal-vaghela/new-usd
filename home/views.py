@@ -60,12 +60,14 @@ def home(request):
     dentist = Dentist.objects.all().order_by("?")[:6]
     gallery = Gallery.objects.all().order_by("?")
     cities = City.objects.annotate(
-        dentist_count=Count('dentist')
-    ).filter(dentist_count__gt=0).order_by('-dentist_count')[:6]
-
+        countdr=Count('dentist', filter=Q(dentist__status=True))
+    ).filter(countdr__gt=0).order_by('-countdr')[:6]
+    a_city = City.objects.annotate(
+        active_dentist_count=Count('dentist', filter=Q(dentist__status=True))
+    ).filter(active_dentist_count__gt=0).order_by('city')
     city_id = request.GET.get('city', '').strip()
     query = request.GET.get('q', '').strip()
-    data1 = Dentist.objects.all().order_by('name')  # Default queryset
+    data1 = Dentist.objects.filter(status=True).order_by('name')
     search_message = None
     city_name = city.city if 'city' in locals() and city else 'Surat'
     query = request.GET.get("q",'').strip()
@@ -135,6 +137,7 @@ def home(request):
       'city': city_id or request.session.get('city'),
       'review': reviews,      
       'city_name': city_name,
+      'a_city': a_city,
     }
     return render(request, 'index.html', context)
 # def home(request):
@@ -235,8 +238,10 @@ def home(request):
 
 
 def location_view(request):
-    data1 = City.objects.all()[:10]
-    return render(request, 'location.html', {'data1': data1})
+    cities = City.objects.annotate(
+        dentist_count=Count('dentist', filter=Q(dentist__status=True))
+    ).filter(dentist_count__gt=0).order_by('-dentist_count')[:6]
+    return render(request, 'location.html', {'cities': cities})
 
 
 # def smile_step(request):
@@ -245,6 +250,13 @@ def location_view(request):
 
 def search_all_usd(request, city_name=None):
     city = None
+    a_city = City.objects.annotate(
+        active_dentist_count=Count(
+            'dentist',
+            filter=Q(dentist__status=True)
+        )
+    ).filter(active_dentist_count__gt=0).order_by('city')
+
     query = request.GET.get('q', '').strip()
     # mari mate 10 valie crunchx, 10 vala singbajiya
     # AJAX search (for autocomplete or live suggestions)
@@ -252,10 +264,10 @@ def search_all_usd(request, city_name=None):
         suggestion = []
         if query:
             # search doctors by name
-            doctor_matches = Dentist.objects.filter(name__icontains=query)
+            doctor_matches = Dentist.objects.filter(status=True, name__icontains=query)
 
             # search clinices by clinic name
-            clinic_matches = Dentist.objects.filter(clinic_name__icontains=query)
+            clinic_matches = Dentist.objects.filter(status=True, clinic_name__icontains=query)
 
             # matching_doctor = Dentist.objects.filter(Q(name__icontains=query)).distinct()[:5]
             # results = [{'name': dentist.name, 'id': dentist.id, 'slug': dentist.slug} for dentist in matching_doctor]
@@ -278,7 +290,7 @@ def search_all_usd(request, city_name=None):
         return JsonResponse(suggestion, safe=False)
 
     city_id = request.GET.get('city', '').strip()
-    data1 = Dentist.objects.all().order_by('name')
+    data1 = Dentist.objects.filter(status=True).order_by('name')
     search_message = None
 
     user_latitude = request.session.get('latitude')
@@ -352,7 +364,7 @@ def search_all_usd(request, city_name=None):
 
         nearby_city_distances = []
         for c in nearby_cities:
-            if Dentist.objects.filter(city=c).exists():
+            if Dentist.objects.filter(city=c, status=True).exists():
                 dist = geodesic(user_location, (c.latitude, c.longitude)).km
                 nearby_city_distances.append((dist, c))
 
@@ -362,7 +374,7 @@ def search_all_usd(request, city_name=None):
             nearest_city = nearby_city_distances[0][1]
             city = nearest_city
             city_name = nearest_city.city
-            data1 = Dentist.objects.filter(city=nearest_city)
+            data1 = Dentist.objects.filter(city=nearest_city, status=True)
             sorted_doctors = list(data1)
             search_message = (
                 f"No Ultimate Designers Found in {user_location[0]}, {user_location[1]}. "
@@ -390,6 +402,7 @@ def search_all_usd(request, city_name=None):
         'city_id': city.id if city else '',
         'total': len(data),
         'city_name': city_name,
+        'a_city': a_city,
     }
 
     return render(request, 'list.html', context)
@@ -409,7 +422,7 @@ def search_city_dentists(request, city_name):
 
     try:
         city = City.objects.get(city__iexact=city_name.replace("-", " "))
-        data1 = Dentist.objects.filter(city=city).order_by('name')
+        data1 = Dentist.objects.filter(city=city, status=True).order_by('name')
     except City.DoesNotExist:
         data1 = Dentist.objects.none()
         search_message = f"No Ultimate Designers Found in {city_name}."
@@ -781,11 +794,15 @@ def blogsd(request, pk):
     unique_categories = blog.category.all()
 
     form_30_html = render_to_string("custom-search-form.html", {
-        "a_city": City.objects.all(),
+        "a_city": City.objects.annotate(
+                    active_dentist_count=Count('dentist', filter=Q(dentist__status=True))
+                ).filter(active_dentist_count__gt=0).order_by('city'),
     })
 
     section_70_html = render_to_string("custom-contact-form.html", {
-        "a_city": City.objects.all(),
+        "a_city": City.objects.annotate(
+                    active_dentist_count=Count('dentist', filter=Q(dentist__status=True))
+                ).filter(active_dentist_count__gt=0).order_by('city'),
     })
     blog.content = mark_safe(
         inject_multiple_sections(
@@ -875,7 +892,7 @@ def contact(request):
 
             return redirect('home:thankyou')
         else:
-            messages.error(request, 'Your query is not sent! Try Again.')
+            messages.error(request, 'Something went wrong! Please try again.')
             return redirect(request.META.get('HTTP_REFERER', 'contact'))
 
     context = {
@@ -887,65 +904,62 @@ def dentist_connect(request):
     if request.method == 'POST':
         form = DentistConnectForm(request.POST)
 
-        recaptcha_response = request.POST.get('g-recaptcha-response')
-        data = {
-            'secret' : settings.RECAPTCHA_SECRET_KEY,
-            'response' : recaptcha_response,     
-        }
-        r = requests.post("https://www.google.com/recaptcha/api/siteverify", data=data)
-        result = r.json()
+        # recaptcha_response = request.POST.get('g-recaptcha-response')
+        # data = {
+        #     'secret' : settings.RECAPTCHA_SECRET_KEY,
+        #     'response' : recaptcha_response,     
+        # }
+        # r = requests.post("https://www.google.com/recaptcha/api/siteverify", data=data)
+        # result = r.json()
 
-        if not result.get('success'):
-            messages.error(request, 'Invalid reCAPTCHA. Please try again.')
-            return redirect(request.META.get('HTTP_REFERER','dentist-connect'))
+        # if not result.get('success'):
+        #     messages.error(request, 'Invalid reCAPTCHA. Please try again.')
+        #     return redirect(request.META.get('HTTP_REFERER','dentist-connect'))
         
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Your data has been submitted successfully!')
-        
-            # --- Prepare CRM Payload ---
-            full_name = request.POST.get("name", "").strip()
-            first_name, last_name = (full_name.split(" ", 1) + [""])[:2]
-
-            payload = {
-                "firstName": first_name or "Visitor",
-                "lastName": last_name,
-                "designation": request.POST.get("designation", ""),
-                "email": request.POST.get("email", ""),
-                "countryCode": "91",
-                "mobile": request.POST.get("phone", ""),
-                "phoneCountryCode": "91",
-                "phone": request.POST.get("phone", ""),
-                "expectedRevenue": "0",
-                "description": request.POST.get("message", ""),
-                "companyName": request.POST.get("clinic_name", ""),
-                "companyState": request.POST.get("state", ""),
-                "companyStreet": "",
-                "companyCity": request.POST.get("city", ""),
-                "companyCountry": "India",
-                "companyPincode": "",
-                "leadPriority": "1",
+            submission = form.save()
+            # messages.success(request, 'Your data has been submitted successfully!')
+            current_datetime_ist = timezone.localtime(timezone.now())
+            formatted_datetime = current_datetime_ist.strftime("%d-%m-%Y %I:%M %p")
+            context_dict = {
+                "Name": submission.name,
+                "Email": submission.email,
+                "Phone": submission.phone,
+                "ClinicName": submission.clinic_name,
+                "City": submission.city,
+                "DateTime": formatted_datetime,
             }
-
+            threading.Thread(
+                target=send_contact_email_async,
+                args=(context_dict,),
+                daemon=True
+            ).start()
+            bikai_payload  ={
+               "Name": submission.name,
+               "Email": submission.email,
+               "Contact": submission.phone,
+               "ClinicName": submission.clinic_name,
+               "City": submission.city,
+               "DateTime": formatted_datetime,
+            }
+            bikai_url = "https://bikapi.bikayi.app/chatbot/webhook/N8eHI9BWzqVPK7RnXu2xs5qIQt23?flow=webdentist7060"
             headers = {
                 "Content-Type": "application/json",
-                "authToken": "79atXvY2ZVZXs32Tbnw89A==.icG8H90dELRwyW3euMFdTg==", 
-                "timeZone": "Asia/Calcutta",
             }
 
             # --- Send to CRM ---
             try:
                 crm_response = requests.post(
-                    "https://crm.my-company.app/api/v1/lead/webhook",
-                    json=payload,
+                    bikai_url,
+                    json=bikai_payload,
                     headers=headers,
                     timeout=10,
                 )
                 crm_response.raise_for_status()
-                messages.success(
-                    request,
-                    "Thanks for connecting with Ultimate Smile Design. Our team will reach out shortly!"
-                )
+                # messages.success(
+                #     request,
+                #     "Thanks for connecting with Ultimate Smile Design. Our team will reach out shortly!"
+                # )
             except requests.exceptions.RequestException as e:
                 messages.warning(request, f"Data saved but CRM sync failed: {str(e)}")
 
@@ -955,7 +969,7 @@ def dentist_connect(request):
             messages.error(request, 'Something went wrong! Please try again.')
             return redirect(request.META.get('HTTP_REFERER', 'dentist-connect'))
     context = {
-        "RECAPTCHA_SITE_KEY": settings.RECAPTCHA_SITE_KEY
+        # "RECAPTCHA_SITE_KEY": settings.RECAPTCHA_SITE_KEY
     }
     return render(request, 'dentist-connect.html', context)
 
