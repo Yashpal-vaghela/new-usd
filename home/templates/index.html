@@ -1011,56 +1011,65 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function initDentistSwiper() {
-    const swiperEl = document.querySelector(".newdentistSwiper .swiper-wrapper");
-    if(!swiperEl) return;
+    const swiperWrapper = document.querySelector(".newdentistSwiper .swiper-wrapper");
+    if(!swiperWrapper) return;
 
-    const slides = swiperEl.querySelectorAll(".swiper-slide");
-    const isMobile = (window.innerWidth <= 768);
+    let slides = swiperWrapper.querySelectorAll(".swiper-slide");
+    // const isMobile = (window.innerWidth <= 768);
 
-    const enableLoop = slides.length === 2 || slides.length === 3 || slides.length === 4 ? slides.length > 4 : true;
-    const a = (window.innerWidth >= 768) ? enableLoop : true;
+    /* Duplicate only when exactly 4 (as before) */
+    if (slides.length === 4) {
+      slides.forEach(slide => swiperWrapper.appendChild(slide.cloneNode(true)));
+    }
+    slides = swiperWrapper.querySelectorAll(".swiper-slide");
+    const slidesCount = slides.length;
+
+    let slidesPerView = 1;
+    if (window.innerWidth >= 1200) slidesPerView = 3;
+    else if (window.innerWidth >= 768) slidesPerView = 2;
+
+    const enableLoop = slidesCount === 2 || slidesCount === 1 ? true : slidesCount > slidesPerView;
+
+    const enableCentering = slidesCount <= slidesPerView || enableLoop;
+
+    if (window.dentistSwiper) {
+      window.dentistSwiper.destroy(true, true);
+    }
+    // const enableLoop = slides.length === 2 || slides.length === 3 || slides.length === 4 ? slides.length > 4 : true;
+    // const a = (window.innerWidth >= 768) ? enableLoop : true;
 
     // console.log("Slides count:",slides.length,"enableloop",enableLoop,"enableloop1",a ,"window",window.innerWidth <= 768);
 
     window.dentistSwiper = new Swiper(".newdentistSwiper", {
-      slidesPerView: 'auto',
+      slidesPerView: slidesPerView,
       spaceBetween: 30,
-      centeredSlides: true,
-      loop: a,
+
+      loop: enableLoop,
+      centeredSlides: enableCentering,
+      centeredSlidesBounds: !enableLoop,
+
       speed: 800,
-      effect:"slide",
-      freeMode:false,
-      grabCursor:false,
-      observer:true,
-      observeParents:true,
-      // autoplay:false,
-      autoplay:{
-        delay:3000,
-        disableOnInteraction:false,
-      },
-      breakpoints:{
-        0:{slidesPerView:1,spaceBetween:20},
-        576:{slidesPerView:1,spaceBetween:20},
-        768:{slidesPerView:2},
-        991:{slidesPerView:2},
-        992:{slidesPerView:3,spaceBetween:30},
-        1200:{slidesPerView:3,spaceBetween:40}
+      grabCursor:true,
+
+      autoplay: enableLoop
+        ? { delay: 3000, disableOnInteraction: false }
+        : false,
+
+      breakpoints: {
+        0: { slidesPerView: 1, spaceBetween: 20 },
+        768: { slidesPerView: 2 },
+        992: { slidesPerView: 3, spaceBetween: 30 },
+        1200: { slidesPerView: 3, spaceBetween: 40 },
       },
       on: {
-        init: () => {
-          if(window.innerWidth >= 768){
-            console.log("Swiper initialized successfully");
-            if(slides.length === 2 || slides.length === 3 || slides.length === 4){
-                slides.forEach(slide=>slide.classList.remove('swiper-slide-active','swiper-slide-next'));
-                slides[0].classList.add('swiper-slide-active');
-                slides[1].classList.add('swiper-slide-next');
-            }
+        init(swiper) {
+          if (slidesCount === 1) {
+            swiper.el.classList.add("single-slide-center");
           }
-        },
-      },
+        }
+      }
     });
   }
-
   initDentistSwiper();
 });
 </script>
