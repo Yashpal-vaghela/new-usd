@@ -241,9 +241,10 @@
                     <div class="overlay">
                         <div class="container">
                             <h2 class="new-footer-letter-title mt-4 mt-sm-0 mb-sm-4 mb-lg-4  mb-4">Subscribe Our Newsletter</h2>
-                            <form>
+                            <form method="POST" action="{% url 'account:newsletter_subscribe' %}">
+                                {% csrf_token %}
                                 <div class="new-footer-letter-wrapper">  
-                                    <input type="text" class="form-control" placeholder="Enter Your Email"></input>
+                                    <input type="email" name="email" class="form-control" placeholder="Enter Your Email"></input>
                                     <button type="submit" class="sf-sb-btn-footer btn bat">Submit</button>
                                 </div>
                             </form>
@@ -305,7 +306,7 @@
                     
                         </div>
                         <div class="new-footer-bottom">
-                            <span class="new-footer-copyright cool mb-0">Copyright 2025 | <a href="https://advancedentalexport.com/" target="_blank">Advance Dental Export.</a> All Rights Resevred</span>
+                            <span class="new-footer-copyright cool mb-0">Copyright 2026 | <a href="https://advancedentalexport.com/" target="_blank">Advance Dental Export.</a> All Rights Resevred</span>
                         </div>
                 
                     </div>
@@ -509,27 +510,24 @@
 
 
 
-{% block js %}
     <!--Sweet alert after submit the request-->
-{% comment %} <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
-    {% if messages %}
-        
-        {% for ie in messages %}
-            <script>
-                Swal.fire({
-                    position: "top-end",
-                    icon: "{{ie.tags}}",
-                    title: "{{ie.message}}",
-                    showConfirmButton: false,
-                    timer: 2500
-                    });
-            </script>
-        {% endfor %}
-            
-    {% endif %}
-     {% endcomment %}
-{% endblock js %}
-        
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{% if messages %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    {% for message in messages %}
+        Swal.fire({
+        position: "top-center",
+        icon: "{{ message.tags|cut:'safe' }}",
+        title: "{{ message|escapejs }}",
+        showConfirmButton: false,
+        timer: 2000
+        });
+    {% endfor %}
+    });
+    </script>
+{% endif %}
+{% block js %} {% endblock js %} 
 </body>
 </html>

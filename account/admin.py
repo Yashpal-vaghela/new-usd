@@ -66,6 +66,10 @@ class BeforeAfterAdmin(admin.ModelAdmin):
         return "(No Image)"
     
     image_preview.short_description = "Preview"
+class NewsletterSubscriberAdmin(admin.ModelAdmin):
+    list_display = ('email','is_active','subscribed_at')
+    search_fields = ('email',)
+    list_filter = ('is_active','subscribed_at')
 
 admin.site.register(Location)
 admin.site.register(City)
@@ -88,3 +92,4 @@ admin.site.register(UserSubmission, UserSubmissionAdmin)
 admin.site.register(PatientReview, PatientReviewAdmin) 
 admin.site.register(DentistRedirect, DentistRedirectAdmin)
 admin.site.register(BeforeAfter, BeforeAfterAdmin)
+admin.site.register(NewsletterSubscriber, NewsletterSubscriberAdmin)
