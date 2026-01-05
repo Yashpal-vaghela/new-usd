@@ -1,0 +1,271 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block header %}
+{% endblock header %}
+{% block css %}
+{% endblock %}
+{% block body %}
+    <div class="virtualpage">
+        <section class="banner_section mt-4 mb-3 mt-sm-4 mb-sm-4 pb-3">
+            <div class="container">
+                <div class="row justify-content-between align-items-center mb-2 mb-sm-2 mb-md-2 mb-lg-4">
+                    <div class="col-lg-6 col-md-8 col-12">
+                        <span class="d-flex justify-content-center justify-content-sm-between align-items-center banner-highlight"><img src="{% static 'banner-vector.svg'%}" class="img-fluid mx-2" alt="banner-vector" /><b class="cool">AI-Powered Smile Simulation</b></span>
+                        <h1>Preview Your Future Smile with <b class="cool">Ultimate AI.</b></h1>
+                        <p>See your future smile with our advanced AI virtual smile design try-on.</p>
+                        <button class="btn bat d-flex align-items-center justify-content-between" data-bs-toggle="modal" data-bs-target="#smileModal">Design My Smile Now<img src="{% static 'arrow-left.svg'%}" class="mx-1 img-fluid" alt="arrow-left"/></button>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-12 banner-content">
+                        {% comment %} <img src="{% static 'bg-vector7.png'%}" class="bg-vector d-block d-md-none img-fluid" alt="bg-vector" /> {% endcomment %}
+                        {% comment %} <img src="{% static 'bg-vector3.png'%}" class="bg-vector d-none d-md-block img-fluid" alt="bg-vector" /> {% endcomment %}
+                        <img src="{% static 'bg-vector3.png'%}" class="bg-vector img-fluid" alt="bg-vector" />
+                        <div class="d-flex align-items-center justify-content-start">
+                            <img src="{% static 'banner-img1.png' %}" class="banner-img1 img-fluid" alt=""/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="tips-section text-center py-4 pt-md-4 pb-md-3 pt-lg-5 pb-lg-5">
+            <div class="container">
+                <div class="mt-2">
+                    <h2 class="text-center tips-title cool">Tips for a Perfect Smile Try-On</h2>
+                    <p class="tips-subtitle">Transform your smile in three simple steps. No waiting, no appointments — just instant results.</p>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="tips-card">
+                            <div class="tips-icon-wrapper d-flex justify-content-between align-items-center">
+                                <img src="{% static 'tips-icon11.svg'%}" class="img-fluid" alt="tips-icon1"/>
+                                <span>01</span>
+                            </div>
+                            <h2>Camera Access</h2>
+                            <p>Allow camera access to capture your photo.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="tips-card">
+                            <div class="tips-icon-wrapper d-flex justify-content-between align-items-center">
+                                <img src="{% static 'tips-icon2.svg'%}" class="img-fluid" alt="tips-icon1"/>
+                                <span>02</span>
+                            </div>
+                            <h2>Face Detection</h2>
+                            <p>Keep your face centred and clearly visible on the screen.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="tips-card">
+                            <div class="tips-icon-wrapper d-flex justify-content-between align-items-center">
+                                <img src="{% static 'tips-icon3.svg'%}" class="img-fluid" alt="tips-icon1"/>
+                                <span>03</span>
+                            </div>
+                            <h2>Smile Naturally</h2>
+                            <p>Smile naturally and make sure your teeth are visible.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="tips-card">
+                            <div class="tips-icon-wrapper d-flex justify-content-between align-items-center">
+                                <img src="{% static 'tips-icon4.svg'%}" class="img-fluid" alt="tips-icon1"/>
+                                <span>04</span>
+                            </div>
+                            <h2>Capture Smile</h2>
+                            <p>The capture button will activate once a proper smile is detected.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="ai-smile-section my-5">
+            <div class="container">
+                <div class="ai-smile-wrapper text-center">
+                    <h2 class="cool">Ready to See Your New Smile?</h2>
+                    <p>See your personalized smile transformation in just 30 seconds—no commitment, instant results.</p>
+                    <button class="btn bat d-flex align-items-center justify-content-center mx-auto" data-bs-toggle="modal" data-bs-target="#smileModal">Design My Smile Now <img src="{% static 'arrow-left.svg'%}" class="mx-1 img-fluid" alt="arrow-left" /></button>
+                </div>
+            </div>
+        </section>
+        <div class="modal fade" id="smileModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <h2 class="modal-title cool">Smile,Snap,Submit</h2>
+                        <p>Share a selfie to simulate what your new smile could look like.</p>
+                        <img src="{% static 'user-smile1.png'%}" class="mb-2 img-fluid" alt="user-smile-img" />
+                        <p class="mb-0">Don't worry, we won't save or use your image at any time.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn bat d-flex align-items-center justify-content-center">Open Camera <img src="{% static 'arrow-left.svg'%}" class="mx-1 img-fluid" alt="arrow-left" /></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="new-footer">
+            <div class="container">
+            
+                <div class="container new-footer-wrapper">
+                    <div class="row footer-links my-md-0 my-lg-3">
+                        <div class="col-lg-2 col-md-3 col-sm-4 col-4 footer-link">
+                            <a href="https://advancedentalexport.com/about-us/" target="_blank">
+                                <span data-hover="About ADE">About ADE </span>
+                                {% comment %} <img src="{% static 'footer-link-img.svg'%}" class="px-1 px-sm-2 img-fluid" /> {% endcomment %}
+                                <svg class="px-1 px-sm-2 img-fluid" width="12" height="12" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_556_285)">
+                                <path d="M11.227 0H2.15898C1.73242 0 1.38555 0.346875 1.38555 0.773438C1.38555 1.2 1.73242 1.54688 2.15898 1.54688H9.35664L0.227734 10.6781C-0.0746094 10.9805 -0.0746094 11.4703 0.227734 11.7727C0.530078 12.075 1.01992 12.075 1.32227 11.7727L10.4512 2.64141V9.83906C10.4512 10.2656 10.798 10.6125 11.2246 10.6125C11.6512 10.6125 11.998 10.2656 11.998 9.83906V0.773438C12.0004 0.346875 11.6535 0 11.227 0Z" fill="white"/>
+                                </g>
+                                <defs>
+                                <clipPath id="clip0_556_285">
+                                <rect width="12" height="12" fill="white"/>
+                                </clipPath>
+                                </defs>
+                                </svg>
+                            </a>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-4 col-4 footer-link">
+                            <a href="{% url 'home:search_all_usd' %}">
+                                <span data-hover="All Dentists">All Dentists </span>
+                                {% comment %} <img src="{% static 'footer-link-img.svg'%}" class="px-2 img-fluid" /> {% endcomment %}
+                                <svg class="px-1 px-sm-2 img-fluid" width="12" height="12" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_556_285)">
+                                <path d="M11.227 0H2.15898C1.73242 0 1.38555 0.346875 1.38555 0.773438C1.38555 1.2 1.73242 1.54688 2.15898 1.54688H9.35664L0.227734 10.6781C-0.0746094 10.9805 -0.0746094 11.4703 0.227734 11.7727C0.530078 12.075 1.01992 12.075 1.32227 11.7727L10.4512 2.64141V9.83906C10.4512 10.2656 10.798 10.6125 11.2246 10.6125C11.6512 10.6125 11.998 10.2656 11.998 9.83906V0.773438C12.0004 0.346875 11.6535 0 11.227 0Z" fill="white"/>
+                                </g>
+                                <defs>
+                                <clipPath id="clip0_556_285">
+                                <rect width="12" height="12" fill="white"/>
+                                </clipPath>
+                                </defs>
+                                </svg>
+                            </a>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-4 col-4 footer-link">
+                            <a href="https://advancedentalexport.com/ad-implant/" target="_blank">
+                                <span data-hover="ADE Implant">ADE Implant </span>
+                                {% comment %} <img src="{% static 'footer-link-img.svg'%}" class="px-2 img-fluid" /> {% endcomment %}
+                                <svg class="px-1 px-sm-2 img-fluid" width="12" height="12" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_556_285)">
+                                <path d="M11.227 0H2.15898C1.73242 0 1.38555 0.346875 1.38555 0.773438C1.38555 1.2 1.73242 1.54688 2.15898 1.54688H9.35664L0.227734 10.6781C-0.0746094 10.9805 -0.0746094 11.4703 0.227734 11.7727C0.530078 12.075 1.01992 12.075 1.32227 11.7727L10.4512 2.64141V9.83906C10.4512 10.2656 10.798 10.6125 11.2246 10.6125C11.6512 10.6125 11.998 10.2656 11.998 9.83906V0.773438C12.0004 0.346875 11.6535 0 11.227 0Z" fill="white"/>
+                                </g>
+                                <defs>
+                                <clipPath id="clip0_556_285">
+                                <rect width="12" height="12" fill="white"/>
+                                </clipPath>
+                                </defs>
+                                </svg>
+                            </a>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-5 col-5 footer-link">
+                            <a href="https://advancedentalexport.com/zirconia-crown/" target="_blank">
+                                <span data-hover="Advance Zirconia">Advance Zirconia </span>
+                                {% comment %} <img src="{% static 'footer-link-img.svg'%}" class="px-2 img-fluid"/> {% endcomment %}
+                                <svg class="px-1 px-sm-2 img-fluid" width="12" height="12" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_556_285)">
+                                <path d="M11.227 0H2.15898C1.73242 0 1.38555 0.346875 1.38555 0.773438C1.38555 1.2 1.73242 1.54688 2.15898 1.54688H9.35664L0.227734 10.6781C-0.0746094 10.9805 -0.0746094 11.4703 0.227734 11.7727C0.530078 12.075 1.01992 12.075 1.32227 11.7727L10.4512 2.64141V9.83906C10.4512 10.2656 10.798 10.6125 11.2246 10.6125C11.6512 10.6125 11.998 10.2656 11.998 9.83906V0.773438C12.0004 0.346875 11.6535 0 11.227 0Z" fill="white"/>
+                                </g>
+                                <defs>
+                                <clipPath id="clip0_556_285">
+                                <rect width="12" height="12" fill="white"/>
+                                </clipPath>
+                                </defs>
+                                </svg>
+                            </a>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-7 footer-link">
+                            <a href="https://advancedentalexport.com/aesthetic-maxima/" target="_blank">
+                                <span data-hover="Aesthetic Maxima-Emax">Aesthetic Maxima-Emax </span>
+                                {% comment %} <img src="{% static 'footer-link-img.svg'%}" class="px-2 img-fluid"/> {% endcomment %}
+                                <svg class="px-1 px-sm-2 img-fluid" width="12" height="12" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_556_285)">
+                                <path d="M11.227 0H2.15898C1.73242 0 1.38555 0.346875 1.38555 0.773438C1.38555 1.2 1.73242 1.54688 2.15898 1.54688H9.35664L0.227734 10.6781C-0.0746094 10.9805 -0.0746094 11.4703 0.227734 11.7727C0.530078 12.075 1.01992 12.075 1.32227 11.7727L10.4512 2.64141V9.83906C10.4512 10.2656 10.798 10.6125 11.2246 10.6125C11.6512 10.6125 11.998 10.2656 11.998 9.83906V0.773438C12.0004 0.346875 11.6535 0 11.227 0Z" fill="white"/>
+                                </g>
+                                <defs>
+                                <clipPath id="clip0_556_285">
+                                <rect width="12" height="12" fill="white"/>
+                                </clipPath>
+                                </defs>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="new-footer-content">
+                    <div class="overlay">
+                        <div class="container">
+                            <h2 class="new-footer-letter-title mt-4 mt-sm-0 mb-sm-4 mb-lg-4  mb-4">Subscribe Our Newsletter</h2>
+                            <form method="POST" action="{% url 'account:newsletter_subscribe' %}">
+                                {% csrf_token %}
+                                <div class="new-footer-letter-wrapper">  
+                                    <input type="email" name="email" class="form-control" placeholder="Enter Your Email"></input>
+                                    <button type="submit" class="sf-sb-btn-footer btn bat">Submit</button>
+                                </div>
+                            </form>
+                            <div class="new-footer-logo">
+                                <img src="{% static 'usdlog.webp'%}" class="img-fluid" alt="Ultimate Smile Design official logo for Premium Aesthetic Dental Solutions"></img>
+                            </div>
+                            <div class="new-footer-social-links container pb-2">
+                                <ul class="footer-links">
+                                    <li class="footer-link">
+                                        <a target="_blank" href="https://www.instagram.com/ultimate_smile_design/">
+                                            <span data-hover="Instagram">Instagram </span>
+                                            {% comment %} <img src="{% static 'footer-link-img.svg'%}" class="px-2 img-fluid"/> {% endcomment %}
+                                            <svg class="px-2 img-fluid" width="12" height="12" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <g clip-path="url(#clip0_556_285)">
+                                            <path d="M11.227 0H2.15898C1.73242 0 1.38555 0.346875 1.38555 0.773438C1.38555 1.2 1.73242 1.54688 2.15898 1.54688H9.35664L0.227734 10.6781C-0.0746094 10.9805 -0.0746094 11.4703 0.227734 11.7727C0.530078 12.075 1.01992 12.075 1.32227 11.7727L10.4512 2.64141V9.83906C10.4512 10.2656 10.798 10.6125 11.2246 10.6125C11.6512 10.6125 11.998 10.2656 11.998 9.83906V0.773438C12.0004 0.346875 11.6535 0 11.227 0Z" fill="white"/>
+                                            </g>
+                                            <defs>
+                                            <clipPath id="clip0_556_285">
+                                            <rect width="12" height="12" fill="white"/>
+                                            </clipPath>
+                                            </defs>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                    <li class="footer-link">
+                                        <a target="_blank" href="https://www.facebook.com/ultimate.smile.designing">
+                                            <span data-hover="Facebook">Facebook </span>
+                                            {% comment %} <img src="{% static 'footer-link-img.svg'%}" class="px-2 img-fluid"/> {% endcomment %}
+                                            <svg class="px-2 img-fluid" width="12" height="12" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <g clip-path="url(#clip0_556_285)">
+                                            <path d="M11.227 0H2.15898C1.73242 0 1.38555 0.346875 1.38555 0.773438C1.38555 1.2 1.73242 1.54688 2.15898 1.54688H9.35664L0.227734 10.6781C-0.0746094 10.9805 -0.0746094 11.4703 0.227734 11.7727C0.530078 12.075 1.01992 12.075 1.32227 11.7727L10.4512 2.64141V9.83906C10.4512 10.2656 10.798 10.6125 11.2246 10.6125C11.6512 10.6125 11.998 10.2656 11.998 9.83906V0.773438C12.0004 0.346875 11.6535 0 11.227 0Z" fill="white"/>
+                                            </g>
+                                            <defs>
+                                            <clipPath id="clip0_556_285">
+                                            <rect width="12" height="12" fill="white"/>
+                                            </clipPath>
+                                            </defs>
+                                            </svg>
+                                        </a>                              
+                                    </li>
+                                    <li class="footer-link">
+                                        <a target="_blank" href="https://www.linkedin.com/company/ultimate-smile-designing-by-ade">
+                                            <span data-hover="LinkedIn">LinkedIn </span>
+                                            {% comment %} <img src="{% static 'footer-link-img.svg'%}" class="px-2 img-fluid"/> {% endcomment %}
+                                            <svg class="px-2 img-fluid" width="12" height="12" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <g clip-path="url(#clip0_556_285)">
+                                            <path d="M11.227 0H2.15898C1.73242 0 1.38555 0.346875 1.38555 0.773438C1.38555 1.2 1.73242 1.54688 2.15898 1.54688H9.35664L0.227734 10.6781C-0.0746094 10.9805 -0.0746094 11.4703 0.227734 11.7727C0.530078 12.075 1.01992 12.075 1.32227 11.7727L10.4512 2.64141V9.83906C10.4512 10.2656 10.798 10.6125 11.2246 10.6125C11.6512 10.6125 11.998 10.2656 11.998 9.83906V0.773438C12.0004 0.346875 11.6535 0 11.227 0Z" fill="white"/>
+                                            </g>
+                                            <defs>
+                                            <clipPath id="clip0_556_285">
+                                            <rect width="12" height="12" fill="white"/>
+                                            </clipPath>
+                                            </defs>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="new-footer-bottom">
+                            <span class="new-footer-copyright cool mb-0">Copyright 2026 | <a href="https://advancedentalexport.com/" target="_blank">Advance Dental Export.</a> All Rights Resevred</span>
+                        </div>
+                
+                    </div>
+                </div> 
+            </div>
+        </footer>
+    </div>
+{% endblock %}
+{% block js %}
+{% endblock %}
