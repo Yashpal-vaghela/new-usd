@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block header %}
+{% endblock header %}
+{% block css %}
+{% endblock %}
+{% block body %}
+    <div class="virtualpage">
+        <section class="banner_section mt-4 mb-3 mt-sm-4 mb-sm-4 pb-3">
+            <div class="container">
+                <div class="row justify-content-between align-items-center mb-2 mb-sm-2 mb-md-2 mb-lg-4">
+                    <div class="col-lg-6 col-md-8 col-12">
+                        <span class="d-flex justify-content-center justify-content-sm-between align-items-center banner-highlight"><img src="{% static 'banner-vector.svg'%}" class="img-fluid mx-2" alt="banner-vector" /><b class="cool">AI-Powered Smile Simulation</b></span>
+                        <h1>Preview Your Future Smile with <b class="cool">Ultimate AI.</b></h1>
+                        <p>See your future smile with our advanced AI virtual smile design try-on.</p>
+                        <button class="btn bat d-flex align-items-center justify-content-between" data-bs-toggle="modal" data-bs-target="#smileModal">Design My Smile Now<img src="{% static 'arrow-left.svg'%}" class="mx-1 img-fluid" alt="arrow-left"/></button>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-12 banner-content">
+                        {% comment %} <img src="{% static 'bg-vector7.png'%}" class="bg-vector d-block d-md-none img-fluid" alt="bg-vector" /> {% endcomment %}
+                        {% comment %} <img src="{% static 'bg-vector3.png'%}" class="bg-vector d-none d-md-block img-fluid" alt="bg-vector" /> {% endcomment %}
+                        <img src="{% static 'bg-vector3.png'%}" class="bg-vector img-fluid" alt="bg-vector" />
+                        <div class="d-flex align-items-center justify-content-start">
+                            <img src="{% static 'banner-img1.png' %}" class="banner-img1 img-fluid" alt=""/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="tips-section text-center py-4 pt-md-4 pb-md-3 pt-lg-5 pb-lg-5">
+            <div class="container">
+                <div class="mt-2">
+                    <h2 class="text-center tips-title cool">Tips for a Perfect Smile Try-On</h2>
+                    <p class="tips-subtitle">Transform your smile in three simple steps. No waiting, no appointments — just instant results.</p>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="tips-card">
+                            <div class="tips-icon-wrapper d-flex justify-content-between align-items-center">
+                                <img src="{% static 'tips-icon11.svg'%}" class="img-fluid" alt="tips-icon1"/>
+                                <span>01</span>
+                            </div>
+                            <h2>Camera Access</h2>
+                            <p>Allow camera access to capture your photo.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="tips-card">
+                            <div class="tips-icon-wrapper d-flex justify-content-between align-items-center">
+                                <img src="{% static 'tips-icon2.svg'%}" class="img-fluid" alt="tips-icon1"/>
+                                <span>02</span>
+                            </div>
+                            <h2>Face Detection</h2>
+                            <p>Keep your face centred and clearly visible on the screen.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="tips-card">
+                            <div class="tips-icon-wrapper d-flex justify-content-between align-items-center">
+                                <img src="{% static 'tips-icon3.svg'%}" class="img-fluid" alt="tips-icon1"/>
+                                <span>03</span>
+                            </div>
+                            <h2>Smile Naturally</h2>
+                            <p>Smile naturally and make sure your teeth are visible.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="tips-card">
+                            <div class="tips-icon-wrapper d-flex justify-content-between align-items-center">
+                                <img src="{% static 'tips-icon4.svg'%}" class="img-fluid" alt="tips-icon1"/>
+                                <span>04</span>
+                            </div>
+                            <h2>Capture Smile</h2>
+                            <p>The capture button will activate once a proper smile is detected.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="ai-smile-section my-5">
+            <div class="container">
+                <div class="ai-smile-wrapper text-center">
+                    <h2 class="cool">Ready to See Your New Smile?</h2>
+                    <p>See your personalized smile transformation in just 30 seconds—no commitment, instant results.</p>
+                    <button class="btn bat d-flex align-items-center justify-content-center mx-auto" data-bs-toggle="modal" data-bs-target="#smileModal">Design My Smile Now <img src="{% static 'arrow-left.svg'%}" class="mx-1 img-fluid" alt="arrow-left" /></button>
+                </div>
+            </div>
+        </section>
+        <div class="modal fade" id="smileModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <h2 class="modal-title cool">Smile,Snap,Submit</h2>
+                        <p>Share a selfie to simulate what your new smile could look like.</p>
+                        <img src="{% static 'user-smile1.png'%}" class="mb-2 img-fluid" alt="user-smile-img" />
+                        <p class="mb-0">Don't worry, we won't save or use your image at any time.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn bat d-flex align-items-center justify-content-center">Open Camera <img src="{% static 'arrow-left.svg'%}" class="mx-1 img-fluid" alt="arrow-left" /></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+{% endblock %}

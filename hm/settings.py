@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'home',
     'ckeditor',
     'account',
-    'import_export'
+    'import_export',
+    'virtualsmileAI'
 ]
 
 MIDDLEWARE = [
@@ -211,6 +212,9 @@ CKEDITOR_CONFIGS = {
 }
 RECAPTCHA_SITE_KEY = "6LeNfq4rAAAAAMBnNy3uLYynCo2hDdx6vkuMfDl7"
 RECAPTCHA_SECRET_KEY = "6LeNfq4rAAAAAPM7U4LVTLif735LUSoLuYjEbBo_"
+
+GEMINI_API_KEY = 'AIzaSyB5gh6wHhhoIKxwhtN8b-zX4IcrTf90y24'
+GEMINI_MODEL_NAME = 'gemini-3.0-pro-image-preview'
 # SMTP
 # EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST ='localhost' 

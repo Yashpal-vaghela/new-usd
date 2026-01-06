@@ -12,7 +12,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('home.urls')),
     path('account/', include('account.urls')),
-    
+    path('virtualsmileAI/', include('virtualsmileAI.urls')),
     path('get-location-info/', pre.get_location_info, name='get_location_info'),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     # password reset
