@@ -10,15 +10,15 @@
             <div class="container">
                 <div class="row justify-content-between align-items-center mb-2 mb-sm-2 mb-md-2 mb-lg-4">
                     <div class="col-lg-6 col-md-8 col-12">
-                        <span class="d-flex justify-content-center justify-content-sm-between align-items-center banner-highlight"><img src="{% static 'banner-vector.svg'%}" class="img-fluid mx-2" alt="banner-vector" /><b class="cool">AI-Powered Smile Simulation</b></span>
+                        <span class="d-flex justify-content-center justify-content-sm-between justify-content-xl-center align-items-center banner-highlight"><img src="{% static 'banner-vector.svg'%}" class="img-fluid mx-2" alt="banner-vector" /><b class="cool">AI-Powered Smile Simulation</b></span>
                         <h1>Preview Your Future Smile with <b class="cool">Ultimate AI.</b></h1>
                         <p>See your future smile with our advanced AI virtual smile design try-on.</p>
                         <button class="btn bat d-flex align-items-center justify-content-between" data-bs-toggle="modal" data-bs-target="#smileModal">Design My Smile Now<img src="{% static 'arrow-left.svg'%}" class="mx-1 img-fluid" alt="arrow-left"/></button>
                     </div>
                     <div class="col-lg-4 col-md-4 col-12 banner-content">
                         {% comment %} <img src="{% static 'bg-vector7.png'%}" class="bg-vector d-block d-md-none img-fluid" alt="bg-vector" /> {% endcomment %}
-                        {% comment %} <img src="{% static 'bg-vector3.png'%}" class="bg-vector d-none d-md-block img-fluid" alt="bg-vector" /> {% endcomment %}
-                        <img src="{% static 'bg-vector3.png'%}" class="bg-vector img-fluid" alt="bg-vector" />
+                        <img src="{% static 'bg-vector3.png'%}" class="bg-vector d-none d-md-block img-fluid" alt="bg-vector" />
+                        <img src="{% static 'bg-vector13.png'%}" class="bg-vector d-block d-md-none img-fluid" alt="bg-vector" />
                         <div class="d-flex align-items-center justify-content-start">
                             <img src="{% static 'banner-img1.png' %}" class="banner-img1 img-fluid" alt=""/>
                         </div>
@@ -86,19 +86,39 @@
             </div>
         </section>
         <div class="modal fade" id="smileModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog ">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body text-center">
-                        <h2 class="modal-title cool">Smile,Snap,Submit</h2>
-                        <p>Share a selfie to simulate what your new smile could look like.</p>
-                        <img src="{% static 'user-smile1.png'%}" class="mb-2 img-fluid" alt="user-smile-img" />
-                        <p class="mb-0">Don't worry, we won't save or use your image at any time.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn bat d-flex align-items-center justify-content-center">Open Camera <img src="{% static 'arrow-left.svg'%}" class="mx-1 img-fluid" alt="arrow-left" /></button>
+                    <div class="modal-body">
+                        <div class="row align-items-center justify-content-center  h-100">
+                            <div class="col-lg-6 col-12 ">
+                                <button type="button" class="d-lg-none d-block btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <div class="video-capture-wrapper my-3 my-lg-4">
+                                    <video id="video" autoplay playsinline muted></video>
+                                    <img id="freezeImg" class="visually-hidden hidden" alt="Captured">
+                                    <canvas id="canvas" width="640" height="480" class="visually-hidden hidden"></canvas>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between btn-wrapper">
+                                    <button class="btn">Change Image</button>
+                                    <button class="btn d-flex align-items-center justify-content-between">Continue <img src="{% static 'light-arrow-left.svg'%}" class="img-fluid" alt="arrow-left" /></button>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-12 d-none d-lg-block">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <div class="modal-content-wrapper">
+                                    <h2 class="modal-title cool">For your best results</h2>
+                                    <ul class="modal-ul">
+                                        <li>Make sure your face is well-lit</li>
+                                        <li>Look directly into your camer</li>
+                                        <li>Smile fully so your teeth are visible</li>
+                                    </ul>
+                                    <h2 class="modal-title cool">Example</h2>
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <img src="{% static 'user-smile1.png'%}" class="py-4 w-75 img-fluid" alt="user-smile-img" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
                     </div>
                 </div>
             </div>
