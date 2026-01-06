@@ -963,7 +963,7 @@ def dentist_connect(request):
             except requests.exceptions.RequestException as e:
                 messages.warning(request, f"Data saved but CRM sync failed: {str(e)}")
 
-            return redirect('home:thankyou')
+            return redirect('home:dthankyou')
         
         else:
             messages.error(request, 'Something went wrong! Please try again.')
@@ -982,6 +982,9 @@ def robots(request):
     
 def thankyou(request):
     return render(request, 'pthankyou.html')
+
+def dthankyou(request):
+    return render(request, 'dthankyou.html')
 
 def quicklinks(request):
     return render(request,'quick-links.html')

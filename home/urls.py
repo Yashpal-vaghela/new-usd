@@ -23,6 +23,7 @@ urlpatterns = [
     path('blogs/<str:pk>/', views.blogsd, name='blogsd'),
     path('contact/', views.contact, name='contact'),
     path('thank-you/', views.thankyou, name='thankyou'),
+    path('dentist-thank-you/', views.dthankyou, name='dthankyou'),
     path('quick-links/',views.quicklinks,name="quicklinks"),
     # path('sitemap.xml/',views.sitemap, name='sitemap'),
     path('robots.txt',views.robots, name='robots'),

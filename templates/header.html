@@ -51,18 +51,18 @@
                             </li> 
                         </a>   
                         <li class="hea-shrink-btn">
-                            <form action="{% url 'home:dentist' %}" method="get">
+                            <a href="{% url 'home:dentist' %}">
                                 <button type="submit" class="bat text-center hea-shrink-btn-inner">
                                     For Patients
                                 </button>
-                            </form>
+                            </a>
                         </li>
                         <li class="hea-shrink-btn">
-                            <form action="{% url 'home:dentist_connect' %}" method="get">
+                            <a href="{% url 'home:dentist_connect' %}">
                                 <button type="submit" class="bat text-center hea-shrink-btn-inner">
                                     For Dentist
                                 </button>
-                            </form>
+                            </a>
                         </li>
                     </ul>
 
@@ -91,10 +91,10 @@
                         <!--    <i class="feather-user"></i> Sign In-->
                         <!--</a>-->
                         <!--Add Listing up-->
-                        <a href="{% url 'home:dentist' %}" method="post" class="aon-add-listing m-l20 header-buttons bat" onClick="localStorage.removeItem('selectedDoctor')">
+                        <a href="{% url 'home:dentist' %}" method="GET" class="aon-add-listing m-l20 header-buttons bat" onClick="localStorage.removeItem('selectedDoctor')">
                             <p class="">For Patients</p>   
                           </a>
-                          <a href="{% url 'home:dentist_connect' %}" method="post" class="bat aon-add-listing m-l20 header-buttons ">
+                          <a href="{% url 'home:dentist_connect' %}" method="GET" class="bat aon-add-listing m-l20 header-buttons ">
                              <p class="">For Dentist</p>
                           </a>
 

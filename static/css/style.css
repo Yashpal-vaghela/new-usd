@@ -7128,6 +7128,11 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   font-size: 28px;
   letter-spacing: 0.5px;
 }
+  .thank-you-heading {
+  font-family: "Barlow", sans-serif !important;
+  font-size: 20px !important;
+  letter-spacing: 0.5px;
+}
 .thank-you-wrapper .btn {
   width: 40%;
   padding: 12px 0;
@@ -7292,6 +7297,9 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   }
 }
 @media (max-width: 768px) {
+  .thank-you-heading{
+    font-size: 18px !important;
+  }
   .thank-you-wrapper .usd-logo-img {
     width: 60%;
     left: 20%;
@@ -7325,6 +7333,9 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   }
 }
 @media (max-width: 576px) {
+  .thank-you-heading{
+    font-size: 16px !important;
+  }
   .thank-you-wrapper .usd-logo-img {
     width: 65%;
     left: 17%;
@@ -7352,6 +7363,9 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   }
 }
 @media (max-width: 480px) {
+  .thank-you-heading {
+    font-size: 16px !important;
+  }
   .thank-you-section{
     padding: 40px 0px 10px;
   }

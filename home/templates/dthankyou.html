@@ -1,0 +1,298 @@
+{% extends 'base2.html' %}
+{% load static %}
+
+{% block header %}
+
+{% endblock header %}
+
+{% block css %}
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+{% endblock css %}
+
+{% block body %}
+   
+<div class="page-wraper">
+     
+    
+    <!-- CONTENT START -->
+    <div class="page-content">
+        <section>
+            <div class="p-0">
+                <picture>
+                    <!-- Mobile image (below 768px) -->
+                    <source
+                    media="(max-width: 576px)"
+                    alt="Ultimate Smile Design - 100% Money Back Guarantee"
+                    srcset="{% static 'mobile-dc.webp' %}"
+                    />
+                    <source 
+                    media="(max-width:991px)"
+                    alt="Ultimate Smile Design - 100% Money Back Guarantee"
+                    srcset="{% static 'tablet-dc.webp'%}"
+                    />
+                    <!-- Default image (desktop) -->
+                    <img
+                    src="{% static 'connect-dentist.webp' %}"
+                    alt="Ultimate Smile Design - 100% Money Back Guarantee"
+                    class="img-fluid w-100 banner-img"
+                    />
+                </picture>
+            </div>
+        </section>
+        <section class='thank-you-section'>
+            <div class="container">
+                <div class="thank-you-wrapper">
+                    <a href="/">    
+                        <img src="{% static 'usd-logo1.svg' %}" class="img-fluid usd-logo-img" alt="usd-logo-img" />
+                    </a>
+                    <img src="{% static 'Thank-you-image.webp'%}" class="img-fluid thankyou-img mb-xl-4 mb-lg-4 mb-2" alt="thank-you-img" width="200" height="200" />
+                    <h2 class="thank-you-heading text-center text-white mb-lg-4 mb-3">Thank You for your interest to <br/> Become a Ultimate Smile Designer</h2>
+                    <p class="text-center text-white w-50 d-flex mx-auto mb-5">We have received your Appliction request and will connect with you soon.</p>
+                    <a href="/"><button class="btn cool mb-5">Back To Home</button></a>
+                    
+                    <div class="social-media-wrapper my-4 my-sm-3">
+                        <h2 class="text-center cool mb-4 ">Social Media</h2>
+                        <div class="social-media-content row w-50 mx-auto text-center justify-content-between align-items-center">
+                            <div class="col-lg-3 col-sm-3 col-3">
+                                <a class="instagram-link" href="https://www.instagram.com/ultimate_smile_design/" target="_blank" rel="noopener noreferrer">
+                                <img src="{% static 'Instagram-icon.svg' %}" class="img-fluid" width="50" height='50' />
+                                <p class="mb-0" data-hover="Instagram">Instagram</p>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-sm-3 col-3">
+                                <a class="facebook-link" href="https://www.facebook.com/ultimate.smile.designing" target="_blank" rel="noopener noreferrer">
+                                <img src="{% static 'facebook-icon.svg' %}" class="img-fluid" width="50" height="50" />
+                                <p class="mb-0"  data-hover="Facebook">Facebook</p>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-sm-3 col-3">
+                                <a class="linkedin-link" href="https://www.linkedin.com/company/ultimate-smile-designing-by-ade" target="_blank" rel="noopener noreferrer">         
+                                <img src="{% static 'linkedin-icon.svg' %}" class="img-fluid" width="50" height="50" />
+                                <p class="mb-0" data-hover="LinkedIn">LinkedIn</p>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-sm-3 col-3">
+                                <a class="whatsapp-link" href="https://wa.me/917265888877" target="_blank" rel="noopener noreferrer">
+                                <img src="{% static 'whatsapp-icon.svg' %}" class="img-fluid" width="50" height="50" />
+                                <p class="mb-0" data-hover="Whatsapp">Whatsapp</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="usd-studio-section overflow-hidden mb-5">
+            <div class="usd-studio-wrapper position-relative">
+                <canvas id="snow-canvas"></canvas>
+                <div class="usd_studio_image usd-title-wrapper">
+                <img src="{% static 'usd-studio-2.webp'%}" class="usd-studio-img img-fluid" width="432" height="420"/>
+                </div>
+                <div class="usd-floating-images position-relative">
+                    <div class="container">
+                    <a href=" https://www.instagram.com/reel/C94bjw2yWj6/" class="usd-img-wrapper usd-img-wrapper-1">
+                        <video   
+                        id="usdVideo"
+                        autoplay
+                        loop
+                        muted
+                        playsinline  
+                        class="usd-img1 img-fluid" 
+                        alt="usd-img1"
+                        sizes="calc(100vw * 0.0875)"
+                        onerror="handleVideoError(this)"
+                        onstalled="handleVideoError(this)"
+                        data-fallback="{% static 'usd-videoImg1.jpg'%}"
+                        >
+                        <source src="https://daedzhbgqwmn0.cloudfront.net/reel-8.mp4" type="video/mp4"></source>
+                        </video>
+                        <div class="usd-bg-shadow"></div>
+                    </a>
+                    <a href="https://www.instagram.com/reel/DNQcAreKk4A/" class="usd-img-wrapper" >
+                        <video   
+                        autoplay
+                        loop
+                        muted
+                        playsinline  
+                        class="usd-img2 img-fluid" 
+                        alt="usd-img2"
+                        data-fallback="{% static 'usd-videoImg2.jpg'%}"
+                        >
+                        <source src="https://daedzhbgqwmn0.cloudfront.net/reel-2.mp4" type="video/mp4"></source>
+                        </video>
+                    </a>
+                    <a href="https://www.instagram.com/reel/DKmhQ8gyGd3/" class="usd-img-wrapper">
+                        <video 
+                        autoplay
+                        loop
+                        muted
+                        playsinline  
+                        class="usd-img3 img-fluid" 
+                        alt="usd-img3"
+                        data-fallback="{% static 'usd-videoImg3.jpg'%}"
+                        >
+                        <source src="https://daedzhbgqwmn0.cloudfront.net/reel-9.mp4" type="video/mp4"></source>
+                        </video>
+                    </a>
+                    <a href="https://www.instagram.com/reel/DBQ-063KXmf/" class="usd-img-wrapper ">
+                        <video   
+                        autoplay
+                        loop
+                        muted
+                        playsinline  
+                        class="usd-img4 img-fluid" 
+                        alt="usd-img4"
+                        data-fallback="{% static 'usd-videoImg4.jpg'%}"
+                        >
+                        <source src="https://daedzhbgqwmn0.cloudfront.net/reel-4.mp4" type="video/mp4"></source>
+                        </video>
+                    </a>
+                    <a href="https://www.instagram.com/reel/DG2uNjSS7AT/" class="usd-img-wrapper">
+                        <video  
+                        autoplay
+                        loop
+                        muted
+                        playsinline  
+                        class="usd-img5 img-fluid" 
+                        alt="usd-img5"
+                        data-fallback="{% static 'usd-videoImg5.jpg'%}"
+                        >
+                        <source src="https://daedzhbgqwmn0.cloudfront.net/reel-3.mp4" type="video/mp4"></source>
+                        </video>
+                        <div class="usd-bg-shadow"></div>
+                    </a>
+                    <a href="https://www.instagram.com/reel/C-H-Qm2KwU5/" class="usd-img-wrapper">
+                        <video
+                        autoplay
+                        loop
+                        muted
+                        playsinline  
+                        class="usd-img6 img-fluid" 
+                        alt="usd-img6"
+                        data-fallback="{% static 'usd-videoImg6.jpg'%}"
+                        >
+                        <source src="https://daedzhbgqwmn0.cloudfront.net/reel-5.mp4" type="video/mp4"></source>
+                        </video>
+                        <div class="usd-bg-shadow"></div>
+                    </a>
+                    <a href="https://www.instagram.com/reel/C8HMFoeKigC/" class="usd-img-wrapper">
+                        <video  
+                        autoplay
+                        loop
+                        muted
+                        playsinline  
+                        class="usd-img7 img-fluid" 
+                        alt="usd-img7"
+                        data-fallback="{% static 'usd-videoImg7.jpg'%}"
+                        >
+                        <source src="https://daedzhbgqwmn0.cloudfront.net/reel-1.mp4" type="video/mp4"></source>
+                        </video>
+                    </a>
+                    <a href=" https://www.instagram.com/reel/DKwrEzaqRoZ/" class="usd-img-wrapper">
+                        <video   
+                        autoplay
+                        loop
+                        muted
+                        playsinline  
+                        class="usd-img8 img-fluid" 
+                        alt="usd-img8"
+                        data-fallback="{% static 'usd-videoImg8.jpg'%}"
+                        >
+                        <source src="https://daedzhbgqwmn0.cloudfront.net/reel-6.mp4" type="video/mp4"></source>
+                        </video>
+                    </a>
+                    <a href="https://www.instagram.com/reel/DNkgB1EIQZo/" class="usd-img-wrapper ">
+                        <video  
+                        autoplay
+                        loop
+                        muted
+                        playsinline  
+                        class="usd-img9 img-fluid" 
+                        alt="usd-img9"
+                        data-fallback="{% static 'usd-videoImg9.jpg'%}"
+                        >
+                        <source src="https://daedzhbgqwmn0.cloudfront.net/reel-7.mp4" type="video/mp4"></source>
+                        </video>
+                    </a>
+                    <a href="https://www.instagram.com/reel/DM-PS3tKjpt/ " class="usd-img-wrapper ">
+                        <video 
+                        autoplay
+                        loop
+                        muted
+                        playsinline  
+                        class="usd-img9 img-fluid" 
+                        alt="usd-img9"
+                        data-fallback="{% static 'usd-videoImg10.jpg'%}"
+                        >
+                        <source src="https://daedzhbgqwmn0.cloudfront.net/reel-10.mp4" type="video/mp4"></source>
+                        </video>
+                        <div class="usd-bg-shadow"></div>
+                    </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search Bar Home START -->
+        {% comment %} <div class="aon-login-wrap d-flex">
+             <div class="aon-login-left">
+                 <div class="aon-login-heading butt">
+                     <div class="aon-login-text cool">
+                         Thank You for Your Appointment Request!
+                     </div>
+                     <div class="aon-login-pic">
+                         <img src="{% static 'images/banner2/doctor.png' %}" alt=""/>
+                     </div>
+                 </div>
+            </div>
+            <div class="aon-login-right d-flex flex-wrap align-items-center">
+                <div class="aon-login-area">
+                    <div class="col-md-12">
+                        <div class="site-logo login-sign-logo">
+                            <a href="{% url 'home:home' %}"><img src="{% static 'usdl.png' %}" style="height: 80px;" alt=""/></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                        <div class="login-sign-head">
+                            <strong class="cool">Thank You for Booking</strong>
+                            <span class="cool">We have received your appointment request and will contact you shortly to confirm the details.</span>
+                        </div>
+                        <div class="thank-you-button" style="text-align: center; margin-top: 20px;">
+                            <a href="{% url 'home:home' %}" class="edu-btn" style="display: inline-block;">Back to Home <i class="icon-4"></i></a>
+                        </div>
+                </div>
+             
+                 
+            </div>
+        </div> {% endcomment %}
+        <!-- Search Bar Home END --> 
+    </div>
+    <!-- CONTENT END -->
+ </div>
+
+
+{% endblock body %}
+    
+
+
+{% block js %}
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{% if messages %}
+<script>
+    {% for message in messages %}
+    Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: '{{ message }}',
+        showConfirmButton: false,
+        timer: 1500
+    });
+    {% endfor %}
+</script>
+{% endif %}
+
+
+{% endblock js %}
+    
