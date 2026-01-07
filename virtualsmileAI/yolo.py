@@ -62,9 +62,9 @@ def encode_image_to_base64_jpeg(img_bgr: np.ndarray, quality: int = 85) -> str:
     b64 = base64.b64encode(buf.tobytes()).decode("utf-8")
     return "data:image/jpeg;base64," + b64
 
-def run_inference_on_bgr(img_bgr, conf_threshold=0.65):
+def run_inference_on_bgr(img_bgr, conf_threshold=0.55):
     if conf_threshold is None:
-        conf_threshold = getattr(settings, 'TEETH_DETECTION_THRESHOLD', 0.65)
+        conf_threshold = getattr(settings, 'TEETH_DETECTION_THRESHOLD', 0.55)
     conf_threshold = float(conf_threshold)
 
     model = load_model()

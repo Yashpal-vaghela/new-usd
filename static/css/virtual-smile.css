@@ -20,6 +20,9 @@
 .bat:focus,.bat:hover{
     box-shadow: none;
 }
+.hidden{
+    display: none !important;
+}
 #smileModal .modal-dialog{
     border: 1px solid #fff;
     box-shadow: 0px 0px 46px 0px #FFFFFF40;
@@ -84,12 +87,22 @@
 #smileModal .btn-wrapper{
     padding: 10px 0px;
 }
-.video-capture-wrapper #video,.video-capture-wrapper #freezeImg {
+.video-capture-wrapper,.video-capture-wrapper {
+    position: relative;
     width: 100%;
     max-width: 640px;
     aspect-ratio: 4 / 3;
     background: #111;
     border-radius: 10px;
+    z-index: 10;
+}
+.video-capture-wrapper #video,
+.video-capture-wrapper #freezeImg{
+  position: absolute;
+  inset: 0;               /* top:0; right:0; bottom:0; left:0 */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 /* endcommon css */
 /* banner css */

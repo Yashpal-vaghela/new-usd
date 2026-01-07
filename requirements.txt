@@ -1,0 +1,10 @@
+Django>=4.2
+django-ckeditor
+django-import-export
+geopy
+ultralytics
+opencv-python
+numpy
+pillow
+google-generativeai
+python-dotenv
