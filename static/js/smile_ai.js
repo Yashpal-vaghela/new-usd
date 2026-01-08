@@ -75,7 +75,7 @@
     stopCamera();
 
     stream = await navigator.mediaDevices.getUserMedia({
-      video: { width: 640, height: 480 },
+      video: { width: 1184, height: 864 },
       audio: false,
     });
 
@@ -157,8 +157,8 @@ function setControlsForCaptured() {
           continue;
         }
 
-        canvas.width = video.videoWidth || 640;
-        canvas.height = video.videoHeight || 480;
+        canvas.width = video.videoWidth || 1184;
+        canvas.height = video.videoHeight || 864;
 
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
         const frame = canvas.toDataURL("image/jpeg", 0.8);
@@ -205,8 +205,8 @@ function setControlsForCaptured() {
       return;
     }
 
-    canvas.width = video.videoWidth || 640;
-    canvas.height = video.videoHeight || 480;
+    canvas.width = video.videoWidth || 1184;
+    canvas.height = video.videoHeight || 864;
 
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     capturedDataUrl = canvas.toDataURL("image/jpeg", 0.92);

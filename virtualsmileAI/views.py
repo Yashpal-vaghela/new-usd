@@ -9,6 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from virtualsmileAI.forms import SmileDesignLeadForm
 from django.utils import timezone
+from virtualsmileAI.gemini import add_logo_on_right
 from .yolo import decode_base64_image, run_inference_on_bgr, encode_image_to_base64_jpeg
 
 THRESHOLD = getattr(settings, "TEETH_DETECTION_THRESHOLD", 0.65)
@@ -142,6 +143,11 @@ def smile_design_api(request):
 
     import cv2
     cv2.imwrite(before_path, img_bgr)
+    
+    add_logo_on_right(
+        before_path,
+        os.path.join(settings.MEDIA_ROOT, "logo", "usd-logo.png")
+        )
 
     # Run Gemini (full image)
     try:

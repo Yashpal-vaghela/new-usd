@@ -1,6 +1,6 @@
 import os
 from typing import Optional
-
+from PIL import Image, ImageDraw
 from django.conf import settings
 
 PROMPT = r"""TASK: Using [INPUT_IMAGE], perform a high-end cosmetic dentistry digital smile design. The design must strictly adhere to the visible natural tooth structure only.
@@ -11,7 +11,7 @@ Background & Lighting: Preserve the exact original background, lighting, and all
 Framing & Perspective: Maintain the exact same camera angle, framing, and crop as the original image. No zooming, cropping, or re-centering.
 
 😁 SMILE DESIGN (TEETH ONLY)
-Transformation Scope: Replace the visible teeth only with high-end, symmetrical, and naturally aligned porcelain veneers. Do not extend tooth visibility beyond what is present in the original image.
+Transformation Scope: Replace the visible teeth only with high-end, symmetrical, and naturally aligned emax veneers. Do not extend tooth visibility beyond what is present in the original image.
 Shade & Harmony: Use a high-value white shade (approx. B1) that appears clean yet realistic. Shade must be harmonized with the subject’s natural skin tone — avoid tones that appear unnaturally bright or mismatched, especially for darker complexions. Teeth must not appear overly bleached or artificial.
 Anatomical Realism: Ensure detailed tooth anatomy including:
 - Defined separation between teeth.
@@ -25,12 +25,49 @@ No expression change. The person must look exactly the same emotionally and phys
 Final output should look professionally enhanced but indistinguishably real, as if the person naturally had perfect teeth.
 """
 
+
 def get_api_key() -> Optional[str]:
     return getattr(settings, "GEMINI_API_KEY", None) or os.environ.get("GEMINI_API_KEY")
 
 def get_model_name() -> str:
-    return getattr(settings, "GEMINI_MODEL_NAME", None) or os.environ.get("GEMINI_MODEL_NAME") or "gemini-2.0-flash-exp"
+    return getattr(settings, "GEMINI_MODEL_NAME", None) or os.environ.get("GEMINI_MODEL_NAME") 
 
+def add_logo_on_right(image_path: str, logo_path: str) -> None:
+    base = Image.open(image_path).convert("RGBA")
+    logo = Image.open(logo_path).convert("RGBA")
+
+    base_w, base_h = base.size
+
+    shadow_height = int(base_h * 0.18)  
+
+    gradient = Image.new("RGBA", (base_w, shadow_height), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(gradient)
+
+    for y in range(shadow_height):
+        alpha = int(255 * (y / shadow_height))  
+        draw.line(
+            [(0, y), (base_w, y)],
+            fill=(0, 0, 0, alpha)
+        )
+
+    base.paste(gradient, (0, base_h - shadow_height), gradient)
+
+    target_w = int(base_w * 0.20)
+    ratio = target_w / logo.width
+    target_h = int(logo.height * ratio)
+    logo = logo.resize((target_w, target_h), Image.LANCZOS)
+
+    padding_x = int(base_w * 0.02)   
+    padding_y = int(base_h * 0.02)   
+
+    x = base_w - target_w - padding_x
+    y = base_h - target_h - padding_y
+
+
+    base.paste(logo, (x, y), logo)
+
+    base.convert("RGB").save(image_path, "JPEG", quality=95)
+    
 def generate_smile_design(input_path: str, output_path: str) -> None:
     """
     Sends input image + prompt to Gemini and saves an output image to output_path.
@@ -106,3 +143,5 @@ def generate_smile_design(input_path: str, output_path: str) -> None:
 
     with open(output_path, "wb") as f:
         f.write(image_bytes)
+        logo_path = os.path.join(settings.MEDIA_ROOT, "logo", "usd-logo.png")
+        add_logo_on_right(output_path, logo_path)
