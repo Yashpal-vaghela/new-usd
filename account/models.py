@@ -313,6 +313,12 @@ class NewsletterSubscriber(models.Model):
     def __str__(self):
         return self.email
     
+class SmileDesignLead(models.Model):
+    name = models.CharField(max_length=150)
+    phone = models.IntegerField()
+    city = models.CharField(max_length=150)
+    message = models.TextField(blank=True, null=True)
+    submitted_at = models.DateTimeField(auto_now_add=True)
     
      
 

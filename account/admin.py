@@ -71,6 +71,11 @@ class NewsletterSubscriberAdmin(admin.ModelAdmin):
     search_fields = ('email',)
     list_filter = ('is_active','subscribed_at')
 
+class SmileDesignLeadAdmin(admin.ModelAdmin):
+    list_display = ('name', 'phone', 'city', 'submitted_at')
+    search_fields = ('name', 'phone', 'city')
+    list_filter = ('submitted_at',)
+
 admin.site.register(Location)
 admin.site.register(City)
 admin.site.register(Specializations)
@@ -93,3 +98,4 @@ admin.site.register(PatientReview, PatientReviewAdmin)
 admin.site.register(DentistRedirect, DentistRedirectAdmin)
 admin.site.register(BeforeAfter, BeforeAfterAdmin)
 admin.site.register(NewsletterSubscriber, NewsletterSubscriberAdmin)
+admin.site.register(SmileDesignLead, SmileDesignLeadAdmin)
