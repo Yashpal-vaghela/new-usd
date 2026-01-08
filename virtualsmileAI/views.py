@@ -7,12 +7,33 @@ from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
-
+from virtualsmileAI.forms import SmileDesignLeadForm
+from django.utils import timezone
 from .yolo import decode_base64_image, run_inference_on_bgr, encode_image_to_base64_jpeg
 
 THRESHOLD = getattr(settings, "TEETH_DETECTION_THRESHOLD", 0.65)
 
-def index(request):
+def smile(request):
+    if request.method == "POST":
+        form = SmileDesignLeadForm(request.POST)
+        if form.is_valid():
+            submission = form.save()
+            return render(request, "virtual-smile-try-on.html", {
+                "form": SmileDesignLeadForm(),
+                "success": True
+            })
+        else:
+            form = SmileDesignLeadForm()
+
+            # current_datetime_ist = timezone.localtime(timezone.now())
+            # formatted_datetime = current_datetime_ist.strftime("%d-%m-%Y %I:%M %p")
+            # context_dict = {
+            #     "Name":submission.name,
+            #     "Phone":submission.phone,
+            #     "City":submission.city,
+            #     "Message":submission.message
+            # }
+
     return render(request, "virtual-smile-try-on.html", {"threshold": THRESHOLD})
 
 @csrf_exempt
