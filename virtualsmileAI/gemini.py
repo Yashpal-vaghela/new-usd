@@ -143,5 +143,5 @@ def generate_smile_design(input_path: str, output_path: str) -> None:
 
     with open(output_path, "wb") as f:
         f.write(image_bytes)
-        logo_path = os.path.join(settings.MEDIA_ROOT, "logo", "usd-logo.png")
-        add_logo_on_right(output_path, logo_path)
+        # logo_path = os.path.join(settings.MEDIA_ROOT, "logo", "usd-logo.png")
+        # add_logo_on_right(output_path, logo_path)

@@ -16,9 +16,13 @@
                             class="cool">AI-Powered Smile Simulation</b></span>
                     <h1>Preview Your Future Smile with <b class="cool">Ultimate AI.</b></h1>
                     <p>See your future smile with our advanced AI virtual smile design try-on.</p>
-                    <button class="btn bat d-flex align-items-center justify-content-between" data-bs-toggle="modal" data-bs-target="#smileModal">Design My Smile Now <img src="{% static 'arrow-left.svg'%}" class="mx-1 img-fluid" alt="arrow-left" /></button>
-                    <button class="btn bat d-flex align-items-center justify-content-between" data-bs-toggle="modal" data-bs-target='#contactModal'>Contact Modal</button>
-                    <button class="btn bat d-flex align-items-center justify-content-between" data-bs-toggle="modal" data-bs-target='#PreviewModal'>Preview Modal</button>
+                    <button class="btn bat d-flex align-items-center justify-content-between" data-bs-toggle="modal"
+                        data-bs-target="#smileModal">Design My Smile Now <img src="{% static 'arrow-left.svg'%}"
+                            class="mx-1 img-fluid" alt="arrow-left" /></button>
+                    <button class="btn bat d-flex align-items-center justify-content-between" data-bs-toggle="modal"
+                        data-bs-target='#contactModal'>Contact Modal</button>
+                    <button class="btn bat d-flex align-items-center justify-content-between" data-bs-toggle="modal"
+                        data-bs-target='#PreviewModal'>Preview Modal</button>
                 </div>
                 <div class="col-lg-4 col-md-4 col-12 banner-content">
                     {% comment %} <img src="{% static 'bg-vector7.png'%}" class="bg-vector d-block d-md-none img-fluid"
@@ -96,16 +100,17 @@
             </div>
         </div>
     </section>
-    <div class="modal fade smileModal" id="smileModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade smileModal" id="smileModal" tabIndex="-1" aria-labelledby="exampleModalLabel"
+        data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div class="row align-items-center justify-content-center  h-100">
+                    <div class="row align-items-center justify-content-center  h-100"> 
                         <div class="col-lg-6 col-12 ">
                             <button type="button" class="d-lg-none d-block btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                             <div class="video-capture-wrapper my-3 my-lg-4">
-                                <video id="video" autoplay playsinline muted></video>
+                                <video id="video" playsinline muted></video>
                                 <img id="freezeImg" class="visually-hidden hidden" alt="Captured">
                                 <canvas id="canvas" width="1184" height="864" class="visually-hidden hidden"></canvas>
                             </div>
@@ -116,14 +121,14 @@
                                     Capture
                                 </button>
 
-                                <button id="confirmBtn"
+                                <button id="confirmBtn" type="button"
                                     class="btn d-flex align-items-center justify-content-between hidden">
                                     Continue <img src="{% static 'light-arrow-left.svg'%}" class="img-fluid"
                                         alt="arrow-left" />
                                 </button>
-                                <br/>
+                                <br />
                                 <span id="status" class="d-none">
-                                Confidence: 0.00 — Visible: false
+                                    Confidence: 0.00 — Visible: false
                                 </span>
                             </div>
                         </div>
@@ -158,48 +163,57 @@
                         <img src="{% static 'usd-logo1.svg'%}" class="img-fluid usd-logo-img" alt="usd-logo-img" />
                     </a>
                     <h2 class="contact-title">Contact Information</h2>
-                    <form method="post" class="contact-form form" action="{% url 'virtualsmileAI:smile' %}">
-                       {% csrf_token %}
-                       {{form.non_field_errors}}
+                    <form id="leadForm" method="post" class="contact-form form"
+                        action="{% url 'virtualsmileAI:smile' %}">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+
                         <div class="row align-items-center justify-content-center">
                             <div class="col-12">
                                 <div class="contact-input">
-                                    {{form.name.errors}}
-                                    <input class="form-control" type="text" name="name" placeholder="Name" value={{form.name.value}} required />
+                                    {{ form.name.errors }}
+                                    <input id="leadName" class="form-control" type="text" name="name" placeholder="Name"
+                                        value="{{ form.name.value|default:'' }}" required />
                                 </div>
                             </div>
+
                             <div class="col-6">
                                 <div class="contact-input">
-                                    <input class="form-control" type="number" name="phone" placeholder="Contact" required />
+                                    <input id="leadPhone" class="form-control" type="number" name="phone"
+                                        placeholder="Contact" required />
                                 </div>
                             </div>
+
                             <div class="col-6">
                                 <div class="contact-input">
-                                    <input class="form-control" type="text" name="city" placeholder="city" required />
+                                    <input id="leadCity" class="form-control" type="text" name="city" placeholder="city"
+                                        required />
                                 </div>
                             </div>
-                            {% comment %} <div class="col-12">
-                                <div class="contact-input"> 
-                                    <input class="form-control" type="email" name="email" placeholder="email" required />
-                                </div>
-                            </div> {% endcomment %}
+
                             <div class="col-12">
                                 <div class="contact-input">
-                                    <input class="form-control" type="message" name="message" placeholder="Message" required />
+                                    <input id="leadMessage" class="form-control" type="text" name="message"
+                                        placeholder="Message" required />
                                 </div>
                             </div>
+
+                            <!-- ✅ This shows success/error message without page reload -->
+                            <div id="leadFormMsg" class="mt-2 small text-center"></div>
+
                             <div class="col-12 d-flex align-items-center justify-content-center">
-                                <button class="btn bat" type="submit" >Submit</button>
+                                <button id="leadSubmitBtn" class="btn bat" type="submit">Submit</button>
                             </div>
                         </div>
                     </form>
+
                     {% if success %}
-                        <p class="text-success mt-3">Thank you! Your submission was successful.</p>
+                    <p class="text-success mt-3">Thank you! Your submission was successful.</p>
                     {% endif %}
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
     <div class="modal fade" id="PreviewModal" tabIndex="-1" aria-labelledby="PreviewModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -207,13 +221,14 @@
                 <div class="modal-body">
                     <div class="preview-wrapper">
                         <h2 class="preview-title">Your AI-Designed Smile Preview</h2>
-                        <p>This AI-designed smile is the first step toward your real smile transformation. With expert dentist consultation, this design can be confidently brought to life</p>
-                        <div class="preview-modal-wrapper" >
+                        <p>This AI-designed smile is the first step toward your real smile transformation. With expert
+                            dentist consultation, this design can be confidently brought to life</p>
+                        <div class="preview-modal-wrapper">
                             <div class="preview_img_wrapper">
-                                <img src="{% static 'before-2.png'%}" class="img-fluid" alt="before" />
+                                <img id="previewBeforeImg" class="img-fluid" alt="before"/>
                             </div>
                             <div class="preview_img_wrapper">
-                                <img src="{% static 'after-2.png'%}" class="img-fluid" alt="After" />
+                                <img id="previewAfterImg" class="img-fluid" alt="After" />
                             </div>
                             <div id="preview-line"></div>
                             {% comment %} <span class="preview-label before">Before</span> {% endcomment %}
@@ -222,67 +237,92 @@
                         </div>
                         <div class="row justify-content-center mt-4 mb-0 my-lg-4">
                             <div class="col-lg-2 col-md-3 col-6 order-1 order-md-1">
-                                <button class="btn bat btn-before ">Before 
-                                    <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M24.4987 22.1668H3.4987C3.18928 22.1668 2.89253 22.2897 2.67374 22.5085C2.45495 22.7273 2.33203 23.0241 2.33203 23.3335C2.33203 23.6429 2.45495 23.9397 2.67374 24.1585C2.89253 24.3772 3.18928 24.5002 3.4987 24.5002H24.4987C24.8081 24.5002 25.1049 24.3772 25.3237 24.1585C25.5424 23.9397 25.6654 23.6429 25.6654 23.3335C25.6654 23.0241 25.5424 22.7273 25.3237 22.5085C25.1049 22.2897 24.8081 22.1668 24.4987 22.1668ZM13.9987 2.3335C13.6893 2.3335 13.3925 2.45641 13.1737 2.6752C12.9549 2.894 12.832 3.19074 12.832 3.50016V15.8552L8.9937 12.0052C8.77401 11.7855 8.47605 11.6621 8.16537 11.6621C7.85468 11.6621 7.55672 11.7855 7.33703 12.0052C7.11734 12.2248 6.99392 12.5228 6.99392 12.8335C6.99392 13.1442 7.11734 13.4421 7.33703 13.6618L13.1704 19.4952C13.2788 19.6045 13.4079 19.6913 13.55 19.7505C13.6922 19.8098 13.8447 19.8403 13.9987 19.8403C14.1527 19.8403 14.3052 19.8098 14.4474 19.7505C14.5895 19.6913 14.7186 19.6045 14.827 19.4952L20.6604 13.6618C20.7691 13.5531 20.8554 13.4239 20.9143 13.2818C20.9732 13.1397 21.0035 12.9873 21.0035 12.8335C21.0035 12.6797 20.9732 12.5273 20.9143 12.3852C20.8554 12.2431 20.7691 12.1139 20.6604 12.0052C20.5516 11.8964 20.4224 11.8101 20.2803 11.7512C20.1382 11.6924 19.9859 11.6621 19.832 11.6621C19.6782 11.6621 19.5259 11.6924 19.3837 11.7512C19.2416 11.8101 19.1125 11.8964 19.0037 12.0052L15.1654 15.8552V3.50016C15.1654 3.19074 15.0424 2.894 14.8237 2.6752C14.6049 2.45641 14.3081 2.3335 13.9987 2.3335Z" fill="black"/>
+                                <button class="btn bat btn-before" id="downloadBeforeBtn">Before
+                                    <svg width="20" height="20" viewBox="0 0 28 28" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M24.4987 22.1668H3.4987C3.18928 22.1668 2.89253 22.2897 2.67374 22.5085C2.45495 22.7273 2.33203 23.0241 2.33203 23.3335C2.33203 23.6429 2.45495 23.9397 2.67374 24.1585C2.89253 24.3772 3.18928 24.5002 3.4987 24.5002H24.4987C24.8081 24.5002 25.1049 24.3772 25.3237 24.1585C25.5424 23.9397 25.6654 23.6429 25.6654 23.3335C25.6654 23.0241 25.5424 22.7273 25.3237 22.5085C25.1049 22.2897 24.8081 22.1668 24.4987 22.1668ZM13.9987 2.3335C13.6893 2.3335 13.3925 2.45641 13.1737 2.6752C12.9549 2.894 12.832 3.19074 12.832 3.50016V15.8552L8.9937 12.0052C8.77401 11.7855 8.47605 11.6621 8.16537 11.6621C7.85468 11.6621 7.55672 11.7855 7.33703 12.0052C7.11734 12.2248 6.99392 12.5228 6.99392 12.8335C6.99392 13.1442 7.11734 13.4421 7.33703 13.6618L13.1704 19.4952C13.2788 19.6045 13.4079 19.6913 13.55 19.7505C13.6922 19.8098 13.8447 19.8403 13.9987 19.8403C14.1527 19.8403 14.3052 19.8098 14.4474 19.7505C14.5895 19.6913 14.7186 19.6045 14.827 19.4952L20.6604 13.6618C20.7691 13.5531 20.8554 13.4239 20.9143 13.2818C20.9732 13.1397 21.0035 12.9873 21.0035 12.8335C21.0035 12.6797 20.9732 12.5273 20.9143 12.3852C20.8554 12.2431 20.7691 12.1139 20.6604 12.0052C20.5516 11.8964 20.4224 11.8101 20.2803 11.7512C20.1382 11.6924 19.9859 11.6621 19.832 11.6621C19.6782 11.6621 19.5259 11.6924 19.3837 11.7512C19.2416 11.8101 19.1125 11.8964 19.0037 12.0052L15.1654 15.8552V3.50016C15.1654 3.19074 15.0424 2.894 14.8237 2.6752C14.6049 2.45641 14.3081 2.3335 13.9987 2.3335Z"
+                                            fill="black" />
                                     </svg>
                                 </button>
                             </div>
                             <div class="col-lg-4 col-md-4 col-12 order-3 order-md-2">
-                                <button class="btn btn-default btn-appoinment ">Book Appointment 
-                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M13.3372 7.845L6.16466 15.0175L4.98633 13.8392L12.158 6.66667H5.83716V5H15.0038V14.1667H13.3372V7.845Z" fill="white"/>
+                                <button class="btn btn-default btn-appoinment">Book Appointment
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M13.3372 7.845L6.16466 15.0175L4.98633 13.8392L12.158 6.66667H5.83716V5H15.0038V14.1667H13.3372V7.845Z"
+                                            fill="white" />
                                     </svg>
                                 </button>
                             </div>
                             <div class="col-lg-2 col-md-2 col-12 order-4 order-md-3">
-                                <button class="btn btn-default btn-share ">share 
-                                    <svg width="18" height="18" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <button class="btn btn-default btn-share ">share
+                                    <svg width="18" height="18" viewBox="0 0 21 21" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
                                         <g clip-path="url(#clip0_1557_1409)">
-                                        <path d="M1.3125 19.0312C1.26246 19.0312 1.21193 19.0254 1.16189 19.0139C1.01802 18.9798 0.889867 18.8982 0.798118 18.7822C0.70637 18.6663 0.656389 18.5228 0.65625 18.3749C0.65625 12.4116 1.41061 7.45197 10.5 7.22638V2.62492C10.5 2.49733 10.5372 2.37251 10.6071 2.26574C10.6769 2.15897 10.7764 2.07487 10.8933 2.02375C11.0102 1.97262 11.1394 1.95667 11.2653 1.97787C11.3911 1.99906 11.508 2.05647 11.6017 2.14307L20.1329 10.0181C20.2675 10.1416 20.3438 10.3167 20.3438 10.4999C20.3438 10.6832 20.2675 10.8582 20.1329 10.9819L11.6017 18.8569C11.5081 18.9439 11.3911 19.0015 11.2652 19.0227C11.1392 19.0439 11.0098 19.0277 10.8929 18.9762C10.7761 18.925 10.6767 18.8408 10.6069 18.7341C10.5372 18.6273 10.5 18.5025 10.5 18.3749V13.7889C4.26497 13.9382 3.11456 16.2383 1.89952 18.6684C1.84504 18.7775 1.76125 18.8692 1.65756 18.9332C1.55388 18.9973 1.43439 19.0312 1.3125 19.0312ZM11.1562 12.4687C11.519 12.4687 11.8125 12.7622 11.8125 13.1249V16.8759L18.7199 10.4999L11.8125 4.12396V7.87492C11.8125 8.23766 11.519 8.53117 11.1562 8.53117C3.90666 8.53117 2.3456 11.335 2.03864 15.8134C3.3979 13.9876 5.71463 12.4687 11.1562 12.4687Z" fill="white"/>
+                                            <path
+                                                d="M1.3125 19.0312C1.26246 19.0312 1.21193 19.0254 1.16189 19.0139C1.01802 18.9798 0.889867 18.8982 0.798118 18.7822C0.70637 18.6663 0.656389 18.5228 0.65625 18.3749C0.65625 12.4116 1.41061 7.45197 10.5 7.22638V2.62492C10.5 2.49733 10.5372 2.37251 10.6071 2.26574C10.6769 2.15897 10.7764 2.07487 10.8933 2.02375C11.0102 1.97262 11.1394 1.95667 11.2653 1.97787C11.3911 1.99906 11.508 2.05647 11.6017 2.14307L20.1329 10.0181C20.2675 10.1416 20.3438 10.3167 20.3438 10.4999C20.3438 10.6832 20.2675 10.8582 20.1329 10.9819L11.6017 18.8569C11.5081 18.9439 11.3911 19.0015 11.2652 19.0227C11.1392 19.0439 11.0098 19.0277 10.8929 18.9762C10.7761 18.925 10.6767 18.8408 10.6069 18.7341C10.5372 18.6273 10.5 18.5025 10.5 18.3749V13.7889C4.26497 13.9382 3.11456 16.2383 1.89952 18.6684C1.84504 18.7775 1.76125 18.8692 1.65756 18.9332C1.55388 18.9973 1.43439 19.0312 1.3125 19.0312ZM11.1562 12.4687C11.519 12.4687 11.8125 12.7622 11.8125 13.1249V16.8759L18.7199 10.4999L11.8125 4.12396V7.87492C11.8125 8.23766 11.519 8.53117 11.1562 8.53117C3.90666 8.53117 2.3456 11.335 2.03864 15.8134C3.3979 13.9876 5.71463 12.4687 11.1562 12.4687Z"
+                                                fill="white" />
                                         </g>
                                         <defs>
-                                        <clipPath id="clip0_1557_1409">
-                                        <rect width="21" height="21" fill="white"/>
-                                        </clipPath>
+                                            <clipPath id="clip0_1557_1409">
+                                                <rect width="21" height="21" fill="white" />
+                                            </clipPath>
                                         </defs>
                                     </svg>
                                 </button>
                             </div>
                             <div class="col-lg-2 col-md-3 col-6 order-2 order-md-4">
-                                <button class="btn bat btn-after">After     
-                                    <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M24.4987 22.1668H3.4987C3.18928 22.1668 2.89253 22.2897 2.67374 22.5085C2.45495 22.7273 2.33203 23.0241 2.33203 23.3335C2.33203 23.6429 2.45495 23.9397 2.67374 24.1585C2.89253 24.3772 3.18928 24.5002 3.4987 24.5002H24.4987C24.8081 24.5002 25.1049 24.3772 25.3237 24.1585C25.5424 23.9397 25.6654 23.6429 25.6654 23.3335C25.6654 23.0241 25.5424 22.7273 25.3237 22.5085C25.1049 22.2897 24.8081 22.1668 24.4987 22.1668ZM13.9987 2.3335C13.6893 2.3335 13.3925 2.45641 13.1737 2.6752C12.9549 2.894 12.832 3.19074 12.832 3.50016V15.8552L8.9937 12.0052C8.77401 11.7855 8.47605 11.6621 8.16537 11.6621C7.85468 11.6621 7.55672 11.7855 7.33703 12.0052C7.11734 12.2248 6.99392 12.5228 6.99392 12.8335C6.99392 13.1442 7.11734 13.4421 7.33703 13.6618L13.1704 19.4952C13.2788 19.6045 13.4079 19.6913 13.55 19.7505C13.6922 19.8098 13.8447 19.8403 13.9987 19.8403C14.1527 19.8403 14.3052 19.8098 14.4474 19.7505C14.5895 19.6913 14.7186 19.6045 14.827 19.4952L20.6604 13.6618C20.7691 13.5531 20.8554 13.4239 20.9143 13.2818C20.9732 13.1397 21.0035 12.9873 21.0035 12.8335C21.0035 12.6797 20.9732 12.5273 20.9143 12.3852C20.8554 12.2431 20.7691 12.1139 20.6604 12.0052C20.5516 11.8964 20.4224 11.8101 20.2803 11.7512C20.1382 11.6924 19.9859 11.6621 19.832 11.6621C19.6782 11.6621 19.5259 11.6924 19.3837 11.7512C19.2416 11.8101 19.1125 11.8964 19.0037 12.0052L15.1654 15.8552V3.50016C15.1654 3.19074 15.0424 2.894 14.8237 2.6752C14.6049 2.45641 14.3081 2.3335 13.9987 2.3335Z" fill="black"/>
+                                <button class="btn bat btn-after" id="downloadAfterBtn">After
+                                    <svg width="20" height="20" viewBox="0 0 28 28" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M24.4987 22.1668H3.4987C3.18928 22.1668 2.89253 22.2897 2.67374 22.5085C2.45495 22.7273 2.33203 23.0241 2.33203 23.3335C2.33203 23.6429 2.45495 23.9397 2.67374 24.1585C2.89253 24.3772 3.18928 24.5002 3.4987 24.5002H24.4987C24.8081 24.5002 25.1049 24.3772 25.3237 24.1585C25.5424 23.9397 25.6654 23.6429 25.6654 23.3335C25.6654 23.0241 25.5424 22.7273 25.3237 22.5085C25.1049 22.2897 24.8081 22.1668 24.4987 22.1668ZM13.9987 2.3335C13.6893 2.3335 13.3925 2.45641 13.1737 2.6752C12.9549 2.894 12.832 3.19074 12.832 3.50016V15.8552L8.9937 12.0052C8.77401 11.7855 8.47605 11.6621 8.16537 11.6621C7.85468 11.6621 7.55672 11.7855 7.33703 12.0052C7.11734 12.2248 6.99392 12.5228 6.99392 12.8335C6.99392 13.1442 7.11734 13.4421 7.33703 13.6618L13.1704 19.4952C13.2788 19.6045 13.4079 19.6913 13.55 19.7505C13.6922 19.8098 13.8447 19.8403 13.9987 19.8403C14.1527 19.8403 14.3052 19.8098 14.4474 19.7505C14.5895 19.6913 14.7186 19.6045 14.827 19.4952L20.6604 13.6618C20.7691 13.5531 20.8554 13.4239 20.9143 13.2818C20.9732 13.1397 21.0035 12.9873 21.0035 12.8335C21.0035 12.6797 20.9732 12.5273 20.9143 12.3852C20.8554 12.2431 20.7691 12.1139 20.6604 12.0052C20.5516 11.8964 20.4224 11.8101 20.2803 11.7512C20.1382 11.6924 19.9859 11.6621 19.832 11.6621C19.6782 11.6621 19.5259 11.6924 19.3837 11.7512C19.2416 11.8101 19.1125 11.8964 19.0037 12.0052L15.1654 15.8552V3.50016C15.1654 3.19074 15.0424 2.894 14.8237 2.6752C14.6049 2.45641 14.3081 2.3335 13.9987 2.3335Z"
+                                            fill="black" />
                                     </svg>
                                 </button>
                             </div>
                         </div>
-                        {% comment %} <div class="d-flex align-items-center justify-content-between gap-2 gsp-sm-3 my-4">
-                            <button class="btn bat btn-before order-1 order-sm-1">Before 
-                                <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24.4987 22.1668H3.4987C3.18928 22.1668 2.89253 22.2897 2.67374 22.5085C2.45495 22.7273 2.33203 23.0241 2.33203 23.3335C2.33203 23.6429 2.45495 23.9397 2.67374 24.1585C2.89253 24.3772 3.18928 24.5002 3.4987 24.5002H24.4987C24.8081 24.5002 25.1049 24.3772 25.3237 24.1585C25.5424 23.9397 25.6654 23.6429 25.6654 23.3335C25.6654 23.0241 25.5424 22.7273 25.3237 22.5085C25.1049 22.2897 24.8081 22.1668 24.4987 22.1668ZM13.9987 2.3335C13.6893 2.3335 13.3925 2.45641 13.1737 2.6752C12.9549 2.894 12.832 3.19074 12.832 3.50016V15.8552L8.9937 12.0052C8.77401 11.7855 8.47605 11.6621 8.16537 11.6621C7.85468 11.6621 7.55672 11.7855 7.33703 12.0052C7.11734 12.2248 6.99392 12.5228 6.99392 12.8335C6.99392 13.1442 7.11734 13.4421 7.33703 13.6618L13.1704 19.4952C13.2788 19.6045 13.4079 19.6913 13.55 19.7505C13.6922 19.8098 13.8447 19.8403 13.9987 19.8403C14.1527 19.8403 14.3052 19.8098 14.4474 19.7505C14.5895 19.6913 14.7186 19.6045 14.827 19.4952L20.6604 13.6618C20.7691 13.5531 20.8554 13.4239 20.9143 13.2818C20.9732 13.1397 21.0035 12.9873 21.0035 12.8335C21.0035 12.6797 20.9732 12.5273 20.9143 12.3852C20.8554 12.2431 20.7691 12.1139 20.6604 12.0052C20.5516 11.8964 20.4224 11.8101 20.2803 11.7512C20.1382 11.6924 19.9859 11.6621 19.832 11.6621C19.6782 11.6621 19.5259 11.6924 19.3837 11.7512C19.2416 11.8101 19.1125 11.8964 19.0037 12.0052L15.1654 15.8552V3.50016C15.1654 3.19074 15.0424 2.894 14.8237 2.6752C14.6049 2.45641 14.3081 2.3335 13.9987 2.3335Z" fill="black"/>
+                        {% comment %} <div
+                            class="d-flex align-items-center justify-content-between gap-2 gsp-sm-3 my-4">
+                            <button class="btn bat btn-before order-1 order-sm-1">Before
+                                <svg width="20" height="20" viewBox="0 0 28 28" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M24.4987 22.1668H3.4987C3.18928 22.1668 2.89253 22.2897 2.67374 22.5085C2.45495 22.7273 2.33203 23.0241 2.33203 23.3335C2.33203 23.6429 2.45495 23.9397 2.67374 24.1585C2.89253 24.3772 3.18928 24.5002 3.4987 24.5002H24.4987C24.8081 24.5002 25.1049 24.3772 25.3237 24.1585C25.5424 23.9397 25.6654 23.6429 25.6654 23.3335C25.6654 23.0241 25.5424 22.7273 25.3237 22.5085C25.1049 22.2897 24.8081 22.1668 24.4987 22.1668ZM13.9987 2.3335C13.6893 2.3335 13.3925 2.45641 13.1737 2.6752C12.9549 2.894 12.832 3.19074 12.832 3.50016V15.8552L8.9937 12.0052C8.77401 11.7855 8.47605 11.6621 8.16537 11.6621C7.85468 11.6621 7.55672 11.7855 7.33703 12.0052C7.11734 12.2248 6.99392 12.5228 6.99392 12.8335C6.99392 13.1442 7.11734 13.4421 7.33703 13.6618L13.1704 19.4952C13.2788 19.6045 13.4079 19.6913 13.55 19.7505C13.6922 19.8098 13.8447 19.8403 13.9987 19.8403C14.1527 19.8403 14.3052 19.8098 14.4474 19.7505C14.5895 19.6913 14.7186 19.6045 14.827 19.4952L20.6604 13.6618C20.7691 13.5531 20.8554 13.4239 20.9143 13.2818C20.9732 13.1397 21.0035 12.9873 21.0035 12.8335C21.0035 12.6797 20.9732 12.5273 20.9143 12.3852C20.8554 12.2431 20.7691 12.1139 20.6604 12.0052C20.5516 11.8964 20.4224 11.8101 20.2803 11.7512C20.1382 11.6924 19.9859 11.6621 19.832 11.6621C19.6782 11.6621 19.5259 11.6924 19.3837 11.7512C19.2416 11.8101 19.1125 11.8964 19.0037 12.0052L15.1654 15.8552V3.50016C15.1654 3.19074 15.0424 2.894 14.8237 2.6752C14.6049 2.45641 14.3081 2.3335 13.9987 2.3335Z"
+                                        fill="black" />
                                 </svg>
                             </button>
-                            <button class="btn btn-default btn-appoinment order-3 order-sm-2">Book Appointment 
-                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M13.3372 7.845L6.16466 15.0175L4.98633 13.8392L12.158 6.66667H5.83716V5H15.0038V14.1667H13.3372V7.845Z" fill="white"/>
+                            <a class="btn btn-default btn-appoinment order-3 order-sm-2" href="{% home:'search_all_usd' %}">Book Appointment
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M13.3372 7.845L6.16466 15.0175L4.98633 13.8392L12.158 6.66667H5.83716V5H15.0038V14.1667H13.3372V7.845Z"
+                                        fill="white" />
                                 </svg>
-                            </button>
-                            <button class="btn btn-default btn-share order-4 order-sm-3">share 
-                                <svg width="18" height="18" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            </a>
+                            <!-- <button class="btn btn-default btn-share order-4 order-sm-3" id="shareAfterBtn">share
+                                <svg width="18" height="18" viewBox="0 0 21 21" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
                                     <g clip-path="url(#clip0_1557_1409)">
-                                    <path d="M1.3125 19.0312C1.26246 19.0312 1.21193 19.0254 1.16189 19.0139C1.01802 18.9798 0.889867 18.8982 0.798118 18.7822C0.70637 18.6663 0.656389 18.5228 0.65625 18.3749C0.65625 12.4116 1.41061 7.45197 10.5 7.22638V2.62492C10.5 2.49733 10.5372 2.37251 10.6071 2.26574C10.6769 2.15897 10.7764 2.07487 10.8933 2.02375C11.0102 1.97262 11.1394 1.95667 11.2653 1.97787C11.3911 1.99906 11.508 2.05647 11.6017 2.14307L20.1329 10.0181C20.2675 10.1416 20.3438 10.3167 20.3438 10.4999C20.3438 10.6832 20.2675 10.8582 20.1329 10.9819L11.6017 18.8569C11.5081 18.9439 11.3911 19.0015 11.2652 19.0227C11.1392 19.0439 11.0098 19.0277 10.8929 18.9762C10.7761 18.925 10.6767 18.8408 10.6069 18.7341C10.5372 18.6273 10.5 18.5025 10.5 18.3749V13.7889C4.26497 13.9382 3.11456 16.2383 1.89952 18.6684C1.84504 18.7775 1.76125 18.8692 1.65756 18.9332C1.55388 18.9973 1.43439 19.0312 1.3125 19.0312ZM11.1562 12.4687C11.519 12.4687 11.8125 12.7622 11.8125 13.1249V16.8759L18.7199 10.4999L11.8125 4.12396V7.87492C11.8125 8.23766 11.519 8.53117 11.1562 8.53117C3.90666 8.53117 2.3456 11.335 2.03864 15.8134C3.3979 13.9876 5.71463 12.4687 11.1562 12.4687Z" fill="white"/>
+                                        <path
+                                            d="M1.3125 19.0312C1.26246 19.0312 1.21193 19.0254 1.16189 19.0139C1.01802 18.9798 0.889867 18.8982 0.798118 18.7822C0.70637 18.6663 0.656389 18.5228 0.65625 18.3749C0.65625 12.4116 1.41061 7.45197 10.5 7.22638V2.62492C10.5 2.49733 10.5372 2.37251 10.6071 2.26574C10.6769 2.15897 10.7764 2.07487 10.8933 2.02375C11.0102 1.97262 11.1394 1.95667 11.2653 1.97787C11.3911 1.99906 11.508 2.05647 11.6017 2.14307L20.1329 10.0181C20.2675 10.1416 20.3438 10.3167 20.3438 10.4999C20.3438 10.6832 20.2675 10.8582 20.1329 10.9819L11.6017 18.8569C11.5081 18.9439 11.3911 19.0015 11.2652 19.0227C11.1392 19.0439 11.0098 19.0277 10.8929 18.9762C10.7761 18.925 10.6767 18.8408 10.6069 18.7341C10.5372 18.6273 10.5 18.5025 10.5 18.3749V13.7889C4.26497 13.9382 3.11456 16.2383 1.89952 18.6684C1.84504 18.7775 1.76125 18.8692 1.65756 18.9332C1.55388 18.9973 1.43439 19.0312 1.3125 19.0312ZM11.1562 12.4687C11.519 12.4687 11.8125 12.7622 11.8125 13.1249V16.8759L18.7199 10.4999L11.8125 4.12396V7.87492C11.8125 8.23766 11.519 8.53117 11.1562 8.53117C3.90666 8.53117 2.3456 11.335 2.03864 15.8134C3.3979 13.9876 5.71463 12.4687 11.1562 12.4687Z"
+                                            fill="white" />
                                     </g>
                                     <defs>
-                                    <clipPath id="clip0_1557_1409">
-                                    <rect width="21" height="21" fill="white"/>
-                                    </clipPath>
+                                        <clipPath id="clip0_1557_1409">
+                                            <rect width="21" height="21" fill="white" />
+                                        </clipPath>
                                     </defs>
                                 </svg>
-                            </button>
-                            <button class="btn bat btn-after order-2 order-sm-4">After     
-                                <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24.4987 22.1668H3.4987C3.18928 22.1668 2.89253 22.2897 2.67374 22.5085C2.45495 22.7273 2.33203 23.0241 2.33203 23.3335C2.33203 23.6429 2.45495 23.9397 2.67374 24.1585C2.89253 24.3772 3.18928 24.5002 3.4987 24.5002H24.4987C24.8081 24.5002 25.1049 24.3772 25.3237 24.1585C25.5424 23.9397 25.6654 23.6429 25.6654 23.3335C25.6654 23.0241 25.5424 22.7273 25.3237 22.5085C25.1049 22.2897 24.8081 22.1668 24.4987 22.1668ZM13.9987 2.3335C13.6893 2.3335 13.3925 2.45641 13.1737 2.6752C12.9549 2.894 12.832 3.19074 12.832 3.50016V15.8552L8.9937 12.0052C8.77401 11.7855 8.47605 11.6621 8.16537 11.6621C7.85468 11.6621 7.55672 11.7855 7.33703 12.0052C7.11734 12.2248 6.99392 12.5228 6.99392 12.8335C6.99392 13.1442 7.11734 13.4421 7.33703 13.6618L13.1704 19.4952C13.2788 19.6045 13.4079 19.6913 13.55 19.7505C13.6922 19.8098 13.8447 19.8403 13.9987 19.8403C14.1527 19.8403 14.3052 19.8098 14.4474 19.7505C14.5895 19.6913 14.7186 19.6045 14.827 19.4952L20.6604 13.6618C20.7691 13.5531 20.8554 13.4239 20.9143 13.2818C20.9732 13.1397 21.0035 12.9873 21.0035 12.8335C21.0035 12.6797 20.9732 12.5273 20.9143 12.3852C20.8554 12.2431 20.7691 12.1139 20.6604 12.0052C20.5516 11.8964 20.4224 11.8101 20.2803 11.7512C20.1382 11.6924 19.9859 11.6621 19.832 11.6621C19.6782 11.6621 19.5259 11.6924 19.3837 11.7512C19.2416 11.8101 19.1125 11.8964 19.0037 12.0052L15.1654 15.8552V3.50016C15.1654 3.19074 15.0424 2.894 14.8237 2.6752C14.6049 2.45641 14.3081 2.3335 13.9987 2.3335Z" fill="black"/>
+                            </button> -->
+                            <button class="btn bat btn-after order-2 order-sm-4">After
+                                <svg width="20" height="20" viewBox="0 0 28 28" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M24.4987 22.1668H3.4987C3.18928 22.1668 2.89253 22.2897 2.67374 22.5085C2.45495 22.7273 2.33203 23.0241 2.33203 23.3335C2.33203 23.6429 2.45495 23.9397 2.67374 24.1585C2.89253 24.3772 3.18928 24.5002 3.4987 24.5002H24.4987C24.8081 24.5002 25.1049 24.3772 25.3237 24.1585C25.5424 23.9397 25.6654 23.6429 25.6654 23.3335C25.6654 23.0241 25.5424 22.7273 25.3237 22.5085C25.1049 22.2897 24.8081 22.1668 24.4987 22.1668ZM13.9987 2.3335C13.6893 2.3335 13.3925 2.45641 13.1737 2.6752C12.9549 2.894 12.832 3.19074 12.832 3.50016V15.8552L8.9937 12.0052C8.77401 11.7855 8.47605 11.6621 8.16537 11.6621C7.85468 11.6621 7.55672 11.7855 7.33703 12.0052C7.11734 12.2248 6.99392 12.5228 6.99392 12.8335C6.99392 13.1442 7.11734 13.4421 7.33703 13.6618L13.1704 19.4952C13.2788 19.6045 13.4079 19.6913 13.55 19.7505C13.6922 19.8098 13.8447 19.8403 13.9987 19.8403C14.1527 19.8403 14.3052 19.8098 14.4474 19.7505C14.5895 19.6913 14.7186 19.6045 14.827 19.4952L20.6604 13.6618C20.7691 13.5531 20.8554 13.4239 20.9143 13.2818C20.9732 13.1397 21.0035 12.9873 21.0035 12.8335C21.0035 12.6797 20.9732 12.5273 20.9143 12.3852C20.8554 12.2431 20.7691 12.1139 20.6604 12.0052C20.5516 11.8964 20.4224 11.8101 20.2803 11.7512C20.1382 11.6924 19.9859 11.6621 19.832 11.6621C19.6782 11.6621 19.5259 11.6924 19.3837 11.7512C19.2416 11.8101 19.1125 11.8964 19.0037 12.0052L15.1654 15.8552V3.50016C15.1654 3.19074 15.0424 2.894 14.8237 2.6752C14.6049 2.45641 14.3081 2.3335 13.9987 2.3335Z"
+                                        fill="black" />
                                 </svg>
                             </button>
                         </div> {% endcomment %}
@@ -298,20 +338,97 @@
     const THRESHOLD = parseFloat("{{ threshold|default:'0.55' }}");
 </script>
 <script>
-  const imgAfter = document.querySelector('.preview_img_wrapper:nth-of-type(2)');
-  const line = document.getElementById('preview-line');
-  const slider = document.getElementById('slider');
+    const imgAfter = document.querySelector('.preview_img_wrapper:nth-of-type(2)');
+    const line = document.getElementById('preview-line');
+    const slider = document.getElementById('slider');
 
-  slider.addEventListener('input', () => {
-    line.style.left = `${slider.value}%`;   
-    imgAfter.style.clipPath = `inset(0px 0px 0px ${slider.value}%)`;
+    slider.addEventListener('input', () => {
+        line.style.left = `${slider.value}%`;
+        imgAfter.style.clipPath = `inset(0px 0px 0px ${slider.value}%)`;
+    });
+
+    // Reset on double-click
+    slider.addEventListener('dblclick', () => {
+        slider.value = 50;
+        line.style.left = '50%';
+        imgAfter.style.clipPath = 'inset(0px 0px 0px 50%';
+    });
+</script>
+<script>
+    document.getElementById("confirmBtn").addEventListener("click", function () {
+        const smileModalEl = document.getElementById("smileModal");
+        const smileModal = bootstrap.Modal.getInstance(smileModalEl);
+        if (smileModal) smileModal.hide();
+
+        const contactModal = new bootstrap.Modal(
+            document.getElementById("contactModal")
+        );
+        contactModal.show();
+    });
+</script>
+<script>
+  function downloadImage(url, filename) {
+    if (!url) {
+      alert("Image not ready yet.");
+      return;
+    }
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  document.getElementById("downloadBeforeBtn")?.addEventListener("click", () => {
+    const beforeImg = document.getElementById("previewBeforeImg");
+    downloadImage(
+      beforeImg?.src,
+      "smile-before.jpg"
+    );
   });
 
-  // Reset on double-click
-  slider.addEventListener('dblclick', () => {
-    slider.value = 50;
-    line.style.left = '50%';
-    imgAfter.style.clipPath = 'inset(0px 0px 0px 50%';
+  document.getElementById("downloadAfterBtn")?.addEventListener("click", () => {
+    const afterImg = document.getElementById("previewAfterImg");
+    downloadImage(
+      afterImg?.src,
+      "smile-after.jpg"
+    );
+  });
+</script>
+<script>
+  async function shareImageFromUrl(imageUrl) {
+    if (!imageUrl) {
+      alert("Image not ready yet.");
+      return;
+    }
+
+    try {
+      // fetch image as blob
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+
+      const file = new File([blob], "smile-after.jpg", { type: blob.type });
+
+      if (navigator.share && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          title: "My AI Smile Preview",
+          text: "Check out my AI-designed smile ✨",
+          files: [file],
+        });
+      } else {
+        alert("Sharing not supported on this browser.");
+      }
+    } catch (err) {
+      console.error("Share failed:", err);
+      alert("Failed to share image.");
+    }
+  }
+
+  document.getElementById("shareAfterBtn")?.addEventListener("click", () => {
+    const afterImg = document.getElementById("previewAfterImg");
+    shareImageFromUrl(afterImg?.src);
   });
 </script>
 <script src="{% static 'js/smile_ai.js' %}"></script>
