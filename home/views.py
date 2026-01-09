@@ -1077,5 +1077,5 @@ def dentist(request):
 def quicklinks(request):
 	return render(request,'quick-links.html')
 
-def virtualsmiletryon(request):
-    return render(request,"virtual-smile-try-on.html")
+# def virtualsmiletryon(request):
+#     return render(request,"virtual-smile-try-on.html")

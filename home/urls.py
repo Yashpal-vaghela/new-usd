@@ -33,6 +33,6 @@ urlpatterns = [
     # path('locations/', views.location_view, name='locations'),
     path('dentist-connect/',views.dentist_connect,name='dentist_connect'),
     path('sitemap.xml/', sitemap, {'sitemaps': sitemaps_dict}, name='django.contrib.sitemaps.views.sitemap'),
-    path('virtual-smile-try-on/',views.virtualsmiletryon , name="virtualsmiletryon")
+    # path('virtual-smile-try-on/',views.virtualsmiletryon , name="virtualsmiletryon")
     # path('smile_step/', views.smile_step, name='smile_step'),
 ] 
