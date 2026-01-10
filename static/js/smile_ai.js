@@ -33,6 +33,46 @@
   let lastConf = 0;  
   let generationPromise = null;
   let generationResult = null;       
+  let leadSubmitted = false;
+  let previewOpened = false;
+
+  function tryOpenPreviewInline() {
+    if (previewOpened) return;
+    if (!leadSubmitted) return;
+    if (!generationResult || generationResult.done !== true) return;
+
+    // stop loader
+    if (leadFormMsg) {
+      leadFormMsg.innerHTML = "";
+      leadFormMsg.style.color = "";
+    }
+
+    if (generationResult.ok === true) {
+      const pBefore = document.getElementById("previewBeforeImg");
+      const pAfter = document.getElementById("previewAfterImg");
+
+      if (pBefore) pBefore.src = generationResult.beforeUrl || capturedDataUrl;
+      if (pAfter) pAfter.src = generationResult.afterUrl || generationResult.beforeUrl;
+
+      const contactModal = bootstrap.Modal.getInstance(
+        document.getElementById("contactModal")
+      );
+      contactModal?.hide();
+
+      const previewEl = document.getElementById("PreviewModal");
+      const previewModal =
+        bootstrap.Modal.getInstance(previewEl) ||
+        new bootstrap.Modal(previewEl);
+      previewModal.show();
+
+      previewOpened = true;
+      leadForm?.reset();
+    } else {
+      leadFormMsg.style.color = "red";
+      leadFormMsg.textContent =
+        generationResult.error || "Smile generation failed.";
+    }
+  }
 
   function getThreshold() {
     if (typeof window.THRESHOLD === "number") return window.THRESHOLD;
@@ -280,7 +320,7 @@
       showError("Allow camera access in browser, then refresh.");
     }
   });
-    confirmBtn.addEventListener("click", async () => {
+  confirmBtn.addEventListener("click", async () => {
     showError("");
     // resetResult();
 
@@ -304,6 +344,7 @@
               error: result?.error || "Smile generation failed",
               done: true,
             };
+            tryOpenPreviewInline();
             return generationResult;
           }
 
@@ -319,13 +360,14 @@
             resultWrap.classList.remove("hidden");
             resultStatus.textContent = "Smile generated ✅";
           }
-
+          tryOpenPreviewInline();
           return generationResult;
 
         } catch (e) {
           generationResult = {
             ok: false,
             error: e.message || String(e),
+            done:true,
           };
           return generationResult;
         }
@@ -366,122 +408,99 @@
   const csrftoken = getCookie("csrftoken");
 
   if (leadForm) {
-    leadForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
+  leadForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-      if (leadFormMsg) {
-        leadFormMsg.textContent = "";
+    if (leadFormMsg) {
+      leadFormMsg.textContent = "";
+      leadFormMsg.style.color = "";
+    }
+
+    if (leadSubmitBtn) leadSubmitBtn.disabled = true;
+
+    const payload = {
+      name: leadName ? leadName.value.trim() : "",
+      phone: leadPhone ? leadPhone.value.trim() : "",
+      city: leadCity ? leadCity.value.trim() : "",
+      message: leadMessage ? leadMessage.value.trim() : "",
+    };
+
+    try {
+      const res = await fetch("/virtual-smile-try-on/api/smile-lead/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrftoken,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.ok) {
+        leadFormMsg.style.color = "red";
+        leadFormMsg.textContent =
+          data?.error || "Form error. Please check fields.";
+        return;
+      }
+      leadSubmitted = true;
+      previewOpened = false;
+
+      // 🔹 Loader helper
+      function showLeadLoader(text = "Your smile generation is in process…") {
+        if (!leadFormMsg) return;
+        leadFormMsg.style.color = "white";
+        leadFormMsg.innerHTML = `
+          <div class="d-flex align-items-center justify-content-center gap-2">
+            <span class="spinner-border spinner-border-sm"></span>
+            <span>${text}</span>
+          </div>`;
+      }
+       // 🔹 Loader stop helper
+      function hideLeadLoader() {
+        if (!leadFormMsg) return;
+        leadFormMsg.innerHTML = "";
         leadFormMsg.style.color = "";
       }
 
-      if (leadSubmitBtn) leadSubmitBtn.disabled = true;
+      // 🔹 Open preview helper
+      const openPreviewWith = (beforeUrl, afterUrl) => {
+        try {
+          ///hideLeadLoader();
+          const pBefore = document.getElementById("previewBeforeImg");
+          const pAfter = document.getElementById("previewAfterImg");
 
-      const payload = {
-        name: leadName ? leadName.value.trim() : "",
-        phone: leadPhone ? leadPhone.value.trim() : "",
-        city: leadCity ? leadCity.value.trim() : "",
-        message: leadMessage ? leadMessage.value.trim() : "",
+          if (pBefore) pBefore.src = beforeUrl || capturedDataUrl;
+          if (pAfter) pAfter.src = afterUrl || beforeUrl;
+
+          const contactEl = document.getElementById("contactModal");
+          const contactModal = bootstrap.Modal.getInstance(contactEl);
+          if (contactModal) contactModal.hide();
+
+          const previewEl = document.getElementById("PreviewModal");
+          const previewModal =
+            bootstrap.Modal.getInstance(previewEl) ||
+            new bootstrap.Modal(previewEl);
+          previewModal.show();
+        } catch (e) {
+          console.warn("Preview modal error:", e);
+        }
       };
 
-      try {
-        const res = await fetch("/virtual-smile-try-on/api/smile-lead/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": csrftoken,
-          },
-          body: JSON.stringify(payload),
-        });
+      // ✅ ALWAYS show loader after submit
+      showLeadLoader();
+      tryOpenPreviewInline();
+    } catch (err) {
+      //hideLeadLoader();
+      leadFormMsg.style.color = "red";
+      leadFormMsg.textContent = "Network error. Please try again.";
+    } finally {
+      if (leadSubmitBtn) leadSubmitBtn.disabled = false;
+    }
+  });
+}
 
-        const data = await res.json();
 
-        if (!res.ok || !data.ok) {
-          const errText =
-            (data && (data.error || (data.errors && JSON.stringify(data.errors)))) ||
-            "Form error. Please check fields.";
-          if (leadFormMsg) {
-            leadFormMsg.style.color = "red";
-            leadFormMsg.textContent = errText;
-          }
-          return;
-        }
-
-          if (leadFormMsg) {
-          leadFormMsg.style.color = "green";
-          leadFormMsg.textContent = "Submitted ✅";
-        }
-
-        // ✅ If Gemini result is already ready → open PreviewModal immediately
-        const openPreviewWith = (beforeUrl, afterUrl) => {
-          try {
-            // set preview images
-            const pBefore = document.getElementById("previewBeforeImg");
-            const pAfter = document.getElementById("previewAfterImg");
-            if (pBefore) pBefore.src = beforeUrl || capturedDataUrl;
-            if (pAfter) pAfter.src = afterUrl || beforeUrl || capturedDataUrl;
-
-            // close contact modal
-            const contactEl = document.getElementById("contactModal");
-            const contactModal = bootstrap.Modal.getInstance(contactEl);
-            if (contactModal) contactModal.hide();
-
-            // open preview modal
-            const previewEl = document.getElementById("PreviewModal");
-            const previewModal =
-              bootstrap.Modal.getInstance(previewEl) || new bootstrap.Modal(previewEl);
-            previewModal.show();
-          } catch (e) {
-            console.warn("Preview modal open error:", e);
-          }
-        };
-
-        // CASE 1: already generated
-        if (generationResult && generationResult.ok) {
-          openPreviewWith(
-            generationResult.beforeUrl,
-            generationResult.afterUrl
-          );
-          leadForm.reset();
-          return;
-        }
-
-        // CASE 2: not ready yet → show loader and wait
-          leadFormMsg.style.color = "white";
-          leadFormMsg.innerHTML =
-            `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>` +
-            `Generating your smile preview…`;
-          leadSubmitBtn.disabled = true;
-
-        // wait for generation to complete
-        const result = await generationPromise;
-
-        if (result && result.ok) {
-          openPreviewWith(result.beforeUrl, result.afterUrl);
-          leadForm.reset();
-          return;
-        }
-        // if (!result || result.ok !== true) {
-        //   leadFormMsg.style.color = "white";
-        //   leadFormMsg.innerHTML =
-        //     `<span class="spinner-border spinner-border-sm me-2"></span>
-        //     Your smile transformation is in process…`;
-        //   return;
-        // }
-        // CASE 3: Gemini finished but FAILED
-        leadFormMsg.style.color = "red";
-        leadFormMsg.textContent =
-          result?.error || "Failed to generate preview.";
-        return;
-      } catch (err) {
-        if (leadFormMsg) {
-          leadFormMsg.style.color = "red";
-          leadFormMsg.textContent = "Network error. Please try again.";
-        }
-      } finally {
-        if (leadSubmitBtn) leadSubmitBtn.disabled = false;
-      }
-    });
-  }
  //start Camera On Model
   const smileModalEl = document.getElementById("smileModal");
 
@@ -491,6 +510,8 @@
       generationPromise = null;
       generationResult = null;
       capturedDataUrl = null;
+      leadSubmitted = false;
+      previewOpened = false;
       lastConf = 0;
 
       // clear preview images

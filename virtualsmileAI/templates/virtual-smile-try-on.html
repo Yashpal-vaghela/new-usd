@@ -19,10 +19,10 @@
                     <button class="btn bat d-flex align-items-center justify-content-between" data-bs-toggle="modal"
                         data-bs-target="#smileModal">Design My Smile Now <img src="{% static 'arrow-left.svg'%}"
                             class="mx-1 img-fluid" alt="arrow-left" /></button>
-                    <button class="btn bat d-flex align-items-center justify-content-between" data-bs-toggle="modal"
+                    <!-- <button class="btn bat d-flex align-items-center justify-content-between" data-bs-toggle="modal"
                         data-bs-target='#contactModal'>Contact Modal</button>
                     <button class="btn bat d-flex align-items-center justify-content-between" data-bs-toggle="modal"
-                        data-bs-target='#PreviewModal'>Preview Modal</button>
+                        data-bs-target='#PreviewModal'>Preview Modal</button> -->
                 </div>
                 <div class="col-lg-4 col-md-4 col-12 banner-content">
                     {% comment %} <img src="{% static 'bg-vector7.png'%}" class="bg-vector d-block d-md-none img-fluid"
@@ -114,8 +114,8 @@
                                 <img id="freezeImg" class="visually-hidden hidden" alt="Captured">
                                 <canvas id="canvas" width="1184" height="864" class="visually-hidden hidden"></canvas>
                             </div>
-                            <div class="d-flex align-items-center justify-content-between btn-wrapper">
-                                <button id="recaptureBtn" class="btn hidden">Retake</button>
+                            <div class="d-flex align-items-center justify-content-center gap-5 btn-wrapper">
+                                <button id="recaptureBtn" class="btn hidden">ReCapture</button>
 
                                 <button id="captureBtn" class="btn" disabled>
                                     Capture
@@ -126,7 +126,7 @@
                                     Continue <img src="{% static 'light-arrow-left.svg'%}" class="img-fluid"
                                         alt="arrow-left" />
                                 </button>
-                                <br />
+                                <!-- <br /> -->
                                 <span id="status" class="d-none">
                                     Confidence: 0.00 — Visible: false
                                 </span>
@@ -236,8 +236,9 @@
                             <input id="slider" class="before-input" type="range" min="0" max="100" value="50">
                         </div>
                         <div class="row justify-content-center mt-4 mb-0 my-lg-4">
-                            <div class="col-lg-2 col-md-3 col-6 order-1 order-md-1">
-                                <button class="btn bat btn-before" id="downloadBeforeBtn">Before
+                            <div class="col-lg-3 col-md-3 col-6 order-1 order-md-1">
+                                <button class="btn bat btn-before" id="downloadBeforeBtn" >Before 
+                                    & After
                                     <svg width="20" height="20" viewBox="0 0 28 28" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -275,7 +276,7 @@
                                     </svg>
                                 </button>
                             </div> {% endcomment %}
-                            <div class="col-lg-2 col-md-3 col-6 order-2 order-md-4">
+                            <!-- <div class="col-lg-2 col-md-3 col-6 order-2 order-md-4">
                                 <button class="btn bat btn-after" id="downloadAfterBtn">After
                                     <svg width="20" height="20" viewBox="0 0 28 28" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -284,7 +285,7 @@
                                             fill="black" />
                                     </svg>
                                 </button>
-                            </div>
+                            </div> -->
                         </div>
                         {% comment %} <div
                             class="d-flex align-items-center justify-content-between gap-2 gsp-sm-3 my-4">
@@ -390,14 +391,14 @@
       "smile-before.jpg"
     );
   });
-
-  document.getElementById("downloadAfterBtn")?.addEventListener("click", () => {
-    const afterImg = document.getElementById("previewAfterImg");
-    downloadImage(
-      afterImg?.src,
-      "smile-after.jpg"
-    );
+  document.getElementById("downloadBeforeBtn")?.addEventListener("click", () => {
+        const afterImg = document.getElementById("previewAfterImg");
+        downloadImage(
+        afterImg?.src,
+        "smile-after.jpg"
+        );
   });
+  
 </script>
 <script>
   async function shareImageFromUrl(imageUrl) {
