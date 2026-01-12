@@ -86,36 +86,36 @@ def create_smile_lead_api(request):
 
 
 @csrf_exempt
-def detect_api(request):
-    """
-    POST JSON: { image: <base64 dataURL> }
-    Returns: { conf: float, visible: bool, annotated: <base64 dataURL> }
-    """
-    if request.method != "POST":
-        return HttpResponseBadRequest("POST required")
+# def detect_api(request):
+#     """
+#     POST JSON: { image: <base64 dataURL> }
+#     Returns: { conf: float, visible: bool, annotated: <base64 dataURL> }
+#     """
+#     if request.method != "POST":
+#         return HttpResponseBadRequest("POST required")
 
-    try:
-        payload = json.loads(request.body.decode("utf-8"))
-    except Exception:
-        return HttpResponseBadRequest("Invalid JSON")
+#     try:
+#         payload = json.loads(request.body.decode("utf-8"))
+#     except Exception:
+#         return HttpResponseBadRequest("Invalid JSON")
 
-    img_b64 = payload.get("image")
-    if not img_b64:
-        return HttpResponseBadRequest("Missing image")
+#     img_b64 = payload.get("image")
+#     if not img_b64:
+#         return HttpResponseBadRequest("Missing image")
 
-    try:
-        img_bgr = decode_base64_image(img_b64)
-        out = run_inference_on_bgr(img_bgr)
+#     try:
+#         img_bgr = decode_base64_image(img_b64)
+#         out = run_inference_on_bgr(img_bgr)
 
-        conf = float(out["max_conf"])
-        visible = bool(out["visible"])
+#         conf = float(out["max_conf"])
+#         visible = bool(out["visible"])
 
-        # You can keep returning annotated (even if you hide in UI)
-        annotated = encode_image_to_base64_jpeg(out["annotated_bgr"], quality=80)
+#         # You can keep returning annotated (even if you hide in UI)
+#         annotated = encode_image_to_base64_jpeg(out["annotated_bgr"], quality=80)
 
-        return JsonResponse({"conf": conf, "visible": visible, "annotated": annotated})
-    except Exception as e:
-        return JsonResponse({"error": str(e)}, status=400)
+#         return JsonResponse({"conf": conf, "visible": visible, "annotated": annotated})
+#     except Exception as e:
+#         return JsonResponse({"error": str(e)}, status=400)
 
 
 @csrf_exempt
