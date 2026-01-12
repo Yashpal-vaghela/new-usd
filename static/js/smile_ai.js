@@ -191,12 +191,18 @@
     };
   }
 
+  function updateCaptureButtonState(enabled) {
+    if (!captureBtn) return;
+
+    captureBtn.disabled = !enabled;
+    captureBtn.textContent = enabled ? "Capture Now" : "Capture";
+  }
 
   function setControlsForLive() {
     captureBtn.classList.remove("hidden");
     recaptureBtn.classList.add("hidden");
     confirmBtn.classList.add("hidden");
-
+    captureBtn.textContent = "Capture";
     captureBtn.disabled = true;
     confirmBtn.disabled = true;
   }
@@ -209,7 +215,7 @@
     confirmBtn.disabled = !capturedDataUrl;
     captureBtn.disabled = true;
   }
-
+  
   async function detectLoop() {
     running = true;
 
@@ -227,7 +233,8 @@
         const frame = canvas.toDataURL("image/jpeg", 0.8);
 
         const data = await detectOnce(frame);
-
+        console.log("data smile",data);
+        
         const conf =
           typeof data.confidence === "number"
             ? data.confidence
@@ -248,7 +255,8 @@
             `Confidence: ${conf.toFixed(2)} — Visible: ${visible} — Threshold: ${threshold}`;
         }
 
-        captureBtn.disabled = !(visible && conf >= threshold);
+        const canCapture = visible && conf >= threshold;
+          updateCaptureButtonState(canCapture);
       } catch (e) {
         console.error("detectLoop error:", e);
       }

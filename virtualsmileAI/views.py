@@ -14,7 +14,7 @@ from virtualsmileAI.gemini import add_logo_on_right
 from .yolo import decode_base64_image, run_inference_on_bgr, encode_image_to_base64_jpeg
 from .gemini import generate_smile_design
 
-THRESHOLD = getattr(settings, "TEETH_DETECTION_THRESHOLD", 0.65)
+THRESHOLD = getattr(settings, "TEETH_DETECTION_THRESHOLD", 0.55)
 
 
 def smile(request):
