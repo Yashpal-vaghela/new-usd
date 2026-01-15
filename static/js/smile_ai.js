@@ -35,6 +35,8 @@
   let generationResult = null;       
   let leadSubmitted = false;
   let previewOpened = false;
+  let autoCaptured = false;
+  let lastDetectFrame = null;
 
   function tryOpenPreviewInline() {
     if (previewOpened) return;
@@ -199,21 +201,61 @@
   }
 
   function setControlsForLive() {
-    captureBtn.classList.remove("hidden");
+    if (captureBtn) {
+      captureBtn.classList.remove("hidden");
+      captureBtn.classList.add("ghost");
+      captureBtn.textContent = "Capture";
+      captureBtn.disabled = true;
+    }
     recaptureBtn.classList.add("hidden");
     confirmBtn.classList.add("hidden");
-    captureBtn.textContent = "Capture";
-    captureBtn.disabled = true;
     confirmBtn.disabled = true;
   }
 
   function setControlsForCaptured() {
-    captureBtn.classList.add("hidden");
+    if (captureBtn) {
+      captureBtn.classList.add("hidden");
+      captureBtn.classList.remove("ghost");
+      captureBtn.disabled = true;
+    }
     recaptureBtn.classList.remove("hidden");
     confirmBtn.classList.remove("hidden");
 
     confirmBtn.disabled = !capturedDataUrl;
-    captureBtn.disabled = true;
+  }
+
+  async function doCapture(frameDataUrl) {
+    showError("");
+    resetResult();
+    setMessage("");
+
+    if (frameDataUrl) {
+      capturedDataUrl = frameDataUrl;
+    } else {
+      if (!video.srcObject || video.readyState < 2) {
+        setMessage("Camera not ready. Please try again.", "error");
+        return;
+      }
+
+      canvas.width = video.videoWidth || 1184;
+      canvas.height = video.videoHeight || 864;
+
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      capturedDataUrl = canvas.toDataURL("image/jpeg", 0.92);
+    }
+
+    if (!capturedDataUrl || capturedDataUrl.length < 100) {
+      setMessage("Capture failed. Try again.", "error");
+      return;
+    }
+
+    freezeImg.src = capturedDataUrl;
+    showFreeze();
+
+    running = false;
+    stopCamera();
+
+    setControlsForCaptured();
   }
   
   async function detectLoop() {
@@ -233,6 +275,7 @@
         const frame = canvas.toDataURL("image/jpeg", 0.8);
 
         const data = await detectOnce(frame);
+        lastDetectFrame = frame;
         console.log("data smile",data);
         
         const conf =
@@ -256,7 +299,12 @@
         }
 
         const canCapture = visible && conf >= threshold;
-          updateCaptureButtonState(canCapture);
+        updateCaptureButtonState(canCapture);
+        if (canCapture && !autoCaptured && !capturedDataUrl) {
+          autoCaptured = true;
+          await doCapture(lastDetectFrame);
+          break;
+        }
       } catch (e) {
         console.error("detectLoop error:", e);
       }
@@ -264,48 +312,9 @@
       await new Promise((r) => setTimeout(r, 180));
     }
   }
-  captureBtn.addEventListener("click", async () => {
-    showError("");
-    resetResult();
-    setMessage("");
-
-    if (!video.srcObject || video.readyState < 2) {
-      setMessage("Camera not ready. Please try again.", "error");
-      return;
-    }
-
-    canvas.width = video.videoWidth || 1184;
-    canvas.height = video.videoHeight || 864;
-
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    capturedDataUrl = canvas.toDataURL("image/jpeg", 0.92);
-
-    if (!capturedDataUrl || capturedDataUrl.length < 100) {
-      setMessage("Capture failed. Try again.", "error");
-      return;
-    }
-
-    freezeImg.src = capturedDataUrl;
-    showFreeze();
-
-    running = false;
-    stopCamera();
-
-    // try {
-    //   const saved = await saveCapture(capturedDataUrl, lastConf);
-    //   if (saved && saved.saved) {
-    //     setMessage(
-    //       `Captured ✅ (confidence ${(saved.conf || lastConf || 0).toFixed(2)})`,
-    //       "ok"
-    //     );
-    //   } else {
-    //     setMessage("Captured ✅", "ok");
-    //   }
-    // } catch (e) {
-    //   setMessage("Captured ✅", "ok");
-    // }
-
-    setControlsForCaptured();
+  captureBtn?.addEventListener("click", async () => {
+    autoCaptured = true;
+    await doCapture(lastDetectFrame);
   });
   recaptureBtn.addEventListener("click", async () => {
     showError("");
@@ -314,12 +323,14 @@
 
     capturedDataUrl = null;
     lastConf = 0;
+    autoCaptured = false;
+    lastDetectFrame = null;
 
     hideFreeze();
 
     try {
       await startCamera();
-      setMessage("Camera restarted. Smile to enable Capture.", "muted");
+      setMessage("Camera restarted. Smile to auto-capture.", "muted");
       setControlsForLive();
       detectLoop();
     } catch (e) {
@@ -521,6 +532,8 @@
       leadSubmitted = false;
       previewOpened = false;
       lastConf = 0;
+      autoCaptured = false;
+      lastDetectFrame = null;
 
       // clear preview images
       const pBefore = document.getElementById("previewBeforeImg");
@@ -539,7 +552,7 @@
           detectLoop();
         }
         setMessage(
-          "Camera started. Smile and the Capture button will enable automatically.",
+          "Camera started. Smile and auto-capture will trigger.",
           "muted"
         );
       } catch (e) {
@@ -558,6 +571,8 @@
       generationResult = null;
       capturedDataUrl = null;
       lastConf = 0;
+      autoCaptured = false;
+      lastDetectFrame = null;
       setControlsForLive();
       console.log("Camera stopped (modal closed)");
     });

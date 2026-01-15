@@ -23,6 +23,10 @@
 .hidden {
   display: none !important;
 }
+.ghost {
+  visibility: hidden;
+  pointer-events: none;
+}
 /* .virtualpage .smileModal.show{
     display: flex !important;
     align-items: center;

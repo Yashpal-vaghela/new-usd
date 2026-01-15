@@ -8,3 +8,5 @@ numpy
 pillow
 google-generativeai
 python-dotenv
+uvicorn
+fastapi
