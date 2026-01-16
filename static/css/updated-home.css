@@ -4442,6 +4442,26 @@ body {
     margin-bottom: 14px;
   }
 }
+@media(max-width:576px){
+  .technology-title{
+    font-size: 24px;
+  }
+  #before_after_img{
+    width: 100%;
+    height: 350px;
+  }
+  .Ai-technology_section{
+    padding: 10px 0px 40px !important;
+  }
+  .Ai-technology_section .banner-highlight{
+    font-size: 13px;
+  }
+  .Ai-technology_section p{
+    font-size: 14px;
+  }
+}
+
+
 /* .ba-wrapper {
   display: flex;
   justify-content: center;
@@ -4524,7 +4544,6 @@ body {
   cursor: ew-resize;
   transform: translateX(-50%);
 } */
-
 /* .ba-knob {
   position: absolute;
   top: 50%;
