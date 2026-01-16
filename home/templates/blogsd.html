@@ -477,7 +477,6 @@
 </script>
 
 <script>
-  // Function to display SweetAlert based on Django messages
   {% if messages %}
       {% for message in messages %}
           Swal.fire({
@@ -588,7 +587,5 @@
     }
   }
 </script>
-<script>
 {{blog.schema|safe}}
-</script>
 {% endblock js %}

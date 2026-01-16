@@ -2748,6 +2748,10 @@
   width: 6%;
   height: 30px;
 }
+.find-section-subtitle{
+  font-size: 1.6rem !important;
+  line-height: 30px !important;
+}
 @media (max-width: 1200px) {
   .searchbar-box-wrapper1 svg {
     width: 8%;
