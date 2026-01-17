@@ -35,8 +35,24 @@
   let generationResult = null;       
   let leadSubmitted = false;
   let previewOpened = false;
-  let autoCaptured = false;
-  let lastDetectFrame = null;
+  let frameSeq = 0;
+  const frameStore = new Map()
+  let inFlight =false;
+  let hasCaptured = false;
+
+  const MAX_STORE = 8;
+  const STORE_TTL = 2500;
+
+  function pruneFrameStore(){
+    const now = Date.now();
+    for (const [id, item] of frameStore.entries()) {
+      if(now - item.ts > STORE_TTL) frameStore.delete(id);
+    }
+    while (frameStore.size > MAX_STORE) {
+      const oldestKey = frameStore.keys().next().value;
+      frameStore.delete(oldestKey);
+    }
+  }
 
   function tryOpenPreviewInline() {
     if (previewOpened) return;
@@ -60,6 +76,7 @@
         document.getElementById("contactModal")
       );
       contactModal?.hide();
+
 
       const previewEl = document.getElementById("PreviewModal");
       const previewModal =
@@ -151,13 +168,37 @@
     stream = null;
   }
 
-  async function detectOnce(frameDataUrl) {
-    const resp = await fetch("http://127.0.0.1:8001/detect", {
+  async function captureFromFrame(dataUrl, conf) {
+    if (hasCaptured) return;
+    hasCaptured = true;
+
+    showError("");
+    resetResult();
+    setMessage("");
+
+    capturedDataUrl = dataUrl;
+    lastConf = conf || 0;
+
+    freezeImg.src = capturedDataUrl;
+    showFreeze();
+
+    running = false;
+    stopCamera();
+
+    setControlsForCaptured();
+    setMessage(`Captured ✅ (confidence ${(lastConf).toFixed(2)})`, "ok");
+  }
+
+
+  async function detectOnce(frameDataUrl, frameId) {
+    const resp = await fetch("https://api.ultimatesmiledesign.com/detect", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ image: frameDataUrl }),
+      body: JSON.stringify({ image: frameDataUrl, frame_id: frameId }),
     });
-    return await resp.json();
+    const data = await resp.json();
+    data.__frameId = frameId
+    return data;
   }
 
   async function saveCapture(frameDataUrl, conf) {
@@ -201,48 +242,165 @@
   }
 
   function setControlsForLive() {
-    if (captureBtn) {
-      captureBtn.classList.remove("hidden");
-      captureBtn.classList.add("ghost");
-      captureBtn.textContent = "Capture";
-      captureBtn.disabled = true;
-    }
+    captureBtn.classList.remove("hidden");
     recaptureBtn.classList.add("hidden");
     confirmBtn.classList.add("hidden");
+    captureBtn.textContent = "Capture";
+    captureBtn.disabled = true;
     confirmBtn.disabled = true;
   }
 
   function setControlsForCaptured() {
-    if (captureBtn) {
-      captureBtn.classList.add("hidden");
-      captureBtn.classList.remove("ghost");
-      captureBtn.disabled = true;
-    }
+    captureBtn.classList.add("hidden");
     recaptureBtn.classList.remove("hidden");
     confirmBtn.classList.remove("hidden");
 
     confirmBtn.disabled = !capturedDataUrl;
+    captureBtn.disabled = true;
+  }
+  
+  // async function detectLoop() {
+  //   running = true;
+
+  //   while (running) {
+  //     try {
+  //       if (!video.srcObject || video.readyState < 2) {
+  //         await new Promise((r) => setTimeout(r, 120));
+  //         continue;
+  //       }
+
+  //       canvas.width = video.videoWidth || 1184;
+  //       canvas.height = video.videoHeight || 864;
+
+  //       ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  //       const frame = canvas.toDataURL("image/jpeg", 0.8);
+
+  //       const data = await detectOnce(frame);
+  //       console.log("data smile",data);
+        
+  //       const conf =
+  //         typeof data.confidence === "number"
+  //           ? data.confidence
+  //           : (typeof data.conf === "number" ? data.conf : 0);
+
+  //       lastConf = conf;
+
+  //       const visible = !!(
+  //         data.visible ||
+  //         data.smile_visible ||
+  //         data.is_smile_visible
+  //       );
+
+  //       const threshold = getThreshold();
+
+  //       if (status) {
+  //         status.textContent =
+  //           `Confidence: ${conf.toFixed(2)} — Visible: ${visible} — Threshold: ${threshold}`;
+  //       }
+
+  //       const canCapture = visible && conf >= threshold;
+  //         updateCaptureButtonState(canCapture);
+  //     } catch (e) {
+  //       console.error("detectLoop error:", e);
+  //     }
+
+  //     await new Promise((r) => setTimeout(r, 180));
+  //   }
+  // }
+  
+  async function detectLoop() {
+    running = true;
+    hasCaptured = false;
+    inFlight = false;
+
+    while (running) {
+      try {
+        if (hasCaptured) break;
+
+        if (!video.srcObject || video.readyState < 2) {
+          await new Promise((r) => setTimeout(r, 120));
+          continue;
+        }
+
+        if (inFlight) {
+          // wait until previous detect finishes
+          await new Promise((r) => setTimeout(r, 60));
+          continue;
+        }
+
+        // --- grab a frame and assign an id ---
+        canvas.width = video.videoWidth || 1184;
+        canvas.height = video.videoHeight || 864;
+
+        ctx.save();
+        ctx.translate(canvas.width, 0);
+        ctx.scale(-1, 1);
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        ctx.restore();
+
+        const frameDataUrl = canvas.toDataURL("image/jpeg", 0.8);
+
+        const frameId = ++frameSeq;
+        frameStore.set(frameId, { dataUrl: frameDataUrl, ts: Date.now() });
+        pruneFrameStore();
+
+        inFlight = true;
+
+        const data = await detectOnce(frameDataUrl, frameId);
+        inFlight = false;
+
+        const conf =
+          typeof data.confidence === "number"
+            ? data.confidence
+            : (typeof data.conf === "number" ? data.conf : 0);
+
+        lastConf = conf;
+
+        const visible = !!(data.visible || data.smile_visible || data.is_smile_visible);
+        const threshold = getThreshold();
+
+        if (status) {
+          status.textContent = `Confidence: ${conf.toFixed(2)} — Visible: ${visible} — Threshold: ${threshold}`;
+        }
+        // ✅ AUTO CAPTURE: capture the exact frame that produced this response
+        if (visible && conf >= threshold) {
+          console.log("DETECT", { conf, visible, threshold, frameId: data.__frameId });
+          const stored = frameStore.get(data.__frameId);
+          const exactFrame = stored?.dataUrl || frameDataUrl; 
+          await captureFromFrame(exactFrame, conf);
+          console.log("AUTO CAPTURE TRIGGERED", data.__frameId);
+          break;
+        }
+
+      } catch (e) {
+        inFlight = false;
+        console.error("detectLoop error:", e);
+      }
+
+      await new Promise((r) => setTimeout(r, 120));
+    }
   }
 
-  async function doCapture(frameDataUrl) {
+
+  captureBtn.addEventListener("click", async () => {
     showError("");
     resetResult();
     setMessage("");
 
-    if (frameDataUrl) {
-      capturedDataUrl = frameDataUrl;
-    } else {
-      if (!video.srcObject || video.readyState < 2) {
-        setMessage("Camera not ready. Please try again.", "error");
-        return;
-      }
-
-      canvas.width = video.videoWidth || 1184;
-      canvas.height = video.videoHeight || 864;
-
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-      capturedDataUrl = canvas.toDataURL("image/jpeg", 0.92);
+    if (!video.srcObject || video.readyState < 2) {
+      setMessage("Camera not ready. Please try again.", "error");
+      return;
     }
+
+    canvas.width = video.videoWidth || 1184;
+    canvas.height = video.videoHeight || 864;
+
+    ctx.save();
+    ctx.translate(canvas.width, 0);
+    ctx.scale(-1,1);
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    ctx.restore();
+    capturedDataUrl = canvas.toDataURL("image/jpeg", 0.92);
 
     if (!capturedDataUrl || capturedDataUrl.length < 100) {
       setMessage("Capture failed. Try again.", "error");
@@ -255,67 +413,23 @@
     running = false;
     stopCamera();
 
+    // try {
+    //   const saved = await saveCapture(capturedDataUrl, lastConf);
+    //   if (saved && saved.saved) {
+    //     setMessage(
+    //       `Captured ✅ (confidence ${(saved.conf || lastConf || 0).toFixed(2)})`,
+    //       "ok"
+    //     );
+    //   } else {
+    //     setMessage("Captured ✅", "ok");
+    //   }
+    // } catch (e) {
+    //   setMessage("Captured ✅", "ok");
+    // }
+
     setControlsForCaptured();
-  }
-  
-  async function detectLoop() {
-    running = true;
-
-    while (running) {
-      try {
-        if (!video.srcObject || video.readyState < 2) {
-          await new Promise((r) => setTimeout(r, 120));
-          continue;
-        }
-
-        canvas.width = video.videoWidth || 1184;
-        canvas.height = video.videoHeight || 864;
-
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-        const frame = canvas.toDataURL("image/jpeg", 0.8);
-
-        const data = await detectOnce(frame);
-        lastDetectFrame = frame;
-        console.log("data smile",data);
-        
-        const conf =
-          typeof data.confidence === "number"
-            ? data.confidence
-            : (typeof data.conf === "number" ? data.conf : 0);
-
-        lastConf = conf;
-
-        const visible = !!(
-          data.visible ||
-          data.smile_visible ||
-          data.is_smile_visible
-        );
-
-        const threshold = getThreshold();
-
-        if (status) {
-          status.textContent =
-            `Confidence: ${conf.toFixed(2)} — Visible: ${visible} — Threshold: ${threshold}`;
-        }
-
-        const canCapture = visible && conf >= threshold;
-        updateCaptureButtonState(canCapture);
-        if (canCapture && !autoCaptured && !capturedDataUrl) {
-          autoCaptured = true;
-          await doCapture(lastDetectFrame);
-          break;
-        }
-      } catch (e) {
-        console.error("detectLoop error:", e);
-      }
-
-      await new Promise((r) => setTimeout(r, 180));
-    }
-  }
-  captureBtn?.addEventListener("click", async () => {
-    autoCaptured = true;
-    await doCapture(lastDetectFrame);
   });
+
   recaptureBtn.addEventListener("click", async () => {
     showError("");
     resetResult();
@@ -323,14 +437,12 @@
 
     capturedDataUrl = null;
     lastConf = 0;
-    autoCaptured = false;
-    lastDetectFrame = null;
 
     hideFreeze();
 
     try {
       await startCamera();
-      setMessage("Camera restarted. Smile to auto-capture.", "muted");
+      setMessage("Camera restarted. Smile to enable Capture.", "muted");
       setControlsForLive();
       detectLoop();
     } catch (e) {
@@ -339,6 +451,7 @@
       showError("Allow camera access in browser, then refresh.");
     }
   });
+
   confirmBtn.addEventListener("click", async () => {
     showError("");
     // resetResult();
@@ -407,7 +520,6 @@
     // keep confirm enabled again (user can still submit contact)
     confirmBtn.disabled = false;
   });
-
 
   function getCookie(name) {
     let cookieValue = null;
@@ -532,8 +644,6 @@
       leadSubmitted = false;
       previewOpened = false;
       lastConf = 0;
-      autoCaptured = false;
-      lastDetectFrame = null;
 
       // clear preview images
       const pBefore = document.getElementById("previewBeforeImg");
@@ -552,7 +662,7 @@
           detectLoop();
         }
         setMessage(
-          "Camera started. Smile and auto-capture will trigger.",
+          "Camera started. Smile and the Capture button will enable automatically.",
           "muted"
         );
       } catch (e) {
@@ -571,8 +681,6 @@
       generationResult = null;
       capturedDataUrl = null;
       lastConf = 0;
-      autoCaptured = false;
-      lastDetectFrame = null;
       setControlsForLive();
       console.log("Camera stopped (modal closed)");
     });
