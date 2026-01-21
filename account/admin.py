@@ -76,6 +76,11 @@ class SmileDesignLeadAdmin(admin.ModelAdmin):
     search_fields = ('name', 'phone', 'city')
     list_filter = ('submitted_at',)
 
+class AwardsAdmin(admin.ModelAdmin):
+    list_display = ('name', 'year')
+    search_fields = ('name', 'year')
+    
+
 admin.site.register(Location)
 admin.site.register(City)
 admin.site.register(Specializations)
@@ -99,3 +104,4 @@ admin.site.register(DentistRedirect, DentistRedirectAdmin)
 admin.site.register(BeforeAfter, BeforeAfterAdmin)
 admin.site.register(NewsletterSubscriber, NewsletterSubscriberAdmin)
 admin.site.register(SmileDesignLead, SmileDesignLeadAdmin)
+admin.site.register(Awards, AwardsAdmin)

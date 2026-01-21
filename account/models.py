@@ -320,5 +320,13 @@ class SmileDesignLead(models.Model):
     message = models.TextField(blank=True, null=True)
     submitted_at = models.DateTimeField(auto_now_add=True)
     
-     
+class Awards(models.Model):
+    name = models.CharField(max_length=300)
+    image = models.ImageField(upload_to="Awards")
+    alt_text = models.CharField(max_length=300, blank=True)
+    year = models.CharField(max_length=4)
+
+    def save(self, *args, **kwargs):
+        self.alt_text = self.name
+        super().save(*args, **kwargs)
 
