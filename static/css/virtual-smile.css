@@ -114,6 +114,11 @@
 .user-smile-img {
   width: 60%;
 }
+.video-capture-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .video-capture-wrapper #video,
 .video-capture-wrapper #freezeImg {
   width: 100%;

@@ -31,7 +31,7 @@
         &nbsp; <i class=" fa fa-solid fa-angles-right"></i> 
         &nbsp; <a href="{% url 'home:blogs' %}"> Blogs </a> 
         &nbsp; <i class=" fa fa-solid fa-angles-right"></i>
-        &nbsp; <br/><a class="breadcrumbs-title" href="{% url 'home:blogs' %}">{{blog.h1}}</a>
+        &nbsp; <br/><a class="breadcrumbs-title" href="{% url 'home:blogsd' blog.slug %}">{{ blog.h1 }}</a>
       </div>
       {% comment %} <h1 class=" breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool fs-4">{{blog.h1}}</h1> {% endcomment %}
     </div>
