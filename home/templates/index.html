@@ -241,7 +241,10 @@
             </svg>
             <p class="mb-0">Instant preview in seconds</p>
           </div>
-          <button class="btn bat my-2 mx-1 d-sm-none d-md-block">Try Your Smile Now</button>
+          {% comment %} <button class="btn bat my-2 mx-1 d-sm-none d-md-block">Try Your Smile Now</button> {% endcomment %}
+          <a href="{% url 'virtualsmileAI:smile' %}">
+            <button class="btn bat my-2 mx-1 d-sm-none d-md-block">Try Your Smile Now</button>
+          </a>
         </div>
       </div>
     </div>
