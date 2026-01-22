@@ -4,4 +4,4 @@ from .models import SmileDesignLead
 class SmileDesignLeadForm(forms.ModelForm):
     class Meta:
         model = SmileDesignLead
-        fields = ["name", "phone", "city", "message"]
+        fields = ["name", "phone", "city", "email"]

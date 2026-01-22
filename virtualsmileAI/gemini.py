@@ -3,26 +3,45 @@ from typing import Optional
 from PIL import Image, ImageDraw
 from django.conf import settings
 
-PROMPT = r"""TASK: Using [INPUT_IMAGE], perform a high-end cosmetic dentistry digital smile design. The design must strictly adhere to the visible natural tooth structure only.
+PROMPT = r"""
+TASK: Using [INPUT_IMAGE], perform a high-end cosmetic dentistry digital smile design. Only modify the visible teeth – all other features must remain unchanged.
 
-⚠️ NON-NEGOTIABLE CONSTRAINTS
-Facial Integrity: Do not alter any part of the face, including lips, gums, skin, beard, hair, eyes, or facial expression. No smile enhancement or expression modification is allowed.
-Background & Lighting: Preserve the exact original background, lighting, and all ambient shadows outside the mouth area. Do not change, blur, or stylize any part of the surrounding image.
-Framing & Perspective: Maintain the exact same camera angle, framing, and crop as the original image. No zooming, cropping, or re-centering.
+⚠️ Non-Negotiable Constraints
 
-😁 SMILE DESIGN (TEETH ONLY)
-Transformation Scope: Replace the visible teeth only with high-end, symmetrical, and naturally aligned emax veneers. Do not extend tooth visibility beyond what is present in the original image.
-Shade & Harmony: Use a high-value white shade (approx. B1) that appears clean yet realistic. Shade must be harmonized with the subject’s natural skin tone — avoid tones that appear unnaturally bright or mismatched, especially for darker complexions. Teeth must not appear overly bleached or artificial.
-Anatomical Realism: Ensure detailed tooth anatomy including:
-- Defined separation between teeth.
-- Subtle enamel translucency near the incisal edges.
-- Natural surface texture and shape.
-Lip & Mouth Integration: Veneers must fit seamlessly under the existing lip line. Do not alter the lip position, shape, or visibility. Respect the natural mouth dynamics and avoid making the teeth look overly long, bulky, or disproportionate.
-Lighting Consistency: New teeth must reflect and absorb light in harmony with the original image’s lighting conditions. Shadows, reflections, and highlights around the mouth must remain coherent.
+Facial Integrity: Do not alter any part of the face (this includes lips, gums, skin, beard, hair, eyes, or facial expression). The subject’s smile and expression should remain natural – no forced smiles or lip adjustments.
+Background & Lighting: Preserve the original background, lighting, and shadows exactly as they are. Do not change, blur, or stylize any area outside the mouth. Everything around the face and in the environment must remain identical to the input.
+Framing & Perspective: Maintain the same camera angle, framing, and crop as the original image. No zooming, cropping, or re-centering is allowed. The output should align perfectly with the input image in perspective and composition.
 
-✅ REMINDERS TO ENFORCE
-No expression change. The person must look exactly the same emotionally and physically.
-Final output should look professionally enhanced but indistinguishably real, as if the person naturally had perfect teeth.
+😁 Smile Design (Teeth Only)
+Transformation Scope: Replace only the visible teeth with high-end, beautifully crafted e.max veneers. The new teeth should be symmetrical and naturally aligned, following the exact layout of the original teeth (do not reveal more teeth than are originally visible, and do not alter the gum line). Each veneer should sit precisely where the original tooth is.
+Shade & Harmony: Select the veneer shade dynamically based on the subject’s natural skin tone to ensure realism and harmony:
+Darker skin tones: Use shade A3 (a warm, natural white with depth that complements deeper complexions).
+Medium or wheatish skin tones: Use shade A2 (a balanced, soft natural white).
+Fair or light skin tones: Use shade A1 (a bright yet realistic white).
+Avoid any overly bleached, chalky look – the veneers should be clean and bright but still believable for the individual’s complexion. They must appear healthy and premium in color, without looking fake.
+Color Consistency: Ensure the new teeth have even, consistent coloration with no spots, streaks, or discoloration. The enamel shade should transition naturally from the slightly warmer tone near the gum to a subtle translucency at the tips, mimicking real teeth. There should be no staining or blotches – the veneers must look impeccably clean and evenly shaded (while still showing gentle gradation like natural teeth). This aligns with the ideal that a tooth shade should harmonize with one’s appearance and stay free of discoloration over time.
+Anatomical Realism: The veneers must have realistic dental anatomy and texture:
+Tooth Separation: Each tooth should be clearly individually defined with a natural outline. Do not let veneers merge or blur together – there should be subtle, clean lines or slight gaps where teeth meet, just like real teeth.
+Translucency & Texture: Incorporate subtle enamel translucency towards the incisal edges (the biting tips of the teeth) – a slight see-through quality at the edges that real enamel often has. Also include natural surface textures and micro-details (fine textures or luster) so they catch light realistically, rather than looking flat.
+Micro-Asymmetry: Introduce very slight, natural variations in tooth shape or positioning (for example, a tiny variation in the contour or angle of a tooth) to avoid a “cookie-cutter” appearance. Real smiles have minor asymmetries that give them character. The veneers should not look unnaturally identical or overly uniform – they should be perfectly aligned and proportional yet with a touch of individuality for realism.
+Lip & Mouth Integration: The new teeth must fit seamlessly into the existing mouth without altering any surrounding tissues:
+The veneers should sit under the existing lip line exactly. Do not change the position or shape of the lips or the amount of gums showing. The lips in the image should look untouched and naturally draped over the teeth as they originally were.
+Maintain Original Tooth Size: Keep each tooth’s height and width the same as in the original image. Do not make the teeth longer, wider, or bulkier than they originally appear. This ensures the veneers do not look too large or out-of-place. The overall smile line (the curve of the teeth as it follows the lip) should remain unchanged.
+Ensure the gumline and teeth junction is clean and natural. Do not alter the gums’ color or shape. There should be no dark edges or obvious lines at the gum-teeth interface – the veneers should appear to emerge naturally from the gums.
+Tooth Size & Proportion: Veneers must strictly match the original visible tooth dimensions. Do not increase height or width beyond what is naturally present in the input image.
+Teeth should never appear oversized, bulky, or long. The design must preserve the subject’s natural smile curve and avoid any “too big” appearance.
+Slight improvements for symmetry are allowed, but only if they do not make teeth visually larger than before. Always prioritize natural realism over geometric correction.
+Veneers must fit entirely within the original tooth contour – no extension past gumline, lips, or spacing.
+The smile should look harmonious and balanced, not artificial or “overdone.”
+Lighting Consistency: The replaced teeth must match the lighting of the original photo perfectly:
+Retain the same highlights and shadows on the teeth that would be present given the scene’s lighting. For example, if the light in the original image comes from above or one side, the veneers should show corresponding gentle highlights on that side and soft shadows where appropriate, just like real teeth under those conditions.
+The reflection and shine on the veneers should mirror what real teeth would reflect in that environment (no excessive gloss beyond what the original lighting suggests).
+Do not introduce any new light sources or unnatural glare. The goal is that the new teeth appear as if they were always part of the original image, with coherent lighting and shadowing around the mouth. All ambient shadows and lighting on the face remain unchanged, and the teeth should blend into that light seamlessly.
+Flawless Final Result: The final smile should look impeccably realistic and aesthetically stunning:
+The veneers must be high-end and flawless – as if a top cosmetic dentist did the work. They should show no imperfections like chips, cracks, or rough edges. Each tooth’s edges should be smooth and well-defined (unless the original had a certain unique edge shape that should be preserved).
+Use e.max veneers for their renowned quality – they are ultra-thin and have life-like translucency, enabling a very natural look. This means the new teeth should exhibit the slight glassy depth that real enamel has, enhancing realism.
+There should be no artifacts or errors from the editing process: no double exposure of teeth, no blurred areas, no mismatched colors. Everything about the teeth should look deliberate and naturally photographical.
+Overall, the outcome must radiate a premium yet natural smile. It should look like the person simply has perfect, healthy teeth. Anyone viewing the image should not detect it was digitally altered – it should look like a real, high-quality photograph of a person with a beautiful, naturally harmonious smile.
 """
 
 

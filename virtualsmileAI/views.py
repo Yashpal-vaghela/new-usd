@@ -68,7 +68,7 @@ def create_smile_lead_api(request):
         "name": (payload.get("name") or "").strip(),
         "phone": (payload.get("phone") or "").strip(),
         "city": (payload.get("city") or "").strip(),
-        "message": (payload.get("message") or "").strip(),
+        "email": (payload.get("email") or "").strip(),
     }
 
     form = SmileDesignLeadForm(data)

@@ -21,7 +21,7 @@
   const leadName = document.getElementById("leadName");
   const leadPhone = document.getElementById("leadPhone");
   const leadCity = document.getElementById("leadCity");
-  const leadMessage = document.getElementById("leadMessage");
+  const leadEmail = document.getElementById("leadEmail");
   const leadFormMsg = document.getElementById("leadFormMsg");
   const leadSubmitBtn = document.getElementById("leadSubmitBtn");
 
@@ -467,7 +467,7 @@
       name: leadName ? leadName.value.trim() : "",
       phone: leadPhone ? leadPhone.value.trim() : "",
       city: leadCity ? leadCity.value.trim() : "",
-      message: leadMessage ? leadMessage.value.trim() : "",
+      email: leadEmail ? leadEmail.value.trim() : "",
     };
 
     try {
