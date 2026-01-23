@@ -28,13 +28,18 @@
   const ctx = canvas.getContext("2d", { willReadFrequently: true });
 
   let stream = null;
-  let running = false;   
-  let capturedDataUrl = null;  
-  let lastConf = 0;  
-  let generationPromise = null;
-  let generationResult = null;       
+  let running = false;
+  let capturedDataUrl = null;
+  let lastConf = 0;
+  let generationPromise = null; 
+  let generationResult = null;
   let leadSubmitted = false;
   let previewOpened = false;
+  let leadId = null;
+
+  // ✅ WhatsApp dedupe flags
+  let whatsappTriggered = false;
+  let whatsappInFlight = false;
 
   function tryOpenPreviewInline() {
     if (previewOpened) return;
@@ -59,19 +64,19 @@
       );
       contactModal?.hide();
 
-
       const previewEl = document.getElementById("PreviewModal");
       const previewModal =
-        bootstrap.Modal.getInstance(previewEl) ||
-        new bootstrap.Modal(previewEl);
+        bootstrap.Modal.getInstance(previewEl) || new bootstrap.Modal(previewEl);
       previewModal.show();
 
       previewOpened = true;
       leadForm?.reset();
+
+      // ✅ Only triggers once due to whatsappInFlight lock
+      tryTriggerWhatsapp();
     } else {
       leadFormMsg.style.color = "red";
-      leadFormMsg.textContent =
-        generationResult.error || "Smile generation failed.";
+      leadFormMsg.textContent = generationResult.error || "Smile generation failed.";
     }
   }
 
@@ -153,20 +158,14 @@
   async function detectOnce(canvas) {
     console.log("CALLING /detect (json base64)");
 
-    // Convert canvas → Base64 JPEG
     const dataUrl = canvas.toDataURL("image/jpeg", 0.85);
 
     const resp = await fetch("https://ai.ultimatesmiledesign.com/detect", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        image: dataUrl,
-      }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ image: dataUrl }),
     });
 
-    // Safe parsing (handles HTML/text 500 errors)
     const text = await resp.text();
     let data;
     try {
@@ -183,7 +182,6 @@
 
     return data;
   }
-
 
   async function saveCapture(frameDataUrl, conf) {
     const resp = await fetch("/virtual-smile-try-on/api/capture/", {
@@ -220,7 +218,6 @@
 
   function updateCaptureButtonState(enabled) {
     if (!captureBtn) return;
-
     captureBtn.disabled = !enabled;
     captureBtn.textContent = enabled ? "Capture Now" : "Capture";
   }
@@ -239,11 +236,10 @@
     captureBtn.classList.add("hidden");
     recaptureBtn.classList.remove("hidden");
     confirmBtn.classList.remove("hidden");
-
     confirmBtn.disabled = !capturedDataUrl;
     captureBtn.disabled = true;
   }
-  
+
   async function detectLoop() {
     running = true;
 
@@ -259,7 +255,7 @@
 
         ctx.save();
         ctx.translate(canvas.width, 0);
-        ctx.scale(-1, 1); // keep selfie mirror behavior
+        ctx.scale(-1, 1);
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
         ctx.restore();
 
@@ -277,9 +273,7 @@
 
         const threshold = getThreshold();
         if (status) {
-          status.textContent = `Confidence: ${conf.toFixed(
-            2
-          )} | Visible: ${visible} | Threshold: ${threshold}`;
+          status.textContent = `Confidence: ${conf.toFixed(2)} | Visible: ${visible} | Threshold: ${threshold}`;
         }
 
         updateCaptureButtonState(visible && conf >= threshold);
@@ -301,9 +295,7 @@
       return;
     }
 
-    // Stop detection loop before capturing so the frame is from the tap moment.
     running = false;
-
     await new Promise(requestAnimationFrame);
 
     canvas.width = video.videoWidth || 1184;
@@ -311,9 +303,10 @@
 
     ctx.save();
     ctx.translate(canvas.width, 0);
-    ctx.scale(-1,1);
+    ctx.scale(-1, 1);
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     ctx.restore();
+
     capturedDataUrl = canvas.toDataURL("image/jpeg", 0.92);
 
     if (!capturedDataUrl || capturedDataUrl.length < 100) {
@@ -326,20 +319,6 @@
 
     running = false;
     stopCamera();
-
-    // try {
-    //   const saved = await saveCapture(capturedDataUrl, lastConf);
-    //   if (saved && saved.saved) {
-    //     setMessage(
-    //       `Captured ✅ (confidence ${(saved.conf || lastConf || 0).toFixed(2)})`,
-    //       "ok"
-    //     );
-    //   } else {
-    //     setMessage("Captured ✅", "ok");
-    //   }
-    // } catch (e) {
-    //   setMessage("Captured ✅", "ok");
-    // }
 
     setControlsForCaptured();
   });
@@ -368,7 +347,6 @@
 
   confirmBtn.addEventListener("click", async () => {
     showError("");
-    // resetResult();
 
     if (!capturedDataUrl) {
       setMessage("Please capture an image first.", "error");
@@ -378,60 +356,41 @@
     confirmBtn.disabled = true;
     setMessage("Generating with Gemini…", "muted");
 
-    // ✅ Start Gemini async ONCE (do not block UI)
     if (!generationPromise) {
       generationPromise = (async () => {
         try {
           const result = await callGemini(capturedDataUrl);
 
           if (!result || !result.ok) {
-            generationResult = {
-              ok: false,
-              error: result?.error || "Smile generation failed",
-              done: true,
-            };
+            generationResult = { ok: false, error: result?.error || "Smile generation failed", done: true };
             tryOpenPreviewInline();
             return generationResult;
           }
 
-          generationResult = {
-            ok: true,
-            beforeUrl: result.beforeUrl,
-            afterUrl: result.afterUrl,
-            done:true,
-          };
+          generationResult = { ok: true, beforeUrl: result.beforeUrl, afterUrl: result.afterUrl, done: true };
 
-          // OPTIONAL: status text only (NO preview update)
           if (resultWrap && resultStatus) {
             resultWrap.classList.remove("hidden");
             resultStatus.textContent = "Smile generated ✅";
           }
+
           tryOpenPreviewInline();
           return generationResult;
-
         } catch (e) {
-          generationResult = {
-            ok: false,
-            error: e.message || String(e),
-            done:true,
-          };
+          generationResult = { ok: false, error: e.message || String(e), done: true };
           return generationResult;
         }
       })();
     }
 
-
-    // ✅ Open Contact modal immediately (user can fill while Gemini runs)
     try {
       const contactModalEl = document.getElementById("contactModal");
-      const contactModal =
-        bootstrap.Modal.getInstance(contactModalEl) || new bootstrap.Modal(contactModalEl);
+      const contactModal = bootstrap.Modal.getInstance(contactModalEl) || new bootstrap.Modal(contactModalEl);
       contactModal.show();
     } catch (e) {
       console.warn("Contact modal show error:", e);
     }
 
-    // keep confirm enabled again (user can still submit contact)
     confirmBtn.disabled = false;
   });
 
@@ -441,7 +400,7 @@
       const cookies = document.cookie.split(";");
       for (let i = 0; i < cookies.length; i++) {
         const cookie = cookies[i].trim();
-        if (cookie.substring(0, name.length + 1) === (name + "=")) {
+        if (cookie.substring(0, name.length + 1) === name + "=") {
           cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
           break;
         }
@@ -452,129 +411,137 @@
 
   const csrftoken = getCookie("csrftoken");
 
-  if (leadForm) {
-  leadForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
+  async function triggerWhatsappWebhook() {
+    const res = await fetch("/virtual-smile-try-on/api/whatsapp/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrftoken,
+      },
+      body: JSON.stringify({
+        lead_id: leadId,
+        before_url: generationResult?.beforeUrl || "",
+        after_url: generationResult?.afterUrl || "",
+      }),
+    });
+    return await res.json();
+  }
 
-    if (leadFormMsg) {
-      leadFormMsg.textContent = "";
-      leadFormMsg.style.color = "";
-    }
+  // ✅ UPDATED: prevents double call with whatsappInFlight
+  async function tryTriggerWhatsapp() {
+    if (whatsappTriggered || whatsappInFlight) return;
 
-    if (leadSubmitBtn) leadSubmitBtn.disabled = true;
+    if (!leadSubmitted || !leadId) return;
+    if (!generationResult || generationResult.done !== true) return;
+    if (!generationResult.ok) return;
 
-    const payload = {
-      name: leadName ? leadName.value.trim() : "",
-      phone: leadPhone ? leadPhone.value.trim() : "",
-      city: leadCity ? leadCity.value.trim() : "",
-      email: leadEmail ? leadEmail.value.trim() : "",
-    };
-
+    whatsappInFlight = true;
     try {
-      const res = await fetch("/virtual-smile-try-on/api/smile-lead/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRFToken": csrftoken,
-        },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok || !data.ok) {
-        leadFormMsg.style.color = "red";
-        leadFormMsg.textContent =
-          data?.error || "Form error. Please check fields.";
-        return;
+      const data = await triggerWhatsappWebhook();
+      if (data && data.ok) {
+        whatsappTriggered = true;
+      } else {
+        console.warn("WhatsApp webhook failed:", data);
       }
-      leadSubmitted = true;
-      previewOpened = false;
+    } catch (e) {
+      console.warn("WhatsApp webhook error:", e);
+    } finally {
+      whatsappInFlight = false;
+    }
+  }
 
-      // 🔹 Loader helper
-      function showLeadLoader(text = "Your smile generation is in process…") {
-        if (!leadFormMsg) return;
-        leadFormMsg.style.color = "white";
-        leadFormMsg.innerHTML = `
-          <div class="d-flex align-items-center justify-content-center gap-2">
-            <span class="spinner-border spinner-border-sm"></span>
-            <span>${text}</span>
-          </div>`;
-      }
-       // 🔹 Loader stop helper
-      function hideLeadLoader() {
-        if (!leadFormMsg) return;
-        leadFormMsg.innerHTML = "";
+  if (leadForm) {
+    leadForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      if (leadFormMsg) {
+        leadFormMsg.textContent = "";
         leadFormMsg.style.color = "";
       }
 
-      // 🔹 Open preview helper
-      const openPreviewWith = (beforeUrl, afterUrl) => {
-        try {
-          ///hideLeadLoader();
-          const pBefore = document.getElementById("previewBeforeImg");
-          const pAfter = document.getElementById("previewAfterImg");
+      if (leadSubmitBtn) leadSubmitBtn.disabled = true;
 
-          if (pBefore) pBefore.src = beforeUrl || capturedDataUrl;
-          if (pAfter) pAfter.src = afterUrl || beforeUrl;
-
-          const contactEl = document.getElementById("contactModal");
-          const contactModal = bootstrap.Modal.getInstance(contactEl);
-          if (contactModal) contactModal.hide();
-
-          const previewEl = document.getElementById("PreviewModal");
-          const previewModal =
-            bootstrap.Modal.getInstance(previewEl) ||
-            new bootstrap.Modal(previewEl);
-          previewModal.show();
-        } catch (e) {
-          console.warn("Preview modal error:", e);
-        }
+      const payload = {
+        name: leadName ? leadName.value.trim() : "",
+        phone: leadPhone ? leadPhone.value.trim() : "",
+        city: leadCity ? leadCity.value.trim() : "",
+        email: leadEmail ? leadEmail.value.trim() : "",
       };
 
-      // ✅ ALWAYS show loader after submit
-      showLeadLoader();
-      tryOpenPreviewInline();
-    } catch (err) {
-      //hideLeadLoader();
-      leadFormMsg.style.color = "red";
-      leadFormMsg.textContent = "Network error. Please try again.";
-    } finally {
-      if (leadSubmitBtn) leadSubmitBtn.disabled = false;
-    }
-  });
-}
+      try {
+        const res = await fetch("/virtual-smile-try-on/api/smile-lead/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrftoken,
+          },
+          body: JSON.stringify(payload),
+        });
 
+        const data = await res.json();
 
- //start Camera On Model
+        if (!res.ok || !data.ok) {
+          leadFormMsg.style.color = "red";
+          leadFormMsg.textContent = data?.error || "Form error. Please check fields.";
+          return;
+        }
+
+        leadSubmitted = true;
+        leadId = data.id || null;
+        previewOpened = false;
+
+        function showLeadLoader(text = "Your smile generation is in process…") {
+          if (!leadFormMsg) return;
+          leadFormMsg.style.color = "white";
+          leadFormMsg.innerHTML = `
+            <div class="d-flex align-items-center justify-content-center gap-2">
+              <span class="spinner-border spinner-border-sm"></span>
+              <span>${text}</span>
+            </div>`;
+        }
+
+        showLeadLoader();
+
+        tryOpenPreviewInline();
+        tryTriggerWhatsapp(); // ✅ safe now
+      } catch (err) {
+        leadFormMsg.style.color = "red";
+        leadFormMsg.textContent = "Network error. Please try again.";
+      } finally {
+        if (leadSubmitBtn) leadSubmitBtn.disabled = false;
+      }
+    });
+  }
+
   const smileModalEl = document.getElementById("smileModal");
 
   if (smileModalEl) {
     smileModalEl.addEventListener("shown.bs.modal", async () => {
-      // 🔁 RESET PREVIOUS SESSION STATE
       generationPromise = null;
       generationResult = null;
       capturedDataUrl = null;
       leadSubmitted = false;
       previewOpened = false;
+      leadId = null;
+
+      // ✅ reset WhatsApp flags for new session
+      whatsappTriggered = false;
+      whatsappInFlight = false;
+
       lastConf = 0;
 
-      // clear preview images
       const pBefore = document.getElementById("previewBeforeImg");
       const pAfter = document.getElementById("previewAfterImg");
       if (pBefore) pBefore.src = "";
       if (pAfter) pAfter.src = "";
 
-      // clear UI
       resetResult();
       hideFreeze();
 
       try {
         setControlsForLive();
         await startCamera();
-        if (!running) {
-          detectLoop();
-        }
+        if (!running) detectLoop();
         setMessage(
           "Camera started. Smile and the Capture button will enable automatically.",
           "muted"
@@ -591,10 +558,19 @@
       stopCamera();
       hideFreeze();
       resetResult();
+
       generationPromise = null;
       generationResult = null;
       capturedDataUrl = null;
       lastConf = 0;
+
+      leadSubmitted = false;
+      leadId = null;
+
+      // ✅ reset WhatsApp flags
+      whatsappTriggered = false;
+      whatsappInFlight = false;
+
       setControlsForLive();
       console.log("Camera stopped (modal closed)");
     });
