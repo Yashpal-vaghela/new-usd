@@ -70,6 +70,7 @@ def home(request):
     data1 = Dentist.objects.filter(status=True).order_by('name')
     search_message = None
     city_name = city.city if 'city' in locals() and city else 'Surat'
+    awards = Awards.objects.all().order_by('-id')
     query = request.GET.get("q",'').strip()
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         suggestion = []
@@ -138,6 +139,7 @@ def home(request):
       'review': reviews,      
       'city_name': city_name,
       'a_city': a_city,
+      'awards':awards
     }
     return render(request, 'index.html', context)
 # def home(request):

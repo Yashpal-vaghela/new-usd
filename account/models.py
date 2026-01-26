@@ -38,6 +38,14 @@ class City(models.Model):
                 pass  # Optionally retry or handle timeout
         super().save(*args, **kwargs)
 
+class Awardss(models.Model):
+    name = models.CharField(max_length=1256,blank=True)
+    image = models.ImageField(upload_to="Awards")
+    image_alt = models.CharField(max_length=156,blank=True,null=True)
+    year = models.CharField(max_length=156)
+
+    def __str__(self):
+        return self.name
 
 class Specializations(models.Model):
     name = models.CharField(max_length=300)

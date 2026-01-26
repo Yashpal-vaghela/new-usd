@@ -169,18 +169,20 @@
           </div>  {% endcomment %}
           <div id="before_after_img" class="mt-4 mb-3 my-sm-3 my-md-0" aria-label="Before and after image slider">
             <div class="img-wrapper">
-              <img src="{% static 'before-2.webp' %}" alt="Before">
+              <img src="{% static 'before-43.webp' %}" alt="Before">
             </div>
             <div class="img-wrapper">
-              <img src="{% static 'after-2.webp' %}" alt="After">
+              <img src="{% static 'after-43.webp' %}" alt="After">
             </div>
             <div id="line"></div>
-            <span class="ba-label before">Before</span>
-            <span class="ba-label after">After</span>
+            <span class="ba-label bat before">Before</span>
+            <span class="ba-label bat after">After</span>
             <input id="slider" class="before-input" type="range" min="0" max="100" value="50">
           </div>
-          <p class="d-block d-md-none  text-center">Upload a single photo and see an instant AI-powered preview of your enhanced smile. Visualize your dream smile before any commitment.</p>
-          <button class="btn bat my-2 mx-1 d-block d-md-none mx-auto">Try Your Smile Now</button>
+          <p class="d-block d-md-none text-center">Upload a single photo and see an instant AI-powered preview of your enhanced smile. Visualize your dream smile before any commitment.</p>
+          <a href="{% url 'virtualsmileAI:smile' %}">
+            <button class="btn bat my-2 mx-1 d-block d-md-none mx-auto">Try Your Smile Now</button>
+          </a>
         </div>
         <div class="col-lg-6 col-md-6 col-12 order-md-2 order-1 pb-2 pb-sm-0">
           <span class="d-flex justify-content-center justify-content-sm-between justify-content-xl-center align-items-center banner-highlight">
@@ -243,7 +245,7 @@
           </div>
           {% comment %} <button class="btn bat my-2 mx-1 d-sm-none d-md-block">Try Your Smile Now</button> {% endcomment %}
           <a href="{% url 'virtualsmileAI:smile' %}">
-            <button class="btn bat my-2 mx-1 d-sm-none d-md-block">Try Your Smile Now</button>
+            <button class="btn bat my-2 mx-1 d-none d-md-block">Try Your Smile Now</button>
           </a>
         </div>
       </div>
@@ -955,8 +957,155 @@
       </div>
     </div>
   </section>
+  
+  <section class="award-section">
+    {% comment %} <img src="{% static 'award-bg-img1.png'%}" class="award-bg-img img-fluid" alt="award-bg-img" /> {% endcomment %}
+    <div class="container">
+      <div class="row align-items-center justify-content-center">
+      
+        <div class="col-lg-2 col-md-3">
+          <h2>Winning Never Stops</h2>
+        </div>
+        <div class="col-lg-9 col-xl-10 col-md-9">
+        {% comment %} <div class="swiper-bg-grident "></div> {% endcomment %}
+          <div class="swiper AwardSwiper">
+            <div class="swiper-wrapper">
+              {% for ie in awards %}
+                <div class="swiper-slide">
+                  <div class="card">
+                    <img src="{{ie.image.url}}" class="card-img-top img-fluid" width="400" height="400" alt="award-img"/>
+                    <div class="card-body">
+                        <h3 class="card-title">-{{ie.year}}</h3>
+                        <p class="card-text">{{ie.name}}</p>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    </div>
+  </section>
 </div>
 {% endblock body %} {% block js %}
+{% comment %} <script>
+  window.addEventListener("load", () => {
+    const NORMAL_SPEED = 0.7;   // pixels per frame
+    const SLOW_SPEED = 0.25;
+    let currentSpeed = NORMAL_SPEED;
+    let position = 0;
+
+    // Initialize Swiper layout only
+    const swiper = new Swiper(".AwardSwiper", {
+      loop: false,           // we handle looping manually
+      slidesPerView: "auto",
+      spaceBetween: 25,
+      allowTouchMove: true,
+      speed: NORMAL_SPEED,
+      autoplay: false,
+    });
+
+    const wrapper = swiper.wrapperEl;
+    const swiperEl = swiper.el;
+
+    // === DUPLICATE SLIDES FOR SEAMLESS LOOP ===
+    const slides = [...wrapper.children];
+    slides.forEach(slide => {
+      const clone = slide.cloneNode(true);
+      wrapper.appendChild(clone);
+    });
+
+    // === CONTINUOUS ANIMATION ===
+    function animate() {
+      position -= currentSpeed;
+
+      // Reset at half width because of duplicated slides
+      if (Math.abs(position) >= wrapper.scrollWidth / 2) {
+        position = 0;
+      }
+
+      wrapper.style.transform = `translate3d(${position}px, 0, 0)`;
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // === HOVER SPEED CONTROL ===
+    swiperEl.addEventListener("mouseenter", () => {
+      currentSpeed = SLOW_SPEED;
+    });
+
+    swiperEl.addEventListener("mouseleave", () => {
+      currentSpeed = NORMAL_SPEED;
+    });
+
+    // === OPTIONAL: PER-SLIDE HOVER SLOWDOWN ===
+    swiperEl.querySelectorAll(".swiper-slide").forEach(slide => {
+      slide.addEventListener("mouseenter", () => currentSpeed = SLOW_SPEED);
+      slide.addEventListener("mouseleave", () => currentSpeed = NORMAL_SPEED);
+    });
+  });
+</script>  {% endcomment %}
+<script>
+  window.addEventListener("load", () => {
+
+    const BASE_SPEED = 60; // px per second
+    const SLOW_SPEED = 20;
+
+    let targetSpeed = BASE_SPEED;
+    let currentSpeed = BASE_SPEED;
+    let position = 0;
+    let lastTime = performance.now();
+
+    const swiper = new Swiper(".AwardSwiper", {
+      slidesPerView: "auto",
+      allowTouchMove: true,
+      loop: false,
+      speed: 0,
+    });
+
+    const wrapper = swiper.wrapperEl;
+    const swiperEl = swiper.el;
+
+    // 🔁 DUPLICATE SLIDES ONCE
+    const slides = [...wrapper.children];
+    slides.forEach(slide => wrapper.appendChild(slide.cloneNode(true)));
+
+    const halfWidth = wrapper.scrollWidth / 2;
+
+    function animate(now) {
+      const delta = (now - lastTime) / 1000; // seconds
+      lastTime = now;
+
+      // 🧈 Smooth speed interpolation
+      currentSpeed += (targetSpeed - currentSpeed) * 0.08;
+
+      position -= currentSpeed * delta;
+
+      if (Math.abs(position) >= halfWidth) {
+        position = 0;
+      }
+
+      wrapper.style.transform = `translate3d(${position}px,0,0)`;
+
+      requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
+
+    // 🖱 Hover slow motion
+    swiperEl.addEventListener("mouseenter", () => {
+      targetSpeed = SLOW_SPEED;
+    });
+
+    swiperEl.addEventListener("mouseleave", () => {
+      targetSpeed = BASE_SPEED;
+    });
+
+  });
+</script>
 <script>
   function BookAppoinment(name,city){
     const doctordata = {

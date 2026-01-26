@@ -5961,7 +5961,7 @@ div:where(.swal2-container) div:where(.swal2-popup) {
     background-image: none;
   }
   .new-footer-content .overlay {
-    background-image: url("../toothbg4.png");
+    background-image: url("../toothbg4.webp");
     width: 100%;
     height: 100%;
     background-repeat: no-repeat;
@@ -7394,5 +7394,184 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   .thank-you-wrapper h2 {
     font-size: 18px;
     margin-bottom: 1rem !important;
+  }
+}
+
+.award-section {
+  padding: 60px 0px 60px;
+  background: #000;
+  overflow: hidden;
+  position: relative;
+}
+.award-section::before{
+  position: absolute;
+  content:"";
+  z-index: 99;
+  background-image: url('../award-bg-img1.png');
+  width:42%;
+  height:100%;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: center;
+}
+.award-section::after{
+  position: absolute;
+  content:"";
+  z-index: 0;
+  background-image: url('../award-bg-img2.png');
+  width:42%;
+  height:100%;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: center;
+  top:0%;
+  right:0%;
+}
+.AwardSwiper{
+  overflow: hidden;
+  cursor: grab;
+  /* background-color: #fff; */
+}
+.AwardSwiper::before{
+  /* background: linear-gradient(270deg, rgba(0, 0, 0, 0) 0%,#000000 100%); */
+  /* Rectangle 19347 */
+  /* #savi579038 */
+  /* background: linear-gradient(90deg, #000000 0%, rgba(0, 0, 0, 0.5) 12.5%, rgba(0, 0, 0, 0.25) 25%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.25) 75%, rgba(0, 0, 0, 0.5) 87.5%, #000000 100%); */
+  /* background: linear-gradient(90deg,#000000 0%,rgba(0,0,0,0) 50%,#000000 100%); */
+  /* background: linear-gradient(90deg, #000000 0%, rgba(0, 0, 0, 0.5) 12.5%, rgba(0, 0, 0, 0.25) 15%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.25) 60%, rgba(0, 0, 0, 0.5) 87.5%, #000000 100%); */
+  background: linear-gradient(90deg, #000000 0%, rgba(0, 0, 0, 0.5) 5%,rgba(0, 0, 0, 0.2) 12%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.2) 88% ,rgba(0, 0, 0, 0.5) 95%, #000000 100%);
+  /* background: linear-gradient(90deg, #000000 0%, #d89c27 1.5%, #00a900 50%,  #022278 98.5%, #000000 100%); */
+  position: absolute;
+  z-index: 999;
+  /* color:#00a900; */
+  content: "";
+  width: 100%;
+  height: 100%;
+}
+/* .AwardSwiper .swiper-wrapper{
+  transition-timing-function: linear !important;
+} */
+.AwardSwiper .swiper-slide{
+  /* width: auto !important; */
+  /* min-width: 32%; */
+  /* min-width: 260px; */
+  /* height: 220px; */
+  background-color: #202020;
+  /* background: #111; */
+  color: #fff;
+  border-radius: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 600;
+  height: auto;
+  width: 38%;
+}
+.AwardSwiper .swiper-slide:first-child{
+  margin-left: 10px !important;
+}
+.award-section h2{
+  color:#fff;
+  line-height: 1.8;
+  font-weight: 500;
+  font-family: "Gilda Display", serif;
+}
+.AwardSwiper .swiper-slide .card{
+  padding: 12px;
+  background-color:#202020;
+  color:#fff;
+  width: 100%;
+  height: 100%;
+}
+.AwardSwiper .swiper-slide .card-body{
+  padding: 10px 0px;
+}
+.AwardSwiper .swiper-slide .card-body h3{
+  font-size: 20px;
+  color:#fff;
+  font-family: 'Barlow', sans-serif;
+}
+.AwardSwiper .swiper-slide .card-body p{
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  margin-bottom: 0px;
+  font-family: 'Barlow', sans-serif;
+}
+.AwardSwiper{
+  z-index: 99 !important;
+}
+@media(min-width:1300px){
+  /* .award-section .col-lg-2{
+    width: 25%;
+  } */
+  .award-section h2{
+    font-size: 45px;
+  }
+  .award-section::before,
+  .award-section::after{
+    width: 41%;
+  }
+  .AwardSwiper .swiper-slide{
+    width: 30%;
+  }
+}
+@media(max-width:1200px) and (min-width:991px){
+  .award-section .col-lg-2{
+    width: 25%;
+  }
+}
+@media(max-width:1200px){
+  .AwardSwiper .swiper-slide{
+    width: 45%;
+  }
+  .award-section::after{
+    top:-4.5%;
+    width: 40%;
+  }
+  .award-section::before{
+    width: 40%;
+  }
+  .award-section h2{
+    font-size: 41px;
+  }
+}
+@media(max-width:992px){
+  .AwardSwiper .swiper-slide{
+    width: 50%;
+    margin-right: 20px !important;
+  }
+  .award-section{
+    padding: 50px 0px 50px;
+  }
+  .award-section h2{
+    line-height: 1.6;
+    font-size: 35px;
+  }
+}
+@media(max-width:768px){
+  .award-section::before,
+  .award-section::after{
+    display: none;
+  }
+  .award-section h2{
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+}
+@media(max-width:576px){
+  .AwardSwiper .swiper-slide:first-child{
+    margin-left: 10px !important;
+  }
+  .AwardSwiper .swiper-slide{
+    width: 90%;
+    margin-left: 5px !important;
+    margin-right: 20px !important;
+  }
+  .award-section h2{
+    font-size: 26px;
+    letter-spacing: 0.6px;
+    margin-bottom: 10px;
   }
 }
