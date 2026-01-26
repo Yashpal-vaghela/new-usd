@@ -53,20 +53,33 @@ def smile(request):
     )
 
 
+
 @require_POST
 @csrf_protect
 def create_smile_lead_api(request):
-    """
-    ✅ For Bootstrap modal submit (AJAX)
-    POST JSON: { name, phone, city, message }
-    Saves into SmileDesignLead table via SmileDesignLeadForm.
-    """
     try:
         payload = json.loads(request.body.decode("utf-8"))
     except Exception:
         return HttpResponseBadRequest("Invalid JSON")
 
-    # Map to your form fields (make sure form has same field names)
+    # ✅ nonce check
+    client_nonce = (payload.get("nonce") or "").strip()
+    session_nonce = request.session.get("smile_capture_nonce")
+
+    if not session_nonce or client_nonce != session_nonce:
+        return JsonResponse(
+            {"ok": False, "error": "Your Capture image is missing! try again"},
+            status=403
+        )
+
+    # ✅ ensure before image exists
+    before_img = request.session.get("smile_before")
+    if not before_img:
+        return JsonResponse(
+            {"ok": False, "error": "Please capture your photo first."},
+            status=403
+        )
+
     data = {
         "name": (payload.get("name") or "").strip(),
         "phone": (payload.get("phone") or "").strip(),
@@ -79,13 +92,18 @@ def create_smile_lead_api(request):
         return JsonResponse({"ok": False, "errors": form.errors}, status=400)
 
     obj = form.save(commit=False)
-
-    obj.before_image = request.session.get("smile_before", "")
+    obj.before_image = before_img
     obj.after_image = request.session.get("smile_after", "")
     obj.save()
+
+    # ✅ clear so it can’t be reused
     request.session.pop("smile_before", None)
     request.session.pop("smile_after", None)
+    request.session.pop("smile_capture_nonce", None)
+    request.session.pop("smile_capture_done", None)
+
     return JsonResponse({"ok": True, "id": obj.id})
+
 
 
 @require_POST
@@ -227,52 +245,26 @@ def trigger_whatsapp_api(request):
 #     except Exception as e:
 #         return JsonResponse({"error": str(e)}, status=400)
 
-
+@require_POST
 @csrf_exempt
 def capture_api(request):
-    """
-    POST JSON: { image: <base64 dataURL>, conf: float }
-    Saves image only if conf > THRESHOLD.
-    Returns: { saved: bool, path: <media url>, conf: float }
-    """
-    if request.method != "POST":
-        return HttpResponseBadRequest("POST required")
+    payload = json.loads(request.body.decode("utf-8"))
+    img = payload.get("image") or ""
+    conf = payload.get("conf") or 0
 
-    try:
-        payload = json.loads(request.body.decode("utf-8"))
-    except Exception:
-        return HttpResponseBadRequest("Invalid JSON")
+    # TODO: validate img is a dataURL and not tiny/empty
+    if not img.startswith("data:image/") or len(img) < 5000:
+        return JsonResponse({"ok": False, "error": "Invalid image"}, status=400)
 
-    img_b64 = payload.get("image")
-    conf = payload.get("conf", 0)
+    # store "before" in session
+    request.session["smile_before"] = img
 
-    if img_b64 is None:
-        return HttpResponseBadRequest("Missing image")
+    # generate one-time nonce for lead submission
+    nonce = uuid.uuid4().hex
+    request.session["smile_capture_nonce"] = nonce
+    request.session["smile_capture_done"] = True
 
-    try:
-        conf = float(conf)
-    except Exception:
-        conf = 0.0
-
-    if conf <= THRESHOLD:
-        return JsonResponse({"saved": False, "reason": "confidence too low", "conf": conf})
-
-    try:
-        img_bgr = decode_base64_image(img_b64)
-
-        out_dir = os.path.join(settings.MEDIA_ROOT, "captures")
-        os.makedirs(out_dir, exist_ok=True)
-
-        fname = f"capture_{int(time.time())}_{uuid.uuid4().hex[:8]}.jpg"
-        out_path = os.path.join(out_dir, fname)
-
-        import cv2
-        cv2.imwrite(out_path, img_bgr)
-
-        url = settings.MEDIA_URL + "captures/" + fname
-        return JsonResponse({"saved": True, "path": url, "conf": conf})
-    except Exception as e:
-        return JsonResponse({"saved": False, "error": str(e)}, status=400)
+    return JsonResponse({"ok": True, "nonce": nonce})
 
 
 @csrf_exempt

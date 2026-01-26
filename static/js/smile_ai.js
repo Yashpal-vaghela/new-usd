@@ -36,7 +36,7 @@
   let leadSubmitted = false;
   let previewOpened = false;
   let leadId = null;
-
+  let captureNonce = null;
   // ✅ WhatsApp dedupe flags
   let whatsappTriggered = false;
   let whatsappInFlight = false;
@@ -186,7 +186,10 @@
   async function saveCapture(frameDataUrl, conf) {
     const resp = await fetch("/virtual-smile-try-on/api/capture/", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrftoken,
+      },
       body: JSON.stringify({ image: frameDataUrl, conf: conf }),
     });
     return await resp.json();
@@ -313,7 +316,19 @@
       setMessage("Capture failed. Try again.", "error");
       return;
     }
-
+    try {
+      const saved = await saveCapture(capturedDataUrl, lastConf);
+      if (saved && saved.ok) {
+        captureNonce = saved.nonce || null;
+      } else {
+        setMessage("Capture validation failed. Try again.", "error");
+        return;
+      }
+    } catch (e) {
+      console.warn("capture_api failed", e);
+      setMessage("Capture failed. Please try again.", "error");
+      return;
+    }
     freezeImg.src = capturedDataUrl;
     showFreeze();
 
@@ -466,6 +481,7 @@
         phone: leadPhone ? leadPhone.value.trim() : "",
         city: leadCity ? leadCity.value.trim() : "",
         email: leadEmail ? leadEmail.value.trim() : "",
+        nonce: captureNonce,
       };
 
       try {
