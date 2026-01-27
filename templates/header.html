@@ -34,7 +34,7 @@
                             <li class=""><span {% if request.path == '/' %}class="heasder_active cool"{% endif %}> Home</span>
                             </li> 
                         </a>
-                        <a href={% url 'home:search_all_usd' %}>
+                        <a href="{% url 'home:search_all_usd' %}">
                             <li class=""><span {% if '/certified-dentists/' in request.path %}class="heasder_active cool"{% endif %}> Find Dentist</span>
                             </li> 
                         </a>
@@ -48,6 +48,10 @@
                         </a>
                         <a href="{% url 'home:contact' %}">
                             <li class=""><span {% if request.path == '/contact/' %}class="heasder_active cool"{% endif %}> Contact</span>                       
+                            </li> 
+                        </a>   
+                        <a href="{% url 'virtualsmileAI:smile' %}">
+                            <li class=""><span {% if request.path == '/virtual-smile-try-on/' %}class="heasder_active cool"{% endif %}> Ultimate Smile AI</span>                       
                             </li> 
                         </a>   
                         <li class="hea-shrink-btn">

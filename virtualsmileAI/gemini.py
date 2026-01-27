@@ -11,6 +11,8 @@ TASK: Using [INPUT_IMAGE], perform a high-end cosmetic dentistry digital smile d
 Facial Integrity: Do not alter any part of the face (this includes lips, gums, skin, beard, hair, eyes, or facial expression). The subject’s smile and expression should remain natural – no forced smiles or lip adjustments.
 Background & Lighting: Preserve the original background, lighting, and shadows exactly as they are. Do not change, blur, or stylize any area outside the mouth. Everything around the face and in the environment must remain identical to the input.
 Framing & Perspective: Maintain the same camera angle, framing, and crop as the original image. No zooming, cropping, or re-centering is allowed. The output should align perfectly with the input image in perspective and composition.
+Strict Tooth Boundary Lock: The veneers must remain fully or pariallty as per smile inside the original tooth silhouettes as seen in the input photo. Do not expand beyond the original tooth edges (top, bottom, left, right). No scaling up, no widening, no lengthening.
+No Smile Expansion: Do not increase the amount of visible teeth or show additional teeth. Keep the same number of visible teeth and the same exposure.
 
 😁 Smile Design (Teeth Only)
 Transformation Scope: Replace only the visible teeth with high-end, beautifully crafted e.max veneers. The new teeth should be symmetrical and naturally aligned, following the exact layout of the original teeth (do not reveal more teeth than are originally visible, and do not alter the gum line). Each veneer should sit precisely where the original tooth is.
@@ -29,8 +31,8 @@ The veneers should sit under the existing lip line exactly. Do not change the po
 Maintain Original Tooth Size: Keep each tooth’s height and width the same as in the original image. Do not make the teeth longer, wider, or bulkier than they originally appear. This ensures the veneers do not look too large or out-of-place. The overall smile line (the curve of the teeth as it follows the lip) should remain unchanged.
 Ensure the gumline and teeth junction is clean and natural. Do not alter the gums’ color or shape. There should be no dark edges or obvious lines at the gum-teeth interface – the veneers should appear to emerge naturally from the gums.
 Tooth Size & Proportion: Veneers must strictly match the original visible tooth dimensions. Do not increase height or width beyond what is naturally present in the input image.
-Teeth should never appear oversized, bulky, or long. The design must preserve the subject’s natural smile curve and avoid any “too big” appearance.
-Slight improvements for symmetry are allowed, but only if they do not make teeth visually larger than before. Always prioritize natural realism over geometric correction.
+Teeth should never appears with too wider and longer than input image. The design must preserve the subject’s natural smile curve.
+Slight improvements for symmetry are allowed. Always prioritize natural realism over geometric correction.
 Veneers must fit entirely within the original tooth contour – no extension past gumline, lips, or spacing.
 The smile should look harmonious and balanced, not artificial or “overdone.”
 Lighting Consistency: The replaced teeth must match the lighting of the original photo perfectly:
@@ -43,7 +45,6 @@ Use e.max veneers for their renowned quality – they are ultra-thin and have li
 There should be no artifacts or errors from the editing process: no double exposure of teeth, no blurred areas, no mismatched colors. Everything about the teeth should look deliberate and naturally photographical.
 Overall, the outcome must radiate a premium yet natural smile. It should look like the person simply has perfect, healthy teeth. Anyone viewing the image should not detect it was digitally altered – it should look like a real, high-quality photograph of a person with a beautiful, naturally harmonious smile.
 """
-
 
 def get_api_key() -> Optional[str]:
     return getattr(settings, "GEMINI_API_KEY", None) or os.environ.get("GEMINI_API_KEY")
