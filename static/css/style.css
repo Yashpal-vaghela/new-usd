@@ -782,7 +782,11 @@ THEMEFOREST REQUIRED CLASSES
   /* color: #ad8545; */
   color: white;
 }
-
+@media(max-width:1200px){
+  .header-nav .nav > a{
+    padding: 15px 6px;
+  }
+}
 @media (max-width: 991px) {
   .header-nav .nav > a {
     padding: 12px 15px;
@@ -5822,6 +5826,10 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   }
   .new-footer-letter-title {
     font-size: 22px;
+  }
+  .header-buttons{
+    padding: 10px ;
+    margin-left: 8px;
   }
 }
 @media (max-width: 991px) {
