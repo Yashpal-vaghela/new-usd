@@ -7415,7 +7415,7 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   position: absolute;
   content:"";
   z-index: 99;
-  background-image: url('../award-bg-img1.png');
+  background-image: url('../award-bg-img1.webp');
   width:42%;
   height:100%;
   background-repeat: no-repeat;
@@ -7426,7 +7426,7 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   position: absolute;
   content:"";
   z-index: 0;
-  background-image: url('../award-bg-img2.png');
+  background-image: url('../award-bg-img2.webp');
   width:42%;
   height:100%;
   background-repeat: no-repeat;
