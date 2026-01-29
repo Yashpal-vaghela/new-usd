@@ -441,7 +441,7 @@
               <label class="mb-0 form-label">By submitting, you agree to receive SMS or emails via the provided channel.</label>
             </div>
             <div class="col-lg-12">
-              <div class="g-recaptcha" data-sitekey="6LeNfq4rAAAAAMBnNy3uLYynCo2hDdx6vkuMfDl7"></div>
+              {% comment %} <div class="g-recaptcha" data-sitekey="{{ RECAPTCHA_SITE_KEY }}"></div> {% endcomment %}
             </div>
             <div class="col-lg-3 col-md-4 col-sm-5 col-12">
               <button type="submit" class="request-button bat-form">Submit</button>
@@ -455,7 +455,8 @@
 </div>
 {% endblock body %} 
 {% block js %}
-
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="{% static 'js/recaptcha-api.js' %}" async defer></script>
 <script>
   function BookAppoinment(name){
     //console.log("sdf",id,name,city)

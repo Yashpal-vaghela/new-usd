@@ -563,6 +563,17 @@ def find_dentist_d(request, pk):
 
     if request.method == 'POST':
         form = UserSubmissionForm(request.POST)
+        # recaptcha_response = request.POST.get('g-recaptcha-response')
+        # data = {
+        #     'secret': settings.RECAPTCHA_SECRET_KEY,
+        #     'response': recaptcha_response,
+        # }
+        # r = requests.post("https://www.google.com/recaptcha/api/siteverify", data=data)
+        # result = r.json()
+
+        # if not result.get('success'):
+        #     messages.error(request, 'Invalid reCAPTCHA. Please try again.')
+        #     return redirect(request.META.get('HTTP_REFERER','contact'))
 
         if form.is_valid():
             user_submission = form.save()
@@ -618,7 +629,12 @@ def find_dentist_d(request, pk):
             return redirect('home:thankyou')
         else:
             messages.error(request,"Something went wrong! Please check your details.")
-            return render(request,'detail.html',{'form':form,'error_message':'Please correct the errors below.'})
+            return render(request,'detail.html',
+                          {
+                            'form':form,
+                            # 'RECAPTCHA_SITE_KEY': settings.RECAPTCHA_SITE_KEY,
+                            'error_message':'Please correct the errors below.'
+                            })
     else:
         form = UserSubmissionForm()
 
@@ -626,7 +642,8 @@ def find_dentist_d(request, pk):
         'data': data,
         'gallery': gallery,
         'reviews': reviews,
-        'form':form
+        'form':form,
+        # 'RECAPTCHA_SITE_KEY': settings.RECAPTCHA_SITE_KEY,
     }
     return render(request, 'detail.html', context)
 
