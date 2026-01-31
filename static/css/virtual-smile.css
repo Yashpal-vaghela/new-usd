@@ -359,26 +359,6 @@
 .preview-wrapper svg {
   margin: 0px 5px;
 }
-.preview_img_wrapper {
-  position: relative;
-}
-
-.img-loader {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: rgba(0,0,0,0.45);
-  color: #fff;
-  z-index: 5;
-}
-
-.img-loader.hidden {
-  display: none;
-}
-
 /* endcommon css */
 /* banner css */
 .banner-highlight {
