@@ -5649,7 +5649,7 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 .footer-link a span::before {
   content: attr(data-hover);
   position: absolute;
-  top: 100%;
+  top: 108%;
   left: 0;
   width: 100%;
   height: 100%;
@@ -7453,8 +7453,9 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   z-index: 999;
   /* color:#00a900; */
   content: "";
-  width: 100%;
+  width: 101%;
   height: 100%;
+  transform: translate(-1px ,0px);
 }
 /* .AwardSwiper .swiper-wrapper{
   transition-timing-function: linear !important;
@@ -7510,6 +7511,9 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 .AwardSwiper{
   z-index: 99 !important;
 }
+.AwardSwiper .swiper-wrapper{
+  gap:20px;
+}
 @media(min-width:1300px){
   /* .award-section .col-lg-2{
     width: 25%;
@@ -7544,8 +7548,15 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   .award-section h2{
     font-size: 41px;
   }
+  /* .AwardSwiper::before{
+    background: linear-gradient(90deg, #000000 1%, rgba(0,0,0,0.3) 4%,rgba(0,0,0,0.2) 9%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.2) 88% ,rgba(0, 0, 0, 0.5) 95%, #000000 100%);
+    
+    
+    background: linear-gradient(90deg, #000000 0%, rgba(216,156,39,0.5) 3%,rgba(0,169,0,0.2) 12%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.2) 88% ,rgba(0, 0, 0, 0.5) 95%, #000000 100%);
+    background: linear-gradient(90deg, #000000 0%, rgba(0, 0, 0, 0.3) 5%,rgba(0, 0, 0, 0.2) 6%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.2) 88% ,rgba(0, 0, 0, 0.5) 95%, #000000 100%);
+  } */
 }
-@media(max-width:992px){
+@media(max-width:991px){
   .AwardSwiper .swiper-slide{
     width: 50%;
     margin-right: 20px !important;
@@ -7557,6 +7568,12 @@ div:where(.swal2-container) div:where(.swal2-popup) {
     line-height: 1.6;
     font-size: 35px;
   }
+  .AwardSwiper .swiper-wrapper{
+    gap:5px;
+  }
+  .AwardSwiper::before{
+    transform:translate(0px,0px)
+  }
 }
 @media(max-width:768px){
   .award-section::before,
@@ -7567,6 +7584,7 @@ div:where(.swal2-container) div:where(.swal2-popup) {
     font-size: 28px;
     margin-bottom: 10px;
   }
+  
 }
 @media(max-width:576px){
   .AwardSwiper .swiper-slide:first-child{
@@ -7581,5 +7599,8 @@ div:where(.swal2-container) div:where(.swal2-popup) {
     font-size: 26px;
     letter-spacing: 0.6px;
     margin-bottom: 10px;
+  }
+  .AwardSwiper .swiper-wrapper{
+    gap:0px;
   }
 }
