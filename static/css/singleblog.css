@@ -307,7 +307,44 @@
     margin: 0 3px !important;
     transition: all 0.3s ease;
 }
-
+/* new Author section */
+.new-author-section{
+    z-index: 1;
+    position: relative;
+    /* padding: 100px 0; */
+    padding: 20px 10px;
+    /* background-color:  #141414; */
+    overflow: hidden;
+}
+.new-author-section::before{
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background-image: url("../author-bg-img1.png");
+    background-repeat: no-repeat;
+    background-position:center;
+    background-size: cover;
+    width:100%;
+    height:100%;
+}
+.new-author-name{
+    font-size: 42px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color:rgb(255, 255, 255,0.31);
+    line-height: normal;
+    /* color:#141414; */
+}
+.new-author-section .col-lg-7{
+    display: block;
+    margin: auto 0px;
+}
+.new-author-role{
+    font-size: 18px;
+    font-weight: 600;
+    margin:0px
+}
 /* Active bullet */
 .before-after-section .swiper-pagination-bullet-active {
     background: #fff;
@@ -332,38 +369,22 @@
         margin-top: 2.1%;
     }
 }
-@media(max-width:1230px){
+/* @media(max-width:1230px){
     .author-name{
         font-size: 45px;
     }
-}
+} */
 @media(max-width:1200px){
-    .author-image{
-        margin-top: 6%;
+    .new-author-name{
+        font-size: 38px;
     }
-    .author-name{
-        font-size: 42px;
-    }
-    .author-bio{
-        font-size: 14px;
-        margin-right: 10px;
-    }
-}
-@media(max-width:1040px){
-    .author-name{
-        font-size: 40px;
-    }
-    .author-bio{
-        font-size: 13px;
-        
-    }
-    .author-image{
-        margin-top: 8%;
+    .new-author-role{
+        font-size: 16px;
     }
 }
 @media(max-width:992px){
-    .author-image{
-        margin-top: -7%;
+    .single-blog-content2 {
+        margin-top: 10px;
     }
 }
 @media(max-width:768px){
@@ -371,52 +392,15 @@
         font-size: 20px;
         line-height: 35px;
     }
-    .author-section{
-        background-color: #000;
+    .new-author-name{
+        font-size: 32px;
     }
-    .author-inner{
-        flex-direction: column;
-        align-items: flex-start;
+    .new-author-role{
+        font-size: 15px;
     }
-    .desktop-img { display: none; }
-    .mobile-img {
-        display: block;
-    }
-    .author-inner img{
-        width: 350px !important;
-        height: 350px;
-        margin-right: 0px !important;
-    }
-    .author-name {
-        font-size: 45px;
-        line-height: 1.2;
-        -webkit-text-stroke: 1px #dcdcdc;
-        text-align: center;
-    }
-     .author-role {
-        font-size: 16px;
-        margin-bottom: 8px;
-    }
-
-    .author-bio {
-        margin-right: 0;
-        font-size: 14px;
-    }
-
-    .author-social-links {
-        justify-content: flex-start;
-        margin-top: 10px;
-        margin-right: 0;
-        margin-bottom: 20px;
-    }
-    .author-social-links svg{
-        width: 30px;
-    }
-
-}
-@media(max-width:992px){
-    .single-blog-content2 {
-        margin-top: 10px;
+    .new-author-section::before{
+        background-image: url("../author-bg-img2.png");
+        background-size: cover;
     }
 }
 @media(max-width:576px){
@@ -427,13 +411,14 @@
     .blog-meta {
         font-size: 14px;
     }
-    .author-inner img{
-        width: 275px !important;
-        height: 320px;
+    .new-author-name{
+        font-size: 28px;
     }
-    .author-name {
-        font-size: 36px;
-        padding-top: 10px;
+    .new-author-role{
+        font-size: 12px;
+    }
+    .sidebar-sticky-wrapper{
+        margin-top: 7%;
     }
 }
 @media(max-width:576px){
@@ -503,6 +488,23 @@
     white-space: nowrap;
     }
 }
+@media(max-width:480px){
+    .new-author-name{
+        font-size: 20px;
+    }
+    .new-author-role{
+        font-size: 10px;
+    }
+    .new-author-section .col-lg-7{
+        padding:0px 5px;
+    }
+    .author-singture{
+        width: 65%;
+    }
+    .single-blog-content .container{
+        width: 95%;
+    }
+}
 @media(max-width:420px){
     .single-blog-content .container{
         padding-right:var(--bs-gutter-x, .5rem);
@@ -512,4 +514,5 @@
         padding: 12px 6px;
         font-size: 13px;
     }
+    
 }

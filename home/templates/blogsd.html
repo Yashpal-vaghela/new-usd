@@ -103,7 +103,41 @@
           <div class="single-page-main-content mt-4 mt-sm-5" id="blogContent">
             {{blog.content|safe}}
           </div>
-          <div class="author-section mt-5">
+          {% comment %} <section class="profile-section">
+            <div class="curve-bg"></div>
+
+            <div class="profile-content">
+              <div class="profile-image">
+                <img src="{% static 'author-new-img1.png' %}" class="img-fluid" alt="author-new-img" width="200" height="200" />
+              </div>
+
+              <div class="profile-text">
+                <h1>HARESH SAVANI</h1>
+                <p class="designation">Founder & CEO of Advance Dental Export</p>
+                <span class="signature">Haresh Savani</span>
+              </div>
+            </div>
+          </section> {% endcomment %}
+
+          <div class="new-author-section">
+            <div class="new-author-inner row align-item-center justify-content-center ">
+              <div class="col-lg-4 col-xl-3 col-md-3 col-5 p-0">
+                <img src="{% static 'author-new-img1.png' %}" class="img-fluid" alt="author-new-img"  />
+              </div>
+              <div class="col-lg-7 col-md-7 col-6 d-flex justify-content-lg-center justify-content-start align-items-center">
+                <div class="new-author-content ms-1 ms-sm-2 ms-md-4 ms-lg-0">
+                  <div class="mt-0 mb-2 mb-sm-3">
+                      <div class="new-author-name">Haresh Savani</div>
+                      <p class="new-author-role author-role cool">Founder & CEO of Advance Dental Export</p>
+                  </div>
+                  <div class="my-2">
+                    <img src="{% static 'author-singture.png'%}" class="author-singture img-fluid" alt="author-singture" width="180" height="180" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% comment %} <div class="author-section mt-5">
             <div class="author-inner d-flex align-items-center">
               <div class="author-image">
                 <img src="{% static 'author-usd-new.webp' %}" class="img-fluid desktop-img" alt="Author Image"/>
@@ -182,7 +216,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> {% endcomment %}
           <div class="before-after-section mt-5">
             <h2 class="before-after-title cool">Smile Design Before & After</h2>
             <div class="swiper beforeAfterSwiper mt-4">

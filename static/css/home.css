@@ -285,7 +285,6 @@
     bottom: 0%;
   }
 }
-
 /* --------------------- working section -------------- */
 .working-section {
   margin: 20px auto;
@@ -899,7 +898,7 @@
   /* height: 100%; */
   z-index: 1;
   top: 0%;
-  background-image: url("../border-frame2.png");
+  background-image: url("../border-frame2.webp");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 100%;
