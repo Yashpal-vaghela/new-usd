@@ -947,6 +947,7 @@ def dentist_connect(request):
                 "ClinicName": submission.clinic_name,
                 "City": submission.city,
                 "DateTime": formatted_datetime,
+                "Page URL": request.META.get("HTTP_REFERER", "Not available")
             }
             threading.Thread(
                 target=send_contact_email_async,
