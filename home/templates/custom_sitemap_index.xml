@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>{{ request.scheme }}://{{ request.get_host }}/sitemap-static.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>{{ request.scheme }}://{{ request.get_host }}/sitemap-news.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>{{ request.scheme }}://{{ request.get_host }}/sitemap-blog.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>{{ request.scheme }}://{{ request.get_host }}/sitemap-dentists.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>{{ request.scheme }}://{{ request.get_host }}/sitemap-city-dentists.xml</loc>
+  </sitemap>
+</sitemapindex>

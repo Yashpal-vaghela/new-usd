@@ -3,6 +3,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import User
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut
+from django.urls import reverse
 
 # Create your models here.
 class Location(models.Model):
@@ -109,9 +110,14 @@ class Dentist(models.Model):
     Sat = models.CharField(max_length=300, default='open',blank=True, null=True)
     Sun = models.CharField(max_length=300, default='close',blank=True, null=True)
     
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
+    
+    def get_absolute_url(self):
+        return reverse("home:dentist_detail", kwargs={"slug": self.slug})
     
 class PatientReview(models.Model):
     dentist = models.ForeignKey(Dentist, on_delete=models.CASCADE, related_name='reviews')
@@ -195,6 +201,9 @@ class Blog(models.Model):
     
     def __str__(self):
         return self.h1
+    
+    def get_absolute_url(self):
+        return reverse('home:blogsd', kwargs={'pk': self.slug})
     
     def save(self, *args, **kwargs):
         # if not self.blog_banner_lg_alt and self.title:

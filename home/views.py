@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect ,get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
 from django.contrib import messages
@@ -22,6 +22,7 @@ import requests
 import random
 import threading
 from django.utils import timezone
+from .sitemaps import *
 
 @csrf_exempt  # This bypasses CSRF protection for demonstration purposes only
 def receive_location(request):
@@ -993,10 +994,6 @@ def dentist_connect(request):
     }
     return render(request, 'dentist-connect.html', context)
 
-def sitemap(request):
-    return render(request, 'sitemap.xml', content_type='text/xml')
-
-#end
 def robots(request):
     return render(request, 'robots.txt', content_type='text')   
     
@@ -1097,5 +1094,126 @@ def dentist(request):
 def quicklinks(request):
 	return render(request,'quick-links.html')
 
-# def virtualsmiletryon(request):
-#     return render(request,"virtual-smile-try-on.html")
+def sitemap(request):
+    return render(request, 'sitemap.xml', content_type='text/xml')
+
+def sitemap_index(request):
+    return HttpResponse(render_to_string("custom_sitemap_index.xml", {
+        'request': request
+    }), content_type="application/xml")
+
+def staticPageSitemap(request):
+    sitemap = StaticPageSitemap()
+    items = sitemap.items()
+
+    urlset = []
+    for item in items:
+        loc = request.build_absolute_uri(sitemap.location(item))
+        url_info = {
+            'location': loc,
+            'lastmod': sitemap.lastmod(item) if hasattr(sitemap, 'lastmod') else None,
+            'changefreq': sitemap.changefreq(item),
+            'priority': sitemap.priority(item),
+            'images': sitemap.image_urls(item)
+        }
+        urlset.append(url_info)
+    xml_content = render_to_string('sitemap-static.xml', {'urlset': urlset})
+    return HttpResponse(xml_content, content_type='application/xml')
+
+def dentistsSitemap(request):
+    sitemap = DentistsSitemap()
+    items = sitemap.items()
+    urlset = []
+
+    static_url = request.build_absolute_uri(reverse('home:search_all_usd'))
+    urlset.append({
+        "location": static_url,
+        "lastmod": None,
+        "changefreq": "daily",
+        "priority": "0.8",
+        "images": [],
+    })
+    for item in items:
+        loc = request.build_absolute_uri(sitemap.location(item))
+        url_info = {
+            'location': loc,
+            'lastmod' : sitemap.lastmod(item) if hasattr(sitemap, 'lastmod') else None,
+            'changefreq': sitemap.changefreq,
+            'priority': sitemap.priority,
+            'images': sitemap.image_urls(item)
+        }
+        urlset.append(url_info)
+    xml_content = render_to_string('sitemap-dentist.xml', {'urlset': urlset})
+    return HttpResponse(xml_content, content_type ='application/xml')
+
+def blogSitemap(request):
+    sitemap = BlogsSitemap()
+    items = sitemap.items()
+    urlset = []
+
+    static_url = request.build_absolute_uri(reverse('home:blogs'))
+    urlset.append({
+        'location': static_url,
+        'lastmod': None,
+        'changefreq': 'daily',
+        'priority': '0.8',
+        'images': [],
+    })
+
+    for item in items:
+        loc = request.build_absolute_uri(sitemap.location(item))
+        url_info = {
+            'location' : loc,
+            'lastmod' : sitemap.lastmod(item) if hasattr(sitemap, 'lastmod') else None,
+            'changefreq': sitemap.changefreq,
+            'priority': sitemap.priority,
+            'images': sitemap.image_urls(item)
+        }
+        urlset.append(url_info)
+    xml_content = render_to_string('sitemap-blog.xml', {'urlset': urlset})
+    return HttpResponse (xml_content, content_type='application/xml')
+
+def newsSitemap(request):
+    sitemap = NewsSitemap()
+    items = sitemap.items()
+    urlset = []
+
+    static_url = request.build_absolute_uri(reverse('home:blogs'))
+    urlset.append({
+        'location': static_url,
+        'lastmod': None,
+        'changefreq': 'daily',
+        'priority': '0.8',
+        'images': [],
+    })
+
+    for item in items:
+        loc = request.build_absolute_uri(sitemap.location(item))
+        url_info ={
+            'location': loc,
+            'lastmod': sitemap.lastmod(item) if hasattr(sitemap, 'lastmod') else None,
+            'changefreq': sitemap.changefreq,
+            'priority': sitemap.priority,
+            'images': sitemap.image_urls(item)
+        }
+        urlset.append(url_info)
+    xml_content = render_to_string('sitemap-news.xml', {'urlset': urlset})
+    return HttpResponse(xml_content, content_type='application/xml')
+
+def dentistCitySitemap(request):
+    sitemap = BestDentistcitiesSitemap()
+    items = sitemap.items()
+
+    urlset = []
+    for item in items:
+        loc = request.build_absolute_uri(sitemap.location(item))
+        url_info = {
+            'location': loc,
+            'lastmod': sitemap.lastmod(item) if hasattr(sitemap, 'lastmod') else None,
+            'chanegfreq': sitemap.changefreq,
+            'priority': sitemap.priority,
+            'images': sitemap.image_urls(item)
+        }
+        urlset.append(url_info)
+    xml_content = render_to_string('sitemap-best-densits-cities.xml', {'urlset': urlset})
+    return HttpResponse(xml_content, content_type='application/xml')

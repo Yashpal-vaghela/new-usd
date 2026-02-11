@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+{% for item in urlset %}
+  <url>
+    <loc>{{ item.location }}</loc>
+    {% if item.changefreq %}<changefreq>{{ item.changefreq}}</changefreq>{% endif%}
+    {% if item.priority %}<priority>{{ item.priority }}</priority>{% endif %}
+    <news:news>
+      <news:publication>
+        <news:name>Ultimate Smile Design</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      {% if item.lastmod %}<news:publication_date>{{ item.lastmod|date:"Y-m-d" }}</news:publication_date>{% endif %}
+      {% if item.title %}<news:title>{{ item.title }}</news:title>{% endif %}
+    </news:news>
+    {% if item.images%}
+        {% for image in item.images%}
+            <image:image>
+            <image:loc>{{ image.loc }}</image:loc>
+            {% if image.title %} <image:caption>{{ image.title }}</image:caption>{% endif %}
+            {% if image.title %}<image:title>{{ image.title }}</image:title>{% endif %}
+            </image:image>
+        {% endfor %}
+    {% endif %}
+  </url>
+{% endfor %}
+</urlset>
