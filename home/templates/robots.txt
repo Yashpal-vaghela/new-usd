@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 Disallow: thank-you/
+Disallow: /certified-dentists/?*
 Sitemap: https://ultimatesmiledesign.com/sitemap.xml

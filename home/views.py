@@ -16,6 +16,7 @@ from geopy.distance import geodesic
 from home.forms import UserSubmissionForm
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
+from datetime import date
 from .utils import send_mail
 import re
 import requests
@@ -1135,12 +1136,20 @@ def dentistsSitemap(request):
     })
     for item in items:
         loc = request.build_absolute_uri(sitemap.location(item))
+        description = (
+            f"Explore {item.name}'s profile, a smile design expert and best dentist in "
+            f"{item.city}. {item.name} provides comprehensive dental and cosmetic smile solutions."
+        )
+        images = []
+        for img in sitemap.image_urls(item):
+            img['caption'] = description
+            images.append(img)
         url_info = {
             'location': loc,
             'lastmod' : sitemap.lastmod(item) if hasattr(sitemap, 'lastmod') else None,
             'changefreq': sitemap.changefreq,
             'priority': sitemap.priority,
-            'images': sitemap.image_urls(item)
+            'images': images
         }
         urlset.append(url_info)
     xml_content = render_to_string('sitemap-dentist.xml', {'urlset': urlset})
@@ -1167,7 +1176,8 @@ def blogSitemap(request):
             'lastmod' : sitemap.lastmod(item) if hasattr(sitemap, 'lastmod') else None,
             'changefreq': sitemap.changefreq,
             'priority': sitemap.priority,
-            'images': sitemap.image_urls(item)
+            'images': sitemap.image_urls(item),
+            'description': item.description
         }
         urlset.append(url_info)
     xml_content = render_to_string('sitemap-blog.xml', {'urlset': urlset})
@@ -1178,23 +1188,16 @@ def newsSitemap(request):
     items = sitemap.items()
     urlset = []
 
-    static_url = request.build_absolute_uri(reverse('home:blogs'))
-    urlset.append({
-        'location': static_url,
-        'lastmod': None,
-        'changefreq': 'daily',
-        'priority': '0.8',
-        'images': [],
-    })
-
     for item in items:
         loc = request.build_absolute_uri(sitemap.location(item))
         url_info ={
             'location': loc,
-            'lastmod': sitemap.lastmod(item) if hasattr(sitemap, 'lastmod') else None,
+            'publication_date': item.published,
             'changefreq': sitemap.changefreq,
             'priority': sitemap.priority,
-            'images': sitemap.image_urls(item)
+            'images': sitemap.image_urls(item),
+            'title': getattr(item, "title", None),
+            'description': item.description
         }
         urlset.append(url_info)
     xml_content = render_to_string('sitemap-news.xml', {'urlset': urlset})

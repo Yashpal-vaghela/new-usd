@@ -2,19 +2,17 @@
 <urlset
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-{% for item in urlset%}
+{% for item in urlset %}
 <url>
     <loc>{{ item.location }}</loc>
     {% if item.lastmod %}<lastmod>{{ item.lastmod|date:"Y-m-d" }}</lastmod>{% endif %}
-    {% if item.changefreq %}<changefreq>{{ item.changefreq }}</changefreq>{% endif %}
-    {% if item.priority %}<priority>{{ item.priority }}</priority>{% endif %}
 
     {% if item.images %}
         {% for image in item.images %}
         <image:image>
             <image:loc>{{ image.loc }}</image:loc>
             {% if image.title %}<image:title>{{ image.title }}</image:title>{% endif %}
-            {% if image.title %}<image:caption>{{ image.title }}</image:caption>{% endif %}
+            {% if item.description %}<image:caption>{{ item.description }}</image:caption>{% endif %}
         </image:image>
         {% endfor %}
     {% endif %}

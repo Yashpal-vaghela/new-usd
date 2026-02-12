@@ -73,6 +73,11 @@ class StaticPageSitemap(Sitemap):
                 }]
             },
             {
+                'name': 'home:blogs',
+                'priority': 0.8,
+                'changefreq': 'weekly'
+            },
+            {
                 'name': 'home:contact',
                 'priority': 0.8,
                 'changefreq': 'weekly',
@@ -102,6 +107,7 @@ class StaticPageSitemap(Sitemap):
                 'changefreq': 'weekly',
                 'images': []
             }
+
         ]
     
     def location(self, item):
@@ -234,5 +240,5 @@ class BestDentistcitiesSitemap(Sitemap):
         return [{
             "loc": "https://ultimatesmiledesign.com/static/usdlog.webp",
             "title": f"Top Dentists in {city} - List of Professional Dentists Near You",
-            "caption": f"Best Dentists in {city} | Ultimate Smile Design",
+            "caption": f"Explore a comprehensive list of the best dentists in {city}. Find qualified dental professionals, clinics, and specialists near you for all your oral health needs."
         }]
