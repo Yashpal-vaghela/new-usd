@@ -1,6 +1,8 @@
 from django.contrib import admin
+from django.db import models
 from import_export.admin import ImportExportModelAdmin
 from django.utils.html import format_html
+from django_json_widget.widgets import JSONEditorWidget
 from .models import *
 
 class DentistAdmin(ImportExportModelAdmin):
@@ -13,6 +15,10 @@ class BlogAdmin(admin.ModelAdmin):
     search_fields = ('h1', 'author__name', 'keyword')
     list_filter = ('status', 'category', 'published')
     exclude = ('blog_banner_lg_alt', 'blog_banner_sm_alt', 'image_alt')
+
+    formfield_overrides = {
+        models.JSONField: {"widget": JSONEditorWidget},
+    }
 
 class AuthorAdmin(admin.ModelAdmin):
     list_display = ('name', 'position')

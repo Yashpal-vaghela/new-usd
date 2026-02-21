@@ -196,6 +196,7 @@ class Blog(models.Model):
     content = RichTextUploadingField()
     active = True
     edits = RichTextUploadingField( blank=True, null=True)
+    faq = models.JSONField(default=list, blank=True, null=True)
     schema = models.TextField( blank=True, null=True)
     
     

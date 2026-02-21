@@ -102,6 +102,33 @@
           </div>  
           <div class="single-page-main-content mt-4 mt-sm-5" id="blogContent">
             {{blog.content|safe}}
+            {% if blog.faq %}
+            <div class="faq-section mt-5">
+
+                <h2 class="mb-4">FAQs</h2>
+
+                <div id="accordion">
+                    {% for item in blog.faq %}
+                    <div class="faq-item mb-3">
+
+                        <div class="faq-question collapsed">
+                            {{ item.q }}
+                        </div>
+
+                        <div id="faq{{ forloop.counter }}"
+                            class="collapse">
+
+                            <div class="faq-answer">
+                                {{ item.a|linebreaks }}
+                            </div>
+
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+            {% endif %}
           </div>
           {% comment %} <section class="profile-section">
             <div class="curve-bg"></div>

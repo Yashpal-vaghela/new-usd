@@ -122,79 +122,118 @@
   }
 </script>
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "url": "https://ultimatesmiledesign.com/certified-dentists/city/{{city_name}}/",
-  "name": "Top Dentists in {{city_name}} - List of Professional Dentists Near You",
-  "description": "Explore a comprehensive list of the best dentists in {{city_name}}. Find qualified dental professionals, clinics, and specialists near you for all your oral health needs."
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Dentist",
-  "name": "Dentists in {{city_name}} Best Dentist Near Me in {{city_name}}",
-  "description": "Explore verified dentists in {{city_name}} near me offering expert dental solutions and customized smile design treatment. Get a complete list of best dentist in {{ City_name }}.",
-  "url": "{{ URL }}",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "{{city_name}}",
-    "addressCountry": "IN"
-  },
-  "areaServed": {
-    "@type": "Place",
-    "name": "{{city_name}}"
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://ultimatesmiledesign.com/certified-dentists/city/{{city_name}}/",
+        "url": "https://ultimatesmiledesign.com/certified-dentists/city/{{city_name}}/",
+        "name": "Best Dentists in {{ city_name|capfirst }} for Smile Designing | ✅ USD certified",
+        "description": "Find the best dentists in {{ city_name|capfirst }}  for smile designing treatment. Find top cosmetic dentists and qualified smile design experts near you in {{ city_name|capfirst }}.",
+        "inLanguage": "en-IN",
+        "about": {
+          "@type": "MedicalProcedure",
+          "name": "Smile Designing Treatment",
+          "procedureType": "http://schema.org/NoninvasiveProcedure"
+        }
+      },
+      {
+        "@type": "ItemList",
+        "name": "Best Smile Design Dentists in {{ city_name|capfirst }}",
+        "description": "List of top densits in {{ city_name|capfirst }} specializing in cosmetic dentistry and smile designing treatment.",
+        "numberOfItems": "{{data.paginator.count}}",
+        "itemListElement": [
+          {% for ie in data %}
+          {
+            "@type": "ListItem",
+            "position": {{forloop.counter}},
+            "item": {
+              "@type": "Dentist",
+              "name": "{{ie.name}}",
+              "medicalSpecialty": "http://schema.org/Dentistry",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "{{ie.city}}",
+                "addressRegion": "{{ie.state}}",
+                "addressCountry": "IN"
+              },
+              "areaServed": "{{ie.city}}",
+              "availableService": {
+                "@type": "MedicalProcedure",
+                "name": "Smile Designing Treatment"
+              }
+            }
+          }{% if not forloop.last %},{% endif %}
+          {% endfor %}
+        ]
+      },
+      {
+        "@type": "MedicalProcedure",
+        "name": "Smile Designing Treatment",
+        "alternateName": "Smile Design",
+        "procedureType": "http://schema.org/NoninvasiveProcedure",
+        "bodyLocation": "Teeth",
+        "howPerformed": "Smile designing involves analysis of tooth shape, alignment, color, and smile symmetry, followed by cosmetic and restorative dental procedures with the latest digital smile design methods.",
+        "preparation": "Dental examination, diagnostic analysis, and treatment planning.",
+        "followup": "Dental evaluation and smile assessment."
+      },
+      {
+        "@type": "MedicalOrganization",
+        "name": "Ultimate Smile Design",
+        "url": "https://ultimatesmiledesign.com/",
+        "logo": "https://ultimatesmiledesign.com/static/usd-logo1.svg",
+        "areaServed": {
+          "@type": "City",
+          "name": "{{ city_name|capfirst }}"
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://ultimatesmiledesign.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Certified Dentists",
+            "item": "https://ultimatesmiledesign.com/certified-dentists/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Certified Dentists in {{ city_name|capfirst }}",
+            "item": "https://ultimatesmiledesign.com/certified-dentists/city/{{city_name}}/"
+          }
+        ]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "serviceType": "Best Dentist in {{ city_name|capfirst }}",
+        "provider": {
+          "@type": "Organization",
+          "name": "Ultimate Smile Design",
+          "url": "https://ultimatesmiledesign.com/"
+        },
+        "areaServed": {
+          "@type": "Place",
+          "name": "{{ city_name|capfirst }}",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "{{ city_name|capfirst }}",
+            "addressCountry": "IN"
+          }
+        }, 
+        "description": "Explore verified dentists in {{ city_name|capfirst }} near me offering expert digital smile design and customized smile design treatment. Get a complete list of best dentist in {{ city_name|capfirst }}.",
+        "url": "https://ultimatesmiledesign.com/certified-dentists/city/{{city_name}}/"
+      }
+    ]
   }
-}
-
-{
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "serviceType": "Best Dentist in {{city_name}}",
-  "provider": {
-    "@type": "Organization",
-    "name": "Ultimate Smile Design",
-    "url": "https://ultimatesmiledesign.com/"
-  },
-  "areaServed": {
-    "@type": "Place",
-    "name": "{{city_name}}",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "{{city_name}}",
-      "addressCountry": "IN"
-    }
-  },
-  "description": "Explore verified dentists in {{city_name}} near me offering expert digital smile design and customized smile design treatment. Get a complete list of best dentist in {{city_name}}.",
-  "url": "https://ultimatesmiledesign.com/certified-dentists/city/{{city_name}}/"
-}
-
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Home",
-      "item": "https://ultimatesmiledesign.com/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "Certified Dentists",
-      "item": "https://ultimatesmiledesign.com/certified-dentists/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 3,
-      "name": "Certified Dentists in {{city_name}}",
-      "item": "https://ultimatesmiledesign.com/certified-dentists/city/{{city_name}}/"
-    }
-  ]
-}
 </script>
 {% endblock js %}
