@@ -253,6 +253,39 @@
     position: sticky;
     top: 500px;
 }
+/* ===== BLOG CONTENT LIST STYLING ===== */
+
+/* Top level ordered list */
+#blogContent > ol {
+    list-style-type: decimal;   /* 1,2,3 */
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+/* Top level list items */
+#blogContent > ol > li {
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+/* Nested list (li > ol) → a,b,c */
+#blogContent li > ol {
+    list-style-type: lower-alpha;
+    padding-left: 25px;
+    margin-top: 6px;
+}
+
+/* Third level (li > ol > li > ol) → i,ii,iii */
+#blogContent li > ol li > ol {
+    list-style-type: lower-roman;
+    padding-left: 25px;
+}
+
+/* Better spacing for nested items */
+#blogContent li > ol > li {
+    margin-bottom: 6px;
+    font-weight: 400;
+}
 /* ===== Myth vs Fact Table ===== */
 
 .myth-fact-table{
@@ -293,33 +326,6 @@
   position: absolute;
   left: 0;
   color: rgba(255,255,255,.85);
-}
-.veneer-list {
-    counter-reset: main-counter;
-    list-style: decimal;
-    padding-left: 20px;
-    margin-bottom: 20px;
-}
-
-/* Level 1 */
-.veneer-list > li {
-    margin-bottom: 12px;
-    font-weight: 500;
-}
-
-/* Level 2 (a, b, c) */
-.veneer-list > li > ol {
-    list-style: lower-alpha;
-    margin-top: 8px;
-    padding-left: 25px;
-}
-.veneer-list > li > ol > li > ol {
-    list-style: lower-roman;
-    padding-left: 25px;
-}
-
-.veneer-list ol li {
-    margin-bottom: 6px;
 }
 /* category */
 .category-wrapper{
