@@ -652,12 +652,43 @@ def find_dentist_d(request, pk):
 def gallery(request):
     data = Gallery.objects.all().order_by("?")
     data1 = Hgallery.objects.all().order_by("?")
-    context = {
-        'data':data,
-        'data1':data1,
+
+    gallery_rows = []
+    pair_index = 0
+
+    for i in range(0, len(data), 2):
+
+        # Normal image row (2 images side by side)
+        gallery_rows.append({
+            "type": "normal",
+            "img1": data[i],
+            "img2": data[i+1] if i+1 < len(data) else None
+        })
+
+        # Vertical pair row
+        if pair_index * 2 < len(data1):
+            gallery_rows.append({
+                "type": "vertical",
+                "img1": data1[pair_index*2],
+                "img2": data1[pair_index*2 + 1] if pair_index*2 + 1 < len(data1) else None,
+                "reverse": pair_index % 2 == 1
+            })
+            pair_index += 1
         
+        mobile_items = []
+        v = 0
+        for i in range(len(data)):
+            mobile_items.append({"type": "normal", "img": data[i]})
+            if v < len(data1):
+                mobile_items.append({"type": "vertical", "img": data1[v]})
+                v += 1
+
+    context = {
+        "gallery_rows": gallery_rows,
+        "mobile_items": mobile_items
     }
-    return render(request, 'gallery.html', context)
+
+    return render(request, "gallery.html", context)
 
 def blogs(request):
     all_blogs = Blog.objects.all().order_by('-published')  # Fetch all blogs

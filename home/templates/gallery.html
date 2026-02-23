@@ -37,191 +37,92 @@
       <div class="col-lg-12 col-md-12 m-b30">
         <div class="p-4">
           <div class="wt-box wt-product-gallery">
-            <div class="image-container">
-              <div class="image-grid" id="imageGrid">
-                {% for ie in data %}
-                <div
-                  class="image-item col-12"
-                  data-aos="fade-up"
-                  data-aos-duration="1500"
-                  data-aos-delay="0"
-                >
-                  <img src="{{ ie.image.url }}" alt="Image" />
-                </div>
-                {% comment %} {% if forloop.counter0|divisibleby:3 or forloop.counter0|divisibleby:3 == 1%}
-                  <div class="image-item col-6" data-aos="fade-up" data-aos-duration="1500">
-                    <img src="{{ie.image.url}}" alt="Image"></img>
-                  </div>
-                {% else %}
-                  <div class="image-item col-12 single-image" data-aos="zomm-in" data-aos-duration="1500">
-                    <img src="{{ie.image.url}}" alt="Image"></img>
-                  </div>
-                {% endif %} {% endcomment %}
+            <div class="image-container d-none d-md-block">
+                {% for ie in gallery_rows %}
+                  {% if ie.type == "normal" %}
+                    <div class="row mb-4">
+                      <div class="col-lg-6 col-md-6 mb-3"
+                        {% if forloop.counter > 2 %}
+                          data-aos="fade-up"
+                          data-aos-duration="1500"
+                        {% endif %}
+                      >
+                        <img src="{{ ie.img1.image.url }}" class="image-item img-fluid w-100" alt="Image" />
+                      </div>
+                        {% if ie.img2 %}
+                          <div class="col-lg-6 col-md-6 mb-3"
+                            {% if forloop.counter > 2 %}
+                              data-aos="fade-up"
+                              data-aos-duration="1500"
+                            {% endif %}
+                          >
+                            <img src="{{ ie.img2.image.url }}" class="image-item img-fluid w-100">
+                          </div>
+                        {% endif %}
+                    </div>
+                  {% endif %}
+                  {% if ie.type == "vertical" %}
+                      <div class="row mb-5 align-items-start">
 
-                {% if forloop.counter == 2 and data1|length > 0 %} {% comment %}
-                {% for ie1 in data1%} {% endcomment %}
-                <div
-                  class="image-item single-image"
-                  style="
-                    display: flex;
-                    justify-content: flex-start;
-                    gap: 80px;
-                    flex-wrap: wrap;
-                  "
-                  data-aos="zoom-in-right"
-                  data-aos-duration="1500"
-                  data-aos-delay="0"
-                >
-                  <img
-                    src="{{ data1.0.image.url }}"
-                    alt="single-image"
-                    class="vertical-Image"
-                  />
+                          {% if ie.reverse %}
+                              <!-- Blank Left -->
+                              <div class="col-lg-4"></div>
+
+                              <div class="col-lg-4 col-md-6 mb-3 vcol vcol-1"
+                                {% if forloop.counter > 2 %}
+                                  data-aos="fade-up"
+                                  data-aos-duration="1200"
+                                {% endif %}
+                              >
+                                  <img src="{{ ie.img1.image.url }}" class="img-fluid vertical-Image">
+                              </div>
+
+                              <div class="col-lg-4 col-md-6 mb-3 vcol vcol-2"
+                                {% if forloop.counter > 2 %}
+                                  data-aos="fade-up"
+                                  data-aos-duration="1400"
+                                {% endif %}
+                              >
+                                  <img src="{{ ie.img2.image.url }}" class="img-fluid vertical-Image">
+                              </div>
+
+                          {% else %}
+                              <div class="col-lg-4 col-md-6 mb-3 vcol vcol-1"
+                                {% if forloop.counter > 2 %}
+                                  data-aos="fade-up"
+                                  data-aos-duration="1200"
+                                {% endif %}
+                              >
+                                  <img src="{{ ie.img1.image.url }}" class="img-fluid vertical-Image">
+                              </div>
+
+                              <div class="col-lg-4 col-md-6 mb-3 vcol vcol-2"
+                                {% if forloop.counter > 2 %}
+                                  data-aos="fade-up"
+                                  data-aos-duration="1400"
+                                {% endif %}
+                              >
+                                  <img src="{{ ie.img2.image.url }}" class="img-fluid vertical-Image">
+                              </div>
+
+                              <!-- Blank Right -->
+                              <div class="col-lg-4"></div>
+                          {% endif %}
+
+                      </div>
+                  {% endif %}
+                {% endfor %}
+            </div>
+            <div class="image-container d-block d-md-none">
+              {% for item in mobile_items %}
+                <div class="row mb-3">
+                  <div class="col-12" data-aos="fade-up" data-aos-duration="1000">
+                    <img src="{{ item.img.image.url }}"
+                        class="img-fluid image-item w-100 {% if item.type == 'vertical' %}vertical-Image{% endif %}"
+                        alt="">
+                  </div>
                 </div>
-                {% comment %} {% endfor %} {% endcomment %} 
-                {% endif %} 
-                {% if forloop.counter == 4 and data1|length > 1%}
-                <div
-                  class="image-item single-image"
-                  style="
-                    display: flex;
-                    justify-content: flex-end;
-                    gap: 80px;
-                    flex-wrap: wrap;
-                  "
-                  data-aos="zoom-in-left"
-                  data-aos-duration="1500"
-                  data-aos-delay="0"
-                >
-                  <img
-                    src="{{ data1.1.image.url }}"
-                    alt="single-image-2"
-                    class="vertical-Image"
-                  />
-                </div>
-                {% endif %}
-                {% if forloop.counter == 6 and data1|length > 1%}
-                <div
-                  class="image-item single-image"
-                  style="
-                    display: flex;
-                    justify-content: flex-start;
-                    gap: 80px;
-                    flex-wrap: wrap;
-                  "
-                  data-aos="zoom-in-right"
-                  data-aos-duration="1500"
-                  data-aos-delay="0"
-                >
-                  <img
-                    src="{{ data1.2.image.url }}"
-                    alt="single-image-2"
-                    class="vertical-Image"
-                  />
-                </div>
-                {% endif %} 
-                {% if forloop.counter == 8 and data1|length > 1%}
-                <div
-                  class="image-item single-image"
-                  style="
-                    display: flex;
-                    justify-content: flex-end;
-                    gap: 80px;
-                    flex-wrap: wrap;
-                  "
-                  data-aos="zoom-in-left"
-                  data-aos-duration="1500"
-                  data-aos-delay="0"
-                >
-                  <img
-                    src="{{ data1.3.image.url }}"
-                    alt="single-image-2"
-                    class="vertical-Image"
-                  />
-                </div>
-                {% endif %} 
-                {% if forloop.counter == 10 and data1|length > 1%}
-                <div
-                  class="image-item single-image"
-                  style="
-                    display: flex;
-                    justify-content: flex-start;
-                    gap: 80px;
-                    flex-wrap: wrap;
-                  "
-                  data-aos="zoom-in-left"
-                  data-aos-duration="1500"
-                  data-aos-delay="0"
-                >
-                  <img
-                    src="{{ data1.4.image.url }}"
-                    alt="single-image-2"
-                    class="vertical-Image"
-                  />
-                </div>
-                {% endif %} 
-                {% if forloop.counter == 12 and data1|length > 1%}
-                <div
-                  class="image-item single-image"
-                  style="
-                    display: flex;
-                    justify-content: flex-end;
-                    gap: 80px;
-                    flex-wrap: wrap;
-                  "
-                  data-aos="zoom-in-left"
-                  data-aos-duration="1500"
-                  data-aos-delay="0"
-                >
-                  <img
-                    src="{{ data1.5.image.url }}"
-                    alt="single-image-2"
-                    class="vertical-Image"
-                  />
-                </div>
-                {% endif %} 
-                {% if forloop.counter == 14 and data1|length > 1%}
-                <div
-                  class="image-item single-image"
-                  style="
-                    display: flex;
-                    justify-content: flex-start;
-                    gap: 80px;
-                    flex-wrap: wrap;
-                  "
-                  data-aos="zoom-in-left"
-                  data-aos-duration="1500"
-                  data-aos-delay="0"
-                >
-                  <img
-                    src="{{ data1.6.image.url }}"
-                    alt="single-image-2"
-                    class="vertical-Image"
-                  />
-                </div>
-                {% endif %}
-                {% if forloop.counter == 16 and data1|length > 1%}
-                <div
-                  class="image-item single-image"
-                  style="
-                    display: flex;
-                    justify-content: flex-end;
-                    gap: 80px;
-                    flex-wrap: wrap;
-                  "
-                  data-aos="zoom-in-left"
-                  data-aos-duration="1500"
-                  data-aos-delay="0"
-                >
-                  <img
-                    src="{{ data1.7.image.url }}"
-                    alt="single-image-2"
-                    class="vertical-Image"
-                  />
-                </div>
-                {% endif %} 
               {% endfor %}
-              </div>
             </div>
           </div>
         </div>
@@ -234,11 +135,7 @@
 {% endblock body %} {% block js %}
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const imageGrid = document.getElementById("imageGrid");
     const introSection = document.querySelector(".intro-section0");
-    const allImages = Array.from(imageGrid.children);
-    let imageIndex = allImages.length;
-    let imagesLoaded = false;
     let lastScrollTop = 0;
     if (introSection !== null) {
       window.addEventListener("scroll", function () {
@@ -256,23 +153,6 @@
           }, 100);
         }
         lastScrollTop = scrollTop;
-      });
-      function loadNextImages() {
-        if (imagesLoaded) return;
-
-        for (let i = 0; i < 2; i++) {
-          if (imageIndex >= allImages.length) break;
-          const nextImage =
-            allImages[imageIndex % allImages.length].cloneNode(true);
-          imageGrid.appendChild(nextImage);
-          imageIndex++;
-        }
-      }
-      const items = imageGrid.querySelectorAll(".image-item");
-      items.forEach((item) => {
-        if (item.classList.contains("single-image")) {
-          item.style.gridColumn = "span 2";
-        }
       });
     }
   });
