@@ -4,7 +4,8 @@
 {% endblock header %}
 {% block seo%}
 <title>Ultimate AI Smile Design | Preview Your Future Smile</title>
-<meta name="description" content="Try our Ultimate AI smile design. Design your perfect smile with AI. Capture your smile photo and preview a personalized digital smile designed for your face." />
+<meta name="description"
+    content="Try our Ultimate AI smile design. Design your perfect smile with AI. Capture your smile photo and preview a personalized digital smile designed for your face." />
 <link rel="canonical" href="https://ultimatesmiledesign.com/virtual-smile-try-on/" />
 <meta property="og:image" content="{% static 'feature-usd.webp'%}">
 <meta property="og:image:secure_url" content="{% static 'feature-usd.webp'%}">
@@ -14,11 +15,13 @@
 <meta property="og:locale" content="en_IN" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Ultimate AI Smile Design | Preview Your Future Smile" />
-<meta property="og:description" content="Try our Ultimate AI smile design. Design your perfect smile with AI. Capture your smile photo and preview a personalized digital smile designed for your face." />
+<meta property="og:description"
+    content="Try our Ultimate AI smile design. Design your perfect smile with AI. Capture your smile photo and preview a personalized digital smile designed for your face." />
 <meta property="og:url" content="https://ultimatesmiledesign.com/virtual-smile-try-on/" />
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Ultimate AI Smile Design | Preview Your Future Smile">
-<meta name="twitter:description" content="Try our Ultimate AI smile design. Design your perfect smile with AI. Capture your smile photo and preview a personalized digital smile designed for your face.">
+<meta name="twitter:description"
+    content="Try our Ultimate AI smile design. Design your perfect smile with AI. Capture your smile photo and preview a personalized digital smile designed for your face.">
 {% endblock seo%}
 {% block css %}
 {% endblock %}
@@ -123,15 +126,22 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div class="row align-items-center justify-content-center  h-100"> 
+                    <div class="row align-items-center justify-content-center  h-100">
                         <div class="col-lg-6 col-12 ">
                             <button type="button" class="d-lg-none d-block btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                             <div class="video-capture-wrapper my-3 my-lg-4">
-                                <video id="video" playsinline muted></video>
-                                <img id="freezeImg" class="visually-hidden hidden" alt="Captured">
-                                <canvas id="canvas" width="1184" height="864" class="visually-hidden hidden"></canvas>
+                                <div class="video-inner">
+                                    <video id="video" playsinline muted></video>
+                                    <img id="freezeImg" class="visually-hidden hidden" alt="Captured">
+                                    <canvas id="canvas" width="1184" height="864"
+                                        class="visually-hidden hidden"></canvas>
+                                    <div id="faceOverlay" class="face-overlay"></div>
+                                </div>
                             </div>
+                            <p id="smileGuideLine" class="text-center mb-3 text-secondary"
+                                style="font-size: 1.1rem; font-weight: 500; min-height: 1.5rem; transition: opacity 0.5s;">
+                                Please smile widely until your full teeth are visible</p>
                             <div class="d-flex align-items-center justify-content-center gap-5 btn-wrapper">
                                 <button id="recaptureBtn" class="btn hidden">ReCapture</button>
 
@@ -254,7 +264,7 @@
                         </div>
                         <div class="row justify-content-center mt-4 mb-0 my-lg-4">
                             <div class="col-lg-3 col-md-3 col-sm-6 col-12 order-1 order-md-1">
-                                <button class="btn bat btn-before" id="downloadBeforeBtn" >Before 
+                                <button class="btn bat btn-before" id="downloadBeforeBtn">Before
                                     & After
                                     <svg width="20" height="20" viewBox="0 0 28 28" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -318,69 +328,69 @@
     });
 </script>
 <script>
-  function downloadImage(url, filename) {
-    if (!url) {
-      alert("Image not ready yet.");
-      return;
+    function downloadImage(url, filename) {
+        if (!url) {
+            alert("Image not ready yet.");
+            return;
+        }
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
     }
 
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  }
-
-  document.getElementById("downloadBeforeBtn")?.addEventListener("click", () => {
-    const beforeImg = document.getElementById("previewBeforeImg");
-    downloadImage(
-      beforeImg?.src,
-      "smile-before.jpg"
-    );
-  });
-  document.getElementById("downloadBeforeBtn")?.addEventListener("click", () => {
+    document.getElementById("downloadBeforeBtn")?.addEventListener("click", () => {
+        const beforeImg = document.getElementById("previewBeforeImg");
+        downloadImage(
+            beforeImg?.src,
+            "smile-before.jpg"
+        );
+    });
+    document.getElementById("downloadBeforeBtn")?.addEventListener("click", () => {
         const afterImg = document.getElementById("previewAfterImg");
         downloadImage(
-        afterImg?.src,
-        "smile-after.jpg"
+            afterImg?.src,
+            "smile-after.jpg"
         );
-  });
-  
+    });
+
 </script>
 <script>
-  async function shareImageFromUrl(imageUrl) {
-    if (!imageUrl) {
-      alert("Image not ready yet.");
-      return;
+    async function shareImageFromUrl(imageUrl) {
+        if (!imageUrl) {
+            alert("Image not ready yet.");
+            return;
+        }
+
+        try {
+            // fetch image as blob
+            const response = await fetch(imageUrl);
+            const blob = await response.blob();
+
+            const file = new File([blob], "smile-after.jpg", { type: blob.type });
+
+            if (navigator.share && navigator.canShare({ files: [file] })) {
+                await navigator.share({
+                    title: "My AI Smile Preview",
+                    text: "Check out my AI-designed smile ✨",
+                    files: [file],
+                });
+            } else {
+                alert("Sharing not supported on this browser.");
+            }
+        } catch (err) {
+            console.error("Share failed:", err);
+            alert("Failed to share image.");
+        }
     }
 
-    try {
-      // fetch image as blob
-      const response = await fetch(imageUrl);
-      const blob = await response.blob();
-
-      const file = new File([blob], "smile-after.jpg", { type: blob.type });
-
-      if (navigator.share && navigator.canShare({ files: [file] })) {
-        await navigator.share({
-          title: "My AI Smile Preview",
-          text: "Check out my AI-designed smile ✨",
-          files: [file],
-        });
-      } else {
-        alert("Sharing not supported on this browser.");
-      }
-    } catch (err) {
-      console.error("Share failed:", err);
-      alert("Failed to share image.");
-    }
-  }
-
-  document.getElementById("shareAfterBtn")?.addEventListener("click", () => {
-    const afterImg = document.getElementById("previewAfterImg");
-    shareImageFromUrl(afterImg?.src);
-  });
+    document.getElementById("shareAfterBtn")?.addEventListener("click", () => {
+        const afterImg = document.getElementById("previewAfterImg");
+        shareImageFromUrl(afterImg?.src);
+    });
 </script>
 <script src="{% static 'js/smile_ai.js' %}"></script>
 {% endblock %}

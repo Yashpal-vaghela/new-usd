@@ -951,3 +951,79 @@
   50% { transform: scale(1.05); }
   100% { transform: scale(1); }
 }
+
+.video-capture-wrapper .video-inner {
+        position: relative;
+        width: 100%;
+        max-width: 420px;
+        aspect-ratio: 11/8;
+        border-radius: 10px;
+        overflow: hidden;
+        margin: auto;
+    }
+
+    .video-capture-wrapper .video-inner #video,
+    .video-capture-wrapper .video-inner #freezeImg {
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        object-fit: cover;
+    }
+
+    .video-capture-wrapper .face-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 50%;
+        height: 75%;
+        border: 4px dashed rgba(255, 255, 255, 0.8);
+        border-radius: 60%;
+        pointer-events: none;
+        box-shadow: 0 0 0 2000px rgba(0, 0, 0, 0.4);
+        z-index: 5;
+        transition: border-color 0.3s ease;
+    }
+
+    .video-capture-wrapper .face-overlay.ready {
+        border-color: rgba(255, 255, 255, 0) !important;
+    }
+
+    .video-capture-wrapper .face-overlay::after {
+        content: "";
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        border: 4px solid transparent;
+        border-radius: 50%;
+        background: linear-gradient(130deg,
+                #c3942f 0%,
+                #d89c27 18%,
+                #dfc86f 37%,
+                #e7dc96 50%,
+                #dfc86f 64%,
+                #d89c27 82%,
+                #c99c30 100%) border-box;
+        -webkit-mask:
+            linear-gradient(#fff 0 0) padding-box,
+            linear-gradient(#fff 0 0);
+        mask:
+            linear-gradient(#fff 0 0) padding-box,
+            linear-gradient(#fff 0 0);
+        -webkit-mask-composite: destination-out;
+        mask-composite: exclude;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .video-capture-wrapper .face-overlay.ready::after {
+        opacity: 1;
+    }
+
+    @media (max-width: 991px) {
+        .video-capture-wrapper .video-inner {
+            max-width: 620px;
+        }
+    }
