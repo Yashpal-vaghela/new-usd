@@ -10,7 +10,8 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.views.decorators.http import require_POST
 from django.conf import settings
 from django.utils import timezone
-
+import threading
+from home.utils import send_mail
 from virtualsmileAI.forms import SmileDesignLeadForm
 from virtualsmileAI.gemini import add_logo_on_right
 from .yolo import decode_base64_image, run_inference_on_bgr, encode_image_to_base64_jpeg
@@ -52,7 +53,12 @@ def smile(request):
         {"threshold": THRESHOLD, "form": SmileDesignLeadForm()},
     )
 
-
+def send_smile_lead_email_async(context_dict):
+    send_mail(
+        to_email="vaghela9632@gmail.com",
+        subject=f"New Smile Ai Design Lead from {context_dict.get('Name', 'Unknown')}",
+        context_dict=context_dict
+    )
 
 @require_POST
 @csrf_protect
@@ -93,9 +99,33 @@ def create_smile_lead_api(request):
 
     obj = form.save(commit=False)
     obj.before_image = before_img
-    obj.after_image = request.session.get("smile_after", "")
+    after_img = request.session.get("smile_after", "")
+    obj.after_image = after_img
     obj.save()
 
+    def get_absolute_image_url(path):
+        if not path:
+            return "N/A"
+        if path.startswith("data:image"):
+            return "Image Provided as Base64 Data URL"
+        if path.startswith("http://") or path.startswith("https://"):
+            return path
+        return request.build_absolute_uri(settings.MEDIA_URL + path.lstrip("/"))
+    
+    context_dict = {
+        "Name": obj.name,
+        "Email": obj.email,
+        "Phone": obj.phone,
+        "City": obj.city,
+        "Before Image": get_absolute_image_url(obj.before_image),
+        "After Image": get_absolute_image_url(obj.after_image), 
+    }
+
+    threading.Thread(
+        target=send_smile_lead_email_async,
+        args=(context_dict,),
+        daemon=True
+    ).start()
     # ✅ clear so it can’t be reused
     request.session.pop("smile_before", None)
     request.session.pop("smile_after", None)
