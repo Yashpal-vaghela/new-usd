@@ -264,13 +264,18 @@
       captureBtn.disabled = false;
       captureBtn.textContent = "Capture Now";
       if (guideLine) guideLine.classList.add("hidden", "d-none");
-      if (faceOverlay) faceOverlay.classList.add("ready");
+      if (faceOverlay) {
+        faceOverlay.classList.add("ready");
+        faceOverlay.style.border = "none";
+      }
     } else {
       captureBtn.classList.add("hidden", "d-none");
       captureBtn.disabled = true;
       if (guideLine) guideLine.classList.remove("hidden", "d-none");
-      if (faceOverlay) faceOverlay.classList.remove("ready");
-      if (faceOverlay) faceOverlay.style.borderColor = "";
+      if (faceOverlay) {
+        faceOverlay.classList.remove("ready");
+        faceOverlay.style.border = "4px dashed rgba(255, 255, 255, 0.8)"
+      }
     }
   }
 
@@ -282,8 +287,10 @@
     captureBtn.disabled = true;
     confirmBtn.disabled = true;
     if (guideLine) guideLine.classList.remove("hidden", "d-none");
-    if (faceOverlay) faceOverlay.classList.remove("ready");
-    if (faceOverlay) faceOverlay.style.borderColor = "";
+    if (faceOverlay) {
+      faceOverlay.classList.remove("ready");
+      faceOverlay.style.border = "4px dashed rgba(255, 255, 255, 0.8)";
+    }
   }
 
   function setControlsForCaptured() {
