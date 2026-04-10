@@ -885,17 +885,17 @@
     <div class="container position-relative">
       <div class="gallery-container mt-xl-4" style="padding-top:130px">
           <div class="floating-images position-relative w-100 d-flex justify-content-center " data-aos="fade-down" data-aos-duration="1500">
-              <img src="{% static 'home-gallery/before-1.webp' %}" alt="Ultimate Smile Design Service Final Result Image of Dental Prosthesis">
-              <img src="{% static 'home-gallery/home-gallery10.webp' %}" alt="Real transformation gallery from customized dental treatment at Ultimate Smile Design studio">
-              <img src="{% static 'home-gallery/before-4.webp' %}" alt="High-impact before-after visuals of confident smiles crafted by expert clinicians">
+              <img src="{% static 'home-gallery/new-before-after-3.webp' %}" alt="Ultimate Smile Design Service Final Result Image of Dental Prosthesis">
+              <img src="{% static 'home-gallery/new-before-after-1.webp' %}" alt="Real transformation gallery from customized dental treatment at Ultimate Smile Design studio">
+              <img src="{% static 'home-gallery/new-before-after-4.webp' %}" alt="High-impact before-after visuals of confident smiles crafted by expert clinicians">
               <img src="{% static 'home-gallery/home-gallery11.webp' %}" alt="Stunning visual results from personalized smile design captured in patient gallery view">
-              <img src="{% static 'home-gallery/before-3.webp' %}" alt="Clinical showcase highlighting artistic smile enhancement and real case outcomes">
-              <img src="{% static 'home-gallery/home-gallery5.webp' %}" alt="Patient journey from consultation to perfect smile in Ultimate Smile Design series">
-              <img src="{% static 'home-gallery/before-5.webp' %}" alt="Image timeline of smile success stories from Ultimate Smile Design restorative care">
+              <img src="{% static 'home-gallery/new-before-after-2.webp' %}" alt="Clinical showcase highlighting artistic smile enhancement and real case outcomes">
+              <img src="{% static 'home-gallery/new-before-after-8.webp' %}" alt="Patient journey from consultation to perfect smile in Ultimate Smile Design series">
+              <img src="{% static 'home-gallery/new-before-after-5.webp' %}" alt="Image timeline of smile success stories from Ultimate Smile Design restorative care">
               <img src="{% static 'home-gallery/before-6.webp' %}" alt="Authentic smile evolution captured in patient showcase at Ultimate Smile Design">
-              <img src="{% static 'home-gallery/home-gallery9.webp' %}" alt="Gallery of restored smiles featuring aesthetic upgrades at Ultimate Smile Design center">
-              <img src="{% static 'home-gallery/home-gallery8.webp' %}" alt="Smile makeover before-after display featuring real patient results at Ultimate Smile Design">
-              <img src="{% static 'home-gallery/before-2.webp' %}" alt="Visible dental improvements through advanced treatment shown in patient image timeline">
+              <img src="{% static 'home-gallery/new-before-after.webp' %}" alt="Gallery of restored smiles featuring aesthetic upgrades at Ultimate Smile Design center">
+              <img src="{% static 'home-gallery/new-before-after-7.webp' %}" alt="Smile makeover before-after display featuring real patient results at Ultimate Smile Design">
+              <img src="{% static 'home-gallery/new-before-after-6.webp' %}" alt="Visible dental improvements through advanced treatment shown in patient image timeline">
           </div>
           <div class="d-flex justify-content-center" style="margin-top:100px; margin-bottom:40px" data-aos="zoom-in" data-aos-duration="1500">
             <svg class="img-fluid" style="width:67%" width="1089" height="426" viewBox="0 0 1089 426" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1454,5 +1454,63 @@ document.addEventListener("DOMContentLoaded", function () {
   "name": "Ultimate Smile Design | Custom Smile Design by Expert Dentists",
   "description": "Experience custom smile designing with Ultimate Smile Design. Connect with expert dentists across cities and book your personalized smile makeover appointment."
 }
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const counters = document.querySelectorAll(".counter");
+  const duration = 2000; // Animation duration in milliseconds
+
+  const animateCounter = (counter) => {
+    // Cancel any currently running animation on this element first
+    if (counter.dataset.rafId) {
+      window.cancelAnimationFrame(Number(counter.dataset.rafId));
+    }
+
+    const targetValue = parseInt(counter.getAttribute("data-target"), 10);
+    if (isNaN(targetValue)) return;
+
+    let startTimestamp = null;
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      // Ensure smooth easing out
+      const easeOut = Math.sin((progress * Math.PI) / 2);
+      counter.innerText = Math.floor(easeOut * targetValue);
+      
+      if (progress < 1) {
+        counter.dataset.rafId = window.requestAnimationFrame(step);
+      } else {
+        counter.innerText = targetValue;
+      }
+    };
+    counter.dataset.rafId = window.requestAnimationFrame(step);
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const counter = entry.target;
+        if (entry.isIntersecting) {
+          // Animate it up when visible
+          animateCounter(counter);
+        } else {
+          // Reset to 0 when out of view
+          if (counter.dataset.rafId) {
+            window.cancelAnimationFrame(Number(counter.dataset.rafId));
+          }
+          counter.innerText = "0";
+        }
+      });
+    },
+    { threshold: 0.5 } // Trigger when 50% visible
+  );
+
+  counters.forEach((counter) => {
+    // Hide the original text and store it as data-target, set text to 0 initially
+    counter.setAttribute("data-target", counter.innerText.trim());
+    counter.innerText = "0";
+    observer.observe(counter);
+  });
+});
 </script>
 {% endblock js %}
