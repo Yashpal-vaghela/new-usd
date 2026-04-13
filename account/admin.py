@@ -85,6 +85,20 @@ class SmileDesignLeadAdmin(admin.ModelAdmin):
 class AwardsAdmin(admin.ModelAdmin):
     list_display = ('name', 'year')
     search_fields = ('name', 'year')
+
+class HgalleryAdmin(admin.ModelAdmin):
+    list_display = ("id", "image_preview")
+    readonly_fields = ("image_preview",)
+
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html(
+                '<img src="{}" width="120" style="border-radius:5px;" />',
+                obj.image.url
+            )
+        return "(No Image)"
+
+    image_preview.short_description = "Preview"
     
 
 admin.site.register(Location)
@@ -100,7 +114,7 @@ admin.site.register(Blog, BlogAdmin)
 admin.site.register(Team, TeamAdmin)
 admin.site.register(Testimonials, TestimonialsAdmin)
 admin.site.register(Gallery)
-admin.site.register(Hgallery)
+admin.site.register(Hgallery, HgalleryAdmin)
 admin.site.register(Contact, ContactAdmin)
 admin.site.register(DentistConnect, DentistConnectAdmin)
 admin.site.register(DentistConnectNew, DentistConnectNewAdmin)
