@@ -575,6 +575,26 @@ THEMEFOREST REQUIRED CLASSES
   }
 }
 
+/* newlogo css */
+.new_logo_header {
+  width: 124px;
+  height: 54px;
+  /* border: 1px solid white; */
+
+}
+
+.new_logo_header>a>img {
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  .new_logo_header {
+    width: 100px;
+    height: 50px;
+  }
+}
+
 .logo-header {
   /*--logo for header---*/
   display: table;
@@ -6089,7 +6109,7 @@ input[placeholder],
   /* overflow-y: auto; */
   overflow: hidden;
   /* padding: 20px; */
-  background-image: url("../usdlog.webp");
+  background-image: url("../USD_NEW_LOGO.svg");
   background-size: 600px 180px;
   background-color: rgba(0, 0, 0, 0.4);
   background-blend-mode: multiply;
@@ -6101,6 +6121,7 @@ input[placeholder],
   top: 50%;
   left: 0%;
   z-index: 0;
+  /* border: 1px solid red; */
 }
 
 .single-image {
@@ -6155,8 +6176,8 @@ input[placeholder],
 
 @media (max-width: 576px) {
   .image-container {
-    background-image: url("../usdlog.webp");
-    background-size: 73% auto;
+    background-image: url("../USD_NEW_LOGO.svg");
+    background-size: 75% 100px;
     /* background-size: cover; */
     background-repeat: no-repeat;
     background-position: center center;
@@ -6366,7 +6387,18 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 
 .new-footer-logo {
   margin: 3% auto 5%;
-  width: 30%;
+  width: 174px;
+  /* height: 75px; */
+  height: 65px;
+  /* border: 1px solid honeydew; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.new-footer-logo>img {
+  width: 100%;
+  height: 100%;
 }
 
 .new-footer-social-links {
@@ -6468,9 +6500,9 @@ div:where(.swal2-container) div:where(.swal2-popup) {
     padding: 8px 10px;
   }
 
-  .new-footer-logo {
+  /* .new-footer-logo {
     margin: 2.9% auto 6.5%;
-  }
+  } */
 
   .new-footer-letter-title {
     font-size: 22px;
@@ -6503,7 +6535,7 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 
   .new-footer-logo {
     margin: 3% auto 6%;
-    width: 36%;
+    width: 20%;
   }
 
   .new-footer-content .container {
@@ -6578,7 +6610,7 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   .new-footer-logo {
     /* margin: 3% auto 6%; */
     margin: 4.5% auto 8%;
-    width: 45%;
+    width: 30%;
   }
 
   .new-footer-content .container {
@@ -6669,7 +6701,7 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 
   .new-footer-logo {
     margin: 10% auto 12%;
-    width: 58%;
+    width: 37%;
   }
 
   .new-footer-letter-wrapper .form-control {
@@ -6756,7 +6788,7 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 
   .new-footer-logo {
     margin: 12% auto 12%;
-    width: 60%;
+    width: 55%;
   }
 
   .new-footer-social-links .footer-link {

@@ -8,13 +8,23 @@
             <div class="container clearfix " style="height: 59px;"> 
                 <div class="d-flex align-items-center justify-content-between w-100" style="height: 60px;">
                 <!--Logo section start-->
-                <div class="logo-header ">
+                {% comment %} <div class="logo-header ">
                     <div class="logo-header-inner logo-header-one">
                         <a href="{% url 'home:home' %}">
                             <img class="logo-pic-one" src="{% static 'usd-logo1.svg' %}" alt="Ultimate Smile Design official logo for Premium Aesthetic Dental Solutions">
                         </a>
                     </div>
-                </div>  
+                </div>   
+
+             {% comment %} logo section start {% endcomment %}
+
+             <div class="new_logo_header">
+                    <a href="{% url 'home:home' %}">
+                        <img  src="{% static 'USD_NEW_LOGO.svg' %}" alt="Ultimate Smile Design official logo for Premium Aesthetic Dental Solutions">
+                    </a>
+             </div>
+
+
                 <!--Logo section End-->
 
                 <!-- NAV Toggle Button -->

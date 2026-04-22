@@ -245,11 +245,12 @@
                                 {% csrf_token %}
                                 <div class="new-footer-letter-wrapper">  
                                     <input type="email" name="email" class="form-control" placeholder="Enter Your Email"></input>
-                                    <button type="submit" class="sf-sb-btn-footer btn bat">Submit</button>
+                                    {% comment %} <button type="submit" class="sf-sb-btn-footer btn bat">Submit</button> {% endcomment %}
+                                    <button class="hello btn-3 hover-border-1"><span>Submit</span></button>
                                 </div>
                             </form>
                             <div class="new-footer-logo">
-                                <img src="{% static 'usdlog.webp'%}" class="img-fluid" alt="Ultimate Smile Design official logo for Premium Aesthetic Dental Solutions"></img>
+                                <img src="{% static 'USD_NEW_LOGO.svg'%}" class="img-fluid" alt="Ultimate Smile Design official logo for Premium Aesthetic Dental Solutions"></img>
                             </div>
                             <div class="new-footer-social-links container pb-2">
                                 <ul class="footer-links">
