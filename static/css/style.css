@@ -6386,10 +6386,10 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 }
 
 .new-footer-logo {
-  margin: 3% auto 5%;
+  margin: 3% auto 4%;
   width: 174px;
   /* height: 75px; */
-  height: 65px;
+  /* height: 65px; */
   /* border: 1px solid honeydew; */
   display: flex;
   align-items: center;
@@ -6788,7 +6788,7 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 
   .new-footer-logo {
     margin: 12% auto 12%;
-    width: 55%;
+    width: 40%;
   }
 
   .new-footer-social-links .footer-link {
@@ -6909,12 +6909,16 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 
 .dentists-mobile-name h2 {
   font-size: 24px;
+  margin-bottom: 0px !important;
+  /* border: 1px solid #fff; */
 }
 
 .dentists-mobile-name p {
   color: #fff;
   font-size: 18px;
   font-weight: 600;
+  margin: 0px !important;
+  /* border: 1px solid #fff; */
 }
 
 .new-dentist-contain {
@@ -7104,17 +7108,18 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 
 .dentists-request-section .usd-logo-img {
   background-image: linear-gradient(#000 40%, transparent 31%);
-  padding: 0 20px;
+  /* padding: 0 20px; */
   position: absolute;
   text-align: start;
-  top: -3%;
+  top: -5%;
   z-index: 1;
-  width: 30%;
-  left: 35%;
+  width: 14%;
+  left: 43%;
+  /* border: 1px solid red; */
 }
 
 .dentists-request-section {
-  padding-top: 15px;
+  padding-top: 20px;
 }
 
 .dentists-request-wrapper {
@@ -7350,6 +7355,7 @@ div:where(.swal2-container) div:where(.swal2-popup) {
     font-size: 40px;
   }
 
+
   /* .PatientReviewSwiper .card-header{
     height: 160px;
   } */
@@ -7377,9 +7383,9 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   }
 
   .dentists-request-section .usd-logo-img {
-    width: 33%;
-    left: 34%;
-    top: -2.4%;
+    width: 18.5%;
+    left: 44%;
+    top: -5%;
   }
 
   .dentists-request-wrapper h2 {
@@ -7425,8 +7431,17 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 
   .dentists-mobile-name h2 {
     font-size: 22px;
-    margin-bottom: 3px;
+
   }
+
+  .dentists-mobile-name p {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px !important;
+    line-height: 23px;
+  }
+
 }
 
 @media (max-width: 991px) {
@@ -7452,10 +7467,10 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   }
 
   .dentists-request-section .usd-logo-img {
-    width: 40%;
-    top: -2%;
-    left: 30%;
-    padding: 0px 15px;
+    width: 22%;
+    top: -3.5%;
+    left: 40%;
+    /* padding: 0px 15px; */
   }
 
   .dentists-request-wrapper h2 {
@@ -7521,15 +7536,19 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   /* .new-dentists-subtitle{
     font-size: 15px;
   } */
+  .dentists-request-section {
+    padding-top: 5px;
+  }
+
   .dentists-request-wrapper {
     padding: 40px 20px 30px;
   }
 
   .dentists-request-section .usd-logo-img {
-    width: 45%;
-    top: -1.6%;
-    left: 27%;
-    padding: 0px 10px;
+    width: 26%;
+    top: -2.8%;
+    left: 38%;
+    /* padding: 0px 10px; */
   }
 
   .dentists-request-wrapper h2 {
@@ -7654,10 +7673,10 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   }
 
   .dentists-request-section .usd-logo-img {
-    width: 55%;
-    top: -1.9%;
-    left: 22%;
-    padding: 0px 10px;
+    width: 34%;
+    top: -4.3%;
+    left: 34%;
+    /* padding: 0px 10px; */
   }
 
   .dentists-request-wrapper h2 {
@@ -7751,6 +7770,7 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 
   .dentists-mobile-name.dentists-top h2 {
     font-size: 16px;
+    margin-top: 10px !important;
   }
 
   .dentists-mobile-name p {
@@ -7758,14 +7778,14 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   }
 
   .dentists-request-section .usd-logo-img {
-    top: -1.5%;
+    top: -3.5%;
   }
 
   .dentists-mobile-name.dentists-top {
     left: 0%;
-    width: 94%;
+    width: 92%;
     bottom: 0%;
-    margin: 0% auto 29.5%;
+    margin: 0% auto 25.5%;
   }
 
   .new-dentist-section .row {
