@@ -343,7 +343,7 @@ def smile_design_api(request):
     try:
         add_logo_on_right(
             before_path,
-            os.path.join(settings.MEDIA_ROOT, "logo", "usd-logo.png"),
+            os.path.join(settings.MEDIA_ROOT, "logo", "USD-GOLDEN.png"),
         )
     except Exception as e:
         # If logo fails, still continue with Gemini
