@@ -7327,6 +7327,16 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   /* border: 1px solid #6b6b6b */
 }
 
+.dentist-gallery-item {
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.dentist-gallery-item img {
+  object-fit: contain;
+}
+
 @media(min-width:1300px) {
 
   /* .dentists-mobile-name.dentists-top{
@@ -7785,11 +7795,15 @@ div:where(.swal2-container) div:where(.swal2-popup) {
     left: 0%;
     width: 92%;
     bottom: 0%;
-    margin: 0% auto 25.5%;
+    margin: 0% auto 28.5%;
   }
 
   .new-dentist-section .row {
     --bs-gutter-x: 1.5rem;
+  }
+
+  .dentist-gallery-item img {
+    object-fit: cover;
   }
 
   /* .new-dentist-contain .new-dentists-content-title{

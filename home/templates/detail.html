@@ -222,17 +222,20 @@
       </div>
     </div>
   </section>
+
+
+  {% comment %} hello {% endcomment %}
   <section class="dentists-gallery-section mb-4">
     <div class="container">
       <h3 class="cool font-Glida-display new-dentists-title">Photo Gallery</h3>
-      <div class="swiper gallerySwiper">
+      <div class="swiper gallerySwiper mt-3">
         <div class="swiper-wrapper">
           {% for ie in gallery %}
           <div class="swiper-slide">
-            <a href="#">
+            <a href="{{ie.image.url}}" class="dentist-gallery-item d-block overflow-hidden rounded-4 shadow-sm">
               <img
                 src="{{ie.image.url}}"
-                class="img-fluid"
+                class="img-fluid w-100 h-100"
                 alt="gallery-image"
               />
             </a>
@@ -495,17 +498,17 @@
     const GallerySwiper = new Swiper(".gallerySwiper", {
       loop: true,
       centeredSlides: false,
-      spaceBetween: 40,
+      spaceBetween: 30,
       speed: 800,
       effect: "slide",
       grabCursor: true,
-      slidesPerView: 2,
+      slidesPerView: 3,
       observeParents: true,
       observer: true,
-      autoplay: {
+      /*autoplay: {
         delay: 3000,
         disableOnInteraction: false,
-      },
+      }*/
       navigation: {
         nextEl: ".swiper-button-next",
         prevEl: ".swiper-button-prev",
@@ -516,16 +519,18 @@
       },
       breakpoints: {
         0: {
+          slidesPerView: 1,
+          spaceBetween: 15,
+        },
+        576: {
           slidesPerView: 2,
           spaceBetween: 20,
         },
-        576: {
-          sliderPreview: 2,
-        },
         768: {
-          slidesPerView: 2,
+          slidesPerView: 3,
+          spaceBetween: 30,
         },
-    },
+      },
     });
   });
 </script>
@@ -576,7 +581,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelector(".swiper-button-next")?.style.setProperty("display",showControls1 ? "flex" : "none");
   document.querySelector(".swiper-button-prev")?.style.setProperty("display",showControls1 ? "flex" : "none");
 
-  const ReviewSwiper = new Swiper(".PatientReviewSwiper", {
+   const ReviewSwiper = new Swiper(".PatientReviewSwiper", {
     loop: showControls1,
     spaceBetween: 30,
     speed: 800,
@@ -593,7 +598,7 @@ document.addEventListener("DOMContentLoaded", function () {
       el: ".swiper-pagination",
       dynamicBullets: true,
     } : false
-  });
+  }); 
 
 });
 </script>

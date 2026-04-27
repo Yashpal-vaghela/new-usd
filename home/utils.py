@@ -10,10 +10,13 @@ def send_mail(to_email, subject, context_dict):
 
     email_body = "\n".join(lines)
 
+    if isinstance(to_email, str):
+        to_email = [to_email]
+
     email_msg = EmailMessage(
         subject=subject,
         body=email_body,
         from_email=settings.EMAIL_HOST_USER,
-        to=[to_email],
+        to=to_email,
     )
     email_msg.send(fail_silently=False)

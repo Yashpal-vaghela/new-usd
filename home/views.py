@@ -51,7 +51,7 @@ def receive_location(request):
 
 def send_contact_email_async(context_dict):
     send_mail(
-        to_email="vaghela9632@gmail.com",  # company email
+        to_email=["vaghela9632@gmail.com","vyashpalsinh9@gmail.com"],  # company email
         subject=f"New Contact Form Submission from {context_dict['Name']}",
         context_dict=context_dict
     )
@@ -533,10 +533,10 @@ def find_dentist_d(request, pk):
         else:
             # No dentists in this city → fallback to main certified dentists page
             return redirect("/certified-dentists/", permanent=True)
-    all_ids = list(Gallery.objects.values_list("id",flat=True))
+    all_ids = list(Hgallery.objects.values_list("id",flat=True))
 
-    random_ids = random.sample(all_ids,min(5,len(all_ids)))
-    gallery = Gallery.objects.filter(id__in=random_ids)
+    random_ids = random.sample(all_ids,min(9,len(all_ids)))
+    gallery = Hgallery.objects.filter(id__in=random_ids)
     reviews = data.reviews.all().order_by('-created_at')
     query = request.GET.get("q", '').strip()
 
@@ -837,11 +837,12 @@ def blogsd(request, pk):
             messages.error(request, "Your query is not sent! Try again.")
             return redirect(request.META.get('HTTP_REFERER', 'home:blogs'))
         
-
+    ids = list(BeforeAfter.objects.values_list('id', flat=True))
+    random_ids = random.sample(ids, min(len(ids), 6))
     blog = Blog.objects.get(slug=pk)
     data2 = Blog.objects.all().order_by('-id')
     related_blog = Blog.objects.all().order_by('-id')[1:4]
-    before_after_images = BeforeAfter.objects.all().order_by('-id')
+    before_after_images = BeforeAfter.objects.filter(id__in=random_ids)
     unique_tags = blog.tag.all()
     unique_categories = blog.category.all()
 
