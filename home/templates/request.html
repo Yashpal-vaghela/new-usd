@@ -39,8 +39,8 @@
             <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool">Consult with Expert Dentist Today</h1>
         </div>
     </section>
-  <section class="request-section d-flex justify-content-center align-items-center"  >
-    <div class="container">
+  <section class="request-section d-flex justify-content-center align-items-center mt-5"  >
+    <div class="container position-relative">
       <div class="request-img-section d-flex justify-content-center mx-auto">
         {% comment %} <a href="/" style="display:contents">
           <img class="img-fluid usd-logo-img" src="{% static 'usdlog.png' %}" alt="logo-img"/>
@@ -48,9 +48,11 @@
         {% comment %} <a href="/"><i class="fa fa-solid fa-xmark cnacel_btn" ></i></a> {% endcomment %}
         
         <div class="request-content text-center d-block">
-          <img class="img-fluid usd-2-logo" src="{% static 'usdlog.webp' %}" alt="Ultimate Smile Design official logo for Premium Aesthetic Dental Solutions"/>
-          {% comment %} <h2 class="pt-4"></h2> {% endcomment %}
-          <p class="mb-0 cool">Please enter the details below for a call back.</p>
+          <div class="logo_main">
+            <img class="img-fluid" src="{% static 'USD_NEW_LOGO.svg' %}" alt="Ultimate Smile Design official logo for Premium Aesthetic Dental Solutions"/>
+          </div>
+          
+          <p class="mb-0 cool mt-4">Please enter the details below for a call back.</p>
 
           <form method="post" class="aon-login-form login-form form ">
             {% csrf_token %}
