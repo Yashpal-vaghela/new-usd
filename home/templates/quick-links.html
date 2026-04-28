@@ -31,15 +31,17 @@
         <section class="quicks-links-section">
             <div class="container">
                 <div class="quick-link-wrapper">
-                    <img src="{% static 'usdlog.png' %}" class="img-fluid usd-logo-img" alt="usd-logo-img" />
-                    <h2 class="text-center text-white mb-md-5 pb-2 pb-md-0 mb-4">Explore USD’s Digital Presence</h2>
+                    <a href="{% url 'home:home' %}">
+                        <img src="{% static 'USD_NEW_LOGO.svg' %}" class="img-fluid usd-logo-img" alt="usd-logo-img" />
+                    </a>
+                    <h2 class="text-center text-white mb-md-5 pb-2 mt-3 pb-md-0 mb-4">Explore USD’s Digital Presence</h2>
                       <div class="social-media-wrapper my-4 my-sm-3">
                         <h2 class="text-center cool mb-4">Social Media</h2>
                         <div class="social-media-content row w-50  mx-auto text-center justify-content-between align-items-center">
                             <div class="col-lg-4 col-sm-4 col-4">
                                 <a class="instagram-link" href="https://www.instagram.com/ultimate_smile_design/">
                                     <img src="{% static 'Instagram-icon.svg' %}" class="svg-icon img-fluid" width="50" height='50' />
-                                    <p class="mb-0">Instagram 
+                                    <p class="mb-0"><span data-hover="Instagram">Instagram </span>
                                         <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clip-path="url(#clip0_4008_26528)">
                                             <path d="M14.9699 0H2.8793C2.31055 0 1.84805 0.4625 1.84805 1.03125C1.84805 1.6 2.31055 2.0625 2.8793 2.0625H12.4762L0.304297 14.2375C-0.0988281 14.6406 -0.0988281 15.2938 0.304297 15.6969C0.707422 16.1 1.36055 16.1 1.76367 15.6969L13.9355 3.52188V13.1188C13.9355 13.6875 14.398 14.15 14.9668 14.15C15.5355 14.15 15.998 13.6875 15.998 13.1188V1.03125C16.0012 0.4625 15.5387 0 14.9699 0Z" fill="white"/>
@@ -56,7 +58,7 @@
                             <div class="col-lg-4 col-sm-4 col-4">
                                 <a class="facebook-link" href="https://www.facebook.com/ultimate.smile.designing">
                                     <img src="{% static 'facebook-icon.svg' %}" class="svg-icon img-fluid" width="50" height="50" />
-                                    <p class="mb-0">Facebook 
+                                    <p class="mb-0"><span data-hover="Facebook">Facebook </span>
                                         <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clip-path="url(#clip0_4008_26528)">
                                             <path d="M14.9699 0H2.8793C2.31055 0 1.84805 0.4625 1.84805 1.03125C1.84805 1.6 2.31055 2.0625 2.8793 2.0625H12.4762L0.304297 14.2375C-0.0988281 14.6406 -0.0988281 15.2938 0.304297 15.6969C0.707422 16.1 1.36055 16.1 1.76367 15.6969L13.9355 3.52188V13.1188C13.9355 13.6875 14.398 14.15 14.9668 14.15C15.5355 14.15 15.998 13.6875 15.998 13.1188V1.03125C16.0012 0.4625 15.5387 0 14.9699 0Z" fill="white"/>
@@ -73,7 +75,7 @@
                             <div class="col-lg-4 col-sm-4 col-4">
                                 <a class="linkedin-link" href="https://www.linkedin.com/authwall?trk=bf&trkInfo=AQE7tqHufhMVggAAAZrzuNEYw_YFQtJ28Wmw1G2p68fTrtbp4nYsP1bLq3w5WPD7HTiqRXMEK39Y-yj_6C4aR3ck6SeZ4NtlSCCNQqCBZLUyqjTa27sgCifSPmmmJQG1G6k6jHQ=&original_referer=&sessionRedirect=https%3A%2F%2Fwww.linkedin.com%2Fcompany%2Fultimate-smile-designing-by-ade">
                                     <img src="{% static 'linkedin-icon.svg' %}" class="svg-icon img-fluid" width="50" height="50" />
-                                    <p class="mb-0">Linked In
+                                    <p class="mb-0"><span data-hover="Linked In">Linked In </span>
                                         <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clip-path="url(#clip0_4008_26528)">
                                             <path d="M14.9699 0H2.8793C2.31055 0 1.84805 0.4625 1.84805 1.03125C1.84805 1.6 2.31055 2.0625 2.8793 2.0625H12.4762L0.304297 14.2375C-0.0988281 14.6406 -0.0988281 15.2938 0.304297 15.6969C0.707422 16.1 1.36055 16.1 1.76367 15.6969L13.9355 3.52188V13.1188C13.9355 13.6875 14.398 14.15 14.9668 14.15C15.5355 14.15 15.998 13.6875 15.998 13.1188V1.03125C16.0012 0.4625 15.5387 0 14.9699 0Z" fill="white"/>
@@ -90,7 +92,7 @@
                             <div class="col-lg-4 col-sm-4 col-4">
                                 <a class="whatsapp-link" href="https://wa.link/3viyk0">
                                   <img src="{% static 'whatsapp-icon.svg' %}" class="svg-icon img-fluid" width="50" height="50" />
-                                    <p class="mb-0">Whatsapp 
+                                    <p class="mb-0"><span data-hover="Whatsapp">Whatsapp </span>
                                         <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clip-path="url(#clip0_4008_26528)">
                                             <path d="M14.9699 0H2.8793C2.31055 0 1.84805 0.4625 1.84805 1.03125C1.84805 1.6 2.31055 2.0625 2.8793 2.0625H12.4762L0.304297 14.2375C-0.0988281 14.6406 -0.0988281 15.2938 0.304297 15.6969C0.707422 16.1 1.36055 16.1 1.76367 15.6969L13.9355 3.52188V13.1188C13.9355 13.6875 14.398 14.15 14.9668 14.15C15.5355 14.15 15.998 13.6875 15.998 13.1188V1.03125C16.0012 0.4625 15.5387 0 14.9699 0Z" fill="white"/>
@@ -107,7 +109,7 @@
                             <div class="col-lg-4 col-sm-4 col-4">
                                 <a class="phone-link" href="tel:+918469888877">
                                     <img src="{% static 'phone-icon.svg' %}" class="svg-icon img-fluid" width="50" height="50" />
-                                    <p class="mb-0">Phone 
+                                    <p class="mb-0"><span data-hover="Phone">Phone </span>
                                         <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clip-path="url(#clip0_4008_26528)">
                                             <path d="M14.9699 0H2.8793C2.31055 0 1.84805 0.4625 1.84805 1.03125C1.84805 1.6 2.31055 2.0625 2.8793 2.0625H12.4762L0.304297 14.2375C-0.0988281 14.6406 -0.0988281 15.2938 0.304297 15.6969C0.707422 16.1 1.36055 16.1 1.76367 15.6969L13.9355 3.52188V13.1188C13.9355 13.6875 14.398 14.15 14.9668 14.15C15.5355 14.15 15.998 13.6875 15.998 13.1188V1.03125C16.0012 0.4625 15.5387 0 14.9699 0Z" fill="white"/>
@@ -124,7 +126,7 @@
                             <div class="col-lg-4 col-sm-4 col-4">
                                 <a class="email-link" href="mailto:ultimatesmiledesigning@gmail.com">
                                     <img src="{% static 'email-icon.svg' %}" class="svg-icon img-fluid" width="50" height="50" />
-                                    <p class="mb-0">Email 
+                                    <p class="mb-0"><span data-hover="Email">Email </span>
                                         <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clip-path="url(#clip0_4008_26528)">
                                             <path d="M14.9699 0H2.8793C2.31055 0 1.84805 0.4625 1.84805 1.03125C1.84805 1.6 2.31055 2.0625 2.8793 2.0625H12.4762L0.304297 14.2375C-0.0988281 14.6406 -0.0988281 15.2938 0.304297 15.6969C0.707422 16.1 1.36055 16.1 1.76367 15.6969L13.9355 3.52188V13.1188C13.9355 13.6875 14.398 14.15 14.9668 14.15C15.5355 14.15 15.998 13.6875 15.998 13.1188V1.03125C16.0012 0.4625 15.5387 0 14.9699 0Z" fill="white"/>

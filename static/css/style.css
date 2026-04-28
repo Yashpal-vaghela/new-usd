@@ -7851,14 +7851,14 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 }
 
 .quick-link-wrapper .usd-logo-img {
-  background-image: linear-gradient(#000 40%, transparent 31%);
+  background-image: linear-gradient(#000 40%);
   padding: 0 45px;
   position: absolute;
   text-align: start;
-  top: -4.4%;
+  top: -9.4%;
   z-index: 1;
-  width: 40%;
-  left: 30%;
+  width: 25%;
+  left: 38%;
 }
 
 .quick-link-wrapper h2 {
@@ -7893,15 +7893,14 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 }
 
 @media (min-width: 1400px) {
-  .quicks-links-wrapper .usd-logo-img {
-    top: -4.4%;
+  .quick-link-wrapper .usd-logo-img {
+    top: -9.4%;
   }
 }
 
-@media (max-width: 1200px) {
-  .quicks-links-wrapper .usd-logo-img {
-    background-image: linear-gradient(#000 42%, transparent 31%);
-    top: -2.4%;
+@media (max-width: 1180px) {
+  .quick-link-wrapper .usd-logo-img {
+    top: -4.4%;
   }
 }
 
@@ -7917,9 +7916,9 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   }
 
   .quick-link-wrapper .usd-logo-img {
-    width: 45%;
-    left: 28.5%;
-    top: -3.4%;
+    width: 30%;
+    left: 38%;
+    top: -5.4%;
   }
 
   .quick-link-wrapper h2 {
@@ -7933,9 +7932,9 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   }
 
   .quick-link-wrapper .usd-logo-img {
-    width: 60%;
-    left: 20%;
-    top: -3.8%;
+    width: 40%;
+    left: 30%;
+    top: -5.8%;
   }
 
   .quick-link-wrapper h2 {
@@ -7949,9 +7948,10 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   }
 
   .quick-link-wrapper .usd-logo-img {
-    width: 70%;
-    left: 14%;
-    top: -2.8%;
+    width: 40%;
+    left: 30%;
+    top: -4.8%;
+    padding: 0 35px;
   }
 
   .quick-link-wrapper h2 {
@@ -7965,10 +7965,10 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   }
 
   .quick-link-wrapper .usd-logo-img {
-    width: 75%;
-    left: 12%;
-    padding: 0px 30px;
-    top: -3.8%;
+    width: 50%;
+    left: 25%;
+    top: -5.8%;
+    padding: 0 20px;
   }
 
   .quick-link-wrapper h2 {
@@ -7984,6 +7984,14 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   .quick-link-wrapper .social-media-content p svg {
     padding: 2px;
     margin: 0px 3px;
+  }
+}
+
+@media (max-width: 320px) {
+  .quick-link-wrapper .usd-logo-img {
+    width: 50%;
+    left: 25%;
+    top: -3.4%;
   }
 }
 
@@ -8153,15 +8161,16 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   margin-bottom: 12px;
 }
 
-.social-media-content a p {
+.social-media-content a [data-hover] {
   color: #fff;
   transition: transform 0.3s ease;
   transform-origin: 50% 0;
   transform-style: preserve-3d;
   position: relative;
+  display: inline-block;
 }
 
-.social-media-content a p::before {
+.social-media-content a [data-hover]::before {
   content: attr(data-hover);
   position: absolute;
   top: 100%;
@@ -8173,15 +8182,16 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   transform: rotateX(-90deg);
   transform-origin: 50% 0;
   transition: color 0.5s;
+  white-space: nowrap;
 }
 
-.social-media-content a:hover p,
-.social-media-content a:focus p {
+.social-media-content a:hover [data-hover],
+.social-media-content a:focus [data-hover] {
   transform: rotateX(90deg) translateY(-22px);
 }
 
-.social-media-content a:hover p::before,
-.social-media-content a:focus p::before {
+.social-media-content a:hover [data-hover]::before,
+.social-media-content a:focus [data-hover]::before {
   color: #fff;
 }
 
