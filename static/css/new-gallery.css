@@ -1,0 +1,255 @@
+.gallery-perspective {
+  background-image: url("../USD_NEW_LOGO.svg");
+  background-size: 500px 160px;
+  background-color: rgba(0, 0, 0, 0.6);
+  background-blend-mode: multiply;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  overflow: hidden;
+  position: relative;
+  z-index: 0;
+}
+
+/* .glow-sphere {
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 0;
+} */
+
+.gallery-sticky-wrapper {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
+  background: transparent;
+  isolation: isolate;
+  z-index: 10;
+}
+
+.gallery-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  z-index: 5;
+}
+
+.gallery-item {
+  position: absolute;
+  width: 450px;
+  height: auto;
+  will-change: transform, opacity, filter;
+  z-index: 1;
+  transform-origin: center center;
+  cursor: pointer;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+  object-fit: cover;
+  border: 1px solid rgba(212, 175, 55, 0.6);
+  transition: border 0.3s ease;
+  cursor: pointer;
+}
+
+/* .gallery-item:hover img {
+  border: 1px solid rgba(212, 175, 55, 0.6);
+} */
+
+.item-1 {
+  top: 8%;
+  left: -22%;
+  z-index: 10;
+}
+
+.item-2 {
+  top: 12%;
+  left: 105%;
+  z-index: 8;
+}
+
+.item-3 {
+  top: -37%;
+  left: 17%;
+  z-index: 7;
+}
+
+.item-4 {
+  top: 20%;
+  left: 67%;
+  z-index: 99;
+}
+
+.item-5 {
+  top: 0%;
+  left: -19%;
+}
+
+.item-6 {
+  top: -12%;
+  left: 106%;
+}
+
+.item-7 {
+  top: 83%;
+  left: 100%;
+}
+
+.item-8 {
+  top: 85%;
+  left: 35%;
+}
+
+.item-9 {
+  top: 10%;
+  left: -20%;
+}
+
+.item-10 {
+  top: -26%;
+  left: 103%;
+}
+
+.item-11 {
+  top: -60%;
+  left: 40%;
+}
+
+.item-12 {
+  top: 81%;
+  left: 115%;
+}
+
+.item-13 {
+  top: 1%;
+  left: -24%;
+}
+
+.item-14 {
+  top: 116%;
+  left: 43%;
+}
+
+.item-15 {
+  top: -15%;
+  left: 115%;
+}
+
+.gallery-overlay {
+  position: absolute;
+  inset: 0;
+  /* background: radial-gradient(circle, transparent 30%, #000 100%); */
+  z-index: 2;
+  pointer-events: none;
+}
+
+@media (max-width: 1285px) {
+  .gallery-item {
+    width: 300px;
+  }
+  .gallery-perspective {
+    background-image: url("../USD_NEW_LOGO.svg");
+    background-size: 350px 100px;
+  }
+}
+@media (max-width: 768px) {
+  .gallery-perspective {
+    background-size: 300px 90px;
+  }
+  .gallery-item {
+    width: 200px !important;
+  }
+}
+@media (max-width: 576px) {
+  .gallery-item {
+    width: 230px !important;
+  }
+  .item-1 {
+    top: 11%;
+    left: -44%;
+  }
+
+  .item-2 {
+    top: 5%;
+    left: 114%;
+  }
+
+  .item-3 {
+    top: -37%;
+    left: 17%;
+    z-index: 7;
+  }
+
+  .item-4 {
+    top: 70%;
+    left: 22%;
+  }
+
+  .item-5 {
+    top: -6%;
+    left: -65%;
+  }
+
+  .item-6 {
+    top: -12%;
+    left: 106%;
+  }
+
+  .item-7 {
+    top: 76%;
+    left: 96%;
+  }
+
+  .item-8 {
+    top: 67%;
+    left: -53%;
+  }
+
+  .item-9 {
+    top: -41%;
+    left: -29%;
+  }
+
+  .item-10 {
+    top: -45%;
+    left: 73%;
+  }
+
+  .item-11 {
+    top: -45%;
+    left: 22%;
+  }
+
+  .item-12 {
+    top: 69%;
+    left: 83%;
+  }
+
+  .item-13 {
+    top: -23%;
+    left: -30%;
+  }
+
+  .item-14 {
+    top: 86%;
+    left: -37%;
+  }
+
+  .item-15 {
+    top: -41%;
+    left: 95%;
+  }
+}

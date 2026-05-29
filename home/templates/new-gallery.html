@@ -1,0 +1,246 @@
+{% extends 'base.html' %} {% load static %} {% block seo %}
+<title>Smile Design Before and After | Real Smile Makeover Results</title>
+<meta
+  name="description"
+  content="Explore real smile design before and after results. See how our expertly crafted modern smile makeover treatment creates confident smiles on our patients."
+/>
+<link rel="canonical" href="https://ultimatesmiledesign.com/gallery/" />
+<meta property="og:image" content="{% static 'feature-usd.webp' %}" />
+<meta
+  property="og:image:secure_url"
+  content="{% static 'feature-usd.webp' %}"
+/>
+<meta property="og:image:type" content="image/webp" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="en_IN" />
+<meta property="og:type" content="website" />
+<meta
+  property="og:title"
+  content="Smile Design Before and After | Real Smile Makeover Results"
+/>
+<meta
+  property="og:description"
+  content="Explore real smile design before and after results. See how our expertly crafted modern smile makeover treatment creates confident smiles on our patients."
+/>
+<meta property="og:url" content="https://ultimatesmiledesign.com/gallery/" />
+{% endblock seo %} {% block header %} {% endblock header %} {% block css %}
+<link rel="stylesheet" href="{% static 'css/new-gallery.css' %}" />
+{% endblock css %} {% block body %} {% load static %}
+
+<!-- Content -->
+<div class="page-content">
+  <section class="breadcrumbs-section">
+    <div class="container">
+      <div class="breadcrumbs-path">
+        <a href="{% url 'home:home' %}"> Home </a>
+        <i class="fa fa-solid fa-angles-right"></i> Gallery
+      </div>
+      <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool">
+        Gallery
+      </h1>
+    </div>
+  </section>
+  <!-- Premium Cinematic Gallery Section -->
+  <section class="gallery-perspective">
+    <div class="gallery-sticky-wrapper">
+      <div class="gallery-overlay"></div>
+      <div class="gallery-container" id="galleryContainer">
+        {% comment %} {% for i in img %}
+        <div class="gallery-item item-{{ forloop.counter }}">
+          <img src="{{ i.image.url }}" alt="before-after-smile-design-img" />
+        </div>
+        {% endfor %} {% endcomment %}
+        <!-- 15 Images with varying depths and positions -->
+        <div class="gallery-item item-1">
+          <img
+            src="{% static 'gallery_image/ba.webp' %}"
+            alt="Smile Makeover"
+          />
+        </div>
+
+        <div class="gallery-item item-2">
+          <img
+            src="{% static 'gallery_image/ba-1.webp' %}"
+            alt="Smile Makeover"
+          />
+        </div>
+        <div class="gallery-item item-3">
+          <img
+            src="{% static 'gallery_image/ba-2.webp' %}"
+            alt="Smile Makeover"
+          />
+        </div>
+        <div class="gallery-item item-4">
+          <img
+            src="{% static 'gallery_image/ba-3.webp' %}"
+            alt="Smile Makeover"
+          />
+        </div>
+        <div class="gallery-item item-5">
+          <img
+            src="{% static 'gallery_image/ba-4.webp' %}"
+            alt="Smile Makeover"
+          />
+        </div>
+        <div class="gallery-item item-6">
+          <img
+            src="{% static 'gallery_image/ba-5.webp' %}"
+            alt="Smile Makeover"
+          />
+        </div>
+        <div class="gallery-item item-7">
+          <img
+            src="{% static 'gallery_image/ba-6.webp' %}"
+            alt="Smile Makeover"
+          />
+        </div>
+        <div class="gallery-item item-8">
+          <img
+            src="{% static 'gallery_image/ba-7.webp' %}"
+            alt="Smile Makeover"
+          />
+        </div>
+        <div class="gallery-item item-9">
+          <img
+            src="{% static 'gallery_image/ba-8.webp' %}"
+            alt="Smile Makeover"
+          />
+        </div>
+        <div class="gallery-item item-10">
+          <img
+            src="{% static 'gallery_image/ba-9.webp' %}"
+            alt="Smile Makeover"
+          />
+        </div>
+        <div class="gallery-item item-11">
+          <img
+            src="{% static 'gallery_image/ba-11.webp' %}"
+            alt="Smile Makeover"
+          />
+        </div>
+        <div class="gallery-item item-12">
+          <img
+            src="{% static 'gallery_image/ba-12.webp' %}"
+            alt="Smile Makeover"
+          />
+        </div>
+        <div class="gallery-item item-13">
+          <img
+            src="{% static 'gallery_image/ba-13.webp' %}"
+            alt="Smile Makeover"
+          />
+        </div>
+        <div class="gallery-item item-14">
+          <img
+            src="{% static 'gallery_image/ba-14.webp' %}"
+            alt="Smile Makeover"
+          />
+        </div>
+        <div class="gallery-item item-15">
+          <img
+            src="{% static 'gallery_image/ba-10.webp' %}"
+            alt="Smile Makeover"
+          />
+        </div>
+
+        <!-- Subtle Golden Glow Background Elements -->
+        {% comment %}
+        <div class="glow-sphere"></div>
+        {% endcomment %}
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Content END-->
+{% endblock body %} {% block js %}
+<!-- GSAP & ScrollTrigger CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    gsap.registerPlugin(ScrollTrigger);
+    ScrollTrigger.config({
+      ignoreMobileResize: true,
+    });
+
+    ScrollTrigger.normalizeScroll(true);
+
+    const items = document.querySelectorAll(".gallery-item");
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".gallery-perspective",
+        start: "top +80px",
+        end: "+=4000",
+        scrub: 1.5,
+        pin: true,
+        anticipatePin: 1,
+      },
+    });
+
+    items.forEach((item, index) => {
+      const zInitial = -2000 - index * 500;
+      const zFinal = 2000;
+      gsap.set(item, {
+        z: zInitial,
+        opacity: 1,
+        scale: 2,
+      });
+
+      tl.to(
+        item,
+        {
+          z: zFinal,
+          opacity: 1,
+          ease: "power1.inOut",
+        },
+        index * 0.12,
+      ).to(
+        item,
+        {
+          opacity: 0,
+          duration: 0.3,
+          ease: "power2.in",
+        },
+        index * 0.12 + 0.6,
+      );
+    });
+
+    items.forEach((item) => {
+      gsap.to(item, {
+       // y: "random(-30, 30)",
+       // x: "random(-30, 30)",
+        //rotation: "random(-4, 4)",
+        duration: "random(3, 5)",
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+    });
+   /* if (window.innerWidth > 1024) {
+      window.addEventListener("mousemove", (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 10;
+        const y = (e.clientY / window.innerHeight - 0.5) * 10;
+        gsap.to(".gallery-container", {
+          rotationY: x,
+          rotationX: -y,
+          duration: 5,
+          ease: "power2.out",
+        });
+      });
+    } */
+  });
+</script>
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "url": "https://ultimatesmiledesign.com/gallery/",
+    "name": "Before & After Transformation Gallery | Ultimate Smile Design",
+    "description": "Explore our before & after smile design photo gallery showcasing stunning smile makeovers that highlight our commitment to aesthetic excellence."
+  }
+</script>
+{% endblock js %}
