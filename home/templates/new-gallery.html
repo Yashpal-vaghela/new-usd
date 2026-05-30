@@ -160,7 +160,25 @@
     <img src="" alt="Gallery Preview" id="imgLightboxImg" />
   </div>
 </div>
-
+<svg
+            id="headlines"
+            fill="none"
+            stroke="#fff"
+            stroke-width="3"
+            viewBox="0 0 586 150"
+        >
+            <g id="txt2">
+            <path
+                d="M210.7,1v16.2h-54.5v27h48.9v15.3h-48.9v27.3h56.2v16.2H139V1H210.7z"
+            />
+            <path
+                d="M311,1h17.2v102.1h-18.7l-57.8-74.5v74.5h-17.2V1h17.2L311,77.2V1z"
+            />
+            <path
+                d="M433.8,14.4c9.8,8.9,14.7,21.3,14.7,37.2c0,15.9-4.8,28.4-14.3,37.7c-9.5,9.2-24.1,13.9-43.8,13.9h-33.9V1h35 C409.9,1,423.9,5.5,433.8,14.4z M431.1,52c0-23.4-13.4-35-40.1-35h-17.2v69.9h19.1c12.4,0,21.8-2.9,28.4-8.8 C427.9,72.1,431.1,63.4,431.1,52z"
+            />
+            </g>
+        </svg>
 <!-- Content END-->
 {% endblock body %} {% block js %}
 <!-- GSAP & ScrollTrigger CDN -->
@@ -172,13 +190,14 @@
   var _lightboxScrollY = 0;
 
   function openLightbox(src, alt) {
-    _lightboxScrollY = window.scrollY || document.documentElement.scrollTop;
-    // Lock scroll without layout jump
-    document.body.style.position  = 'fixed';
-    document.body.style.top       = '-' + _lightboxScrollY + 'px';
-    document.body.style.left      = '0';
-    document.body.style.right     = '0';
-    document.body.style.overflowY = 'scroll';
+    // Prevent layout shifting by checking scrollbar width
+    var scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.paddingRight = scrollbarWidth + 'px';
+
+    // Lock scroll without changing the window scroll position
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+
     document.getElementById('imgLightboxImg').src = src;
     document.getElementById('imgLightboxImg').alt = alt || '';
     document.getElementById('imgLightbox').classList.add('active');
@@ -188,13 +207,11 @@
   function closeLightbox() {
     document.getElementById('imgLightbox').classList.remove('active');
     document.getElementById('imgLightboxImg').src = '';
-    document.body.style.position  = '';
-    document.body.style.top       = '';
-    document.body.style.left      = '';
-    document.body.style.right     = '';
-    document.body.style.overflowY = '';
-    // Restore exact scroll — no jump, no reverse scroll
-    window.scrollTo({ top: _lightboxScrollY, behavior: 'instant' });
+
+    // Unlock scroll
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
   }
 
   // Close handlers (delegated so they work regardless of DOM timing)
@@ -261,30 +278,37 @@
     });
 
     // ── Click Handling via galleryContainer ───────────────────────
-    // Each item enters at timeline position: index * 0.12
-    // Total timeline duration ≈ items.length * 0.12 + 0.9
-    // On click, use tl.progress() to determine which item is currently front.
-    var totalItems = items.length;
+    // Open the exact image that the user clicked, solving 3D perspective hit-test limitations
+    document.getElementById('galleryContainer').addEventListener('click', function(e) {
+      var clientX = e.clientX;
+      var clientY = e.clientY;
+      var matchedItems = [];
 
-    function getItemAtProgress() {
-      var prog = tl.progress(); // 0 to 1
-      var totalDur = tl.duration();
-      var currentTime = prog * totalDur;
-      // Find item whose center time is closest to currentTime
-      var bestIdx = 0;
-      var bestDist = Infinity;
-      for (var i = 0; i < totalItems; i++) {
-        var centerTime = i * 0.12 + 0.3; // midpoint of item's animation
-        var dist = Math.abs(currentTime - centerTime);
-        if (dist < bestDist) { bestDist = dist; bestIdx = i; }
+      items.forEach(function(item) {
+        // Only match items that are currently visible, not faded out, and not behind the camera (z < 1100)
+        var opacity = parseFloat(window.getComputedStyle(item).opacity) || 0;
+        var zVal = parseFloat(gsap.getProperty(item, "z")) || 0;
+        if (opacity > 0.1 && zVal < 1100) {
+          var rect = item.getBoundingClientRect();
+          if (clientX >= rect.left && clientX <= rect.right &&
+              clientY >= rect.top && clientY <= rect.bottom) {
+            matchedItems.push(item);
+          }
+        }
+      });
+
+      if (matchedItems.length > 0) {
+        // Sort items by their current Z-depth in GSAP (highest/closest first)
+        matchedItems.sort(function(a, b) {
+          var zA = parseFloat(gsap.getProperty(a, "z")) || 0;
+          var zB = parseFloat(gsap.getProperty(b, "z")) || 0;
+          return zB - zA;
+        });
+
+        var frontItem = matchedItems[0];
+        var img = frontItem.querySelector('img');
+        if (img) openLightbox(img.src, img.alt);
       }
-      return items[bestIdx];
-    }
-
-    document.getElementById('galleryContainer').addEventListener('click', function() {
-      var frontItem = getItemAtProgress();
-      var img = frontItem ? frontItem.querySelector('img') : null;
-      if (img) openLightbox(img.src, img.alt);
     });
   });
 </script>

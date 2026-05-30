@@ -161,23 +161,28 @@
   .gallery-item {
     width: 300px;
   }
+
   .gallery-perspective {
     background-image: url("../USD_NEW_LOGO.svg");
     background-size: 350px 100px;
   }
 }
+
 @media (max-width: 768px) {
   .gallery-perspective {
     background-size: 300px 90px;
   }
+
   .gallery-item {
     width: 200px !important;
   }
 }
+
 @media (max-width: 576px) {
   .gallery-item {
     width: 230px !important;
   }
+
   .item-1 {
     top: 11%;
     left: -44%;
