@@ -153,6 +153,14 @@
   </section>
 </div>
 
+<!-- Image Lightbox Popup -->
+<div class="img-lightbox-overlay" id="imgLightbox" role="dialog" aria-modal="true" aria-label="Image Preview">
+  <button class="img-lightbox-close" id="imgLightboxClose" aria-label="Close">&times;</button>
+  <div class="img-lightbox-inner">
+    <img src="" alt="Gallery Preview" id="imgLightboxImg" />
+  </div>
+</div>
+
 <!-- Content END-->
 {% endblock body %} {% block js %}
 <!-- GSAP & ScrollTrigger CDN -->
@@ -160,13 +168,48 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
 <script>
+  // ── Lightbox functions (global scope) ──────────────────────────────
+  var _lightboxScrollY = 0;
+
+  function openLightbox(src, alt) {
+    _lightboxScrollY = window.scrollY || document.documentElement.scrollTop;
+    // Lock scroll without layout jump
+    document.body.style.position  = 'fixed';
+    document.body.style.top       = '-' + _lightboxScrollY + 'px';
+    document.body.style.left      = '0';
+    document.body.style.right     = '0';
+    document.body.style.overflowY = 'scroll';
+    document.getElementById('imgLightboxImg').src = src;
+    document.getElementById('imgLightboxImg').alt = alt || '';
+    document.getElementById('imgLightbox').classList.add('active');
+    document.getElementById('imgLightboxClose').focus();
+  }
+
+  function closeLightbox() {
+    document.getElementById('imgLightbox').classList.remove('active');
+    document.getElementById('imgLightboxImg').src = '';
+    document.body.style.position  = '';
+    document.body.style.top       = '';
+    document.body.style.left      = '';
+    document.body.style.right     = '';
+    document.body.style.overflowY = '';
+    // Restore exact scroll — no jump, no reverse scroll
+    window.scrollTo({ top: _lightboxScrollY, behavior: 'instant' });
+  }
+
+  // Close handlers (delegated so they work regardless of DOM timing)
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('#imgLightboxClose')) { closeLightbox(); return; }
+    if (e.target.id === 'imgLightbox')          { closeLightbox(); }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && document.getElementById('imgLightbox').classList.contains('active'))
+      closeLightbox();
+  });
+
+  // ── GSAP Gallery ───────────────────────────────────────────────────
   document.addEventListener("DOMContentLoaded", function () {
     gsap.registerPlugin(ScrollTrigger);
-    ScrollTrigger.config({
-      ignoreMobileResize: true,
-    });
-
-    ScrollTrigger.normalizeScroll(true);
 
     const items = document.querySelectorAll(".gallery-item");
     const tl = gsap.timeline({
@@ -210,27 +253,39 @@
 
     items.forEach((item) => {
       gsap.to(item, {
-       // y: "random(-30, 30)",
-       // x: "random(-30, 30)",
-        //rotation: "random(-4, 4)",
         duration: "random(3, 5)",
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut",
       });
     });
-   /* if (window.innerWidth > 1024) {
-      window.addEventListener("mousemove", (e) => {
-        const x = (e.clientX / window.innerWidth - 0.5) * 10;
-        const y = (e.clientY / window.innerHeight - 0.5) * 10;
-        gsap.to(".gallery-container", {
-          rotationY: x,
-          rotationX: -y,
-          duration: 5,
-          ease: "power2.out",
-        });
-      });
-    } */
+
+    // ── Click Handling via galleryContainer ───────────────────────
+    // Each item enters at timeline position: index * 0.12
+    // Total timeline duration ≈ items.length * 0.12 + 0.9
+    // On click, use tl.progress() to determine which item is currently front.
+    var totalItems = items.length;
+
+    function getItemAtProgress() {
+      var prog = tl.progress(); // 0 to 1
+      var totalDur = tl.duration();
+      var currentTime = prog * totalDur;
+      // Find item whose center time is closest to currentTime
+      var bestIdx = 0;
+      var bestDist = Infinity;
+      for (var i = 0; i < totalItems; i++) {
+        var centerTime = i * 0.12 + 0.3; // midpoint of item's animation
+        var dist = Math.abs(currentTime - centerTime);
+        if (dist < bestDist) { bestDist = dist; bestIdx = i; }
+      }
+      return items[bestIdx];
+    }
+
+    document.getElementById('galleryContainer').addEventListener('click', function() {
+      var frontItem = getItemAtProgress();
+      var img = frontItem ? frontItem.querySelector('img') : null;
+      if (img) openLightbox(img.src, img.alt);
+    });
   });
 </script>
 
