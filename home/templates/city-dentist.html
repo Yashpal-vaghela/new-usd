@@ -22,15 +22,6 @@
 <meta name="twitter:description" content="Find the best dentists in {{city_name | capfirst}} for smile designing treatment. Find top cosmetic dentists and qualified smile design experts near you in {{city_name | capfirst}}.">
 {% endblock seo%}
 {% endblock header %} {% block css %}
-
-<style>
-  .circular-image {
-    width: 100px !important;
-    height: 100px !important; 
-    border-radius: 50% !important;
-    object-fit: cover !important;
-  }
-</style>
 <link rel="stylesheet" href="{% static 'css/findDentist.css'%}" />
 {% endblock css %} {% block body %}
 
@@ -182,7 +173,7 @@
         "@type": "MedicalOrganization",
         "name": "Ultimate Smile Design",
         "url": "https://ultimatesmiledesign.com/",
-        "logo": "https://ultimatesmiledesign.com/static/usd-logo1.svg",
+        "logo": "https://ultimatesmiledesign.com/static/USD_NEW_LOGO.svg",
         "areaServed": {
           "@type": "City",
           "name": "{{ city_name|capfirst }}"
