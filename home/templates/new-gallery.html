@@ -1,34 +1,29 @@
-{% extends 'base.html' %} {% load static %} {% block seo %}
+{% extends 'base.html' %} 
+{% load static %} 
+{% block seo %}
 <title>Smile Design Before and After | Real Smile Makeover Results</title>
-<meta
-  name="description"
-  content="Explore real smile design before and after results. See how our expertly crafted modern smile makeover treatment creates confident smiles on our patients."
-/>
+<meta name="description" content="Explore real smile design before and after results. See how our expertly crafted modern smile makeover treatment creates confident smiles on our patients." />
 <link rel="canonical" href="https://ultimatesmiledesign.com/gallery/" />
 <meta property="og:image" content="{% static 'feature-usd.webp' %}" />
-<meta
-  property="og:image:secure_url"
-  content="{% static 'feature-usd.webp' %}"
-/>
+<meta property="og:image:secure_url" content="{% static 'feature-usd.webp' %}" />
 <meta property="og:image:type" content="image/webp" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:locale" content="en_IN" />
 <meta property="og:type" content="website" />
-<meta
-  property="og:title"
-  content="Smile Design Before and After | Real Smile Makeover Results"
-/>
-<meta
-  property="og:description"
-  content="Explore real smile design before and after results. See how our expertly crafted modern smile makeover treatment creates confident smiles on our patients."
-/>
+<meta property="og:title" content="Smile Design Before and After | Real Smile Makeover Results" />
+<meta property="og:description" content="Explore real smile design before and after results. See how our expertly crafted modern smile makeover treatment creates confident smiles on our patients." />
 <meta property="og:url" content="https://ultimatesmiledesign.com/gallery/" />
-{% endblock seo %} {% block header %} {% endblock header %} {% block css %}
+{% endblock seo %} 
+{% block header %} 
+{% endblock header %} 
+{% block css %}
 <link rel="stylesheet" href="{% static 'css/new-gallery.css' %}" />
-{% endblock css %} {% block body %} {% load static %}
+{% endblock css %} 
+{% block body %} 
+{% load static %}
 
-<!-- Content -->
+<!-- breadcrumbs -->
 <div class="page-content">
   <section class="breadcrumbs-section">
     <div class="container">
@@ -36,118 +31,42 @@
         <a href="{% url 'home:home' %}"> Home </a>
         <i class="fa fa-solid fa-angles-right"></i> Gallery
       </div>
-      <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool">
-        Gallery
-      </h1>
+      <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool">Gallery</h1>
     </div>
   </section>
+
   <!-- Premium Cinematic Gallery Section -->
   <section class="gallery-perspective">
     <div class="gallery-sticky-wrapper">
       <div class="gallery-overlay"></div>
       <div class="gallery-container" id="galleryContainer">
-        {% comment %} {% for i in img %}
+        {% for i in img %}
         <div class="gallery-item item-{{ forloop.counter }}">
           <img src="{{ i.image.url }}" alt="before-after-smile-design-img" />
         </div>
-        {% endfor %} {% endcomment %}
-        <!-- 15 Images with varying depths and positions -->
-        <div class="gallery-item item-1">
-          <img
-            src="{% static 'gallery_image/ba.webp' %}"
-            alt="Smile Makeover"
-          />
-        </div>
+        {% endfor %}
+      </div>
 
-        <div class="gallery-item item-2">
-          <img
-            src="{% static 'gallery_image/ba-1.webp' %}"
-            alt="Smile Makeover"
-          />
-        </div>
-        <div class="gallery-item item-3">
-          <img
-            src="{% static 'gallery_image/ba-2.webp' %}"
-            alt="Smile Makeover"
-          />
-        </div>
-        <div class="gallery-item item-4">
-          <img
-            src="{% static 'gallery_image/ba-3.webp' %}"
-            alt="Smile Makeover"
-          />
-        </div>
-        <div class="gallery-item item-5">
-          <img
-            src="{% static 'gallery_image/ba-4.webp' %}"
-            alt="Smile Makeover"
-          />
-        </div>
-        <div class="gallery-item item-6">
-          <img
-            src="{% static 'gallery_image/ba-5.webp' %}"
-            alt="Smile Makeover"
-          />
-        </div>
-        <div class="gallery-item item-7">
-          <img
-            src="{% static 'gallery_image/ba-6.webp' %}"
-            alt="Smile Makeover"
-          />
-        </div>
-        <div class="gallery-item item-8">
-          <img
-            src="{% static 'gallery_image/ba-7.webp' %}"
-            alt="Smile Makeover"
-          />
-        </div>
-        <div class="gallery-item item-9">
-          <img
-            src="{% static 'gallery_image/ba-8.webp' %}"
-            alt="Smile Makeover"
-          />
-        </div>
-        <div class="gallery-item item-10">
-          <img
-            src="{% static 'gallery_image/ba-9.webp' %}"
-            alt="Smile Makeover"
-          />
-        </div>
-        <div class="gallery-item item-11">
-          <img
-            src="{% static 'gallery_image/ba-11.webp' %}"
-            alt="Smile Makeover"
-          />
-        </div>
-        <div class="gallery-item item-12">
-          <img
-            src="{% static 'gallery_image/ba-12.webp' %}"
-            alt="Smile Makeover"
-          />
-        </div>
-        <div class="gallery-item item-13">
-          <img
-            src="{% static 'gallery_image/ba-13.webp' %}"
-            alt="Smile Makeover"
-          />
-        </div>
-        <div class="gallery-item item-14">
-          <img
-            src="{% static 'gallery_image/ba-14.webp' %}"
-            alt="Smile Makeover"
-          />
-        </div>
-        <div class="gallery-item item-15">
-          <img
-            src="{% static 'gallery_image/ba-10.webp' %}"
-            alt="Smile Makeover"
-          />
-        </div>
-
-        <!-- Subtle Golden Glow Background Elements -->
-        {% comment %}
-        <div class="glow-sphere"></div>
-        {% endcomment %}
+      <!-- Gold Gradient END SVG -->
+      <div class="gallery-svg-container" style="background-color:black;">
+        <svg id="headlines" fill="none" stroke="url(#goldGradient)" stroke-width="3" viewBox="0 0 586 150">
+          <defs>
+            <linearGradient id="goldGradient" x1="0%" y1="0%" x2="50%" y2="50%">
+              <stop offset="0%" stop-color="#c3942f" />
+              <stop offset="18%" stop-color="#d89c27" />
+              <stop offset="37%" stop-color="#dfc86f" />
+              <stop offset="50%" stop-color="#e7dc96" />
+              <stop offset="64%" stop-color="#dfc86f" />
+              <stop offset="82%" stop-color="#d89c27" />
+              <stop offset="100%" stop-color="#c99c30" />
+            </linearGradient>
+          </defs>
+          <g id="txt2">
+            <path d="M210.7,1v16.2h-54.5v27h48.9v15.3h-48.9v27.3h56.2v16.2H139V1H210.7z" />
+            <path d="M311,1h17.2v102.1h-18.7l-57.8-74.5v74.5h-17.2V1h17.2L311,77.2V1z" />
+            <path d="M433.8,14.4c9.8,8.9,14.7,21.3,14.7,37.2c0,15.9-4.8,28.4-14.3,37.7c-9.5,9.2-24.1,13.9-43.8,13.9h-33.9V1h35C409.9,1,423.9,5.5,433.8,14.4z M431.1,52c0-23.4-13.4-35-40.1-35h-17.2v69.9h19.1c12.4,0,21.8-2.9,28.4-8.8C427.9,72.1,431.1,63.4,431.1,52z" />
+          </g>
+        </svg>
       </div>
     </div>
   </section>
@@ -160,44 +79,21 @@
     <img src="" alt="Gallery Preview" id="imgLightboxImg" />
   </div>
 </div>
-<svg
-            id="headlines"
-            fill="none"
-            stroke="#fff"
-            stroke-width="3"
-            viewBox="0 0 586 150"
-        >
-            <g id="txt2">
-            <path
-                d="M210.7,1v16.2h-54.5v27h48.9v15.3h-48.9v27.3h56.2v16.2H139V1H210.7z"
-            />
-            <path
-                d="M311,1h17.2v102.1h-18.7l-57.8-74.5v74.5h-17.2V1h17.2L311,77.2V1z"
-            />
-            <path
-                d="M433.8,14.4c9.8,8.9,14.7,21.3,14.7,37.2c0,15.9-4.8,28.4-14.3,37.7c-9.5,9.2-24.1,13.9-43.8,13.9h-33.9V1h35 C409.9,1,423.9,5.5,433.8,14.4z M431.1,52c0-23.4-13.4-35-40.1-35h-17.2v69.9h19.1c12.4,0,21.8-2.9,28.4-8.8 C427.9,72.1,431.1,63.4,431.1,52z"
-            />
-            </g>
-        </svg>
-<!-- Content END-->
-{% endblock body %} {% block js %}
+
+{% endblock body %} 
+{% block js %}
 <!-- GSAP & ScrollTrigger CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
 <script>
-  // ── Lightbox functions (global scope) ──────────────────────────────
   var _lightboxScrollY = 0;
 
   function openLightbox(src, alt) {
-    // Prevent layout shifting by checking scrollbar width
     var scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
     document.body.style.paddingRight = scrollbarWidth + 'px';
-
-    // Lock scroll without changing the window scroll position
     document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
-
     document.getElementById('imgLightboxImg').src = src;
     document.getElementById('imgLightboxImg').alt = alt || '';
     document.getElementById('imgLightbox').classList.add('active');
@@ -207,26 +103,32 @@
   function closeLightbox() {
     document.getElementById('imgLightbox').classList.remove('active');
     document.getElementById('imgLightboxImg').src = '';
-
-    // Unlock scroll
     document.documentElement.style.overflow = '';
     document.body.style.overflow = '';
     document.body.style.paddingRight = '';
   }
 
-  // Close handlers (delegated so they work regardless of DOM timing)
-  document.addEventListener('click', function(e) {
+  document.addEventListener('click', function (e) {
     if (e.target.closest('#imgLightboxClose')) { closeLightbox(); return; }
-    if (e.target.id === 'imgLightbox')          { closeLightbox(); }
+    if (e.target.id === 'imgLightbox') { closeLightbox(); }
   });
-  document.addEventListener('keydown', function(e) {
+
+  document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && document.getElementById('imgLightbox').classList.contains('active'))
       closeLightbox();
   });
 
-  // ── GSAP Gallery ───────────────────────────────────────────────────
   document.addEventListener("DOMContentLoaded", function () {
     gsap.registerPlugin(ScrollTrigger);
+    ScrollTrigger.config({
+      ignoreMobileResize: true
+    });
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (isTouchDevice) {
+      ScrollTrigger.normalizeScroll({
+        allowNestedScroll: true
+      });
+    }
 
     const items = document.querySelectorAll(".gallery-item");
     const tl = gsap.timeline({
@@ -237,6 +139,7 @@
         scrub: 1.5,
         pin: true,
         anticipatePin: 1,
+        invalidateOnRefresh: true,
       },
     });
 
@@ -268,8 +171,45 @@
       );
     });
 
+    // ── Gold 'END' SVG scroll animation ────────────────────────────────
+    const svgContainer = document.querySelector(".gallery-svg-container");
+    const svgPaths = document.querySelectorAll("#headlines path");
+    svgPaths.forEach(path => {
+      const length = path.getTotalLength();
+      path.style.strokeDasharray = length;
+      path.style.strokeDashoffset = length;
+    });
+
+    const lastItemIndex = items.length - 1;
+    const svgStartTime = lastItemIndex * 0.12 + 0.3;
+
+    tl.to(svgContainer, {
+      opacity: 1,
+      duration: 0.6,
+      ease: "power2.out"
+    }, svgStartTime);
+
+    svgPaths.forEach((path, pathIndex) => {
+      tl.to(path, {
+        strokeDashoffset: 0,
+        duration: 0.8,
+        ease: "power1.inOut"
+      }, svgStartTime + 0.1 + pathIndex * 0.15);
+    });
+
+    tl.fromTo(svgContainer, {
+      scale: 0.8,
+    }, {
+      scale: 1.1,
+      duration: 1.5,
+      ease: "power2.out"
+    }, svgStartTime);
+
     items.forEach((item) => {
       gsap.to(item, {
+        y: "random(-30, 30)",
+        x: "random(-30, 30)",
+        rotation: "random(-4, 4)",
         duration: "random(3, 5)",
         repeat: -1,
         yoyo: true,
@@ -277,40 +217,84 @@
       });
     });
 
-    // ── Click Handling via galleryContainer ───────────────────────
-    // Open the exact image that the user clicked, solving 3D perspective hit-test limitations
-    document.getElementById('galleryContainer').addEventListener('click', function(e) {
+    if (window.innerWidth > 1024) {
+      window.addEventListener("mousemove", (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 10;
+        const y = (e.clientY / window.innerHeight - 0.5) * 10;
+
+        gsap.to(".gallery-container", {
+          rotationY: x,
+          rotationX: -y,
+          duration: 0.8,
+          ease: "power2.out",
+        });
+      });
+    }
+
+    document.getElementById('galleryContainer').addEventListener('click', function (e) {
       var clientX = e.clientX;
       var clientY = e.clientY;
       var matchedItems = [];
 
-      items.forEach(function(item) {
-        // Only match items that are currently visible, not faded out, and not behind the camera (z < 1100)
+      items.forEach(function (item) {
         var opacity = parseFloat(window.getComputedStyle(item).opacity) || 0;
         var zVal = parseFloat(gsap.getProperty(item, "z")) || 0;
         if (opacity > 0.1 && zVal < 1100) {
           var rect = item.getBoundingClientRect();
           if (clientX >= rect.left && clientX <= rect.right &&
-              clientY >= rect.top && clientY <= rect.bottom) {
+            clientY >= rect.top && clientY <= rect.bottom) {
             matchedItems.push(item);
           }
         }
       });
 
       if (matchedItems.length > 0) {
-        // Sort items by their current Z-depth in GSAP (highest/closest first)
-        matchedItems.sort(function(a, b) {
+        matchedItems.sort(function (a, b) {
           var zA = parseFloat(gsap.getProperty(a, "z")) || 0;
           var zB = parseFloat(gsap.getProperty(b, "z")) || 0;
           return zB - zA;
         });
-
         var frontItem = matchedItems[0];
         var img = frontItem.querySelector('img');
         if (img) openLightbox(img.src, img.alt);
       }
     });
+
+    window.addEventListener("orientationchange", () => {
+      setTimeout(() => {
+        ScrollTrigger.refresh(true);
+      }, 250);
+    });
+
   });
+</script>
+
+<script>
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("keydown", function (e) {
+    if (e.key === "F12") {
+        e.preventDefault();
+    }
+    if (e.ctrlKey && e.shiftKey && e.key === "I") {
+        e.preventDefault();
+    }
+    if (e.ctrlKey && e.shiftKey && e.key === "J") {
+        e.preventDefault();
+    }
+    if (e.ctrlKey && e.shiftKey && e.key === "C") {
+        e.preventDefault();
+    }
+    if (e.ctrlKey && e.key === "u") {
+        e.preventDefault();
+    }
+});
+
+setInterval(() => {
+    const threshold = 160;
+    if (window.outerWidth - window.innerWidth > threshold || window.outerHeight - window.innerHeight > threshold) {
+        document.body.innerHTML = "";
+    }
+}, 1000);
 </script>
 
 <script type="application/ld+json">
