@@ -182,7 +182,10 @@
           <div class="swiper-slide">
             <div class="card h-100">
                 <div class="card-header">
-                <p>{{review.review}}</p>
+                <!-- Added by Antigravity - Hidden full review content and clamped paragraph class -->
+                <div class="full-review-content d-none">{{review.review}}</div>
+                <p class="review-text-content mb-0">{{review.review}}</p>
+                <!-- End Added by Antigravity -->
               </div>
               <div class="card-footer d-flex justify-content-between align-items-center">
                   <div class="d-block ">
@@ -253,7 +256,7 @@
         <h2 class="font-Glida-display">Request Consultation</h2>
         <p class="cool">Please enter the details below for a call back.</p>
         <form method="post" class="form my-2 my-lg-4">
-        {% csrf_token %}
+        {% csrf_token %}  
           <div class="row align-items-center justify-content-center">
             <div class="col-lg-6 dentists-input-box">
               <label class="form-label">First Name</label>
@@ -454,6 +457,26 @@
       </div>
     </div>
   </section>
+  <!-- Added by Antigravity - Review Modal Popup -->
+  <div class="review-modal-backdrop" id="reviewModal">
+    <div class="review-modal-content">
+      <button class="review-modal-close cool" aria-label="Close modal">&times;</button>
+      <div class="review-modal-body">
+        <div class="review-modal-stars mb-3"></div>
+        <div class="review-modal-text-container">
+          <p class="review-modal-text"></p>
+        </div>
+        <div class="review-modal-footer d-flex justify-content-between align-items-center mt-4 pt-3">
+          <div class="review-modal-patient-info">
+            <span class="review-modal-patient-name fw-bold cool"></span>
+          </div>
+          <div class="review-modal-icon-container"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Added by Antigravity -->
+
   <!-- old find dentist page -->
 </div>
 {% endblock body %} 
@@ -581,7 +604,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelector(".swiper-button-next")?.style.setProperty("display",showControls1 ? "flex" : "none");
   document.querySelector(".swiper-button-prev")?.style.setProperty("display",showControls1 ? "flex" : "none");
 
-   const ReviewSwiper = new Swiper(".PatientReviewSwiper", {
+    const ReviewSwiper = new Swiper(".PatientReviewSwiper", {
     loop: showControls1,
     spaceBetween: 30,
     speed: 800,
@@ -599,6 +622,75 @@ document.addEventListener("DOMContentLoaded", function () {
       dynamicBullets: true,
     } : false
   }); 
+
+  // Added by Antigravity - Review Read More & Popup Logic
+  function initReviewReadMore() {
+    // Select all paragraphs (including duplicates if loop is enabled)
+    const paragraphs = document.querySelectorAll(".PatientReviewSwiper .card-header p.review-text-content");
+    paragraphs.forEach(p => {
+      // Avoid adding duplicate buttons if it's already there
+      if (p.parentNode.querySelector(".read-more-btn")) return;
+
+      // If the text actually overflows the 7-line clamped height
+      if (p.scrollHeight > p.clientHeight) {
+        const readMoreSpan = document.createElement("span");
+        readMoreSpan.className = "read-more-btn cool";
+        readMoreSpan.textContent = "Read More";
+        p.parentNode.appendChild(readMoreSpan);
+
+        const card = p.closest(".card");
+        const fullText = card.querySelector(".full-review-content")?.textContent || p.textContent;
+        const patientName = card.querySelector(".patient-name")?.textContent || "";
+        const starsHTML = card.querySelector(".d-flex.mb-2")?.innerHTML || "";
+        const googleIconHTML = card.querySelector(".card-footer a, .card-footer img")?.outerHTML || "";
+
+        readMoreSpan.addEventListener("click", () => {
+          openReviewModal(fullText, patientName, starsHTML, googleIconHTML);
+        });
+      }
+    });
+  }
+
+  const modal = document.getElementById("reviewModal");
+  const modalClose = modal.querySelector(".review-modal-close");
+
+  function openReviewModal(text, name, starsHTML, googleIconHTML) {
+    modal.querySelector(".review-modal-text").textContent = text;
+    modal.querySelector(".review-modal-patient-name").textContent = name;
+    modal.querySelector(".review-modal-stars").innerHTML = starsHTML;
+    modal.querySelector(".review-modal-icon-container").innerHTML = googleIconHTML;
+
+    modal.classList.add("active");
+    document.body.classList.add("modal-open");
+    // Workaround for mobile scroll lock consistency
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeReviewModal() {
+    modal.classList.remove("active");
+    document.body.classList.remove("modal-open");
+    document.body.style.overflow = "";
+  }
+
+  modalClose.addEventListener("click", closeReviewModal);
+
+  // Close on click outside modal content
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      closeReviewModal();
+    }
+  });
+
+  // Close on Escape key press
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.classList.contains("active")) {
+      closeReviewModal();
+    }
+  });
+
+  // Run after Swiper layout is settled (using small timeout for safety)
+  setTimeout(initReviewReadMore, 200);
+  // End Added by Antigravity
 
 });
 </script>

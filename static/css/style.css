@@ -7040,6 +7040,129 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   font-family: "Barlow", sans-serif;
 }
 
+/* Added by Antigravity - Review Read More & Modal Popup */
+.PatientReviewSwiper .card-header p.review-text-content {
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 0;
+  line-height: 1.6;
+}
+
+.PatientReviewSwiper .card-header .read-more-btn {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-block;
+  margin-top: 8px;
+  text-transform: capitalize;
+  transition: color 0.2s ease;
+}
+
+.PatientReviewSwiper .card-header .read-more-btn:hover {
+  color: #fff;
+}
+
+/* Modal Lock Scroll */
+body.modal-open {
+  overflow: hidden !important;
+}
+
+/* Review Modal Backdrop */
+.review-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 99999; /* Higher than any header/navigation */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  padding: 20px;
+}
+
+.review-modal-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Review Modal Content Box */
+.review-modal-content {
+  background: #0d0d0d;
+  border: 2px solid #ad8545; /* Gold border to match theme */
+  border-radius: 16px;
+  width: 100%;
+  max-width: 650px;
+  max-height: 85vh;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(173, 133, 69, 0.2);
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.review-modal-backdrop.active .review-modal-content {
+  transform: translateY(0);
+}
+
+/* Close Button */
+.review-modal-close {
+  position: absolute;
+  top: 0px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 50px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 10;
+  transition: color 0.2s, transform 0.2s;
+  padding: 5px;
+}
+
+.review-modal-close:hover {
+  color: #ad8545;
+  transform: scale(1.1);
+}
+
+/* Modal Body */
+.review-modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+  text-align: left;
+}
+
+.review-modal-text {
+  color: #f0f0f0;
+  font-size: 16px;
+  line-height: 1.8;
+  white-space: pre-wrap; /* Preserves newlines and spaces */
+  margin-bottom: 0;
+}
+
+.review-modal-patient-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.review-modal-footer {
+  border-top: 1px solid rgba(173, 133, 69, 0.2) !important;
+}
+/* End Added by Antigravity */
+
 /* end patient review Swiper */
 .gallerySwiper .swiper-wrapper {
   padding-bottom: 30px;
