@@ -71,7 +71,7 @@ class Dentist(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='User', blank=True, null=True )    
     city = models.ForeignKey(City, on_delete=models.CASCADE,blank=True, null=True)   
     state = models.CharField(max_length=300,blank=True, null=True)  
-    
+    certificate_code = models.CharField(max_length=300, blank=True, null=True)
     name = models.CharField(max_length=300)
     title = models.CharField(max_length=300)
     sub_title = models.CharField(max_length=300,blank=True, null=True)

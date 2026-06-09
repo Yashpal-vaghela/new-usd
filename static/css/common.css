@@ -84,14 +84,14 @@
 
  /* text-color  */
  :root {
-   --text-gradient: linear-gradient(130deg,
-       #c3942f 0%,
-       #d89c27 18%,
-       #dfc86f 37%,
-       #e7dc96 50%,
-       #dfc86f 64%,
-       #d89c27 82%,
-       #c99c30 100%);
+   --text-gradient: linear-gradient(270deg,
+       #be9644 0%,
+       #aa803c 15%,
+       #f3dc87 43%,
+       #fbefac 59%,
+       #f3dc87 73%,
+       #aa803c 93%,
+       #c49d47 100%);
    --button-gradient: linear-gradient(130deg,
        #636363 0%,
        #9b9b9b 20%,
@@ -190,6 +190,40 @@
    transition: background 2s ease-in-out;
    border-radius: 6px;
    border: none;
+ }
+
+ .premium-book-btn {
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   gap: 5px;
+   color: #111 !important;
+   padding: 7px 14px;
+   border-radius: 10px;
+   font-size: 16px;
+   font-weight: 600;
+   text-transform: uppercase;
+   letter-spacing: 0.5px;
+   transition: all 0.3s ease;
+   cursor: pointer;
+   box-shadow: 0 4px 15px rgba(216, 156, 39, 0.3);
+   border: none;
+   text-decoration: none;
+   width: auto !important;
+   margin-top: 15px;
+ }
+
+ .arrow-new-svg {
+   color: #111 !important;
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   transform-origin: center;
+   transition: transform 0.3s ease-in-out;
+ }
+
+ .premium-book-btn:hover .arrow-new-svg {
+   transform: rotate(45deg);
  }
 
  /* text-header */

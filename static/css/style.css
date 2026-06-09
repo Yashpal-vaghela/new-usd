@@ -6890,7 +6890,7 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   letter-spacing: 0.5px;
 }
 
-.dentists-mobile-name {
+.dentists-top {
   /* position: relative; */
   position: absolute;
   /* top:-14%; */
@@ -6903,17 +6903,17 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   text-align: end;
 }
 
-.dentists-mobile-name.dentists-top {
-  bottom: 17%;
+.dentists-top.dentists-top {
+  bottom: 5%;
 }
 
-.dentists-mobile-name h2 {
+.dentists-top h2 {
   font-size: 24px;
   margin-bottom: 0px !important;
   /* border: 1px solid #fff; */
 }
 
-.dentists-mobile-name p {
+.dentists-top p {
   color: #fff;
   font-size: 18px;
   font-weight: 600;
@@ -7080,7 +7080,8 @@ body.modal-open {
   background-color: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  z-index: 99999; /* Higher than any header/navigation */
+  z-index: 99999;
+  /* Higher than any header/navigation */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -7098,7 +7099,8 @@ body.modal-open {
 /* Review Modal Content Box */
 .review-modal-content {
   background: #0d0d0d;
-  border: 2px solid #ad8545; /* Gold border to match theme */
+  border: 2px solid #ad8545;
+  /* Gold border to match theme */
   border-radius: 16px;
   width: 100%;
   max-width: 650px;
@@ -7149,7 +7151,8 @@ body.modal-open {
   color: #f0f0f0;
   font-size: 16px;
   line-height: 1.8;
-  white-space: pre-wrap; /* Preserves newlines and spaces */
+  white-space: pre-wrap;
+  /* Preserves newlines and spaces */
   margin-bottom: 0;
 }
 
@@ -7161,6 +7164,7 @@ body.modal-open {
 .review-modal-footer {
   border-top: 1px solid rgba(173, 133, 69, 0.2) !important;
 }
+
 /* End Added by Antigravity */
 
 /* end patient review Swiper */
@@ -7460,23 +7464,6 @@ body.modal-open {
   object-fit: contain;
 }
 
-@media(min-width:1300px) {
-
-  /* .dentists-mobile-name.dentists-top{
-    width: 83%;
-  } */
-  /* .dentists-mobile-name{
-    width: 90.5%;
-  } */
-  .dentists-mobile-name.dentists-top {
-    bottom: 16%;
-  }
-
-  /* .new-appoint_btn{
-    width: 80% !important;
-  } */
-}
-
 @media (min-width: 1200px) {
   .PatientReviewSwiper .swiper-pagination {
     display: none !important;
@@ -7548,26 +7535,26 @@ body.modal-open {
     top: -87px;
   }
 
-  .dentists-mobile-name {
+  .dentists-top {
     left: 3%;
     /* bottom: 18.5%; */
     bottom: 24.5%;
   }
 
-  .dentists-mobile-name.dentists-top {
-    bottom: 18.5%;
+  .dentists-top.dentists-top {
+    bottom: 4%;
   }
 
   .new-appoint_btn {
     width: 100% !important;
   }
 
-  .dentists-mobile-name h2 {
+  .dentists-top h2 {
     font-size: 22px;
 
   }
 
-  .dentists-mobile-name p {
+  .dentists-top p {
     color: #fff;
     font-size: 16px;
     font-weight: 600;
@@ -7621,22 +7608,22 @@ body.modal-open {
     top: -84px;
   }
 
-  .dentists-mobile-name {
+  .dentists-top {
     width: 49%;
     left: 25%;
     bottom: 17.5%;
   }
 
-  .dentists-mobile-name.dentists-top {
-    bottom: 17%;
+  .dentists-top.dentists-top {
+    bottom: 4%;
   }
 
-  .dentists-mobile-name h2 {
+  .dentists-top h2 {
     text-align: end;
     font-size: 20px;
   }
 
-  .dentists-mobile-name p {
+  .dentists-top p {
     font-size: 16px;
   }
 
@@ -7697,21 +7684,20 @@ body.modal-open {
     font-size: 15px;
   }
 
-  .dentists-mobile-name {
+  .dentists-top {
     width: 55%;
     left: 21.5%;
   }
 
-  .dentists-mobile-name.dentists-top {
+  .dentists-top.dentists-top {
     width: 64%;
-    bottom: 17%;
   }
 
-  .dentists-mobile-name h2 {
+  .dentists-top h2 {
     font-size: 20px;
   }
 
-  .dentists-mobile-name p {
+  .dentists-top p {
     font-size: 16px;
   }
 
@@ -7740,11 +7726,16 @@ body.modal-open {
   }
 
   .new-dentists-title {
-    margin-bottom: 6px;
+    margin-top: 6px;
   }
 
   .dentists-gallery-section .new-dentists-title {
     margin-bottom: 12px;
+  }
+
+  .new-dentist-content-wrapper {
+    display: flex !important;
+    flex-direction: column-reverse !important;
   }
 
   .gallerySwiper .swiper-slide img {
@@ -7832,30 +7823,30 @@ body.modal-open {
     max-width: 100%;
   }
 
-  .dentists-mobile-name {
+  .dentists-top {
     width: 94%;
     left: 0%;
     bottom: 0%;
     margin: 0% auto 38%;
   }
 
-  .dentists-mobile-name.dentists-top {
+  .dentists-top.dentists-top {
     left: 13%;
     width: 81.5%;
-    bottom: 0%;
+    bottom: -13%;
     margin: 0% auto 23.5%;
   }
 
-  .dentists-mobile-name h2 {
+  .dentists-top h2 {
     margin-bottom: 5px;
     font-size: 20px;
   }
 
-  .dentists-mobile-name.dentists-top h2 {
+  .dentists-top.dentists-top h2 {
     font-size: 18px;
   }
 
-  .dentists-mobile-name p {
+  .dentists-top p {
     font-size: 16px;
   }
 
@@ -7901,12 +7892,12 @@ body.modal-open {
     font-size: 22px;
   }
 
-  .dentists-mobile-name.dentists-top h2 {
+  .dentists-top.dentists-top h2 {
     font-size: 16px;
     margin-top: 10px !important;
   }
 
-  .dentists-mobile-name p {
+  .dentists-top p {
     font-size: 14px;
   }
 
@@ -7914,10 +7905,10 @@ body.modal-open {
     top: -3.5%;
   }
 
-  .dentists-mobile-name.dentists-top {
+  .dentists-top.dentists-top {
     left: 0%;
     width: 92%;
-    bottom: 0%;
+    bottom: -17%;
     margin: 0% auto 28.5%;
   }
 
