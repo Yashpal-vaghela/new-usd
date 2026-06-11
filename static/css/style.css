@@ -342,183 +342,15 @@ ol li {
   color: #000;
 }
 
-.mfp-video.video-play-btn {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 40px;
-  height: 40px;
-  line-height: 38px;
-  text-align: center;
-  margin: -25px;
-  color: #fff;
-  display: block;
-  z-index: 10;
-  font-size: 16px;
-  border: 2px solid #fff;
-  border-radius: 50%;
-}
-
-.mfp-video.video-play-btn:hover {
-  background-color: #0f1221;
-  color: #fff;
-  border: 2px solid transparent;
-}
-
-.mfp-video.video-play-btn i {
-  margin-right: -5px;
-}
-
 /*Button text uppercase */
 .site-button.text-uppercase {
   text-transform: uppercase;
 }
 
-/*===Owl Slider===*/
-.owl-carousel .owl-nav {
-  margin-top: 40px;
-  text-align: center;
-}
-
-.owl-carousel .owl-nav .disabled {
-  opacity: 0.5;
-  cursor: default;
-}
-
-/*---Owl dots button---*/
-.owl-carousel .owl-dots {
-  text-align: center;
-  margin-top: 30px;
-}
-
-.owl-carousel .owl-dots .owl-dot {
-  display: inline-block;
-  outline: none !important;
-}
-
-.owl-carousel .owl-dots .owl-dot span {
-  width: 6px;
-  height: 6px;
-  margin: 5px 7px;
-
-  border: 2px solid transparent;
-  display: block;
-  border-radius: 50%;
-  transition: opacity 200ms ease;
-}
-
-.owl-carousel .owl-dots .owl-dot:hover span {
-  background: #ad8545;
-}
-
-.owl-carousel .owl-dots .owl-dot.active span {
-  background: none;
-  border: 2px solid transparent;
-  margin: 2px;
-  height: 12px;
-  width: 12px;
-}
-
-.owl-carousel .owl-dots .owl-dot.active span {
-  background: #fff;
-}
-
-/*---Owl button show on hover---*/
-.owl-carousel .owl-item img {
-  transform-style: inherit;
-}
-
-/*---Owl slider button---*/
-.owl-carousel .owl-nav button.owl-prev {
-  color: #fff !important;
-  padding: 14px 14px !important;
-  font-size: 11px !important;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  display: inline-block;
-  cursor: pointer;
-  border-radius: 0px;
-  opacity: 1;
-  margin-right: 5px;
-  font-weight: 500;
-  outline: none;
-  margin-left: 0px;
-}
-
-.owl-carousel .owl-nav button.owl-prev i {
-  font-style: normal;
-}
-
-.owl-carousel .owl-nav button.owl-prev:hover {
-  color: #fff;
-  opacity: 0.9;
-}
-
-.owl-carousel .owl-nav button.owl-prev:active {
-  color: #fff;
-  opacity: 0.9;
-}
-
-.owl-carousel .owl-nav button.owl-prev:focus {
-  color: #fff;
-  opacity: 0.9;
-}
-
-.owl-carousel .owl-nav button.owl-next {
-  color: #fff !important;
-  padding: 8px 10px !important;
-  font-size: 11px !important;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  display: inline-block;
-  cursor: pointer;
-  border-radius: 0px;
-  opacity: 1;
-  margin-right: 0px;
-  font-weight: 500;
-  outline: none;
-}
-
-.owl-carousel .owl-nav button.owl-next i {
-  font-style: normal;
-}
-
-.owl-carousel .owl-nav button.owl-next:hover {
-  color: #fff;
-  opacity: 0.9;
-}
-
-.owl-carousel .owl-nav button.owl-next:active {
-  color: #fff;
-  opacity: 0.9;
-}
-
-.owl-carousel .owl-nav button.owl-next:focus {
-  color: #fff;
-  opacity: 0.9;
-}
-
-/*---Owl dots nav position---*/
-@media only screen and (max-width: 480px) {
-  .owl-carousel .owl-nav button.owl-prev {
-    margin: 0px;
-  }
-}
-
-/*======================================
-THEMEFOREST REQUIRED CLASSES
-======================================*/
-/*-------------------------------------
-	Text meant only for screen readers
--------------------------------------*/
 .sticky {
   clear: both;
 }
 
-/*-------------------------------------
-	Tabs 
--------------------------------------*/
-/*Header Start ============================*/
 .site-header {
   position: relative;
   z-index: 999;
@@ -748,9 +580,6 @@ THEMEFOREST REQUIRED CLASSES
   width: 100%;
 }
 
-/* .is-fixed.mobile-sider-drawer-menu .header-style-1 .header-nav .nav>li {
-  padding: 12px 15px !important;
-} */
 
 .header-nav {
   position: relative;
@@ -1402,7 +1231,6 @@ button.scroltop {
   }
 }
 
-/*Footer Light version css*/
 .footer-light {
   background-color: #f8f5ff;
   color: #000;
@@ -1882,23 +1710,9 @@ select {
   width: calc(100%);
 }
 
-#sidebar-admin-wraper {
-  width: 250px;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  height: 100%;
-  z-index: 999;
-  background: #fff;
-  border-right: 1px solid #e8edf1;
-  color: #fff;
-  transition: all 0.3s;
-  padding-top: 0px;
-}
 
-#sidebar-admin-wraper.active {
-  margin-left: -250px;
-}
+
+
 
 #content {
   width: calc(100% - 250px);
@@ -1925,15 +1739,6 @@ select {
 }
 
 @media (max-width: 768px) {
-  #sidebar-admin-wraper {
-    margin-left: -250px;
-    padding-top: 70px;
-  }
-
-  #sidebar-admin-wraper.active {
-    margin-left: 0;
-  }
-
   #content {
     width: 100%;
   }
@@ -2319,11 +2124,6 @@ SIMPLE INNER SCROLLBAR
   transition: opacity 0.8s ease-in-out;
 }
 
-.single-image {
-  grid-column: span 1;
-  max-width: 100%;
-}
-
 @media only screen and (max-width: 991px) {
   .content-admin-main {
     padding: 15px;
@@ -2523,7 +2323,6 @@ input::placeholder {
   border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 10px;
-
   -webkit-box-shadow: 0 0 15px 12px rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 15px 12px rgba(0, 0, 0, 0.1);
   -webkit-transition: all 0.5s ease;
@@ -2750,7 +2549,6 @@ input::placeholder {
   left: auto;
 }
 
-/*=== >text ===*/
 .text-white {
   color: #fff;
 }
@@ -2934,11 +2732,6 @@ div.dataTables_wrapper div.dataTables_length select {
   padding-left: 40px;
 }
 
-.aon-divider-line {
-  height: 1px;
-  background: #ddd;
-}
-
 .form-control.t-area-height {
   height: 50px !important;
 }
@@ -3010,25 +2803,6 @@ table .sf-radio-checkbox input[type="radio"]+label {
   padding-top: 20px;
 }
 
-.active-team .cs-message-panel {
-  right: 0%;
-}
-
-.active-edit-pro .cs-editpro-area {
-  right: 0%;
-}
-
-.active-new-chart .cs-newchart-area {
-  right: 0%;
-}
-
-.active-books-appointment .cs-books-appointment-area {
-  right: 0%;
-}
-
-.active-edit-appointments .cs-edit-appointments-area {
-  right: 0%;
-}
 
 body[class*="active-"] .cs-message-panel {
   box-shadow: 0 0px 150px 0px rgba(0, 0, 0, 0.3);
@@ -3086,62 +2860,6 @@ body[class*="active-"] .cs-message-panel {
   .aon-custom-nav>.nav-item>.nav-link {
     padding-left: 0px;
   }
-}
-
-/*--------------------------------------------
-  team membar section
----------------------------------------------*/
-.create-user-infos {
-  display: none;
-  padding: 30px;
-  border: 1px solid #ddd;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  color: #999;
-  background-color: #fff;
-}
-
-.create-user-notess {
-  display: none;
-  padding: 30px;
-  border: 1px solid #ddd;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  color: #999;
-  background-color: #fff;
-}
-
-.active-time-slide .cs-timeSlide-area {
-  right: 0px;
-}
-
-.input_Timing-box {
-  border: 1px solid #ddd;
-  padding: 20px;
-  background: #fff;
-  margin-bottom: 30px;
-  position: relative;
-}
-
-.input-timing-close {
-  position: absolute;
-  top: 25px;
-  right: 20px;
-  background: none;
-  border: none;
-  font-size: 18px;
-  width: 22px;
-  height: 22px;
-  line-height: 22px;
-  text-align: center;
-  background: #f8374a;
-  color: #fff;
-  padding: 0;
-  border-radius: 3px;
-}
-
-.input-timing-close:hover {
-  color: #fff;
 }
 
 .aon-feedback-list {
@@ -3387,9 +3105,6 @@ body[class*="active-"] .cs-message-panel {
   }
 }
 
-.active-feedback-slide .cs-feedback-area {
-  right: 0px;
-}
 
 /*Patient Booking*/
 .aon-search2-bar-wrap {
@@ -3663,18 +3378,8 @@ body[class*="active-"] .cs-message-panel {
   font-weight: 700;
 }
 
-.aon-docLocation-wrap {
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 50px;
-  padding-bottom: 30px;
-}
-
 .aon-docPexpi-wrap {
   margin-bottom: 50px;
-}
-
-.aon-doctor-tabs {
-  margin-bottom: 30px !important;
 }
 
 .aon-doctorTotal-rating {
@@ -3750,17 +3455,6 @@ body[class*="active-"] .cs-message-panel {
   color: #222;
 }
 
-.aon-insuranc-list {
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.aon-insuranc-list .feather-check {
-  font-size: 18px;
-  color: #4ecd69;
-  padding-top: 5px;
-  padding-right: 5px;
-}
 
 @media only screen and (max-width: 640px) {
   .aon-custom-nav.sf-doc-timeing-card-nav {
@@ -3776,39 +3470,6 @@ body[class*="active-"] .cs-message-panel {
 
 .site-button.red {
   background-color: #ef1b1a;
-}
-
-/*exp-tabs*/
-.sf-doc-exp-list-detail {
-  list-style: none;
-  margin-bottom: 0px;
-}
-
-.sf-doc-exp-list-detail li {
-  padding-bottom: 15px;
-  border-bottom: 1px solid #dedfe1;
-  margin-bottom: 15px;
-  font-size: 16px;
-  display: flex;
-  justify-content: space-between;
-}
-
-@media only screen and (max-width: 767px) {
-  .sf-doc-exp-list-detail li {
-    display: block;
-  }
-}
-
-.sf-doc-exp-list-detail li:last-child {
-  border-bottom: 0px;
-  margin: 0px;
-  padding: 0px;
-}
-
-.sf-doc-exp-list-detail li .list-title {
-  color: #2a2a2a;
-  margin-right: 10px;
-  font-weight: 600;
 }
 
 /*Patient Exp*/
@@ -3891,32 +3552,6 @@ body[class*="active-"] .cs-message-panel {
   }
 }
 
-.aon-photo-gallery {
-  background-image: url("../a9.png");
-  height: 250px;
-  border-radius: 10px;
-  background-position: center;
-  background-size: cover;
-}
-
-.aon-photo-num {
-  width: 100%;
-  font-size: 40px;
-  color: #fff;
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-}
-
-.aon-photo-num:hover {
-  color: #fff;
-}
-
-/*Home page One CSS*/
-.aon-banner-wrap {
-  background-color: #2c6c5e;
-  padding-top: 100px;
-}
-
 .aon-search-advance-btn {
   background: none;
   border: none;
@@ -3947,46 +3582,6 @@ body[class*="active-"] .cs-message-panel {
   letter-spacing: 4.5px;
 }
 
-.accordion-button:after {
-  background-image: none;
-  content: "\f067";
-  font-family: "FontAwesome";
-  line-height: 20px;
-}
-
-.accordion-button:not(.collapsed):after {
-  background-image: none;
-  content: "\f068";
-  transform: none;
-}
-
-/*Home page Two CSS*/
-.aon-banner2-wrap {
-  background-color: #000000;
-  background-image: url("#");
-  padding-top: 100px;
-}
-
-.aon-med-testimonial2-area {
-  padding: 90px 0px;
-  border-top: 1px solid #ddd;
-}
-
-@media only screen and (max-width: 991px) {
-  .aon-med-testimonial2-area {
-    padding: 30px 0px;
-  }
-}
-
-.aon-med-testimonial.aon-owl-arrow.left .owl-nav {
-  padding-left: 50px;
-}
-
-@media only screen and (max-width: 480px) {
-  .aon-med-testimonial.aon-owl-arrow.left .owl-nav {
-    padding-left: 0px;
-  }
-}
 
 /*provider mid Section*/
 .active-plan .aon-price1-label {
@@ -4023,28 +3618,6 @@ body[class*="active-"] .cs-message-panel {
 
 .site-button.round i {
   padding-right: 0px;
-}
-
-.aon-page-jobs-wrap {
-  padding-top: 50px;
-  padding-bottom: 50px;
-  position: relative;
-}
-
-/*Recent post widgets*/
-.aon-recentpost-carousel .post-info {
-  padding-bottom: 35px;
-  border-bottom: 1px solid #ddd;
-}
-
-.aon-recentpost-carousel .aon-blog-style-1 {
-  margin-bottom: 10px;
-}
-
-@media only screen and (max-width: 767px) {
-  .aon-recentpost-carousel .aon-blog-style-1 .post-info {
-    padding-bottom: 30px;
-  }
 }
 
 /*BLog Detail*/
@@ -4325,10 +3898,6 @@ Comment Form
   margin-bottom: 13px;
 }
 
-#sync2 .item {
-  border: 1px solid #ddd;
-}
-
 /* This CSS file is unnecessary if you are not using vertical buttons functionality */
 .bootstrap-touchspin .input-group-btn-vertical {
   position: absolute;
@@ -4464,44 +4033,6 @@ div.dataTables_wrapper div.dataTables_filter input {
   border-radius: 5px;
 }
 
-.availibility-edit {
-  position: absolute;
-  top: 8px;
-  right: 4px;
-  display: table;
-  width: 180px;
-  height: 32px;
-}
-
-.availibility-edit>div {
-  display: table-cell;
-  padding: 0px 4px;
-  vertical-align: middle;
-}
-
-.active-zone .btn-time-zone {
-  border: 1px solid #ad8545;
-  color: #ad8545;
-}
-
-.aon-availibility-edit {
-  color: #000;
-  margin-right: 10px;
-  cursor: pointer;
-  border: 1px solid #777;
-  padding: 2px 10px;
-  font-size: 12px;
-  border-radius: 5px;
-}
-
-.aon-avai-edit-btn {
-  color: #ad8545;
-  cursor: pointer;
-}
-
-.active-availibility-slide .cs-message-panel {
-  right: 0px;
-}
 
 .aon-login-sign-tabs {
   margin: 0px 30px;
@@ -4553,55 +4084,6 @@ div.dataTables_wrapper div.dataTables_filter input {
   -moz-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
-}
-
-@keyframes orbit {
-  0% {
-    opacity: 1;
-    z-index: 99;
-    transform: rotate(180deg);
-    animation-timing-function: ease-out;
-  }
-
-  7% {
-    opacity: 1;
-    transform: rotate(300deg);
-    animation-timing-function: linear;
-  }
-
-  30% {
-    opacity: 1;
-    transform: rotate(410deg);
-    animation-timing-function: ease-in-out;
-  }
-
-  39% {
-    opacity: 1;
-    transform: rotate(645deg);
-    animation-timing-function: linear;
-  }
-
-  70% {
-    opacity: 1;
-    transform: rotate(770deg);
-    animation-timing-function: ease-out;
-  }
-
-  75% {
-    opacity: 1;
-    transform: rotate(900deg);
-    animation-timing-function: ease-out;
-  }
-
-  76% {
-    opacity: 0;
-    transform: rotate(900deg);
-  }
-
-  100% {
-    opacity: 0;
-    transform: rotate(900deg);
-  }
 }
 
 /*Site Loader CSS*/
@@ -5067,94 +4549,6 @@ div.dataTables_wrapper div.dataTables_filter input {
   }
 }
 
-.aon-scrolling-nav {
-  position: fixed;
-  top: 50%;
-  left: 0px;
-  list-style: none;
-  z-index: 99;
-  -moz-transform: translateY(-50%);
-  -webkit-transform: translateY(-50%);
-  -o-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-}
-
-.aon-scrolling-nav li {
-  width: 40px;
-  height: 40px;
-  line-height: 40px;
-  position: relative;
-  background: #ad8545;
-  margin: 3px 2px;
-  border-radius: 5px;
-  color: #fff;
-  text-align: center;
-  overflow: hidden;
-  display: flex;
-}
-
-.aon-scrolling-nav li a {
-  color: #fff;
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.aon-scrolling-nav li a i {
-  font-size: 18px;
-}
-
-.aon-scrolling-nav li span {
-  opacity: 0;
-  position: absolute;
-  top: 4px;
-  left: 100%;
-  line-height: 1;
-  background: #1295a8;
-  color: #fff;
-  padding: 8px 10px;
-  border-radius: 3px;
-  white-space: nowrap;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -ms-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-}
-
-.aon-scrolling-nav li span:before {
-  content: "";
-  position: absolute;
-  top: 10px;
-  right: 100%;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 4px 5px 4px 0;
-  border-color: transparent #1295a8 transparent transparent;
-}
-
-.aon-scrolling-nav li:hover {
-  overflow: visible;
-  background: #1295a8;
-}
-
-.aon-scrolling-nav li.active {
-  overflow: visible;
-  background: #1295a8;
-}
-
-.aon-scrolling-nav li:hover span {
-  opacity: 1;
-  left: 120%;
-}
-
-.aon-scrolling-nav li.actives span {
-  opacity: 1;
-  left: 120%;
-}
-
 .sf-doc-location-map {
   width: 100%;
   height: 100%;
@@ -5165,45 +4559,6 @@ div.dataTables_wrapper div.dataTables_filter input {
   height: 100%;
 }
 
-.aon-banner-wrap {
-  overflow: hidden;
-}
-
-.aon-banner-animate .aon-banner-pic {
-  -moz-transform: translateY(0%);
-  -webkit-transform: translateY(0%);
-  -o-transform: translateY(0%);
-  -ms-transform: translateY(0%);
-  transform: translateY(0%);
-}
-
-.aon-banner-animate .aon-banner-right {
-  -moz-transform: translateX(0%);
-  -webkit-transform: translateX(0%);
-  -o-transform: translateX(0%);
-  -ms-transform: translateX(0%);
-  transform: translateX(0%);
-}
-
-.aon-banner-wrap {
-  overflow: hidden;
-}
-
-.aon-banner2-animate .aon-banner2-pic {
-  -moz-transform: translateY(0%);
-  -webkit-transform: translateY(0%);
-  -o-transform: translateY(0%);
-  -ms-transform: translateY(0%);
-  transform: translateY(0%);
-}
-
-.aon-banner2-animate .aon-banner2-left {
-  -moz-transform: translateX(0%);
-  -webkit-transform: translateX(0%);
-  -o-transform: translateX(0%);
-  -ms-transform: translateX(0%);
-  transform: translateX(0%);
-}
 
 /*Comming Soon*/
 .sf-news-l-form.sf-news-cosoon {
@@ -5215,21 +4570,6 @@ div.dataTables_wrapper div.dataTables_filter input {
   width: calc(100% + 2px);
   border-radius: 5px 5px 0px 0px;
   margin: -1px -1px;
-}
-
-.aon-book-appoint-block {
-  padding: 20px;
-  border: 1px solid #ebebeb;
-  background: #fff;
-  border-radius: 10px;
-  transition: all 0.5s linear;
-  position: relative;
-  cursor: pointer;
-}
-
-.aon-book-appoint-block:hover {
-  border: 1px solid #ad8545;
-  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
 }
 
 .btn-primary.btn-red {
@@ -5367,38 +4707,8 @@ div.dataTables_wrapper div.dataTables_filter input {
   }
 }
 
-.fc .fc-view-harness {
-  flex-grow: 1;
-  position: relative;
-  background: #fff;
-}
-
-.fc-button-primary {
-  background-color: #ad8545 !important;
-  border-color: #ad8545 !important;
-  outline: none !important;
-}
-
-.fc .fc-button-primary:focus,
-.fc .fc-button-primary:not(:disabled).fc-button-active:focus,
-.fc .fc-button-primary:not(:disabled):active:focus {
-  box-shadow: none;
-}
 
 @media only screen and (max-width: 991px) {
-  .fc .fc-toolbar.fc-header-toolbar {
-    flex-wrap: wrap;
-  }
-
-  .fc-toolbar-chunk {
-    width: 100% !important;
-    margin-bottom: 15px;
-  }
-
-  .fc-toolbar-chunk:last-child {
-    margin-bottom: 0px;
-  }
-
   .aon-admin-heading {
     flex-wrap: wrap !important;
   }
@@ -5407,28 +4717,6 @@ div.dataTables_wrapper div.dataTables_filter input {
   .aon-admin-heading-righr {
     width: 100%;
   }
-}
-
-.datepicker table tr td.active.active,
-.datepicker table tr td.active:hover,
-.datepicker table tr td:hover {
-  color: #fff;
-  background-color: #ad8545;
-  border-color: #ad8545;
-}
-
-.datepicker table tr td.active.active:hover {
-  color: #fff;
-  background-color: #ad8545;
-  border-color: #ad8545;
-}
-
-.datepicker table tr td {
-  font-size: 16px;
-}
-
-.datepicker table tr th {
-  font-size: 12px;
 }
 
 input[placeholder],
@@ -5442,11 +4730,7 @@ input[placeholder],
   text-transform: capitalize;
 }
 
-@media (max-width: 768px) {
-  .aon-banner2-wrap {
-    padding-top: 0;
-  }
-}
+
 
 .hover-link:hover {
   color: white;
@@ -5480,44 +4764,6 @@ input[placeholder],
   color: transparent !important;
 }
 
-.owl-carousel .owl-nav button {
-  background-color: transparent !important;
-  border: none !important;
-  font-size: 24px !important;
-  color: #ad8545 !important;
-}
-
-.owl-carousel .owl-nav button.owl-prev {
-  position: absolute !important;
-  left: -50px !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-}
-
-.owl-carousel .owl-nav button.owl-next {
-  position: absolute !important;
-  right: -50px !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-}
-
-.owl-carousel .owl-dots {
-  text-align: center !important;
-  margin-top: 20px !important;
-}
-
-.owl-carousel .owl-dot {
-  display: inline-block !important;
-  width: 12px !important;
-  height: 12px !important;
-  background-color: #ad8545 !important;
-  margin: 0 5px !important;
-  border-radius: 50% !important;
-}
-
-.owl-carousel .owl-dot.active {
-  background-color: #333 !important;
-}
 
 @media (max-width: 768px) {
   .bis {
@@ -5692,49 +4938,10 @@ input[placeholder],
 }
 
 /* ------------------------------------------------------------------ Dentist Detail Page -------------------------------------------------------------------------------- */
-.bg_detail_vec1 {
-  position: absolute;
-  top: -8%;
-  left: 0%;
-  height: 600px;
-  width: 100%;
-  object-fit: cover;
-  z-index: -1;
-}
 
-.Doctor_photo_card {
-  display: inline-block;
-  background-color: var(--bg-content-color);
-  padding: 20px;
-  max-width: 422px;
-  border-radius: 25px;
-  align-content: center;
-}
 
-.Doctor_photo {
-  position: relative;
-  border-radius: 12.5px;
-  max-width: 250px;
-}
 
-.appoint_btn {
-  position: relative;
-  margin-top: 12.5px;
-  color: black;
-  border-radius: 12.5px;
-  text-align: center;
-  padding: 8px 0px;
-  cursor: pointer;
-}
 
-.Doctor_Detail_Card {
-  position: relative;
-  background-color: var(--bg-content-color);
-  margin-top: 50px;
-  padding: 40px;
-  border-radius: 25px;
-  width: 100%;
-}
 
 .Doctor_Name {
   font-family: "Barlow Condensed", sans-serif;
@@ -5743,72 +4950,6 @@ input[placeholder],
   font-weight: 500 !important;
 }
 
-.Doctor-Text {
-  font-family: "Barlow", sans-serif;
-  color: white;
-}
-
-.Doctor-Text h2,
-.Doctor_Detail_Card h2 {
-  color: #fff;
-}
-
-.Doctor-subtext {
-  display: inline-block;
-  font-family: "Barlow Condensed", sans-serif;
-  font-weight: 500;
-  font-size: 20px;
-  margin-top: 20px;
-}
-
-.Education_list li {
-  list-style: none;
-  padding-bottom: 0px !important;
-}
-
-.details_card {
-  width: 100%;
-  padding: 20px;
-  border-radius: 25px;
-  background-color: var(--bg-content-color);
-}
-
-.Loc-subtext {
-  display: inline-block;
-  font-family: "Barlow Condensed", sans-serif;
-  font-weight: 600;
-  font-size: 20px;
-  margin-bottom: 10px;
-  margin-top: 10px;
-}
-
-.address_dr {
-  margin-bottom: 20px;
-}
-
-/* review section in dentist page */
-.dentist-review-section .row {
-  background-color: var(--bg-content-color);
-  padding: 0px 20px;
-  border-radius: 25px;
-}
-
-.review-content-wrapper {
-  padding: 0px 0px 0px 12px;
-  border-radius: 25px;
-}
-
-.review-description {
-  line-height: 1.8;
-  color: #fff;
-}
-
-.review-content-wrapper .swiper-container {
-  width: 90%;
-  justify-content: center;
-  display: flex;
-  align-items: center;
-}
 
 .review-card {
   padding: 30px 0px 30px 0px;
@@ -5823,36 +4964,6 @@ input[placeholder],
   font-weight: 600;
 }
 
-.review-content-wrapper .swiper-container .swiper-button-prev {
-  left: var(--swiper-navigation-sides-offset, 27%);
-}
-
-.review-content-wrapper .swiper-container .swiper-button-prev::after,
-.review-content-wrapper .swiper-container .swiper-button-next::after {
-  content: none;
-}
-
-.review-content-wrapper .swiper-container .swiper-button-next {
-  right: var(--swiper-navigation-sides-offset, 63%);
-}
-
-.review-content-wrapper .swiper-container .swiper-button-prev,
-.review-content-wrapper .swiper-container .swiper-button-next {
-  width: 40px;
-  top: var(--swiper-navigation-top-offset, 92%);
-}
-
-.review-content-wrapper .swiper-container .swiper-button-prev::after,
-.review-content-wrapper .swiper-container .swiper-button-next::after {
-  font-size: 18px;
-  background-color: #000;
-  font-weight: 900;
-  background: var(--text-gradient) !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-clip: text !important;
-  color: transparent !important;
-}
 
 .review-card .stars {
   width: max-content;
@@ -5866,212 +4977,21 @@ input[placeholder],
   width: 85%;
 }
 
-.review-content-wrapper .swiper-container .swiper-pagination-bullet {
-  background-color: #fff !important;
-}
-
-.review-content-wrapper .swiper-container .swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-next {
-  transform: scale(0.77) !important;
-}
-
-.review-content-wrapper .swiper-container .swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-next-next {
-  transform: scale(0.55) !important;
-}
-
-.review-content-wrapper .swiper-container .swiper-pagination-bullets.swiper-pagination-horizontal {
-  bottom: var(--swiper-pagination-bottom, 30px) !important;
-}
-
-.review-content-wrapper>.swiper-pagination-bullets.swiper-pagination-bullets-dynamic,
-.review-content-wrapper .swiper-pagination-horizontal.swiper-pagination-bullets.swiper-pagination-bullets-dynamic {
-  left: 45%;
-}
-
-.review-content-wrapper .swiper-container .swiper-pagination-bullet-active {
-  background: var(--text-gradient) !important;
-}
-
-@media (max-width: 1200px) {
-  .review-content-wrapper {
-    padding: 20px 0px 10px 20px;
-  }
-
-  .review-card {
-    padding: 0px 0px 30px 0px;
-  }
-
-  .review-title {
-    font-size: 22px;
-  }
-
-  .review-card .stars {
-    font-size: 16px;
-  }
-
-  .review-description {
-    line-height: 1.6;
-    font-size: 14px;
-  }
-
-  .review-content-wrapper .swiper-container .swiper-button-prev,
-  .review-content-wrapper .swiper-container .swiper-button-next {
-    top: var(--swiper-navigation-top-offset, 93%);
-  }
-
-  .review-content-wrapper .swiper-container .swiper-button-next {
-    right: var(--swiper-navigation-sides-offset, 61%);
-  }
-}
-
-@media (max-width: 991px) {
-  .Doctor_Detail_Card {
-    padding: 30px 30px 30px;
-  }
-
-  .review-card {
-    padding: 20px 10px;
-  }
-
-  .review-title {
-    font-size: 20px;
-  }
-
-  .review-img {
-    margin-left: auto;
-    display: flex;
-  }
-
-  .review-vector {
-    width: 100%;
-    left: 18%;
-    top: 60%;
-  }
-
-  .review-content-wrapper {
-    padding: 10px 0px 10px 0px;
-  }
-
-  .review-content-wrapper .swiper-container {
-    width: 100%;
-  }
-
-  .review-content-wrapper .swiper-container .swiper-button-prev {
-    left: var(--swiper-navigation-sides-offset, 40%);
-  }
-
-  .review-content-wrapper .swiper-container .swiper-button-next {
-    right: var(--swiper-navigation-sides-offset, 42%);
-  }
-
-  .review-content-wrapper .swiper-container .swiper-button-prev,
-  .review-content-wrapper .swiper-container .swiper-button-next {
-    top: var(--swiper-navigation-top-offset, 96.5%);
-  }
-}
-
-/* .review-card  */
-@media (max-width: 875px) {
-  .bg_detail_vec1 {
-    top: -14%;
-    height: 800px;
-    object-fit: cover;
-  }
-}
-
-@media (max-width: 768px) {
-  .review-vector {
-    width: 60%;
-    left: 3%;
-    top: 66%;
-  }
-
-  .review-img {
-    width: 70%;
-  }
-}
-
 @media (max-width: 575px) {
-  .dentist-review-section .container {
-    width: 100%;
-    --bs-gutter-x: 1rem;
-  }
-
-  .bg_detail_vec1 {
-    top: 0%;
-    height: 800px;
-    object-fit: cover;
-  }
-
-  .Doctor_Detail_Card {
-    padding: 20px;
-  }
-
   .Doctor_Name {
     font-size: 20px;
     font-weight: 600;
   }
 
-  .Doctor-Text {
-    font-size: 14px;
-  }
-
-  .aon-insuranc-list .Doctor-Text {
-    padding-left: 20px;
-  }
-
-  .dentist-review-section {
-    --bs-gutter-x: 0.5rem;
-  }
-
-  .review-title {
-    font-size: 1.1rem;
-  }
 
   .review-card .stars {
     font-size: 16px;
   }
 
-  .review-card {
-    padding: 15px 0px;
-  }
-
-  .review-vector {
-    width: 60%;
-    left: 2%;
-    top: 68%;
-  }
-
-  .review-content-wrapper {
-    padding: 20px 0px;
-  }
-
-  .review-content-wrapper .swiper-container .swiper-pagination-bullets.swiper-pagination-horizontal {
-    bottom: var(--swiper-pagination-bottom, 28%) !important;
-    left: 46.5%;
-  }
-
-  .review-content-wrapper .swiper-container .swiper-button-prev,
-  .review-content-wrapper .swiper-container .swiper-button-next {
-    top: var(--swiper-navigation-top-offset, 97%);
-  }
-
-  .review-content-wrapper .swiper-container .swiper-button-prev {
-    left: var(--swiper-navigation-sides-offset, 34%);
-  }
-
-  .review-content-wrapper .swiper-container .swiper-button-next {
-    right: var(--swiper-navigation-sides-offset, 34%);
-  }
 }
 
 /* ------------------------------------------ Gallary Page Css --------------------------------------------------------- */
-.image-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 100px;
-  grid-auto-rows: auto;
-  z-index: 1;
-}
+
 
 .intro-section {
   position: fixed;
@@ -6124,10 +5044,6 @@ input[placeholder],
   /* border: 1px solid red; */
 }
 
-.single-image {
-  grid-column: span 2;
-  max-width: 100%;
-}
 
 @media (max-width: 1200px) {
   .vertical-Image {
@@ -6229,8 +5145,6 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 
 /* new desing footer */
 .new-footer {
-  /* border: 2px solid #fff; */
-  /* background-color: #000; */
   padding: 5px 0px 50px;
   background: url("../footer-bg7.png"), rgba(0, 0, 0, 1);
   background-repeat: no-repeat;
@@ -6318,41 +5232,13 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   color: #fff;
 }
 
-/* .new-footer-content{
-  background-image: url("../footer-bg1.png");
-  width:100%;
-  height: 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  position: relative;
-} */
 .new-footer-content {
-  /* background: url("../footer-bg.png") no-repeat center/cover, rgba(0, 0, 0, 0.7); */
   padding: 5px 0px 30px;
   position: relative;
   width: 100%;
   height: 100%;
 }
 
-/* .new-footer-content .overlay {
-  width: 100%;
-  height: 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  position: relative;
-  border-radius: 15px;
-} */
-/* .new-footer-content .overlay {
-  position: relative;
-  padding: 50px 0px;
-  inset: 0;
-  background-color: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  z-index: 2;
-} */
 .new-footer-content .container {
   padding: 20px 50px 10px;
 }
@@ -6388,9 +5274,6 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 .new-footer-logo {
   margin: 3% auto 4%;
   width: 174px;
-  /* height: 75px; */
-  /* height: 65px; */
-  /* border: 1px solid honeydew; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6415,11 +5298,7 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 }
 
 .new-footer-bottom {
-  /* background: linear-gradient(90deg, #c3942f, #d89c27 4px, transparent 3px, transparent 7px) border-box; */
-  /* border-image: linear-gradient(90deg, #c3942f, #d89c27 4px, transparent 3px, transparent 7px) border-box; */
-  /* border-top: 2px dashed #c3942f; */
   padding: 10px 0px;
-  /* padding: 0px 0px 40px; */
   width: 85%;
   margin: auto;
 }
@@ -6442,7 +5321,6 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   color: transparent !important;
   background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
-  /* background: linear-gradient(100.47deg, #C3942F 28.12%, #D89C27 41.31%, #E7DC96 53.42%, #DFC86F 65.82%, #D89C27 75.96%, #C99C30 84.47%); */
 }
 
 .new-footer-wrapper {
@@ -6580,9 +5458,6 @@ div:where(.swal2-container) div:where(.swal2-popup) {
     padding: 12px 0px 40px;
   }
 
-  /* .new-footer-letter-wrapper {
-    padding: 12px;
-  } */
   .new-footer-letter-wrapper {
     border-radius: 12px;
   }
@@ -6599,47 +5474,28 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 
 @media (max-width: 768px) {
 
-  /* .new-footer .footer-links{
-    justify-content: space-between;
-    gap:1.3rem;
-  } */
   .new-footer {
     padding: 0px 0px 40px;
   }
 
   .new-footer-logo {
-    /* margin: 3% auto 6%; */
     margin: 4.5% auto 8%;
     width: 30%;
   }
 
   .new-footer-content .container {
     padding: 25px 0px 20px 5px;
-    /* padding: 35px 0px 20px; */
   }
 
   .new-footer-social-links.container {
     padding: 0px 0px 0px !important;
   }
 
-  /* .new-footer-letter-wrapper .form-control{
-    width:60%
-  } */
   .new-footer-letter-wrapper .sf-sb-btn-footer {
     padding: 4px 30px;
     font-size: 16px;
   }
 
-  /* .new-footer-letter-wrapper {
-    display: block;
-  } */
-  /* .new-footer-letter-wrapper .form-control {
-    width: 100%;
-    margin-bottom: 15px;
-  }
-  .new-footer-letter-wrapper button{
-    width:100%;
-  } */
   .new-footer-letter-title {
     font-size: 18px;
   }
@@ -6674,8 +5530,6 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 
 @media (max-width: 576px) {
   .new-footer {
-    /* background-size: 100% 500px; */
-    /* background: url('../footer-bg.png') no-repeat bottom/cover, rgba(0, 0, 0, 1); */
     background-size: 100% auto;
     background-image: none;
   }
@@ -6718,8 +5572,6 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   .new-footer-bottom {
     padding: 10px 0px 8px;
     width: 70%;
-    /* border-top: 2px dashed #c3942f; */
-    /* width:97%; */
   }
 
   .new-footer-letter-wrapper {
@@ -6751,9 +5603,6 @@ div:where(.swal2-container) div:where(.swal2-popup) {
     padding: 5px 0px 3px !important;
   }
 
-  /* .new-footer .container{
-      padding: 0px 5px;
-    } */
   .new-footer .footer-links .footer-link {
     margin-bottom: 0px;
   }
@@ -6804,74 +5653,6 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   }
 }
 
-.permission-helper-wrapper {
-  background-color: #1c1c1c;
-  border: 1px solid #333;
-  border-radius: 12px;
-  padding: 30px 20px;
-  margin: 30px auto;
-  max-width: 720px;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
-}
-
-.permission-helper-wrapper h4 {
-  color: #ffffff;
-  font-size: 1.5rem;
-}
-
-.permission-helper-wrapper p {
-  color: #ccc;
-  font-size: 1rem;
-  max-width: 600px;
-  margin: auto;
-}
-
-.permission-helper-wrapper .helper-img {
-  margin-top: 20px;
-  border-radius: 8px;
-  max-height: 300px;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-}
-
-/* Fix Lightbox2 for mobile */
-/* .lb-outerContainer {
-  width: 100% !important;
-  max-width: 100% !important;
-  height: auto !important;
-}
-
-.lb-image {
-  width: 100% !important;
-  height: auto !important;
-  max-height: 90vh !important; 
-}
-
-.lb-dataContainer {
-  font-size: 14px !important;
-} */
-
-/* new dentist page design css code */
-.new-appoint_btn {
-  padding: 12px 12px;
-  text-align: center;
-  display: block;
-  font-size: 20px;
-  color: #fff;
-  width: 100% !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: auto;
-}
-
-.new-appoint_btn svg {
-  height: 25px;
-  width: auto;
-  margin-top: 9px;
-  background-color: transparent;
-  display: inline-block;
-}
 
 .new-dentist-section .row {
   --bs-gutter-x: 2rem;
@@ -7475,10 +6256,6 @@ body.modal-open {
     font-size: 40px;
   }
 
-
-  /* .PatientReviewSwiper .card-header{
-    height: 160px;
-  } */
   .PatientReviewSwiper .card-header,
   .PatientReviewSwiper .card-footer {
     padding: 12px;
@@ -7537,7 +6314,6 @@ body.modal-open {
 
   .dentists-top {
     left: 3%;
-    /* bottom: 18.5%; */
     bottom: 24.5%;
   }
 
@@ -7545,9 +6321,6 @@ body.modal-open {
     bottom: 4%;
   }
 
-  .new-appoint_btn {
-    width: 100% !important;
-  }
 
   .dentists-top h2 {
     font-size: 22px;
@@ -7561,7 +6334,6 @@ body.modal-open {
     margin-bottom: 10px !important;
     line-height: 23px;
   }
-
 }
 
 @media (max-width: 991px) {
@@ -7571,7 +6343,6 @@ body.modal-open {
   }
 
   .dentists-img {
-    /* border: 1px solid #fff; */
     border-radius: 10px;
     max-width: 300px;
   }
@@ -7581,16 +6352,12 @@ body.modal-open {
     text-align: center;
   }
 
-  .new-appoint_btn {
-    padding: 8px 10px;
-    font-size: 18px;
-  }
+
 
   .dentists-request-section .usd-logo-img {
     width: 22%;
     top: -3.5%;
     left: 40%;
-    /* padding: 0px 15px; */
   }
 
   .dentists-request-wrapper h2 {
@@ -7627,9 +6394,6 @@ body.modal-open {
     font-size: 16px;
   }
 
-  .new-appoint_btn {
-    width: 52% !important;
-  }
 }
 
 @media (max-width: 768px) {
@@ -7653,9 +6417,6 @@ body.modal-open {
     font-size: 22px;
   }
 
-  /* .new-dentists-subtitle{
-    font-size: 15px;
-  } */
   .dentists-request-section {
     padding-top: 5px;
   }
@@ -7701,9 +6462,6 @@ body.modal-open {
     font-size: 16px;
   }
 
-  .new-appoint_btn {
-    width: 79% !important;
-  }
 }
 
 @media (max-width: 576px) {
@@ -7800,7 +6558,6 @@ body.modal-open {
     width: 34%;
     top: -4.3%;
     left: 34%;
-    /* padding: 0px 10px; */
   }
 
   .dentists-request-wrapper h2 {
@@ -7850,27 +6607,10 @@ body.modal-open {
     font-size: 16px;
   }
 
-  .new-appoint_btn {
-    width: 100% !important;
-    font-size: 16px;
-  }
-
-  .new-appoint_btn svg {
-    margin-top: 6px;
-    width: 27px;
-  }
-
   .dentists-gallery-section {
     padding: 20px 0px 0px;
   }
 
-  /* .new-dentist-contain{
-    display: block !important;
-  }
-  .new-dentist-content{
-    border-right: 0px ;
-    width:100%;
-  } */
 }
 
 @media(max-width:480px) {
@@ -7920,13 +6660,8 @@ body.modal-open {
     object-fit: cover;
   }
 
-  /* .new-dentist-contain .new-dentists-content-title{
-    font-size: 12px;
-  } */
 }
 
-/* quick links page new design */
-/* quicks links */
 .quicks-links-section {
   padding: 0px 80px 0px;
   margin: 6% auto 3%;
@@ -7981,10 +6716,6 @@ body.modal-open {
   letter-spacing: 0.5px;
 }
 
-/* .quick-link-wrapper h2.text-white{
-  margin-bottom: 50px !important;
-  font-size: 28px;
-} */
 .quick-link-wrapper .social-media-content .col-lg-4 {
   margin-bottom: 15px;
 }
@@ -8116,19 +6847,6 @@ body.modal-open {
   position: relative;
 }
 
-/* .thank-you-wrapper{
-  background-image: url("/static/Thankyou-bg3.png");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-position: center;
-  width: 100%;
-  height: 100%;
-  padding: 85px 0px 30px;
-  border-image-source:  linear-gradient(100.47deg, #C3942F 28.12%, #D89C27 41.31%, #DFC86F 53.42%, #E7DC96 65.82%, #DFC86F 75.96%, #D89C27 84.47%) !important;
-  border-image-slice:1;
-  border-image-width:2px;
-  border-radius: 25px;
-} */
 .thank-you-wrapper {
   position: relative;
   padding: 85px 0px 30px;
@@ -8138,18 +6856,14 @@ body.modal-open {
   width: 100%;
   height: 100%;
   border-radius: 20px;
-  /* overflow: hidden;  */
 }
 
-/* GOLDEN GRADIENT BORDER */
 .thank-you-wrapper::before {
   content: "";
   position: absolute;
   inset: 0;
   padding: 2px;
-  /* border width */
   border-radius: inherit;
-  /* same 25px radius */
   background: linear-gradient(100deg,
       #c3942f,
       #d89c27,
@@ -8446,9 +7160,6 @@ body.modal-open {
     font-size: 14px;
   }
 
-  /* .social-media-wrapper .social-media-content{
-    gap:20px;
-  } */
   .social-media-wrapper h2 {
     font-size: 18px;
   }
@@ -8541,37 +7252,21 @@ body.modal-open {
 .AwardSwiper {
   overflow: hidden;
   cursor: grab;
-  /* background-color: #fff; */
 }
 
 .AwardSwiper::before {
-  /* background: linear-gradient(270deg, rgba(0, 0, 0, 0) 0%,#000000 100%); */
-  /* Rectangle 19347 */
-  /* #savi579038 */
-  /* background: linear-gradient(90deg, #000000 0%, rgba(0, 0, 0, 0.5) 12.5%, rgba(0, 0, 0, 0.25) 25%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.25) 75%, rgba(0, 0, 0, 0.5) 87.5%, #000000 100%); */
-  /* background: linear-gradient(90deg,#000000 0%,rgba(0,0,0,0) 50%,#000000 100%); */
-  /* background: linear-gradient(90deg, #000000 0%, rgba(0, 0, 0, 0.5) 12.5%, rgba(0, 0, 0, 0.25) 15%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.25) 60%, rgba(0, 0, 0, 0.5) 87.5%, #000000 100%); */
   background: linear-gradient(90deg, #000000 0%, rgba(0, 0, 0, 0.5) 5%, rgba(0, 0, 0, 0.2) 12%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.2) 88%, rgba(0, 0, 0, 0.5) 95%, #000000 100%);
-  /* background: linear-gradient(90deg, #000000 0%, #d89c27 1.5%, #00a900 50%,  #022278 98.5%, #000000 100%); */
   position: absolute;
   z-index: 999;
-  /* color:#00a900; */
   content: "";
   width: 101%;
   height: 100%;
   transform: translate(-1px, 0px);
 }
 
-/* .AwardSwiper .swiper-wrapper{
-  transition-timing-function: linear !important;
-} */
+
 .AwardSwiper .swiper-slide {
-  /* width: auto !important; */
-  /* min-width: 32%; */
-  /* min-width: 260px; */
-  /* height: 220px; */
   background-color: #202020;
-  /* background: #111; */
   color: #fff;
   border-radius: 0px;
   display: flex;
@@ -8629,10 +7324,6 @@ body.modal-open {
 }
 
 @media(min-width:1300px) {
-
-  /* .award-section .col-lg-2{
-    width: 25%;
-  } */
   .award-section h2 {
     font-size: 45px;
   }
@@ -8671,13 +7362,6 @@ body.modal-open {
     font-size: 41px;
   }
 
-  /* .AwardSwiper::before{
-    background: linear-gradient(90deg, #000000 1%, rgba(0,0,0,0.3) 4%,rgba(0,0,0,0.2) 9%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.2) 88% ,rgba(0, 0, 0, 0.5) 95%, #000000 100%);
-    
-    
-    background: linear-gradient(90deg, #000000 0%, rgba(216,156,39,0.5) 3%,rgba(0,169,0,0.2) 12%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.2) 88% ,rgba(0, 0, 0, 0.5) 95%, #000000 100%);
-    background: linear-gradient(90deg, #000000 0%, rgba(0, 0, 0, 0.3) 5%,rgba(0, 0, 0, 0.2) 6%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.2) 88% ,rgba(0, 0, 0, 0.5) 95%, #000000 100%);
-  } */
 }
 
 @media(max-width:991px) {
