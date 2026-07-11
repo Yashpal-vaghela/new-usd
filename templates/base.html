@@ -1,12 +1,13 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 
 <head>
    
 	<!-- META -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
     <!-- MOBILE SPECIFIC -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     {% block seo %} {% endblock %}	
@@ -143,7 +144,7 @@
 	<div class="page-wraper">
      
        {% include 'header.html' %}
-        
+        {% include 'chat_bot.html' %}
         {% block body %}
             
         {% endblock body %}
