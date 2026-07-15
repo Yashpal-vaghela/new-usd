@@ -1,0 +1,124 @@
+{% comment %} {% extends 'base.html' %} {% endcomment %}
+{% load static %}
+{% block seo%}
+{% endblock seo%}
+{% block header %}
+{% endblock header %}
+{% block css %}
+<link href="{% static 'css/new_contact_section.css' %}" rel="stylesheet" />
+{% endblock css %}
+{% block body %}
+
+<!-- Content -->
+<p class="text-center position-relative text-header mb-0 cool d-table m-auto contact_heading_text" data-aos="fade-left"
+    data-aos-duration="400" data-aos-delay="300">Contact Us</p>
+<h2 class="text-header-subtitle text-center" data-aos="fade-right" data-aos-duration="400" data-aos-delay="400">Get in Touch - Let's Talk About Your Smile</h2>
+
+{% comment %} <p class="text-center position-relative text-header mb-0 cool d-table m-auto contact_heading_text">Contact
+    Us</p>
+<h2 class="text-header-subtitle text-center">Get in Touch - Let's Talk About Your Smile</h2> {% endcomment %}
+
+<div class="container contact_section_main">
+    <div class="right_side_main">
+        <div class="right_logo_main">
+            <img src="{% static 'images/contect_form_icon_image/Contact_logo_gray_color.webp' %}" alt="logo"
+                class="usd_gary_logo" />
+        </div>
+        <div class="light_image_main">
+            <img src="{% static 'images/contect_form_icon_image/Contact_light_image.webp' %}" alt="light image"
+                class="contact_light_image" />
+        </div>
+        <div class="bottom_char_img_main">
+            <img src="{% static 'images/contect_form_icon_image/Contact_char_image.webp' %}" alt="char image"
+                class="bottom_char_img" />
+        </div>
+    </div>
+
+    <div class="left_side_main">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="input_filds_main">
+                <label class="input_labal">Full Name</label>
+                <div class="input_filds_and_icon_main">
+                    <div class="icon_main">
+                        <img src="{% static 'images/contect_form_icon_image/user_icon.svg' %}" alt="user icon"
+                            class="input_icon" />
+                    </div>
+                    <div class="input_fild_main">
+                        <input type="text" name="full_name" placeholder="Enter your name..." class="input_filds"
+                            required />
+                    </div>
+                </div>
+            </div>
+
+            <div class="input_filds_main">
+                <label class="input_labal">Email</label>
+                <div class="input_filds_and_icon_main">
+                    <div class="icon_main">
+                        <img src="{% static 'images/contect_form_icon_image/e-mail_icon.svg' %}" alt="user icon"
+                            class="input_icon" />
+                    </div>
+                    <div class="input_fild_main">
+                        <input type="email" name="email" placeholder="Enter your email..." class="input_filds"
+                            required />
+                    </div>
+                </div>
+            </div>
+
+            <div class="input_filds_main">
+                <label class="input_labal">Mobile Number</label>
+                <div class="input_filds_and_icon_main">
+                    <div class="icon_main">
+                        <img src="{% static 'images/contect_form_icon_image/phone_icon.svg' %}" alt="user icon"
+                            class="input_icon" />
+                    </div>
+                    <div class="input_fild_main">
+                        <input type="tel" name="phone" class="input_filds" placeholder="Enter your phone number..."
+                            maxlength="10" inputmode="numeric" pattern="[0-9]{10}"
+                            oninput="this.value = this.value.replace(/\D/g, '').slice(0, 10)" required />
+                    </div>
+                </div>
+            </div>
+
+            <div class="input_filds_main">
+                <label class="input_labal">City</label>
+                <div class="input_filds_and_icon_main">
+                    <div class="icon_main">
+                        <img src="{% static 'images/contect_form_icon_image/city_icon.svg' %}" alt="user icon"
+                            class="input_icon" />
+                    </div>
+                    <div class="input_fild_main">
+                        <input type="text" name="city" placeholder="Enter your city..." class="input_filds" required />
+                    </div>
+                </div>
+            </div>
+
+            <div class="input_filds_main">
+                <label class="input_labal">Message</label>
+                <div class="input_filds_and_icon_main">
+                    <div class="icon_main">
+                        <img src="{% static 'images/contect_form_icon_image/e-mail_icon.svg' %}" alt="user icon"
+                            class="input_icon" />
+                    </div>
+                    <div class="input_fild_main">
+                        <textarea name="message" id="message" class="input_filds" placeholder="Enter your message..."
+                            rows="4" required></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact_recaptcha_main">
+                {% comment %} <div class="g-recaptcha" data-sitekey="{{ RECAPTCHA_SITE_KEY }}"></div> {% endcomment %}
+            </div>
+
+            <div class="submit_button_main bat">
+                <button type="submit">Contact Now</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Content END-->
+{% endblock body %}
+{% block js %}
+
+{% endblock js %}

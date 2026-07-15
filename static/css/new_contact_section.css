@@ -1,0 +1,411 @@
+.contact_heading_text {
+  margin-top: 20px !important;
+}
+
+.contact_section_main {
+  height: auto;
+  margin-top: 24px;
+  margin-bottom: 30px;
+  display: flex;
+  gap: 20px;
+}
+
+.right_side_main {
+  width: 50%;
+  height: auto;
+  border-top: 1px solid #838383c2;
+  border-bottom: 1px solid #838383c2;
+  border-left: 1px solid #838383c2;
+  border-right: 1px solid #838383c2;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  background: url("../../static/images/contect_form_icon_image/Contact_bg_desktop.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.right_logo_main {
+  width: 100%;
+  height: 78px;
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.usd_gary_logo {
+  width: 189px;
+  height: 78px;
+  object-fit: contain;
+}
+
+.light_image_main {
+  width: 275px;
+  height: 270px;
+  margin-top: 35px;
+  transform: rotate(-2.3deg);
+  margin-left: -8px;
+}
+
+.contact_light_image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.bottom_char_img_main {
+  width: 100%;
+  height: 377px;
+  margin-top: 20px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.bottom_char_img {
+  width: 560px;
+  object-fit: contain;
+}
+
+.left_side_main {
+  width: 50%;
+  height: auto;
+  border-top: 1px solid #838383c2;
+  border-bottom: 1px solid #838383c2;
+  border-left: 1px solid #838383c2;
+  border-right: 1px solid #838383c2;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  background: url("../../static/images/contect_form_icon_image/Contact_bg_desktop.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  padding: 35px;
+}
+
+.input_filds_main {
+  width: 100%;
+  height: auto;
+  margin-bottom: 14px;
+}
+
+.input_labal {
+  font-size: 18px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+  margin-left: 3px;
+}
+
+.input_filds_and_icon_main {
+  width: 100%;
+  min-height: 50px;
+  border: 1px solid rgba(44, 44, 44, 1);
+  background-color: black;
+  border-radius: 8px;
+  padding: 5px 16px;
+  display: flex;
+}
+
+.icon_main {
+  width: 40px;
+  max-height: 38px;
+  border-right: 1px solid rgba(44, 44, 44, 1);
+  display: flex;
+  align-items: start;
+  padding-top: 8px;
+}
+
+.input_icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.input_fild_main {
+  height: 100%;
+  flex-grow: 1;
+  margin-left: 10px;
+  margin-top: 5px;
+}
+
+.input_filds {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 16px;
+  font-weight: 400;
+  color: #fff;
+  font-family: inherit;
+}
+
+textarea.input_filds {
+  height: auto;
+  resize: none;
+  padding: 0px;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+textarea.input_filds::-webkit-scrollbar {
+  display: none;
+}
+
+.contact_recaptcha_main {
+  width: 100%;
+  height: 80px;
+  border: 1px solid white;
+}
+
+.submit_button_main {
+  width: 100%;
+  height: 60px;
+  border: 1px solid rgba(44, 44, 44, 1);
+  margin-top: 20px;
+  border-radius: 8px;
+}
+
+.submit_button_main>button {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 22px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 1);
+  font-family: inherit;
+}
+
+@media (max-width: 1300px) {
+  .right_side_main {
+    background: url("../../static/images/contect_form_icon_image/Contact_bg_mini_laptop.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .left_side_main {
+    background: url("../../static/images/contect_form_icon_image/Contact_bg_mini_laptop.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .bottom_char_img {
+    width: 501px;
+  }
+
+  .input_filds_main {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .bottom_char_img_main {
+    height: 362px;
+    margin-top: 0px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .right_side_main {
+    background: url("../../static/images/contect_form_icon_image/Contact_bg_tablet_horizontally.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .left_side_main {
+    background: url("../../static/images/contect_form_icon_image/Contact_bg_tablet_horizontally.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 30px 20px;
+  }
+
+  .contact_section_main {
+    gap: 15px;
+  }
+
+  .usd_gary_logo {
+    width: 158px;
+  }
+
+  .right_logo_main {
+    margin-top: 20px;
+  }
+
+  .bottom_char_img {
+    width: 420px;
+  }
+
+  .light_image_main {
+    width: 240px;
+    height: 270px;
+    margin-top: 65px;
+  }
+
+  .bottom_char_img_main {
+    height: 327px;
+  }
+}
+
+@media (max-width: 992px) {
+  .contact_section_main {
+    flex-direction: column;
+    gap: 0px;
+  }
+
+  .right_side_main {
+    width: 100%;
+    border-top: 1px solid #838383c2;
+    border-bottom: none;
+    border-left: 1px solid #838383c2;
+    border-right: 1px solid #838383c2;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    background: url("../../static/images/contect_form_icon_image/Contact_bg_tablet_Vertical_right_side.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .left_side_main {
+    width: 100%;
+    border-top: 0px;
+    border-bottom: 1px solid #838383c2;
+    border-left: 1px solid #838383c2;
+    border-right: 1px solid #838383c2;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    background: url("../../static/images/contect_form_icon_image/Contact_bg_tablet_Vertical_left_side.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .bottom_char_img_main {
+    align-items: start;
+    justify-content: start;
+    margin-left: 30px;
+  }
+
+  .bottom_char_img {
+    width: 479px;
+  }
+
+  .light_image_main {
+    width: 240px;
+    height: 270px;
+    margin-top: 40px;
+  }
+}
+
+@media (max-width: 576px) {
+  .right_side_main {
+    background: url("../../static/images/contect_form_icon_image/Contact_bg_mobile_Vertical_right_side.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .usd_gary_logo {
+    width: 132px;
+    height: 55px;
+  }
+
+  .right_logo_main {
+    margin-top: 16px;
+    height: 55px;
+  }
+
+  .light_image_main {
+    width: 211px;
+    height: 206px;
+    margin-top: 21px;
+  }
+
+  .bottom_char_img_main {
+    margin-left: 0px;
+    height: 200px;
+  }
+
+  .bottom_char_img {
+    width: 306px;
+    margin-left: 30px;
+  }
+
+  .left_side_main {
+    background: url("../../static/images/contect_form_icon_image/Contact_bg_mobile_Vertical_left_side.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 17px 12px;
+  }
+
+  .input_labal {
+    font-size: 16px;
+  }
+
+  .input_filds {
+    font-size: 14px;
+  }
+
+  .input_icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+  }
+
+  .input_filds_and_icon_main {
+    padding: 5px 10px;
+  }
+
+  .icon_main {
+    width: 32px;
+    max-height: 38px;
+    padding-top: 8px;
+  }
+
+  .input_fild_main {
+    margin-left: 5px;
+  }
+
+  .input_filds_main {
+    margin-bottom: 5px;
+  }
+
+  .submit_button_main {
+    height: 45px;
+    margin-top: 15px;
+  }
+
+  .submit_button_main>button {
+    font-size: 18px;
+  }
+
+  .contact_recaptcha_main {
+    margin-top: 10px;
+  }
+}
