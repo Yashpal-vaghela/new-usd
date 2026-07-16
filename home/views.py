@@ -8,7 +8,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from account.models import *
-from home.forms import ContactForm, DentistConnectForm
+from home.forms import ContactForm, DentistConnectForm, ContactHomePageForm
 from django.db.models import Count,Q
 from django.core.paginator import Paginator
 from hm.pre import get_location_info
@@ -100,8 +100,65 @@ def home(request):
                     "slug": clinic.slug
                 })
             return JsonResponse(suggestion, safe=False)
+    if request.method == 'POST':
+        form = ContactHomePageForm(request.POST)
+        # recaptcha_response = request.POST.get('g-recaptcha-response')
+        # data = {
+        #     'secret': settings.RECAPTCHA_SECRET_KEY,
+        #     'response': recaptcha_response,
+        # }
+        # r = requests.post("https://www.google.com/recaptcha/api/siteverify", data=data)  # <-- FIXED
+        # result = r.json()
 
+        # if not result.get('success'):
+        #     messages.error(request, 'Invalid reCAPTCHA. Please try again.')
+        #     return redirect(request.META.get('HTTP_REFERER','home:home'))
+        if form.is_valid():
+            submission = form.save()
+            current_datetime_ist = timezone.localtime(timezone.now())
+            formatted_datetime = current_datetime_ist.strftime("%d-%m-%Y %I:%M %p")
+            context_dict = {
+                "Name": submission.name,
+                "Email": submission.email,
+                "Phone": submission.phone,
+                "City": submission.city,
+                "Message": submission.message,
+                "Page URL": request.META.get("HTTP_REFERER", "Not available")
+            }
+            threading.Thread(
+                target=send_contact_email_async,
+                args=(context_dict,),
+                daemon=True
+            ).start()
 
+            bikai_payload  ={
+                "Name": submission.name,
+                "Email": submission.email,
+                "Contact": submission.phone,
+                "City": submission.city,
+                "Message": submission.message,
+                "DateTime": formatted_datetime,
+            }
+            bikai_url ="https://bikapi.bikayi.app/chatbot/webhook/N8eHI9BWzqVPK7RnXu2xs5qIQt23?flow=webleads3220"
+            headers = {
+                "Content-Type": "application/json",
+            }
+            try:
+                crm_response = requests.post(
+                    bikai_url,
+                    json=bikai_payload,
+                    headers=headers,
+                    timeout=10,
+                )
+                crm_response.raise_for_status()
+            except requests.exceptions.RequestException as e:
+                messages.warning(request, f"Form saved but CRM sync failed: {str(e)}")
+
+            return redirect('home:thankyou')
+        else:
+            messages.error(request, 'Something went wrong! Please try again.')
+            return redirect('home:home')
+    
     reviews = [
         {id:1,'doctor_name':'Dr. Priyanka Sharma','review':"I never imagined my smile could look this great. The entire process was smooth and tailored to my needs. I'm so grateful to the team and my smile designer!"},
         {id:2,'doctor_name':'Dr. Anjali Mehta','review':'My experience was beyond my expectations. The attention to detail and personalized care I received was truly outstanding. Highly recommend!'},
@@ -141,7 +198,8 @@ def home(request):
       'review': reviews,      
       'city_name': city_name,
       'a_city': a_city,
-      'awards':awards
+      'awards':awards,
+    #   'RECAPTCHA_SITE_KEY': settings.RECAPTCHA_SITE_KEY
     }
     return render(request, 'index.html', context)
 # def home(request):
@@ -520,7 +578,7 @@ def search_city_dentists(request, city_name):
 def find_dentist_d(request, pk):
     try:
         # Try to get Dentist by slug
-        data = Dentist.objects.get(slug=pk)
+        data = DentistDetails.objects.get(slug=pk)
     except Dentist.DoesNotExist:
         # If not found, check DentistRedirect
         redirect_entry = get_object_or_404(DentistRedirect, old_slug=pk)
@@ -904,6 +962,7 @@ def contact(request):
                 "Email":  submission.email,
                 "Phone": submission.phone,
                 "City": submission.city,
+                "Subject": submission.subject,
                 "Message": submission.message,
                 "Page URL": request.META.get("HTTP_REFERER", "Not available")
             }
@@ -1252,3 +1311,12 @@ def dentistCitySitemap(request):
         urlset.append(url_info)
     xml_content = render_to_string('sitemap-best-densits-cities.xml', {'urlset': urlset})
     return HttpResponse(xml_content, content_type='application/xml')
+
+def newgallery(request):
+    galleryimage = Hgallery.objects.all().order_by('?')
+    context_dict = {'img':galleryimage}
+    return render(request,'new-gallery.html',context_dict)
+
+
+def beforeaftergallery(request):
+    return render(request, 'before-after-gallery.html')

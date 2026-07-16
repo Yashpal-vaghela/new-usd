@@ -10,6 +10,11 @@ class DentistAdmin(ImportExportModelAdmin):
     search_fields = ('name', 'city__city', 'contact')
     list_filter = ('status', 'city')
 
+class DentistDetailsAdmin(ImportExportModelAdmin):
+    list_display = ('name', 'city', 'contact', 'status')
+    search_fields = ('name', 'city__city', 'contact')
+    list_filter = ('status', 'city')
+
 class BlogAdmin(admin.ModelAdmin):
     list_display = ('h1', 'author', 'published', 'status')
     search_fields = ('h1', 'author__name', 'keyword')
@@ -51,7 +56,7 @@ class PatientReviewAdmin(admin.ModelAdmin):
     search_fields = ('patient_name', 'dentist__name')
     list_filter = ('rating', 'created_at')
 
-class UserSubmissionAdmin(admin.ModelAdmin):
+class UserSubmissionAdmin(ImportExportModelAdmin):
     list_display = ('first_name', 'last_name', 'phone', 'email', 'city', 'doctor_name', 'created_at')
     search_fields = ('first_name', 'last_name', 'phone', 'email', 'doctor_name')
     list_filter = ('city', 'doctor_name', 'created_at')
@@ -99,12 +104,18 @@ class HgalleryAdmin(admin.ModelAdmin):
         return "(No Image)"
 
     image_preview.short_description = "Preview"
+
+class ContactHomePageAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'phone','city', 'date', 'message')
+    search_fields = ('name', 'email', 'phone')
+    list_filter = ('date',)
     
 
 admin.site.register(Location)
 admin.site.register(City)
 admin.site.register(Specializations)
 admin.site.register(Dentist, DentistAdmin)
+admin.site.register(DentistDetails, DentistDetailsAdmin)
 admin.site.register(Image)
 admin.site.register(Rating)
 admin.site.register(Category)
@@ -125,3 +136,4 @@ admin.site.register(BeforeAfter, BeforeAfterAdmin)
 admin.site.register(NewsletterSubscriber, NewsletterSubscriberAdmin)
 admin.site.register(SmileDesignLead, SmileDesignLeadAdmin)
 admin.site.register(Awards, AwardsAdmin)
+admin.site.register(ContactHomePage, ContactHomePageAdmin)

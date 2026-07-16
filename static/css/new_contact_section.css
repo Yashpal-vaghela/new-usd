@@ -171,14 +171,14 @@ textarea.input_filds::-webkit-scrollbar {
 .contact_recaptcha_main {
   width: 100%;
   height: 80px;
-  border: 1px solid white;
+  /* border: 1px solid white; */
 }
 
 .submit_button_main {
   width: 100%;
   height: 60px;
   border: 1px solid rgba(44, 44, 44, 1);
-  margin-top: 20px;
+  margin-top: 10px;
   border-radius: 8px;
 }
 

@@ -118,9 +118,48 @@ class Dentist(models.Model):
     
     def get_absolute_url(self):
         return reverse("home:dentist_detail", kwargs={"slug": self.slug})
+
+class DentistDetails(models.Model):
+    status = models.BooleanField(default=False)
+    h1  = models.CharField(max_length = 156)
+    title = models.CharField(max_length=300,blank=True, null=True)
+    name = models.CharField(max_length=1256)
+    certificate_code = models.CharField(max_length=300, blank=True, null=True)
+    slug = models.CharField(max_length=1256)
+    canonical = models.CharField(max_length = 900,blank=True, null=True, default="https://ultimatesmiledesign.com/")
+    description = models.TextField(max_length = 15622, blank=True, null=True)
+    contact = models.CharField(max_length=300)
+    clinic_name = models.CharField(max_length=1256, blank=True, null=True)
+    address = models.TextField(max_length = 15622, blank=True, null=True)
+    city = models.ForeignKey(City, on_delete=models.CASCADE,blank=True, null=True)
+    state = models.CharField(max_length=300,blank=True, null=True)
+    lat = models.FloatField(blank=True, null=True)
+    long = models.FloatField(blank=True, null=True)
+    iframe = models.TextField(max_length=1300,blank=True, null=True)
+    details_page_image  = models.ImageField(upload_to="DentistImage/details-page",blank=True, null=True)
+    list_page_image  = models.ImageField(upload_to="DentistImage/list-page",blank=True, null=True)
+    schema = models.TextField(max_length = 15622, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        # If the user left it as the default or empty, auto-generate from slug
+        if self.canonical in [None, "", "https://ultimatesmiledesign.com/"] and self.slug:
+            slug_val = self.slug.lstrip('/')
+            self.canonical = f"https://ultimatesmiledesign.com/{slug_val}"
+        # If the user typed a custom link but forgot the domain, prepend it
+        elif self.canonical and not self.canonical.startswith('http'):
+            val = self.canonical.lstrip('/')
+            self.canonical = f"https://ultimatesmiledesign.com/{val}"
+            
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
     
+    def get_absolute_url(self):
+        return reverse("home:dentist_detail", kwargs={"slug": self.slug})
+
 class PatientReview(models.Model):
-    dentist = models.ForeignKey(Dentist, on_delete=models.CASCADE, related_name='reviews')
+    dentist = models.ForeignKey(DentistDetails, on_delete=models.CASCADE, related_name='reviews')
     patient_name = models.CharField(max_length=300)
     review = models.TextField(max_length=2000)
     reviewlink= models.URLField(max_length=2000, blank=True, null=True)
@@ -347,4 +386,15 @@ class Awards(models.Model):
     def save(self, *args, **kwargs):
         self.alt_text = self.name
         super().save(*args, **kwargs)
+
+class ContactHomePage(models.Model):
+    name =models.CharField(max_length = 1256,blank=True, null=True)
+    email = models.CharField(max_length = 1256,blank=True, null=True)
+    phone = models.CharField(max_length = 156)
+    city = models.CharField(max_length = 156,blank=True, null=True)
+    message = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.name or self.email or f"Contact #{self.id}"
 

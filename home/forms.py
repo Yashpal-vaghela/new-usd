@@ -4,6 +4,11 @@ class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
         fields= '__all__'
+
+class ContactHomePageForm(forms.ModelForm):
+    class Meta:
+        model = ContactHomePage
+        fields= '__all__'
         
 class DentistConnectForm(forms.ModelForm):
     class Meta:

@@ -45,7 +45,7 @@
                             class="input_icon" />
                     </div>
                     <div class="input_fild_main">
-                        <input type="text" name="full_name" placeholder="Enter your name..." class="input_filds"
+                        <input type="text" name="name" placeholder="Enter your name..." class="input_filds"
                             required />
                     </div>
                 </div>
@@ -120,5 +120,6 @@
 <!-- Content END-->
 {% endblock body %}
 {% block js %}
-
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="{% static 'js/recaptcha-api.js' %}" async defer></script>
 {% endblock js %}
