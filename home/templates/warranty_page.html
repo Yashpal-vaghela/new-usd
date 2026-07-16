@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block seo %}
+<title>Warranty Page</title>
+{% endblock seo %}
+{% block header %}
+{% endblock header %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/warranty_page.css' %}" />
+{% endblock css %}
+{% block body %}
+
+
+<div class="warranty_page_main_banner">
+    <picture>
+        <!-- Mobile Image -->
+        <source media="(max-width: 992px)" srcset="{% static 'images/warranty_page_banner_tab.webp' %}">
+        <!-- Desktop Image -->
+        <img src="{% static 'images/warranty_page_banner.webp' %}" alt="warranty_banner" class="img-fluid">
+    </picture>
+</div>
+
+<div class="container d-flex justify-content-center">
+    <p class="verify_your_warranty_heading cool">Verify Your Warranty</p>
+</div>
+
+<div class="container">
+    <form action="">
+        <div class="form_input_main">
+            <div class="form_input_main_col">
+                <input type="text" placeholder="Enter Your Order ID">
+            </div>
+            <div class="form_input_main_col">
+                <input type="text" placeholder="Enter Your Authentication ID">
+            </div>
+        </div>
+        <div class="submit_button_main">
+            <button type="submit" class="warranty_submit_btn"> <span class="cool">Submit</span> </button>
+        </div>
+    </form>
+
+    <div class="warranty_details_main">
+        <div class="warranty_details_logo_main">
+            <img src="{% static 'USD_NEW_LOGO.svg' %}" alt="">
+        </div>
+        <div class="warranty_details_fileds_main">
+            <div class="warranty_details_fileds_left_side">
+                <p class="warranty_details_fileds_labal">Order ID</p>
+                <p class="warranty_details_fileds_values">LC386741</p>
+            </div>
+            <div class="warranty_details_fileds_right_side">
+                <p class="warranty_details_fileds_labal">Order Date</p>
+                <p class="warranty_details_fileds_values">23/06/2026</p>
+            </div>
+        </div>
+        <div class="warranty_details_fileds_main">
+            <div class="warranty_details_fileds_left_side">
+                <p class="warranty_details_fileds_labal">Client Name</p>
+                <p class="warranty_details_fileds_values">Dr. Ashok Mashru</p>
+            </div>
+            <div class="warranty_details_fileds_right_side">
+                <p class="warranty_details_fileds_labal">Patient Name</p>
+                <p class="warranty_details_fileds_values">DAKSHA PATEL</p>
+            </div>
+        </div>
+
+        <div class="warranty_details_single_fileds">
+            <p class="warranty_details_fileds_labal">Product Name</p>
+            <p class="warranty_details_fileds_values">UP02 USD PREMIER ZIRCAD PRIME (ANTERIOR) 25YEAR</p>
+        </div>
+
+        <div class="warranty_details_single_fileds">
+            <p class="warranty_details_fileds_labal">Tooth No</p>
+            <p class="warranty_details_fileds_values">13 ,12 ,11 ,21 ,22 ,23 ,43 ,42 ,41 ,31 ,32 ,33</p>
+        </div>
+
+        <div class="warranty_details_fileds_main">
+            <div class="warranty_details_fileds_left_side">
+                <p class="warranty_details_fileds_labal">Warranty</p>
+                <p class="warranty_details_fileds_values">25 Year</p>
+            </div>
+            <div class="warranty_details_fileds_right_side">
+                <p class="warranty_details_fileds_labal">Valid Upto</p>
+                <p class="warranty_details_fileds_values">29/06/2051</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}
+{% block js %}
+{% endblock js %}
