@@ -1,0 +1,58 @@
+{% load static %}
+{% if status %}
+<div class="warranty_details_main">
+    <div class="warranty_details_logo_main">
+        <img src="{% static 'USD_NEW_LOGO.svg' %}" alt="">
+    </div>
+
+    <div class="warranty_details_fileds_main">
+        <div class="warranty_details_fileds_left_side">
+            <p class="warranty_details_fileds_labal">Order ID</p>
+            <p class="warranty_details_fileds_values">{{ warranty_data.order_id }}</p>
+        </div>
+        <div class="warranty_details_fileds_right_side">
+            <p class="warranty_details_fileds_labal">Order Date</p>
+            <p class="warranty_details_fileds_values"> {{ warranty_data.order_date }}</p>
+        </div>
+    </div>
+    
+    <div class="warranty_details_fileds_main">
+        <div class="warranty_details_fileds_left_side">
+            <p class="warranty_details_fileds_labal">Client Name</p>
+            <p class="warranty_details_fileds_values">{{ warranty_data.client_name }}</p>
+        </div>
+        <div class="warranty_details_fileds_right_side">
+            <p class="warranty_details_fileds_labal">Patient Name</p>
+            <p class="warranty_details_fileds_values">{{ warranty_data.patient_name }}</p>
+        </div>
+    </div>
+
+    <div class="warranty_details_single_fileds">
+        <p class="warranty_details_fileds_labal">Product Name</p>
+        <p class="warranty_details_fileds_values">{{ warranty_data.product_name }}</p>
+    </div>
+
+    <div class="warranty_details_single_fileds">
+        <p class="warranty_details_fileds_labal">Tooth No</p>
+        <p class="warranty_details_fileds_values">{{ warranty_data.unit }}</p>
+    </div>
+
+    <div class="warranty_details_fileds_main">
+        <div class="warranty_details_fileds_left_side">
+            <p class="warranty_details_fileds_labal">Warranty</p>
+            <p class="warranty_details_fileds_values">{{ warranty_data.warranty }} Year</p>
+        </div>
+        <div class="warranty_details_fileds_right_side">
+            <p class="warranty_details_fileds_labal">Valid Upto</p>
+            <p class="warranty_details_fileds_values">{{ warranty_data.valid_upto }}</p>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="warranty_details_main">
+    <div class="warranty_details_logo_main">
+        <img src="{% static 'USD_NEW_LOGO.svg' %}" alt="">
+    </div>
+    <p class="warranty_details_content text-center">Warranty Details Not Found.</p>
+</div>
+{% endif %}

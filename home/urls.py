@@ -38,7 +38,10 @@ urlpatterns = [
     path('sitemap-blog.xml', views.blogSitemap, name='blogs_sitemap'),
     path('sitemap-news.xml', views.newsSitemap, name='news_sitemap'),
     path('sitemap-city-dentists.xml', views.dentistCitySitemap, name="city_dentists_sitemap"),
-    path('sitemap-new.xml', views.sitemap_index, name="sitemap_index")
+    path('sitemap-new.xml', views.sitemap_index, name="sitemap_index"),
+    path('newgallery/',views.newgallery,name='newgallery'),
+    path('before-after-gallery/',views.beforeaftergallery,name='beforeaftergallery'),
+    path('verify-warranty/',views.verify_warranty, name="verify_warranty")
     # path('virtual-smile-try-on/',views.virtualsmiletryon , name="virtualsmiletryon")
     # path('smile_step/', views.smile_step, name='smile_step'),
 ] 

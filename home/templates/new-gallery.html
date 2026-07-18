@@ -4,8 +4,8 @@
 <title>Smile Design Before and After | Real Smile Makeover Results</title>
 <meta name="description" content="Explore real smile design before and after results. See how our expertly crafted modern smile makeover treatment creates confident smiles on our patients." />
 <link rel="canonical" href="https://ultimatesmiledesign.com/gallery/" />
-<meta property="og:image" content="{% static 'feature-usd.webp' %}" />
-<meta property="og:image:secure_url" content="{% static 'feature-usd.webp' %}" />
+<meta property="og:image" content="{% static 'feature-2.webp' %}" />
+<meta property="og:image:secure_url" content="{% static 'feature-2.webp' %}" />
 <meta property="og:image:type" content="image/webp" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
@@ -217,20 +217,6 @@
       });
     });
 
-    if (window.innerWidth > 1024) {
-      window.addEventListener("mousemove", (e) => {
-        const x = (e.clientX / window.innerWidth - 0.5) * 10;
-        const y = (e.clientY / window.innerHeight - 0.5) * 10;
-
-        gsap.to(".gallery-container", {
-          rotationY: x,
-          rotationX: -y,
-          duration: 0.8,
-          ease: "power2.out",
-        });
-      });
-    }
-
     document.getElementById('galleryContainer').addEventListener('click', function (e) {
       var clientX = e.clientX;
       var clientY = e.clientY;
@@ -269,7 +255,7 @@
   });
 </script>
 
-<script>
+{% comment %} <script>
 document.addEventListener("contextmenu", e => e.preventDefault());
 document.addEventListener("keydown", function (e) {
     if (e.key === "F12") {
@@ -295,7 +281,7 @@ setInterval(() => {
         document.body.innerHTML = "";
     }
 }, 1000);
-</script>
+</script> {% endcomment %}
 
 <script type="application/ld+json">
   {

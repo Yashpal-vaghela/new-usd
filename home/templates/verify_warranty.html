@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block seo %}
+<title>Check Advance Dental Export's warranty </title>
+<meta name="robots" content="noindex, nofollow" />
+{% endblock seo %}
+{% block header %}
+{% endblock header %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/warranty_page.css' %}" />
+{% endblock css %}
+{% block body %}
+
+
+<div class="warranty_page_main_banner">
+    <picture>
+        <!-- Mobile Image -->
+        <source media="(max-width: 992px)" srcset="{% static 'images/warranty_page_banner_tab.webp' %}">
+        <!-- Desktop Image -->
+        <img src="{% static 'images/warranty_page_banner.webp' %}" alt="warranty_banner" class="img-fluid">
+    </picture>
+</div>
+
+<div class="container d-flex justify-content-center">
+    <p class="verify_your_warranty_heading cool">Verify Your Warranty</p>
+</div>
+
+<div class="container">
+    <form id="warranty-form" method="POST" action="">
+        {% csrf_token %}
+        <div class="form_input_main">
+            <div class="form_input_main_col">
+                <input type="text" id="order_id_input" name="order_id" placeholder="Enter Your Order ID" value="{{ order_id|default:'' }}" required>
+            </div>
+            <div class="form_input_main_col">
+                <input type="text" id="auth_id_input" name="auth_id" placeholder="Enter Your Authentication ID" value="{{ auth_id|default:'' }}" required>
+            </div>
+        </div>
+        <div class="submit_button_main">
+            <button type="submit" id="warranty-submit-btn" class="warranty_submit_btn"> <span class="cool">Submit</span> </button>
+        </div>
+    </form>
+
+    <div id="warranty-result-container">
+        {% if show_results %}
+            {% include 'verify_warranty_data.html' %}
+        {% endif %}
+    </div>
+</div>
+
+{% endblock body %}
+{% block js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('warranty-form');
+    const resultContainer = document.getElementById('warranty-result-container');
+
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            if (resultContainer) {
+                resultContainer.innerHTML = '<p class="text-center mt-4">Verifying warranty, please wait...</p>';
+            }
+
+            const formData = new FormData(form);
+
+            fetch('', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(html => {
+                if (resultContainer) {
+                    resultContainer.innerHTML = html;
+                    
+                    // Clear all fields
+                    form.reset();
+
+                    // Scroll to the results section smoothly with offset to keep USD_NEW_LOGO.svg visible
+                    const yOffset = -120;
+                    const y = resultContainer.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                if (resultContainer) {
+                    resultContainer.innerHTML = '<p class="text-center mt-4 text-danger">An error occurred. Please try again.</p>';
+                    
+                    // Scroll to the results section smoothly with offset
+                    const yOffset = -120;
+                    const y = resultContainer.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                }
+            });
+        });
+    }
+});
+</script>
+{% endblock js %}

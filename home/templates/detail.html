@@ -56,9 +56,9 @@
     <div class="container pt-5">
       <div class="row justify-content-center justify-content-md-center justify-content-lg-start align-items-center position-relative">
         <div class="col-lg-4 col-md-10 col-9 text-center position-relative mb-2 mb-lg-0">
-          {% if data.profile %}
+          {% if data.details_page_image %}
           <img
-            src="{{ data.profile.url }}"
+            src="{{ data.details_page_image.url }}"
             alt="{{data.name}} - Dentist in {{data.city}}"
             class="dentists-img img-fluid mb-2"
           />
@@ -89,7 +89,7 @@
             {% comment %} <h2 class="dentists-name d-none d-lg-block ">{{data.name}}</h2> {% endcomment %}
             <div>
               <h2 class="new-dentists-title cool  font-Glida-display">About {{data.name}}</h2>
-              <p class="new-dentists-subtitle text-white">{{data.bio}}</p>
+              <p class="new-dentists-subtitle text-white">{{data.description}}</p>
             </div>
             <div class="text-center text-lg-start">
               <button class="premium-book-btn bat" onClick="BookAppoinment('{{data.name}}','{{data.city}}')">
@@ -177,7 +177,7 @@
     <div class="container">
       <div class="d-flex justify-content-between align-items-center">
         <h2 class='cool font-Glida-display new-dentists-title'>Patient Testimonials</h2>
-        {% comment %} <img src="{% static 'google-verified-img.png'%}" class="google-verified-img img-fluid" width="150" height="150" alt="google-verified-img" /> {% endcomment %}
+        <img src="{% static 'google-verified-img.png'%}" class="google-verified-img img-fluid" width="150" height="150" alt="google-verified-img" />
       </div>
       <div class="swiper PatientReviewSwiper mt-2 mb-4  mt-sm-3 mb-sm-4">
         <div class="swiper-wrapper">
@@ -211,7 +211,7 @@
                     </div>
                     <span class="patient-name">{{ review.patient_name }}</span>
                   </div>
-                  {% comment %} <img src="{% static 'google-icon-img.png' %}" class="img-fluid" width="50" height="50" alt="google-view-img"/> {% endcomment %}
+                  <img src="{% static 'google-icon-img.png' %}" class="img-fluid" width="50" height="50" alt="google-view-img"/>
                   {% if review.reviewlink %}
                     <a href="{{ review.reviewlink }}" target="_blank">
                       <img src="{% static 'google-icon.svg'%}" class="img-fluid" width="45" height="45" alt="google-view-img" />
@@ -228,7 +228,7 @@
       </div>
     </div>
   </section>
-  {% endif %}
+  {% endif %} 
 
 
   {% comment %} hello {% endcomment %}

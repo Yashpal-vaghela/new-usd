@@ -1320,3 +1320,57 @@ def newgallery(request):
 
 def beforeaftergallery(request):
     return render(request, 'before-after-gallery.html')
+
+def verify_warranty(request):
+    # Input parameters
+    if request.method == 'POST':
+        orderId = request.POST.get('order_id') 
+        authenticationId = request.POST.get('auth_id') 
+        is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest'
+        
+        # Set your parameters
+        api_url = "https://advancedentalerp.com/API.php?call=get_warranty_details"
+        orderId = str(orderId)
+        authenticationId = str(authenticationId)
+        
+        # Data to be sent in form-encoded format
+        data = {
+            "authenticationId": authenticationId,
+            "orderId": orderId
+        }
+        
+        # Make the POST request with data as form-encoded
+        response = requests.post(api_url, data=data)
+        # Check if request was successful (status code 200)
+        if response.status_code == 200:
+            # Parse JSON response
+            data = response.json()
+            # Extract data from the "data" object
+            warranty_data = data.get("data", {})
+            status = data.get("status", False)
+            
+            if is_ajax:
+                return render(request, 'verify_warranty_data.html', {
+                    'status': status,
+                    'warranty_data': warranty_data
+                })
+            
+            # Pass data to template
+            return render(request, 'verify_warranty.html', {
+                'status': status,
+                'warranty_data': warranty_data,
+                'show_results': True,
+                'order_id': orderId,
+                'auth_id': authenticationId
+            })
+        else:
+            if is_ajax:
+                return render(request, 'verify_warranty_data.html', {
+                    'status': False,
+                    'warranty_data': {}
+                })
+            # If request fails, handle it appropriately
+            messages.error(request, 'Your Warranty Card Is Invalid')
+            return redirect('home:verify_warranty')
+        
+    return render(request, 'verify_warranty.html')
