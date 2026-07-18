@@ -1,5 +1,17 @@
+/* -----------------------New Banner section -------------------------- */
+
+.new_banner_section_main{
+  height: auto;
+  padding-top: 80px;
+}
+@media(max-width:992px){
+  .new_banner_section_main{
+    padding-top: 60px;
+  }
+}
+
 /* -----------------------Banner section -------------------------- */
-.page-wraper {
+/* .page-wraper {
   overflow: hidden;
 }
 
@@ -161,7 +173,7 @@
     margin-top: 5px;
     margin-bottom: 0px;
   }
-}
+} */
 
 /* ------------------------------Devloper section --------------------- */
 .Developer_Section {
