@@ -1,14 +1,17 @@
 /* -----------------------New Banner section -------------------------- */
+.page-wraper {
+  overflow: hidden;
+}
 
 .new_banner_section_main{
-  height: auto;
-  padding-top: 80px;
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden !important;
 }
-@media(max-width:992px){
-  .new_banner_section_main{
-    padding-top: 60px;
-  }
-}
+
 
 /* -----------------------Banner section -------------------------- */
 /* .page-wraper {
@@ -261,6 +264,10 @@
 @media (max-width: 992px) {
   .Developer_Section {
     padding: 20px 0px 15px !important;
+  }
+  
+  .Discover_Group {
+    padding: 40px 166px;
   }
 
   .mainImageCard {
