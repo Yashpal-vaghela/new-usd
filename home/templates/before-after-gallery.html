@@ -1,433 +1,452 @@
-{% extends 'base.html' %}
-{% load static %}
+{% extends 'base.html' %} 
+{% load static %} 
 {% block seo %}
 <title>Smile Design Before and After | Real Smile Makeover Results</title>
-<meta name="description"
-    content="Explore real smile design before and after results. See how our expertly crafted modern smile makeover treatment creates confident smiles on our patients." />
+<meta
+  name="description"
+  content="Explore real smile design before and after results. See how our expertly crafted modern smile makeover treatment creates confident smiles on our patients."
+/>
 <link rel="canonical" href="https://ultimatesmiledesign.com/gallery/" />
 <meta property="og:image" content="{% static 'feature-usd.webp' %}" />
-<meta property="og:image:secure_url" content="{% static 'feature-usd.webp' %}" />
+<meta
+  property="og:image:secure_url"
+  content="{% static 'feature-usd.webp' %}"
+/>
 <meta property="og:image:type" content="image/webp" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:locale" content="en_IN" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Smile Design Before and After | Real Smile Makeover Results" />
-<meta property="og:description"
-    content="Explore real smile design before and after results. See how our expertly crafted modern smile makeover treatment creates confident smiles on our patients." />
+<meta
+  property="og:title"
+  content="Smile Design Before and After | Real Smile Makeover Results"
+/>
+<meta
+  property="og:description"
+  content="Explore real smile design before and after results. See how our expertly crafted modern smile makeover treatment creates confident smiles on our patients."
+/>
 <meta property="og:url" content="https://ultimatesmiledesign.com/gallery/" />
 {% endblock seo %}
-{% block header %}
-{% endblock header %}
+{% block header %} 
+{% endblock header %} 
 {% block css %}
-<link rel="stylesheet" href="{% static 'css/y-n-b-f.css' %}" />
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-{% endblock css %}
+<link rel="stylesheet" href="{% static 'css/before-after-gallery.css' %}" />
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+{% endblock css %} 
 {% block body %}
-
 
 <!-- breadcrumbs -->
 <div class="page-content">
-    <section class="breadcrumbs-section">
-        <div class="container">
-            <div class="breadcrumbs-path">
-                <a href="{% url 'home:home' %}"> Home </a>
-                <i class="fa fa-solid fa-angles-right"></i> Gallery
-            </div>
-            <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool">Gallery</h1>
-        </div>
-    </section>
+  <section class="breadcrumbs-section">
+    <div class="container">
+      <div class="breadcrumbs-path">
+        <a href="{% url 'home:home' %}"> Home </a>
+        <i class="fa fa-solid fa-angles-right"></i> Gallery
+      </div>
+      <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool">
+        Gallery
+      </h1>
+    </div>
+  </section>
 </div>
 
-<section class="nbf-section" id="nbf-section" aria-label="Before and after dental gallery — 3D scroll carousel">
-    <p class="nbf-descriptor" aria-hidden="true">
-        <span class="nbf-bg-a cool">BEFORE</span>
-        <br />
-        <span class="nbf-bg-b"> & </span>
-        <br />
-        <span class="nbf-bg-c cool">AFTER</span>
-    </p>
-    <div class="nbf-scene" id="nbf-scene">
-        <div class="nbf-ring-center" id="nbf-ring-center">
-            <div class="nbf-ring-tilt" id="nbf-ring-tilt">
-                <div class="nbf-ring" id="nbf-ring">
-                    <article class="nbf-card" data-i="0" tabindex="0" aria-label="Dental transformation case 1">
-                        <div class="nbf-card-inner">
-                            <img src="/media/SEO/ba-6.webp" alt="Dental before and after case 1" />
-                        </div>
-                    </article>
-                    <article class="nbf-card" data-i="1" tabindex="0" aria-label="Dental transformation case 2">
-                        <div class="nbf-card-inner">
-                            <img src="/media/SEO/ba-7.webp" alt="Dental before and after case 2" />
-                        </div>
-                    </article>
-                    <article class="nbf-card" data-i="2" tabindex="0" aria-label="Dental transformation case 3">
-                        <div class="nbf-card-inner">
-                            <img src="/media/SEO/ba-8.webp" alt="Dental before and after case 3" />
-                        </div>
-                    </article>
-                    <article class="nbf-card" data-i="3" tabindex="0" aria-label="Dental transformation case 4">
-                        <div class="nbf-card-inner">
-                            <img src="/media/SEO/ba-9.webp" alt="Dental before and after case 4" />
-                        </div>
-                    </article>
-                    <article class="nbf-card" data-i="4" tabindex="0" aria-label="Dental transformation case 5">
-                        <div class="nbf-card-inner">
-                            <img src="/media/SEO/ba-14.webp" alt="Dental before and after case 5" />
-                        </div>
-                    </article>
-                    <article class="nbf-card" data-i="5" tabindex="0" aria-label="Dental transformation case 6">
-                        <div class="nbf-card-inner">
-                            <img src="/media/SEO/ba-3.webp" alt="Dental before and after case 6" />
-                        </div>
-                    </article>
-                    <article class="nbf-card" data-i="6" tabindex="0" aria-label="Dental transformation case 7">
-                        <div class="nbf-card-inner">
-                            <img src="/media/SEO/ba.webp" alt="Dental before and after case 7" />
-                        </div>
-                    </article>
-                    <article class="nbf-card" data-i="7" tabindex="0" aria-label="Dental transformation case 8">
-                        <div class="nbf-card-inner">
-                            <img src="/media/SEO/ba-2.webp" alt="Dental before and after case 8" />
-                        </div>
-                    </article>
-                    <article class="nbf-card" data-i="8" tabindex="0" aria-label="Dental transformation case 9">
-                        <div class="nbf-card-inner">
-                            <img src="/media/SEO/ba-10.webp" alt="Dental before and after case 9" />
-                        </div>
-                    </article>
-                    <article class="nbf-card" data-i="9" tabindex="0" aria-label="Dental transformation case 10">
-                        <div class="nbf-card-inner">
-                            <img src="/media/SEO/ba-13.webp" alt="Dental before and after case 10" />
-                        </div>
-                    </article>
-                </div>
+<section
+  class="nbf-section"
+  id="nbf-section"
+  aria-label="Before and after dental gallery — 3D scroll carousel"
+>
+  <p class="nbf-descriptor" aria-hidden="true">
+    <span class="nbf-bg-a cool">BEFORE</span>
+    <br />
+    <span class="nbf-bg-b"> & </span>
+    <br />
+    <span class="nbf-bg-c cool">AFTER</span>
+  </p>
+  <div class="nbf-scene" id="nbf-scene">
+    <div class="nbf-ring-center" id="nbf-ring-center">
+      <div class="nbf-ring-tilt" id="nbf-ring-tilt">
+        <div class="nbf-ring" id="nbf-ring">
+          {% for gallery in img %} 
+          <article
+            class="nbf-card"
+            data-i="{{ forloop.counter0 }}"
+            tabindex="0"
+            aria-label="Dental transformation case {{ forloop.counter }}"
+          >
+            <div class="nbf-card-inner">
+              <img
+                src="{{ gallery.image.url }}"
+                alt="Dental before and after case {{ forloop.counter }}"
+              />
             </div>
+          </article>
+          {% endfor %}
         </div>
+      </div>
     </div>
+  </div>
 </section>
 
 <div class="container simpale_img_view">
-    <div class="img_wrapper" data-aos="fade-down-right"><img src="/media/SEO/ba-1.webp" alt="Gallery 15"></div>
-    <div class="img_wrapper" data-aos="fade-down"><img src="/media/SEO/ba-11.webp" alt="Gallery 14"></div>
-    <div class="img_wrapper" data-aos="fade-down-left"><img src="/media/SEO/ba-10.webp" alt="Gallery 13"></div>
-    <div class="img_wrapper" data-aos="fade-up-right"><img src="/media/SEO/ba-9.webp" alt="Gallery 12"></div>
-    <div class="img_wrapper" data-aos="fade-up"><img src="/media/SEO/ba-14.webp" alt="Gallery 11"></div>
-    <div class="img_wrapper" data-aos="fade-up-left"><img src="/media/SEO/ba-6.webp" alt="Gallery 10"></div>
-    <div class="img_wrapper" data-aos="fade-down-right"><img src="/media/SEO/ba-12.webp" alt="Gallery 9"></div>
-    <div class="img_wrapper" data-aos="fade-down"><img src="/media/SEO/ba-3.webp" alt="Gallery 8"></div>
-    <div class="img_wrapper" data-aos="fade-down-left"><img src="/media/SEO/ba-5.webp" alt="Gallery 7"></div>
-    <div class="img_wrapper" data-aos="fade-up-right"><img src="/media/SEO/ba-8.webp" alt="Gallery 6"></div>
-    <div class="img_wrapper" data-aos="fade-up"><img src="/media/SEO/ba.webp" alt="Gallery 5"></div>
-    <div class="img_wrapper" data-aos="fade-up-left"><img src="/media/SEO/ba-2.webp" alt="Gallery 4"></div>
-    <div class="img_wrapper" data-aos="fade-down-right"><img src="/media/SEO/ba-4.webp" alt="Gallery 3"></div>
-    <div class="img_wrapper" data-aos="fade-down"><img src="/media/SEO/ba-13.webp" alt="Gallery 2"></div>
-    <div class="img_wrapper" data-aos="fade-down-left"><img src="/media/SEO/ba-7.webp" alt="Gallery 1"></div>
+  {% for gallery in all_img %}
+  <div
+    class="img_wrapper"
+    data-aos="{% cycle 'fade-down-right' 'fade-down' 'fade-down-left' 'fade-up-right' 'fade-up' 'fade-up-left' %}"
+  >
+    <img src="{{ gallery.image.url }}" alt="Gallery {{ forloop.counter }}" />
+  </div>
+  {% endfor %}
 </div>
 
-
-
-{% endblock body %}
-{% block js %}
+{% endblock body %} {% block js %}
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
-    AOS.init({
-        once: false,
-        mirror: true,
-        offset: 120,
-        duration: 600,
-        easing: 'ease-out',
-    });
+  AOS.init({
+    once: false,
+    mirror: true,
+    offset: 120,
+    duration: 600,
+    easing: "ease-out",
+  });
 </script>
 
 <script>
-    (function () {
-        'use strict';
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  (function () {
+    "use strict";
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
 
-        gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollTrigger);
+    ScrollTrigger.config({ ignoreMobileResize: true });
 
-        const section = document.getElementById('nbf-section');
-        const ring = document.getElementById('nbf-ring');
-        const ringTilt = document.getElementById('nbf-ring-tilt');
-        const cards = Array.from(document.querySelectorAll('.nbf-card'));
-        const fillEl = document.getElementById('nbf-progress-fill');
-        const countEl = document.getElementById('nbf-count-cur');
-        const hintEl = document.getElementById('nbf-scroll-hint');
-        const svgTop = document.getElementById('nbf-spiral-path-top');
-        const svgBottom = document.getElementById('nbf-spiral-path-bottom');
-        const TOTAL = cards.length;   // dynamically resolves to active cards (8)
+    const section = document.getElementById("nbf-section");
+    const ring = document.getElementById("nbf-ring");
+    const ringTilt = document.getElementById("nbf-ring-tilt");
+    const cards = Array.from(document.querySelectorAll(".nbf-card"));
+    const fillEl = document.getElementById("nbf-progress-fill");
+    const countEl = document.getElementById("nbf-count-cur");
+    const hintEl = document.getElementById("nbf-scroll-hint");
+    const svgTop = document.getElementById("nbf-spiral-path-top");
+    const svgBottom = document.getElementById("nbf-spiral-path-bottom");
+    const TOTAL = cards.length;
 
-        if (prefersReducedMotion) {
-            section.classList.add('nbf--simple');
-            return;
+    if (prefersReducedMotion) {
+      section.classList.add("nbf--simple");
+      return;
+    }
+
+    const startVal = 0.12;
+    const endVal = 1.2;
+    let CARD_W, CARD_H, GAP_PX;
+    const ringCenter = document.getElementById("nbf-ring-center");
+
+    function updateResponsiveSizes() {
+      if (window.innerWidth <= 576) {
+        CARD_W = 130;
+        CARD_H = 160;
+        GAP_PX = 30;
+      } else if (window.innerWidth <= 992) {
+        CARD_W = 180;
+        CARD_H = 225;
+        GAP_PX = 50;
+      } else if (window.innerWidth <= 1300) {
+        CARD_W = 240;
+        CARD_H = 300;
+        GAP_PX = 60;
+      } else {
+        CARD_W = 340;
+        CARD_H = 425;
+        GAP_PX = 90;
+      }
+
+      document.documentElement.style.setProperty("--nbf-card-w", CARD_W + "px");
+      document.documentElement.style.setProperty("--nbf-card-h", CARD_H + "px");
+
+      ringCenter.style.marginLeft = -CARD_W / 2 + "px";
+      ringCenter.style.marginTop = -CARD_H / 2 + "px";
+    }
+
+    updateResponsiveSizes();
+
+    const BASE_RX = -5;
+    const BASE_RZ = -2;
+
+    gsap.set(ringTilt, {
+      rotationX: BASE_RX,
+      rotationZ: BASE_RZ,
+      transformPerspective: 1800,
+    });
+
+    const totalAngle = 3.2 * Math.PI;
+
+    function getPathPosition(t) {
+      const W = window.innerWidth;
+      const H = window.innerHeight;
+      const R_bottom = W * 0.55;
+      const R_top = W * 0.35;
+      const R = Math.max(50, R_bottom * (1 - t) + R_top * t);
+      const angle = t * totalAngle;
+      const x = R * Math.sin(angle);
+      const z = R * Math.cos(angle) - R_bottom;
+      const totalHeight = H * 1;
+      const y = totalHeight / 1.5 - t * totalHeight;
+      const rx = 0;
+      const ry = angle * (180 / Math.PI);
+      const rz = 0;
+      return { x, y, z, rx, ry, rz };
+    }
+
+    function getProjectedPosition(t) {
+      const pos = getPathPosition(t);
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+      const PERSPECTIVE = 1800;
+      const scale = PERSPECTIVE / (PERSPECTIVE - pos.z);
+      const px = centerX + pos.x * scale;
+      const py = centerY + pos.y * scale;
+      return { x: px, y: py };
+    }
+
+    function drawSpiralPath() {
+      if (!svgTop || !svgBottom) return;
+      let dTop = "";
+      let dBottom = "";
+      const steps = 160;
+
+      for (let i = 0; i <= steps; i++) {
+        const t = i / steps;
+        const pos = getPathPosition(t);
+        const PERSPECTIVE = 1800;
+        const scale = PERSPECTIVE / (PERSPECTIVE - pos.z);
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        const px = centerX + pos.x * scale;
+        const pyTop = centerY + (pos.y - CARD_H / 2) * scale;
+        const pyBottom = centerY + (pos.y + CARD_H / 2) * scale;
+        const cmd = i === 0 ? "M" : "L";
+        dTop += `${cmd} ${px.toFixed(1)} ${pyTop.toFixed(1)} `;
+        dBottom += `${cmd} ${px.toFixed(1)} ${pyBottom.toFixed(1)} `;
+      }
+
+      svgTop.setAttribute("d", dTop);
+      svgBottom.setAttribute("d", dBottom);
+    }
+
+    function getRadiusAtT(t) {
+      const W = window.innerWidth;
+      const R_bottom = W * 0.55;
+      const R_top = W * 0.35;
+      return Math.max(50, R_bottom * (1 - t) + R_top * t);
+    }
+
+    function getDeltaT(t, cardW, gapPx) {
+      const R = getRadiusAtT(t);
+      if (R <= 0) return 0.05;
+      return (cardW + gapPx) / (R * totalAngle);
+    }
+
+    function getCardParameters(t0, cardW, gapPx) {
+      const tValues = [t0];
+      for (let i = 1; i < TOTAL; i++) {
+        const prevT = tValues[i - 1];
+        const dt = getDeltaT(prevT, cardW, gapPx);
+        tValues.push(prevT - dt);
+      }
+      return tValues;
+    }
+
+    function getT0End(cardW, gapPx) {
+      let t = endVal;
+      for (let i = TOTAL - 1; i > 0; i--) {
+        t += getDeltaT(t, cardW, gapPx);
+      }
+      return t;
+    }
+
+    const counterTotalEl = document.querySelector(
+      ".nbf-counter span:last-child",
+    );
+    if (counterTotalEl) {
+      counterTotalEl.textContent = String(TOTAL).padStart(2, "0");
+    }
+
+    function updateCards(progress) {
+      const t0_start = startVal;
+      const t0_end = getT0End(CARD_W, GAP_PX);
+      const t0 = t0_start + progress * (t0_end - t0_start);
+      const tValues = getCardParameters(t0, CARD_W, GAP_PX);
+
+      cards.forEach((card, i) => {
+        const t = tValues[i];
+
+        if (t >= -0.05 && t <= 1.05) {
+          card.style.visibility = "visible";
+          card.style.pointerEvents = "auto";
+          const pos = getPathPosition(t);
+          let boundaryOpacity = 1;
+          if (t < 0.08) {
+            boundaryOpacity = (t + 0.05) / 0.13;
+          } else if (t > 0.92) {
+            boundaryOpacity = (1.05 - t) / 0.13;
+          }
+          boundaryOpacity = Math.max(0, Math.min(1, boundaryOpacity));
+          const finalOpacity = boundaryOpacity;
+          const centerT = 1 / 1.5;
+          const dist = Math.abs(t - centerT);
+          const finalScale = 0.65 + 0.55 * Math.exp(-Math.pow(dist * 3.0, 2));
+
+          gsap.set(card, {
+            x: pos.x,
+            y: pos.y,
+            z: pos.z,
+            rotationX: pos.rx,
+            rotationY: pos.ry,
+            rotationZ: pos.rz,
+            opacity: finalOpacity,
+            scale: finalScale,
+            zIndex: Math.round(pos.z) + 20000,
+            backfaceVisibility: "visible",
+            overwrite: "auto",
+          });
+        } else {
+          card.style.visibility = "hidden";
+          card.style.pointerEvents = "none";
+          gsap.set(card, { opacity: 0, scale: 0.65, zIndex: 0 });
         }
+      });
+    }
 
-        let CARD_W_DESKTOP = 419;
-        let CARD_H_DESKTOP = 524;
-        let CARD_W_TABLET = 180;
-        let CARD_H_TABLET = 225;
-        let CARD_GAP_PX = 25;
+    drawSpiralPath();
+    updateCards(0);
 
-        if (window.innerWidth <= 1300) {
-            CARD_W_DESKTOP = 280;
-            CARD_H_DESKTOP = 350;
-            CARD_GAP_PX = 20
-        }
-        if (window.innerWidth <= 992) {
-            CARD_W_TABLET = 220;
-            CARD_H_TABLET = 280;
-            CARD_GAP_PX = 10
-        }
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        pin: true,
+        start: "top +60px",
+        end: "+=5000",
+        scrub: 1.2,
+        anticipatePin: 1,
+        onUpdate(self) {
+          if (fillEl) fillEl.style.transform = `scaleX(${self.progress})`;
+        },
+      },
+    });
 
-        if (window.innerWidth <= 576) {
-            CARD_GAP_PX = 1;
-        }
+    const beforeText = document.querySelector(".nbf-descriptor .nbf-bg-a");
+    const andText = document.querySelector(".nbf-descriptor .nbf-bg-b");
+    const afterText = document.querySelector(".nbf-descriptor .nbf-bg-c");
 
-        const startVal = 0.12;
-        const endVal = 1.20;
+    const scrollProgress = { value: 0 };
 
-        let CARD_W, CARD_H, GAP_PX;
-        const ringCenter = document.getElementById('nbf-ring-center');
+    tl.to(
+      scrollProgress,
+      {
+        value: 1,
+        ease: "none",
+        duration: 1,
+        onUpdate() {
+          updateCards(scrollProgress.value);
 
-        function updateResponsiveSizes() {
-            CARD_W = window.innerWidth < 1100 ? CARD_W_TABLET : CARD_W_DESKTOP;
-            CARD_H = window.innerWidth < 1100 ? CARD_H_TABLET : CARD_H_DESKTOP;
-            GAP_PX = CARD_GAP_PX;
+          if (countEl) {
+            const idx = Math.min(
+              TOTAL - 1,
+              Math.floor(scrollProgress.value * TOTAL),
+            );
+            countEl.textContent = String(idx + 1).padStart(2, "0");
+          }
+        },
+      },
+      0,
+    );
 
-            document.documentElement.style.setProperty('--nbf-card-w', CARD_W + 'px');
-            document.documentElement.style.setProperty('--nbf-card-h', CARD_H + 'px');
+    let textDuration = 1;
+    tl.fromTo(
+      beforeText,
+      { x: "-50vw" },
+      { x: "0vw", ease: "none", duration: textDuration },
+      0,
+    );
+    tl.fromTo(
+      afterText,
+      { x: "50vw" },
+      { x: "0vw", ease: "none", duration: textDuration },
+      0,
+    );
+    tl.fromTo(
+      andText,
+      { opacity: 0, scale: 0.3 },
+      { opacity: 1, scale: 1, ease: "none", duration: textDuration },
+      0,
+    );
 
-            ringCenter.style.marginLeft = (-CARD_W / 2) + 'px';
-            ringCenter.style.marginTop = (-CARD_H / 2) + 'px';
-        }
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top top",
+      end: "+=400",
+      onEnter: () => gsap.to(hintEl, { opacity: 0, y: -14, duration: 0.45 }),
+      onLeaveBack: () => gsap.to(hintEl, { opacity: 1, y: 0, duration: 0.45 }),
+    });
 
+    let targetRX = BASE_RX,
+      targetRZ = BASE_RZ;
+    let currentRX = BASE_RX,
+      currentRZ = BASE_RZ;
+
+    gsap.ticker.add(() => {
+      currentRX += (targetRX - currentRX) * 0.055;
+      currentRZ += (targetRZ - currentRZ) * 0.055;
+      gsap.set(ringTilt, { rotationX: currentRX, rotationZ: currentRZ });
+    });
+
+    cards.forEach((card) => {
+      const inner = card.querySelector(".nbf-card-inner");
+      card.addEventListener("mouseenter", () =>
+        gsap.to(inner, {
+          scale: 1.1,
+          duration: 0.35,
+          ease: "power2.out",
+          overwrite: "auto",
+        }),
+      );
+      card.addEventListener("mouseleave", () =>
+        gsap.to(inner, {
+          scale: 1.0,
+          duration: 0.35,
+          ease: "power2.inOut",
+          overwrite: "auto",
+        }),
+      );
+
+      card.addEventListener("focus", () =>
+        card.classList.add("nbf-card--focused"),
+      );
+      card.addEventListener("blur", () =>
+        card.classList.remove("nbf-card--focused"),
+      );
+    });
+
+    /* ─── Resize ─────────────────────────────────────────────────── */
+    let rTimer;
+    let windowWidth = window.innerWidth;
+    window.addEventListener("resize", () => {
+      if (window.innerWidth === windowWidth) return;
+      windowWidth = window.innerWidth;
+
+      clearTimeout(rTimer);
+      rTimer = setTimeout(() => {
         updateResponsiveSizes();
-
-        const BASE_RX = -5;
-        const BASE_RZ = -2;
-
-        gsap.set(ringTilt, {
-            rotationX: BASE_RX,
-            rotationZ: BASE_RZ,
-            transformPerspective: 1800,
-        });
-
-        const totalAngle = 3.2 * Math.PI;
-
-        function getPathPosition(t) {
-            const W = window.innerWidth;
-            const H = window.innerHeight;
-            const R_bottom = W * 0.55;
-            const R_top = W * 0.35;
-            const R = Math.max(50, R_bottom * (1 - t) + R_top * t);
-            const angle = t * totalAngle;
-            const x = R * Math.sin(angle);
-            const z = R * Math.cos(angle) - R_bottom
-            const totalHeight = H * 1;
-            const y = totalHeight / 1.5 - t * totalHeight;
-            const rx = 0;
-            const ry = angle * (180 / Math.PI);
-            const rz = 0;
-            return { x, y, z, rx, ry, rz };
-        }
-
-        function getProjectedPosition(t) {
-            const pos = getPathPosition(t);
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight / 2;
-            const PERSPECTIVE = 1800;
-            const scale = PERSPECTIVE / (PERSPECTIVE - pos.z);
-            const px = centerX + pos.x * scale;
-            const py = centerY + pos.y * scale;
-            return { x: px, y: py };
-        }
-
-        function drawSpiralPath() {
-            if (!svgTop || !svgBottom) return;
-            let dTop = '';
-            let dBottom = '';
-            const steps = 160;
-
-            for (let i = 0; i <= steps; i++) {
-                const t = i / steps;
-                const pos = getPathPosition(t);
-                const PERSPECTIVE = 1800;
-                const scale = PERSPECTIVE / (PERSPECTIVE - pos.z);
-                const centerX = window.innerWidth / 2;
-                const centerY = window.innerHeight / 2;
-                const px = centerX + pos.x * scale;
-                const pyTop = centerY + (pos.y - CARD_H / 2) * scale;
-                const pyBottom = centerY + (pos.y + CARD_H / 2) * scale;
-                const cmd = i === 0 ? 'M' : 'L';
-                dTop += `${cmd} ${px.toFixed(1)} ${pyTop.toFixed(1)} `;
-                dBottom += `${cmd} ${px.toFixed(1)} ${pyBottom.toFixed(1)} `;
-            }
-
-            svgTop.setAttribute('d', dTop);
-            svgBottom.setAttribute('d', dBottom);
-        }
-
-        function getRadiusAtT(t) {
-            const W = window.innerWidth;
-            const R_bottom = W * 0.55;
-            const R_top = W * 0.35;
-            return Math.max(50, R_bottom * (1 - t) + R_top * t);
-        }
-
-        function getDeltaT(t, cardW, gapPx) {
-            const R = getRadiusAtT(t);
-            if (R <= 0) return 0.05;
-            return (cardW + gapPx) / (R * totalAngle);
-        }
-
-        function getCardParameters(t0, cardW, gapPx) {
-            const tValues = [t0];
-            for (let i = 1; i < TOTAL; i++) {
-                const prevT = tValues[i - 1];
-                const dt = getDeltaT(prevT, cardW, gapPx);
-                tValues.push(prevT - dt);
-            }
-            return tValues;
-        }
-
-        function getT0End(cardW, gapPx) {
-            let t = endVal;
-            for (let i = TOTAL - 1; i > 0; i--) {
-                t += getDeltaT(t, cardW, gapPx);
-            }
-            return t;
-        }
-
-        const counterTotalEl = document.querySelector('.nbf-counter span:last-child');
-        if (counterTotalEl) {
-            counterTotalEl.textContent = String(TOTAL).padStart(2, '0');
-        }
-
-        function updateCards(progress) {
-            const t0_start = startVal;
-            const t0_end = getT0End(CARD_W, GAP_PX);
-            const t0 = t0_start + progress * (t0_end - t0_start);
-            const tValues = getCardParameters(t0, CARD_W, GAP_PX);
-
-            cards.forEach((card, i) => {
-                const t = tValues[i];
-
-                if (t >= -0.05 && t <= 1.05) {
-                    card.style.visibility = 'visible';
-                    card.style.pointerEvents = 'auto';
-                    const pos = getPathPosition(t);
-                    let boundaryOpacity = 1;
-                    if (t < 0.08) {
-                        boundaryOpacity = (t + 0.05) / 0.13;
-                    } else if (t > 0.92) {
-                        boundaryOpacity = (1.05 - t) / 0.13;
-                    }
-                    boundaryOpacity = Math.max(0, Math.min(1, boundaryOpacity));
-                    const finalOpacity = boundaryOpacity;
-                    gsap.set(card, {
-                        x: pos.x,
-                        y: pos.y,
-                        z: pos.z,
-                        rotationX: pos.rx,
-                        rotationY: pos.ry,
-                        rotationZ: pos.rz,
-                        opacity: finalOpacity,
-                        backfaceVisibility: 'visible',
-                        overwrite: 'auto'
-                    });
-                } else {
-                    card.style.visibility = 'hidden';
-                    card.style.pointerEvents = 'none';
-                    gsap.set(card, { opacity: 0 });
-                }
-            });
-        }
-
         drawSpiralPath();
-        updateCards(0);
-
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: section,
-                pin: true,
-                start: 'top +60px',
-                end: '+=5000',
-                scrub: 1.2,
-                anticipatePin: 1,
-                onUpdate(self) {
-                    if (fillEl) fillEl.style.transform = `scaleX(${self.progress})`;
-                },
-            },
-        });
-
-        const beforeText = document.querySelector('.nbf-descriptor .nbf-bg-a');
-        const andText = document.querySelector('.nbf-descriptor .nbf-bg-b');
-        const afterText = document.querySelector('.nbf-descriptor .nbf-bg-c');
-
-        const scrollProgress = { value: 0 };
-
-        tl.to(scrollProgress, {
-            value: 1,
-            ease: 'none',
-            duration: 1,
-            onUpdate() {
-                updateCards(scrollProgress.value);
-
-                if (countEl) {
-                    const idx = Math.min(TOTAL - 1, Math.floor(scrollProgress.value * TOTAL));
-                    countEl.textContent = String(idx + 1).padStart(2, '0');
-                }
-            }
-        }, 0);
-
-        let textDuration = 1;
-        tl.fromTo(beforeText, { x: '-50vw' }, { x: '0vw', ease: 'none', duration: textDuration }, 0);
-        tl.fromTo(afterText, { x: '50vw' }, { x: '0vw', ease: 'none', duration: textDuration }, 0);
-        tl.fromTo(andText, { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, ease: 'none', duration: textDuration }, 0);
-
-        ScrollTrigger.create({
-            trigger: section,
-            start: 'top top',
-            end: '+=400',
-            onEnter: () => gsap.to(hintEl, { opacity: 0, y: -14, duration: 0.45 }),
-            onLeaveBack: () => gsap.to(hintEl, { opacity: 1, y: 0, duration: 0.45 }),
-        });
-
-        let targetRX = BASE_RX, targetRZ = BASE_RZ;
-        let currentRX = BASE_RX, currentRZ = BASE_RZ;
-
-        gsap.ticker.add(() => {
-            currentRX += (targetRX - currentRX) * 0.055;
-            currentRZ += (targetRZ - currentRZ) * 0.055;
-            gsap.set(ringTilt, { rotationX: currentRX, rotationZ: currentRZ });
-        });
-
-        cards.forEach(card => {
-            const inner = card.querySelector('.nbf-card-inner');
-            card.addEventListener('mouseenter', () =>
-                gsap.to(inner, { scale: 1.10, duration: 0.35, ease: 'power2.out', overwrite: 'auto' }));
-            card.addEventListener('mouseleave', () =>
-                gsap.to(inner, { scale: 1.00, duration: 0.35, ease: 'power2.inOut', overwrite: 'auto' }));
-
-            card.addEventListener('focus', () => card.classList.add('nbf-card--focused'));
-            card.addEventListener('blur', () => card.classList.remove('nbf-card--focused'));
-        });
-
-        /* ─── Resize ─────────────────────────────────────────────────── */
-        let rTimer;
-        window.addEventListener('resize', () => {
-            clearTimeout(rTimer);
-            rTimer = setTimeout(() => {
-                updateResponsiveSizes();
-                drawSpiralPath();
-                ScrollTrigger.refresh();
-            }, 200);
-        });
-
-    })();
+        ScrollTrigger.refresh();
+      }, 200);
+    });
+    window.addEventListener("load", () => {
+      ScrollTrigger.refresh();
+    });
+  })();
 </script>
 
 <script type="application/ld+json">
