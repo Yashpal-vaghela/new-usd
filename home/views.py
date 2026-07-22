@@ -974,23 +974,52 @@ def contact(request):
 
             #messages.success(request, 'Your data is sent successfully.')
             # return redirect('home:thankyou')
-            bikai_payload  ={
+            # bikai_payload  ={
+            #    "Name": submission.name,
+            #    "Email": submission.email,
+            #    "Contact": submission.phone,
+            #    "City": submission.city,
+            #    "Subject": submission.subject,
+            #    "Message": submission.message,
+            #    "DateTime": formatted_datetime,
+            # }
+            # bikai_url ="https://bikapi.bikayi.app/chatbot/webhook/N8eHI9BWzqVPK7RnXu2xs5qIQt23?flow=webleads3220"
+            # headers = {
+            #     "Content-Type": "application/json",
+            # }
+            # try:
+            #     crm_response = requests.post(
+            #         bikai_url,
+            #         json=bikai_payload,
+            #         headers=headers,
+            #         timeout=10,
+            #     )
+            #     crm_response.raise_for_status()
+            #     # messages.success(
+            #     #     request,
+            #     #     "Thanks for contacting the Ultimate Smile Design Team. We will get back to you shortly."
+            #     # )
+            # except requests.exceptions.RequestException as e:
+            #     messages.warning(request, f"Form saved but CRM sync bik api failed: {str(e)}")
+
+            zoho_payload  ={
                "Name": submission.name,
                "Email": submission.email,
-               "Contact": submission.phone,
+               "Phone": submission.phone,
                "City": submission.city,
                "Subject": submission.subject,
                "Message": submission.message,
-               "DateTime": formatted_datetime,
+               "Website": "Ultimate Smile Design",
+               "FormName": "Contact Form"
             }
-            bikai_url ="https://bikapi.bikayi.app/chatbot/webhook/N8eHI9BWzqVPK7RnXu2xs5qIQt23?flow=webleads3220"
+            zoho_url ="https://flow.zoho.in/60070945438/flow/webhook/incoming?zapikey=1001.a119cd21b36db26402ffe013750915ad.885b5855c0af73a633e0a39a93142bcd&isdebug=false"
             headers = {
                 "Content-Type": "application/json",
             }
             try:
                 crm_response = requests.post(
-                    bikai_url,
-                    json=bikai_payload,
+                    zoho_url,
+                    json=zoho_payload,
                     headers=headers,
                     timeout=10,
                 )
@@ -1000,7 +1029,7 @@ def contact(request):
                 #     "Thanks for contacting the Ultimate Smile Design Team. We will get back to you shortly."
                 # )
             except requests.exceptions.RequestException as e:
-                messages.warning(request, f"Form saved but CRM sync failed: {str(e)}")
+                messages.warning(request, f"Form saved but CRM sync zoho api failed: {str(e)}")
 
             return redirect('home:thankyou')
         else:
@@ -1042,39 +1071,67 @@ def dentist_connect(request):
                 "DateTime": formatted_datetime,
                 "Page URL": request.META.get("HTTP_REFERER", "Not available")
             }
-            threading.Thread(
-                target=send_contact_email_async,
-                args=(context_dict,),
-                daemon=True
-            ).start()
-            bikai_payload  ={
+            # threading.Thread(
+            #     target=send_contact_email_async,
+            #     args=(context_dict,),
+            #     daemon=True
+            # ).start()
+            # bikai_payload  ={
+            #    "Name": submission.name,
+            #    "Email": submission.email,
+            #    "Contact": submission.phone,
+            #    "ClinicName": submission.clinic_name,
+            #    "City": submission.city,
+            #    "DateTime": formatted_datetime,
+            # }
+            # bikai_url = "https://bikapi.bikayi.app/chatbot/webhook/N8eHI9BWzqVPK7RnXu2xs5qIQt23?flow=webdentist7060"
+            # headers = {
+            #     "Content-Type": "application/json",
+            # }
+
+            # # --- Send to CRM ---
+            # try:
+            #     crm_response = requests.post(
+            #         bikai_url,
+            #         json=bikai_payload,
+            #         headers=headers,
+            #         timeout=10,
+            #     )
+            #     crm_response.raise_for_status()
+            #     # messages.success(
+            #     #     request,
+            #     #     "Thanks for connecting with Ultimate Smile Design. Our team will reach out shortly!"
+            #     # )
+            # except requests.exceptions.RequestException as e:
+            #     messages.warning(request, f"Data saved but CRM sync failed: {str(e)}")
+
+            zoho_payload  ={
                "Name": submission.name,
                "Email": submission.email,
-               "Contact": submission.phone,
-               "ClinicName": submission.clinic_name,
+               "Phone": submission.phone,
                "City": submission.city,
-               "DateTime": formatted_datetime,
+               "ClinicName": submission.clinic_name,
+               "Website": "Ultimate Smile Design",
+               "FormName": "Dentist Form"
             }
-            bikai_url = "https://bikapi.bikayi.app/chatbot/webhook/N8eHI9BWzqVPK7RnXu2xs5qIQt23?flow=webdentist7060"
+            zoho_url ="https://flow.zoho.in/60070945438/flow/webhook/incoming?zapikey=1001.a119cd21b36db26402ffe013750915ad.885b5855c0af73a633e0a39a93142bcd&isdebug=false"
             headers = {
                 "Content-Type": "application/json",
             }
-
-            # --- Send to CRM ---
             try:
                 crm_response = requests.post(
-                    bikai_url,
-                    json=bikai_payload,
+                    zoho_url,
+                    json=zoho_payload,
                     headers=headers,
                     timeout=10,
                 )
                 crm_response.raise_for_status()
                 # messages.success(
                 #     request,
-                #     "Thanks for connecting with Ultimate Smile Design. Our team will reach out shortly!"
+                #     "Thanks for contacting the Ultimate Smile Design Team. We will get back to you shortly."
                 # )
             except requests.exceptions.RequestException as e:
-                messages.warning(request, f"Data saved but CRM sync failed: {str(e)}")
+                messages.warning(request, f"Form saved but CRM sync zoho api failed: {str(e)}")
 
             return redirect('home:dthankyou')
         
@@ -1128,22 +1185,58 @@ def dentist(request):
                 "Doctor_name": user_submission.doctor_name or "NA",
                 "Page URL": request.META.get("HTTP_REFERER", "Not available")
             }
-            threading.Thread(
-                target=send_contact_email_async,
-                args=(context_dict,),
-                daemon=True
-            ).start()
+            # threading.Thread(
+            #     target=send_contact_email_async,
+            #     args=(context_dict,),
+            #     daemon=True
+            # ).start()
 
-            bikai_payload ={
-                "First_name": user_submission.first_name,
-                "Last_name": user_submission.last_name,
+            # bikai_payload ={
+            #     "First_name": user_submission.first_name,
+            #     "Last_name": user_submission.last_name,
+            #     "Email": user_submission.email,
+            #     "Phone": user_submission.phone,
+            #     "Email": user_submission.email,
+            #     "City": user_submission.city,
+            #     "Message": user_submission.message,
+            #     "Doctor_name": user_submission.doctor_name,
+            #     "DateTime": formatted_datetime,
+            # }
+            # # Send email to company
+            # # send_mail(
+            # #     to_email="tukadiyabhargav5@gmail.com", 
+            # #     subject=f"New Contact Form Submission from {context_dict['Name']}",
+            # #     context_dict=context_dict
+            # # )
+            # bikai_url ="https://bikapi.bikayi.app/chatbot/webhook/N8eHI9BWzqVPK7RnXu2xs5qIQt23?flow=webpatient3834"
+            # headers ={
+            #     "Content-Type": "application/json",
+            # }
+            # try: 
+            #     crm_response = requests.post(
+            #         bikai_url,
+            #         json=bikai_payload,
+            #         headers=headers,
+            #         timeout=10,
+            #     )
+            #     crm_response.raise_for_status()
+            # # messages.success(
+            # #     request,
+            # #     f"Form submitted successfully! Thank you, {user_submission.first_name} {user_submission.last_name}."
+            # # )
+            # except requests.exceptions.RequestException as e:
+            #     messages.warning(request, f"Form saved but CRM sync failed: {str(e)}")
+            
+
+            zoho_payload ={
+                "Name": user_submission.first_name + " " + user_submission.last_name,
                 "Email": user_submission.email,
                 "Phone": user_submission.phone,
-                "Email": user_submission.email,
                 "City": user_submission.city,
                 "Message": user_submission.message,
-                "Doctor_name": user_submission.doctor_name,
-                "DateTime": formatted_datetime,
+                "DoctorName": user_submission.doctor_name,
+                "Website": "Ultimate Smile Design", 
+                "FormName" : "Patient appoiment Form",
             }
             # Send email to company
             # send_mail(
@@ -1151,14 +1244,14 @@ def dentist(request):
             #     subject=f"New Contact Form Submission from {context_dict['Name']}",
             #     context_dict=context_dict
             # )
-            bikai_url ="https://bikapi.bikayi.app/chatbot/webhook/N8eHI9BWzqVPK7RnXu2xs5qIQt23?flow=webpatient3834"
+            zoho_url ="https://flow.zoho.in/60070945438/flow/webhook/incoming?zapikey=1001.a119cd21b36db26402ffe013750915ad.885b5855c0af73a633e0a39a93142bcd&isdebug=false"
             headers ={
                 "Content-Type": "application/json",
             }
             try: 
                 crm_response = requests.post(
-                    bikai_url,
-                    json=bikai_payload,
+                    zoho_url,
+                    json=zoho_payload,
                     headers=headers,
                     timeout=10,
                 )
@@ -1169,7 +1262,8 @@ def dentist(request):
             # )
             except requests.exceptions.RequestException as e:
                 messages.warning(request, f"Form saved but CRM sync failed: {str(e)}")
-            # form = UserSubmissionForm()
+
+            
             return redirect('home:thankyou')
         else:
             messages.error(request, "Something went wrong! Please check your details.")
@@ -1319,7 +1413,13 @@ def newgallery(request):
 
 
 def beforeaftergallery(request):
-    return render(request, 'before-after-gallery.html')
+    all_images = Hgallery.objects.all().order_by('-id')
+    random_images = Hgallery.objects.all().order_by('?')[:10]
+    context_dict = {
+        'img': random_images,
+        'all_img': all_images,
+    }
+    return render(request, 'before-after-gallery.html', context_dict)
 
 def verify_warranty(request):
     # Input parameters
@@ -1374,3 +1474,9 @@ def verify_warranty(request):
             return redirect('home:verify_warranty')
         
     return render(request, 'verify_warranty.html')
+
+def aboutPage(request):
+    context = {
+
+    }
+    return render(request, 'aboutPage.html', context)

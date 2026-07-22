@@ -20,7 +20,7 @@
 
              <div class="new_logo_header">
                     <a href="{% url 'home:home' %}">
-                        <img  src="{% static 'USD_NEW_LOGO.svg' %}" alt="Ultimate Smile Design official logo for Premium Aesthetic Dental Solutions">
+                        <img  src="{% static 'USD_NEW_LOGO.svg' %}" alt="Official logo of Ultimate Smile Design SVG vector graphic">
                     </a>
              </div>
 
@@ -44,6 +44,10 @@
                             <li class=""><span {% if request.path == '/' %}class="heasder_active cool"{% endif %}> Home</span>
                             </li> 
                         </a>
+                        {% comment %} <a href="{% url 'home:search_all_usd' %}">
+                            <li class=""><span {% if '/certified-dentists/' in request.path %}class="heasder_active cool"{% endif %}> About</span>
+                            </li> 
+                        </a> {% endcomment %}
                         <a href="{% url 'home:search_all_usd' %}">
                             <li class=""><span {% if '/certified-dentists/' in request.path %}class="heasder_active cool"{% endif %}> Find Dentist</span>
                             </li> 
@@ -63,14 +67,21 @@
                         <a href="{% url 'home:contact' %}">
                             <li class=""><span {% if request.path == '/contact/' %}class="heasder_active cool"{% endif %}> Contact</span>                       
                             </li> 
-                        </a>      
+                        </a>
                         <li class="hea-shrink-btn">
+                            <a href="{% url 'home:verify_warranty' %}">
+                                <button type="submit" class="bat text-center hea-shrink-btn-inner">
+                                    Verify Warranty
+                                </button>
+                            </a>
+                        </li>      
+                        {% comment %} <li class="hea-shrink-btn">
                             <a href="{% url 'home:dentist' %}">
                                 <button type="submit" class="bat text-center hea-shrink-btn-inner">
                                     For Patients
                                 </button>
                             </a>
-                        </li>
+                        </li> {% endcomment %}
                         <li class="hea-shrink-btn">
                             <a href="{% url 'home:dentist_connect' %}">
                                 <button type="submit" class="bat text-center hea-shrink-btn-inner">
@@ -105,13 +116,15 @@
                         <!--    <i class="feather-user"></i> Sign In-->
                         <!--</a>-->
                         <!--Add Listing up-->
-                        <a href="{% url 'home:dentist' %}" method="GET" class="aon-add-listing m-l20 header-buttons bat" onClick="localStorage.removeItem('selectedDoctor')">
+                        <a href="{% url 'home:verify_warranty' %}" method="GET" class="aon-add-listing m-l20 header-buttons bat">
+                            <p class="">Verify Warranty</p>
+                        </a>
+                        {% comment %} <a href="{% url 'home:dentist' %}" method="GET" class="aon-add-listing m-l20 header-buttons bat" onClick="localStorage.removeItem('selectedDoctor')">
                             <p class="">For Patients</p>   
-                          </a>
-                          <a href="{% url 'home:dentist_connect' %}" method="GET" class="bat aon-add-listing m-l20 header-buttons ">
-                             <p class="">For Dentist</p>
-                          </a>
-
+                        </a> {% endcomment %}
+                        <a href="{% url 'home:dentist_connect' %}" method="GET" class="bat aon-add-listing m-l20 header-buttons ">
+                            <p class="">For Dentist</p>
+                        </a>
                         {% comment %} {% endif %} {% endcomment %}
 
                         </div>
