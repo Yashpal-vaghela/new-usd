@@ -68,8 +68,8 @@ class StaticPageSitemap(Sitemap):
                 'changefreq': 'daily',
                 'images': [{
                     'loc': 'https://ultimatesmiledesign.com/static/usdlog.webp',
-                    'title': 'Ultimate Smile Design | Cosmetic Smile Makeover in India',
-                    'caption': 'Get a perfect smile with Ultimate Smile Design. Our expert cosmetic dentists provide premium smile makeover solutions in India. Schedule your consultation now!',
+                    'title': 'Ultimate Smile Design | #1 Digital Smile Design Solution',
+                    'caption': 'Transform your smile with Ultimate Smile Design. Digitally designed & handcrafted by Haresh Savani using advanced digital dentistry and facial analysis.',
                 }]
             },
             {
