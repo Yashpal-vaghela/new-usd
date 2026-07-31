@@ -1480,3 +1480,10 @@ def aboutPage(request):
 
     }
     return render(request, 'aboutPage.html', context)
+
+
+def ai_guideline(request):
+    context = {
+
+    }
+    return render(request, 'ai_guideline.html', context) 

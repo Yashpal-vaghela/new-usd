@@ -1,0 +1,587 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block seo %}
+<title>How to Record Patient Video for Exocad TruSmile</title>
+<meta name="description" content="Follow the Exocad TruSmile video recording guidelines for patient positioning, camera settings, lighting, and technical requirements." />
+{% endblock seo %}
+{% block header %}
+{% endblock header %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/ai_guideline.css' %}" />
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+{% endblock css %}
+{% block body %}
+
+<!-- Hero Section  -->
+<section class="ai_guide_line_hero_section">
+    <div class="square_border_lines">
+        <span class="corner top-left"></span>
+        <span class="corner top-right"></span>
+        <span class="corner bottom-left"></span>
+        <span class="corner bottom-right"></span>
+    </div>
+    <div class="container d-flex align-items-center flex-column position-relative">
+        <h1 class="hero_heading" data-aos="fade-left" data-aos-duration="400" data-aos-delay="300">How to Record Video
+            for <br><span class="cool" data-aos="fade-right" data-aos-duration="400" data-aos-delay="400">Exocad
+                TruSmile</span></h1>
+        <div class="hero_section_video_main">
+            <video autoplay muted loop playsinline width="100%" height="100%"
+                poster="{% static 'ai_guideline_videos_and_images/hero_section_video_poster.webp' %}">
+                <source src="{% static 'ai_guideline_videos_and_images/hero_section_video.mp4' %}" type="video/mp4">
+            </video>
+        </div>
+        <p class="hero_sub_heading">Record your patient's video by following the steps below. A correctly captured video
+            provides the facial data required for precise analysis in Exocad TruSmile.</p>
+    </div>
+</section>
+
+<!-- 7 Steps for Video Recording on Mobile  -->
+<div class="container quick_start_main_section">
+    <h2 class="quick_start_main_heading cool" data-aos="fade-left" data-aos-duration="400" data-aos-delay="300">7 Steps
+        for Video Recording on Mobile</h2>
+    <p class="quick_start_main_subheading" data-aos="fade-right" data-aos-duration="400" data-aos-delay="400">Follow
+        these 7 steps for a smooth and efficient video recording. Additional guidance is available in the detailed
+        instructions.</p>
+    <div class="gradiant_border"></div>
+
+    <div class="steps_main">
+        <div class="step_box_main">
+            <p class="step_counter cool">01</p>
+            <p class="step_heading">Camera settings</p>
+            <p class="step_description">Set your mobile camera to 1080p (Full HD) resolution at 30 FPS before recording.
+            </p>
+        </div>
+        <div class="step_box_main">
+            <p class="step_counter cool">02</p>
+            <p class="step_heading">Flawless Lighting</p>
+            <p class="step_description">Ensure the patient's face is well lit, and use a ring light whenever available.
+            </p>
+        </div>
+        <div class="step_box_main">
+            <p class="step_counter cool">03</p>
+            <p class="step_heading">Setup & Stability</p>
+            <p class="step_description">Mount your phone on a tripod and use a plain wall for a stable background setup.
+            </p>
+        </div>
+        <div class="step_box_main">
+            <p class="step_counter cool">04</p>
+            <p class="step_heading">Elegant Framing</p>
+            <p class="step_description">Record in portrait mode and keep the patient's teeth at the centre of the frame.
+            </p>
+        </div>
+        <div class="step_box_main">
+            <p class="step_counter cool">05</p>
+            <p class="step_heading">Camera Angle</p>
+            <p class="step_description">Point the camera directly towards the patient's face and focus on the smile.</p>
+        </div>
+        <div class="step_box_main">
+            <p class="step_counter cool">06</p>
+            <p class="step_heading">Video length</p>
+            <p class="step_description">Keep the recording within 30 seconds or trim it before submitting the video.</p>
+        </div>
+        <div class="step_box_main">
+            <p class="step_counter cool">07</p>
+            <p class="step_heading">Natural Expressions</p>
+            <p class="step_description">Ask the patient to talk, smile naturally, and keep teeth visible during the
+                video.</p>
+        </div>
+    </div>
+</div>
+
+<!-- warning_box -->
+<div class="container">
+    <div class="imgae_with_guide_main">
+        <img src="{% static 'ai_guideline_videos_and_images/image_with_guide.webp' %}" alt="img_with_guide" width="100%"
+            height="100%">
+    </div>
+
+    <div class="warning_box_main">
+        <div class="warning_icon">
+            <img src="{% static 'ai_guideline_videos_and_images/warning_icon.svg' %}" alt="warning_icon" width="100%"
+                height="100%">
+        </div>
+        <p class="warning_description">Please upload the video as the original file, document or an attachment. Avoid
+            sending it through messaging apps like WhatsApp, as they often compress videos and reduce their quality.</p>
+    </div>
+</div>
+
+<!-- Guidelines for Patient Actions  -->
+<div class="container physical_main_section">
+    <h2 class="physical_main_heading cool" data-aos="fade-left" data-aos-duration="400" data-aos-delay="300">Guidelines
+        for Patient Actions</h2>
+    <p class="physical_main_subheading" data-aos="fade-right" data-aos-duration="400" data-aos-delay="400">Follow these
+        patient action guidelines to capture a stable and accurate video.</p>
+
+    <div class="performance_guide_main">
+        <p class="performance_heading cool">Preparation</p>
+        <p class="performance_subheading">Ask the patient to sit comfortably and remain steady with both hands resting
+            on their lap.</p>
+
+        <div class="performance_guide_image_main">
+            <div class="performance_guide_image">
+                <img src="{% static 'ai_guideline_videos_and_images/performance_instruct.webp' %}" alt="">
+            </div>
+        </div>
+    </div>
+    
+    <div class="encourage_main">
+        <p class="performance_heading cool">During the Recording</p>
+        <p class="performance_subheading">Encourage the patient to perform the following actions throughout the
+            recording.</p>
+
+        <div class="encourage_images_main">
+            <div class="encourage_image_with_description">
+                <div class="icon_and_description">
+                    <div class="encourage_icon">
+                        <img src="{% static 'ai_guideline_videos_and_images/right_icon.svg' %}" alt="right arrow icon">
+                    </div>
+                    <p class="encourage_description">Face directly towards the camera view</p>
+                </div>
+                <div class="encourage_image">
+                    <img src="{% static 'ai_guideline_videos_and_images/encourage_right_image_1.webp' %}" alt="">
+                </div>
+            </div>
+            <div class="encourage_image_with_description">
+                <div class="icon_and_description">
+                    <div class="encourage_icon">
+                        <img src="{% static 'ai_guideline_videos_and_images/right_icon.svg' %}" alt="right arrow icon">
+                    </div>
+                    <p class="encourage_description">Perform facial movements steadily</p>
+                </div>
+                <div class="encourage_image">
+                    <img src="{% static 'ai_guideline_videos_and_images/encourage_right_image_2.webp' %}" alt="">
+                </div>
+            </div>
+            <div class="encourage_image_with_description">
+                <div class="icon_and_description">
+                    <div class="encourage_icon">
+                        <img src="{% static 'ai_guideline_videos_and_images/right_icon.svg' %}" alt="right arrow icon">
+                    </div>
+                    <p class="encourage_description">Speak naturally throughout the video</p>
+                </div>
+                <div class="encourage_image">
+                    <img src="{% static 'ai_guideline_videos_and_images/encourage_right_image_3.webp' %}" alt="">
+                </div>
+            </div>
+            <div class="encourage_image_with_description">
+                <div class="icon_and_description">
+                    <div class="encourage_icon">
+                        <img src="{% static 'ai_guideline_videos_and_images/right_icon.svg' %}" alt="right arrow icon">
+                    </div>
+                    <p class="encourage_description">Smile and laugh naturally and openly</p>
+                </div>
+                <div class="encourage_image">
+                    <img src="{% static 'ai_guideline_videos_and_images/encourage_right_image_4.webp' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="encourage_main">
+        <p class="performance_heading cool">Avoid These Actions</p>
+        <p class="performance_subheading">Ensure the patient avoids the following actions throughout the recording.</p>
+        <div class="encourage_images_main">
+            <div class="avoid_image_with_description">
+                <div class="icon_and_description">
+                    <div class="encourage_icon">
+                        <img src="{% static 'ai_guideline_videos_and_images/cross_red_icon.svg' %}"
+                            alt="right arrow icon">
+                    </div>
+                    <p class="encourage_description">Rapid head movements during the video</p>
+                </div>
+                <div class="encourage_image">
+                    <img src="{% static 'ai_guideline_videos_and_images/encourage_avoid_image_1.webp' %}" alt="">
+                </div>
+            </div>
+            <div class="avoid_image_with_description">
+                <div class="icon_and_description">
+                    <div class="encourage_icon">
+                        <img src="{% static 'ai_guideline_videos_and_images/cross_red_icon.svg' %}"
+                            alt="right arrow icon">
+                    </div>
+                    <p class="encourage_description">Moving out of the camera frame</p>
+                </div>
+                <div class="encourage_image">
+                    <img src="{% static 'ai_guideline_videos_and_images/encourage_avoid_image_2.webp' %}" alt="">
+                </div>
+            </div>
+            <div class="avoid_image_with_description">
+                <div class="icon_and_description">
+                    <div class="encourage_icon">
+                        <img src="{% static 'ai_guideline_videos_and_images/cross_red_icon.svg' %}"
+                            alt="right arrow icon">
+                    </div>
+                    <p class="encourage_description">Biting the lips during recording</p>
+                </div>
+                <div class="encourage_image">
+                    <img src="{% static 'ai_guideline_videos_and_images/encourage_avoid_image_3.webp' %}" alt="">
+                </div>
+            </div>
+            <div class="avoid_image_with_description">
+                <div class="icon_and_description">
+                    <div class="encourage_icon">
+                        <img src="{% static 'ai_guideline_videos_and_images/cross_red_icon.svg' %}"
+                            alt="right arrow icon">
+                    </div>
+                    <p class="encourage_description">Protruding the tongue during the video</p>
+                </div>
+                <div class="encourage_image">
+                    <img src="{% static 'ai_guideline_videos_and_images/encourage_avoid_image_4.webp' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="avoid_warning_box_main">
+        <div class="warning_icon">
+            <img src="{% static 'ai_guideline_videos_and_images/warning_icon.svg' %}" alt="warning_icon" width="100%"
+                height="100%">
+        </div>
+        <p class="warning_description">Perform the patient's intra-oral scan within one week of the video recording to
+            ensure the recorded video accurately reflects the patient's current dentition. Use only scans of teeth that
+            have not been prepped.</p>
+    </div>
+
+    <div class="avoid_warning_box_main">
+        <div class="warning_icon">
+            <img src="{% static 'ai_guideline_videos_and_images/warning_icon.svg' %}" alt="warning_icon" width="100%"
+                height="100%">
+        </div>
+        <p class="warning_description">This tool is intended exclusively for patients aged 18 years or older and should
+            not be used for patients with underbites or supernumerary teeth.</p>
+    </div>
+</div>
+
+<!-- Background & Environmental Guidelines  -->
+<div class="container physical_main_section">
+    <h2 class="physical_main_heading cool" data-aos="fade-left" data-aos-duration="400" data-aos-delay="300">Background
+        & Environmental Guidelines</h2>
+    <p class="physical_main_subheading" data-aos="fade-right" data-aos-duration="400" data-aos-delay="400">Follow these
+        guidelines to create an ideal recording environment.</p>
+    <div class="gradiant_border"></div>
+    <div class="performance_guide_main">
+        <p class="performance_heading cool">Tripod</p>
+        <p class="performance_subheading">Mount your device on a tripod to keep the recording steady and stable
+            throughout the video.
+        </p>
+
+        <div class="performance_guide_image_main">
+            <div class="performance_guide_image">
+                <img src="{% static 'ai_guideline_videos_and_images/girl_with_tripod.webp' %}" alt="">
+            </div>
+        </div>
+    </div>
+    <div class="performance_guide_main">
+        <p class="performance_heading cool">Background</p>
+        <p class="performance_subheading">Use a plain, solid-coloured background free from patterns and distractions to
+            ensure a clear video.</p>
+
+        <div class="performance_guide_image_main">
+            <div class="performance_guide_image">
+                <img src="{% static 'ai_guideline_videos_and_images/girl_with_tripod.webp' %}" alt="">
+            </div>
+        </div>
+    </div>
+    <div class="performance_guide_steps">
+        <p class="performance_guide_steps_heading cool">Lighting</p>
+        <p class="performance_guide_steps_desciption">Ensure optimal lighting using a ring light or another suitable
+            light source. Position the light in front of the patient, preferably from the camera's direction, rather
+            than behind or above them. Provide sufficient illumination to keep the anterior teeth clearly visible
+            throughout the recording.</p>
+
+        <div class="performance_guide_lighting_main">
+            <div class="performance_guide_lighting_img">
+                <div class="guide_lighting_img">
+                    <img src="{% static 'ai_guideline_videos_and_images/performance_guide_steps_lighting_img_1.webp' %}"
+                        alt="">
+
+                </div>
+            </div>
+            <div class="performance_guide_lighting_img">
+                <div class="guide_lighting_img">
+                    <img src="{% static 'ai_guideline_videos_and_images/performance_guide_steps_lighting_img_2.webp' %}"
+                        alt="">
+
+                </div>
+            </div>
+            <div class="performance_guide_lighting_green_img">
+                <div class="guide_lighting_img">
+                    <img src="{% static 'ai_guideline_videos_and_images/performance_guide_steps_lighting_img_3.webp' %}"
+                        alt="">
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="performance_guide_steps">
+        <p class="performance_guide_steps_heading cool">Video Orientation</p>
+        <p class="performance_guide_steps_desciption">Record the video in portrait mode. Landscape videos can be
+            uploaded but are not recommended, especially for dual-view presentations. If a portrait video appears
+            rotated, correct its orientation during the upload process.</p>
+        <div class="performance_guide_video_image_format_main">
+            <div class="performance_guide_video_image_format_img">
+                <div class="performance_guide_video_image_box">
+                    <img src="{% static 'ai_guideline_videos_and_images/performance_guide_steps_video_format_img_1.webp' %}"
+                        alt="">
+                </div>
+            </div>
+            <div class="performance_guide_video_image_format_right_side">
+                <div class="performance_guide_video_image_left">
+                    <div class="performance_guide_video_image_box">
+                        <img src="{% static 'ai_guideline_videos_and_images/performance_guide_steps_video_format_img_2.webp' %}"
+                            alt="">
+                    </div>
+                </div>
+                <div class="performance_guide_video_image_right">
+                    <div class="performance_guide_video_image_box">
+                        <img src="{% static 'ai_guideline_videos_and_images/performance_guide_steps_video_format_img_3.webp' %}"
+                            alt="">
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+    <div class="performance_guide_steps">
+        <p class="performance_guide_steps_heading cool">Face Position</p>
+        <p class="performance_guide_steps_desciption">Position the patient's head in the upper portion of the frame,
+            with the teeth approximately centred. Leave enough space for natural movement without making the face too
+            small, as on-screen overlays may obstruct the teeth.</p>
+        <div class="performance_guide_face_position_main">
+            <div class="performance_guide_face_position_img">
+                <div class="guide_face_position_img">
+                    <img src="{% static 'ai_guideline_videos_and_images/performance_guide_steps_face_position_img_1.webp' %}"
+                        alt="">
+                </div>
+            </div>
+            <div class="performance_guide_face_position_img">
+                <div class="guide_face_position_img">
+                    <img src="{% static 'ai_guideline_videos_and_images/performance_guide_steps_face_position_img_2.webp' %}"
+                        alt="">
+                </div>
+            </div>
+            <div class="performance_guide_face_position_green_img">
+                <div class="guide_face_position_img">
+                    <img src="{% static 'ai_guideline_videos_and_images/performance_guide_steps_face_position_img_3.webp' %}"
+                        alt="">
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="performance_guide_steps">
+        <p class="performance_guide_steps_heading cool">Avoid Camera Zoom</p>
+        <p class="performance_guide_steps_desciption">Do not use digital or optical zoom during recording, as it can
+            reduce video quality and create an unstable perspective. Instead, move the camera closer and adjust the
+            framing before you begin recording.</p>
+        <div class="performance_guide_face_position_main">
+            <div class="performance_guide_face_position_img">
+                <div class="guide_face_position_img">
+                    <img src="{% static 'ai_guideline_videos_and_images/performance_guide_steps_avoid_cemera_zoom_img_1.webp' %}"
+                        alt="">
+                </div>
+            </div>
+            <div class="performance_guide_face_position_img">
+                <div class="guide_face_position_img">
+                    <img src="{% static 'ai_guideline_videos_and_images/performance_guide_steps_avoid_cemera_zoom_img_2.webp' %}"
+                        alt="">
+                </div>
+            </div>
+            <div class="performance_guide_face_position_green_img">
+                <div class="guide_face_position_img">
+                    <img src="{% static 'ai_guideline_videos_and_images/performance_guide_steps_avoid_cemera_zoom_img_3.webp' %}"
+                        alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="performance_guide_steps">
+        <p class="performance_guide_steps_heading cool">Camera Position</p>
+        <p class="performance_guide_steps_desciption">Position the camera directly in front of the patient's face, aimed
+            at the nose. Record the patient from a frontal view with the full face visible in an upright posture, and
+            keep the camera aligned at the same level as the patient's smile, avoiding both high and low angles.</p>
+
+        <div class="performance_guide_lighting_main">
+            <div class="performance_guide_lighting_img">
+                <div class="guide_lighting_img">
+                    <img src="{% static 'ai_guideline_videos_and_images/performance_guide_steps_camera_positioning _img_1.webp' %}"
+                        alt="">
+
+                </div>
+            </div>
+            <div class="performance_guide_lighting_img">
+                <div class="guide_lighting_img">
+                    <img src="{% static 'ai_guideline_videos_and_images/performance_guide_steps_camera_positioning _img_2.webp' %}"
+                        alt="">
+
+                </div>
+            </div>
+            <div class="performance_guide_lighting_green_img">
+                <div class="guide_lighting_img">
+                    <img src="{% static 'ai_guideline_videos_and_images/performance_guide_steps_camera_positioning _img_3.webp' %}"
+                        alt="">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Watch a Sample Recording  -->
+<div class="example_recording_section_main">
+    <div class="container d-flex flex-column align-items-center">
+        <p class="example_recording_small_title cool">Example</p>
+        <p class="example_recording_title" data-aos="fade-left" data-aos-duration="400" data-aos-delay="300">Watch a
+            Sample Recording</p>
+        <p class="example_recording_description" data-aos="fade-right" data-aos-duration="400" data-aos-delay="400">
+            Watch a sample patient video recorded according to the recommended guidelines.</p>
+
+        <a href="">
+            <div class="example_recording_button_main">
+                <div class="example_recording_button_icon">
+
+                    <img src="{% static 'ai_guideline_videos_and_images/video_play_icon.svg' %}" alt="">
+                </div>
+                <p class="example_recording_button_text cool">Play Sample Video</p>
+            </div>
+        </a>
+    </div>
+
+</div>
+
+<!-- Settings for iPhone Users  -->
+<div class="container for_iphone_user_main">
+    <p class="example_recording_title cool" data-aos="fade-left" data-aos-duration="400" data-aos-delay="300">Settings
+        for iPhone Users</p>
+    <p class="example_recording_description" data-aos="fade-right" data-aos-duration="400" data-aos-delay="400">Use the
+        recommended iPhone settings below to ensure accurate video capture and optimal processing.</p>
+    <div class="gradiant_border"></div>
+    <div class="iphone_user_deatils_main">
+        <div class="iphone_user_deatils">
+            <div class="symbol_and_tille_main">
+                <div class="iphone_icon">
+                    <img src="{% static 'ai_guideline_videos_and_images/phone_icon.svg' %}" alt="">
+                </div>
+                <p class="iphone_title cool">Preferred method</p>
+            </div>
+            <p class="iphone_sub_title">Most Compatible Format</p>
+            <p class="iphone_descriptions">Select the “Most Compatible” format to save videos in the widely supported
+                .mp4 format. Follow these steps to set it as the default.
+            </p>
+
+
+            <div class="iphone_guide_steps_main">
+                <div class="iphone_guide_steps">
+                    <div class="setp_round_numbers_text_main">
+                        <div class="setp_round_numbers"><span class="cool">1</span></div>
+                        <p class="setp_round_numbers_text">Open Settings on your iPhone.</p>
+                    </div>
+                    <div class="setp_round_numbers_text_main">
+                        <div class="setp_round_numbers"><span class="cool">2</span></div>
+                        <p class="setp_round_numbers_text">Go to Camera > Formats > Camera Capture.</p>
+
+                    </div>
+                    <div class="setp_round_numbers_text_main">
+                        <div class="setp_round_numbers"><span class="cool">3</span></div>
+                        <p class="setp_round_numbers_text">Select the Most Compatible option.</p>
+
+                    </div>
+
+                </div>
+                <div class="watch_the_walkthrough_link">
+                    <a href="">
+                        <p class="cool watch_the_walkthrough_text">Watch Video</p>
+                        <img src="{% static 'ai_guideline_videos_and_images/right_arrow_icon.svg' %}" alt="">
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="iphone_user_deatils">
+            <div class="symbol_and_tille_main">
+                <div class="iphone_icon">
+                    <img src="{% static 'ai_guideline_videos_and_images/phone_icon.svg' %}" alt="">
+                </div>
+                <p class="iphone_title cool">High efficiency route</p>
+            </div>
+            <p class="iphone_sub_title">High Efficiency Format</p>
+            <p class="iphone_descriptions">When using the High Efficiency format, follow these steps while downloading
+                from iCloud.
+            </p>
+
+
+            <div class="iphone_guide_steps_main">
+                <div class="iphone_guide_steps">
+                    <div class="setp_round_numbers_text_main">
+                        <div class="setp_round_numbers"><span class="cool">1</span></div>
+                        <p class="setp_round_numbers_text">Click on the three dots (...) menu.</p>
+
+                    </div>
+                    <div class="setp_round_numbers_text_main">
+                        <div class="setp_round_numbers"><span class="cool">2</span></div>
+                        <p class="setp_round_numbers_text">Select More Download Options.</p>
+
+                    </div>
+                    <div class="setp_round_numbers_text_main">
+                        <div class="setp_round_numbers"><span class="cool">3</span></div>
+                        <p class="setp_round_numbers_text">Choose Original Version or Highest Resolution to maintain the
+                            best video quality.</p>
+
+                    </div>
+                    <div class="setp_round_numbers_text_main">
+                        <div class="setp_round_numbers"><span class="cool">4</span></div>
+                        <p class="setp_round_numbers_text">Open that video in Clipchamp & export it as .mp4 in Full HD
+                            resolution.</p>
+
+                    </div>
+
+                </div>
+                <div class="watch_the_walkthrough_link">
+                    <a href="">
+                        <p class="cool watch_the_walkthrough_text">Watch Video</p>
+                        <img src="{% static 'ai_guideline_videos_and_images/right_arrow_icon.svg' %}" alt="">
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Ready to Record Your TruSmile Video?  -->
+<div class="container ready_to_record_section_main">
+    <div class="star_icon_main">
+        <img src="{% static 'ai_guideline_videos_and_images/star_Icon.svg' %}" alt="">
+    </div>
+    <h2 class="ready_to_record_title" data-aos="fade-left" data-aos-duration="400" data-aos-delay="300">Ready to Record
+        <br><span class="cool" data-aos="fade-right" data-aos-duration="400" data-aos-delay="400">Your TruSmile
+            Video?</span></h2>
+    <p>Start Following the Guidelines</p>
+    <a href="">
+        <div class="begin_recording_butoon_main">Begin Recording
+            <img src="{% static 'ai_guideline_videos_and_images/right_arrow_icon_black_color.svg' %}" alt="">
+        </div>
+    </a>
+</div>
+
+
+{% endblock body %}
+{% block js %}
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({
+        offset: 100,
+    });
+</script>
+{% endblock js %}
