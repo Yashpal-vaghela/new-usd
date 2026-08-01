@@ -3,4 +3,6 @@ from . import views
 
 urlpatterns = [
     path('', views.chat_bot, name='chat_bot'),
+    path('api/tts', views.api_tts, name='api_tts'),
+    path('api/tts/', views.api_tts, name='api_tts_slash'),
 ]
