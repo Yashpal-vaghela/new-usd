@@ -8,10 +8,11 @@ body {
     display: none;
 }
 
+/* hero section */
+
 .ai_guide_line_hero_section {
     width: 100%;
-    height: 919px;
-    /* border: 1px solid white; */
+    height: 100vh;
     padding-top: 85px;
     background-image: url(../ai_guideline_videos_and_images/ai_guide_line_hero_bg.svg);
     background-repeat: no-repeat;
@@ -112,9 +113,8 @@ body {
 }
 
 .hero_section_video_main {
-    width: 588px;
+    width: auto;
     height: 682px;
-    /* border: 1px solid wheat; */
     position: relative;
 }
 
@@ -124,7 +124,6 @@ body {
     bottom: -5px;
     width: 100%;
     height: 125px;
-    /* border: 1px solid #BE9644; */
     background-image: url(../ai_guideline_videos_and_images/video_bottom_blck_border.svg);
     background-repeat: no-repeat;
     background-size: contain;
@@ -141,16 +140,13 @@ body {
     margin-top: -60px;
     z-index: 2;
     text-align: center;
-    /* border: 1px solid red; */
     margin-bottom: 0px;
 }
-
 
 /* Quick start section */
 
 .quick_start_main_section {
     height: auto;
-    /* border: 1px solid #C49D47; */
     margin-top: 50px;
     display: flex;
     flex-direction: column;
@@ -274,7 +270,6 @@ body {
 
 .physical_main_section {
     height: auto;
-    /* border: 1px solid #C49D47; */
     margin-top: 50px;
     display: flex;
     flex-direction: column;
@@ -339,7 +334,6 @@ body {
 .encourage_main {
     width: 100%;
     height: auto;
-    /* border: 1px solid bisque; */
     margin-top: 40px;
     margin-bottom: 20px;
 }
@@ -349,11 +343,12 @@ body {
     height: auto;
     margin-top: 30px;
     display: flex;
+    flex-wrap: wrap;
     gap: 22px;
 }
 
 .encourage_image_with_description {
-    width: 25%;
+    width: 32%;
     height: 100%;
     border: 1px solid #002505;
     border-radius: 12px;
@@ -367,7 +362,6 @@ body {
 .icon_and_description {
     width: 100%;
     height: auto;
-    /* border: 1px solid red; */
     display: flex;
 }
 
@@ -403,7 +397,7 @@ body {
 }
 
 .avoid_image_with_description {
-    width: 25%;
+    width: 32%;
     height: 100%;
     border: 1px solid #310101;
     border-radius: 12px;
@@ -429,9 +423,7 @@ body {
 .performance_guide_steps {
     width: 100%;
     height: auto;
-    /* border: 1px solid red; */
     margin-top: 40px;
-
 }
 
 .performance_guide_steps_heading {
@@ -450,13 +442,11 @@ body {
     font-size: 16px;
     line-height: 160%;
     letter-spacing: 3%;
-
 }
 
 .performance_guide_lighting_main {
     width: 100%;
     height: auto;
-    /* border: 1px solid white; */
     margin-top: 25px;
     display: flex;
     gap: 20px;
@@ -495,7 +485,6 @@ body {
     width: 100%;
     height: auto;
     margin-top: 25px;
-    /* border: 1px solid white; */
     display: flex;
     gap: 20px;
     align-items: end;
@@ -523,7 +512,6 @@ body {
 
 .performance_guide_video_image_format_right_side {
     width: 67%;
-    /* border: 1px solid white; */
     display: flex;
     gap: 20px;
 }
@@ -535,7 +523,6 @@ body {
     border-radius: 12px;
     background: linear-gradient(100.61deg, rgba(38, 255, 0, 0.1) -2.64%, rgba(0, 105, 56, 0.1) 98.59%);
     padding: 18px;
-
 }
 
 .performance_guide_video_image_right {
@@ -546,8 +533,6 @@ body {
     background: linear-gradient(100.61deg, rgba(255, 0, 0, 0.1) -2.64%, rgba(105, 0, 0, 0.1) 98.59%);
     padding: 18px;
 }
-
-
 
 .performance_guide_face_position_main {
     width: 100%;
@@ -586,16 +571,16 @@ body {
     object-fit: contain;
 }
 
+/*  Watch a Sample Recording  */
+
 .example_recording_section_main {
     width: 100%;
     height: auto;
     background: #14141466;
     margin-top: 40px;
-    padding: 60px 0px;
-
+    padding: 40px 0px;
     border-top: 1px solid;
     border-bottom: 1px solid;
-
     border-image: linear-gradient(270deg,
             #BE9644 0.01%,
             #AA803C 15.01%,
@@ -604,17 +589,6 @@ body {
             #F3DC87 73.01%,
             #AA803C 93.01%,
             #C49D47 100.01%) 1;
-}
-
-.example_recording_small_title {
-    font-family: 'Montserrat';
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 16.5px;
-    letter-spacing: 3px;
-    text-align: center;
-    text-transform: uppercase;
-    margin-bottom: 14px;
 }
 
 .example_recording_title {
@@ -636,8 +610,22 @@ body {
     color: white;
 }
 
+.video_wrapper_main {
+    width: 100%;
+    height: 530px;
+    border: 1px solid #4a4a4a;
+    border-radius: 12px;
+    padding: 30px;
+}
+
+.video_wrapper {
+    width: 100%;
+    height: 100%;
+    background-color: #302f2f;
+}
+
 .example_recording_button_main {
-    width: auto;
+    width: 354px;
     height: auto;
     border: 1px solid #C9A84C80;
     border-radius: 40px;
@@ -650,6 +638,16 @@ body {
 .example_recording_button_icon {
     width: 48px;
     height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(270deg, #BE9644 0.01%, #AA803C 15.01%, #F3DC87 43.01%, #FBEFAC 59.01%, #F3DC87 73.01%, #AA803C 93.01%, #C49D47 100.01%);
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    line-height: 100%;
+    padding-bottom: 3px;
+    cursor: pointer;
 }
 
 .example_recording_button_icon>img {
@@ -668,10 +666,88 @@ body {
     margin-bottom: 0px;
 }
 
+/* Video recording specifications section  */
+
+.video_recording_specifications_main {
+    height: auto;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.video_recording_specifications_title {
+    font-size: 32px;
+    font-family: var(--font-Glida-Display);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+}
+
+.video_recording_specifications_subtitle {
+    color: white;
+    font-family: 'Montserrat';
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 5%;
+    max-width: 905px;
+    text-align: center;
+}
+
+.video_guide_steps_main {
+    width: 100%;
+    height: auto;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+}
+
+.video_guide_box_main {
+    width: 32%;
+    height: 290px;
+    border: 1px solid #505050;
+    border-radius: 12px;
+    background: linear-gradient(100.61deg, #1B1B1B -2.64%, #000000 98.59%);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.video_guide_icon {
+    width: 44px;
+    height: 44px;
+}
+
+.video_guide_icon>img {
+    width: 100%;
+    height: 100%;
+}
+
+.video_guide_title {
+    margin-top: 10px;
+    font-size: 24px;
+    color: white;
+    font-family: var(--font-Glida-Display);
+    letter-spacing: 3%;
+}
+
+.video_guide_description {
+    font-size: 16px;
+    color: white;
+    font-family: 'Montserrat';
+    margin-bottom: 0px;
+    line-height: 160%;
+    letter-spacing: 3%;
+}
+
+/*  Settings for iPhone Users */
 .for_iphone_user_main {
     height: auto;
-    /* border:1px solid red ; */
     margin-top: 40px;
+    margin-bottom: 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -680,7 +756,6 @@ body {
 .iphone_user_deatils_main {
     width: 100%;
     height: auto;
-    /* border: 1px solid white; */
     margin-top: 40px;
     display: flex;
     gap: 20px;
@@ -693,39 +768,9 @@ body {
     background: linear-gradient(100.61deg, #1B1B1B -2.64%, #000000 98.59%);
     border-radius: 12px;
     padding: 35px;
-
-}
-
-.symbol_and_tille_main {
-    width: 100%;
-    height: auto;
-    display: flex;
-    align-items: center;
-}
-
-.iphone_icon {
-    width: 24px;
-    height: 24px;
-    /* border: 1px solid gold; */
-}
-
-.iphone_icon>img {
-    margin-bottom: 8px;
-}
-
-.iphone_title {
-    margin-bottom: 0px;
-    margin-left: 8px;
-    font-family: 'Montserrat';
-    font-weight: 400;
-    font-size: 14px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-
 }
 
 .iphone_sub_title {
-    margin-top: 16px;
     font-weight: 400;
     font-size: 24px;
     line-height: 28px;
@@ -742,13 +787,12 @@ body {
     font-size: 14px;
     line-height: 160%;
     letter-spacing: 3%;
-
+    margin-bottom: 0px;
 }
 
 .iphone_guide_steps_main {
     width: 100%;
-    height: 280px;
-    /* border: 1px solid white; */
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -757,7 +801,6 @@ body {
 .iphone_guide_steps {
     width: 100%;
     height: auto;
-    /* border: 1px solid red; */
     margin-top: 12px;
     margin-bottom: 8px;
 }
@@ -765,10 +808,9 @@ body {
 .setp_round_numbers_text_main {
     width: 100%;
     height: auto;
-    /* border: 1px solid red; */
     display: flex;
     align-items: center;
-    margin-bottom: 16px;
+    margin-top: 16px;
 }
 
 .setp_round_numbers {
@@ -803,29 +845,888 @@ body {
     font-size: 15px;
 }
 
-.watch_the_walkthrough_link {
-    width: 100%;
-    height: auto;
-    display: flex;
+@media (max-width: 1600px) {
+    .hero_heading {
+        font-size: 32px;
+        line-height: 40px;
+        letter-spacing: -0.2px;
+    }
+
+    .square_border_lines {
+        position: absolute;
+        width: 100%;
+        height: 88%;
+    }
+
+    .hero_section_video_main {
+        height: 550px;
+    }
+
+    .hero_sub_heading {
+        font-size: 16px;
+        max-width: 740px;
+        line-height: 160%;
+    }
+
+    .hero_section_video_main::before {
+        bottom: -30px;
+    }
+
+    .quick_start_main_section {
+        margin-top: 20px;
+    }
+
+    .quick_start_main_heading {
+        font-size: 28px;
+    }
+
+    .quick_start_main_subheading {
+        font-size: 16px;
+        letter-spacing: 5%;
+        max-width: 740px;
+        margin-bottom: 5px;
+    }
+
+    .step_counter {
+        font-size: 32px;
+    }
+
+    .step_heading {
+        margin-top: 5px;
+        font-size: 20px;
+    }
+
+    .step_description {
+        font-size: 14px;
+    }
+
+    .warning_description {
+        font-size: 14px;
+    }
+
+    .imgae_with_guide_main {
+        margin-top: 0px;
+    }
+
+    .encourage_main {
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    .encourage_images_main {
+        margin-top: 20px;
+    }
+
+    .physical_main_section {
+        margin-top: 30px;
+    }
+
+    .physical_main_heading {
+        font-size: 28px;
+    }
+
+    .physical_main_subheading {
+        font-size: 16px;
+        margin-bottom: 0px;
+    }
+
+    .performance_guide_steps {
+        margin-top: 20px;
+    }
+
+    .performance_heading {
+        font-size: 24px;
+    }
+
+    .performance_guide_steps_heading {
+        font-size: 24px;
+    }
+
+    .performance_guide_steps_desciption {
+        margin-bottom: 0px;
+    }
+
+    .performance_guide_main {
+        margin-top: 16px;
+    }
+
+    .example_recording_section_main {
+        margin-top: 30px;
+        padding: 30px 0px;
+    }
+
+    .example_recording_title {
+        font-size: 28px;
+        margin-bottom: 0px;
+    }
+
+    .example_recording_button_main {
+        padding: 10px 12px;
+        width: 340px;
+    }
+
+    .example_recording_button_text {
+        font-size: 16px;
+    }
+
+    .video_recording_specifications_main {
+        margin-top: 30px;
+    }
+
+    .video_recording_specifications_title {
+        font-size: 28px;
+        margin-bottom: 8px;
+    }
+
+    .video_recording_specifications_subtitle {
+        font-size: 16px;
+        max-width: 740px;
+        margin-bottom: 5px;
+    }
+
+    .video_guide_steps_main {
+        margin-top: 20px;
+    }
+
+    .video_guide_title {
+        margin-top: 10px;
+        font-size: 20px;
+    }
+
+    .video_guide_box_main {
+        height: 230px;
+    }
+
+    .video_guide_description {
+        font-size: 14px;
+    }
+
+    .video_guide_icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .iphone_user_deatils_main {
+        margin-top: 20px;
+    }
+
+    .for_iphone_user_main {
+        margin-top: 20px;
+        margin-bottom: 30px;
+    }
 }
 
-.watch_the_walkthrough_text {
-    margin-bottom: 0px;
-    font-size: 14px;
-    font-family: 'Montserrat';
-    letter-spacing: 1px;
+@media (max-width: 1300px) {
+    .ai_guide_line_hero_section {
+        height: 580px;
+        padding-top: 80px;
+    }
+
+    .hero_section_video_main {
+        height: 370px;
+    }
+
+    .hero_section_video_main::before {
+        bottom: -68px;
+    }
+
+    .hero_sub_heading {
+        font-size: 14px;
+        line-height: 150%;
+        margin-top: -28px;
+    }
+
+    .hero_heading {
+        font-size: 28px;
+        line-height: 36px;
+        letter-spacing: -0.2px;
+    }
+
+    .square_border_lines {
+        height: 86%;
+    }
+
+    .corner {
+        width: 60px;
+        height: 60px;
+    }
+
+    .quick_start_main_section {
+        margin-top: 0px;
+    }
+
+    .quick_start_main_heading {
+        font-size: 24px;
+    }
+
+    .quick_start_main_subheading {
+        font-size: 14px;
+        margin-bottom: 0px;
+    }
+
+    .steps_main {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .step_counter {
+        font-size: 28px;
+    }
+
+    .step_heading {
+        margin-top: 0px;
+        font-size: 18px;
+    }
+
+    .step_description {
+        font-size: 14px;
+        line-height: 160%;
+    }
+
+    .physical_main_section {
+        margin-top: 20px;
+    }
+
+    .physical_main_heading {
+        font-size: 24px;
+        margin-bottom: 0px;
+    }
+
+    .physical_main_subheading {
+        font-size: 14px;
+    }
+
+    .performance_heading {
+        font-size: 22px;
+    }
+
+    .performance_subheading {
+        font-size: 14px;
+        line-height: 160%;
+        margin-bottom: 0px;
+    }
+
+    .encourage_description {
+        height: 40px;
+    }
+
+    .performance_guide_steps_heading {
+        font-size: 22px;
+        margin-bottom: 0px;
+    }
+
+    .performance_guide_steps_desciption {
+        margin-bottom: 0px;
+        font-size: 14px;
+    }
+
+    .video_guide_box_main {
+        height: 218px;
+    }
+
+    .video_recording_specifications_title {
+        font-size: 24px;
+    }
+
+    .video_recording_specifications_subtitle {
+        font-size: 14px;
+        margin-bottom: 0px;
+    }
+
+    .video_guide_title {
+        margin-top: 10px;
+        font-size: 18px;
+        margin-bottom: 0px;
+    }
+
+    .for_iphone_user_main {
+        margin-top: 10px;
+        margin-bottom: 30px;
+    }
+
+    .example_recording_section_main {
+        margin-top: 20px;
+        padding: 20px 0px;
+    }
+
+    .example_recording_title {
+        font-size: 24px;
+        margin-bottom: 0px;
+    }
+
+    .example_recording_description {
+        font-size: 14px;
+        margin-bottom: 14px;
+    }
+
+    .video_wrapper_main {
+        height: 389px;
+        padding: 20px;
+    }
+
+    .example_recording_button_main {
+        padding: 8px 8px;
+        width: 290px;
+        margin-top: 10px;
+    }
+
+    .example_recording_button_icon {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+        padding-bottom: 0px;
+        cursor: pointer;
+    }
+
+    .example_recording_button_text {
+        font-size: 14px;
+        margin-left: 10px;
+    }
+
+    .iphone_sub_title {
+        font-size: 20px;
+        line-height: 28px;
+        margin-bottom: 8px;
+    }
+
+    .iphone_guide_steps {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .setp_round_numbers_text {
+        font-size: 14px;
+    }
 }
 
-.watch_the_walkthrough_link>a>img {
-    width: 20px;
-    height: 20px;
-    margin-left: 4px;
+@media (max-width: 1200px) {
+    .ai_guide_line_hero_section {
+        height: 700px;
+        padding-top: 80px;
+    }
+
+    .square_border_lines {
+        height: 89%;
+    }
+
+    .hero_section_video_main {
+        height: 486px;
+    }
+
+    .hero_section_video_main::before {
+        bottom: -4px;
+        background-size: cover;
+    }
+
+    .hero_sub_heading {
+        margin-top: -40px;
+    }
+
+    .step_box_main {
+        width: 48.5%;
+        padding: 20px;
+    }
+
+    .warning_box_main {
+        margin: 20px auto 20px auto;
+        padding: 8px 12px;
+    }
+
+    .performance_guide_main {
+        margin-top: 20px;
+        padding: 20px;
+    }
+
+    .performance_guide_image_main {
+        border-radius: 16px;
+        margin-top: 15px;
+    }
+
+    .encourage_image_with_description {
+        width: 31.5%;
+        padding: 16px;
+
+    }
+
+    .avoid_image_with_description {
+        width: 31.5%;
+        padding: 16px;
+    }
+
+    .warning_icon {
+        width: 36px;
+        height: 36px;
+        flex-shrink: 0;
+    }
+
+    .avoid_warning_box_main {
+        padding: 8px 12px;
+    }
+
+    .warning_description {
+        margin-left: 14px;
+    }
+
+    .performance_guide_lighting_img {
+        width: 48.5%;
+        padding: 20px;
+    }
+
+    .performance_guide_lighting_green_img {
+        padding: 20px;
+    }
+
+    .performance_guide_video_image_format_img {
+        padding: 20px;
+    }
+
+    .performance_guide_video_image_left {
+        padding: 16px;
+    }
+
+    .performance_guide_video_image_right {
+        padding: 16px;
+    }
+
+    .performance_guide_face_position_img {
+        padding: 20px;
+    }
+
+    .performance_guide_face_position_green_img {
+        padding: 20px;
+    }
+
+    .performance_guide_lighting_img {
+        padding: 16px;
+    }
+
+    .performance_guide_lighting_green_img {
+        padding: 16px;
+    }
+
+    .video_wrapper_main {
+        height: 410px;
+        margin-top: 10px;
+    }
+
+    .video_guide_box_main {
+        height: auto;
+        width: 31.5%;
+        padding: 16px;
+    }
+
+    .video_guide_title {
+        margin-top: 15px;
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .for_iphone_user_main {
+        margin-top: 0px;
+        margin-bottom: 20px;
+    }
+
+    .example_recording_description {
+        font-size: 14px;
+        margin-bottom: 0px;
+    }
+
+    .iphone_user_deatils {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 992px) {
+    .ai_guide_line_hero_section {
+        height: 1000px;
+        padding-top: 90px;
+    }
+
+    .hero_heading {
+        margin-top: 20px;
+    }
+
+    .square_border_lines {
+        height: 92%;
+    }
+
+    .hero_section_video_main {
+        height: auto;
+    }
+
+    .hero_section_video_main::before {
+        bottom: 7px;
+    }
+
+    .hero_sub_heading {
+        margin-top: -61px;
+        max-width: 630px;
+    }
+
+    .hero_section_video_main::before {
+        background-size: cover;
+    }
+
+    .quick_start_main_subheading {
+        max-width: 630px;
+    }
+
+    .imgae_with_guide_main {
+        border-radius: 16px;
+    }
+
+    .warning_box_main {
+        width: 100%;
+    }
+
+    .encourage_image_with_description {
+        width: 48%;
+        padding: 20px;
+    }
+
+    .avoid_image_with_description {
+        width: 48%;
+        padding: 20px;
+    }
+
+    .avoid_warning_box_main {
+        width: 100%;
+    }
+
+    .performance_guide_lighting_img {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .performance_guide_lighting_green_img {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .performance_guide_video_image_format_img {
+        width: 50%;
+    }
+
+    .performance_guide_video_image_format_right_side {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .performance_guide_video_image_left {
+        padding: 20px;
+        width: 100%;
+    }
+
+    .performance_guide_video_image_right {
+        padding: 20px;
+        width: 100%;
+    }
+
+    .performance_guide_video_image_format_main {
+        align-items: center;
+    }
+
+    .video_guide_box_main {
+        width: 48%;
+        padding: 20px;
+    }
+
+    .video_recording_specifications_subtitle {
+        max-width: 630px;
+    }
+
+    .example_recording_description {
+        text-align: center;
+        max-width: 630px;
+    }
+
+    .iphone_user_deatils_main {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .iphone_user_deatils {
+        width: 80%;
+    }
+}
+
+@media (max-width: 780px) {
+    .hero_section_video_main {
+        height: 680px;
+    }
+
+    .hero_sub_heading {
+        margin-top: -28px;
+    }
+
+    .step_box_main {
+        width: 100%;
+    }
+
+    .encourage_image_with_description {
+        width: 47%;
+    }
+
+    .avoid_image_with_description {
+        width: 47%;
+    }
+
+    .video_guide_box_main {
+        width: 100%;
+    }
+
+    .iphone_user_deatils {
+        width: 100%;
+    }
 
 }
 
+@media (max-width: 576px) {
+    .hero_heading {
+        font-size: 22px;
+        line-height: 30px;
+        margin-top: 30px;
+    }
+
+    .ai_guide_line_hero_section {
+        height: 90vh;
+        padding-top: 70px;
+    }
+
+    .corner {
+        width: 50px;
+        height: 50px;
+    }
+
+    .square_border_lines {
+        height: 90%;
+    }
+
+    .hero_section_video_main {
+        height: auto;
+        margin-top: 30%;
+    }
+
+    .hero_section_video_main::before {
+        bottom: -3px;
+    }
+
+    .hero_sub_heading {
+        width: 100%;
+        font-size: 12px;
+        margin-top: -20%;
+    }
+
+    .quick_start_main_heading {
+        font-size: 18px;
+    }
+
+    .quick_start_main_subheading {
+        font-size: 12px;
+        margin-bottom: 0px;
+        width: 100%;
+    }
+
+    .step_box_main {
+        padding: 16px;
+    }
+
+    .step_counter {
+        font-size: 24px;
+    }
+
+    .step_heading {
+        margin-top: 0px;
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .step_description {
+        font-size: 12px;
+        line-height: 160%;
+    }
+
+    .warning_description {
+        margin-left: 12px;
+        font-size: 12px;
+        line-height: 140%;
+    }
+
+    .physical_main_heading {
+        font-size: 18px;
+        margin-bottom: 0px;
+    }
+
+    .physical_main_subheading {
+        font-size: 12px;
+        text-align: center;
+    }
+
+    .performance_guide_main {
+        margin-top: 16px;
+        padding: 16px;
+    }
+
+    .performance_heading {
+        font-size: 18px;
+    }
+
+    .performance_subheading {
+        font-size: 12px;
+        line-height: 140%;
+    }
+
+    .encourage_image_with_description {
+        width: 100%;
+        padding: 16px;
+    }
+
+    .encourage_description {
+        height: 30px;
+        font-size: 12px;
+        margin-left: 12px;
+    }
+
+    .avoid_image_with_description {
+        width: 100%;
+        padding: 16px;
+    }
+
+    .performance_guide_steps_heading {
+        font-size: 18px;
+    }
+
+    .performance_guide_steps_desciption {
+        font-size: 12px;
+    }
+
+    .performance_guide_lighting_img {
+        padding: 16px;
+    }
+
+    .performance_guide_video_image_format_main {
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .performance_guide_video_image_format_img {
+        width: 100%;
+        padding: 16px;
+    }
+
+    .performance_guide_video_image_left {
+        padding: 16px;
+    }
+
+    .performance_guide_video_image_format_right_side {
+        width: 100%;
+    }
+
+    .performance_guide_face_position_main {
+        margin-top: 16px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .performance_guide_face_position_img {
+        padding: 16px;
+        width: 100%;
+    }
+
+    .performance_guide_face_position_green_img {
+        padding: 16px;
+        width: 100%;
+    }
+
+    .example_recording_title {
+        font-size: 18px;
+        margin-bottom: 0px;
+    }
+
+    .video_wrapper_main {
+        height: auto;
+        margin-top: 10px;
+        padding: 16px;
+    }
+
+    .video_wrapper {
+        width: auto;
+        height: auto;
+    }
+
+    .example_recording_button_text {
+        font-size: 12px;
+        margin-left: 10px;
+        letter-spacing: 1.5px;
+    }
+
+    .example_recording_button_main {
+        width: 235px;
+    }
+
+    .example_recording_section_main {
+        margin-top: 20px;
+        padding: 16px 0px;
+    }
+
+    .video_recording_specifications_main {
+        margin-top: 20px;
+    }
+
+    .video_recording_specifications_title {
+        font-size: 18px;
+    }
+
+    .video_recording_specifications_subtitle {
+        font-size: 12px;
+    }
+
+    .video_guide_description {
+        font-size: 12px;
+    }
+
+    .video_guide_box_main {
+        padding: 16px;
+    }
+
+    .video_guide_title {
+        font-size: 16px;
+    }
+
+    .example_recording_description {
+        font-size: 12px;
+    }
+
+    .iphone_sub_title {
+        font-size: 17px;
+    }
+
+    .iphone_user_deatils {
+        padding: 16px;
+    }
+
+    .iphone_descriptions {
+        font-size: 12px;
+        line-height: 150%;
+    }
+
+    .setp_round_numbers_text {
+        font-size: 12px;
+    }
+
+    .setp_round_numbers {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+/*  Ready to record  */
+/*
 .ready_to_record_section_main {
     height: auto;
-    /* border: 1px solid red; */
+    border: 1px solid red;
     margin-top: 50px;
     margin-bottom: 40px;
     background: url('/static/ai_guideline_videos_and_images/ready_to_record_section_bg.svg') no-repeat center center/contain;
@@ -885,4 +1786,5 @@ body {
     width: 20px;
     height: 20px;
     margin-left: 4px;
-}
+}   
+*/

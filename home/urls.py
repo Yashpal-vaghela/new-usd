@@ -46,6 +46,5 @@ urlpatterns = [
     path('verify-warranty/',views.verify_warranty, name="verify_warranty"),
     # path('virtual-smile-try-on/',views.virtualsmiletryon , name="virtualsmiletryon")
     # path('smile_step/', views.smile_step, name='smile_step'),
-    path('ai/',views.ai_guideline,name='ai_guideline'),
-    # path('video-recording-guide-for-exocad/',views.ai_guideline,name='ai_guideline'),
+    path('video-recording-guide-for-exocad/',views.ai_guideline,name='ai_guideline'),
 ] 
