@@ -503,6 +503,7 @@
         let isMicSoftwareMuted = true; 
         let interruptRestartHoldUntil = 0;
         let liveUserText = "";
+        let botSpeakingHeartbeatInterval = null;
 
        // ⚡ AUDIO RECORDING VARIABLES
         let mediaRecorder = null;
@@ -605,6 +606,23 @@
 
         function updateState(newState, statusText = null) {
             currentAgentState = newState;
+
+            // Keep WebSocket alive during thinking or speaking by sending a periodic heartbeat
+            if (newState === 'speaking' || newState === 'thinking') {
+                if (!botSpeakingHeartbeatInterval) {
+                    botSpeakingHeartbeatInterval = setInterval(() => {
+                        if (socket && socket.readyState === WebSocket.OPEN) {
+                            socket.send(JSON.stringify({ type: 'heartbeat' }));
+                        }
+                    }, 5000);
+                }
+            } else {
+                if (botSpeakingHeartbeatInterval) {
+                    clearInterval(botSpeakingHeartbeatInterval);
+                    botSpeakingHeartbeatInterval = null;
+                }
+            }
+
             const statusBox = document.getElementById('usd-status-box');
             const interimBox = document.getElementById('usd-interim-text');
             const voiceTrigger = document.getElementById('usd-voice-trigger-btn');
@@ -622,12 +640,14 @@
             }
 
             if (statusBox) {
-                if (newState === 'connecting' || newState === 'off') {
-                    if (statusText) statusBox.innerText = statusText;
+                if (newState === 'connecting') {
+                    statusBox.innerText = statusText || "Calling assistant... 🟡";
+                } else if (newState === 'off') {
+                    statusBox.innerText = statusText || "Disconnected 🔴";
                 } else if (isVoiceMode) {
                     statusBox.innerText = "Connected 🟢"; 
                 } else {
-                    statusBox.innerText = "Chat Mode Active. Type below.";
+                    statusBox.innerText = statusText || "Chat Mode Active. Type below.";
                 }
             }
 
@@ -1184,6 +1204,29 @@
                     }
                 };
                 socket.onerror = () => { updateState('listening'); };
+                socket.onclose = (event) => {
+                    console.log("WebSocket closed:", event);
+                    
+                    // Clean up microphone and VAD
+                    if (window.myvad) {
+                        try { window.myvad.pause(); } catch(e){}
+                        window.myvad = null;
+                    }
+                    releaseWakeLock();
+                    if (globalStream) {
+                        try { globalStream.getTracks().forEach(track => track.stop()); } catch(e){}
+                        globalStream = null;
+                    }
+                    
+                    // Show disconnect message in the chat log if it was an active session
+                    const chatLog = document.getElementById('usd-chat-log');
+                    const hasEndedMsg = chatLog.innerText.includes("The chat has ended") || chatLog.innerText.includes("Thanks talking with us");
+                    if (!hasEndedMsg && currentAgentState !== 'off') {
+                        logMessage('bot', "The chat has ended. Thanks talking with us have greate day!");
+                    }
+                    
+                    updateState('off');
+                };
             } catch (err) {
                 updateState('listening');
             }
