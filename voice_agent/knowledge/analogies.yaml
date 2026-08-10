@@ -1,0 +1,152 @@
+intent: emotional_reasons
+
+user_questions:
+- I hate my smile.
+- I never smile in photos.
+- People tease my teeth.
+- I cover my mouth.
+- I'm getting married.
+- I have an interview.
+- I lost confidence.
+- I want to smile again.
+- I feel embarrassed.
+- I avoid laughing.
+
+emotion:
+emotional
+
+voice_response:
+
+Thank you for sharing that with me.
+
+Many people don't come to us because they want perfect teeth. They come because they want to smile without thinking about it.
+
+That's the philosophy behind Ultimate Smile Design. We don't try to give everyone the same smile. We carefully plan a smile that feels natural and truly belongs to you.
+
+The most beautiful smile isn't the perfect one.
+
+It's the one that gives you your confidence back.
+
+follow_up:
+
+Would you like me to explain what happens during your very first consultation?
+
+keywords:
+- confidence
+- wedding
+- interview
+- embarrassment
+- photos
+
+intent: ai_and_human_expertise
+
+user_questions:
+- Does AI replace dentists?
+- Does AI replace ceramists?
+- Can AI design smiles?
+- Can ChatGPT design smiles?
+- Can machines replace humans?
+- Is AI enough?
+- How much AI is used?
+
+emotion:
+curious
+
+voice_response:
+
+AI is a powerful assistant, but it isn't a smile designer.
+
+Think of GPS. It helps you find the best route, but you still need an experienced driver to reach your destination safely.
+
+At Ultimate Smile Design, AI and digital technology help analyse, measure, and plan with incredible accuracy. But the final decisions always come from experienced dentists and Master Ceramists who understand beauty, balance, and individuality.
+
+Technology supports expertise.
+
+It never replaces it.
+
+follow_up:
+
+Would you like to know how technology and craftsmanship work together during smile designing?
+
+intent: usd_protocols
+
+user_questions:
+- What are USD Protocols?
+- What is the Ultimate Smile Design process?
+- How does the treatment work?
+- What are the steps?
+- How do you design a smile?
+- What's your process?
+- What makes your process different?
+- How does USD work?
+- What happens after consultation?
+- Explain the smile journey.
+
+emotion:
+curious
+
+voice_response:
+
+Every beautiful smile follows a process, not just a procedure.
+
+Think about building a home. You don't start by laying bricks. You first understand the land, create a blueprint, review the design, and only then begin construction.
+
+Ultimate Smile Design follows the same philosophy.
+
+Instead of rushing into treatment, we follow a series of carefully designed protocols that help understand your smile, analyse your facial features, create a personalised smile plan, preview the expected result, and finally deliver a smile that feels naturally yours.
+
+The goal isn't simply to improve your teeth.
+
+It's to create a smile that's thoughtfully designed from beginning to end.
+
+follow_up:
+
+Would you like me to explain the first protocol, the USD Smile Discovery Consultation?
+
+keywords:
+- protocol
+- process
+- smile journey
+- steps
+- consultation
+- blueprint
+- preview
+- reveal
+
+intent: smile_confidence
+
+user_questions:
+- Why confidence?
+- How does a smile change confidence?
+- Can a smile change my personality?
+- Why do smiles matter?
+- Can smiling affect life?
+- How does smile affect first impressions?
+
+emotion:
+hopeful
+
+voice_response:
+
+Most people don't dream about perfect teeth.
+
+They dream about smiling without hesitation.
+
+Think about meeting someone who smiles confidently. Before they even speak, you naturally feel warmth, trust, and positivity.
+
+That's why Ultimate Smile Design focuses on confidence rather than perfection. When your smile feels natural, you stop thinking about it—and simply become yourself.
+
+The greatest transformation isn't your teeth.
+
+It's your confidence.
+
+follow_up:
+
+Would you like to know how we design a smile that still feels like you?
+
+keywords:
+- confidence
+- personality
+- first impression
+- smile psychology
+

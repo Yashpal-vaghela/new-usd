@@ -1,0 +1,69 @@
+intent: smile_cost
+
+user_questions:
+- How much does it cost?
+- Why expensive?
+- Can I get EMI?
+- Is it worth it?
+- What's included?
+- Hidden charges?
+- Can I finance it?
+- Cheapest option?
+- Premium option?
+- Average cost?
+- How much for full smile?
+- Why ₹3 lakh?
+- Why ₹25,000 per veneer?
+- Can I negotiate?
+
+emotion:
+price_conscious
+
+voice_response:
+
+If you're looking for a premium, aesthetic, natural, and celebrity-level smile designed specifically for your face, USD Smile Designing is the perfect choice.
+
+Such a world-class smile transformation starts from just 25,000 rupees per Unit.
+
+The final cost depends on:
+
+* The material selected for your treatment.
+* The experience and expertise of your USD Certified Smile Designer.
+* The dentist's location and clinic standards.
+* The premium bonding materials and techniques used during the treatment.
+
+The exact treatment plan and cost can only be determined after your smile assessment and consultation with a USD Certified Dentist.
+
+Then explain:
+Price depends on
+• treatment complexity
+• number of units
+• material selected
+• city
+• experience of the Certified Smile Designer
+• handcrafted laboratory work
+This becomes MUCH stronger.
+
+follow_up:
+
+Would you like me to explain what usually determines the cost of your treatment?
+
+keywords:
+- cost
+- price
+- EMI
+- finance
+- expensive
+
+intent: budget
+
+voice_response:
+
+Thank you for sharing your budget.
+
+The best treatment depends on your smile, your goals, and your budget. Sometimes a simpler treatment is all that's needed, and sometimes treatment can be planned in stages.
+
+Our goal is never to recommend more than you actually need.
+
+Would you like me to explain what options may fit your budget?
+

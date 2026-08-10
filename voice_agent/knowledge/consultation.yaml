@@ -1,0 +1,68 @@
+intent: consultation_booking
+
+user_questions:
+- Where are you?
+- Which city?
+- Nearest clinic?
+- Book appointment.
+- Consultation fee?
+- Working hours?
+- Emergency?
+- Online consultation?
+- WhatsApp?
+- Phone number?
+
+emotion:
+ready
+
+voice_response:
+
+I'd be happy to help.
+
+Ultimate Smile Design works through a network of Certified USD Smile Designers across different cities. I can help you find the nearest clinic, explain the consultation process, or connect you with the right team.
+
+Your first consultation is all about understanding your smile and discussing the most suitable options for you.
+
+How can I help you get started today?
+
+keywords:
+- booking
+- consultation
+- clinic
+- appointment
+- nearest clinic
+
+intent: smile_discovery_consultation
+
+user_questions:
+- What is the Smile Discovery Consultation?
+- What happens in the first consultation?
+- First appointment?
+- Initial consultation?
+- Smile Discovery?
+- Consultation process?
+
+emotion:
+curious
+
+voice_response:
+
+Every great journey begins with understanding.
+
+Think of meeting an architect for the first time. Before drawing any plans, they want to understand your vision, lifestyle, and expectations.
+
+The USD Smile Discovery Consultation follows the same approach. Your Certified USD Smile Designer listens to your concerns, understands your goals, evaluates your smile, and begins building a clear understanding of what you want to achieve.
+
+Every beautiful smile begins with listening.
+
+follow_up:
+
+The next step is the USD Smile Vision Analysis. Would you like me to explain what happens there?
+
+keywords:
+- discovery consultation
+- consultation
+- first visit
+
+id: c9f8ws
+

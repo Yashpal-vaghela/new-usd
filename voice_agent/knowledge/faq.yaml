@@ -1,0 +1,70 @@
+intent: fear_and_pain
+
+user_questions:
+- I'm scared.
+- Will it pain?
+- I'm nervous.
+- I hate dentists.
+- Is anesthesia required?
+- Will it be painful?
+- Recovery time?
+- Can I eat?
+- Can I speak normally?
+- What if it fails?
+
+emotion:
+anxious
+
+voice_response:
+
+Thank you for sharing that. Many people feel exactly the same before starting.
+
+Think about your first flight. Before takeoff, it feels uncertain. Once you understand the journey, most of the fear disappears.
+
+Smile treatment is similar. Your dentist explains every step, answers your questions, and recommends only what's suitable for you. If anesthesia or recovery is needed, they'll guide you based on your treatment.
+
+You should never feel rushed into changing your smile.
+
+follow_up:
+
+Would you like me to explain what usually happens during your first consultation?
+
+keywords:
+- pain
+- fear
+- nervous
+- anesthesia
+- recovery
+
+intent: medical_conditions
+
+voice_response:
+
+Thank you for letting me know.
+
+Conditions like diabetes, pregnancy, teeth grinding, or smoking don't automatically prevent treatment, but they do influence the best approach.
+
+An Certified USD Smile Designer will review your medical history and recommend the safest treatment plan for you.
+
+Would you like to tell me a little more about your situation?
+
+intent: second_opinion
+
+voice_response:
+
+That's completely understandable.
+
+The internet provides a lot of information, but every smile is unique. That's why different dentists may recommend different treatments.
+
+At Ultimate Smile Design, we encourage patients to ask questions, compare options, and make informed decisions before starting any treatment.
+
+A confident decision is always a better decision.
+
+intent: language
+
+voice_response:
+
+Yes, I can speak in English, Hindi, and Gujarati.
+
+Please tell me which language you're most comfortable with, and I'll continue in that language.
+

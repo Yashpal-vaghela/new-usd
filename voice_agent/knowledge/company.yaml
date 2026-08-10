@@ -1,0 +1,277 @@
+intent: ultimate_smile_design
+
+user_questions:
+- What is Ultimate Smile Design?
+- Tell me about Ultimate Smile Design.
+- Explain Ultimate Smile Design.
+- What is USD?
+- Explain USD.
+- Can you explain Ultimate Smile Design?
+- Tell me what USD is.
+- What does Ultimate Smile Design mean?
+- What is the USD concept?
+- Explain the USD concept.
+- What is the Ultimate Smile Design concept?
+
+emotion:
+curious
+
+voice_response:
+
+Ultimate Smile Design (USD) is a premium smile transformation concept that combines advanced digital technology, artistic smile design, and expert dental craftsmanship to create a smile that perfectly complements your face, personality, and natural expressions.
+
+Unlike conventional smile makeovers, USD focuses on achieving a smile that is natural, aesthetic, functional, and uniquely designed only for you. Every smile is carefully planned using facial analysis, digital smile design, and precise treatment protocols, then hand-crafted by master ceramists to deliver a premium, celebrity-level result.
+
+follow_up:
+
+Would you like me to explain how Ultimate Smile Design is different from conventional smile designing?
+
+keywords:
+- ultimate smile design
+- ultimate smile design
+- what is usd
+- explain usd
+- usd concept
+- what is ultimate smile design
+- tell me about ultimate smile design
+
+intent: about_usd
+
+user_questions:
+- Can you share more detils about USD
+- Who created USD?
+- What's the story behind USD?
+- What's so special about USD?
+- Is USD a company?
+- Is USD a clinic?
+- Is USD a hospital?
+- Are you a dental clinic?
+- Are you a dental lab?
+- Are you a software company?
+- What do you actually do?
+- What's the purpose of USD?
+- What problem are you solving?
+- Why should I care about USD?
+
+emotion:
+curious
+
+voice_response:
+
+That's a great question.
+
+Ultimate Smile Design was created by Master Ceramist **Haresh Savani** after years of seeing the inconsistencies in conventional smile makeovers. He realized that beautiful, natural smiles aren't created by technology or materials alone—they require a standardized, planning-first approach.
+
+To clarify, Ultimate Smile Design (USD) is not a clinic, a treatment, or a standalone dental lab—it is the premium and aesthetic dental Product of **Advance Dental Export (ADE) Laboratory**.
+
+To ensure these premium products are applied correctly, ADE has set a strict protocol: dentists must first complete the specialized **USD Course**. Only after completing this training are they certified to use and apply USD products, guaranteeing you get a high-quality, standardized, and beautiful result.
+
+follow_up:
+
+Would you like me to explain how smile designing actually works before any treatment begins?
+
+keywords:
+- more about usd
+- ultimate smile design details
+- philosophy
+- company
+- clinic
+- hospital
+- dental lab
+- haresh savani
+- purpose
+- founder
+
+intent: certified_usd_smile_designer
+
+user_questions:
+- What is an Certified USD Smile Designer?
+- Why certified?
+- Can't any dentist do this?
+- How are dentists selected?
+- Is certification important?
+- Why only authorised clinics?
+- Can my own dentist become authorised?
+- How do I find one?
+- Are all dentists trained?
+- Who trains them?
+
+emotion:
+curious
+
+voice_response:
+
+A Certified Ultimate Smile Designer is a licensed dentist who has successfully completed the Ultimate Smile Design (USD) training and certification program. During this program, dentists learn the official USD philosophy, treatment protocols, digital planning workflow, and aesthetic principles developed by Master Ceramist **Haresh Savani**. After certification, they are authorized to provide treatment using the official USD protocol.
+
+Think of it this way: every chef knows how to cook, but a Master chef is recognized for consistency, creativity, and attention to detail. Similarly, while many dentists perform smile makeovers, a Certified Ultimate Smile Designer has received specialized USD training and follows a standardized protocol designed to deliver consistent, natural, and highly aesthetic results.
+
+follow_up:
+
+Would you like me to explain why the laboratory is just as important as the dentist?
+
+keywords:
+- authorised
+- certified dentist
+- training
+- smile designer
+- certification
+
+intent: trust
+
+user_questions:
+- Can I trust USD?
+- What if I regret it?
+- What if I don't like it?
+- What if something goes wrong?
+- Money back?
+- Do you guarantee results?
+- How many cases have you done?
+- Are there reviews?
+- Real patients?
+- Success rate?
+
+emotion:
+uncertain
+
+voice_response:
+
+I'm glad you asked, because trust should always come before treatment.
+
+You can trust Ultimate Smile Design because every smile is personalized, digitally planned, and handcrafted using premium, USA FDA-cleared materials and standardized treatment protocols. Backed by the master ceramist of **Haresh Savani and his team**, and delivered through Certified Ultimate Smile Designers, our goal is to create a smile that looks natural, feels comfortable, and lasts for years.
+
+Also, we are providing you with an authentication card for your assurance that you get a high-quality and premium product.
+
+follow_up:
+
+Would you like me to explain what happens during your first consultation before you make any decision?
+
+keywords:
+- trust
+- guarantee
+- reviews
+- confidence
+
+intent: headquarters_location
+
+user_questions:
+- Where is Ultimate Smile Design located?
+- Where is USD located?
+- Where is your head office?
+- Where is your headquarters?
+- Where is your company based?
+- Where are you located?
+- Where is Advance Dental Export located?
+- Where is ADE located?
+- Is USD in Mumbai?
+- Is USD located in Surat?
+- Which city is your headquarters?
+
+emotion:
+curious
+
+voice_response:
+
+Ultimate Smile Design (USD) is the premium, aesthetic product of **Advance Dental Export (ADE) Laboratory**. Our global headquarters and state-of-the-art laboratory are located at Plot No. 1 to 8, Maruti Dham Industrial Estate, Velanja-Gothan Road, Umra, Surat, Gujarat, India.
+
+While our headquarters and laboratory are based in Surat, our Certified Ultimate Smile Designers—the Certified dentists who have successfully completed the specialized USD Course—are available across multiple cities, making it convenient for you to receive USD treatment closer to home.
+
+follow_up:
+
+Would you like me to help you find a Certified Ultimate Smile Designer near your city?
+
+keywords:
+- headquarters
+- head office
+- surat
+- gujarat
+- india
+- ade
+- advance dental export
+- location
+
+intent: haresh_savani_location
+
+user_questions:
+- Where is Haresh Savani located?
+- Which city is Haresh Savani from?
+- Where does Haresh Savani work?
+
+emotion:
+curious
+
+voice_response:
+
+Our founder, Master Ceramist **Haresh Savani**, is based in Surat, Gujarat, India. He works and leads his team of master ceramists at our global headquarters and design center at Advance Dental Export (ADE) Laboratory.
+
+follow_up:
+
+Would you like me to explain more about Master Ceramist Haresh Savani's role or the laboratory?
+
+keywords:
+- haresh savani
+- location
+- surat
+- works
+- city
+- based
+
+intent: experience
+
+user_questions:
+- Why experience matters?
+- Can young dentists do this?
+- Why trained dentists?
+- How many smiles?
+- How do skills improve?
+- Why specialization?
+
+emotion:
+curious
+
+voice_response:
+
+Every expert begins as a beginner, but experience brings confidence, judgment, and attention to detail.
+
+Think about a pilot. Every pilot is trained to fly, but years of experience help them handle complex situations with greater confidence.
+
+Smile designing is similar. Technical knowledge is essential, but experience helps dentists and Master Ceramists recognise subtle details that make a smile feel truly natural.
+
+Experience turns knowledge into artistry.
+
+follow_up:
+
+Would you like to know how digital technology supports that experience?
+
+id: p8x4nk
+
+intent: ai_identity
+
+voice_response:
+
+I'm Riya, the AI consultant for Ultimate Smile Design. I'm here to answer your questions, explain the USD philosophy, and help you understand your treatment options.
+
+Whenever you need clinical advice or want to begin treatment, I'll connect you with an Certified USD Smile Designer.
+
+How can I help you today?
+
+intent: human_transfer
+
+voice_response:
+
+Of course.
+
+If you'd prefer to speak with a real person or an Certified USD Smile Designer, I can help connect you with the appropriate clinic or support team.
+
+Would you like me to arrange that for you?
+
+intent: privacy
+
+voice_response:
+
+Yes. Your privacy is important to us.
+
+Any photos or information you share are used only to help understand your smile and assist with your consultation. They aren't used for anything unrelated to your treatment.
+
+Is there anything specific you'd like to know about your privacy?
+
+.

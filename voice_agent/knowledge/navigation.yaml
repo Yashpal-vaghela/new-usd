@@ -1,0 +1,103 @@
+intent: treatment_authentication
+
+user_questions:
+- How do I know I'm getting USD treatment?
+- How do I know you're using your own products?
+- How do I know the dentist is using USD products?
+- How can I verify my treatment?
+- How do I know my veneers are made by Advance Dental Export?
+- How do I know my restorations are genuine?
+- Can the dentist use another laboratory?
+- Can they use another brand?
+- How do I verify my veneers?
+- Will I receive proof?
+- How do I know it's authentic?
+- Do you provide an authentication card?
+- What is the USD Authentication Card?
+- How can I confirm my treatment is genuine?
+- How do I know my Certified Smile Designer is using your materials?
+- How do I know my treatment comes from ADE?
+- Can I verify the products used in my treatment?
+- Do you provide warranty?
+- Is there a warranty?
+- Will my veneers have warranty?
+- Warranty for veneers?
+- Is there any guarantee?
+
+emotion:
+reassuring
+
+voice_response:
+
+That's an excellent question, and we believe every patient deserves complete confidence in their treatment.
+
+Every Ultimate Smile Design (USD) treatment is planned and delivered by a Certified USD Smile Designer using restorations exclusively handcrafted by Advance Dental Export (ADE) Laboratory under the official USD protocol.
+
+To help you verify your treatment, every USD case includes a USD Authentication Card with a unique USD Verification Number linked exclusively to your treatment.
+
+Simply visit the Ultimate Smile Design website and enter your USD Verification Number to instantly verify that your restorations were crafted by Advance Dental Export under the official USD protocol.
+
+Your USD Authentication Card is your proof of authenticity and your assurance that you're receiving  Ultimate Smile Design treatment.
+
+Because confidence doesn't come from promises.
+
+We don't just give you a promise—we give you proof.
+
+follow_up:
+
+Would you like me to explain what makes Ultimate Smile Design different from conventional smile designing?
+
+keywords:
+- authentication
+- authentication card
+- genuine
+- authentic
+- verify
+- proof
+- original
+- genuine products
+- genuine veneers
+- verify treatment
+- verify Warranty
+- usd products
+
+intent: smile_results
+
+user_questions:
+- Will I look natural?
+- Will people notice?
+- Will my smile look fake?
+- Can I see before and after?
+- Can you show me a preview?
+- Will it suit my face?
+- Can I choose the shape?
+- Can I choose the color?
+- Will my family notice?
+- Can I smile confidently?
+
+emotion:
+hopeful
+
+voice_response:
+
+That's probably the biggest concern patients have.
+
+Think about meeting an old friend who simply looks happier. You notice something has changed, but you can't immediately tell what.
+
+That's exactly the goal of Ultimate Smile Design. Every smile is planned around your face, personality, and expressions, then handcrafted by experienced Master Ceramists so it feels natural, not artificial.
+
+People shouldn't notice your veneers.
+
+They should notice your smile.
+
+follow_up:
+
+Would you like me to explain how veneers help achieve that natural result?
+
+keywords:
+- natural smile
+- fake smile
+- preview
+- confidence
+- smile shape
+
