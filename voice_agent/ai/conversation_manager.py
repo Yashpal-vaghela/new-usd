@@ -92,42 +92,12 @@ class ConversationManager:
             pcm_buffer = b"".join(self.session.current_user_pcm_chunks) if self.session.current_user_pcm_chunks else b""
             self.session.current_user_pcm_chunks = []
             self.session.is_interrupted = False
-            
-            # Stop speaking notification to Gemini Live
-            if self.session.gemini_ws:
-                try:
-                    await self.session.gemini_ws.send(json.dumps({"clientContent": {"turnComplete": True}}))
-                except Exception:
-                    pass
-                
-            # Send raw speech chunk as a fallback clientContent segment if required
-            if len(pcm_buffer) > 0 and self.session.gemini_ws:
-                try:
-                    base64_data = base64.b64encode(pcm_buffer).decode('utf-8')
-                    await self.session.gemini_ws.send(json.dumps({
-                        "clientContent": {
-                            "turns": [{
-                                "role": "user",
-                                "parts": [{
-                                    "inlineData": {
-                                        "mimeType": "audio/pcm;rate=16000",
-                                        "data": base64_data
-                                    }
-                                }]
-                            }],
-                            "turnComplete": True
-                        }
-                    }))
-                except Exception:
-                    pass
-            elif self.session.gemini_ws:
-                try:
-                    await self.session.gemini_ws.send(json.dumps({"clientContent": {"turnComplete": True}}))
-                except Exception:
-                    pass
                 
             # Background transcription for the browser UI chat bubble
             native_text = clean_hallucinations(data.get("nativeTranscript", "").strip())
+            if not native_text:
+                native_text = clean_hallucinations(self.session.current_user_transcription.strip())
+                
             if native_text:
                 self.session.current_user_transcription = native_text
                 fut = asyncio.Future()

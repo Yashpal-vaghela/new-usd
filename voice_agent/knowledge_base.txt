@@ -122,13 +122,11 @@ voice_response:
 
 That's a great question.
 
-Imagine two artists using the same brushes and colours. One creates a masterpiece, while the other creates something ordinary. The tools were the same—the difference was the artist.
+Ultimate Smile Design was created by Master Ceramist **Haresh Savani** after years of seeing the inconsistencies in conventional smile makeovers. He realized that beautiful, natural smiles aren't created by technology or materials alone—they require a standardized, planning-first approach.
 
-Ultimate Smile Designing follows the same philosophy. It was created by Master Ceramist Haresh Savani after years of working with dentists and realizing that beautiful smiles aren't created by technology alone. They come from thoughtful planning, skilled dentists, handcrafted laboratory artistry, and understanding what smile naturally suits each person.
+We are not a clinic, a hospital, or just a dental lab. We are a premium smile transformation network. Our purpose is to connect patients with Certified Ultimate Smile Designers who follow our standardized digital planning protocols and use premium, USA FDA-cleared materials to deliver predictable, natural-looking results.
 
-We're not a clinic or a hospital. We're a smile design philosophy that connects patients with Authorised USD Smile Designers who follow this approach.
-
-Beautiful smiles aren't manufactured. They're carefully crafted.
+Ultimately, we bridge the gap between dental science and handcrafted artistry so you can get a smile that looks natural, feels comfortable, and lasts.
 
 follow_up:
 
@@ -536,13 +534,11 @@ uncertain
 
 voice_response:
 
-I'm glad you asked because trust should always come before treatment.
+I'm glad you asked, because trust should always come before treatment.
 
-If you were choosing a heart surgeon, you wouldn't only ask about the price. You'd want to know how carefully they plan and how much experience they have.
+You can trust Ultimate Smile Design because every smile is personalized, digitally planned, and handcrafted using premium, USA FDA-cleared materials and standardized treatment protocols. Backed by the master ceramist of **Haresh Savani and his team**, and delivered through Certified Ultimate Smile Designers, our goal is to create a smile that looks natural, feels comfortable, and lasts for years.
 
-Ultimate Smile Designing follows the same thinking. Every smile is planned before treatment begins, with experienced dentists and handcrafted laboratory support working together to achieve a natural result.
-
-Confident decisions begin with thoughtful planning. Ultimate Smile Designing follows a planning-first philosophy. Every smile is carefully designed before treatment begins, supported by experienced dentists and handcrafted laboratory expertise. Treatments are provided through Authorised USD Smile Designers following our quality standards. Any applicable treatment coverage or service policies will be explained by your Certified Smile Designer during your consultation.
+Also, we are providing you with an authentication card for your assurance that you get a high-quality and premium product.
 
 follow_up:
 

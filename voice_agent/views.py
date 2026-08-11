@@ -15,9 +15,9 @@ def api_tts(request):
     except Exception as e:
         return JsonResponse({'error': 'Invalid JSON body'}, status=400)
     
-    api_key = os.getenv('GEMINI_API_KEY_voice')
+    api_key = os.getenv('GEMINI_API_KEY_NEW')
     if not api_key:
-        return JsonResponse({'error': 'GEMINI_API_KEY_voice is not set'}, status=500)
+        return JsonResponse({'error': 'GEMINI_API_KEY_NEW is not set'}, status=500)
     
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-tts-preview:generateContent?key={api_key}"
     payload = {

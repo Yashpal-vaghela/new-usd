@@ -15,26 +15,36 @@
         <div class="glow_icon_in_chat_box"></div>
         <!-- CALL CANCELLATION OVERLAY -->
         <div id="usd-end-confirm-overlay">
-            <div class="usd-confirm-title">Want to end the call?</div>
+            <div class="usd-confirm-title">Do you want to leave the chat?</div>
             <div class="usd-confirm-btns">
-                <button class="usd-btn-yes" onclick="confirmEndChat(true)">Yes</button>
-                <button class="usd-btn-no" onclick="confirmEndChat(false)">No</button>
+                <button class="usd-btn-yes" onclick="confirmEndChat(true)">Leave</button>
+                <button class="usd-btn-no" onclick="confirmEndChat(false)">Stay</button>
+            </div>
+        </div>
+        <!-- RECONNECT CONFIRMATION OVERLAY -->
+        <div id="usd-reconnect-confirm-overlay" style="display: none;">
+            <div class="usd-confirm-title">Do you want to continue the conversation or start a new one?</div>
+            <div class="usd-confirm-btns">
+                <button class="usd-btn-yes" style="background: #BE9644;" onclick="confirmReconnect(true)">Continue</button>
+                <button class="usd-btn-no" onclick="confirmReconnect(false)">New Chat</button>
             </div>
         </div>
         <div id="usd-chat-inner-wrap">
 
             <div class="voice_icon_title_and_close_icon_main">
-                <div id="usd-text-mic-btn" class="header_voice_icon" onclick="toggleChatMode()" title="Switch to Voice Mode">
+                <div id="usd-text-mic-btn" class="header_voice_icon" onclick="toggleChatMode()"
+                    title="Switch to Voice Mode">
                     <img src="{% static 'header_voice_icon.svg' %}" alt="close_icon">
                 </div>
                 <div class="header_title">
                     <p class="chat_bot_label cool">Ultimate Ai</p>
-                    <div id="usd-status-box">Connected 🟢</div>
                 </div>
-                <div id="usd-text-close-btn" class="header_close_icon" onclick="closeChatBtnClicked()" title="End Conversation">
+                <div id="usd-text-close-btn" class="header_close_icon" onclick="closeChatBtnClicked()"
+                    title="End Conversation">
                     <img src="{% static 'chat_box_close_icon.svg' %}" alt="close_icon">
                 </div>
             </div>
+            <div id="usd-status-box"><span class="status-dot online"></span> Online</div>
 
             <div class="chat_box_icon_inside_main">
                 <div class="chat_box_icon_inside">
@@ -68,7 +78,8 @@
                             d="M103.444 63.2684C104.109 40.7055 86.3581 21.875 63.7952 21.2093C41.2323 20.5436 22.4018 38.2948 21.7361 60.8577C21.0704 83.4206 38.8216 102.251 61.3845 102.917C83.9474 103.583 102.778 85.8313 103.444 63.2684Z"
                             fill="url(#paint8_radial_10596_7466)" style="mix-blend-mode:color-dodge" />
                         <defs>
-                            <radialGradient id="paint0_radial_10596_7466" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse"
+                            <radialGradient id="paint0_radial_10596_7466" cx="0" cy="0" r="1"
+                                gradientUnits="userSpaceOnUse"
                                 gradientTransform="translate(60.0124 59.9927) rotate(-64.49) scale(60)">
                                 <stop stop-color="#171717" />
                                 <stop offset="0.89" stop-color="#000100" />
@@ -78,8 +89,8 @@
                                 <stop offset="0.99" stop-color="#473A0C" />
                                 <stop offset="1" stop-color="#F3DC87" />
                             </radialGradient>
-                            <linearGradient id="paint1_linear_10596_7466" x1="43.1315" y1="18.5687" x2="77.764" y2="101.482"
-                                gradientUnits="userSpaceOnUse">
+                            <linearGradient id="paint1_linear_10596_7466" x1="43.1315" y1="18.5687" x2="77.764"
+                                y2="101.482" gradientUnits="userSpaceOnUse">
                                 <stop stop-color="#F5F5F5" />
                                 <stop offset="0.05" stop-color="#C7C7C7" />
                                 <stop offset="0.09" stop-color="#9C9C9C" />
@@ -92,15 +103,15 @@
                                 <stop offset="0.63" stop-color="#010101" />
                                 <stop offset="1" />
                             </linearGradient>
-                            <linearGradient id="paint2_linear_10596_7466" x1="95.7007" y1="95.7024" x2="17.864" y2="51.7542"
-                                gradientUnits="userSpaceOnUse">
+                            <linearGradient id="paint2_linear_10596_7466" x1="95.7007" y1="95.7024" x2="17.864"
+                                y2="51.7542" gradientUnits="userSpaceOnUse">
                                 <stop stop-color="#AFB1B5" />
                                 <stop offset="0.17" stop-color="#8E9093" />
                                 <stop offset="0.75" stop-color="#28292A" />
                                 <stop offset="1" />
                             </linearGradient>
-                            <linearGradient id="paint3_linear_10596_7466" x1="103.685" y1="48.016" x2="24.7156" y2="89.8812"
-                                gradientUnits="userSpaceOnUse">
+                            <linearGradient id="paint3_linear_10596_7466" x1="103.685" y1="48.016" x2="24.7156"
+                                y2="89.8812" gradientUnits="userSpaceOnUse">
                                 <stop stop-color="#AFB1B5" />
                                 <stop offset="0.17" stop-color="#8E9093" />
                                 <stop offset="0.75" stop-color="#28292A" />
@@ -138,7 +149,8 @@
                                 <stop offset="0.85" stop-color="#62593A" />
                                 <stop offset="1" stop-color="#F3DC87" />
                             </linearGradient>
-                            <radialGradient id="paint7_radial_10596_7466" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse"
+                            <radialGradient id="paint7_radial_10596_7466" cx="0" cy="0" r="1"
+                                gradientUnits="userSpaceOnUse"
                                 gradientTransform="translate(61.0482 60.0161) scale(30.7273)">
                                 <stop stop-color="#8C8C8C" />
                                 <stop offset="0.15" stop-color="#878787" />
@@ -148,7 +160,8 @@
                                 <stop offset="0.9" stop-color="#181818" />
                                 <stop offset="1" />
                             </radialGradient>
-                            <radialGradient id="paint8_radial_10596_7466" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse"
+                            <radialGradient id="paint8_radial_10596_7466" cx="0" cy="0" r="1"
+                                gradientUnits="userSpaceOnUse"
                                 gradientTransform="translate(62.5888 62.0546) scale(40.8715 40.8715)">
                                 <stop stop-color="white" />
                                 <stop offset="0.02" stop-color="#A3A3A3" />
@@ -166,15 +179,17 @@
                 </div>
             </div>
 
-            <div  id="usd-chat-log" class="chat_main_container" >
+            <div id="usd-chat-log" class="chat_main_container">
             </div>
 
             <div class="chat_icon_and_voice_and_close_icon_container_main" id="usd-voice-controls-footer">
-                <div class="chat_icon_main">
+                <div class="chat_icon_main" onclick="toggleChatMode()" title="Switch to Text Mode">
                     <img src="{% static 'chat_box_massage_icon.svg' %}" alt="chat_icon">
                 </div>
-                <div class="voice_icon_main" onclick="toggleChatMode()" title="Switch to Text Mode">
-                    <svg class="voice_animation_icon" viewBox="0 0 114 114" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div class="voice_icon_main" onclick="handleCenterMicClick()"
+                    title="Reconnect / Refresh Voice Connection">
+                    <svg class="voice_animation_icon" viewBox="0 0 114 114" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
                         <circle class="ripple-1" cx="57" cy="57" r="36.5" stroke="url(#paint0_linear_10954_7085)" />
                         <circle class="ripple-2" opacity="0.5" cx="57" cy="57" r="47.5"
                             stroke="url(#paint1_linear_10954_7085)" />
@@ -227,7 +242,6 @@
                             </linearGradient>
                         </defs>
                     </svg>
-
                     <!-- <img src="{% static 'chat_box_voice_icon.svg' %}" alt="voice_icon"> -->
                 </div>
                 <div class="close_icon_main" onclick="closeChatBtnClicked()" title="End Conversation">
@@ -237,7 +251,9 @@
 
             <div class="massge_input_main" id="usd-input-container">
                 <form class="input_box_and_icon_main" onsubmit="event.preventDefault(); submitTextMessage();">
-                    <input type="text" id="usd-text-input" class="chat_input_box" placeholder="Message Here..." onkeypress="handleKeyPress(event)">
+                    <input type="text" id="usd-text-input" class="chat_input_box" placeholder="Message Here..."
+                        onkeypress="handleKeyPress(event)" oninput="handleTypingAutoConnect()"
+                        onfocus="handleTypingAutoConnect()">
                     <div class="send_button_icon" onclick="submitTextMessage()">
                         <img src="{% static 'chat_send_icon.svg' %}" alt="send_icon">
                     </div>
@@ -245,6 +261,7 @@
             </div>
             <!-- INLINE RATING -->
             <div id="usd-inline-rating">
+
                 <div id="usd-rating-title">Rate your experience</div>
                 <div class="usd-stars">
                     <span class="usd-star" onclick="submitRating(1)">★</span>
@@ -253,7 +270,8 @@
                     <span class="usd-star" onclick="submitRating(4)">★</span>
                     <span class="usd-star" onclick="submitRating(5)">★</span>
                 </div>
-                <div id="usd-rating-thanks">Thank you! Transcript sent to our team.</div>
+                <div id="usd-rating-thanks">Thanks for sharing your experience.<br /> Have a great day!</div>
+
             </div>
         </div>
     </div>
@@ -381,7 +399,6 @@
                 </radialGradient>
             </defs>
         </svg>
-
         <!-- <img src="{% static 'voice_agent_icon.png' %}" alt="chat_bot_icon"> -->
     </div>
 </div>
@@ -401,7 +418,7 @@
         const massageInputMain = document.querySelector('.massge_input_main');
         const inputBoxAndIconMain = document.querySelector('.input_box_and_icon_main');
         const chatAndVoiceContainer = document.querySelector('.chat_icon_and_voice_and_close_icon_container_main');
-        const chatMainContainer = document.querySelector('.chat_main_container'); // New element
+        const chatMainContainer = document.querySelector('.chat_main_container');
 
         if (chatBotIconContainer && chatBotContainer) {
             chatBotIconContainer.addEventListener('click', function () {
@@ -409,9 +426,6 @@
                 chatBotIconContainer.classList.add('hidden');
             });
         }
-
-        // Close event listeners removed to prevent conflicts with the confirmation overlay.
-        // Closing is handled via closeChatBtnClicked() inline on the elements.
 
         if (chatIconMain) {
             chatIconMain.addEventListener('click', function () {
@@ -433,13 +447,13 @@
                     if (width <= 1200 && height <= 700) {
                         chatMainContainer.style.height = '287px';
                     }
-                    if(width<= 992 && height <=1200){
+                    if (width <= 992 && height <= 1200) {
                         chatMainContainer.style.height = '365px';
                     }
                     if (width <= 576) {
                         chatMainContainer.style.height = '395px';
                     }
-                    if (width > 1540 ) {
+                    if (width > 1540) {
                         chatMainContainer.style.height = '365px';
                     }
                 }
@@ -464,7 +478,16 @@
             voiceIconMain.addEventListener('click', async function () {
                 voiceIconMain.classList.add('is-listening');
                 try {
-                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    const stream = await navigator.mediaDevices.getUserMedia({
+                        audio: {
+                            echoCancellation: true,
+                            noiseSuppression: true,
+                            autoGainControl: true,
+                            channelCount: 1,
+                            sampleRate: 16000
+                        },
+                        video: false
+                    });
                     console.log('Microphone access granted');
                 } catch (err) {
                     console.error('Microphone access denied', err);
@@ -474,1055 +497,1443 @@
         }
     });
 </script>
-  <script>
-        /**
-         * ============================================================================
-         * GLOBAL CONFIGURATION & STATE
-         * ============================================================================
-         */
-        const RENDER_BACKEND_URL = window.location.origin;
-        const WS_URL = (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host + '/ws/voice-agent/';
+<script>
+    const RENDER_BACKEND_URL = window.location.origin;
+    const WS_URL = (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host + '/ws/voice-agent/';
 
-        let currentAgentState = 'off'; 
-        let chatHistory = [];
-        let socket = null;
-        let globalStream = null;
-        let isVoiceMode = true; 
-        
-        let audioCtx = null;
-        let audioChunkQueue = [];
-        let isAudioPlaying = false;
-        let activeSources = []; 
-        let nextPlayTime = 0;   
-        let isReplyComplete = false; 
-        
-        let activeTag = null; 
-        let activeBotMessageDiv = null; 
-        let activeBotTextSpan = null;
-        let lastBotMessageDiv = null;
-        let isMicSoftwareMuted = true; 
-        let interruptRestartHoldUntil = 0;
-        let liveUserText = "";
-        let botSpeakingHeartbeatInterval = null;
+    let currentAgentState = 'off';
+    let chatHistory = [];
+    let socket = null;
+    let globalStream = null;
+    let isVoiceMode = true;
 
-       // ⚡ AUDIO RECORDING VARIABLES
-        let mediaRecorder = null;
-        let recordedAudioChunks = [];
-        window.recordedAudioBlob = null;
-        window.recordDest = null;
-      window.uploadedAudioUrl = null; // ⚡ Prevents uploading the same audio twice
-        window.myvad = null; 
-        
-        window.isUserSpeaking = false; // ⚡ FIX: Tracks if the user is currently talking!
+    let audioCtx = null;
+    let audioChunkQueue = [];
+    let isAudioPlaying = false;
+    let activeSources = [];
+    let nextPlayTime = 0;
+    let isReplyComplete = false;
 
-        /**
-         * ============================================================================
-         * SILENCE TIMEOUT ENGINE
-         * ============================================================================
-         */
-        window.silenceTimeout = null;
+    let localTurnId = 0;
+    let pendingAudioDecodes = 0;
 
-        let silenceNudgeCount = 0;
+    let activeTag = null;
+    let activeBotMessageDiv = null;
+    let activeUserMessageDiv = null;
+    let activeBotTextSpan = null;
+    let lastBotMessageDiv = null;
+    let isMicSoftwareMuted = true;
+    let interruptRestartHoldUntil = 0;
+    let liveUserText = "";
+    let botSpeakingHeartbeatInterval = null;
 
-        window.resetSilenceTimer = () => {
-            clearTimeout(window.silenceTimeout);
-            window.silenceTimeout = setTimeout(() => {
-                // ⚡ FIX: The timer will NEVER fire if the user is in the middle of speaking!
-                if (currentAgentState === 'listening' && isVoiceMode && !window.isUserSpeaking) {
-                    if (silenceNudgeCount < 1) { // Limit nudges to 1 time in a row
-                        silenceNudgeCount++;
-                        updateState('thinking');
-                        if (socket && socket.readyState === WebSocket.OPEN) {
-                            socket.send(JSON.stringify({
-                                type: 'text_input',
-                                text: "SYSTEM INSTRUCTION: The user has been completely silent for 12 seconds. Ask them politely: 'Are you still there? Please let me know if you have any questions.' Do not say anything else.",
-                                history: chatHistory,
-                                isVoiceMode: true
-                            }));
-                        }
-                    } else {
-                        console.log("Silence nudge limit reached. Let inactivity timeout disconnect the session.");
-                    }
-                }
-            }, 12000); // ⚡ Increased to 12 seconds to give patients more time to think
-        };
+    let mediaRecorder = null;
+    let recordedAudioChunks = [];
+    window.recordedAudioBlob = null;
+    window.recordDest = null;
+    window.uploadedAudioUrl = null;
+    window.myvad = null;
 
-        window.clearSilenceTimer = () => {
-            clearTimeout(window.silenceTimeout);
-        };
+    window.isUserSpeaking = false;
 
-        /**
-         * ============================================================================
-         * SCREEN WAKE LOCK ENGINE
-         * ============================================================================
-         */
-        let wakeLock = null;
+    window.silenceTimeout = null;
+    let silenceNudgeCount = 0;
+    let thinkingTimeout = null;
 
-        async function requestWakeLock() {
-            if ('wakeLock' in navigator) {
-                try {
-                    wakeLock = await navigator.wakeLock.request('screen');
-                    console.log('Screen Wake Lock is active 🌞');
-                } catch (err) { }
-            }
+    function disconnectToOffline() {
+        silenceNudgeCount = 0;
+        if (window.clearSilenceTimer) window.clearSilenceTimer();
+
+        if (window.myvad) {
+            try { window.myvad.pause(); } catch (e) { }
+            window.myvad = null;
+        }
+        releaseWakeLock();
+
+        if (socket) {
+            socket.onclose = null;
+            try { socket.close(); } catch (e) { }
+            socket = null;
+        }
+        if (globalStream) {
+            try { globalStream.getTracks().forEach(track => track.stop()); } catch (e) { }
+            globalStream = null;
         }
 
-        function releaseWakeLock() {
-            if (wakeLock !== null) {
-                wakeLock.release().then(() => { wakeLock = null; });
-            }
+        updateState('off', 'Offline');
+        const interimBox = document.getElementById('usd-interim-text');
+        if (interimBox && isVoiceMode) {
+            interimBox.innerText = "Offline (Tap mic to connect)";
+            interimBox.style.color = "#999999";
         }
+    }
 
-        document.addEventListener('visibilitychange', async () => {
-            if (wakeLock !== null && document.visibilityState === 'visible' && currentAgentState !== 'off') {
-                await requestWakeLock();
-            }
-        });
+    window.resetSilenceTimer = () => {
+        clearTimeout(window.silenceTimeout);
 
-        /**
-         * ============================================================================
-         * ACTION LINKS CONFIGURATION
-         * ============================================================================
-         */
-        const usdLinks = {
-            '[LINK_HOME]': { url: 'https://ultimatesmiledesign.com/', label: '🏠 Go to Home Page' },
-            '[LINK_DENTISTS]': { url: 'https://ultimatesmiledesign.com/certified-dentists/', label: '📍 Find Nearest Dentist' },
-            '[LINK_VTRYON]': { url: 'https://ultimatesmiledesign.com/virtual-smile-try-on/', label: '✨ Virtual Smile Try-On' }, 
-            '[LINK_BLOGS]': { url: 'https://ultimatesmiledesign.com/virtual-smile-try-on/', label: '📰 Read Our Blogs' }, 
-            '[LINK_GALLERY]': { url: 'https://ultimatesmiledesign.com/gallery/', label: '🖼️ Check Out Gallery' },
-            '[LINK_CONSULT]': { url: 'https://ultimatesmiledesign.com/consult-with-dentist/', label: '👨‍⚕️ Consult Expert Dentist' },
-            '[LINK_CONTACT]': { url: 'https://ultimatesmiledesign.com/contact/', label: '📞 Contact Us' },
-            '[LINK_CONNECT]': { url: 'https://ultimatesmiledesign.com/dentist-connect/', label: '🤝 Become Certified Dentist' },
-            '[LINK_WARRANTY]': { url: 'https://ultimatesmiledesign.com/verify-warranty/', label: '🛡️ Verify Warranty & Authentication' },
-        };
+        // ⚡ DYNAMIC TIMEOUT: 15 seconds for initial nudge, 15 seconds for shutdown after nudge (30s total)
+        const timeoutDuration = (silenceNudgeCount === 0) ? 15000 : 15000;
+        console.log(`[DEBUG] resetSilenceTimer scheduled for ${timeoutDuration}ms. silenceNudgeCount: ${silenceNudgeCount}`);
 
-        function cleanDisplayText(text = "") {
-            let result = String(text || "");
-            result = result.replace(new RegExp("\\[(hi|bn|ta|te|mr|gu|kn|ml|pa|or|en)-IN\\]", "gi"), "");
-            result = result.replace(new RegExp("<!--[\\s\\S]*?-->", "g"), "");
-            result = result.replace(new RegExp("\\s+", "g"), " ");
-            return result.trim();
-        }
-
-        function updateState(newState, statusText = null) {
-            currentAgentState = newState;
-
-            // Keep WebSocket alive during thinking or speaking by sending a periodic heartbeat
-            if (newState === 'speaking' || newState === 'thinking') {
-                if (!botSpeakingHeartbeatInterval) {
-                    botSpeakingHeartbeatInterval = setInterval(() => {
-                        if (socket && socket.readyState === WebSocket.OPEN) {
-                            socket.send(JSON.stringify({ type: 'heartbeat' }));
-                        }
-                    }, 5000);
-                }
-            } else {
-                if (botSpeakingHeartbeatInterval) {
-                    clearInterval(botSpeakingHeartbeatInterval);
-                    botSpeakingHeartbeatInterval = null;
-                }
-            }
-
-            const statusBox = document.getElementById('usd-status-box');
-            const interimBox = document.getElementById('usd-interim-text');
-            const voiceTrigger = document.getElementById('usd-voice-trigger-btn');
+        window.silenceTimeout = setTimeout(() => {
+            const isStreaming = (typeof isStreamingToBackend !== 'undefined') ? isStreamingToBackend : false;
+            console.log(`[DEBUG] silenceTimeout fired. currentAgentState: ${currentAgentState}, isStreamingToBackend: ${isStreaming}`);
             
-            const innerWrap = document.getElementById('usd-chat-inner-wrap');
-            if (innerWrap) {
-                innerWrap.classList.remove('usd-speaking', 'usd-listening', 'usd-thinking');
-                if (newState === 'speaking') {
-                    innerWrap.classList.add('usd-speaking');
-                } else if (newState === 'listening') {
-                    innerWrap.classList.add('usd-listening');
-                } else if (newState === 'thinking') {
-                    innerWrap.classList.add('usd-thinking');
-                }
-            }
-
-            if (statusBox) {
-                if (newState === 'connecting') {
-                    statusBox.innerText = statusText || "Calling assistant... 🟡";
-                } else if (newState === 'off') {
-                    statusBox.innerText = statusText || "Disconnected 🔴";
-                } else if (isVoiceMode) {
-                    statusBox.innerText = "Connected 🟢"; 
+            if ((currentAgentState === 'listening' || currentAgentState === 'online') && !isStreaming) {
+                if (silenceNudgeCount === 0) {
+                    silenceNudgeCount = 1; // Mark that we nudged them
+                    updateState('thinking');
+                    if (socket && socket.readyState === WebSocket.OPEN) {
+                        socket.send(JSON.stringify({
+                            type: 'text_input',
+                            text: "SYSTEM INSTRUCTION: The user has been completely silent for 15 seconds. Ask them politely: 'Are you still there? Please let me know if you have any questions.' Do not say anything else.",
+                            history: chatHistory,
+                            isVoiceMode: isVoiceMode
+                        }));
+                    }
                 } else {
-                    statusBox.innerText = statusText || "Chat Mode Active. Type below.";
+                    // ⚡ User ignored the nudge for 15s. Force Offline WITHOUT hiding popup window!
+                    console.log("⏳ User unresponsive. Disconnecting to Offline...");
+                    silenceNudgeCount = 0;
+                    disconnectToOffline();
                 }
             }
+        }, timeoutDuration);
+    };
 
-            if (newState === 'speaking' || newState === 'listening') {
-                if (voiceTrigger) voiceTrigger.classList.add('is-listening');
-            } else {
-                if (voiceTrigger) voiceTrigger.classList.remove('is-listening');
-            }
+    window.clearSilenceTimer = () => {
+        clearTimeout(window.silenceTimeout);
+    };
 
-            if (newState === 'listening' && isVoiceMode) {
-                isMicSoftwareMuted = false;
-                if (window.myvad) window.myvad.start(); // 🔥 Turn VAD ON
-                if (window.resetSilenceTimer) window.resetSilenceTimer();
-                if (interimBox) { interimBox.innerText = "Listening..."; interimBox.style.color = "#D4AF37"; }
-            } else if (newState === 'speaking' && isVoiceMode) {
-                isMicSoftwareMuted = true; // ⚡ STOP ALL INTERRUPTIONS (Mute Mic)
-                if (window.myvad) window.myvad.pause(); // ⚡ TURN VAD OFF while bot speaks
-                if (window.clearSilenceTimer) window.clearSilenceTimer();
-            } else {
-                isMicSoftwareMuted = true;
-                if (window.myvad) window.myvad.pause(); // 🔥 Turn VAD OFF
-                if (window.clearSilenceTimer) window.clearSilenceTimer();
-            }
-
-            if (newState === 'thinking') {
-                if (interimBox) {
-                    interimBox.innerText = "Answering...";
-                    interimBox.style.color = "#ffffff";
-                }
-            }
-
-            if (!isVoiceMode && interimBox && newState !== 'thinking') {
-                interimBox.innerText = "";
-            }
+    let wakeLock = null;
+    async function requestWakeLock() {
+        if ('wakeLock' in navigator) {
+            try {
+                wakeLock = await navigator.wakeLock.request('screen');
+            } catch (err) { }
         }
-
-        async function initAudio() {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            }
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
+    }
+    function releaseWakeLock() {
+        if (wakeLock !== null) {
+            wakeLock.release().then(() => { wakeLock = null; });
         }
+    }
 
-        function detectLocalTagFromText(input = '') {
-            const text = cleanDisplayText(String(input || "").toLowerCase());
-            if (text.includes("end chat") || text.includes("goodbye") || text.includes("bye") || text.includes("take care")) return "[END_CHAT]";
-            if (text.includes("virtual smile") || text.includes("try on") || text.includes("try-on") || text.includes("smile try")) return "[LINK_VTRYON]";
-            if (text.includes("certified dentist") || text.includes("nearest dentist") || text.includes("find designer")) return "[LINK_DENTISTS]";
-            if (text.includes("consultation") || text.includes("consult") || text.includes("schedule") || text.includes("appointment")) return "[LINK_CONSULT]";
-            if (text.includes("contact") || text.includes("reach out") || text.includes("get in touch") || text.includes("call us")) return "[LINK_CONTACT]";
-            if (text.includes("dentist connect") || text.includes("become certified dentist") || text.includes("collaborate")) return "[LINK_CONNECT]";
-            if (text.includes("gallery") || text.includes("results") || text.includes("before and after")) return "[LINK_GALLERY]";
-            if (text.includes("authentication") || text.includes("authentication card") || text.includes("authentic") || text.includes("verify warranty") || text.includes("warranty")) return "[LINK_WARRANTY]";
-            return null;
+    document.addEventListener('visibilitychange', async () => {
+        if (wakeLock !== null && document.visibilityState === 'visible' && currentAgentState !== 'off') {
+            await requestWakeLock();
         }
+    });
 
-        function appendLinkButton(targetEl, tag) {
-            if (!targetEl || !tag || !usdLinks[tag]) return;
-            const btn = document.createElement('button');
-            btn.className = 'usd-link-card';
-            btn.innerText = usdLinks[tag].label;
-            btn.onclick = () => handleLinkClick(tag);
-            targetEl.appendChild(btn);
-        }
+    const usdLinks = {
+        '[LINK_HOME]': { url: 'https://ultimatesmiledesign.com/', label: '🏠 Go to Home Page' },
+        '[LINK_DENTISTS]': { url: 'https://ultimatesmiledesign.com/certified-dentists/', label: '📍 Find Nearest Dentist' },
+        '[LINK_VTRYON]': { url: 'https://ultimatesmiledesign.com/virtual-smile-try-on/', label: '✨ Virtual Smile Try-On' },
+        '[LINK_GALLERY]': { url: 'https://ultimatesmiledesign.com/gallery/', label: '🖼️ Check Out Gallery' },
+        '[LINK_CONSULT]': { url: 'https://ultimatesmiledesign.com/consult-with-dentist/', label: '👨‍⚕️ Consult Expert Dentist' },
+        '[LINK_CONTACT]': { url: 'https://ultimatesmiledesign.com/contact/', label: '📞 Contact Us' },
+        '[LINK_CONNECT]': { url: 'https://ultimatesmiledesign.com/dentist-connect/', label: '🤝 Become Certified Dentist' },
+        '[LINK_WARRANTY]': { url: 'https://ultimatesmiledesign.com/verify-warranty/', label: '🛡️ Verify Warranty & Authentication' },
+    };
 
-        function saveHistory() {
-            sessionStorage.setItem('usd_chat_history', JSON.stringify(chatHistory));
-        }
+    function saveHistory() {
+        sessionStorage.setItem('usd_chat_history', JSON.stringify(chatHistory)); 
+    }
 
-        function addUserHistoryIfNew(text) {
-            const clean = cleanDisplayText(text);
-            if (!clean) return;
-            const last = chatHistory[chatHistory.length - 1];
-            if (last && last.role === 'user' && last.parts && last.parts[0] && clean === last.parts[0].text) return;
-            chatHistory.push({ role: "user", parts: [{ text: clean }] });
+    function addUserHistoryIfNew(text) {
+        if (!text) return;
+        const last = chatHistory[chatHistory.length - 1];
+        if (!(last && last.role === 'user' && last.parts && last.parts[0] && last.parts[0].text === text)) {
+            chatHistory.push({ role: "user", parts: [{ text: text }] });
             if (chatHistory.length > 6) chatHistory = chatHistory.slice(-6);
             saveHistory();
         }
+    }
 
-        function checkBotFinishedSpeaking() {
-            if (isReplyComplete && audioChunkQueue.length === 0 && activeSources.length === 0) {
-                isReplyComplete = false;
-                nextPlayTime = 0; 
-                
-                if (activeTag === '[END_CHAT]') {
-                    setTimeout(() => closeChat(true), 2000);
-                } else {
-                    updateState('cooldown');
-                    setTimeout(() => {
-                        if (currentAgentState === 'cooldown') {
-                            updateState('listening');
-                        }
-                    }, 400); 
+    async function handleTypingAutoConnect() {
+        const inputEl = document.getElementById('usd-text-input');
+        if (!inputEl) return;
+        const val = inputEl.value;
+
+        if (val && val.trim().length > 0) {
+            if (currentAgentState === 'off' || !socket || socket.readyState !== WebSocket.OPEN) {
+                console.log("[INFO] User typing while offline. Changing status to online and reconnecting...");
+                updateState('online', 'Online');
+                await ensureConnected();
+            }
+        }
+    }
+
+    async function ensureConnected() {
+        if (!socket || socket.readyState === WebSocket.CLOSED || socket.readyState === WebSocket.CLOSING) {
+            updateState('online', 'Online');
+            await startWebSocket();
+        }
+    }
+
+    function cleanDisplayText(text = "") {
+        let result = String(text || "");
+        result = result.replace(new RegExp("\\[(hi|bn|ta|te|mr|gu|kn|ml|pa|or|en)-IN\\]", "gi"), "");
+        result = result.replace(new RegExp("\\[(LINK_[A-Z_]+|END_CHAT)\\]", "gi"), "");
+        result = result.replace(new RegExp("<!--[\\s\\S]*?-->", "g"), "");
+        result = result.replace(new RegExp("\\s+", "g"), " ");
+        return result.trim();
+    }
+
+    function cleanLiveStreamText(text = "") {
+        let result = String(text || "");
+        result = result.replace(/\[(hi|bn|ta|te|mr|gu|kn|ml|pa|or|en)-IN\]/gi, "");
+        result = result.replace(/\[(LINK_[A-Z_]+|END_CHAT)\]/gi, "");
+        result = result.replace(/<!--[\s\S]*?-->/g, "");
+        result = result.replace(/(<!--|\[[A-Za-z0-9_\-]*)$/g, "");
+        result = result.replace(/\s+/g, " ");
+        return result;
+    }
+
+    function detectLocalTagFromText(text = "") {
+        if (!text) return null;
+        const str = String(text);
+        for (const tag in usdLinks) {
+            if (str.toUpperCase().includes(tag)) {
+                return tag;
+            }
+        }
+        const commentMatch = str.match(/<!--\s*\[?(LINK_[A-Z_]+)\]?\s*-->/i);
+        if (commentMatch) {
+            const rawTag = `[${commentMatch[1].toUpperCase()}]`;
+            if (usdLinks[rawTag]) return rawTag;
+        }
+        return null;
+    }
+
+    function detectUserTagFromText(text = "") {
+        if (!text) return null;
+        const str = String(text).toLowerCase().trim();
+        if (!str) return null;
+
+        // Allow if the user explicitly typed the tag name itself like "[LINK_CONSULT]"
+        for (const tag in usdLinks) {
+            if (str.toUpperCase().includes(tag)) return tag;
+        }
+
+        // 1. Immediately allow consultation link based on booking/consulting keywords
+        if (str.includes("appointment") || str.includes("book") || str.includes("visit") || (str.includes("consult") && !str.includes("consultant") && !str.includes("consulting"))) {
+            return '[LINK_CONSULT]';
+        }
+
+        // 2. Immediately allow dentist locator link based on dentist/clinic keywords
+        if (str.includes("dentist") || str.includes("clinic") || str.includes("designer") || str.includes("location") || str.includes("nearest")) {
+            return '[LINK_DENTISTS]';
+        }
+
+        // 3. For any OTHER links, we strictly require explicit link request keywords
+        const explicitLinkWords = [
+            "link", "url", "website", "site", "page", "button", "click", "href", "address",
+            "लिंक", "वेबसाइट", "पेज", "बटन", "લિંક", "વેબસાઇટ", "પેજ", "બટન",
+            "send me", "share", "give me", "provide", "show me", "open", "go to", "where can i", "how to"
+        ];
+        const hasExplicitRequest = explicitLinkWords.some(w => str.includes(w));
+        if (!hasExplicitRequest) {
+            return null;
+        }
+
+        if (str.includes("try-on") || str.includes("try on") || str.includes("virtual smile") || str.includes("smile makeover") || str.includes("makeover")) return '[LINK_VTRYON]';
+        if (str.includes("contact") || str.includes("call") || str.includes("phone") || str.includes("reach out")) return '[LINK_CONTACT]';
+        if (str.includes("partner") || str.includes("collaborate") || str.includes("join")) return '[LINK_CONNECT]';
+        if (str.includes("gallery") || str.includes("result") || str.includes("before")) return '[LINK_GALLERY]';
+        if (str.includes("warranty") || str.includes("verify") || str.includes("authentic")) return '[LINK_WARRANTY]';
+
+        return null;
+    }
+
+    function appendLinkButton(container, tag) {
+        if (!container || !tag || !usdLinks[tag]) return;
+        if (container.querySelector('.usd-link-card')) return;
+        const btn = document.createElement('button');
+        btn.className = 'usd-link-card';
+        btn.innerText = usdLinks[tag].label;
+        btn.onclick = () => handleLinkClick(tag);
+        container.appendChild(btn);
+    }
+
+    function updateState(newState, statusText = null) {
+        currentAgentState = newState;
+
+        if (newState === 'thinking') {
+            clearTimeout(thinkingTimeout);
+            thinkingTimeout = setTimeout(() => {
+                if (currentAgentState === 'thinking') {
+                    console.log("⏳ Thinking timeout reached (no response from Gemini). Resetting state to listening...");
+                    updateState('listening');
                 }
-                activeTag = null;
+            }, 6000); // 6 seconds backup safety timeout
+        } else {
+            clearTimeout(thinkingTimeout);
+        }
+
+        if (newState === 'speaking' || newState === 'thinking') {
+            if (!botSpeakingHeartbeatInterval) {
+                botSpeakingHeartbeatInterval = setInterval(() => {
+                    if (socket && socket.readyState === WebSocket.OPEN) {
+                        socket.send(JSON.stringify({ type: 'heartbeat' }));
+                    }
+                }, 5000);
+            }
+        } else {
+            if (botSpeakingHeartbeatInterval) {
+                clearInterval(botSpeakingHeartbeatInterval);
+                botSpeakingHeartbeatInterval = null;
             }
         }
 
-        async function playAudioChunk(base64) {
-            if (!base64) return;
-            updateState('speaking');
+        const statusBox = document.getElementById('usd-status-box');
+        const interimBox = document.getElementById('usd-interim-text');
+        const voiceTrigger = document.getElementById('usd-voice-trigger-btn');
 
-            try {
-                const binaryString = window.atob(base64);
-                const bytes = new Uint8Array(binaryString.length);
-                for (let i = 0; i < binaryString.length; i++) {
-                    bytes[i] = binaryString.charCodeAt(i);
-                }
-                
-                const audioBuffer = await audioCtx.decodeAudioData(bytes.buffer);
-                const source = audioCtx.createBufferSource();
-                source.buffer = audioBuffer;
-                source.connect(audioCtx.destination); 
-                
-                // ⚡ RECORD BOT AUDIO
-                if (window.recordDest) {
-                    source.connect(window.recordDest);
-                }
-
-                source.playbackRate.value = 1.0;
-                
-                if (nextPlayTime < audioCtx.currentTime) {
-                    nextPlayTime = audioCtx.currentTime + 0.05; 
-                }
-                
-                source.start(nextPlayTime);
-                nextPlayTime += audioBuffer.duration; 
-                
-                window.activeAudioSourceNode = source;
-                activeSources.push(source);
-                
-                source.onended = () => {
-                    activeSources = activeSources.filter(s => s !== source);
-                    checkBotFinishedSpeaking(); 
-                };
-            } catch (e) {
-                console.error("Audio Decode error:", e);
+        const innerWrap = document.getElementById('usd-chat-inner-wrap');
+        if (innerWrap) {
+            innerWrap.classList.remove('usd-speaking', 'usd-listening', 'usd-thinking');
+            if (newState === 'speaking') {
+                innerWrap.classList.add('usd-speaking');
+            } else if (newState === 'listening') {
+                innerWrap.classList.add('usd-listening');
+            } else if (newState === 'thinking') {
+                innerWrap.classList.add('usd-thinking');
             }
         }
 
-        async function processAudioQueue() {
-            if (isAudioPlaying) return;
-            isAudioPlaying = true;
+        if (statusBox) {
+            if (newState === 'connecting') {
+                statusBox.innerHTML = '<span class="status-dot connecting"></span> ' + (statusText || "Connecting...");
+            } else if (newState === 'off') {
+                statusBox.innerHTML = '<span class="status-dot offline"></span> ' + (statusText || "Offline");
+            } else if (isVoiceMode) {
+                statusBox.innerHTML = '<span class="status-dot online"></span> Online';
+            } else {
+                statusBox.innerHTML = '<span class="status-dot online"></span> ' + (statusText || "Chat Mode Active.");
+            }
+        }
+
+        if (newState === 'speaking' || newState === 'listening') {
+            if (voiceTrigger) voiceTrigger.classList.add('is-listening');
+        } else {
+            if (voiceTrigger) voiceTrigger.classList.remove('is-listening');
+        }
+
+        if (newState === 'listening' || newState === 'online') {
+            isMicSoftwareMuted = !isVoiceMode;
+            if (isVoiceMode && window.myvad) window.myvad.start();
+            if (window.resetSilenceTimer) window.resetSilenceTimer();
+            if (isVoiceMode && interimBox) { interimBox.innerText = "Listening..."; interimBox.style.color = "#D4AF37"; }
+        } else if (newState === 'speaking' && isVoiceMode) {
+            isMicSoftwareMuted = false;
+            if (window.myvad) window.myvad.start();
+            if (window.clearSilenceTimer) window.clearSilenceTimer();
+        } else {
+            isMicSoftwareMuted = true;
+            if (window.myvad) window.myvad.pause();
+            if (window.clearSilenceTimer) window.clearSilenceTimer();
+        }
+
+        if (newState === 'thinking') {
+            if (interimBox) {
+                interimBox.innerText = "Answering...";
+                interimBox.style.color = "#ffffff";
+            }
+        }
+
+        if (!isVoiceMode && interimBox && newState !== 'thinking') {
+            interimBox.innerText = "";
+        }
+    }
+
+    async function initAudio() {
+        if (!audioCtx) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+    }
+
+    function handleLinkClick(tag) {
+        const linkInfo = usdLinks[tag];
+        if (!linkInfo) return;
+
+        logMessage('bot', "Redirecting you now...");
+        chatHistory.push({ role: "model", parts: [{ text: "Redirecting you now..." }] });
+        if (chatHistory.length > 6) chatHistory = chatHistory.slice(-6);
+        saveHistory();
+
+        window.open(linkInfo.url, '_blank');
+        updateState('listening');
+    }
+
+    function checkBotFinishedSpeaking() {
+        // ⚡ MUST be completely done decoding before resetting to listening 
+        if (isReplyComplete && audioChunkQueue.length === 0 && activeSources.length === 0 && pendingAudioDecodes === 0) {
+            isReplyComplete = false;
+            nextPlayTime = 0;
+
+            if (activeTag === '[END_CHAT]') {
+                setTimeout(() => closeChat(true), 2000);
+            } else {
+                updateState('cooldown');
+                setTimeout(() => {
+                    if (currentAgentState === 'cooldown') {
+                        updateState('listening');
+                    }
+                }, 100);
+            }
+            activeTag = null;
+        }
+    }
+
+    async function playAudioChunk(base64) {
+        if (!base64) return;
+        updateState('speaking');
+
+        try {
+            const binaryString = window.atob(base64);
+            const bytes = new Uint8Array(binaryString.length);
+            for (let i = 0; i < binaryString.length; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+
+            pendingAudioDecodes++;
+            const audioBuffer = await audioCtx.decodeAudioData(bytes.buffer);
+            pendingAudioDecodes--;
+
+            const source = audioCtx.createBufferSource();
+            source.buffer = audioBuffer;
+            source.connect(audioCtx.destination);
+
+            if (window.recordDest) {
+                source.connect(window.recordDest);
+            }
+
+            source.playbackRate.value = 1.0;
+
+            if (nextPlayTime < audioCtx.currentTime) {
+                nextPlayTime = audioCtx.currentTime + 0.05;
+            }
+
+            source.start(nextPlayTime);
+            nextPlayTime += audioBuffer.duration;
+
+            window.activeAudioSourceNode = source;
+            activeSources.push(source);
+
+            source.onended = () => {
+                activeSources = activeSources.filter(s => s !== source);
+                checkBotFinishedSpeaking();
+            };
+        } catch (e) {
+            pendingAudioDecodes--;
+            console.error("Audio Decode error:", e);
+        }
+    }
+
+    async function processAudioQueue() {
+        if (isAudioPlaying) return;
+        isAudioPlaying = true;
+        try {
             while (audioChunkQueue.length > 0) {
-                 const chunk = audioChunkQueue.shift(); 
-                 await playAudioChunk(chunk.audioBase64);
+                const chunk = audioChunkQueue.shift();
+                await playAudioChunk(chunk.audioBase64 || chunk);
             }
+        } finally {
             isAudioPlaying = false;
-            checkBotFinishedSpeaking(); 
+            checkBotFinishedSpeaking();
+
             setTimeout(() => {
-                if (currentAgentState === 'speaking' && activeSources.length === 0) {
+                if (currentAgentState === 'speaking' && activeSources.length === 0 && isReplyComplete) {
                     isReplyComplete = false;
                     updateState('listening');
                 }
             }, 3000);
         }
+    }
 
-        function toggleChatMode() {
-            isVoiceMode = !isVoiceMode;
+    function toggleChatMode() {
+        isVoiceMode = !isVoiceMode;
+
+        const textControls = document.getElementById('usd-input-container');
+        const voiceFooter = document.getElementById('usd-voice-controls-footer');
+        const micText = document.getElementById('usd-interim-text');
+        const inputInner = document.querySelector('.input_box_and_icon_main');
+
+        const textMicBtn = document.getElementById('usd-text-mic-btn');
+        const textCloseBtn = document.getElementById('usd-text-close-btn');
+
+        if (isVoiceMode) {
+            if (textControls) textControls.style.display = "none";
+            if (voiceFooter) voiceFooter.style.display = "flex";
+            if (micText) micText.style.display = "block";
+
+            if (textMicBtn) textMicBtn.style.display = "none";
+            if (textCloseBtn) textCloseBtn.style.display = "none";
+
+            updateState('listening');
+        } else {
+            if (textControls) textControls.style.display = "block";
+            if (inputInner) inputInner.style.display = "flex";
+            if (voiceFooter) voiceFooter.style.display = "none";
+            if (micText) micText.style.display = "none";
+
+            if (textMicBtn) textMicBtn.style.display = "flex";
+            if (textCloseBtn) textCloseBtn.style.display = "flex";
+
+            updateState('listening');
+        }
+        sessionStorage.setItem('usd_is_voice_mode', isVoiceMode.toString());
+    }
+
+    async function handleCenterMicClick() {
+        initAudio();
+        requestWakeLock();
+
+        // If currently disconnected/offline, ask if they want to continue or start a new chat
+        if (currentAgentState === 'off' || !socket || socket.readyState !== WebSocket.OPEN) {
+            document.getElementById('usd-reconnect-confirm-overlay').style.display = 'flex';
             
-            const textControls = document.getElementById('usd-input-container');
-            const voiceFooter = document.getElementById('usd-voice-controls-footer');
-            const micText = document.getElementById('usd-interim-text');
-            const inputInner = document.querySelector('.input_box_and_icon_main');
-            
-            const textMicBtn = document.getElementById('usd-text-mic-btn');
-            const textCloseBtn = document.getElementById('usd-text-close-btn');
-            
-            if (isVoiceMode) {
-                if (textControls) textControls.style.display = "none";
-                if (voiceFooter) voiceFooter.style.display = "flex";
-                if (micText) micText.style.display = "block";
-                
-                if (textMicBtn) textMicBtn.style.display = "none";
-                if (textCloseBtn) textCloseBtn.style.display = "none";
-                
-                updateState('listening');
-            } else {
-                if (textControls) textControls.style.display = "block";
-                if (inputInner) inputInner.style.display = "flex";
-                if (voiceFooter) voiceFooter.style.display = "none";
-                if (micText) micText.style.display = "none";
-                
-                if (textMicBtn) textMicBtn.style.display = "flex";
-                if (textCloseBtn) textCloseBtn.style.display = "flex";
-                
-                updateState('listening');
+            // Connect WebSocket in reconnect-pending mode so bot can speak the query and mic can listen
+            window.isAskReconnectChoicePending = true;
+            window.isReconnectManual = false;
+            audioChunkQueue = [];
+            activeSources.forEach(source => { try { source.stop(); } catch (e) { } });
+            activeSources = [];
+            isAudioPlaying = false;
+            isReplyComplete = false;
+            pendingAudioDecodes = 0;
+            nextPlayTime = 0;
+            localTurnId = 0;
+
+            updateState('connecting', 'Connecting...');
+
+            if (socket) {
+                try {
+                    socket.onclose = null;
+                    socket.onerror = null;
+                    socket.close();
+                } catch (e) { }
             }
-            sessionStorage.setItem('usd_is_voice_mode', isVoiceMode.toString());
+
+            await startWebSocket();
+            return;
         }
 
-        async function openChat(isRestore = false) {
-            initAudio();
-            requestWakeLock();
-            interruptRestartHoldUntil = 0;
-            const container = document.getElementById('usd-chat-container');
-            const bubble = document.getElementById('usd-bubble');
-            
-            // ⚡ REOPEN FIX: Always allow opening if the widget is hidden!
-            const isClosed = container && (container.style.display === 'none' || !container.classList.contains('active'));
-            
-            if (currentAgentState === 'off' || isRestore || isClosed) {
-                currentAgentState = 'off'; 
-                
-                // Clear audio queue from any previous session so it doesn't overlap
-                audioChunkQueue = [];
-                activeSources.forEach(source => { try { source.stop(); } catch(e) {} });
-                activeSources = [];
-                isAudioPlaying = false;
-                
-                if (bubble) {
-                    bubble.style.display = 'none'; 
-                    bubble.classList.add('hidden');
+        window.isReconnectManual = true;
+        audioChunkQueue = [];
+        activeSources.forEach(source => { try { source.stop(); } catch (e) { } });
+        activeSources = [];
+        isAudioPlaying = false;
+        isReplyComplete = false;
+        pendingAudioDecodes = 0;
+        nextPlayTime = 0;
+        localTurnId = 0;
+
+        updateState('connecting', 'Reconnecting...');
+
+        if (socket) {
+            try {
+                socket.onclose = null;
+                socket.onerror = null;
+                socket.close();
+            } catch (e) { }
+        }
+
+        await startWebSocket();
+    }
+
+    async function confirmReconnect(isContinue) {
+        window.isAskReconnectChoicePending = false;
+        document.getElementById('usd-reconnect-confirm-overlay').style.display = 'none';
+
+        if (isContinue) {
+            // Option 1: Continue previous conversation
+            updateState('thinking');
+            if (socket && socket.readyState === WebSocket.OPEN) {
+                socket.send(JSON.stringify({
+                    type: 'text_input',
+                    text: "SYSTEM INSTRUCTION: The user chose to continue the previous conversation. Please acknowledge and proceed naturally.",
+                    history: chatHistory,
+                    isVoiceMode: isVoiceMode
+                }));
+            }
+        } else {
+            // Option 2: Start a new conversation
+            document.getElementById('usd-chat-log').innerHTML = "";
+            chatHistory = [];
+            sessionStorage.removeItem('usd_chat_history');
+            activeBotMessageDiv = null;
+            activeBotTextSpan = null;
+            lastBotMessageDiv = null;
+
+            if (socket) {
+                try {
+                    socket.onclose = null;
+                    socket.onerror = null;
+                    socket.close();
+                } catch (e) { }
+                socket = null;
+            }
+
+            updateState('connecting', 'Starting new chat...');
+            await startWebSocket();
+        }
+    }
+
+    async function openChat(isRestore = false) {
+        initAudio();
+        requestWakeLock();
+        interruptRestartHoldUntil = 0;
+        const container = document.getElementById('usd-chat-container');
+        const bubble = document.getElementById('usd-bubble');
+
+        const isClosed = container && (container.style.display === 'none' || !container.classList.contains('active'));
+
+        if (currentAgentState === 'off' || isRestore || isClosed) {
+
+            currentAgentState = 'off';
+            audioChunkQueue = [];
+            activeSources.forEach(source => { try { source.stop(); } catch (e) { } });
+            activeSources = [];
+            isAudioPlaying = false;
+            isReplyComplete = false;
+            pendingAudioDecodes = 0;
+            nextPlayTime = 0;
+            localTurnId = 0;
+
+            if (bubble) {
+                bubble.style.display = 'none';
+                bubble.classList.add('hidden');
+            }
+
+            if (container) {
+                container.style.display = 'flex';
+                container.classList.add('active');
+            }
+
+            document.getElementById('usd-input-container').style.display = 'none';
+            document.getElementById('usd-voice-controls-footer').style.display = 'flex';
+            document.getElementById('usd-inline-rating').style.display = 'none';
+
+            if (isRestore) {
+                chatHistory = JSON.parse(sessionStorage.getItem('usd_chat_history') || '[]');
+                isVoiceMode = sessionStorage.getItem('usd_is_voice_mode') !== 'false';
+
+                const textControls = document.getElementById('usd-input-container');
+                const voiceFooter = document.getElementById('usd-voice-controls-footer');
+                const inputInner = document.querySelector('.input_box_and_icon_main');
+                const textMicBtn = document.getElementById('usd-text-mic-btn');
+                const textCloseBtn = document.getElementById('usd-text-close-btn');
+
+                if (isVoiceMode) {
+                    if (textControls) textControls.style.display = 'none';
+                    if (voiceFooter) voiceFooter.style.display = 'flex';
+                    if (textMicBtn) textMicBtn.style.display = "none";
+                    if (textCloseBtn) textCloseBtn.style.display = "none";
+                } else {
+                    if (textControls) textControls.style.display = 'block';
+                    if (inputInner) inputInner.style.display = 'flex';
+                    if (voiceFooter) voiceFooter.style.display = 'none';
+                    if (textMicBtn) textMicBtn.style.display = "flex";
+                    if (textCloseBtn) textCloseBtn.style.display = "flex";
                 }
 
-                if (container) {
-                    container.style.display = 'flex';
-                    container.classList.add('active');
-                }
-                
-                document.getElementById('usd-input-container').style.display = 'none';
-                document.getElementById('usd-voice-controls-footer').style.display = 'flex';
-                document.getElementById('usd-inline-rating').style.display = 'none';
-                
-                if (isRestore) {
-                    chatHistory = JSON.parse(sessionStorage.getItem('usd_chat_history') || '[]');
-                    isVoiceMode = sessionStorage.getItem('usd_is_voice_mode') !== 'false';
-                    
-                    const textControls = document.getElementById('usd-input-container');
-                    const voiceFooter = document.getElementById('usd-voice-controls-footer');
-                    const inputInner = document.querySelector('.input_box_and_icon_main');
-                    const textMicBtn = document.getElementById('usd-text-mic-btn');
-                    const textCloseBtn = document.getElementById('usd-text-close-btn');
+                document.getElementById('usd-chat-log').innerHTML = "";
+                chatHistory.forEach(turn => {
+                    const sender = turn.role === 'model' ? 'bot' : 'user';
+                    let cleanText = cleanDisplayText(turn.parts[0].text);
+                    let foundTag = null;
+                    if (turn.role === 'model') { foundTag = detectLocalTagFromText(cleanText); }
+                    logMessage(sender, cleanText, foundTag);
+                });
 
-                    if (isVoiceMode) {
-                        if (textControls) textControls.style.display = 'none';
-                        if (voiceFooter) voiceFooter.style.display = 'flex';
-                        if (textMicBtn) textMicBtn.style.display = "none";
-                        if (textCloseBtn) textCloseBtn.style.display = "none";
-                    } else {
-                        if (textControls) textControls.style.display = 'block';
-                        if (inputInner) inputInner.style.display = 'flex';
-                        if (voiceFooter) voiceFooter.style.display = 'none';
-                        if (textMicBtn) textMicBtn.style.display = "flex";
-                        if (textCloseBtn) textCloseBtn.style.display = "flex";
+                updateState('thinking');
+                await startWebSocket();
+            } else {
+                document.getElementById('usd-chat-log').innerHTML = "";
+                chatHistory = [];
+                sessionStorage.removeItem('usd_chat_history');
+                activeBotMessageDiv = null;
+                activeBotTextSpan = null;
+                lastBotMessageDiv = null;
+
+                updateState('connecting', "Connecting...");
+                await new Promise(resolve => setTimeout(resolve, 1200));
+
+                updateState('online', "Online");
+                await new Promise(resolve => setTimeout(resolve, 600));
+
+                sessionStorage.setItem('usd_chat_active', 'true');
+                await startWebSocket();
+            }
+        }
+    }
+
+    async function startWebSocket() {
+        try {
+            localTurnId = 0;
+            socket = new WebSocket(WS_URL);
+
+            socket.onopen = async () => {
+                if (window.isAskReconnectChoicePending) {
+                    updateState('thinking');
+                    if (socket.readyState === WebSocket.OPEN) {
+                        socket.send(JSON.stringify({
+                            type: 'text_input',
+                            text: "SYSTEM INSTRUCTION: Ask the user warmly: 'Would you like to continue our conversation or start a new one?'",
+                            history: chatHistory,
+                            isVoiceMode: isVoiceMode
+                        }));
                     }
-                    
-                    document.getElementById('usd-chat-log').innerHTML = ""; 
-                    chatHistory.forEach(turn => {
-                        const sender = turn.role === 'model' ? 'bot' : 'user';
-                        let cleanText = cleanDisplayText(turn.parts[0].text);
-                        let foundTag = null;
-                        if (turn.role === 'model') { foundTag = detectLocalTagFromText(cleanText); }
-                        logMessage(sender, cleanText, foundTag);
+                } else if (window.isReconnectManual) {
+                    window.isReconnectManual = false;
+                    updateState('thinking');
+                    if (socket.readyState === WebSocket.OPEN) {
+                        socket.send(JSON.stringify({
+                            type: 'text_input',
+                            text: "SYSTEM INSTRUCTION: The user has just reconnected to the call. Warmly say EXACTLY this short phrase and nothing else: 'So, Can You Continue from where you left off?'",
+                            history: chatHistory,
+                            isVoiceMode: isVoiceMode
+                        }));
+                    }
+                } else if (chatHistory.length === 0) {
+                    updateState('thinking');
+                    if (socket.readyState === WebSocket.OPEN) {
+                        socket.send(JSON.stringify({
+                            type: 'text_input',
+                            text: "SYSTEM INSTRUCTION: Start the conversation by warmly saying EXACTLY this specific phrase and absolutely nothing else: 'Namaste! I am Riya USD Consultant, How can we assist you today? Let's start with your beautiful name, what is your name?'",
+                            history: [],
+                            isVoiceMode: isVoiceMode
+                        }));
+                    }
+                } else {
+                    updateState('listening');
+                }
+
+                try {
+                    globalStream = await navigator.mediaDevices.getUserMedia({
+                        audio: {
+                            echoCancellation: { ideal: true },
+                            noiseSuppression: { ideal: true },
+                            autoGainControl: { ideal: true },
+                            googNoiseSuppression: true,
+                            googHighpassFilter: true,
+                            googEchoCancellation: true,
+                            googAutoGainControl: true,
+                            googNoiseSuppression2: true,
+                            channelCount: 1,
+                            sampleRate: 16000
+                        },
+                        video: false
                     });
 
-                    updateState('thinking');
-                    await startWebSocket();
-                } else {
-                    document.getElementById('usd-chat-log').innerHTML = ""; 
-                    chatHistory = [];
-                    activeBotMessageDiv = null;
-                    activeBotTextSpan = null;
-                    lastBotMessageDiv = null;
-                    
-                    updateState('connecting', "Calling assistant... 🟡");
-                    await new Promise(resolve => setTimeout(resolve, 1200));
-                    
-                    updateState('connecting', "Connected 🟢");
-                    await new Promise(resolve => setTimeout(resolve, 600));
-                    
-                    sessionStorage.setItem('usd_chat_active', 'true');
-                    await startWebSocket();
-                }
-            }
-        }
+                    await initAudio();
+                    window.recordDest = audioCtx.createMediaStreamDestination();
+                    const micToRecorder = audioCtx.createMediaStreamSource(globalStream);
+                    micToRecorder.connect(window.recordDest);
 
-        async function startWebSocket() {
-            try {
-                socket = new WebSocket(WS_URL);
-
-                socket.onopen = async () => {
-                    // 1. Send the initial greeting request immediately so the bot starts speaking right away!
-                    if (chatHistory.length === 0) {
-                        updateState('thinking'); 
-                        if (socket.readyState === WebSocket.OPEN) {
-                            socket.send(JSON.stringify({ 
-                                type: 'text_input', 
-                                text: "SYSTEM INSTRUCTION: Start the conversation by warmly saying EXACTLY this specific phrase and absolutely nothing else: 'Namaste! i Am Riya USD Consultant, How can we assist you today? Let's start with your beautiful name, what is your name?'", 
-                                history: [],
-                                isVoiceMode: isVoiceMode 
-                            }));
-                        }
-                    } else {
-                        updateState('listening');
-                    }
-
-                    // 2. Request microphone permission and initialize audio streaming/VAD
+                    recordedAudioChunks = [];
                     try {
-                        globalStream = await navigator.mediaDevices.getUserMedia({ 
-                            audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true }
-                        });
-
-                        // ⚡ AUDIO RECORDING INITIALIZATION
-                        await initAudio(); 
-                        window.recordDest = audioCtx.createMediaStreamDestination();
-                        const micToRecorder = audioCtx.createMediaStreamSource(globalStream);
-                        micToRecorder.connect(window.recordDest);
-
-                        recordedAudioChunks = [];
-                        try {
-                            mediaRecorder = new MediaRecorder(window.recordDest.stream);
-                            mediaRecorder.ondataavailable = (e) => { if (e.data.size > 0) recordedAudioChunks.push(e.data); };
-                            mediaRecorder.onstop = () => {
-                                const mimeType = mediaRecorder.mimeType || 'audio/webm';
-                                window.recordedAudioBlob = new Blob(recordedAudioChunks, { type: mimeType });
-                            };
-                            mediaRecorder.start(1000);
-                        } catch(e) { console.error("Recorder failed:", e); }
-
-                        const streamCtx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
-                        const source = streamCtx.createMediaStreamSource(globalStream);
-                        
-                        const bufferSize = 4096;
-                        const processor = streamCtx.createScriptProcessor(bufferSize, 1, 1);
-                        const analyser = streamCtx.createAnalyser();
-                        analyser.fftSize = 512;
-
-                        const silenceGain = streamCtx.createGain();
-                        silenceGain.gain.value = 0;
-
-                        source.connect(analyser);
-                        source.connect(processor);
-                        processor.connect(silenceGain);
-                        silenceGain.connect(streamCtx.destination);
-
-                        let isRecording = false;
-                        
-                        // ⚡ PCM STREAMER: Streams constantly to backend only when VAD permits it
-                        processor.onaudioprocess = (e) => {
-                            if (isMicSoftwareMuted || !isRecording) return;
-                            
-                            const inputData = e.inputBuffer.getChannelData(0);
-                            const pcm16 = new Int16Array(inputData.length);
-                            for (let i = 0; i < inputData.length; i++) {
-                                // ⚡ MAGIC VOLUME BOOST: Multiplies mic volume by 3.0 so Gemini hears every word!
-                                let sample = inputData[i] * 3.0; 
-                                if (sample > 1) sample = 1; else if (sample < -1) sample = -1;
-                                pcm16[i] = sample * 32767;
-                            }
-                            
-                            if (socket && socket.readyState === WebSocket.OPEN && isRecording) {
-                                socket.send(pcm16.buffer); 
-                            }
+                        mediaRecorder = new MediaRecorder(window.recordDest.stream);
+                        mediaRecorder.ondataavailable = (e) => { if (e.data.size > 0) recordedAudioChunks.push(e.data); };
+                        mediaRecorder.onstop = () => {
+                            const mimeType = mediaRecorder.mimeType || 'audio/webm';
+                            window.recordedAudioBlob = new Blob(recordedAudioChunks, { type: mimeType });
                         };
+                        mediaRecorder.start(1000);
+                    } catch (e) { console.error("Recorder failed:", e); }
 
-                        // ⚡ HIGH-END SILERO VAD INTEGRATION
-                        try {
-                            window.myvad = await vad.MicVAD.new({
-                                stream: globalStream,
-                                positiveSpeechThreshold: 0.4,  
-                                negativeSpeechThreshold: 0.3,
-                                minSpeechFrames: 3,            
-                                preSpeechPadFrames: 10,        
-                                // ⚡ MAGIC SPEED FIX: Lowered from 45 to 15! 
-                                // It now only waits 450 milliseconds after you stop talking, so it replies instantly!
-                                redemptionFrames: 15,          
-                                onSpeechStart: () => {
-                                    // ⚡ DISABLED BARGE-IN: If bot is speaking, completely ignore the mic
-                                    if (isMicSoftwareMuted || currentAgentState === 'speaking' || isAudioPlaying) return; 
-                                    
-                                    window.isUserSpeaking = true; // ⚡ Mutes the Silence Timer while you talk!
-                                    isRecording = true;
-                                    updateState('listening');
+                    const streamCtx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
+                    const source = streamCtx.createMediaStreamSource(globalStream);
+
+                    const bufferSize = 4096;
+                    const processor = streamCtx.createScriptProcessor(bufferSize, 1, 1);
+                    const analyser = streamCtx.createAnalyser();
+                    analyser.fftSize = 512;
+
+                    const silenceGain = streamCtx.createGain();
+                    silenceGain.gain.value = 0;
+
+                    source.connect(analyser);
+                    source.connect(processor);
+                    processor.connect(silenceGain);
+                    silenceGain.connect(streamCtx.destination);
+
+                    let isRecording = false;
+
+                    let audioBufferQueue = [];
+                    let speechDurationMs = 0;
+                    // ⚡ FRONTEND MIC ACCESSIBILITY & SPEECH DEBOUNCE FILTER ⚡
+                    const BARGE_IN_THRESHOLD = 250; // 250ms continuous speech threshold
+                    const RMS_NOISE_THRESHOLD = 350; // Responsive RMS threshold to capture all user voices cleanly without dropping speech
+                    let isStreamingToBackend = false;
+                    const FRAME_DURATION = (bufferSize / streamCtx.sampleRate) * 1000;
+
+                    processor.onaudioprocess = (e) => {
+                        if (isMicSoftwareMuted || !isRecording) return;
+
+                        const inputData = e.inputBuffer.getChannelData(0);
+                        const pcm16 = new Int16Array(inputData.length);
+                        let sumSquares = 0;
+                        for (let i = 0; i < inputData.length; i++) {
+                            let sample = inputData[i] * 3.0;
+                            if (sample > 1) sample = 1; else if (sample < -1) sample = -1;
+                            let val = sample * 32767;
+                            pcm16[i] = val;
+                            sumSquares += val * val;
+                        }
+                        let rms = Math.sqrt(sumSquares / pcm16.length);
+
+                        // Only accumulate frames with volume exceeding the RMS noise floor
+                        if (rms > RMS_NOISE_THRESHOLD) {
+                            speechDurationMs += FRAME_DURATION;
+                            if (!isStreamingToBackend) {
+                                audioBufferQueue.push(pcm16.buffer);
+                            }
+                        } else {
+                            if (!isStreamingToBackend) {
+                                speechDurationMs = Math.max(0, speechDurationMs - FRAME_DURATION * 0.5);
+                                if (speechDurationMs === 0) {
+                                    audioBufferQueue = [];
+                                }
+                            }
+                        }
+
+                        if (speechDurationMs >= BARGE_IN_THRESHOLD) {
+                            if (!isStreamingToBackend) {
+                                isStreamingToBackend = true;
+
+                                // ⚡ LOCAL BARGE-IN TRIGGERED ⚡
+                                localTurnId++;
+                                audioChunkQueue = [];
+                                activeSources.forEach(source => { try { source.stop(); } catch (e) { } });
+                                activeSources = [];
+                                isAudioPlaying = false;
+                                nextPlayTime = 0;
+                                pendingAudioDecodes = 0;
+
+                                // ⚡ INSTANT WIPE OF ACTIVE BUBBLE MEMORY ⚡
+                                lastBotMessageDiv = null;
+                                activeBotMessageDiv = null;
+
+                                updateState('listening');
+
+                                if (socket && socket.readyState === WebSocket.OPEN) {
+                                    socket.send(JSON.stringify({ type: 'start_of_speech' }));
+                                }
+
+                                audioBufferQueue.forEach(chunk => {
                                     if (socket && socket.readyState === WebSocket.OPEN) {
-                                        socket.send(JSON.stringify({ type: 'start_of_speech' }));
+                                        socket.send(chunk);
                                     }
-                                },
-                                onSpeechEnd: (audio) => {
-                                    window.isUserSpeaking = false; // ⚡ Turns the Silence Timer back on
-                                    if (isMicSoftwareMuted || !isRecording) return;
-                                    isRecording = false;
+                                });
+                                audioBufferQueue = [];
+                            } else {
+                                if (socket && socket.readyState === WebSocket.OPEN) {
+                                    socket.send(pcm16.buffer);
+                                }
+                            }
+                        }
+                    };
+
+                    try {
+                        window.myvad = await vad.MicVAD.new({
+                            stream: globalStream,
+                            positiveSpeechThreshold: 0.65,
+                            negativeSpeechThreshold: 0.40,
+                            minSpeechFrames: 4,
+                            preSpeechPadFrames: 3,
+                            redemptionFrames: 20,
+                            onSpeechStart: () => {
+                                if (isMicSoftwareMuted) return;
+                                window.isUserSpeaking = true;
+                                isRecording = true;
+                            },
+                            onSpeechEnd: (audio) => {
+                                window.isUserSpeaking = false;
+                                if (isMicSoftwareMuted || !isRecording) return;
+                                isRecording = false;
+
+                                if (speechDurationMs < BARGE_IN_THRESHOLD) {
+                                    audioBufferQueue = [];
+                                    speechDurationMs = 0;
+                                    isStreamingToBackend = false;
+                                } else {
+                                    speechDurationMs = 0;
+                                    isStreamingToBackend = false;
+                                    audioBufferQueue = [];
+
                                     updateState('thinking');
                                     if (socket && socket.readyState === WebSocket.OPEN) {
-                                        socket.send(JSON.stringify({ 
-                                            type: 'process_final', 
-                                            history: chatHistory, 
-                                            isVoiceMode: isVoiceMode 
+                                        socket.send(JSON.stringify({
+                                            type: 'process_final',
+                                            history: chatHistory,
+                                            isVoiceMode: isVoiceMode
                                         }));
                                     }
-                                },
-                                onVADMisfire: () => {
-                                    window.isUserSpeaking = false; // ⚡ Turns the Silence Timer back on
-                                    if (isRecording) {
-                                        isRecording = false;
+                                }
+                            },
+                            onVADMisfire: () => {
+                                window.isUserSpeaking = false;
+                                if (isRecording) {
+                                    isRecording = false;
+                                    audioBufferQueue = [];
+                                    speechDurationMs = 0;
+                                    if (isStreamingToBackend) {
+                                        isStreamingToBackend = false;
+                                        updateState('thinking');
+                                        if (socket && socket.readyState === WebSocket.OPEN) {
+                                            socket.send(JSON.stringify({ type: 'process_final', history: chatHistory, isVoiceMode: isVoiceMode }));
+                                        }
+                                    } else {
                                         updateState('listening');
                                     }
                                 }
-                            });
-                            window.myvad.start();
-                        } catch (e) {
-                            console.error("Silero VAD Initialization Failed:", e);
-                        }
-                    } catch (err) {
-                        console.error("Microphone access denied or error:", err);
-                        // Safely switch to text mode
-                        if (isVoiceMode) {
-                            toggleChatMode(); 
-                        }
-                        updateState('listening', "Mic disabled. Chat mode active.");
+                            }
+                        });
+                        window.myvad.start();
+                    } catch (e) {
+                        console.error("Silero VAD Initialization Failed:", e);
                     }
-                };
+                } catch (err) {
+                    console.error("Microphone access denied or error:", err);
+                    if (isVoiceMode) { toggleChatMode(); }
+                    updateState('listening', "Mic disabled. Chat mode active.");
+                }
+            };
 
-                socket.onmessage = async (event) => {
-                    const data = JSON.parse(event.data);
+            socket.onmessage = async (event) => {
+                const data = JSON.parse(event.data);
+
+                if (data.turnId !== undefined) {
+                    if (localTurnId === 0) {
+                        localTurnId = data.turnId;
+                    } else if (data.turnId < localTurnId) {
+                        return;
+                    } else if (data.turnId > localTurnId) {
+                        localTurnId = data.turnId;
+                    }
+                }
+
+                if (data.type === 'interrupted' || (data.serverContent && data.serverContent.interrupted)) {
+                    audioChunkQueue = [];
+                    activeSources.forEach(source => { try { source.stop(); } catch (e) { } });
+                    activeSources = [];
+                    isAudioPlaying = false;
+                    nextPlayTime = 0;
+                    pendingAudioDecodes = 0;
+
+                    // ⚡ WIPES ANY PENDING BUBBLE ⚡
+                    lastBotMessageDiv = null;
+                    activeBotMessageDiv = null;
+                    activeUserMessageDiv = null;
+
+                    updateState('listening');
+                    return;
+                }
+
+                if (data.type === 'error' && data.error === "Session timed out due to inactivity.") {
+                    console.log("Inactivity timeout from backend. Disconnecting...");
+                    disconnectToOffline();
+                    return;
+                }
+
+                if (data.type === 'idle' || data.type === 'error') {
+                    if (data.type === 'error') console.error("Backend Error:", data.error);
+                    liveUserText = "";
+                    isReplyComplete = false;
+                    audioChunkQueue = [];
+
+                    lastBotMessageDiv = null;
+                    activeBotMessageDiv = null;
+                    activeUserMessageDiv = null;
+
+                    const interimBox = document.getElementById('usd-interim-text');
+                    if (interimBox) interimBox.innerText = "";
+                    updateState('listening');
+                }
+                else if (data.type === 'user_text_chunk') {
+                    silenceNudgeCount = 0;
+                    if (!activeUserMessageDiv) {
+                        activeUserMessageDiv = logMessage('user', "");
+                        activeUserMessageDiv.dataset.rawText = "";
+                    }
+                    activeUserMessageDiv.dataset.rawText = (activeUserMessageDiv.dataset.rawText || "") + (data.text || "");
+                    const rawUserText = activeUserMessageDiv.dataset.rawText;
+                    const userP = activeUserMessageDiv.querySelector('.usd-msg-text');
+                    if (userP) userP.innerText = cleanLiveStreamText(rawUserText);
+
+                    // ⚡ DETECT TAG STRICTLY FROM USER INPUT SPEECH STREAM ⚡
+                    const uTag = detectUserTagFromText(rawUserText);
+                    if (uTag) activeTag = uTag;
+
+                    const log = document.getElementById('usd-chat-log');
+                    if (log) log.scrollTop = log.scrollHeight;
+                }
+                else if (data.type === 'bot_text_chunk') {
+                    if (!activeBotMessageDiv) {
+                        activeBotMessageDiv = logMessage('bot', "");
+                        activeBotMessageDiv.dataset.rawText = "";
+                        lastBotMessageDiv = activeBotMessageDiv;
+                    }
+                    activeBotMessageDiv.dataset.rawText = (activeBotMessageDiv.dataset.rawText || "") + (data.text || "");
+                    const rawText = activeBotMessageDiv.dataset.rawText;
+                    const botP = activeBotMessageDiv.querySelector('.usd-msg-text');
+                    if (botP) {
+                        botP.innerText = cleanLiveStreamText(rawText);
+                    }
                     
-                    if (data.type === 'idle' || data.type === 'error') {
-                        if (data.type === 'error') console.error("Backend Error:", data.error);
-                        liveUserText = ""; 
-                        isReplyComplete = false;
-                        audioChunkQueue = [];
-
-                        const interimBox = document.getElementById('usd-interim-text');
-                        if (interimBox) interimBox.innerText = "";
-                        updateState('listening');
+                    // ⚡ ATTACH LINK CARD STRICTLY FROM USER-DERIVED activeTag (NEVER FROM BOT TEXT) ⚡
+                    const streamTag = activeTag || data.tag;
+                    if (streamTag && usdLinks[streamTag]) {
+                        appendLinkButton(activeBotMessageDiv, streamTag);
                     }
-                    else if (data.type === 'user_spoken_text') {
-                        silenceNudgeCount = 0; // Reset silence nudge on user voice input
-                        const cleanUserText = cleanDisplayText(data.text || "");
-                        if (cleanUserText) {
-                            const last = chatHistory[chatHistory.length - 1];
-                            const alreadyInHistory = last && last.role === 'user' && last.parts && last.parts[0] && cleanUserText === last.parts[0].text;
-                            if (!alreadyInHistory) {
-                                logMessage('user', cleanUserText);
-                                addUserHistoryIfNew(cleanUserText);
-                            }
-                            liveUserText = ""; 
-                            const interimBox = document.getElementById('usd-interim-text');
-                            if (interimBox && interimBox.innerText.includes("You:")) {
-                                interimBox.innerText = "Answering...";
-                                interimBox.style.color = "#ffffff";
-                            }
-                        }
-                    }
-                    else if (data.type === 'text_stream') {
-                        const streamedText = cleanDisplayText(data.text || "");
-                        if (!streamedText) return; 
-
-                        if (!activeBotMessageDiv) {
-                            activeBotMessageDiv = logMessage('bot', streamedText);
-                            activeBotTextSpan = activeBotMessageDiv.querySelector('.usd-msg-text');
-                        } else if (activeBotTextSpan) {
-                            activeBotTextSpan.innerText = streamedText;
-                        }
-
-                        const previewTag = data.tag || detectLocalTagFromText(streamedText);
-                        if (previewTag && usdLinks[previewTag]) {
-                            if (!activeBotMessageDiv.querySelector('.usd-link-card')) {
-                                appendLinkButton(activeBotMessageDiv, previewTag);
+                    const log = document.getElementById('usd-chat-log');
+                    if (log) log.scrollTop = log.scrollHeight;
+                }
+                else if (data.type === 'user_spoken_text') {
+                    silenceNudgeCount = 0;
+                    const cleanUserText = cleanDisplayText(data.text || "");
+                    if (cleanUserText) {
+                        // If we are waiting for a reconnect choice, intercept the spoken input
+                        if (window.isAskReconnectChoicePending) {
+                            const textLower = cleanUserText.toLowerCase();
+                            if (textLower.includes("continue") || textLower.includes("yes") || textLower.includes("keep") || textLower.includes("resume") || textLower.includes("stay")) {
+                                confirmReconnect(true); // Continue
+                                return;
+                            } else if (textLower.includes("new") || textLower.includes("start") || textLower.includes("restart") || textLower.includes("clear") || textLower.includes("clean") || textLower.includes("fresh")) {
+                                confirmReconnect(false); // New Chat
+                                return;
                             }
                         }
 
-                        const log = document.getElementById('usd-chat-log');
-                        log.scrollTop = log.scrollHeight;
-                    }
-                    else if (data.type === 'bot_spoken_text') {
-                        // ⚡ BACKGROUND TEXT SYNC: Replaces "..." with the exact transcribed bot words
-                        const finalText = cleanDisplayText(data.text);
-                        if (finalText) {
-                            if (lastBotMessageDiv) {
-                                const span = lastBotMessageDiv.querySelector('.usd-msg-text');
-                                if (span) span.innerText = finalText;
-                            } else {
-                                lastBotMessageDiv = logMessage('bot', finalText);
-                            }
-                            
-                            const last = chatHistory[chatHistory.length - 1];
-                            if (!(last && last.role === 'model' && last.parts && last.parts[0] && last.parts[0].text === finalText)) {
-                                chatHistory.push({ role: "model", parts: [{ text: finalText }] });
-                                if (chatHistory.length > 6) chatHistory = chatHistory.slice(-6);
-                                saveHistory();
-                            }
+                        const userTag = detectUserTagFromText(cleanUserText);
+                        if (userTag) activeTag = userTag;
 
-                            if (data.tag && usdLinks[data.tag]) {
-                                if (!lastBotMessageDiv.querySelector('.usd-link-card')) {
-                                    appendLinkButton(lastBotMessageDiv, data.tag);
-                                }
-                                activeTag = data.tag;
-                            }
-                            
-                            const log = document.getElementById('usd-chat-log');
-                            log.scrollTop = log.scrollHeight;
-                        }
-                    }
-                    else if (data.type === 'audio_chunk') {
-                        if (isVoiceMode) {
-                            audioChunkQueue.push(data);
-                            processAudioQueue();
-                        }
-                    }
-                    else if (data.type === 'reply_complete') {
-                        isReplyComplete = true; 
-                        liveUserText = ""; 
-                        const interimBox = document.getElementById('usd-interim-text');
-                        if (interimBox) { interimBox.innerText = ""; }
-
-                        const botTarget = activeBotMessageDiv; 
-                        activeBotMessageDiv = null;
-                        activeBotTextSpan = null;
-
-                        const finalText = cleanDisplayText(data.botText || "").trim();
-                        const finalTag = data.tag || detectLocalTagFromText(finalText) || detectLocalTagFromText(data.userText || "");
-
-                        if (finalText) {
-                            if (botTarget) {
-                                const span = botTarget.querySelector('.usd-msg-text');
-                                if (span) span.innerText = finalText;
-                            } else {
-                                lastBotMessageDiv = logMessage('bot', finalText);
-                            }
-
-                            // Do not save "..." to memory, it waits for bot_spoken_text
-                            if (finalText !== "...") {
-                                const last = chatHistory[chatHistory.length - 1];
-                                if (!(last && last.role === 'model' && last.parts && last.parts[0] && last.parts[0].text === finalText)) {
-                                    chatHistory.push({ role: "model", parts: [{ text: finalText }] });
-                                    if (chatHistory.length > 6) chatHistory = chatHistory.slice(-6);
-                                    saveHistory();
-                                }
-                            }
-                        } else if (botTarget) {
-                            botTarget.remove();
-                        }
-
-                        activeTag = finalTag;
-                        
-                        const finalBotTarget = botTarget || lastBotMessageDiv;
-                        if (activeTag && usdLinks[activeTag] && finalBotTarget && finalText !== "...") {
-                            if (!finalBotTarget.querySelector('.usd-link-card')) {
-                                appendLinkButton(finalBotTarget, activeTag);
-                            }
-                            const log = document.getElementById('usd-chat-log');
-                            log.scrollTop = log.scrollHeight;
-                        }
-
-                        if (!isVoiceMode) {
-                            updateState('listening');
-                            if (activeTag === '[END_CHAT]') setTimeout(() => closeChat(true), 2000);
+                        if (activeUserMessageDiv) {
+                            const userP = activeUserMessageDiv.querySelector('.usd-msg-text');
+                            if (userP) userP.innerText = cleanUserText;
                         } else {
-                            checkBotFinishedSpeaking(); 
+                            logMessage('user', cleanUserText);
+                        }
+                        addUserHistoryIfNew(cleanUserText);
+                        liveUserText = "";
+                        activeUserMessageDiv = null;
+                        const interimBox = document.getElementById('usd-interim-text');
+                        if (interimBox && interimBox.innerText.includes("You:")) {
+                            interimBox.innerText = "Answering...";
+                            interimBox.style.color = "#ffffff";
                         }
                     }
-                };
-                socket.onerror = () => { updateState('listening'); };
-                socket.onclose = (event) => {
-                    console.log("WebSocket closed:", event);
-                    
-                    // Clean up microphone and VAD
-                    if (window.myvad) {
-                        try { window.myvad.pause(); } catch(e){}
-                        window.myvad = null;
-                    }
-                    releaseWakeLock();
-                    if (globalStream) {
-                        try { globalStream.getTracks().forEach(track => track.stop()); } catch(e){}
-                        globalStream = null;
-                    }
-                    
-                    // Show disconnect message in the chat log if it was an active session
-                    const chatLog = document.getElementById('usd-chat-log');
-                    const hasEndedMsg = chatLog.innerText.includes("The chat has ended") || chatLog.innerText.includes("Thanks talking with us");
-                    if (!hasEndedMsg && currentAgentState !== 'off') {
-                        logMessage('bot', "The chat has ended. Thanks talking with us have greate day!");
-                    }
-                    
-                    updateState('off');
-                };
-            } catch (err) {
-                updateState('listening');
-            }
-        }
-
-        function closeChatBtnClicked() {
-            if (currentAgentState === 'off') {
-                closeChat(false);
-            } else {
-                document.getElementById('usd-end-confirm-overlay').style.display = 'flex';
-            }
-        }
-
-     function confirmEndChat(isYes) {
-            document.getElementById('usd-end-confirm-overlay').style.display = 'none';
-            if (isYes) {
-                updateState('thinking');
-                
-                audioChunkQueue = [];
-                activeSources.forEach(source => { try { source.stop(); } catch(e) {} });
-                activeSources = [];
-                isAudioPlaying = false;
-                
-                // ⚡ GUARANTEED EMAIL TRIGGER: Overwrites the stop event so it sends the email the exact millisecond the audio file is ready!
-                if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-                    mediaRecorder.onstop = () => {
-                        const mimeType = mediaRecorder.mimeType || 'audio/webm';
-                        window.recordedAudioBlob = new Blob(recordedAudioChunks, { type: mimeType });
-                        submitChatData("Call Ended (No Star Given)"); // Instantly sends!
-                    };
-                    mediaRecorder.stop();
-                } else {
-                    submitChatData("Call Ended (No Star Given)");
                 }
+                else if (data.type === 'bot_spoken_text') {
+                    const finalText = cleanDisplayText(data.text);
+                    if (finalText && finalText !== "...") {
+                        const tagToUse = data.tag || activeTag;
+                        if (activeBotMessageDiv) {
+                            const botP = activeBotMessageDiv.querySelector('.usd-msg-text');
+                            if (botP) botP.innerText = finalText;
+                            lastBotMessageDiv = activeBotMessageDiv;
+                        } else {
+                            lastBotMessageDiv = logMessage('bot', finalText, tagToUse);
+                        }
 
-                const goodbyeText = "Thanks for talking with Ultimate Smile Design. Please feel free to check out our reviews or reach out to us.";
-                logMessage('bot', goodbyeText);
-                
-                if (isVoiceMode) {
-                    fetch(`${RENDER_BACKEND_URL}/api/tts`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ text: goodbyeText, lang: 'en-IN' })
-                    })
-                    .then(res => res.json())
-                    .then(data => {
-                        isReplyComplete = true; 
+                        const last = chatHistory[chatHistory.length - 1];
+                        if (!(last && last.role === 'model' && last.parts && last.parts[0] && last.parts[0].text === finalText)) {
+                            chatHistory.push({ role: "model", parts: [{ text: finalText }] });
+                            if (chatHistory.length > 6) chatHistory = chatHistory.slice(-6);
+                            saveHistory();
+                        }
+
+                        if (tagToUse && usdLinks[tagToUse]) {
+                            appendLinkButton(lastBotMessageDiv, tagToUse);
+                        }
+
+                        activeBotMessageDiv = null;
+                        const log = document.getElementById('usd-chat-log');
+                        if (log) log.scrollTop = log.scrollHeight;
+                    }
+                }
+                else if (data.type === 'audio_chunk') {
+                    if (isVoiceMode) {
                         audioChunkQueue.push(data);
-                        processAudioQueue(); 
-                    })
-                    .catch(e => console.error("TTS Error:", e));
+                        processAudioQueue();
+                    }
                 }
+                else if (data.type === 'reply_complete') {
+                    isReplyComplete = true;
+                    liveUserText = "";
+                    const interimBox = document.getElementById('usd-interim-text');
+                    if (interimBox) { interimBox.innerText = ""; }
 
-                closeChat(true);
-            }
-        }
-// ⚡ REUSABLE EMAIL FUNCTION (Uploads audio and sends transcript)
-        async function submitChatData(ratingLabel) {
-            try {
-                let transcript = "No chat history recorded.";
-                const allMessages = document.querySelectorAll('#usd-chat-log > div');
-                if (allMessages.length > 0) {
-                    transcript = Array.from(allMessages).map(msgDiv => {
-                        const text = msgDiv.querySelector('.usd-msg-text')?.innerText || "";
-                        if (msgDiv.classList.contains('user_message')) return `User: ${text}`;
-                        if (msgDiv.classList.contains('bot_message')) return `Assistant: ${text}`;
-                        return `System: ${text}`;
-                    }).join('\n\n');
-                }
-
-                let audioUrlText = "";
-                
-                // ⚡ UPLOAD AUDIO (With CORS-Safe, Long-Term Providers!)
-                if (!window.uploadedAudioUrl && window.recordedAudioBlob && window.recordedAudioBlob.size > 0) {
-                    
-                    // Attempt 1: GoFile.io (Valid for 10 Days!)
-                    try {
-                        const serverReq = await fetch('https://api.gofile.io/servers');
-                        const serverData = await serverReq.json();
-                        if (serverData.status === 'ok') {
-                            const uploadServer = serverData.data.servers[0].name;
-                            const form = new FormData();
-                            form.append("file", window.recordedAudioBlob, "recording.mp3");
-                            const uploadRes = await fetch(`https://${uploadServer}.gofile.io/contents/uploadfile`, { method: 'POST', body: form });
-                            const uploadData = await uploadRes.json();
-                            if (uploadData.status === 'ok') {
-                                window.uploadedAudioUrl = uploadData.data.downloadPage;
-                                audioUrlText = `\n\n🎙️ RAW AUDIO RECORDING (Valid for 10 Days):\n${window.uploadedAudioUrl}`;
-                            }
+                    const finalText = cleanDisplayText(data.botText || "").trim();
+                    const finalTag = data.tag || activeTag;
+                    if (finalTag && usdLinks[finalTag]) {
+                        if (lastBotMessageDiv) {
+                            appendLinkButton(lastBotMessageDiv, finalTag);
                         }
-                    } catch(e) { console.log("GoFile skipped"); }
-
-                    // Attempt 2: Pomf.la (Valid for 30 Days!)
-                    if (!window.uploadedAudioUrl) {
-                        try {
-                            const form = new FormData();
-                            form.append("files[]", window.recordedAudioBlob, "recording.mp3");
-                            const res = await fetch('https://pomf2.lain.la/upload.php', { method: 'POST', body: form });
-                            if (res.ok) {
-                                const data = await res.json();
-                                if (data && data.success) {
-                                    window.uploadedAudioUrl = data.files[0].url;
-                                    audioUrlText = `\n\n🎙️ RAW AUDIO RECORDING (Valid for 30 Days):\n${window.uploadedAudioUrl}`;
-                                }
-                            }
-                        } catch(e) { console.log("Pomf skipped"); }
                     }
-                    
-                    // Attempt 3: Tmpfiles (1 Hour Backup)
-                    if (!window.uploadedAudioUrl) {
-                        try {
-                            const form = new FormData(); form.append("file", window.recordedAudioBlob, "recording.mp3");
-                            const res = await fetch('https://tmpfiles.org/api/v1/upload', { method: 'POST', body: form });
-                            const data = await res.json();
-                            if (data && data.data && data.data.url) {
-                                window.uploadedAudioUrl = data.data.url.replace('tmpfiles.org/', 'tmpfiles.org/dl/');
-                                audioUrlText = `\n\n🎙️ RAW AUDIO RECORDING (Valid for 60 minutes):\n${window.uploadedAudioUrl}`;
-                            }
-                        } catch(e) { console.log("Tmpfiles failed"); }
+                    activeTag = null; // ⚡ Reset for next user turn ⚡
+
+                    activeBotMessageDiv = null;
+                    activeUserMessageDiv = null;
+
+                    if (!isVoiceMode) {
+                        updateState('listening');
+                        if (finalTag === '[END_CHAT]') setTimeout(() => closeChat(true), 2000);
+                    } else {
+                        checkBotFinishedSpeaking();
                     }
-                } else if (window.uploadedAudioUrl) {
-                    audioUrlText = `\n\n🎙️ RAW AUDIO RECORDING:\n${window.uploadedAudioUrl}`;
+                }
+            };
+            socket.onerror = () => { updateState('listening'); };
+            socket.onclose = (event) => {
+                console.log("WebSocket closed:", event);
+
+                // ⚡ SILENT SEAMLESS AUTO-RECONNECT: Reconnect silently in background without freezing UI or requiring mic tap ⚡
+                const container = document.getElementById('usd-chat-container');
+                const isContainerActive = container && container.classList.contains('active');
+
+                if (isContainerActive && currentAgentState !== 'off') {
+                    console.log("[INFO] Connection dropped. Silently auto-reconnecting in background...");
+                    setTimeout(() => {
+                        if (currentAgentState !== 'off') {
+                            startWebSocket();
+                        }
+                    }, 300);
+                    return;
                 }
 
-                // ⚡ SEND EMAIL VIA JSON
-                fetch('https://api.web3forms.com/submit', {
-                    method: 'POST',
-                    keepalive: true, 
-                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                    body: JSON.stringify({ 
-                        access_key: "c1a373a7-407e-47f4-8403-be692c2f3eff", 
-                        subject: `🌟 New USD Voice Agent Rating: ${ratingLabel}`, 
-                        from_name: "Ultimate Smile Voice Agent", 
-                        email: "noreply@ultimatesmiledesign.com",
-                        message: `Transcript:\n\n${transcript}${audioUrlText}` 
-                    })
-                }).catch(e => console.error("Email API Error:", e));
-                
-            } catch(e) { console.error("Submit logic error:", e); }
-        }
-        function closeChat(showRating = false) {
-            updateState('off');
-            
-            if (window.myvad) {
-                window.myvad.pause();
-                window.myvad = null;
-            }
-            releaseWakeLock(); 
-            
-            if (socket) {
-                socket.close();
-                socket = null;
-            }
-            if (globalStream) {
-                globalStream.getTracks().forEach(track => track.stop());
-                globalStream = null;
-            }
-            
-            // MediaRecorder stop is handled natively in confirmEndChat now!
-
-            sessionStorage.removeItem('usd_chat_active');
-            
-            const bubble = document.getElementById('usd-bubble');
-            const container = document.getElementById('usd-chat-container');
-
-            if (showRating) {
-                document.getElementById('usd-input-container').style.display = 'none';
-                document.getElementById('usd-voice-controls-footer').style.display = 'none';
-                document.getElementById('usd-inline-rating').style.display = 'block';
-                logMessage('system', 'The chat has ended. Please rate your experience below.');
-            } else {
-                if (container) {
-                    container.style.display = 'none';
-                    container.classList.remove('active');
+                if (window.myvad) {
+                    try { window.myvad.pause(); } catch (e) { }
+                    window.myvad = null;
                 }
-                if (bubble) {
-                    bubble.style.display = 'flex'; 
-                    bubble.classList.remove('hidden');
+                releaseWakeLock();
+                if (globalStream) {
+                    try { globalStream.getTracks().forEach(track => track.stop()); } catch (e) { }
+                    globalStream = null;
                 }
 
-                document.getElementById('usd-inline-rating').style.display = 'none';
-                document.getElementById('usd-rating-thanks').style.display = 'none';
-                document.querySelectorAll('.usd-star').forEach(s => { 
-                    s.style.color = '#333333'; 
-                    s.style.textShadow = '0 2px 4px rgba(0,0,0,0.5)'; 
-                });
-                
-                // Clear the uploaded URL so the next session uploads fresh audio!
-                window.uploadedAudioUrl = null; 
-            }
-        }
-
-        async function submitRating(stars) {
-            const starElements = document.querySelectorAll('.usd-star');
-            starElements.forEach((s, index) => {
-                s.style.color = index < stars ? '#FFD700' : '#444';
-                s.style.textShadow = index < stars ? '0 0 10px rgba(255, 215, 0, 0.6)' : '0 2px 4px rgba(0,0,0,0.5)';
-            });
-            document.getElementById('usd-rating-thanks').style.display = 'block';
-
-            setTimeout(() => { closeChat(false); }, 2500);
-
-            // ⚡ Update you with the new Star rating!
-            submitChatData(`${stars}/5 Stars`);
-        }
-        async function submitTextMessage() {
-            const inputEl = document.getElementById('usd-text-input');
-            const userText = cleanDisplayText(inputEl.value.trim());
-            if (!userText || currentAgentState === 'thinking' || currentAgentState === 'connecting') return;
-
-            inputEl.value = ''; 
-            silenceNudgeCount = 0; // Reset silence nudge on user text input 
-
-            updateState('thinking');
-            
-            logMessage('user', userText);
-            addUserHistoryIfNew(userText);
-
-            if (socket && socket.readyState === WebSocket.OPEN) {
-                socket.send(JSON.stringify({ 
-                    type: 'text_input', 
-                    text: userText, 
-                    history: chatHistory,
-                    isVoiceMode: isVoiceMode 
-                }));
-            }
-        }
-
-        function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault(); 
-                submitTextMessage();
-            }
-        }
-
-        async function handleLinkClick(tag) {
-            const linkInfo = usdLinks[tag];
-            if (!linkInfo) return;
-            
-            logMessage('bot', "Redirecting you now...");
-            chatHistory.push({ role: "model", parts: [{ text: "Redirecting you now..." }] });
-            if (chatHistory.length > 6) chatHistory = chatHistory.slice(-6);
-            saveHistory();
-
-            window.open(linkInfo.url, '_blank');
+                updateState('off');
+            };
+        } catch (err) {
             updateState('listening');
         }
-        
-        function logMessage(sender, text, tag = null) {
-            const log = document.getElementById('usd-chat-log');
-            const msgDiv = document.createElement('div');
-            
-            if (sender === 'user') {
-                msgDiv.className = 'user_message';
-            } else if (sender === 'bot') {
-                msgDiv.className = 'bot_message';
+    }
+
+    function closeChatBtnClicked() {
+        if (currentAgentState === 'off') {
+            closeChat(false);
+        } else {
+            document.getElementById('usd-end-confirm-overlay').style.display = 'flex';
+        }
+    }
+
+    function confirmEndChat(isYes) {
+        document.getElementById('usd-end-confirm-overlay').style.display = 'none';
+        if (isYes) {
+            updateState('thinking');
+
+            audioChunkQueue = [];
+            activeSources.forEach(source => { try { source.stop(); } catch (e) { } });
+            activeSources = [];
+            isAudioPlaying = false;
+
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.onstop = () => {
+                    const mimeType = mediaRecorder.mimeType || 'audio/webm';
+                    window.recordedAudioBlob = new Blob(recordedAudioChunks, { type: mimeType });
+                    submitChatData("Call Ended (No Star Given)");
+                };
+                mediaRecorder.stop();
             } else {
-                msgDiv.className = 'msg msg-system';
-            }
-            
-            const p = document.createElement('p');
-            p.className = 'usd-msg-text';
-            
-            if (sender === 'user') p.innerText = text;
-            else if (sender === 'bot') p.innerText = text;
-            else p.innerText = text; 
-            
-            msgDiv.appendChild(p);
-
-            if (tag && usdLinks[tag]) {
-                const btn = document.createElement('button');
-                btn.className = 'usd-link-card';
-                btn.innerText = usdLinks[tag].label;
-                btn.onclick = () => handleLinkClick(tag);
-                msgDiv.appendChild(btn);
+                submitChatData("Call Ended (No Star Given)");
             }
 
-            log.appendChild(msgDiv);
-            log.scrollTop = log.scrollHeight;
+            const goodbyeText = "Thanks for talking with Ultimate Smile Design. Please feel free to check out our reviews or reach out to us.";
+            logMessage('bot', goodbyeText);
 
-            if (sender === 'bot') {
-                lastBotMessageDiv = msgDiv;
+            if (isVoiceMode) {
+                fetch(`${RENDER_BACKEND_URL}/api/tts`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: goodbyeText, lang: 'en-IN' })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        isReplyComplete = true;
+                        audioChunkQueue.push(data);
+                        processAudioQueue();
+                    })
+                    .catch(e => console.error("TTS Error:", e));
             }
 
-            return msgDiv;
+            closeChat(true);
+        }
+    }
+
+    async function submitChatData(ratingLabel) {
+        try {
+            let transcript = "No chat history recorded.";
+            const allMessages = document.querySelectorAll('#usd-chat-log > div');
+            if (allMessages.length > 0) {
+                transcript = Array.from(allMessages).map(msgDiv => {
+                    const text = msgDiv.querySelector('.usd-msg-text')?.innerText || "";
+                    if (msgDiv.classList.contains('user_message')) return `User: ${text}`;
+                    if (msgDiv.classList.contains('bot_message')) return `Assistant: ${text}`;
+                    return `System: ${text}`;
+                }).join('\n\n');
+            }
+
+            let audioUrlText = "";
+
+            if (!window.uploadedAudioUrl && window.recordedAudioBlob && window.recordedAudioBlob.size > 0) {
+                try {
+                    const serverReq = await fetch('https://api.gofile.io/servers');
+                    const serverData = await serverReq.json();
+                    if (serverData.status === 'ok') {
+                        const uploadServer = serverData.data.servers[0].name;
+                        const form = new FormData();
+                        form.append("file", window.recordedAudioBlob, "recording.mp3");
+                        const uploadRes = await fetch(`https://${uploadServer}.gofile.io/contents/uploadfile`, { method: 'POST', body: form });
+                        const uploadData = await uploadRes.json();
+                        if (uploadData.status === 'ok') {
+                            window.uploadedAudioUrl = uploadData.data.downloadPage;
+                            audioUrlText = `\n\n🎙️ RAW AUDIO RECORDING (Valid for 10 Days):\n${window.uploadedAudioUrl}`;
+                        }
+                    }
+                } catch (e) { }
+
+                if (!window.uploadedAudioUrl) {
+                    try {
+                        const form = new FormData();
+                        form.append("files[]", window.recordedAudioBlob, "recording.mp3");
+                        const res = await fetch('https://pomf2.lain.la/upload.php', { method: 'POST', body: form });
+                        if (res.ok) {
+                            const data = await res.json();
+                            if (data && data.success) {
+                                window.uploadedAudioUrl = data.files[0].url;
+                                audioUrlText = `\n\n🎙️ RAW AUDIO RECORDING (Valid for 30 Days):\n${window.uploadedAudioUrl}`;
+                            }
+                        }
+                    } catch (e) { }
+                }
+
+                if (!window.uploadedAudioUrl) {
+                    try {
+                        const form = new FormData(); form.append("file", window.recordedAudioBlob, "recording.mp3");
+                        const res = await fetch('https://tmpfiles.org/api/v1/upload', { method: 'POST', body: form });
+                        const data = await res.json();
+                        if (data && data.data && data.data.url) {
+                            window.uploadedAudioUrl = data.data.url.replace('tmpfiles.org/', 'tmpfiles.org/dl/');
+                            audioUrlText = `\n\n🎙️ RAW AUDIO RECORDING (Valid for 60 minutes):\n${window.uploadedAudioUrl}`;
+                        }
+                    } catch (e) { }
+                }
+            } else if (window.uploadedAudioUrl) {
+                audioUrlText = `\n\n🎙️ RAW AUDIO RECORDING:\n${window.uploadedAudioUrl}`;
+            }
+
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                keepalive: true,
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify({
+                    access_key: "c1a373a7-407e-47f4-8403-be692c2f3eff",
+                    subject: `🌟 New USD Voice Agent Rating: ${ratingLabel}`,
+                    from_name: "Ultimate Smile Voice Agent",
+                    email: "noreply@ultimatesmiledesign.com",
+                    message: `Transcript:\n\n${transcript}${audioUrlText}`
+                })
+            }).catch(e => console.error("Email API Error:", e));
+
+        } catch (e) { console.error("Submit logic error:", e); }
+    }
+
+    function closeChat(showRating = false) {
+        updateState('off');
+
+        if (window.myvad) {
+            window.myvad.pause();
+            window.myvad = null;
+        }
+        releaseWakeLock();
+
+        if (socket) {
+            socket.onclose = null;
+            socket.close();
+            socket = null;
+        }
+        if (globalStream) {
+            globalStream.getTracks().forEach(track => track.stop());
+            globalStream = null;
         }
 
-        // Attach to window so HTML inline events can access them
-        window.openChat = openChat;
-        window.closeChat = closeChat;
-        window.confirmEndChat = confirmEndChat;
-        window.toggleChatMode = toggleChatMode;
-        window.closeChatBtnClicked = closeChatBtnClicked;
-        window.submitTextMessage = submitTextMessage;
-        window.submitRating = submitRating;
-        window.handleKeyPress = handleKeyPress;
-        window.handleLinkClick = handleLinkClick;
-    </script>
+        sessionStorage.removeItem('usd_chat_active');
+
+        const bubble = document.getElementById('usd-bubble');
+        const container = document.getElementById('usd-chat-container');
+
+        if (showRating) {
+            document.getElementById('usd-input-container').style.display = 'none';
+            document.getElementById('usd-voice-controls-footer').style.display = 'none';
+            document.getElementById('usd-inline-rating').style.display = 'block';
+            logMessage('system', 'The chat has ended. Please rate your experience below.');
+        } else {
+            if (container) {
+                container.style.display = '';
+                container.classList.remove('active');
+            }
+            if (bubble) {
+                bubble.style.display = '';
+                bubble.classList.remove('hidden');
+            }
+
+            document.getElementById('usd-inline-rating').style.display = 'none';
+            document.getElementById('usd-rating-thanks').style.display = 'none';
+            document.querySelectorAll('.usd-star').forEach(s => {
+                s.style.color = '#333333';
+                s.style.textShadow = '0 2px 4px rgba(0,0,0,0.5)';
+            });
+
+            window.uploadedAudioUrl = null;
+        }
+    }
+
+    async function submitRating(stars) {
+        const starElements = document.querySelectorAll('.usd-star');
+        starElements.forEach((s, index) => {
+            s.style.color = index < stars ? '#FFD700' : '#444';
+            s.style.textShadow = index < stars ? '0 0 10px rgba(255, 215, 0, 0.6)' : '0 2px 4px rgba(0,0,0,0.5)';
+        });
+        document.getElementById('usd-rating-thanks').style.display = 'block';
+
+        setTimeout(() => { closeChat(false); }, 2000);
+
+        submitChatData(`${stars}/5 Stars`);
+    }
+
+    async function submitTextMessage() {
+        const inputEl = document.getElementById('usd-text-input');
+        const userText = cleanDisplayText(inputEl.value.trim());
+        if (!userText) return;
+
+        inputEl.value = '';
+        silenceNudgeCount = 0;
+        const userTag = detectUserTagFromText(userText);
+        if (userTag) activeTag = userTag;
+
+        if (!socket || socket.readyState !== WebSocket.OPEN) {
+            updateState('connecting', 'Connecting...');
+            await startWebSocket();
+            for (let i = 0; i < 30; i++) {
+                if (socket && socket.readyState === WebSocket.OPEN) break;
+                await new Promise(r => setTimeout(r, 100));
+            }
+        }
+
+        localTurnId++;
+
+        // ⚡ Text Input cleanly wipes audio UI too ⚡
+        audioChunkQueue = [];
+        activeSources.forEach(source => { try { source.stop(); } catch (e) { } });
+        activeSources = [];
+        isAudioPlaying = false;
+        nextPlayTime = 0;
+        pendingAudioDecodes = 0;
+        lastBotMessageDiv = null;
+        activeBotMessageDiv = null;
+
+        updateState('thinking');
+
+        logMessage('user', userText);
+        addUserHistoryIfNew(userText);
+
+        if (socket && socket.readyState === WebSocket.OPEN) {
+            socket.send(JSON.stringify({
+                type: 'text_input',
+                text: userText,
+                history: chatHistory,
+                isVoiceMode: isVoiceMode
+            }));
+        }
+    }
+
+    function handleKeyPress(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            submitTextMessage();
+        }
+    }
+
+    function handleLinkClick(tag) {
+        const linkInfo = usdLinks[tag];
+        if (!linkInfo) return;
+
+        logMessage('bot', "Redirecting you now...");
+        chatHistory.push({ role: "model", parts: [{ text: "Redirecting you now..." }] });
+        if (chatHistory.length > 6) chatHistory = chatHistory.slice(-6);
+        saveHistory();
+
+        window.open(linkInfo.url, '_blank');
+        updateState('listening');
+    }
+
+    function logMessage(sender, text, tag = null) {
+        const log = document.getElementById('usd-chat-log');
+        const msgDiv = document.createElement('div');
+
+        if (sender === 'user') {
+            msgDiv.className = 'user_message';
+        } else if (sender === 'bot') {
+            msgDiv.className = 'bot_message';
+        } else {
+            msgDiv.className = 'msg msg-system';
+        }
+
+        const p = document.createElement('p');
+        p.className = 'usd-msg-text';
+
+        if (sender === 'user') p.innerText = text;
+        else if (sender === 'bot') p.innerText = text;
+        else p.innerText = text;
+
+        msgDiv.appendChild(p);
+
+        if (tag && usdLinks[tag]) {
+            const btn = document.createElement('button');
+            btn.className = 'usd-link-card';
+            btn.innerText = usdLinks[tag].label;
+            btn.onclick = () => handleLinkClick(tag);
+            msgDiv.appendChild(btn);
+        }
+
+        log.appendChild(msgDiv);
+        log.scrollTop = log.scrollHeight;
+
+        if (sender === 'bot') {
+            lastBotMessageDiv = msgDiv;
+        }
+
+        return msgDiv;
+    }
+
+    window.openChat = openChat;
+    window.closeChat = closeChat;
+    window.confirmEndChat = confirmEndChat;
+    window.confirmReconnect = confirmReconnect;
+    window.toggleChatMode = toggleChatMode;
+    window.closeChatBtnClicked = closeChatBtnClicked;
+    window.submitTextMessage = submitTextMessage;
+    window.submitRating = submitRating;
+    window.handleKeyPress = handleKeyPress;
+    window.handleLinkClick = handleLinkClick;
+    window.handleCenterMicClick = handleCenterMicClick;
+    window.handleTypingAutoConnect = handleTypingAutoConnect;
+    window.ensureConnected = ensureConnected;
+</script>
 {% endblock %}

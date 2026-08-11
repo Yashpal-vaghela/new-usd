@@ -8,7 +8,6 @@ from voice_agent.ai.prompt_builder import get_system_prompt
 
 class VoiceAgentConsumer(AsyncJsonWebsocketConsumer):
     async def connect(self):
-        # ⚡ Clean initialization of the session state
         self.session = Session()
         
         # ⚡ Dynamically build prompt instructions and retrieve cached knowledge base

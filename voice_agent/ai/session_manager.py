@@ -36,6 +36,7 @@ class Session:
         # Gemini WebSocket connection and background listener task
         self.gemini_ws = None
         self.gemini_recv_task = None
+        self.setup_complete_event = asyncio.Event()
 
     def reset_activity_timer(self):
         self.last_activity_time = asyncio.get_event_loop().time()
