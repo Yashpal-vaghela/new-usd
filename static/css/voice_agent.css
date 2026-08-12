@@ -137,11 +137,9 @@
 
 .chat_main_container {
   width: 100%;
-  height: 310px;
-  border: 1px solid rgb(233, 196, 196);
-  /* User's custom border */
+  height: 335px;
+  /* border: 1px solid rgb(233, 196, 196); */
   border: none;
-  /* Actually the image doesn't show a border around the container, but I will keep it commented if they want it. Oh wait, I'll keep the border if they specifically pasted it */
   margin-top: 20px;
   padding: 16px 16px 8px 16px;
   overflow-y: auto;
@@ -471,6 +469,23 @@
   text-align: center;
   padding: 20px;
 }
+#usd-reconnect-confirm-overlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(10, 10, 10, 0.95);
+  border-radius: 14px;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 101;
+  text-align: center;
+  padding: 20px;
+}
+
 
 .usd-confirm-title {
   color: #fff;
@@ -510,6 +525,99 @@
   flex-direction: column;
   position: relative;
   z-index: 10;
+}
+
+#usd-status-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-top: 10px;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  margin-right: 6px;
+  margin-top: 3px;
+}
+
+.status-dot.online {
+  background-color: #28ca42;
+  animation: glow_green 1.5s infinite;
+}
+
+.status-dot.offline {
+  background-color: red;
+  animation: glow_red 1.5s infinite;
+}
+
+.status-dot.connecting {
+  background-color: #e5a546;
+  animation: glow_yellow 1.5s infinite;
+}
+
+@keyframes glow_red {
+
+  0%,
+  100% {
+    box-shadow: 0 0 .25rem red;
+  }
+
+  50% {
+    box-shadow: 0 0 1rem red;
+  }
+}
+
+@keyframes glow_yellow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 .25rem #e5a546;
+  }
+
+  50% {
+    box-shadow: 0 0 1rem #e5a546;
+  }
+}
+
+@keyframes glow_green {
+
+  0%,
+  100% {
+    box-shadow: 0 0 .25rem #28ca42;
+  }
+
+  50% {
+    box-shadow: 0 0 1rem #28ca42;
+  }
+
+}
+
+#usd-inline-rating {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  z-index: 99999999;
+  align-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  color: white;
+  font-size: 18px;
+}
+
+.usd-star {
+  font-size: 25px;
+  cursor: pointer;
 }
 
 @media (max-width: 1540px) and (max-height: 750px) {
@@ -552,6 +660,7 @@
   .voice_icon_title_and_close_icon_main {
     width: 100%;
     height: 24px;
+    margin-top: 10px;
   }
 
   .header_voice_icon {
@@ -561,7 +670,7 @@
 
   .chat_bot_label {
     font-size: 14px;
-    margin-top: 35px;
+    margin-top: 18px;
   }
 
   .header_close_icon {
@@ -604,9 +713,13 @@
   }
 
   .user_message {
-    font-size: 12px;
+    font-size: 16px;
     margin-bottom: 10px;
     max-width: 90%;
+  }
+
+  .usd-msg-text {
+    font-size: 12px;
   }
 
   .chat_icon_and_voice_and_close_icon_container_main {
@@ -657,6 +770,16 @@
   .send_button_icon {
     width: 20px;
     height: 20px;
+  }
+
+  #usd-status-box {
+    font-size: 12px;
+    margin-top: 0px;
+  }
+
+  .status-dot {
+    width: 12px;
+    height: 12px;
   }
 }
 
@@ -800,6 +923,11 @@
 
   .input_box_and_icon_main {
     padding: 0 10px;
+  }
+
+  #usd-status-box {
+    font-size: 14px;
+    margin-top: 10px;
   }
 }
 
