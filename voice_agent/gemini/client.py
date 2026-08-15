@@ -295,31 +295,51 @@ class GeminiClient:
             display_str = ""
             best_tag = detect_best_tag(user_text, "")
             
-            async with httpx.AsyncClient() as client:
-                async with client.stream("POST", url, json=payload, timeout=30.0) as response:
-                    if response.status_code != 200:
-                        raise Exception(f"Gemini REST failure: {response.status_code}")
-                        
-                    async for line in response.aiter_lines():
-                        line = line.strip()
-                        if not line.startswith("data: "):
-                            continue
-                        payload_data = line[6:]
-                        if not payload_data:
-                            continue
-                        
-                        try:
-                            json_data = json.loads(payload_data)
-                            delta = json_data.get("candidates", [{}])[0].get("content", {}).get("parts", [{}])[0].get("text", "")
-                            if delta:
-                                display_str += delta
-                                await self.send_json({
-                                    "type": "bot_text_chunk",
-                                    "text": delta,
-                                    "tag": best_tag
-                                })
-                        except Exception:
-                            pass
+            max_retries = 3
+            success = False
+            last_error = None
+            
+            for attempt in range(max_retries):
+                try:
+                    display_str = "" # Reset on retry
+                    async with httpx.AsyncClient() as client:
+                        async with client.stream("POST", url, json=payload, timeout=30.0) as response:
+                            if response.status_code != 200:
+                                raise Exception(f"Gemini REST failure: {response.status_code}")
+                                
+                            async for line in response.aiter_lines():
+                                line = line.strip()
+                                if not line.startswith("data: "):
+                                    continue
+                                payload_data = line[6:]
+                                if not payload_data:
+                                    continue
+                                
+                                try:
+                                    json_data = json.loads(payload_data)
+                                    delta = json_data.get("candidates", [{}])[0].get("content", {}).get("parts", [{}])[0].get("text", "")
+                                    if delta:
+                                        display_str += delta
+                                        await self.send_json({
+                                            "type": "bot_text_chunk",
+                                            "text": delta,
+                                            "tag": best_tag
+                                        })
+                                except Exception:
+                                    pass
+                    success = True
+                    break
+                except Exception as e:
+                    last_error = e
+                    if "50" in str(e) or "429" in str(e): # Handle 5xx and 429
+                        print(f"[WARNING] Gemini API error: {e}. Retrying {attempt+1}/{max_retries}...")
+                        import asyncio
+                        await asyncio.sleep(2 * (attempt + 1))
+                    else:
+                        raise e
+            
+            if not success:
+                raise last_error
             
             final_text = clean_assistant_text(display_str.strip() or "Okay.")
             final_tag, new_pending = detect_best_tag_with_fallback(

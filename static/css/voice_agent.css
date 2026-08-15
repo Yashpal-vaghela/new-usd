@@ -942,3 +942,49 @@
     width: 330px;
   }
 }
+
+.typing-indicator-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 14px;
+}
+
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.typing-indicator .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: linear-gradient(270deg,
+     #be9644 0%,
+     #aa803c 15%,
+     #f3dc87 43%,
+     #fbefac 59%,
+     #f3dc87 73%,
+     #aa803c 93%,
+     #c49d47 100%);
+  animation: typing 1.5s infinite ease-in-out both;
+}
+
+.typing-indicator .dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.typing-indicator .dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes typing {
+  0%, 80%, 100% {
+      transform: scale(0);
+  }
+  40% {
+      transform: scale(1);
+  }
+}

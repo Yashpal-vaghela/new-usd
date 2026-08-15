@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from voice_agent.utils.constants import GEMINI_TEXT_MODEL
 
 async def main():
-    load_dotenv("d:/repo/new-usd/.env")
+    # load_dotenv("d:/repo/new-usd/.env")
     api_key = os.getenv("GEMINI_API_KEY_NEW")
     
     # Try gemini-2.5-flash

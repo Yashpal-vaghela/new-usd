@@ -499,7 +499,8 @@
 </script>
 <script>
     const RENDER_BACKEND_URL = window.location.origin;
-    const WS_URL = (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host + '/ws/voice-agent/';
+    // const WS_URL = (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host + '/ws/voice-agent/';
+    const WS_URL = 'wss://voice-agent-ws-705379243140.asia-southeast1.run.app/ws/voice-agent/';
 
     let currentAgentState = 'off';
     let chatHistory = [];
@@ -836,6 +837,24 @@
         }
 
         if (newState === 'thinking') {
+            if (!activeBotMessageDiv) {
+                activeBotMessageDiv = logMessage('bot', "");
+                activeBotMessageDiv.dataset.rawText = "";
+                lastBotMessageDiv = activeBotMessageDiv;
+                const botP = activeBotMessageDiv.querySelector('.usd-msg-text');
+                if (botP) {
+                    const textToShow = !isVoiceMode ? "Riya is typing" : "Riya is thinking";
+                    botP.innerHTML = `
+                      <div class="typing-indicator-container" style="justify-content: flex-start; padding: 0;">
+                        <span>${textToShow}</span>
+                        <div class="typing-indicator">
+                          <span class="dot"></span>
+                          <span class="dot"></span>
+                          <span class="dot"></span>
+                        </div>
+                      </div>`;
+                }
+            }
             if (interimBox) {
                 interimBox.innerText = "Answering...";
                 interimBox.style.color = "#ffffff";
@@ -1318,6 +1337,11 @@
 
                                 // ⚡ INSTANT WIPE OF ACTIVE BUBBLE MEMORY ⚡
                                 lastBotMessageDiv = null;
+                                if (activeBotMessageDiv) {
+                                    if (!activeBotMessageDiv.dataset.rawText || activeBotMessageDiv.dataset.rawText.trim() === "") {
+                                        activeBotMessageDiv.remove();
+                                    }
+                                }
                                 activeBotMessageDiv = null;
 
                                 updateState('listening');
@@ -1429,6 +1453,11 @@
 
                     // ⚡ WIPES ANY PENDING BUBBLE ⚡
                     lastBotMessageDiv = null;
+                    if (activeBotMessageDiv) {
+                        if (!activeBotMessageDiv.dataset.rawText || activeBotMessageDiv.dataset.rawText.trim() === "") {
+                            activeBotMessageDiv.remove();
+                        }
+                    }
                     activeBotMessageDiv = null;
                     activeUserMessageDiv = null;
 
@@ -1579,6 +1608,11 @@
                     }
                     activeTag = null; // ⚡ Reset for next user turn ⚡
 
+                    if (activeBotMessageDiv) {
+                        if (!activeBotMessageDiv.dataset.rawText || activeBotMessageDiv.dataset.rawText.trim() === "") {
+                            activeBotMessageDiv.remove();
+                        }
+                    }
                     activeBotMessageDiv = null;
                     activeUserMessageDiv = null;
 
@@ -1846,12 +1880,17 @@
         nextPlayTime = 0;
         pendingAudioDecodes = 0;
         lastBotMessageDiv = null;
+        if (activeBotMessageDiv) {
+            if (!activeBotMessageDiv.dataset.rawText || activeBotMessageDiv.dataset.rawText.trim() === "") {
+                activeBotMessageDiv.remove();
+            }
+        }
         activeBotMessageDiv = null;
-
-        updateState('thinking');
 
         logMessage('user', userText);
         addUserHistoryIfNew(userText);
+
+        updateState('thinking');
 
         if (socket && socket.readyState === WebSocket.OPEN) {
             socket.send(JSON.stringify({
@@ -1912,7 +1951,11 @@
             msgDiv.appendChild(btn);
         }
 
-        log.appendChild(msgDiv);
+        if (sender === 'user' && activeBotMessageDiv && activeBotMessageDiv.parentNode === log) {
+            log.insertBefore(msgDiv, activeBotMessageDiv);
+        } else {
+            log.appendChild(msgDiv);
+        }
         log.scrollTop = log.scrollHeight;
 
         if (sender === 'bot') {
