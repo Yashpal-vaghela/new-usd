@@ -593,7 +593,7 @@
                         }));
                     }
                 } else {
-                    // ⚡ User ignored the nudge for 15s. Force Offline WITHOUT hiding popup window!
+                    // ⚡ User ignored the nudge (60s total in Chat Mode, 30s total in Voice Mode). Force Offline WITHOUT hiding popup window!
                     console.log("⏳ User unresponsive. Disconnecting to Offline...");
                     silenceNudgeCount = 0;
                     disconnectToOffline();
@@ -1283,17 +1283,20 @@
                     silenceGain.connect(streamCtx.destination);
 
                     let isRecording = false;
+                    let vadActive = false;
 
                     let audioBufferQueue = [];
                     let speechDurationMs = 0;
+                    let silenceDurationMs = 0;
                     // ⚡ FRONTEND MIC ACCESSIBILITY & SPEECH DEBOUNCE FILTER ⚡
                     const BARGE_IN_THRESHOLD = 250; // 250ms continuous speech threshold
                     const RMS_NOISE_THRESHOLD = 350; // Responsive RMS threshold to capture all user voices cleanly without dropping speech
+                    const SILENCE_TIMEOUT_MS = 1100; // 1.1s silence detection for RMS fallback
                     let isStreamingToBackend = false;
                     const FRAME_DURATION = (bufferSize / streamCtx.sampleRate) * 1000;
 
                     processor.onaudioprocess = (e) => {
-                        if (isMicSoftwareMuted || !isRecording) return;
+                        if (isMicSoftwareMuted) return;
 
                         const inputData = e.inputBuffer.getChannelData(0);
                         const pcm16 = new Int16Array(inputData.length);
@@ -1307,9 +1310,13 @@
                         }
                         let rms = Math.sqrt(sumSquares / pcm16.length);
 
-                        // Only accumulate frames with volume exceeding the RMS noise floor
+                        // If VAD is active, only process audio when VAD triggers isRecording
+                        if (vadActive && !isRecording) return;
+
+                        // Accumulate frames with volume exceeding the RMS noise floor
                         if (rms > RMS_NOISE_THRESHOLD) {
                             speechDurationMs += FRAME_DURATION;
+                            silenceDurationMs = 0;
                             if (!isStreamingToBackend) {
                                 audioBufferQueue.push(pcm16.buffer);
                             }
@@ -1319,12 +1326,17 @@
                                 if (speechDurationMs === 0) {
                                     audioBufferQueue = [];
                                 }
+                            } else {
+                                // In streaming mode, track silence
+                                silenceDurationMs += FRAME_DURATION;
                             }
                         }
 
                         if (speechDurationMs >= BARGE_IN_THRESHOLD) {
                             if (!isStreamingToBackend) {
                                 isStreamingToBackend = true;
+                                isRecording = true;
+                                window.isUserSpeaking = true;
 
                                 // ⚡ LOCAL BARGE-IN TRIGGERED ⚡
                                 localTurnId++;
@@ -1362,66 +1374,94 @@
                                 }
                             }
                         }
+
+                        // RMS-based Speech-End Fallback (if VAD is not available or inactive)
+                        if (!vadActive && isStreamingToBackend && silenceDurationMs >= SILENCE_TIMEOUT_MS) {
+                            window.isUserSpeaking = false;
+                            isRecording = false;
+                            isStreamingToBackend = false;
+                            speechDurationMs = 0;
+                            silenceDurationMs = 0;
+                            audioBufferQueue = [];
+
+                            updateState('thinking');
+                            if (socket && socket.readyState === WebSocket.OPEN) {
+                                socket.send(JSON.stringify({
+                                    type: 'process_final',
+                                    history: chatHistory,
+                                    isVoiceMode: isVoiceMode
+                                }));
+                            }
+                        }
                     };
 
                     try {
-                        window.myvad = await vad.MicVAD.new({
-                            stream: globalStream,
-                            positiveSpeechThreshold: 0.65,
-                            negativeSpeechThreshold: 0.40,
-                            minSpeechFrames: 4,
-                            preSpeechPadFrames: 3,
-                            redemptionFrames: 20,
-                            onSpeechStart: () => {
-                                if (isMicSoftwareMuted) return;
-                                window.isUserSpeaking = true;
-                                isRecording = true;
-                            },
-                            onSpeechEnd: (audio) => {
-                                window.isUserSpeaking = false;
-                                if (isMicSoftwareMuted || !isRecording) return;
-                                isRecording = false;
-
-                                if (speechDurationMs < BARGE_IN_THRESHOLD) {
-                                    audioBufferQueue = [];
-                                    speechDurationMs = 0;
-                                    isStreamingToBackend = false;
-                                } else {
-                                    speechDurationMs = 0;
-                                    isStreamingToBackend = false;
-                                    audioBufferQueue = [];
-
-                                    updateState('thinking');
-                                    if (socket && socket.readyState === WebSocket.OPEN) {
-                                        socket.send(JSON.stringify({
-                                            type: 'process_final',
-                                            history: chatHistory,
-                                            isVoiceMode: isVoiceMode
-                                        }));
-                                    }
-                                }
-                            },
-                            onVADMisfire: () => {
-                                window.isUserSpeaking = false;
-                                if (isRecording) {
+                        const vadLib = (typeof vad !== 'undefined' ? vad : (typeof window.vad !== 'undefined' ? window.vad : null));
+                        if (vadLib && vadLib.MicVAD) {
+                            window.myvad = await vadLib.MicVAD.new({
+                                stream: globalStream,
+                                positiveSpeechThreshold: 0.65,
+                                negativeSpeechThreshold: 0.40,
+                                minSpeechFrames: 4,
+                                preSpeechPadFrames: 3,
+                                redemptionFrames: 20,
+                                onSpeechStart: () => {
+                                    if (isMicSoftwareMuted) return;
+                                    window.isUserSpeaking = true;
+                                    isRecording = true;
+                                },
+                                onSpeechEnd: (audio) => {
+                                    window.isUserSpeaking = false;
+                                    if (isMicSoftwareMuted || !isRecording) return;
                                     isRecording = false;
-                                    audioBufferQueue = [];
-                                    speechDurationMs = 0;
-                                    if (isStreamingToBackend) {
+
+                                    if (speechDurationMs < BARGE_IN_THRESHOLD) {
+                                        audioBufferQueue = [];
+                                        speechDurationMs = 0;
                                         isStreamingToBackend = false;
+                                    } else {
+                                        speechDurationMs = 0;
+                                        isStreamingToBackend = false;
+                                        audioBufferQueue = [];
+
                                         updateState('thinking');
                                         if (socket && socket.readyState === WebSocket.OPEN) {
-                                            socket.send(JSON.stringify({ type: 'process_final', history: chatHistory, isVoiceMode: isVoiceMode }));
+                                            socket.send(JSON.stringify({
+                                                type: 'process_final',
+                                                history: chatHistory,
+                                                isVoiceMode: isVoiceMode
+                                            }));
                                         }
-                                    } else {
-                                        updateState('listening');
+                                    }
+                                },
+                                onVADMisfire: () => {
+                                    window.isUserSpeaking = false;
+                                    if (isRecording) {
+                                        isRecording = false;
+                                        audioBufferQueue = [];
+                                        speechDurationMs = 0;
+                                        if (isStreamingToBackend) {
+                                            isStreamingToBackend = false;
+                                            updateState('thinking');
+                                            if (socket && socket.readyState === WebSocket.OPEN) {
+                                                socket.send(JSON.stringify({ type: 'process_final', history: chatHistory, isVoiceMode: isVoiceMode }));
+                                            }
+                                        } else {
+                                            updateState('listening');
+                                        }
                                     }
                                 }
-                            }
-                        });
-                        window.myvad.start();
+                            });
+                            window.myvad.start();
+                            vadActive = true;
+                            console.log("✅ Silero VAD initialized successfully");
+                        } else {
+                            console.warn("ℹ️ VAD library not loaded yet, running in RMS audio detection fallback mode");
+                            vadActive = false;
+                        }
                     } catch (e) {
-                        console.error("Silero VAD Initialization Failed:", e);
+                        console.warn("Silero VAD Initialization Failed (running in RMS fallback mode):", e);
+                        vadActive = false;
                     }
                 } catch (err) {
                     console.error("Microphone access denied or error:", err);
