@@ -27,7 +27,7 @@ def api_tts(request):
             "speechConfig": {
                 "voiceConfig": {
                     "prebuiltVoiceConfig": {
-                        "voiceName": "Aoede"
+                        "voiceName": "Leda"
                     }
                 }
             }

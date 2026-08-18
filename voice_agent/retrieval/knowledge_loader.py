@@ -33,12 +33,12 @@ def get_compiled_knowledge(force_reload=False):
                 
         if combined_parts:
             _cached_knowledge = "\n\n".join(combined_parts)
-            print(f"✅ Knowledge Base loaded from YAML files! Length: {len(_cached_knowledge)} chars.")
+            print(f"[INFO] Knowledge Base loaded from YAML files! Length: {len(_cached_knowledge)} chars.")
         else:
             _cached_knowledge = "Ultimate Smile Design is a premium dental network connecting patients with Certified Smile Designers for Veneers and Crowns."
             
     except Exception as e:
-        print(f"❌ Failed to load Knowledge Base: {e}")
+        print(f"[ERROR] Failed to load Knowledge Base: {e}")
         _cached_knowledge = "Ultimate Smile Design is a premium dental network connecting patients with Certified Smile Designers for Veneers and Crowns."
         
     return _cached_knowledge

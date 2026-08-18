@@ -1,0 +1,12 @@
+.git
+.env
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.zip
+venv/
+tmp/
+media/
+old-db*.sqlite3

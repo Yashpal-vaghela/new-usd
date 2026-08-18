@@ -3,7 +3,11 @@
 {% block seo%}
 <title>Best Cosmetic Dentists Near You | Smile Design Experts</title>
 <meta name="description" content="Find top cosmetic dentists near you. Check dentists' profiles, check details, and easily schedule your appointment for smile design & makeover treatment." />
+{% if request.GET %}
+<link rel="canonical" href="https://ultimatesmiledesign.com/certified-dentists/?{{ request.GET.urlencode }}" />
+{% else %}
 <link rel="canonical" href="https://ultimatesmiledesign.com/certified-dentists/" />
+{% endif %}
 <meta property="og:image" content="{% static 'feature-2.webp' %}">
 <meta property="og:image:secure_url" content="{% static 'feature-2.webp' %}">
 <meta property="og:image:type" content="image/webp" />
@@ -109,7 +113,6 @@
         method="GET"
         action="{% url 'home:search_all_usd' %}"
       >
-        {% csrf_token %}
         <div class="col-lg-5 col-md-6 col-12 position-relative">
           <div class="searchbar-box-wrapper">
             {% comment %} <img class="img-fluid" src="{% static 'searchG.svg' %}" id="searchicon-Img" /> {% endcomment %}

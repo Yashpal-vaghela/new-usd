@@ -32,7 +32,6 @@ async def transcribe_audio_with_gemini(pcm_bytes, sample_rate=16000):
         }
         
         models_to_try = [
-            "gemini-3.6-flash",
             "gemini-3.5-flash",
             "gemini-flash-latest",
             "gemini-3.1-flash-lite",

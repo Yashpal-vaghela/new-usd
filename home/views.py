@@ -69,7 +69,7 @@ def home(request):
     ).filter(active_dentist_count__gt=0).order_by('city')
     city_id = request.GET.get('city', '').strip()
     query = request.GET.get('q', '').strip()
-    data1 = Dentist.objects.filter(status=True).order_by('name')
+    data1 = Dentist.objects.all().order_by('name')
     search_message = None
     city_name = city.city if 'city' in locals() and city else 'Surat'
     awards = Awards.objects.all().order_by('-id')
@@ -78,10 +78,10 @@ def home(request):
         suggestion = []
         if query:
             # search doctors by name
-            doctor_matches = Dentist.objects.filter(name__icontains=query)
+            doctor_matches = Dentist.objects.filter(status=True, name__icontains=query)
 
             # search clinices by clinic name
-            clinic_matches = Dentist.objects.filter(clinic_name__icontains=query)
+            clinic_matches = Dentist.objects.filter(status=True, clinic_name__icontains=query)
 
             # Perpare response
             for doc in doctor_matches:
@@ -301,9 +301,12 @@ def home(request):
 
 def location_view(request):
     cities = City.objects.annotate(
-        dentist_count=Count('dentist', filter=Q(dentist__status=True))
-    ).filter(dentist_count__gt=0).order_by('-dentist_count')[:6]
-    return render(request, 'location.html', {'cities': cities})
+        countdr=Count('dentist', filter=Q(dentist__status=True))
+    ).filter(countdr__gt=0).order_by('-countdr')[:6]
+    a_city = City.objects.annotate(
+        active_dentist_count=Count('dentist', filter=Q(dentist__status=True))
+    ).filter(active_dentist_count__gt=0).order_by('city')
+    return render(request, 'location.html', {'cities': cities, 'a_city': a_city})
 
 
 # def smile_step(request):

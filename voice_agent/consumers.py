@@ -28,7 +28,7 @@ class VoiceAgentConsumer(AsyncJsonWebsocketConsumer):
         
         # Accept ASGI WebSocket connection
         await self.accept()
-        print("✅ Client connected via WebSocket")
+        print("[INFO] Client connected via WebSocket")
         
         # ⚡ Spawn native Gemini Live connection loop
         self.session.gemini_recv_task = asyncio.create_task(
@@ -60,7 +60,7 @@ class VoiceAgentConsumer(AsyncJsonWebsocketConsumer):
             except Exception:
                 pass
                 
-        print("❌ Client disconnected")
+        print("[INFO] Client disconnected")
 
     async def receive(self, text_data=None, bytes_data=None):
         if bytes_data:

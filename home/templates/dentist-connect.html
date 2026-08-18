@@ -25,7 +25,7 @@
 
 {% block body %}
 <div class="page-content">
-  <section>
+  <section class="mobile-add-margin">
     <div class="p-0">
       <picture>
         <!-- Mobile image (below 768px) -->
@@ -84,7 +84,7 @@
           </div>
         </div>
       </form>
-        <div class="modal thankyou-dialogbox" id="thankyouModal" tabindex="-1" aria-labelledby="thankyouModalLabel" aria-hidden="true">
+        {% comment %} <div class="modal thankyou-dialogbox" id="thankyouModal" tabindex="-1" aria-labelledby="thankyouModalLabel" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header justify-content-center">
@@ -127,7 +127,7 @@
                   </div>
                 </div>
               </div>  
-        </div>
+        </div> {% endcomment %}
     </div>
   </section>
   
