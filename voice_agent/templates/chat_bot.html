@@ -499,8 +499,8 @@
 </script>
 <script>
     const RENDER_BACKEND_URL = window.location.origin;
-    // const WS_URL = (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host + '/ws/voice-agent/';
-    const WS_URL = 'wss://voice-agent-ws-705379243140.asia-southeast1.run.app/ws/voice-agent/';
+    const WS_URL = (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host + '/ws/voice-agent/';
+    {% comment %} const WS_URL = 'wss://voice-agent-ws-705379243140.asia-southeast1.run.app/ws/voice-agent/'; {% endcomment %}
 
     let currentAgentState = 'off';
     let chatHistory = [];
@@ -537,11 +537,82 @@
 
     window.isUserSpeaking = false;
 
+    let userTypingDiv = null;
+    let userTypingTimer = null;
+    let userSpeakingDiv = null;
+
+    function showUserTypingIndicator() {
+        removeUserSpeakingIndicator();
+        if (!userTypingDiv) {
+            userTypingDiv = document.createElement('div');
+            userTypingDiv.className = 'user_message user-typing-div';
+            userTypingDiv.innerHTML = `
+                <div class="usd-msg-text" style="display: flex; align-items: center; gap: 8px;">
+                    <div class="typing-indicator-container" style="justify-content: flex-end; padding: 0; margin: 0;">
+                        <span>User is typing</span>
+                        <div class="typing-indicator">
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                </div>`;
+            const log = document.getElementById('usd-chat-log');
+            if (log) {
+                log.appendChild(userTypingDiv);
+                log.scrollTop = log.scrollHeight;
+            }
+        }
+        clearTimeout(userTypingTimer);
+        userTypingTimer = setTimeout(removeUserTypingIndicator, 2500);
+    }
+
+    function removeUserTypingIndicator() {
+        clearTimeout(userTypingTimer);
+        if (userTypingDiv) {
+            userTypingDiv.remove();
+            userTypingDiv = null;
+        }
+    }
+
+    function showUserSpeakingIndicator() {
+        removeUserTypingIndicator();
+        if (!userSpeakingDiv) {
+            userSpeakingDiv = document.createElement('div');
+            userSpeakingDiv.className = 'user_message user-speaking-div';
+            userSpeakingDiv.innerHTML = `
+                <div class="usd-msg-text" style="display: flex; align-items: center; gap: 8px;">
+                    <div class="typing-indicator-container" style="justify-content: flex-end; padding: 0; margin: 0;">
+                        <span>User is speaking</span>
+                        <div class="typing-indicator">
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                </div>`;
+            const log = document.getElementById('usd-chat-log');
+            if (log) {
+                log.appendChild(userSpeakingDiv);
+                log.scrollTop = log.scrollHeight;
+            }
+        }
+    }
+
+    function removeUserSpeakingIndicator() {
+        if (userSpeakingDiv) {
+            userSpeakingDiv.remove();
+            userSpeakingDiv = null;
+        }
+    }
+
     window.silenceTimeout = null;
     let silenceNudgeCount = 0;
     let thinkingTimeout = null;
 
     function disconnectToOffline() {
+        removeUserTypingIndicator();
+        removeUserSpeakingIndicator();
         silenceNudgeCount = 0;
         if (window.clearSilenceTimer) window.clearSilenceTimer();
 
@@ -657,11 +728,24 @@
         const val = inputEl.value;
 
         if (val && val.trim().length > 0) {
+            showUserTypingIndicator();
+
+            // ⚡ Reset silence timer and nudge count while typing so chat never disconnects mid-typing
+            silenceNudgeCount = 0;
+            if (window.resetSilenceTimer) window.resetSilenceTimer();
+
+            // ⚡ Send heartbeat to backend to reset backend inactivity timer
+            if (socket && socket.readyState === WebSocket.OPEN) {
+                socket.send(JSON.stringify({ type: 'heartbeat' }));
+            }
+
             if (currentAgentState === 'off' || !socket || socket.readyState !== WebSocket.OPEN) {
                 console.log("[INFO] User typing while offline. Changing status to online and reconnecting...");
                 updateState('online', 'Online');
                 await ensureConnected();
             }
+        } else {
+            removeUserTypingIndicator();
         }
     }
 
@@ -837,6 +921,8 @@
         }
 
         if (newState === 'thinking') {
+            removeUserTypingIndicator();
+            removeUserSpeakingIndicator();
             if (!activeBotMessageDiv) {
                 activeBotMessageDiv = logMessage('bot', "");
                 activeBotMessageDiv.dataset.rawText = "";
@@ -1337,6 +1423,7 @@
                                 isStreamingToBackend = true;
                                 isRecording = true;
                                 window.isUserSpeaking = true;
+                                showUserSpeakingIndicator();
 
                                 // ⚡ LOCAL BARGE-IN TRIGGERED ⚡
                                 localTurnId++;
@@ -1378,6 +1465,7 @@
                         // RMS-based Speech-End Fallback (if VAD is not available or inactive)
                         if (!vadActive && isStreamingToBackend && silenceDurationMs >= SILENCE_TIMEOUT_MS) {
                             window.isUserSpeaking = false;
+                            removeUserSpeakingIndicator();
                             isRecording = false;
                             isStreamingToBackend = false;
                             speechDurationMs = 0;
@@ -1409,9 +1497,11 @@
                                     if (isMicSoftwareMuted) return;
                                     window.isUserSpeaking = true;
                                     isRecording = true;
+                                    showUserSpeakingIndicator();
                                 },
                                 onSpeechEnd: (audio) => {
                                     window.isUserSpeaking = false;
+                                    removeUserSpeakingIndicator();
                                     if (isMicSoftwareMuted || !isRecording) return;
                                     isRecording = false;
 
@@ -1436,6 +1526,7 @@
                                 },
                                 onVADMisfire: () => {
                                     window.isUserSpeaking = false;
+                                    removeUserSpeakingIndicator();
                                     if (isRecording) {
                                         isRecording = false;
                                         audioBufferQueue = [];
@@ -1472,6 +1563,17 @@
 
             socket.onmessage = async (event) => {
                 const data = JSON.parse(event.data);
+
+                if (data.type === 'user_speaking_status') {
+                    if (data.is_speaking) {
+                        window.isUserSpeaking = true;
+                        showUserSpeakingIndicator();
+                    } else {
+                        window.isUserSpeaking = false;
+                        removeUserSpeakingIndicator();
+                    }
+                    return;
+                }
 
                 if (data.turnId !== undefined) {
                     if (localTurnId === 0) {
@@ -1897,7 +1999,10 @@
         if (!userText) return;
 
         inputEl.value = '';
+        removeUserTypingIndicator();
+        removeUserSpeakingIndicator();
         silenceNudgeCount = 0;
+        if (window.resetSilenceTimer) window.resetSilenceTimer();
         const userTag = detectUserTagFromText(userText);
         if (userTag) activeTag = userTag;
 

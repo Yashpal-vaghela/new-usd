@@ -1,9 +1,11 @@
 import asyncio
 from voice_agent.utils.constants import DEFAULT_LANGUAGE
+from voice_agent.audio.vad import SileroVADState
 
 class Session:
     def __init__(self):
         self.is_client_connected = True
+        self.vad_state = SileroVADState()
         self.pending_action_tag = None
         self.chunk_index = 0
         self.display_str = ""

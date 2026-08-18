@@ -14,26 +14,76 @@ class ConversationManager:
 
     async def handle_audio_chunk(self, bytes_data):
         self.session.reset_activity_timer()
-        # Stream incoming raw audio data to Gemini Live socket
-        if self.session.gemini_ws:
-            try:
-                b64_data = base64.b64encode(bytes_data).decode('utf-8')
-                audio_frame = {
-                    "realtimeInput": {
-                        "audio": {
-                            "mimeType": "audio/pcm;rate=16000",
-                            "data": b64_data
+        
+        # Process audio chunk through per-user Silero VAD ONNX model
+        event, completed_audio = self.session.vad_state.process_chunk(bytes_data)
+
+        if event == "speech_start":
+            # Notify frontend user started speaking
+            await self.send_json({"type": "user_speaking_status", "is_speaking": True})
+            
+            # Start of speech turn setup
+            self.session.current_voice_turn_id += 1
+            self.session.current_user_pcm_chunks = []
+            self.session.last_sent_voice_transcript_turn_id = -1
+            self.session.is_interrupted = False
+            self.session.chunk_index = 0
+            self.session.display_str = ""
+            self.session.full_bot_reply = ""
+            self.session.live_pcm_buffer = bytearray()
+            self.session.assistant_audio_buffer = bytearray()
+            self.session.current_user_transcription = ""
+            self.session.user_transcription_task = None
+
+        # Accumulate PCM data for STT and stream to Gemini Live ONLY while user is speaking
+        if self.session.vad_state.is_speaking:
+            self.session.current_user_pcm_chunks.append(bytes_data)
+
+            if self.session.gemini_ws:
+                try:
+                    b64_data = base64.b64encode(bytes_data).decode('utf-8')
+                    audio_frame = {
+                        "realtimeInput": {
+                            "audio": {
+                                "mimeType": "audio/pcm;rate=16000",
+                                "data": b64_data
+                            }
                         }
                     }
-                }
-                await self.session.gemini_ws.send(json.dumps(audio_frame))
-            except Exception as e:
-                print(f"Failed to send binary to Gemini: {e}")
-        self.session.current_user_pcm_chunks.append(bytes_data)
+                    await self.session.gemini_ws.send(json.dumps(audio_frame))
+                except Exception as e:
+                    print(f"Failed to send binary to Gemini: {e}")
+
+        if event == "speech_end":
+            # Notify frontend user stopped speaking (700ms continuous silence)
+            await self.send_json({"type": "user_speaking_status", "is_speaking": False})
+            
+            # Send turn completion signal to Gemini Live
+            if self.session.gemini_ws:
+                try:
+                    await self.session.gemini_ws.send(json.dumps({
+                        "clientContent": {
+                            "turnComplete": True
+                        }
+                    }))
+                except Exception:
+                    pass
+
+            turn_id_for_this_speech = self.session.current_voice_turn_id
+            pcm_buffer = completed_audio or (b"".join(self.session.current_user_pcm_chunks) if self.session.current_user_pcm_chunks else b"")
+            self.session.current_user_pcm_chunks = []
+            
+            if pcm_buffer:
+                self.session.user_transcription_task = asyncio.create_task(
+                    self.transcribe_user_audio_async(pcm_buffer, turn_id_for_this_speech)
+                )
 
     async def handle_client_json(self, data, system_prompt):
         self.session.reset_activity_timer()
         msg_type = data.get("type")
+
+        if msg_type == 'heartbeat':
+            return
         
         if msg_type == 'text_input':
             self.session.latest_typed_user_text = data.get("text", "")
@@ -85,6 +135,7 @@ class ConversationManager:
                         pass
         
         elif msg_type == 'process_final':
+            self.session.vad_state.is_speaking = False
             self.session.latest_client_history = data.get("history", [])
             self.session.latest_client_is_voice_mode = data.get("isVoiceMode") != False
             
@@ -104,12 +155,13 @@ class ConversationManager:
                 fut.set_result(native_text)
                 self.session.user_transcription_task = fut
                 await self.maybe_send_voice_transcript(turn_id_for_this_speech, native_text)
-            else:
+            elif pcm_buffer:
                 self.session.user_transcription_task = asyncio.create_task(
                     self.transcribe_user_audio_async(pcm_buffer, turn_id_for_this_speech)
                 )
         
         elif msg_type == 'start_of_speech':
+            self.session.vad_state.is_speaking = True
             self.session.current_voice_turn_id += 1
             self.session.current_user_pcm_chunks = []
             self.session.last_sent_voice_transcript_turn_id = -1

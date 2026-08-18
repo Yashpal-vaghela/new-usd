@@ -46,7 +46,7 @@ class GeminiClient:
         self.send_json = send_json_callback
         self.transcribe_bot_audio = transcribe_bot_audio_callback
         
-        api_key = os.getenv("GEMINI_API_KEY_NEW")
+        api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GEMINI_API_KEY_NEW")
         self.gemini_ws_url = f"wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent?key={api_key}"
 
     async def connect_and_loop(self, system_prompt):
@@ -150,9 +150,10 @@ class GeminiClient:
                     return
                 
                 if self.session.is_interrupted:
-                    if server_content.get("turnComplete"):
+                    if server_content.get("turnComplete") or "outputTranscription" in server_centent or "modelTurn" in server_centent:
                         self.session.is_interrupted = False
-                    return
+                    else:
+                        return
                 
                 # ⚡ NATIVE GEMINI LIVE REAL-TIME TRANSCRIPTIONS (REAL-TIME STREAMING SUBTITLES) ⚡
                 if "outputTranscription" in server_content:
@@ -274,7 +275,7 @@ class GeminiClient:
 
     async def stream_gemini_chat_reply(self, user_text, history, system_prompt):
         try:
-            api_key = os.getenv("GEMINI_API_KEY_NEW")
+            api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GEMINI_API_KEY_NEW")
             contents = sanitize_gemini_history(history)
             safe_text = user_text or ""
             
