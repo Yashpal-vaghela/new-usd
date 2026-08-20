@@ -75,8 +75,14 @@
                   aria-expanded="false"
                 >
                   <img id="selectedFlag" src="https://flagcdn.com/w40/in.png" alt="IN" class="country-flag-img" />
-                  <span id="selectedCode" class="selected-code-text">+91</span>
-                  <i class="fa fa-chevron-down dropdown-arrow"></i>
+                  <span id="selectedCode" class="selected-code-text">+91</span> 
+                  <svg 
+                    xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow_1"
+                    viewBox="0 0 640 640"
+                    style="width:20px"
+                  >
+                    <path fill="#dcbe6f" d="M297.4 438.6C309.9 451.1 330.2 451.1 342.7 438.6L502.7 278.6C515.2 266.1 515.2 245.8 502.7 233.3C490.2 220.8 469.9 220.8 457.4 233.3L320 370.7L182.6 233.4C170.1 220.9 149.8 220.9 137.3 233.4C124.8 245.9 124.8 266.2 137.3 278.7L297.3 438.7z"/>
+                  </svg>
                 </button>
                 <input
                   type="tel"
@@ -85,20 +91,17 @@
                   class="form-control phone-number-input"
                   required
                 />
-                <input type="hidden" name="phone" id="fullPhoneInput" />
               </div>
+              <input type="hidden" name="phone" id="fullPhoneInput" />
 
               <!-- Country Dropdown Menu -->
               <div class="country-dropdown-menu shadow-lg" id="countryDropdown">
-                <div class="country-search-box p-2 position-sticky top-0 border-bottom border-secondary">
+                <div class="country-search-box p-2 position-sticky top-0">
                   <div class="input-group input-group-sm">
-                    <span class="input-group-text bg-transparent border-0 pe-1">
-                      <i class="fa fa-search"></i>
-                    </span>
                     <input
                       type="text"
                       id="countrySearchInput"
-                      class="form-control bg-transparent text-white border-0 shadow-none ps-1"
+                      class="form-control  text-white border border-white shadow-none ps-2 mb-0"
                       placeholder="Search country or code..."
                       autocomplete="off"
                     />
@@ -140,7 +143,7 @@
           </div>
           <div class="col-md-12">
             <div class="g-recaptcha mb-3" data-sitekey="{{ RECAPTCHA_SITE_KEY }}"></div>
-            <button class="btn btn-submit d-flex mx-auto bat" type="submit">submit</button>
+            <button class="btn btn-submit d-flex mx-auto bat" type="submit">Submit</button>
           </div>
         </div>
       </form>

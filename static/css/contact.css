@@ -1034,20 +1034,15 @@ div:where(.swal2-container).swal2-top-right>.swal2-popup {
   align-items: center;
   border-radius: 8px;
   overflow: hidden;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.country-phone-group:focus-within {
-  border-color: #C3942F !important;
-  box-shadow: 0 0 0 3px rgba(195, 148, 47, 0.25) !important;
-}
 
 .country-select-btn {
-  background-color: rgba(45, 45, 45, 0.9) !important;
+  background-color: #000000 !important;
   border: none !important;
   border-right: 1px solid rgba(255, 255, 255, 0.15) !important;
   color: #fff !important;
-  padding: 10px 14px !important;
+  padding: 10px 5px 10px 12px !important;
   font-size: 14px;
   height: 48px;
   border-radius: 8px 0 0 8px !important;
@@ -1055,14 +1050,10 @@ div:where(.swal2-container).swal2-top-right>.swal2-popup {
   white-space: nowrap;
   cursor: pointer;
   box-shadow: none !important;
+  margin-bottom: 25px;
+  outline: none;
 }
 
-.country-select-btn:hover,
-.country-select-btn:focus {
-  background-color: rgba(60, 60, 60, 0.95) !important;
-  color: #fff !important;
-  box-shadow: none !important;
-}
 
 .country-flag-img {
   width: 22px;
@@ -1072,13 +1063,16 @@ div:where(.swal2-container).swal2-top-right>.swal2-popup {
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
 }
 
-.dropdown-arrow {
-  font-size: 11px;
-  color: #C3942F;
-  transition: transform 0.25s ease;
+.selected-code-text {
+  margin-left: 5px;
 }
 
-.country-phone-wrapper.active .dropdown-arrow {
+.dropdown-arrow_1 {
+  margin-left: 8px;
+
+}
+
+.country-phone-wrapper.active .dropdown-arrow_1 {
   transform: rotate(180deg);
 }
 
@@ -1104,13 +1098,14 @@ div:where(.swal2-container).swal2-top-right>.swal2-popup {
   left: 0;
   width: 100%;
   max-width: 360px;
-  background-color: #1e1e1e;
-  border: 1px solid rgba(195, 148, 47, 0.35);
+  background-color: #141414;
+  border: 1px solid #e5a546;
   border-radius: 10px;
   z-index: 1050;
   overflow: hidden;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.7);
   animation: countryDropdownFade 0.2s ease;
+  margin-top: -20px;
 }
 
 @keyframes countryDropdownFade {
@@ -1130,13 +1125,15 @@ div:where(.swal2-container).swal2-top-right>.swal2-popup {
 }
 
 .country-search-box {
-  background-color: #141414;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: black;
+  border-bottom: 1px solid white;
   padding: 8px 12px;
 }
 
 .country-search-box .input-group-text {
   color: #C3942F !important;
+  margin-top: -23px;
+  margin-right: 10px;
 }
 
 .country-search-box input {
@@ -1212,4 +1209,238 @@ div:where(.swal2-container).swal2-top-right>.swal2-popup {
   text-align: center;
   color: #888;
   font-size: 13px;
+}
+
+@media(max-width:768px) {
+  .country-select-btn {
+    margin-bottom: 18px;
+    height: auto;
+    padding: 10px 5px 10px 12px !important;
+  }
+}
+
+@media(max-width:576px) {
+  .country-select-btn {
+    margin-bottom: 20px;
+    padding: 9px 5px 9px 11px !important;
+  }
+}
+
+.flag_icon_man {
+  width: 98px !important;
+  height: 40px;
+  /* border: 1px solid red; */
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  cursor: pointer;
+  font-style: normal;
+}
+
+.phone_input {
+  padding-left: 125px !important;
+}
+
+.flag_icon {
+  width: 30px;
+  height: 18px;
+  /* border: 1px solid white; */
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selected_code_text {
+  color: white;
+  margin-left: 8px;
+}
+
+.arrow_icon {
+  width: 20px;
+  height: 20px;
+  /* border: 1px solid red; */
+  margin-left: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow_icon,
+.arrow_icon svg {
+  transition: transform 0.3s ease;
+  transform-origin: center;
+}
+
+.flag_icon_man.active .arrow_icon,
+.flag_icon_man.active .arrow_icon svg,
+.input_icon_with_flag_main.active .arrow_icon,
+.input_icon_with_flag_main.active .arrow_icon svg {
+  transform: rotate(90deg) !important;
+}
+
+.country-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 290px;
+  max-width: calc(100vw - 30px);
+  max-height: 315px;
+  background: #141414;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+  z-index: 9999;
+  padding: 10px;
+}
+
+.country-dropdown-menu.show {
+  display: block;
+}
+
+.country-dropdown-menu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.country-dropdown-menu::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+}
+
+.country-search-box {
+  position: sticky;
+  top: -10px;
+  background: #141414;
+  padding-bottom: 8px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 2;
+  margin-top: -2px;
+}
+
+.country-search-box input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: #222222;
+  color: #ffffff;
+  font-size: 14px;
+  outline: none;
+  font-family: inherit;
+}
+
+.country-search-box input:focus {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.country-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.country-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.country-item:hover,
+.country-item.active {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.country-item-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.country-flag-img {
+  width: 24px;
+  height: 16px;
+  object-fit: cover;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.country-item-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+.country-item-code {
+  color: #aaaaaa;
+  font-size: 13px;
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
+.no-country-found {
+  padding: 12px;
+  color: #aaaaaa;
+  text-align: center;
+  font-size: 14px;
+}
+
+.dentist_number_input {
+  position: relative;
+  display: flex;
+
+}
+
+.dentist_flag_icon_main {
+  width: auto;
+  height: 50px;
+  border-bottom: 1px solid #fff;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.dentist_number_input:focus-within .dentist_flag_icon_main {
+  border-bottom: 1px solid #c7a041;
+}
+
+.dentist_flag_icon {
+  width: 30px;
+  height: 18px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  /* border: 1px solid wheat; */
+}
+
+.selected_code_text {
+  margin-left: 8px;
+}
+
+.arrow_icon_dentist {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.arrow_icon_dentist img {
+  transition: transform 0.2s ease-in-out;
+}
+
+.dentist_number_input.active .arrow_icon_dentist img {
+  transform: rotate(180deg);
 }
