@@ -314,22 +314,28 @@
             </div>
             <div class="col-lg-6 dentists-input-box">
               <label class="form-label">Phone Number</label>
-              <input class="form-control" name="phone" type="text" placeholder="Phone Number" required />
-              <span class="input-icon">
-                <svg class="dentists-input-svg" width="22" height="22" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M29.4512 26.3879C29.252 26.5864 29.0117 26.8404 28.757 27.109C28.1214 27.7836 27.3274 28.6222 26.8297 28.9622C24.2111 30.7516 20.7079 29.8954 18.2299 28.8629C14.961 27.5009 11.4021 24.9904 8.20657 21.7945C5.00805 18.5983 2.49778 15.0383 1.13577 11.7712C0.104518 9.29273 -0.75347 5.78883 1.03616 3.16969C1.376 2.67164 2.21653 1.87881 2.89024 1.24195C3.15977 0.988008 3.41173 0.748066 3.61094 0.549492C3.96463 0.197564 4.44328 0 4.94222 0C5.44117 0 5.91982 0.197564 6.2735 0.549492L11.0915 5.36613C11.4433 5.7198 11.6407 6.19832 11.6407 6.69712C11.6407 7.19592 11.4433 7.67444 11.0915 8.0281L9.77905 9.33797C9.34072 9.77309 9.05461 10.3381 8.9633 10.949C8.87198 11.5598 8.98035 12.1838 9.27227 12.7281C11.0775 16.1353 13.8645 18.9219 17.2721 20.7265C17.8162 21.0184 18.4401 21.1266 19.0508 21.0351C19.6614 20.9437 20.2262 20.6574 20.661 20.2189L21.9703 18.909C22.324 18.5571 22.8026 18.3595 23.3016 18.3595C23.8005 18.3595 24.2792 18.5571 24.6329 18.909L29.4512 23.7265C29.8029 24.08 30.0004 24.5585 30.0004 25.0572C30.0004 25.5559 29.8029 26.0343 29.4512 26.3879Z" fill="url(#paint0_linear_3697_2763)"/>
-                  <defs>
-                    <linearGradient id="paint0_linear_3697_2763" x1="9.99571" y1="-2.45036e-07" x2="29.3622" y2="3.57854" gradientUnits="userSpaceOnUse">
-                      <stop stop-color="#C3942F"/>
-                      <stop offset="0.234" stop-color="#D89C27"/>
-                      <stop offset="0.449" stop-color="#E7DC96"/>
-                      <stop offset="0.669" stop-color="#DFC86F"/>
-                      <stop offset="0.849" stop-color="#D89C27"/>
-                      <stop offset="1" stop-color="#C99C30"/>
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </span>
+              <div class="input_nuber_and_fleg_mian">
+                <div class="country_code_with_fleg_main" id="countrySelectBtn" tabindex="0" role="button" aria-expanded="false">
+                  <div class="flag_image">
+                    <img src="https://flagcdn.com/w40/in.png" alt="flag" id="selectedFlag" class="flag_image" />
+                  </div>
+                  <span id="selectedCode" class="selected_code_text">+91</span>
+                  <div class="arrow_icon">
+                    <img src="{% static 'angle-down-in-country-code.svg' %}" alt="down arrow" />
+                  </div>
+                </div>
+                <input class="form-control remove-padding-left" name="phone" id="phoneInput" type="text" placeholder="Phone Number" required />
+                <input type="hidden" name="full_phone" id="fullPhoneInput" />
+                <!-- Country Dropdown Menu -->
+                <div class="country-dropdown-menu" id="countryDropdown">
+                  <div class="country-search-box">
+                    <input type="text" id="countrySearchInput" placeholder="Search country or code..." autocomplete="off" />
+                  </div>
+                  <ul class="country-list" id="countryList">
+                   <!-- JS Populated -->
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="col-lg-6 dentists-input-box">
               <label class="form-label">Email</label>
@@ -797,6 +803,277 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   ]
 }
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const defaultCountries = [
+            { name: "India", code: "IN", dialCode: "+91" },
+            { name: "United States", code: "US", dialCode: "+1" },
+            { name: "United Kingdom", code: "GB", dialCode: "+44" },
+            { name: "United Arab Emirates", code: "AE", dialCode: "+971" },
+            { name: "Canada", code: "CA", dialCode: "+1" },
+            { name: "Australia", code: "AU", dialCode: "+61" },
+            { name: "Saudi Arabia", code: "SA", dialCode: "+966" },
+            { name: "Germany", code: "DE", dialCode: "+49" },
+            { name: "France", code: "FR", dialCode: "+33" },
+            { name: "Singapore", code: "SG", dialCode: "+65" },
+            { name: "Oman", code: "OM", dialCode: "+968" },
+            { name: "Qatar", code: "QA", dialCode: "+974" },
+            { name: "Kuwait", code: "KW", dialCode: "+965" },
+            { name: "Bahrain", code: "BH", dialCode: "+973" },
+            { name: "Nepal", code: "NP", dialCode: "+977" },
+            { name: "Bangladesh", code: "BD", dialCode: "+880" },
+            { name: "Pakistan", code: "PK", dialCode: "+92" },
+            { name: "Sri Lanka", code: "LK", dialCode: "+94" },
+            { name: "Malaysia", code: "MY", dialCode: "+60" },
+            { name: "Indonesia", code: "ID", dialCode: "+62" },
+            { name: "Thailand", code: "TH", dialCode: "+66" },
+            { name: "Vietnam", code: "VN", dialCode: "+84" },
+            { name: "Philippines", code: "PH", dialCode: "+63" },
+            { name: "Japan", code: "JP", dialCode: "+81" },
+            { name: "South Korea", code: "KR", dialCode: "+82" },
+            { name: "China", code: "CN", dialCode: "+86" },
+            { name: "Hong Kong", code: "HK", dialCode: "+852" },
+            { name: "Taiwan", code: "TW", dialCode: "+886" },
+            { name: "Russia", code: "RU", dialCode: "+7" },
+            { name: "Italy", code: "IT", dialCode: "+39" },
+            { name: "Spain", code: "ES", dialCode: "+34" },
+            { name: "Netherlands", code: "NL", dialCode: "+31" },
+            { name: "Switzerland", code: "CH", dialCode: "+41" },
+            { name: "Sweden", code: "SE", dialCode: "+46" },
+            { name: "Norway", code: "NO", dialCode: "+47" },
+            { name: "Denmark", code: "DK", dialCode: "+45" },
+            { name: "Finland", code: "FI", dialCode: "+358" },
+            { name: "Ireland", code: "IE", dialCode: "+353" },
+            { name: "New Zealand", code: "NZ", dialCode: "+64" },
+            { name: "South Africa", code: "ZA", dialCode: "+27" },
+            { name: "Nigeria", code: "NG", dialCode: "+234" },
+            { name: "Egypt", code: "EG", dialCode: "+20" },
+            { name: "Kenya", code: "KE", dialCode: "+254" },
+            { name: "Brazil", code: "BR", dialCode: "+55" },
+            { name: "Mexico", code: "MX", dialCode: "+52" },
+            { name: "Argentina", code: "AR", dialCode: "+54" },
+            { name: "Turkey", code: "TR", dialCode: "+90" },
+            { name: "Israel", code: "IL", dialCode: "+972" },
+            { name: "Greece", code: "GR", dialCode: "+30" },
+            { name: "Portugal", code: "PT", dialCode: "+351" },
+            { name: "Poland", code: "PL", dialCode: "+48" },
+            { name: "Austria", code: "AT", dialCode: "+43" },
+            { name: "Belgium", code: "BE", dialCode: "+32" }
+        ];
+
+        let countriesList = [...defaultCountries];
+        let currentSelected = { name: "India", code: "IN", dialCode: "+91" };
+
+        const countrySelectBtn = document.getElementById("countrySelectBtn");
+        const countryDropdown = document.getElementById("countryDropdown");
+        const countrySearchInput = document.getElementById("countrySearchInput");
+        const countryListEl = document.getElementById("countryList");
+        const selectedFlag = document.getElementById("selectedFlag");
+        const selectedCode = document.getElementById("selectedCode");
+        const phoneInput = document.getElementById("phoneInput") || document.querySelector('input[name="phone"]');
+        const fullPhoneInput = document.getElementById("fullPhoneInput");
+        const wrapper = document.querySelector(".input_nuber_and_fleg_mian") || document.querySelector(".country-phone-wrapper");
+        const form = document.querySelector(".left_side_main form") || document.querySelector("form");
+
+        function getFlagUrl(code) {
+            return `https://flagcdn.com/w40/${code.toLowerCase()}.png`;
+        }
+
+        function renderList(list) {
+            if (!countryListEl) return;
+            countryListEl.innerHTML = "";
+            if (list.length === 0) {
+                countryListEl.innerHTML = `<li class="no-country-found">No country found</li>`;
+                return;
+            }
+
+            list.forEach((country) => {
+                const li = document.createElement("li");
+                li.className = `country-item ${country.code === currentSelected.code ? "active" : ""}`;
+                li.dataset.code = country.code;
+                li.dataset.dialCode = country.dialCode;
+                li.dataset.name = country.name;
+
+                li.innerHTML = `
+        <div class="country-item-info">
+          <img src="${getFlagUrl(country.code)}" alt="${country.code}" class="country-flag-img" loading="lazy" />
+          <span class="country-item-name">${country.name}</span>
+        </div>
+        <span class="country-item-code">${country.dialCode}</span>
+      `;
+
+                li.addEventListener("click", function (e) {
+                    e.stopPropagation();
+                    selectCountry(country);
+                    closeDropdown();
+                });
+
+                countryListEl.appendChild(li);
+            });
+        }
+
+        function selectCountry(country) {
+            currentSelected = country;
+            if (selectedFlag) {
+                selectedFlag.src = getFlagUrl(country.code);
+                selectedFlag.alt = country.code;
+            }
+            if (selectedCode) {
+                selectedCode.textContent = country.dialCode;
+            }
+
+            document.querySelectorAll(".country-item").forEach((el) => {
+                if (el.dataset.code === country.code) {
+                    el.classList.add("active");
+                } else {
+                    el.classList.remove("active");
+                }
+            });
+
+            updateFullPhone();
+        }
+
+        function updateFullPhone() {
+            if (!phoneInput) return;
+            const number = phoneInput.value.trim();
+            if (fullPhoneInput) {
+                if (number) {
+                    fullPhoneInput.value = `${currentSelected.dialCode} ${number}`;
+                } else {
+                    fullPhoneInput.value = "";
+                }
+            }
+        }
+
+        function toggleDropdown() {
+            const isShowing = countryDropdown && countryDropdown.classList.contains("show");
+            if (isShowing) {
+                closeDropdown();
+            } else {
+                openDropdown();
+            }
+        }
+
+        function openDropdown() {
+            if (countryDropdown) countryDropdown.classList.add("show");
+            if (wrapper) wrapper.classList.add("active");
+            if (countrySelectBtn) {
+                countrySelectBtn.classList.add("active");
+                countrySelectBtn.setAttribute("aria-expanded", "true");
+            }
+            if (countrySearchInput) {
+                countrySearchInput.value = "";
+                setTimeout(() => countrySearchInput.focus(), 50);
+            }
+            renderList(countriesList);
+        }
+
+        function closeDropdown() {
+            if (countryDropdown) countryDropdown.classList.remove("show");
+            if (wrapper) wrapper.classList.remove("active");
+            if (countrySelectBtn) {
+                countrySelectBtn.classList.remove("active");
+                countrySelectBtn.setAttribute("aria-expanded", "false");
+            }
+        }
+
+        if (countrySearchInput) {
+            countrySearchInput.addEventListener("input", function () {
+                const query = this.value.toLowerCase().trim();
+                const filtered = countriesList.filter((c) => {
+                    return (
+                        c.name.toLowerCase().includes(query) ||
+                        c.dialCode.includes(query) ||
+                        c.code.toLowerCase().includes(query)
+                    );
+                });
+                renderList(filtered);
+            });
+        }
+
+        if (countrySelectBtn) {
+            countrySelectBtn.addEventListener("click", function (e) {
+                e.stopPropagation();
+                toggleDropdown();
+            });
+        }
+
+        if (countryDropdown) {
+            countryDropdown.addEventListener("click", function (e) {
+                e.stopPropagation();
+            });
+        }
+
+        document.addEventListener("click", function (e) {
+            if (countryDropdown && countryDropdown.classList.contains("show")) {
+                if (!countryDropdown.contains(e.target) && (!countrySelectBtn || !countrySelectBtn.contains(e.target))) {
+                    closeDropdown();
+                }
+            }
+        });
+
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") {
+                closeDropdown();
+            }
+        });
+
+        if (phoneInput) {
+            phoneInput.addEventListener("input", updateFullPhone);
+        }
+
+        if (form) {
+            form.addEventListener("submit", function () {
+                updateFullPhone();
+            });
+        }
+
+        selectCountry(currentSelected);
+
+        // REST API fetch to enrich country list
+        fetch("https://restcountries.com/v3.1/all?fields=name,cca2,idd,flags")
+            .then((res) => {
+                if (!res.ok) throw new Error("API response error");
+                return res.json();
+            })
+            .then((data) => {
+                const apiList = [];
+                data.forEach((item) => {
+                    if (item.idd && item.idd.root) {
+                        const root = item.idd.root;
+                        let suffix = "";
+                        if (item.idd.suffixes && item.idd.suffixes.length === 1) {
+                            suffix = item.idd.suffixes[0];
+                        }
+                        const dialCode = root + suffix;
+                        if (dialCode && item.cca2 && item.name && item.name.common) {
+                            apiList.push({
+                                name: item.name.common,
+                                code: item.cca2.toUpperCase(),
+                                dialCode: dialCode,
+                            });
+                        }
+                    }
+                });
+
+                if (apiList.length > 0) {
+                    apiList.sort((a, b) => a.name.localeCompare(b.name));
+                    const inIdx = apiList.findIndex((c) => c.code === "IN");
+                    if (inIdx > -1) {
+                        const indiaObj = apiList.splice(inIdx, 1)[0];
+                        apiList.unshift(indiaObj);
+                    }
+                    countriesList = apiList;
+                    if (countryDropdown && countryDropdown.classList.contains("show")) {
+                        renderList(countriesList);
+                    }
+                }
+            })
+            .catch((err) => {
+                console.log("Using built-in country database", err);
+            });
+    });
 </script>
 {% endblock %}
 

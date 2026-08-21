@@ -503,6 +503,8 @@
     const RENDER_BACKEND_URL = window.location.origin;
     const WS_URL = (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host + '/ws/voice-agent/';
     {% comment %} const WS_URL = 'wss://voice-agent-ws-705379243140.asia-southeast1.run.app/ws/voice-agent/'; {% endcomment %}
+    {% comment %} const WS_URL = 'wss://usd-chat-bot-705379243140.asia-southeast1.run.app/ws/voice-agent/'; {% endcomment %}
+     
 
     let currentAgentState = 'off';
     let chatHistory = [];
