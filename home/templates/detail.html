@@ -56,7 +56,19 @@
     <div class="container pt-5">
       <div class="row justify-content-center justify-content-md-center justify-content-lg-start align-items-center position-relative">
         <div class="col-lg-4 col-md-10 col-9 text-center position-relative mb-2 mb-lg-0">
-          {% if data.details_page_image %}
+          {% if data.dentist_image %}
+          <img
+            src="{{ data.dentist_image.url }}"
+            alt="{{data.name}} - Dentist in {{data.city}}"
+            class="dentists-img img-fluid mb-2"
+          />
+          {% elif data.profile %}
+          <img
+            src="{{ data.profile.url }}"
+            alt="{{data.name}} - Dentist in {{data.city}}"
+            class="dentists-img img-fluid mb-2"
+          />
+          {% elif data.details_page_image %}
           <img
             src="{{ data.details_page_image.url }}"
             alt="{{data.name}} - Dentist in {{data.city}}"

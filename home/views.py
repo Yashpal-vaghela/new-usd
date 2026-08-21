@@ -581,19 +581,21 @@ def search_city_dentists(request, city_name):
 def find_dentist_d(request, pk):
     try:
         # Try to get Dentist by slug
-        data = DentistDetails.objects.get(slug=pk)
+        data = Dentist.objects.get(slug=pk)
     except Dentist.DoesNotExist:
         # If not found, check DentistRedirect
-        redirect_entry = get_object_or_404(DentistRedirect, old_slug=pk)
-        city = redirect_entry.city  
+        redirect_entry = DentistRedirect.objects.filter(old_slug=pk).first()
+        if redirect_entry:
+            city = redirect_entry.city  
 
-        # Check if city still has active dentists
-        if Dentist.objects.filter(city=city).exists():
-            city_name = city.city  # <-- using City model's "city" field
-            return redirect(f"/certified-dentists/city/{city_name}/", permanent=True)
-        else:
-            # No dentists in this city → fallback to main certified dentists page
-            return redirect("/certified-dentists/", permanent=True)
+            # Check if city still has active dentists
+            if city and Dentist.objects.filter(city=city, status=True).exists():
+                city_name = city.city  # <-- using City model's "city" field
+                return redirect(f"/certified-dentists/city/{city_name}/", permanent=True)
+            else:
+                # No dentists in this city → fallback to main certified dentists page
+                return redirect("/certified-dentists/", permanent=True)
+        raise Http404("Dentist not found")
     all_ids = list(Hgallery.objects.values_list("id",flat=True))
 
     random_ids = random.sample(all_ids,min(9,len(all_ids)))

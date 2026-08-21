@@ -159,7 +159,7 @@ class DentistDetails(models.Model):
         return reverse("home:dentist_detail", kwargs={"slug": self.slug})
 
 class PatientReview(models.Model):
-    dentist = models.ForeignKey(DentistDetails, on_delete=models.CASCADE, related_name='reviews')
+    dentist = models.ForeignKey(Dentist, on_delete=models.CASCADE, related_name='reviews')
     patient_name = models.CharField(max_length=300)
     review = models.TextField(max_length=2000)
     reviewlink= models.URLField(max_length=2000, blank=True, null=True)
