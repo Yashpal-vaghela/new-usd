@@ -1454,16 +1454,26 @@ def verify_warranty(request):
             warranty_data = data.get("data", {})
             status = data.get("status", False)
             
+            error_message = None
+            if status and warranty_data:
+                product_name = str(warranty_data.get("product_name", ""))
+                if "USD" not in product_name.upper():
+                    status = False
+                    warranty_data = {}
+                    error_message = "Authentication Details Not Found"
+            
             if is_ajax:
                 return render(request, 'verify_warranty_data.html', {
                     'status': status,
-                    'warranty_data': warranty_data
+                    'warranty_data': warranty_data,
+                    'error_message': error_message
                 })
             
             # Pass data to template
             return render(request, 'verify_warranty.html', {
                 'status': status,
                 'warranty_data': warranty_data,
+                'error_message': error_message,
                 'show_results': True,
                 'order_id': orderId,
                 'auth_id': authenticationId
@@ -1472,7 +1482,8 @@ def verify_warranty(request):
             if is_ajax:
                 return render(request, 'verify_warranty_data.html', {
                     'status': False,
-                    'warranty_data': {}
+                    'warranty_data': {},
+                    'error_message': 'Your Warranty Card Is Invalid'
                 })
             # If request fails, handle it appropriately
             messages.error(request, 'Your Warranty Card Is Invalid')
