@@ -1,9 +1,11 @@
+import os
 import json
 import base64
 import asyncio
+import httpx
 from voice_agent.utils.constants import INACTIVITY_TIMEOUT
 from voice_agent.utils.helpers import clean_assistant_text, clean_hallucinations
-from voice_agent.navigation.commands import detect_best_tag
+from voice_agent.navigation.commands import detect_best_tag, detect_best_tag_with_fallback
 from voice_agent.audio.transcriber import transcribe_voice_data
 
 class ConversationManager:
@@ -14,15 +16,103 @@ class ConversationManager:
 
     async def handle_audio_chunk(self, bytes_data):
         self.session.reset_activity_timer()
-        
-        # Process audio chunk through per-user Silero VAD ONNX model
-        event, completed_audio = self.session.vad_state.process_chunk(bytes_data)
+        self.session.current_user_pcm_chunks.append(bytes_data)
 
-        if event == "speech_start":
-            # Notify frontend user started speaking
-            await self.send_json({"type": "user_speaking_status", "is_speaking": True})
+        # ⚡ OFFICIAL GEMINI LIVE DIRECT STREAMING (Automatic Server-Side Neural VAD) ⚡
+        if self.session.gemini_ws:
+            try:
+                b64_data = base64.b64encode(bytes_data).decode('utf-8')
+                audio_frame = {
+                    "realtimeInput": {
+                        "audio": {
+                            "mimeType": "audio/pcm;rate=16000",
+                            "data": b64_data
+                        }
+                    }
+                }
+                await self.session.gemini_ws.send(json.dumps(audio_frame))
+            except Exception as e:
+                print(f"Failed to send audio chunk to Gemini: {e}")
+
+    async def stream_chat_text_response(self, user_text, history, system_prompt):
+        """⚡ Blazing fast sub-second Gemini 3.5 Flash Lite streaming specifically for Chat Mode ⚡"""
+        api_key = os.getenv("GEMINI_API_KEY_NEW") or os.getenv("GEMINI_API_KEY")
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:streamGenerateContent?alt=sse&key={api_key}"
+        
+        contents = []
+        if history:
+            for turn in history[-6:]:
+                role = "model" if turn.get("role") in ["model", "assistant"] else "user"
+                parts = turn.get("parts", [])
+                if parts and isinstance(parts, list) and "text" in parts[0] and parts[0]["text"]:
+                    contents.append({"role": role, "parts": [{"text": parts[0]["text"]}]})
+        contents.append({"role": "user", "parts": [{"text": user_text}]})
+        
+        payload = {
+            "contents": contents,
+            "systemInstruction": {"parts": [{"text": system_prompt}]}
+        }
+        
+        full_text = ""
+        try:
+            async with httpx.AsyncClient(timeout=15.0) as client:
+                async with client.stream("POST", url, json=payload) as resp:
+                    if resp.status_code == 200:
+                        async for line in resp.aiter_lines():
+                            if line.startswith("data: "):
+                                try:
+                                    chunk_data = json.loads(line[6:])
+                                    candidates = chunk_data.get("candidates", [])
+                                    if candidates and "content" in candidates[0]:
+                                        parts = candidates[0]["content"].get("parts", [])
+                                        for p in parts:
+                                            chunk_txt = p.get("text", "")
+                                            if chunk_txt:
+                                                full_text += chunk_txt
+                                                best_tag = detect_best_tag(user_text, full_text)
+                                                await self.send_json({
+                                                    "type": "bot_text_chunk",
+                                                    "text": chunk_txt,
+                                                    "tag": best_tag,
+                                                    "turnId": self.session.current_voice_turn_id
+                                                })
+                                except Exception:
+                                    pass
+                    else:
+                        print(f"Chat stream API status: {resp.status_code}")
+        except Exception as e:
+            print(f"Chat stream error: {e}")
             
-            # Start of speech turn setup
+        clean_text = clean_assistant_text(full_text)
+        final_tag, new_pending = detect_best_tag_with_fallback(
+            user_text, clean_text or "...", self.session.pending_action_tag
+        )
+        self.session.pending_action_tag = new_pending
+        
+        await self.send_json({
+            "type": "bot_spoken_text",
+            "text": clean_text or full_text,
+            "tag": final_tag,
+            "turnId": self.session.current_voice_turn_id
+        })
+        await self.send_json({
+            "type": "reply_complete",
+            "userText": user_text,
+            "botText": clean_text or full_text,
+            "tag": final_tag,
+            "totalChunks": 1
+        })
+
+    async def handle_client_json(self, data, system_prompt):
+        self.session.reset_activity_timer()
+        msg_type = data.get("type")
+
+        if msg_type == 'heartbeat':
+            return
+        
+        if msg_type == 'start_of_speech':
+            self.session.vad_state.is_speaking = True
+            await self.send_json({"type": "user_speaking_status", "is_speaking": True})
             self.session.current_voice_turn_id += 1
             self.session.current_user_pcm_chunks = []
             self.session.last_sent_voice_transcript_turn_id = -1
@@ -34,105 +124,38 @@ class ConversationManager:
             self.session.assistant_audio_buffer = bytearray()
             self.session.current_user_transcription = ""
             self.session.user_transcription_task = None
-
-        # Accumulate PCM data for STT and stream to Gemini Live ONLY while user is speaking
-        if self.session.vad_state.is_speaking:
-            self.session.current_user_pcm_chunks.append(bytes_data)
-
-            if self.session.gemini_ws:
-                try:
-                    b64_data = base64.b64encode(bytes_data).decode('utf-8')
-                    audio_frame = {
-                        "realtimeInput": {
-                            "audio": {
-                                "mimeType": "audio/pcm;rate=16000",
-                                "data": b64_data
-                            }
-                        }
-                    }
-                    await self.session.gemini_ws.send(json.dumps(audio_frame))
-                except Exception as e:
-                    print(f"Failed to send binary to Gemini: {e}")
-
-        if event == "speech_end":
-            # Notify frontend user stopped speaking (700ms continuous silence)
-            await self.send_json({"type": "user_speaking_status", "is_speaking": False})
-            
-            # Send turn completion signal to Gemini Live
-            if self.session.gemini_ws:
-                try:
-                    await self.session.gemini_ws.send(json.dumps({
-                        "clientContent": {
-                            "turnComplete": True
-                        }
-                    }))
-                except Exception:
-                    pass
-
-            turn_id_for_this_speech = self.session.current_voice_turn_id
-            pcm_buffer = completed_audio or (b"".join(self.session.current_user_pcm_chunks) if self.session.current_user_pcm_chunks else b"")
-            self.session.current_user_pcm_chunks = []
-            
-            if pcm_buffer:
-                self.session.user_transcription_task = asyncio.create_task(
-                    self.transcribe_user_audio_async(pcm_buffer, turn_id_for_this_speech)
-                )
-
-    async def handle_client_json(self, data, system_prompt):
-        self.session.reset_activity_timer()
-        msg_type = data.get("type")
-
-        if msg_type == 'heartbeat':
             return
-        
+
         if msg_type == 'text_input':
             self.session.latest_typed_user_text = data.get("text", "")
             self.session.latest_client_history = data.get("history", [])
             self.session.latest_client_is_voice_mode = data.get("isVoiceMode") != False
             
-            if self.session.text_mode_task:
-                self.session.text_mode_task.cancel()
-                self.session.text_mode_task = None
-                
+            user_text = self.session.latest_typed_user_text or "Hello"
+            self.session.is_interrupted = False
+            self.session.chunk_index = 0
+            self.session.display_str = ""
+            self.session.full_bot_reply = ""
+            self.session.live_pcm_buffer = bytearray()
+            self.session.assistant_audio_buffer = bytearray()
+            
+            # In Chat Mode: Stream instantly via Gemini 3.5 Flash Lite for sub-second UI response
             if not self.session.latest_client_is_voice_mode:
-                # Interrupted voice stream, switch to text stream API
-                self.session.is_interrupted = True
-                self.session.chunk_index = 0
-                self.session.display_str = ""
-                self.session.full_bot_reply = ""
-                self.session.live_pcm_buffer = bytearray()
-                self.session.assistant_audio_buffer = bytearray()
-                
-                if self.session.gemini_ws:
-                    try:
-                        await self.session.gemini_ws.send(json.dumps({"clientContent": {"turnComplete": False}}))
-                    except Exception:
-                        pass
-                    
-                # Start Text Mode completion
-                self.session.text_mode_task = asyncio.create_task(
-                    self.gemini_client.stream_gemini_chat_reply(
-                        self.session.latest_typed_user_text,
-                        self.session.latest_client_history,
-                        system_prompt
-                    )
-                )
-            else:
-                self.session.is_interrupted = False
-                if self.session.gemini_ws and not self.session.initial_greeting_sent:
-                    # Let connect_and_loop_gemini_live handle sending the initial greeting text
-                    pass
-                elif self.session.gemini_ws:
-                    try:
-                        fallback_text = self.session.latest_typed_user_text or "Hello"
-                        await self.session.gemini_ws.send(json.dumps({
-                            "clientContent": {
-                                "turns": [{"role": "user", "parts": [{"text": fallback_text}]}],
-                                "turnComplete": True
-                            }
-                        }))
-                    except Exception:
-                        pass
+                asyncio.create_task(self.stream_chat_text_response(user_text, self.session.latest_client_history, system_prompt))
+                return
+
+            # In Voice Mode: Send turn to persistent Gemini Live WebSocket
+            if self.session.gemini_ws:
+                try:
+                    await self.session.gemini_ws.send(json.dumps({
+                        "clientContent": {
+                            "turns": [{"role": "user", "parts": [{"text": user_text}]}],
+                            "turnComplete": True
+                        }
+                    }))
+                    self.session.initial_greeting_sent = True
+                except Exception as e:
+                    print(f"Failed to send text turn to Gemini Live: {e}")
         
         elif msg_type == 'process_final':
             self.session.vad_state.is_speaking = False
@@ -143,12 +166,34 @@ class ConversationManager:
             pcm_buffer = b"".join(self.session.current_user_pcm_chunks) if self.session.current_user_pcm_chunks else b""
             self.session.current_user_pcm_chunks = []
             self.session.is_interrupted = False
-                
-            # Background transcription for the browser UI chat bubble
+            
+            # Extract client transcription if provided by browser STT
             native_text = clean_hallucinations(data.get("nativeTranscript", "").strip())
             if not native_text:
                 native_text = clean_hallucinations(self.session.current_user_transcription.strip())
                 
+            if native_text and self.session.gemini_ws:
+                try:
+                    await self.session.gemini_ws.send(json.dumps({
+                        "clientContent": {
+                            "turns": [{"role": "user", "parts": [{"text": native_text}]}],
+                            "turnComplete": True
+                        }
+                    }))
+                except Exception as e:
+                    print(f"Failed to send speech transcript turn to Gemini Live: {e}")
+            elif self.session.gemini_ws:
+                # Raw audio streaming finalization
+                try:
+                    await self.session.gemini_ws.send(json.dumps({
+                        "realtimeInput": {
+                            "audioStreamEnd": True
+                        }
+                    }))
+                except Exception:
+                    pass
+                
+            # Background transcription for the browser UI chat bubble
             if native_text:
                 self.session.current_user_transcription = native_text
                 fut = asyncio.Future()
@@ -225,14 +270,16 @@ class ConversationManager:
             try:
                 now = asyncio.get_event_loop().time()
                 elapsed = now - self.session.last_activity_time
-                if elapsed >= INACTIVITY_TIMEOUT:
+                is_voice = getattr(self.session, 'latest_client_is_voice_mode', True)
+                current_timeout = 40 if is_voice else 120
+                if elapsed >= current_timeout:
                     print("⏳ Inactivity timeout reached. Disconnecting client...")
                     await self.send_json({"type": "error", "error": "Session timed out due to inactivity."})
                     await close_ws_callback()
                     break
                 
                 # Sleep for the remaining time or a minimum of 1 second
-                sleep_time = max(1.0, INACTIVITY_TIMEOUT - elapsed)
+                sleep_time = max(1.0, current_timeout - elapsed)
                 await asyncio.sleep(sleep_time)
             except Exception as e:
                 print(f"Error in inactivity monitor: {e}")

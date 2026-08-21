@@ -54,7 +54,7 @@ async def transcribe_audio_with_gemini(pcm_bytes, sample_rate=16000):
                             if cleaned:
                                 print(f"[INFO] Successfully transcribed audio using {model}: {cleaned}")
                                 return cleaned
-                            return text
+                            return ""
                     else:
                         print(f"[WARN] Gemini transcription call returned status {resp.status_code} for {model}")
                 except Exception as e:
