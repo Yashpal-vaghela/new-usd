@@ -81,17 +81,15 @@
                     <!-- Country Dropdown Menu -->
                     <div class="country-dropdown-menu" id="countryDropdown">
                         <div class="country-search-box">
-                            <input type="text" id="countrySearchInput" placeholder="Search country or code..." autocomplete="off" />
+                            <input type="text" id="countrySearchInput" placeholder="Search country or code..." />
                         </div>
                         <ul class="country-list" id="countryList">
                             <!-- JS Populated -->
                         </ul>
                     </div>
                     <div class="input_fild_main">
-                        <input type="tel" name="phone" id="phoneInput" class="input_filds" placeholder="Enter your phone number..."
-                            maxlength="10" inputmode="numeric" pattern="[0-9]{10}"
-                            oninput="this.value = this.value.replace(/\D/g, '').slice(0, 10)" required />
-                        <input type="hidden" name="full_phone" id="fullPhoneInput" />
+                        <input type="tel" id="phoneInput" class="input_filds" placeholder="Enter your phone number..." required />
+                        <input type="hidden" name="phone" id="fullPhoneInput" />
                     </div>
                 </div>
             </div>
@@ -263,9 +261,13 @@
         }
 
         function updateFullPhone() {
-            const number = phoneInput.value.trim();
+            let number = phoneInput.value.trim();
             if (number) {
-                fullPhoneInput.value = `${currentSelected.dialCode} ${number}`;
+                if (number.startsWith("+")) {
+                    fullPhoneInput.value = number;
+                } else {
+                    fullPhoneInput.value = `${currentSelected.dialCode} ${number}`;
+                }
             } else {
                 fullPhoneInput.value = "";
             }
