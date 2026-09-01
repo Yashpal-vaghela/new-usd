@@ -18,6 +18,7 @@ from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
 from datetime import date
 from .utils import send_mail
+import json
 import re
 import requests
 import random
@@ -101,7 +102,10 @@ def home(request):
                 })
             return JsonResponse(suggestion, safe=False)
     if request.method == 'POST':
-        form = ContactHomePageForm(request.POST)
+        post_data = request.POST.copy()
+        if post_data.get('full_phone'):
+            post_data['phone'] = post_data.get('full_phone')
+        form = ContactHomePageForm(post_data)
         # recaptcha_response = request.POST.get('g-recaptcha-response')
         # data = {
         #     'secret': settings.RECAPTCHA_SECRET_KEY,
@@ -627,7 +631,10 @@ def find_dentist_d(request, pk):
             return JsonResponse(suggestion, safe=False)
 
     if request.method == 'POST':
-        form = UserSubmissionForm(request.POST)
+        post_data = request.POST.copy()
+        if post_data.get('full_phone'):
+            post_data['phone'] = post_data.get('full_phone')
+        form = ContactHomePageForm(post_data)
         # recaptcha_response = request.POST.get('g-recaptcha-response')
         # data = {
         #     'secret': settings.RECAPTCHA_SECRET_KEY,
@@ -833,7 +840,10 @@ def inject_multiple_sections(html_content, inserts):
 
 def blogsd(request, pk):
     if request.method == 'POST':
-        form = ContactForm(request.POST)
+        post_data = request.POST.copy()
+        if post_data.get('full_phone'):
+            post_data['phone'] = post_data.get('full_phone')
+        form = ContactHomePageForm(post_data)
 
         # Validate Recaptcha
         # recaptcha_response = request.POST.get('g-recaptcha-response')
@@ -944,7 +954,10 @@ def blogsd(request, pk):
 
 def contact(request):
     if request.method == 'POST':
-        form = ContactForm(request.POST)
+        post_data = request.POST.copy()
+        if post_data.get('full_phone'):
+            post_data['phone'] = post_data.get('full_phone')
+        form = ContactForm(post_data)
 
         # recaptcha_response = request.POST.get('g-recaptcha-response')
         # data = {
@@ -1048,7 +1061,10 @@ def contact(request):
 
 def dentist_connect(request):
     if request.method == 'POST':
-        form = DentistConnectForm(request.POST)
+        post_data = request.POST.copy()
+        if post_data.get('full_phone'):
+            post_data['phone'] = post_data.get('full_phone')
+        form = ContactHomePageForm(post_data)
 
         # recaptcha_response = request.POST.get('g-recaptcha-response')
         # data = {
@@ -1162,7 +1178,10 @@ def quicklinks(request):
 
 def dentist(request):
     if request.method == 'POST':
-        form = UserSubmissionForm(request.POST)
+        post_data = request.POST.copy()
+        if post_data.get('full_phone'):
+            post_data['phone'] = post_data.get('full_phone')
+        form = ContactHomePageForm(post_data)
 
         # reCAPTCHA validation
         # recaptcha_response = request.POST.get('g-recaptcha-response')
@@ -1281,6 +1300,131 @@ def dentist(request):
         form = UserSubmissionForm()
 
     return render(request, 'request.html', {'form': form})
+
+@csrf_exempt
+def dentist_api(request):
+    """
+    API endpoint for patient appointment form submission (dentist form).
+    Supports both JSON payload (application/json) and Form-data (application/x-www-form-urlencoded).
+    Saves submission, triggers async email notification, and syncs webhooks to Bikayi CRM & Zoho CRM.
+    """
+    if request.method != 'POST':
+        return JsonResponse({
+            'status': 'error',
+            'message': 'Only POST method is allowed.'
+        }, status=405)
+
+    try:
+        # Parse payload (JSON body or form data)
+        if request.content_type == 'application/json' or (request.body and not request.POST):
+            try:
+                data = json.loads(request.body.decode('utf-8'))
+            except json.JSONDecodeError:
+                return JsonResponse({'status': 'error', 'message': 'Invalid JSON format.'}, status=400)
+        else:
+            data = request.POST.dict()
+
+        # Validate form
+        form = UserSubmissionForm(data)
+        if not form.is_valid():
+            return JsonResponse({
+                'status': 'error',
+                'message': 'Please correct the validation errors.',
+                'errors': form.errors.get_json_data()
+            }, status=400)
+
+        # Save submission
+        user_submission = form.save()
+        current_datetime_ist = timezone.localtime(timezone.now())
+        formatted_datetime = current_datetime_ist.strftime("%d-%m-%Y %I:%M %p")
+
+        context_dict = {
+            "Name": f"{user_submission.first_name or ''} {user_submission.last_name or ''}".strip(),
+            "Email": user_submission.email,
+            "Phone": user_submission.phone,
+            "City": user_submission.city,
+            "Message": user_submission.message,
+            "Doctor_name": user_submission.doctor_name or "NA",
+            "Page URL": data.get("page_url") or request.META.get("HTTP_REFERER", "Not available")
+        }
+
+        # Send async notification email
+        threading.Thread(
+            target=send_contact_email_async,
+            args=(context_dict,),
+            daemon=True
+        ).start()
+
+        # Sync with Bikayi CRM
+        bikayi_synced = False
+        bikayi_payload = {
+            "First_name": user_submission.first_name,
+            "Last_name": user_submission.last_name,
+            "Email": user_submission.email,
+            "Phone": user_submission.phone,
+            "City": user_submission.city,
+            "Message": user_submission.message,
+            "Doctor_name": user_submission.doctor_name,
+            "DateTime": formatted_datetime,
+        }
+        bikai_url = "https://bikapi.bikayi.app/chatbot/webhook/N8eHI9BWzqVPK7RnXu2xs5qIQt23?flow=webpatient3834"
+        try:
+            crm_res = requests.post(
+                bikai_url,
+                json=bikayi_payload,
+                headers={"Content-Type": "application/json"},
+                timeout=10
+            )
+            crm_res.raise_for_status()
+            bikayi_synced = True
+        except requests.exceptions.RequestException:
+            pass
+
+        # Sync with Zoho CRM
+        zoho_synced = False
+        zoho_payload = {
+            "Name": f"{user_submission.first_name or ''} {user_submission.last_name or ''}".strip(),
+            "Email": user_submission.email,
+            "Phone": user_submission.phone,
+            "City": user_submission.city,
+            "Message": user_submission.message,
+            "DoctorName": user_submission.doctor_name,
+            "Website": "Ultimate Smile Design",
+            "FormName": "Patient appointment Form",
+        }
+        zoho_url = "https://flow.zoho.in/60070945438/flow/webhook/incoming?zapikey=1001.a119cd21b36db26402ffe013750915ad.885b5855c0af73a633e0a39a93142bcd&isdebug=false"
+        try:
+            zoho_res = requests.post(
+                zoho_url,
+                json=zoho_payload,
+                headers={"Content-Type": "application/json"},
+                timeout=10
+            )
+            zoho_res.raise_for_status()
+            zoho_synced = True
+        except requests.exceptions.RequestException:
+            pass
+
+        return JsonResponse({
+            'status': 'success',
+            'message': f"Form submitted successfully! Thank you, {user_submission.first_name} {user_submission.last_name}.",
+            'data': {
+                'id': user_submission.id,
+                'first_name': user_submission.first_name,
+                'last_name': user_submission.last_name,
+                'email': user_submission.email,
+                'phone': user_submission.phone,
+                'city': user_submission.city,
+                'bikayi_synced': bikayi_synced,
+                'zoho_synced': zoho_synced,
+            }
+        }, status=201)
+
+    except Exception as e:
+        return JsonResponse({
+            'status': 'error',
+            'message': f'Internal server error: {str(e)}'
+        }, status=500)
 
 def quicklinks(request):
 	return render(request,'quick-links.html')

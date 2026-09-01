@@ -20,6 +20,7 @@ urlpatterns = [
     # path('gallery/', views.gallery, name='gallery'),
     path('gallery/', views.beforeaftergallery, name='gallery'),
     path('consult-with-dentist/', views.dentist, name='dentist'),
+    path('api/consult-with-dentist/', views.dentist_api, name='dentist_api'),
     path('certified-dentists/<str:pk>/', views.find_dentist_d, name='find_dentist_d'),
     path('blogs/', views.blogs, name='blogs'),
     path('blogs/<str:pk>/', views.blogsd, name='blogsd'),

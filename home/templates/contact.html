@@ -92,6 +92,7 @@
                   required
                 />
               </div>
+              <input type="hidden" name="country_code" id="countryCodeInput" value="+91" />
               <input type="hidden" name="phone" id="fullPhoneInput" />
 
               <!-- Country Dropdown Menu -->
@@ -398,6 +399,10 @@ document.addEventListener("DOMContentLoaded", function () {
     selectedFlag.src = getFlagUrl(country.code);
     selectedFlag.alt = country.code;
     selectedCode.textContent = country.dialCode;
+    const countryCodeInput = document.getElementById("countryCodeInput");
+    if (countryCodeInput) {
+      countryCodeInput.value = country.dialCode;
+    }
 
     document.querySelectorAll(".country-item").forEach((el) => {
       if (el.dataset.code === country.code) {
