@@ -32,13 +32,11 @@ curious
 
 voice_response:
 
-Ultimate Smile Designing (USD) is a premium smile transformation concept that combines advanced digital technology, artistic smile design, and expert dental craftsmanship to create a smile that perfectly complements your face, personality, and natural expressions.
-
-Unlike conventional smile makeovers, USD focuses on achieving a smile that is natural, aesthetic, functional, and uniquely designed for you. Every smile is carefully planned using facial analysis, digital smile design, and precise treatment protocols, then crafted by USD Certified Smile Designers to deliver a premium, celebrity-level result.
+Ultimate Smile Designing (USD) is a premium smile transformation concept that combines facial analysis, digital design, and master dental craftsmanship to create a smile tailored to your unique facial features and personality.
 
 follow_up:
 
-Would you like me to explain how Ultimate Smile Designing is different from conventional smile designing?
+Would you like me to explain how our protocols work, or are you exploring a makeover for yourself?
 
 keywords:
 - ultimate smile designing
@@ -1851,3 +1849,325 @@ A normal dentist and a USD Certified Smile Designer may both use digital smile d
 - Every music producer has access to recording software, but award-winning producers know how to bring out the best performance from an artist. Smile designing is about bringing out the best version of your natural smile.
 
 - Every athlete can train hard, but Olympic athletes follow specialized coaching, structured preparation, and refined techniques to perform at the highest level. Similarly, Authorised USD Smile Designers receive additional training in the USD philosophy.
+
+--------------------------
+
+intent: local_dentist_vs_usd
+
+user_questions:
+- My dentist has the same veneers.
+- My local dentist does the same smile design.
+- My dentist can do this at a cheaper price.
+- Why should I choose USD when my dentist says it's the same?
+- Isn't this the same as what any normal dentist offers?
+- My dentist also gives veneers, why USD?
+
+emotion:
+curious / skeptical
+
+voice_response:
+If you want to choose your local dentist, that is completely fine! But before deciding, you may want to ask them a few important questions:
+
+1. Does your dentist provide an official USD Authentication Card and a verifiable warranty?
+2. Can they show you real, live patient case results handcrafted specifically by master ceramists?
+3. Do they provide 100% transparent, all-inclusive pricing with zero hidden lab or revision fees?
+
+At Ultimate Smile Design, transparency, verified warranties, and master artistry are guaranteed. If your dentist can genuinely guarantee all of these standards, you should definitely proceed with them!
+
+follow_up:
+Would you like to learn more about our Certified Smile Designer protocol or our transparent pricing philosophy?
+
+keywords:
+- my dentist has the same
+- my dentist does the same
+- why not my dentist
+- my dentist is cheaper
+- normal dentist vs usd
+- dentist comparison
+
+--------------------------
+
+intent: usd_transparent_pricing_justification
+
+user_questions:
+- Why is USD pricing transparent?
+- Can you justify your transparent pricing?
+- Why does USD cost what it does?
+- What makes your price justified?
+- Why is USD worth the investment?
+- Explain your pricing philosophy.
+
+emotion:
+curious / analytical
+
+voice_response:
+Our transparent pricing is justified by four uncompromising pillars:
+
+1. Certified Smile Designer Protocol: Every smile follows a facial harmony philosophy and precision 3D architecture, not generic dental work.
+2. Master Ceramist Handcrafting: Each veneer is individually sculpted and shaded by master artists using premium e.max porcelain with natural translucency.
+3. Official Authentication & Documented Warranty: You receive a verified authentication card backed by our multi-year warranty.
+4. 100% All-Inclusive Transparency: No hidden lab charges, unexpected revision fees, or surprise chair-time costs. What we quote is your complete investment.
+
+follow_up:
+Would you like to find an Authorised USD Smile Designer near you?
+
+keywords:
+- justify pricing
+- transparent pricing
+- why usd price
+- pricing philosophy
+- handcraft veneers
+- protocol and philosophy
+
+--------------------------
+
+intent: usd_difference_exclusivity
+
+user_questions:
+- What is the difference in USD?
+- What makes USD different?
+- Why is USD different from normal treatments?
+- Tell me the difference of USD.
+
+emotion:
+curious / discerning
+
+voice_response:
+The difference in USD comes down to our bespoke clinical protocols, master ceramist handcrafting, and above all, our exclusivity.
+
+follow_up:
+Would you like me to explain what this exclusivity means for your smile?
+
+keywords:
+- usd difference
+- what makes usd different
+- difference in usd
+- exclusivity
+
+--------------------------
+
+intent: usd_what_is_exclusivity
+
+user_questions:
+- What is this exclusivity?
+- Explain exclusivity in USD.
+- What do you mean by exclusivity?
+- Why do you say exclusive?
+- What is the exclusivity of USD?
+
+emotion:
+curious / analytical
+
+voice_response:
+Our exclusivity is defined by six core principles:
+1. 100% predictable outcomes tailored to your facial symmetry.
+2. Unmatched expertise in the aesthetic dental field.
+3. We believe in explaining everything thoroughly before any treatment begins.
+4. We offer only premium, certified materials.
+5. We provide complete surety with official authentication and warranty.
+6. Our treatment doesn't focus on one-time quick fixes; it focuses on lasting, long-term results.
+
+follow_up:
+And with this, would you like to know how our protocols work?
+
+keywords:
+- what is exclusivity
+- explain exclusivity
+- exclusivity meaning
+- why exclusive
+- 100 percent outcomes
+- explain before treatment
+- long term result
+
+--------------------------
+
+intent: teeth_whitening
+
+user_questions:
+- Do you do teeth whitening?
+- Can I get teeth whitening?
+- What about teeth whitening?
+- Do you recommend teeth whitening?
+- Tell me about teeth whitening.
+- Is teeth whitening good?
+- Can whitening fix my smile?
+
+emotion:
+curious / consultative
+
+voice_response:
+Teeth whitening is not a long-term solution because it relies on temporary chemicals and bleaching agents that do not change or improve tooth shape, alignment, or enamel structure. That's why we don't recommend teeth whitening as a permanent solution. Instead, we focus on whole smile design — oh sorry, Ultimate Smile Design!
+
+follow_up:
+Would you like to explore how custom veneers can give you a permanent, naturally bright smile?
+
+keywords:
+- teeth whitening
+- teeth bleaching
+- whitening
+- bleach teeth
+- chemical whitening
+- white teeth
+
+--------------------------
+
+intent: find_certified_dentist_by_city
+
+user_questions:
+- Who is your certified dentist in Surat?
+- Do you have a smile designer in Mumbai?
+- Who is in Ahmedabad?
+- Dentist in Pune?
+- Do you have a doctor in Delhi?
+- Find a certified smile designer near me.
+- Which cities do you have dentists in?
+- Who are your doctors in Bangalore, Hyderabad, or Chennai?
+
+emotion:
+seeking_guidance / curious
+
+voice_response:
+We have official USD Certified Smile Designers across major cities in India:
+
+• Ahmedabad: Dr. Rakesh Patel, Dr. Jigar P. Thakkar, Dr. Ankit Mataliya, Dr. Neerav Jhaveri, Dr. Alap D Shah, Dr. Abbas Noorani, Dr. Purvesh Chauhan, Dr. Ravi Shah, Dr. Janu Shah
+• Surat: Dr. Bharat R. Patel, Dr. Parita Shah, Dr. Viren K Savani, Dr. Purvi Patel, Dr. Priyanka Kathiriya, Dr. Jay Patel
+• Mumbai: Dr. Vinita Tekchandani, Dr. Deepika Dalal, Dr. Nikita Motwani, Dr. Rohan Bandi, Dr. Moez Khakiani
+• Pune: Dr. Aarti Bhatewara
+• Vadodara: Dr. Kaveena Parikh, Dr. Khushbu Patel
+• Rajkot: Dr. Margie I Aghera, Dr. Pagisha Sojitra, Dr. Vishvaraj Agravat, Dr. Hetal Buch
+• Jamnagar: Dr. D. J. Chetariya, Dr. Prasanna Patel, Dr. Bharat Katarmal
+• Bharuch: Dr. Hafsha Saiyed
+• Halvad: Dr. Pankaj Patel
+• Dhrangadhra: Dr. Dilip J Parejiya
+• New Delhi: Dr. Sanjit Singh, Dr. Minu Arora
+• Gurugram: Dr. Amit Kr. Agrawal
+• Indore: Dr. Surangana Gupta, Dr. Jaydev Roy, Dr. Himanshu Sharma
+• Gwalior: Dr. Aman Singhal
+• Bangalore: Dr. Mohammed Issak
+• Hyderabad: Dr. Srilakshmi CH, Dr. M Jaydev
+• Chennai: Dr. Reuben Joseph
+• Guntur: Dr. Praneeth Kumar
+• Sangli: Dr. Kalyani Jagdale, Dr. Digvijay Deshpande
+• Guwahati: Dr. Adil Lyngdoh
+• Faridkot: Dr. Asmita Sodhi
+• Sri Ganganagar: Dr. Neetu Jindal
+• Malda: Dr. A K Saha
+
+follow_up:
+Which city is most convenient for your smile consultation?
+
+keywords:
+- certified dentist
+- dentist in city
+- smile designer list
+- doctors near me
+- dentist location
+- find doctor
+
+--------------------------
+
+intent: closest_city_routing
+
+user_questions:
+- I am from Nashik, do you have a dentist?
+- Do you have a clinic in Noida or Ghaziabad?
+- I live in Gandhinagar, who is closest?
+- I am from Navsari or Valsad or Vapi.
+- I live in Bhopal or Ujjain.
+- Do you have someone in Kolhapur, Satara, or Solapur?
+- I am from Vijayawada or Visakhapatnam.
+- Is there a designer in Mysore or Mangalore?
+- I am from Ludhiana or Amritsar.
+- Do you have a designer in Kolkata?
+- I live in a city not listed.
+
+emotion:
+seeking_recommendation
+
+voice_response:
+If we do not currently have a USD Certified Smile Designer directly in your city, we guide you to our nearest certified city hub:
+
+• Nashik / Thane / Navi Mumbai -> Closest hub: Mumbai or Pune
+• Noida / Ghaziabad / Faridabad / Chandigarh -> Closest hub: New Delhi or Gurugram
+• Gandhinagar / Mehsana / Anand / Nadiad -> Closest hub: Ahmedabad
+• Navsari / Valsad / Vapi / Bilimora / Ankleshwar -> Closest hub: Surat or Bharuch
+• Bhavnagar / Junagadh / Morbi / Surendranagar -> Closest hub: Rajkot or Halvad/Dhrangadhra
+• Bhopal / Ujjain / Jabalpur -> Closest hub: Indore or Gwalior
+• Agra / Jhansi / Mathura / Kanpur / Lucknow -> Closest hub: Gwalior or New Delhi
+• Kolhapur / Satara / Solapur / Aurangabad -> Closest hub: Sangli or Pune/Mumbai
+• Vijayawada / Visakhapatnam / Nellore -> Closest hub: Guntur or Hyderabad or Chennai
+• Mysore / Mangalore / Hubli -> Closest hub: Bangalore
+• Ludhiana / Amritsar / Jalandhar / Bathinda -> Closest hub: Faridkot or New Delhi
+• Kolkata / Siliguri / Durgapur -> Closest hub: Malda or Guwahati
+• Shillong / Dibrugarh / Tezpur -> Closest hub: Guwahati
+• Bikaner / Jodhpur / Ajmer / Udaipur -> Closest hub: Sri Ganganagar or Delhi/Ahmedabad
+
+When a user asks from a city without a local designer, say:
+"Currently, we don't have a Certified Smile Designer directly in [City], but our closest Certified Smile Designer is in [Closest Hub]. Would you like to know our certified designer's name in [Closest Hub]?"
+
+follow_up:
+Would you like to connect with our nearest Certified Smile Designer?
+
+keywords:
+- closest city
+- near me
+- no dentist in my city
+- nearest doctor
+- travel for treatment
+
+--------------------------
+
+intent: unknown_non_usd_dentist_inquiry
+
+user_questions:
+- Is Dr. Sharma part of USD?
+- Do you know Dr. ABC?
+- Can my dentist Dr. XYZ do USD veneers?
+- Is my local doctor certified by you?
+- Check if this doctor is in USD.
+
+emotion:
+curious / verifying
+
+voice_response:
+We do not have information on that dentist as they are not currently a USD Certified Smile Designer. We only maintain verified records and treatment protocols for our official USD Certified Smile Designers.
+
+follow_up:
+Would you like to consult one of our official USD Certified Smile Designers?
+
+keywords:
+- non usd dentist
+- check doctor
+- is my doctor certified
+- unknown dentist
+
+--------------------------
+
+intent: dentist_join_usd_partnership
+
+user_questions:
+- How can my dentist join USD?
+- How can a dentist become a Certified Smile Designer?
+- I am a dentist, how do I join?
+- How do dentists register with Ultimate Smile Design?
+- Where is the dentist connect page?
+
+emotion:
+interested / professional
+
+voice_response:
+Dentists who wish to become USD Certified Smile Designers can easily apply with us! On your screen, you can see the 'For Dentists' option. If you are on a mobile phone, tap the 3-line menu icon in the header, select 'For Dentists', and fill out your details. Our team will get in touch with you!
+
+follow_up:
+[LINK_CONNECT]
+
+keywords:
+- join usd
+- dentist connect
+- for dentists
+- become certified
+- partner dentist
+- doctor registration
+
+
+

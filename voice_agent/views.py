@@ -126,12 +126,9 @@ def submit_feedback(request):
                 audio_bytes = audio_file.read()
                 if audio_bytes and len(audio_bytes) > 0:
                     email_msg.attach(filename, audio_bytes, 'audio/webm')
-                    email_msg.body += f"\n\n🎙️ RAW AUDIO RECORDING:\nAttached as {filename} ({len(audio_bytes):,} bytes)"
-                    print(f"[INFO] Attached voice recording {filename} ({len(audio_bytes):,} bytes) to outgoing email.")
+                    email_msg.body += f"\n\n🎙️ RAW AUDIO RECORDING:\nAttached as {filename} ({len(audio_bytes)} bytes)"
             except Exception as att_err:
                 print(f"[WARNING] Failed to attach in-memory audio: {att_err}")
-        else:
-            print("[INFO] No audio file uploaded in feedback payload.")
 
         email_msg.send(fail_silently=False)
         print(f"[INFO] Direct Gmail SMTP delivery successful from {from_email_str} to {MARKETING_EMAIL}!")

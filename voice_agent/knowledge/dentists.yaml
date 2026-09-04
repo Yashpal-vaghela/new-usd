@@ -1,0 +1,170 @@
+# =========================================
+# USD CERTIFIED SMILE DESIGNERS & VERIFICATION DIRECTORY
+# =========================================
+
+intent: find_certified_dentist_by_city
+
+user_questions:
+- Do you have a smile designer in Mumbai?
+- Do you have dentists in Ahmedabad?
+- Dentist in Pune?
+- Do you have a doctor in Delhi?
+- Find a certified smile designer near me.
+- Which cities do you have dentists in?
+
+voice_response:
+Yes, we have USD Certified Smile Designers available in [City]! Would you like to know how our protocols work or schedule a consultation?
+(MANDATORY RULE: Never proactively recite or list doctor names when the user asks about a city).
+
+intent: verify_dentist_by_name
+
+user_questions:
+- Is Dr. Rakesh Patel your doctor?
+- Is Dr. Minu Arora in your list?
+- Is Dr. Aarti Bhatewara a USD certified smile designer?
+- Do you know Dr. [Name]?
+
+voice_response:
+- If the doctor is on our official list below: "Yes, [Dr. Name] is a USD Certified Smile Designer, and they are from [City]."
+- If the doctor is NOT on our official list below: "No, they are not currently a USD Certified Smile Designer. We only maintain verified records of our official USD Certified Smile Designers."
+
+# Official USD Certified Smile Designers Database for Name Verification:
+• Ahmedabad: Dr. Rakesh Patel, Dr. Jigar P. Thakkar, Dr. Ankit Mataliya, Dr. Neerav Jhaveri, Dr. Alap D Shah, Dr. Abbas Noorani, Dr. Purvesh Chauhan, Dr. Ravi Shah, Dr. Janu Shah
+• Surat: Dr. Bharat R. Patel, Dr. Parita Shah, Dr. Viren K Savani, Dr. Purvi Patel, Dr. Priyanka Kathiriya, Dr. Jay Patel
+• Mumbai: Dr. Vinita Tekchandani, Dr. Deepika Dalal, Dr. Nikita Motwani, Dr. Rohan Bandi, Dr. Moez Khakiani
+• Pune: Dr. Aarti Bhatewara
+• Vadodara: Dr. Kaveena Parikh, Dr. Khushbu Patel
+• Rajkot: Dr. Margie I Aghera, Dr. Pagisha Sojitra, Dr. Vishvaraj Agravat, Dr. Hetal Buch
+• Jamnagar: Dr. D. J. Chetariya, Dr. Prasanna Patel, Dr. Bharat Katarmal
+• Bharuch: Dr. Hafsha Saiyed
+• Halvad: Dr. Pankaj Patel
+• Dhrangadhra: Dr. Dilip J Parejiya
+• New Delhi: Dr. Sanjit Singh, Dr. Minu Arora
+• Gurugram: Dr. Amit Kr. Agrawal
+• Indore: Dr. Surangana Gupta, Dr. Jaydev Roy, Dr. Himanshu Sharma
+• Gwalior: Dr. Aman Singhal
+• Bangalore: Dr. Mohammed Issak
+• Hyderabad: Dr. Srilakshmi CH, Dr. M Jaydev
+• Chennai: Dr. Reuben Joseph
+• Guntur: Dr. Praneeth Kumar
+• Sangli: Dr. Kalyani Jagdale, Dr. Digvijay Deshpande
+• Guwahati: Dr. Adil Lyngdoh
+• Faridkot: Dr. Asmita Sodhi
+• Sri Ganganagar: Dr. Neetu Jindal
+• Malda: Dr. A K Saha
+
+follow_up:
+Which city is most convenient for your smile consultation?
+
+keywords:
+- certified dentist
+- dentist in city
+- smile designer list
+- doctors near me
+- dentist location
+- find doctor
+
+--------------------------
+
+intent: closest_city_routing
+
+user_questions:
+- I am from Nashik, do you have a dentist?
+- Do you have a clinic in Noida or Ghaziabad?
+- I live in Gandhinagar, who is closest?
+- I am from Navsari or Valsad or Vapi.
+- I live in Bhopal or Ujjain.
+- Do you have someone in Kolhapur, Satara, or Solapur?
+- I am from Vijayawada or Visakhapatnam.
+- Is there a designer in Mysore or Mangalore?
+- I am from Ludhiana or Amritsar.
+- Do you have a designer in Kolkata?
+- I live in a city not listed.
+
+emotion:
+seeking_recommendation
+
+voice_response:
+If we do not currently have a USD Certified Smile Designer directly in your city, we guide you to our nearest certified city hub:
+
+• Nashik / Thane / Navi Mumbai -> Closest hub: Mumbai or Pune
+• Noida / Ghaziabad / Faridabad / Chandigarh -> Closest hub: New Delhi or Gurugram
+• Gandhinagar / Mehsana / Anand / Nadiad -> Closest hub: Ahmedabad
+• Navsari / Valsad / Vapi / Bilimora / Ankleshwar -> Closest hub: Surat or Bharuch
+• Bhavnagar / Junagadh / Morbi / Surendranagar -> Closest hub: Rajkot or Halvad/Dhrangadhra
+• Bhopal / Ujjain / Jabalpur -> Closest hub: Indore or Gwalior
+• Agra / Jhansi / Mathura / Kanpur / Lucknow -> Closest hub: Gwalior or New Delhi
+• Kolhapur / Satara / Solapur / Aurangabad -> Closest hub: Sangli or Pune/Mumbai
+• Vijayawada / Visakhapatnam / Nellore -> Closest hub: Guntur or Hyderabad or Chennai
+• Mysore / Mangalore / Hubli -> Closest hub: Bangalore
+• Ludhiana / Amritsar / Jalandhar / Bathinda -> Closest hub: Faridkot or New Delhi
+• Kolkata / Siliguri / Durgapur -> Closest hub: Malda or Guwahati
+• Shillong / Dibrugarh / Tezpur -> Closest hub: Guwahati
+• Bikaner / Jodhpur / Ajmer / Udaipur -> Closest hub: Sri Ganganagar or Delhi/Ahmedabad
+
+When a user asks from a city without a local designer, say:
+"Currently, we don't have a Certified Smile Designer directly in [City], but our closest Certified Smile Designer is in [Closest Hub]. Would you like to know our certified designer's name in [Closest Hub]?"
+
+follow_up:
+Would you like to connect with our nearest Certified Smile Designer?
+
+keywords:
+- closest city
+- near me
+- no dentist in my city
+- nearest doctor
+- travel for treatment
+
+--------------------------
+
+intent: unknown_non_usd_dentist_inquiry
+
+user_questions:
+- Is Dr. Sharma part of USD?
+- Do you know Dr. ABC?
+- Can my dentist Dr. XYZ do USD veneers?
+- Is my local doctor certified by you?
+- Check if this doctor is in USD.
+
+emotion:
+curious / verifying
+
+voice_response:
+We do not have information on that dentist as they are not currently a USD Certified Smile Designer. We only maintain verified records and treatment protocols for our official USD Certified Smile Designers.
+
+follow_up:
+Would you like to consult one of our official USD Certified Smile Designers?
+
+keywords:
+- non usd dentist
+- check doctor
+- is my doctor certified
+- unknown dentist
+
+--------------------------
+
+intent: dentist_join_usd_partnership
+
+user_questions:
+- How can my dentist join USD?
+- How can a dentist become a Certified Smile Designer?
+- I am a dentist, how do I join?
+- How do dentists register with Ultimate Smile Design?
+- Where is the dentist connect page?
+
+emotion:
+interested / professional
+
+voice_response:
+Dentists who wish to become USD Certified Smile Designers can easily apply with us! On your screen, you can see the 'For Dentists' option. If you are on a mobile phone, tap the 3-line menu icon in the header, select 'For Dentists', and fill out your details. Our team will get in touch with you!
+
+follow_up:
+[LINK_CONNECT]
+
+keywords:
+- join usd
+- dentist connect
+- for dentists
+- become certified
+- partner dentist
+- doctor registration

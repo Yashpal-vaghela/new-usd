@@ -25,6 +25,7 @@ class VoiceAgentConsumer(AsyncJsonWebsocketConsumer):
             send_json_callback=self.send_json,
             gemini_client=self.gemini_client
         )
+        self.gemini_client.conversation_manager = self.conversation_manager
         
         # Accept ASGI WebSocket connection
         await self.accept()
@@ -69,10 +70,15 @@ class VoiceAgentConsumer(AsyncJsonWebsocketConsumer):
         elif text_data:
             try:
                 data = json.loads(text_data)
+                if data.get("type") == "restore_slots":
+                    slots = data.get("slots", {})
+                    if slots:
+                        self.session.booking_slots.update(slots)
+                    return
                 # Delegate JSON events to NLU coordinator
                 await self.conversation_manager.handle_client_json(data, self.system_prompt)
             except Exception as e:
-                print(f"❌ Error routing JSON payload: {e}")
+                print(f"[ERROR] Error routing JSON payload: {e}")
 
     async def transcribe_bot_audio_via_manager(self, audio_bytes):
         # Helper callback to bridge gemini response handler to transcriber

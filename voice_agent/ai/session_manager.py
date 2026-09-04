@@ -26,6 +26,23 @@ class Session:
         self.current_language = DEFAULT_LANGUAGE
         self.current_user_transcription = ""
         self.initial_greeting_sent = False
+        self.last_review_summary_slots = {}
+        self.last_review_summary_text = ""
+        
+        # Long-term Session Memory
+        self.user_name = ""
+        self.user_concern = ""
+        self.booking_slots = {
+            "first_name": "",
+            "last_name": "",
+            "email": "--",
+            "phone": "",
+            "city": "",
+            "message": "",
+            "doctor_name": "",
+            "is_booking_active": False,
+            "is_submitted": False
+        }
         
         # Timing trackers
         self.last_activity_time = asyncio.get_event_loop().time()
