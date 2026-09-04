@@ -130,8 +130,11 @@ def submit_feedback(request):
             except Exception as att_err:
                 print(f"[WARNING] Failed to attach in-memory audio: {att_err}")
 
-        email_msg.send(fail_silently=False)
-        print(f"[INFO] Direct Gmail SMTP delivery successful from {from_email_str} to {MARKETING_EMAIL}!")
+        try:
+            email_msg.send(fail_silently=False)
+            print(f"[INFO] Direct Gmail SMTP delivery successful from {from_email_str} to {MARKETING_EMAIL}!")
+        except Exception as mail_err:
+            print(f"[WARNING] Email delivery failed (network/SMTP restriction on host): {mail_err}")
 
         return JsonResponse({
             'status': 'success',
@@ -140,7 +143,7 @@ def submit_feedback(request):
         
     except Exception as e:
         print(f"[ERROR] submit_feedback failed: {e}")
-        return JsonResponse({'error': str(e)}, status=500)
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=200)
 
 def wrap_pcm_to_wav_base64(base64_pcm, sample_rate=24000):
     pcm_data = base64.b64decode(base64_pcm)

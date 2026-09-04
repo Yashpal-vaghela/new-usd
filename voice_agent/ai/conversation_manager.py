@@ -1274,7 +1274,7 @@ class ConversationManager:
                 f"RULES:\n"
                 f"1. NEVER ask 'Shall I book your appointment?', 'Shall I submit your appointment?', 'Should I book your consultation?', 'તમારી અપૉઇન્ટમેન્ટ બુક કરી નાખું?', 'आपकी अपॉइंटमेंट बुक कर दूं?' or offer booking again.\n"
                 f"2. UNLESS the user explicitly requests: 'I want to change my appointment', 'modify details', or 'book another appointment', you must NEVER prompt for booking or confirmation.\n"
-                f"3. For all other questions (veneers, costs, procedure, warranty, clinic timings, friendly conversation, sports/movies off-topic), answer warmly, helpfully, and authoritatively without mentioning booking an appointment."
+                f"3. For all other questions regarding veneers, costs, procedures, warranty, and dental care, answer warmly, helpfully, and authoritatively within our dental scope without mentioning booking an appointment. Remember: Strict absolute domain lock applies to all off-topic subjects."
             )
         elif not fn and not self.session.user_name:
             next_step_instruction = "STEP 1 (NAME): Ask for the patient's full name in their language: 'Let's start with your beautiful name, what is your name?'"
@@ -1377,17 +1377,13 @@ class ConversationManager:
             return False
 
         def is_cancel_submit(text):
-            tl = text.lower().strip()
-            tl = re.sub(r"[\s.,!?\\/]+$", "", tl)
-            # Detect general update / change intent
-            is_update_intent = any(w in tl for w in [
-                "change", "update", "correct", "modify", "instead", "edit", "wrong", "mistake",
-                "badlo", "badlu", "badlavu", "badlavvu", "sudharo", "sudharvu", "ferfar", "badal",
-                "નથી", "ખોટું", "બદલ", "બદલો", "બદલવો", "બદલવી", "બદલવા", "બદલવું", "અપડેટ", "સુધાર", "સુધારો", "સુધારવું", "ફેરફાર", "નંબર બદલો", "નામ બદલો", "શહેર બદલો", "ડૉક્ટર બદલો", "સમસ્યા બદલો",
-                "नहीं", "गलत", "बदल", "बदलो", "बदलना", "अपडेट", "सुधार", "सुधारो", "सुधारना", "नंबर बदलो", "नाम बदलो", "शहर बदलो", "डॉक्टर बदलो", "समस्या बदलो"
-            ])
             # If user is asking to update or change something, it is NEVER a cancellation!
             if is_update_intent or getattr(self.session, 'slot_just_updated', False) or getattr(self.session, 'asking_for_field', None):
+                return False
+            tl = text.lower().strip()
+            tl = re.sub(r"[\s.,!?\\/]+$", "", tl)
+            # If user text contains update/change keywords, never cancel
+            if any(w in tl for w in ["change", "update", "badal", "badlo", "sudharo", "ferfar", "બદલો", "સુધારો", "અપડેટ", "ફેરફાર", "बदलो", "अपडेट", "सुधारो"]):
                 return False
             # Standalone explicit cancel only
             if tl in [
@@ -1725,6 +1721,7 @@ class ConversationManager:
         msg_type = data.get("type")
 
         if msg_type == 'heartbeat':
+            self.session.reset_activity_timer()
             return
         
         self.session.reset_activity_timer()
