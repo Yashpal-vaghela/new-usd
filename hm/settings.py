@@ -246,6 +246,9 @@ ACCOUNT_EMAIL_VERIFICATION ='none'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
+# Shared secret key for internal sync between Cloud Run and GoDaddy
+INTERNAL_SYNC_SECRET = os.getenv("INTERNAL_SYNC_SECRET", "usd-secret-sync-token-2026")
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
