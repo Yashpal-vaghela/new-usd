@@ -1317,10 +1317,10 @@ class ConversationManager:
             )
         else:
             display_name = f"{fn} {ln}".strip() if (ln and ln != "-" and ln.lower() != fn.lower()) else (self.session.user_name or fn or "Patient")
-            is_update = getattr(self.session, 'slot_just_updated', False)
+            is_update_prompt = getattr(self.session, 'slot_just_updated', False)
             self.session.slot_just_updated = False
             self.session.asking_for_field = None
-            next_step_instruction = get_review_summary_prompt(user_lang, display_name, ph, ct, cn, dr, is_update=is_update)
+            next_step_instruction = get_review_summary_prompt(user_lang, display_name, ph, ct, cn, dr, is_update=is_update_prompt)
 
         active_memory += f"\n- STEP-BY-STEP ONE-QUESTION-AT-A-TIME DIRECTIVE:\n{next_step_instruction}\n(CRITICAL: Never re-ask details already confirmed. Ask ONLY the single missing step)."
 
@@ -1377,13 +1377,16 @@ class ConversationManager:
             return False
 
         def is_cancel_submit(text):
-            # If user is asking to update or change something, it is NEVER a cancellation!
-            if is_update_intent or getattr(self.session, 'slot_just_updated', False) or getattr(self.session, 'asking_for_field', None):
-                return False
             tl = text.lower().strip()
             tl = re.sub(r"[\s.,!?\\/]+$", "", tl)
-            # If user text contains update/change keywords, never cancel
-            if any(w in tl for w in ["change", "update", "badal", "badlo", "sudharo", "ferfar", "બદલો", "સુધારો", "અપડેટ", "ફેરફાર", "बदलो", "अपडेट", "सुधारो"]):
+            user_update_intent = any(w in tl for w in [
+                "change", "update", "correct", "modify", "instead", "edit", "wrong", "mistake",
+                "badlo", "badlu", "badlavu", "badlavvu", "sudharo", "sudharvu", "ferfar", "badal",
+                "નથી", "ખોટું", "બદલ", "બદલો", "બદલવો", "બદલવી", "બદલવા", "બદલવું", "અપડેટ", "સુધાર", "સુધારો", "સુધારવું", "ફેરફાર", "નંબર બદલો", "નામ બદલો", "શહેર બદલો", "ડૉક્ટર બદલો", "સમસ્યા બદલો",
+                "नहीं", "गलत", "बदल", "बदलो", "बदलना", "अपडेट", "सुधार", "सुधारो", "सुधारना", "नंबर बदलो", "नाम बदलो", "शहर बदलो", "डॉक्टर बदलो", "समस्या बदलो"
+            ])
+            # If user is asking to update or change something, it is NEVER a cancellation!
+            if user_update_intent or getattr(self.session, 'slot_just_updated', False) or getattr(self.session, 'asking_for_field', None):
                 return False
             # Standalone explicit cancel only
             if tl in [
