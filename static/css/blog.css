@@ -433,4 +433,51 @@ a{
     .breadcrumbs-path{
         margin-bottom: 10px;
     }
+    .blog-page-pagination ul.pagination{
+        padding-left: 0;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .blog-page-pagination ul li{
+        margin: 0px 3px !important;
+    }
+    .blog-page-pagination .pagination .page-item .page-link{
+        font-size: 13px;
+        min-width: 30px;
+        height: 32px;
+        padding: 0 2px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .blog-page-pagination .pagination .page-item .page-link span{
+        font-size: 13px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .blog-page-pagination .pagination .page-item .page-link span i,
+    .blog-page-pagination .pagination .page-item .page-link i{
+        font-size: 10px;
+        padding: 0 !important;
+    }
+}
+
+@media(max-width:380px){
+    .blog-page-pagination ul li{
+        margin: 0px 1.5px !important;
+    }
+    .blog-page-pagination .pagination .page-item .page-link{
+        font-size: 11px;
+        min-width: 26px;
+        height: 28px;
+        padding: 0 1px;
+    }
+    .blog-page-pagination .pagination .page-item .page-link span{
+        font-size: 11px;
+    }
+    .blog-page-pagination .pagination .page-item .page-link span i,
+    .blog-page-pagination .pagination .page-item .page-link i{
+        font-size: 8px;
+    }
 }
