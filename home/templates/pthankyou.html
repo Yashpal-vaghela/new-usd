@@ -6,10 +6,13 @@
 {% endblock header %}
 
 {% block css %}
+{{ block.super }}
 <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
-
-
-    
+<link rel="stylesheet" href="{% static 'css/thankyou_page.css' %}">
+<link
+  href="https://db.onlinewebfonts.com/c/1eeab2d986186e65853217364b1bccd9?family=Argent+CF"
+  rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 {% endblock css %}
     
 
@@ -21,27 +24,34 @@
     
     <!-- CONTENT START -->
     <div class="page-content">
-        <section>
+        <section class="hero_section_bg position-relative">
             <div class="p-0">
                 <picture>
-                    <!-- Mobile image (below 768px) -->
+                    <!-- Mobile Image (max-width: 576px) - Aap yahan mobile image ka path add kar sakte hain -->
                     <source
-                    media="(max-width: 576px)"
-                    alt="Ultimate Smile Design"
-                    srcset="{% static 'dentist_page_hero_poster_mobile.webp' %}"
+                        media="(max-width: 992px)"
+                        srcset="{% static 'THANKYOU_PAGE_BG/thankyou_massage_bg_mobile.webp' %}"
                     />
-                    <source 
-                    media="(max-width:991px)"
-                    alt="Ultimate Smile Design"
-                    srcset="{% static 'dentist_page_hero_poster_tab.webp'%}"
-                    />
-                    <!-- Default image (desktop) -->
+                    <!-- Desktop Image (Default) -->
                     <img
-                    src="{% static 'dentist_page_hero_poster.webp' %}"
-                    alt="Ultimate Smile Design"
-                    class="img-fluid w-100 banner-img"
+                        src="{% static 'THANKYOU_PAGE_BG/thankyou_massage_bg_desktop.webp' %}"
+                        alt="Thank You"
+                        class="img-fluid w-100 banner-img"
                     />
                 </picture>
+            </div>
+            <div class="container position-relative">
+                <div class="hero_center_box">
+                    <div class="tex_and_modal_image_main">
+                        <div class="heading_tagline_text" data-aos="fade-right" data-aos-duration="1000">
+                          Flaunt <br/>Your Smile 
+                        </div>
+                        <div class="modal_image_main" data-aos="fade-up" data-aos-duration="1000">
+                           <img src="{% static 'THANKYOU_PAGE_BG/thankyou_massage_modal_image.webp'%}" class="modal_image img-fluid" alt="thank-you-img"  />
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </section>
         <section class='thank-you-section'>
@@ -283,6 +293,19 @@
 
 {% block js %}
 
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        AOS.init({
+            duration: 1200,
+            once: true,
+            offset: 0
+        });
+    });
+    window.addEventListener("load", function () {
+        AOS.refresh();
+    });
+</script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 {% if messages %}
 <script>

@@ -98,6 +98,23 @@
   {% endfor %}
 </div>
 
+<!-- Image Lightbox Popup Modal -->
+<div id="imageLightboxModal" class="img-lightbox-modal" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="img-lightbox-backdrop" id="lightboxBackdrop"></div>
+  <button type="button" class="img-lightbox-close" id="lightboxCloseBtn" aria-label="Close popup">
+    <i class="fa fa-times" aria-hidden="true"></i>
+  </button>
+  <button type="button" class="img-lightbox-nav img-lightbox-prev" id="lightboxPrevBtn" aria-label="Previous image">
+    <i class="fa fa-chevron-left" aria-hidden="true"></i>
+  </button>
+  <button type="button" class="img-lightbox-nav img-lightbox-next" id="lightboxNextBtn" aria-label="Next image">
+    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+  </button>
+  <div class="img-lightbox-content">
+    <img id="lightboxImg" src="" alt="Popup Preview" />
+  </div>
+</div>
+
 {% endblock body %} {% block js %}
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -447,6 +464,158 @@
       ScrollTrigger.refresh();
     });
   })();
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("imageLightboxModal");
+    const modalImg = document.getElementById("lightboxImg");
+    const closeBtn = document.getElementById("lightboxCloseBtn");
+    const prevBtn = document.getElementById("lightboxPrevBtn");
+    const nextBtn = document.getElementById("lightboxNextBtn");
+    const backdrop = document.getElementById("lightboxBackdrop");
+    const galleryWrappers = document.querySelectorAll(".simpale_img_view .img_wrapper");
+
+    const images = [];
+    galleryWrappers.forEach((wrapper, index) => {
+      const img = wrapper.querySelector("img");
+      if (img) {
+        images.push({
+          src: img.src,
+          alt: img.alt || `Gallery Image ${index + 1}`,
+        });
+      }
+    });
+
+    let currentIndex = 0;
+
+    function showImage(index) {
+      if (!modal || !modalImg || images.length === 0) return;
+      currentIndex = (index + images.length) % images.length;
+      modalImg.src = images[currentIndex].src;
+      modalImg.alt = images[currentIndex].alt;
+    }
+
+    function openLightbox(index) {
+      if (!modal || !modalImg || images.length === 0) return;
+      showImage(index);
+      modal.classList.add("active");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeLightbox() {
+      if (!modal) return;
+      modal.classList.remove("active");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      setTimeout(() => {
+        if (!modal.classList.contains("active") && modalImg) {
+          modalImg.src = "";
+        }
+      }, 300);
+    }
+
+    function prevImage() {
+      if (modal && modal.classList.contains("active")) {
+        showImage(currentIndex - 1);
+      }
+    }
+
+    function nextImage() {
+      if (modal && modal.classList.contains("active")) {
+        showImage(currentIndex + 1);
+      }
+    }
+
+    galleryWrappers.forEach((wrapper, index) => {
+      wrapper.addEventListener("click", function () {
+        openLightbox(index);
+      });
+    });
+
+    if (closeBtn) closeBtn.addEventListener("click", closeLightbox);
+    if (backdrop) backdrop.addEventListener("click", closeLightbox);
+    if (prevBtn) {
+      prevBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        prevImage();
+      });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        nextImage();
+      });
+    }
+
+    // Close when clicking outside image (on the modal container backdrop)
+    if (modal) {
+      modal.addEventListener("click", function (e) {
+        if (e.target === modal) {
+          closeLightbox();
+        }
+      });
+    }
+
+    // Touch swipe gestures for mobile/tablet screens
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchEndX = 0;
+    let touchEndY = 0;
+
+    modal.addEventListener(
+      "touchstart",
+      function (e) {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+      },
+      { passive: true }
+    );
+
+    modal.addEventListener(
+      "touchend",
+      function (e) {
+        touchEndX = e.changedTouches[0].screenX;
+        touchEndY = e.changedTouches[0].screenY;
+        handleSwipe();
+      },
+      { passive: true }
+    );
+
+    function handleSwipe() {
+      const diffX = touchEndX - touchStartX;
+      const diffY = touchEndY - touchStartY;
+      const minSwipeDistance = 40;
+
+      if (
+        Math.abs(diffX) > Math.abs(diffY) &&
+        Math.abs(diffX) > minSwipeDistance
+      ) {
+        if (diffX < 0) {
+          nextImage(); // Swipe left -> Next image
+        } else {
+          prevImage(); // Swipe right -> Previous image
+        }
+      }
+    }
+
+    // Keyboard navigation: ArrowLeft (prev), ArrowRight (next), Escape (close)
+    document.addEventListener("keydown", function (e) {
+      if (!modal || !modal.classList.contains("active")) return;
+
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        prevImage();
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        nextImage();
+      } else if (e.key === "Escape") {
+        e.preventDefault();
+        closeLightbox();
+      }
+    });
+  });
 </script>
 
 <script type="application/ld+json">
