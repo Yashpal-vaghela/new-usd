@@ -46,7 +46,7 @@
                             class="input_icon" />
                     </div>
                     <div class="input_fild_main">
-                        <input type="text" name="name" placeholder="Enter your name..." class="input_filds" required />
+                        <input type="text" name="name" placeholder="Enter your name..." class="input_filds" value="{{ request.POST.name }}" required />
                     </div>
                 </div>
             </div>
@@ -60,7 +60,7 @@
                     </div>
                     <div class="input_fild_main">
                         <input type="email" name="email" placeholder="Enter your email..." class="input_filds"
-                            required />
+                            value="{{ request.POST.email }}" required />
                     </div>
                 </div>
             </div>
@@ -88,8 +88,8 @@
                         </ul>
                     </div>
                     <div class="input_fild_main">
-                        <input type="tel" id="phoneInput" class="input_filds" placeholder="Enter your phone number..." required />
-                        <input type="hidden" name="phone" id="fullPhoneInput" />
+                        <input type="tel" id="phoneInput" class="input_filds" placeholder="Enter your phone number..." value="{{ request.POST.phone }}" required />
+                        <input type="hidden" name="phone" id="fullPhoneInput" value="{{ request.POST.phone }}" />
                     </div>
                 </div>
             </div>
@@ -102,7 +102,7 @@
                             class="input_icon" />
                     </div>
                     <div class="input_fild_main">
-                        <input type="text" name="city" placeholder="Enter your city..." class="input_filds" required />
+                        <input type="text" name="city" placeholder="Enter your city..." class="input_filds" value="{{ request.POST.city }}" required />
                     </div>
                 </div>
             </div>
@@ -116,13 +116,13 @@
                     </div>
                     <div class="input_fild_main">
                         <textarea name="message" id="message" class="input_filds" placeholder="Enter your message..."
-                            rows="4" required></textarea>
+                            rows="4" required>{{ request.POST.message }}</textarea>
                     </div>
                 </div>
             </div>
 
-            <div class="contact_recaptcha_main">
-                {% comment %} <div class="g-recaptcha" data-sitekey="{{ RECAPTCHA_SITE_KEY }}"></div> {% endcomment %}
+            <div class="contact_recaptcha_main mb-3">
+                <div class="g-recaptcha d-flex justify-content-center" data-sitekey="{{ RECAPTCHA_SITE_KEY }}"></div>
             </div>
 
             <div class="submit_button_main bat">

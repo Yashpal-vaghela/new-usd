@@ -69,10 +69,10 @@
         {% csrf_token %}
         <div class="container row justify-content-center mx-auto">
           <div class="col-lg-12 mb-4 mb-sm-5">
-            <input type="text" name="name" placeholder="Full Name" class="form-control" required />
+            <input type="text" name="name" placeholder="Full Name" class="form-control" value="{{ request.POST.name }}" required />
           </div>
           <div class="col-lg-6 mb-4 mb-sm-5">
-            <input type="email" name="email" placeholder="Email" class="form-control" required />
+            <input type="email" name="email" placeholder="Email" class="form-control" value="{{ request.POST.email }}" required />
           </div>
           <div class="col-lg-6 mb-4 mb-sm-5 dentist_number_input">
             <div class="dentist_flag_icon_main" id="countrySelectBtn">
@@ -93,17 +93,17 @@
                 <!-- JS Populated -->
               </ul>
             </div>
-            <input type="tel" id="phoneInput" placeholder="Phone" class="form-control" required />
-            <input type="hidden" name="phone" id="fullPhoneInput" />
+            <input type="tel" id="phoneInput" placeholder="Phone" class="form-control" value="{{ request.POST.phone }}" required />
+            <input type="hidden" name="phone" id="fullPhoneInput" value="{{ request.POST.phone }}" />
           </div>
           <div class="col-lg-6 mb-4 mb-sm-5">
-            <input type="text" name="clinic_name" placeholder="Clinic Name" class="form-control" required />
+            <input type="text" name="clinic_name" placeholder="Clinic Name" class="form-control" value="{{ request.POST.clinic_name }}" required />
           </div>
           <div class="col-lg-6 mb-3 mb-sm-5">
-            <input type="text" name="city" placeholder="City" class="form-control" required />
+            <input type="text" name="city" placeholder="City" class="form-control" value="{{ request.POST.city }}" required />
           </div>
           <div class="col-md-12 mt-2">
-            <div class="g-recaptcha mb-3" data-sitekey="{{ RECAPTCHA_SITE_KEY }}"></div>
+            <div class="g-recaptcha mb-3 d-flex justify-content-center" data-sitekey="{{ RECAPTCHA_SITE_KEY }}"></div>
             <button class="connect-btn" type="submit" >
               <span>Send Message</span>
               <span class="arrow">

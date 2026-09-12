@@ -514,6 +514,48 @@
 
     <!--Sweet alert after submit the request-->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Intercept form submissions across all forms to validate CAPTCHA before submitting
+    document.addEventListener("submit", function (e) {
+        const form = e.target;
+        if (!form || form.tagName !== "FORM") return;
+
+        const recaptchaWidget = form.querySelector(".g-recaptcha");
+        if (recaptchaWidget) {
+            let response = "";
+            const textarea = form.querySelector('textarea[name="g-recaptcha-response"]');
+            if (textarea && textarea.value.trim() !== "") {
+                response = textarea.value.trim();
+            } else if (typeof grecaptcha !== "undefined" && grecaptcha.getResponse) {
+                try {
+                    response = grecaptcha.getResponse();
+                } catch (err) {
+                    response = "";
+                }
+            }
+
+            if (!response) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (typeof Swal !== "undefined") {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "Verification Required",
+                        text: "Please check the CAPTCHA box before submitting.",
+                        confirmButtonColor: "#C3942F"
+                    });
+                } else {
+                    alert("Please check the CAPTCHA box before submitting.");
+                }
+                return false;
+            }
+        }
+    }, true);
+});
+</script>
 
 {% if messages %}
 <script>

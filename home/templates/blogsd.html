@@ -444,6 +444,7 @@
                           name="name"
                           placeholder="Name"
                           class="form-control"
+                          value="{{ request.POST.name }}"
                           required
                         />
                       </div>
@@ -453,6 +454,7 @@
                           name="email"
                           placeholder="Email"
                           class="form-control"
+                          value="{{ request.POST.email }}"
                           required
                         />
                       </div>
@@ -480,9 +482,10 @@
                           id="phoneInput"
                           placeholder="Phone"
                           class="form-control input_number"
+                          value="{{ request.POST.phone }}"
                           required
                         />
-                        <input type="hidden" name="phone" id="fullPhoneInput" />
+                        <input type="hidden" name="phone" id="fullPhoneInput" value="{{ request.POST.phone }}" />
                       </div>
                       <div class="col-lg-12 mb-4">
                         <input
@@ -490,6 +493,7 @@
                           name="city"
                           placeholder="City"
                           class="form-control"
+                          value="{{ request.POST.city }}"
                           required
                         />
                       </div>
@@ -499,21 +503,21 @@
                           name="subject"
                           placeholder="Subject"
                           class="form-control"
+                          value="{{ request.POST.subject }}"
                           required
                         />
                       </div>
                       <div class="col-md-12 mb-4">
                         <textarea
-                          type="message"
                           name="message"
                           placeholder="Message"
                           class="form-control"
                           rows="5"
                           required
-                        ></textarea>
+                        >{{ request.POST.message }}</textarea>
                       </div>
                       <div class="col-md-12">
-                        <div class="g-recaptcha mb-3" data-sitekey="{{ RECAPTCHA_SITE_KEY }}"></div>
+                        <div class="g-recaptcha mb-3 d-flex justify-content-center" data-sitekey="{{ RECAPTCHA_SITE_KEY }}"></div>
                         <button class="btn btn-submit d-flex mx-auto bat" type="submit">Submit</button>
                       </div>
                     </div>

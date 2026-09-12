@@ -276,7 +276,7 @@
           <div class="row align-items-center justify-content-center">
             <div class="col-lg-6 dentists-input-box">
               <label class="form-label">First Name</label>
-              <input class="form-control" name="first_name" type="text" placeholder="First Name" required />
+              <input class="form-control" name="first_name" type="text" placeholder="First Name" value="{{ request.POST.first_name }}" required />
               <span class="input-icon">
                   <svg class="dentists-input-svg" width="25" height="25" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M9.0625 8.75C9.0625 5.47625 11.7263 2.8125 15 2.8125C18.2738 2.8125 20.9375 5.47625 20.9375 8.75C20.9375 12.0238 18.2738 14.6875 15 14.6875C11.7263 14.6875 9.0625 12.0238 9.0625 8.75ZM18.75 16.5625H11.25C7.2875 16.5625 4.0625 19.7875 4.0625 23.75C4.06316 24.6615 4.42554 25.5354 5.07005 26.1799C5.71456 26.8245 6.58852 27.1868 7.5 27.1875H22.5C23.4115 27.1868 24.2854 26.8245 24.9299 26.1799C25.5745 25.5354 25.9368 24.6615 25.9375 23.75C25.9375 19.7875 22.7125 16.5625 18.75 16.5625Z" fill="url(#paint0_linear_3697_2753)"/>
@@ -295,7 +295,7 @@
             </div>
             <div class="col-lg-6 dentists-input-box">
               <label class="form-label">Last Name</label>
-              <input class="form-control" name="last_name" type="text" placeholder="Last Name" required/>
+              <input class="form-control" name="last_name" type="text" placeholder="Last Name" value="{{ request.POST.last_name }}" required/>
               <span class="input-icon">
                  <svg class="dentists-input-svg" width="25" height="25" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M9.0625 8.75C9.0625 5.47625 11.7263 2.8125 15 2.8125C18.2738 2.8125 20.9375 5.47625 20.9375 8.75C20.9375 12.0238 18.2738 14.6875 15 14.6875C11.7263 14.6875 9.0625 12.0238 9.0625 8.75ZM18.75 16.5625H11.25C7.2875 16.5625 4.0625 19.7875 4.0625 23.75C4.06316 24.6615 4.42554 25.5354 5.07005 26.1799C5.71456 26.8245 6.58852 27.1868 7.5 27.1875H22.5C23.4115 27.1868 24.2854 26.8245 24.9299 26.1799C25.5745 25.5354 25.9368 24.6615 25.9375 23.75C25.9375 19.7875 22.7125 16.5625 18.75 16.5625Z" fill="url(#paint0_linear_3697_2753)"/>
@@ -324,8 +324,8 @@
                     <img src="{% static 'angle-down-in-country-code.svg' %}" alt="down arrow" />
                   </div>
                 </div>
-                <input class="form-control remove-padding-left" id="phoneInput" type="text" placeholder="Phone Number" required />
-                <input type="hidden" name="phone" id="fullPhoneInput" />
+                <input class="form-control remove-padding-left" id="phoneInput" type="text" placeholder="Phone Number" value="{{ request.POST.phone }}" required />
+                <input type="hidden" name="phone" id="fullPhoneInput" value="{{ request.POST.phone }}" />
                 <!-- Country Dropdown Menu -->
                 <div class="country-dropdown-menu" id="countryDropdown">
                   <div class="country-search-box">
@@ -339,7 +339,7 @@
             </div>
             <div class="col-lg-6 dentists-input-box">
               <label class="form-label">Email</label>
-              <input class="form-control" name="email" type="email" placeholder="Email" required />
+              <input class="form-control" name="email" type="email" placeholder="Email" value="{{ request.POST.email }}" required />
               <span class="input-icon">
                 <svg class="dentists-input-svg" width="25" height="25" viewBox="0 0 30 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M2.30779 0C1.87309 0.00127985 1.44776 0.126372 1.08158 0.360632L14.0624 11.9233C14.6466 12.444 15.3783 12.444 15.9613 11.9233L28.9181 0.360632C28.5519 0.126372 28.1266 0.00127985 27.6919 0H2.30779ZM0.132 1.56253C0.052421 1.79716 0 2.04568 0 2.30779V17.6924C0 18.1497 0.132632 18.5728 0.360632 18.9303L9.62779 10.0361L0.132 1.56253ZM29.8677 1.56253L20.3968 10.0241L29.6274 18.9423C29.8702 18.5706 29.9997 18.1364 30 17.6924V2.30779C30 2.04568 29.9476 1.79747 29.8677 1.56253ZM19.2426 11.0577L16.9832 13.0768C16.4411 13.5617 15.7394 13.8298 15.0122 13.8298C14.2849 13.8298 13.5832 13.5617 13.0412 13.0768L10.7817 11.0697L1.59916 19.8793C1.82337 19.9519 2.05926 19.9993 2.30811 19.9993H27.6925C27.9417 19.9993 28.1773 19.9519 28.4018 19.8793L19.2429 11.0571L19.2426 11.0577Z" fill="url(#paint0_linear_3697_2745)"/>
@@ -358,7 +358,7 @@
             </div>
             <div class="col-lg-6 dentists-input-box">
               <label class="form-label">Enter Your City Name</label>
-              <input class="form-control" name="city" type="text" placeholder="Enter Your City Name" required />
+              <input class="form-control" name="city" type="text" placeholder="Enter Your City Name" value="{{ request.POST.city }}" required />
               <span class="input-icon">
                 <svg class="dentists-input-svg" width="25" height="25" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clip-path="url(#clip0_3697_2771)">
@@ -405,7 +405,7 @@
             </div>
             <div class="col-lg-6 dentists-input-box">
               <label class="form-label">Dr.Name</label>
-              <input class="form-control" name="doctor_name" type="text" placeholder="Enter Doctor Name" value="{{data.name}}" required />
+              <input class="form-control" name="doctor_name" type="text" placeholder="Enter Doctor Name" value="{{ request.POST.doctor_name|default:data.name }}" required />
               <span class="input-icon">
                 <svg class="dentists-input-svg" width="25" height="25" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M22.6521 17.1379C22.9089 17.7307 23.0583 18.4561 23.0913 19.2949C23.958 19.4935 24.6066 20.2687 24.6066 21.1945C24.6066 22.2697 23.7318 23.1445 22.6566 23.1445C21.5814 23.1445 20.7066 22.2697 20.7066 21.1945C20.7066 20.2792 21.3411 19.5121 22.1925 19.3024C22.155 18.4693 21.9558 17.2018 21.1404 16.576C20.7196 16.4661 20.2906 16.3906 19.8576 16.3501C19.8252 17.8096 15.0012 21.4114 15.0012 21.4114C15.0012 21.4114 10.1757 17.8102 10.143 16.3507C9.66274 16.3946 9.18747 16.4822 8.72313 16.6126C8.12823 17.0836 7.82043 17.9611 7.80453 19.2367C7.98213 19.3402 8.12299 19.4966 8.20743 19.684C8.84823 19.9867 9.41433 20.6233 9.84783 21.5296C9.92043 21.682 9.93003 21.8542 9.87663 22.0114C10.1364 22.6801 10.2849 23.4109 10.2849 24.0247C10.2849 24.8848 10.2849 25.6981 9.34743 25.9069C9.24578 25.9916 9.11763 26.0379 8.98533 26.0377H8.35893C8.20796 26.0375 8.06324 25.9774 7.95646 25.8707C7.84968 25.764 7.78955 25.6193 7.78923 25.4683L7.78983 25.4461C7.79637 25.2993 7.85908 25.1606 7.965 25.0587C8.07092 24.9568 8.21195 24.8995 8.35893 24.8986H8.98533C9.04917 24.8986 9.11255 24.9094 9.17283 24.9304C9.19047 24.9266 9.20738 24.92 9.22293 24.9109C9.29253 24.7873 9.29253 24.2725 9.29253 24.0253C9.29253 23.5267 9.16773 22.9246 8.94903 22.3651C8.83534 22.3006 8.74406 22.203 8.68743 22.0852C8.30763 21.2899 7.79103 20.7763 7.37163 20.7763C6.94263 20.7763 6.40023 21.3319 6.02193 22.1575C5.9593 22.2925 5.85223 22.4019 5.71863 22.4674C5.52093 23.0026 5.41233 23.5537 5.41233 24.025C5.41233 24.2326 5.41233 24.7834 5.49153 24.913C5.49243 24.913 5.51013 24.9238 5.55993 24.9361C5.62473 24.9112 5.69433 24.8983 5.76393 24.8983H6.39153C6.53257 24.8985 6.66853 24.9509 6.77315 25.0455C6.87777 25.1401 6.9436 25.2701 6.95793 25.4104L6.96093 25.4455C6.96093 25.7818 6.70533 26.038 6.39153 26.038H5.76393C5.63943 26.038 5.51913 25.9963 5.42013 25.9207C5.06163 25.8532 4.80903 25.6951 4.64913 25.4377C4.45533 25.1266 4.41993 24.718 4.41993 24.025C4.41993 23.4172 4.56033 22.717 4.81533 22.0483C4.77749 21.9059 4.79076 21.7547 4.85283 21.6211C5.11833 21.0403 5.45613 20.5429 5.82933 20.1832C6.02317 19.9936 6.24445 19.8342 6.48573 19.7104C6.57061 19.5114 6.71792 19.3455 6.90543 19.2376C6.91503 18.4381 7.03803 17.7478 7.26543 17.1787C4.66203 18.4993 2.87793 21.2002 2.87793 24.3193C2.87793 28.3051 5.79003 28.5001 9.60213 28.5001C10.0182 28.5001 10.4442 28.4977 10.8795 28.4977H19.1196C19.5543 28.4977 19.9803 28.5001 20.3964 28.5001C24.2091 28.5001 27.1224 28.3051 27.1224 24.3193C27.1221 21.1672 25.2999 18.4426 22.6521 17.1379Z" fill="url(#paint0_linear_3697_2783)"/>
@@ -442,7 +442,7 @@
             </div>
             <div class="col-12 dentists-input-box dentists-textarea-box">
               <label class="form-label">Message</label>
-              <textarea class='form-control h-100' name="message" type="text" placeholder="Enter your message" rows="4" required></textarea>
+              <textarea class='form-control h-100' name="message" placeholder="Enter your message" rows="4" required>{{ request.POST.message }}</textarea>
               <span class="input-icon">
                 <svg class="dentists-input-svg" width="25" height="25" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clip-path="url(#clip0_3697_2794)">
@@ -465,11 +465,11 @@
               </span>
             </div>
             <div class="col-12 d-flex align-items-center dentists-input-box mb-4 mb-sm-5">
-              <input class="form-check-input" type="checkbox" name="agree_to_terms" required checked />
+              <input class="form-check-input" type="checkbox" name="agree_to_terms" required {% if request.POST %}{% if request.POST.agree_to_terms %}checked{% endif %}{% else %}checked{% endif %} />
               <label class="mb-0 form-label">By submitting, you agree to receive SMS or emails via the provided channel.</label>
             </div>
-            <div class="col-lg-12">
-              {% comment %} <div class="g-recaptcha" data-sitekey="{{ RECAPTCHA_SITE_KEY }}"></div> {% endcomment %}
+            <div class="col-lg-12 mb-3">
+              <div class="g-recaptcha d-flex justify-content-center" data-sitekey="{{ RECAPTCHA_SITE_KEY }}"></div>
             </div>
             <div class="col-lg-3 col-md-4 col-sm-5 col-12">
               <button type="submit" class="request-button bat-form">Submit</button>
