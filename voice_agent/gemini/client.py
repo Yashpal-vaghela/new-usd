@@ -1,3 +1,18 @@
+import os
+import re
+import json
+import base64
+import asyncio
+import httpx
+import websockets
+from websockets.exceptions import ConnectionClosed
+from voice_agent.utils.constants import GEMINI_LIVE_MODEL, GEMINI_TEXT_MODEL
+from voice_agent.utils.helpers import clean_assistant_text, clean_hallucinations, extract_slots_from_review_summary
+from voice_agent.navigation.commands import detect_best_tag, detect_best_tag_with_fallback
+from voice_agent.audio.transcoder import wrap_pcm_to_wav_base64
+from voice_agent.audio.transcriber import transcribe_voice_data
+from voice_agent.services.appointment_service import submit_consultation_appointment, CERTIFIED_CITIES
+
 def is_affirmative_submit(text):
     if not text:
         return False
@@ -31,20 +46,24 @@ def is_affirmative_submit(text):
             return True
     return False
 
-import os
-import re
-import json
-import base64
-import asyncio
-import httpx
-import websockets
-from websockets.exceptions import ConnectionClosed
-from voice_agent.utils.constants import GEMINI_LIVE_MODEL, GEMINI_TEXT_MODEL
-from voice_agent.utils.helpers import clean_assistant_text, clean_hallucinations, extract_slots_from_review_summary
-from voice_agent.navigation.commands import detect_best_tag, detect_best_tag_with_fallback
-from voice_agent.audio.transcoder import wrap_pcm_to_wav_base64
-from voice_agent.audio.transcriber import transcribe_voice_data
-from voice_agent.services.appointment_service import submit_consultation_appointment, CERTIFIED_CITIES
+def is_cancel_submit(text: str) -> bool:
+    if not text:
+        return False
+    tl = text.lower().strip()
+    tl = re.sub(r"[\s.,!?\\/]+$", "", tl)
+    if any(w in tl for w in ["change", "update", "badal", "badlo", "sudharo", "ferfar", "બદલો", "સુધારો", "અપડેટ", "ફેરફાર", "बदलो", "अपडेट", "सुधारो"]):
+        return False
+    if any(neg in tl for neg in ["don't cancel", "dont cancel", "not cancel", "cancel nathi", "cancel nahi", "cancel nahin", "કેન્સલ નથી", "કેન્સલ નહીં", "कैंसिल नहीं", "कैंसिल मत"]):
+        return False
+    cancel_keywords = [
+        "cancel", "abort", "stop booking", "stop appointment",
+        "કેન્સલ", "રદ", "કેન્સલ કરો", "રદ કરો", "કેન્સલ કરવી", "કેન્સલ કરવું", "રદ કરવી", "રદ કરવું",
+        "कैंसिल", "रद्द", "कैंसिल करो", "रद्द करो", "कैंसिल करना", "रद्द करना",
+        "cancel karvi", "cancel karvu", "cancel karo", "cancel kar do", "cancel kardo", "cancel karna",
+        "cancel kari nakho", "cancel kari dyo", "cancel kari do", "nathi karvu"
+    ]
+    return any(kw in tl for kw in cancel_keywords)
+
 
 APPOINTMENT_TOOL_DECLARATION = {
     "functionDeclarations": [
@@ -70,6 +89,7 @@ APPOINTMENT_TOOL_DECLARATION = {
 }
 
 def log_live_voice_conversation(user_text, bot_text, slots):
+    import sys
     fn = slots.get('first_name') or '-'
     ln = slots.get('last_name') or '-'
     name_str = f"{fn} {ln}".strip() if ln != '-' else fn
@@ -88,7 +108,17 @@ def log_live_voice_conversation(user_text, bot_text, slots):
         f"📋 SLOTS: Name: {name_str} | City: {city_str} | Doctor: {doc_str} | Concern: {msg_str} | Phone: {phone_str} | Submitted: {sub_str}\n"
         f"{sep}\n"
     )
-    print(log_msg, flush=True)
+    try:
+        print(log_msg, flush=True)
+    except Exception:
+        try:
+            sys.stdout.buffer.write(log_msg.encode('utf-8', errors='replace') + b'\n')
+            sys.stdout.buffer.flush()
+        except Exception:
+            pass
+
+def append_to_live_log(msg):
+    pass
 
 def sanitize_gemini_history(history):
     if not isinstance(history, list):
@@ -120,7 +150,7 @@ def sanitize_gemini_history(history):
     return sanitized
 
 def get_gemini_api_key():
-    key = os.getenv("GEMINI_API_KEY_NEW", "")
+    key = os.getenv("GEMINI_API_KEY_NEW") or os.getenv("GEMINI_API_KEY", "")
     return key.strip()
 
 class GeminiClient:
@@ -179,7 +209,7 @@ class GeminiClient:
                                 "speechConfig": {
                                     "voiceConfig": {
                                         "prebuiltVoiceConfig": {
-                                            "voiceName": "Leda"
+                                            "voiceName": "Despina"
                                         }
                                     }
                                 }
@@ -278,26 +308,69 @@ class GeminiClient:
                         args = fc.get("args", {})
                         print(f"[INFO] Gemini Live invoked Tool Call: {func_name} with args: {args}")
                         if func_name == "submit_appointment_booking":
-                            sum_slots = extract_slots_from_review_summary(self.session.full_bot_reply or self.session.display_str)
+                            # ⚡ Extract confirmed slots from last review summary or history ⚡
+                            sum_slots = dict(getattr(self.session, "last_review_summary_slots", {}) or {})
+                            if not sum_slots and getattr(self.session, "last_review_summary_text", ""):
+                                sum_slots = extract_slots_from_review_summary(self.session.last_review_summary_text)
+                            if not sum_slots and getattr(self.session, "latest_client_history", None):
+                                for h_turn in reversed(self.session.latest_client_history):
+                                    if h_turn.get("role") in ["model", "assistant"]:
+                                        h_text = "".join(p.get("text", "") for p in h_turn.get("parts", []) if isinstance(p, dict))
+                                        h_slots = extract_slots_from_review_summary(h_text)
+                                        if h_slots:
+                                            sum_slots = h_slots
+                                            break
                             if sum_slots:
                                 for k, v in sum_slots.items():
-                                    if v:
+                                    if v and str(v).lower() not in ["none", "null", "-", "--"]:
                                         self.session.booking_slots[k] = v
                                 if sum_slots.get("user_name"):
                                     self.session.user_name = sum_slots["user_name"]
-                                if sum_slots.get("user_concern"):
-                                    self.session.user_concern = sum_slots["user_concern"]
-                            full_args = dict(args)
-                            for k, v in self.session.booking_slots.items():
-                                if v and v != "-" and str(v).lower() not in ["none", "null"]:
-                                    full_args[k] = v
+                                    u_p = sum_slots["user_name"].split()
+                                    self.session.booking_slots["first_name"] = u_p[0]
+                                    self.session.booking_slots["last_name"] = " ".join(u_p[1:]) if len(u_p) > 1 else "-"
+                                if sum_slots.get("user_concern") or sum_slots.get("message"):
+                                    self.session.user_concern = sum_slots.get("user_concern") or sum_slots.get("message")
+                                    self.session.booking_slots["message"] = self.session.user_concern
+
+                            full_args = dict(self.session.booking_slots)
+                            full_args.update(args)
+                            if sum_slots:
+                                for k, v in sum_slots.items():
+                                    if v and str(v).lower() not in ["none", "null", "-", "--"]:
+                                        full_args[k] = v
+                            if self.session.user_name:
+                                u_p = self.session.user_name.split()
+                                full_args["first_name"] = u_p[0]
+                                full_args["last_name"] = " ".join(u_p[1:]) if len(u_p) > 1 else "-"
+                            # Guard against placeholder doctor phrases
+                            doc_val = str(full_args.get("doctor_name") or "").lower()
+                            placeholder_words = ["हमारे डॉक्टर", "અમારા ડૉક્ટર", "our doctor", "doctor in", "ડોક્ટર છે", "डॉक्टर हैं", "ceramist", "सिरामिस्ट", "સેરેમિસ્ટ", "haresh savani"]
+                            if any(pw in doc_val for pw in placeholder_words):
+                                full_args["doctor_name"] = ""
+                                self.session.booking_slots["doctor_name"] = ""
+
                             full_args["submission_id"] = self.session.booking_slots.get("submission_id")
+                            if self.session.booking_slots.get("godaddy_id"):
+                                full_args["godaddy_id"] = self.session.booking_slots.get("godaddy_id")
+                            if self.session.booking_slots.get("api_id"):
+                                full_args["api_id"] = self.session.booking_slots.get("api_id")
+                            if is_cancel_submit(self.session.current_user_transcription or ""):
+                                full_args["is_cancel"] = True
+                            full_args["is_update"] = bool(self.session.booking_slots.get("submission_id")) or bool(self.session.booking_slots.get("is_submitted"))
                             result = await submit_consultation_appointment(full_args)
                             if result.get("status") == "success":
                                 self.session.booking_slots["is_submitted"] = True
-                                if "details" in result and "data" in result["details"] and "id" in result["details"]["data"]:
-                                    if not self.session.booking_slots.get("submission_id"):
-                                        self.session.booking_slots["submission_id"] = result["details"]["data"]["id"]
+                                if full_args.get("is_cancel"):
+                                    self.session.booking_slots["is_cancel"] = True
+                                if isinstance(result.get("details"), dict):
+                                    ret_id = result["details"].get("id") or result["details"].get("submission_id")
+                                    if ret_id:
+                                        self.session.booking_slots["submission_id"] = ret_id
+                                    if result["details"].get("godaddy_id"):
+                                        self.session.booking_slots["godaddy_id"] = result["details"]["godaddy_id"]
+                                    if result["details"].get("api_id"):
+                                        self.session.booking_slots["api_id"] = result["details"]["api_id"]
                                 for k, v in full_args.items():
                                     if v is not None:
                                         self.session.booking_slots[k] = str(v)
@@ -406,24 +479,69 @@ class GeminiClient:
                             func_name = fc.get("name")
                             args = fc.get("args", {})
                             if func_name == "submit_appointment_booking":
-                                sum_slots = extract_slots_from_review_summary(self.session.full_bot_reply or self.session.display_str)
+                                # ⚡ Extract confirmed slots from last review summary or history ⚡
+                                sum_slots = dict(getattr(self.session, "last_review_summary_slots", {}) or {})
+                                if not sum_slots and getattr(self.session, "last_review_summary_text", ""):
+                                    sum_slots = extract_slots_from_review_summary(self.session.last_review_summary_text)
+                                if not sum_slots and getattr(self.session, "latest_client_history", None):
+                                    for h_turn in reversed(self.session.latest_client_history):
+                                        if h_turn.get("role") in ["model", "assistant"]:
+                                            h_text = "".join(p.get("text", "") for p in h_turn.get("parts", []) if isinstance(p, dict))
+                                            h_slots = extract_slots_from_review_summary(h_text)
+                                            if h_slots:
+                                                sum_slots = h_slots
+                                                break
                                 if sum_slots:
                                     for k, v in sum_slots.items():
-                                        if v:
+                                        if v and str(v).lower() not in ["none", "null", "-", "--"]:
                                             self.session.booking_slots[k] = v
                                     if sum_slots.get("user_name"):
                                         self.session.user_name = sum_slots["user_name"]
-                                    if sum_slots.get("user_concern"):
-                                        self.session.user_concern = sum_slots["user_concern"]
+                                        u_p = sum_slots["user_name"].split()
+                                        self.session.booking_slots["first_name"] = u_p[0]
+                                        self.session.booking_slots["last_name"] = " ".join(u_p[1:]) if len(u_p) > 1 else "-"
+                                    if sum_slots.get("user_concern") or sum_slots.get("message"):
+                                        self.session.user_concern = sum_slots.get("user_concern") or sum_slots.get("message")
+                                        self.session.booking_slots["message"] = self.session.user_concern
+
                                 full_args = dict(self.session.booking_slots)
                                 full_args.update(args)
+                                if sum_slots:
+                                    for k, v in sum_slots.items():
+                                        if v and str(v).lower() not in ["none", "null", "-", "--"]:
+                                            full_args[k] = v
+                                if self.session.user_name:
+                                    u_p = self.session.user_name.split()
+                                    full_args["first_name"] = u_p[0]
+                                    full_args["last_name"] = " ".join(u_p[1:]) if len(u_p) > 1 else "-"
+                                # Guard against placeholder doctor phrases
+                                doc_val = str(full_args.get("doctor_name") or "").lower()
+                                placeholder_words = ["हमारे डॉक्टर", "અમારા ડૉક્ટર", "our doctor", "doctor in", "ડોક્ટર છે", "डॉक्टर हैं", "ceramist", "सिरामिस्ट", "સેરેમિસ્ટ", "haresh savani"]
+                                if any(pw in doc_val for pw in placeholder_words):
+                                    full_args["doctor_name"] = ""
+                                    self.session.booking_slots["doctor_name"] = ""
+
                                 full_args["submission_id"] = self.session.booking_slots.get("submission_id")
+                                if self.session.booking_slots.get("godaddy_id"):
+                                    full_args["godaddy_id"] = self.session.booking_slots.get("godaddy_id")
+                                if self.session.booking_slots.get("api_id"):
+                                    full_args["api_id"] = self.session.booking_slots.get("api_id")
+                                if is_cancel_submit(self.session.current_user_transcription or ""):
+                                    full_args["is_cancel"] = True
+                                full_args["is_update"] = bool(self.session.booking_slots.get("submission_id")) or bool(self.session.booking_slots.get("is_submitted"))
                                 res = await submit_consultation_appointment(full_args)
                                 if res.get("status") == "success":
                                     self.session.booking_slots["is_submitted"] = True
-                                    if "details" in res and "data" in res["details"] and "id" in res["details"]["data"]:
-                                        if not self.session.booking_slots.get("submission_id"):
-                                            self.session.booking_slots["submission_id"] = res["details"]["data"]["id"]
+                                    if full_args.get("is_cancel"):
+                                        self.session.booking_slots["is_cancel"] = True
+                                    if isinstance(res.get("details"), dict):
+                                        ret_id = res["details"].get("id") or res["details"].get("submission_id")
+                                        if ret_id:
+                                            self.session.booking_slots["submission_id"] = ret_id
+                                        if res["details"].get("godaddy_id"):
+                                            self.session.booking_slots["godaddy_id"] = res["details"]["godaddy_id"]
+                                        if res["details"].get("api_id"):
+                                            self.session.booking_slots["api_id"] = res["details"]["api_id"]
                                     for k, v in full_args.items():
                                         if v is not None:
                                             self.session.booking_slots[k] = str(v)
@@ -514,28 +632,56 @@ class GeminiClient:
                         self.session.last_review_summary_text = clean_text or bot_text_to_send
                         for k, v in summary_slots.items():
                             if v and str(v).lower() not in ["none", "null", "-", "--"]:
-                                if k in ["first_name", "last_name", "user_name"]:
-                                    if not self.session.user_name:
-                                        self.session.booking_slots[k] = v
-                                else:
-                                    self.session.booking_slots[k] = v
-                        if summary_slots.get("user_name") and not self.session.user_name:
+                                self.session.booking_slots[k] = v
+                        if summary_slots.get("user_name"):
                             self.session.user_name = summary_slots["user_name"]
-                        if (summary_slots.get("user_concern") or summary_slots.get("message")) and not self.session.user_concern:
+                            u_p = summary_slots["user_name"].split()
+                            self.session.booking_slots["first_name"] = u_p[0]
+                            self.session.booking_slots["last_name"] = " ".join(u_p[1:]) if len(u_p) > 1 else "-"
+                        if summary_slots.get("user_concern") or summary_slots.get("message"):
                             self.session.user_concern = summary_slots.get("user_concern") or summary_slots.get("message")
+                            self.session.booking_slots["message"] = self.session.user_concern
+                        # Verify doctor-city consistency
+                        if self.session.booking_slots.get("doctor_name") and self.session.booking_slots.get("city"):
+                            try:
+                                from voice_agent.services.appointment_service import is_matched_doctor
+                                matched = is_matched_doctor(self.session.booking_slots["doctor_name"], city=self.session.booking_slots.get("city"))
+                                if matched:
+                                    self.session.booking_slots["doctor_name"] = matched
+                                else:
+                                    self.session.booking_slots["doctor_name"] = ""
+                            except Exception:
+                                pass
                         await self.send_json({
                             "type": "sync_slots",
                             "slots": self.session.booking_slots
                         })
 
-                    # ⚡ Fast-path submission in Voice Mode if user affirms or model confirms ⚡
+                    # ⚡ Fast-path submission / cancellation in Voice Mode ⚡
                     bot_reply_lower = (self.session.full_bot_reply or "").lower()
+                    is_cancel_req = is_cancel_submit(user_text) or any(w in bot_reply_lower for w in ["appointment request has been cancelled", "appointment has been cancelled", "કેન્સલ કરવામાં આવી છે", "રદ કરવામાં આવી છે", "रद्द कर दिया गया", "रद्द कर दी गई", "कैंसिल कर दिया"])
                     is_model_confirmed = any(w in bot_reply_lower for w in ["successfully submitted", "appointment request has been", "appointment has been submitted", "સફળતાપૂર્વક સબમિટ", "સબમિટ થઈ ગઈ છે", "સબમિટ કરવામાં આવી", "सफलतापूर्वक सबमिट", "सबमिट हो गई"])
                     is_user_affirmed = is_affirmative_submit(user_text)
 
-                    if (is_model_confirmed or is_user_affirmed) and not self.session.booking_slots.get("is_submitted"):
+                    should_submit = (is_cancel_req and (self.session.booking_slots.get("submission_id") or self.session.booking_slots.get("is_submitted"))) or \
+                                    ((is_model_confirmed or is_user_affirmed) and not self.session.booking_slots.get("is_submitted"))
+
+                    if should_submit:
                         confirmed_slots = dict(getattr(self.session, "last_review_summary_slots", {}) or {})
+                        if not confirmed_slots and getattr(self.session, "last_review_summary_text", ""):
+                            confirmed_slots = extract_slots_from_review_summary(self.session.last_review_summary_text)
+                        if not confirmed_slots and getattr(self.session, "latest_client_history", None):
+                            for h_turn in reversed(self.session.latest_client_history):
+                                if h_turn.get("role") in ["model", "assistant"]:
+                                    h_text = "".join(p.get("text", "") for p in h_turn.get("parts", []) if isinstance(p, dict))
+                                    h_slots = extract_slots_from_review_summary(h_text)
+                                    if h_slots:
+                                        confirmed_slots = h_slots
+                                        break
                         slots_to_send = dict(self.session.booking_slots)
+                        for k, v in confirmed_slots.items():
+                            if v and str(v).lower() not in ["none", "null", "-", "--"]:
+                                slots_to_send[k] = v
                         if self.session.user_name:
                             u_parts = self.session.user_name.split()
                             slots_to_send["first_name"] = u_parts[0]
@@ -543,24 +689,53 @@ class GeminiClient:
                         if self.session.user_concern:
                             slots_to_send["message"] = self.session.user_concern
                         
+                        if slots_to_send.get("doctor_name"):
+                            try:
+                                from voice_agent.services.appointment_service import is_matched_doctor
+                                matched = is_matched_doctor(slots_to_send["doctor_name"], city=slots_to_send.get("city"))
+                                if not matched:
+                                    matched = is_matched_doctor(slots_to_send["doctor_name"], city=None)
+                                if matched:
+                                    slots_to_send["doctor_name"] = matched
+                                    self.session.booking_slots["doctor_name"] = matched
+                                else:
+                                    slots_to_send["doctor_name"] = ""
+                                    self.session.booking_slots["doctor_name"] = ""
+                            except Exception:
+                                pass
+                        
                         has_fn = bool(slots_to_send.get("first_name") and slots_to_send["first_name"].lower() not in ["", "none", "null", "patient", "user"])
-                        has_city = bool(slots_to_send.get("city") and any(c.lower() == str(slots_to_send["city"]).strip().lower() for c in CERTIFIED_CITIES))
-                        has_doc = bool(slots_to_send.get("doctor_name") and slots_to_send["doctor_name"] not in ["", "none", "null", "usd certified smile designer"])
+                        has_city = bool(slots_to_send.get("city") and len(str(slots_to_send["city"]).strip()) >= 2 and str(slots_to_send["city"]).lower() not in ["none", "null", "india", ""])
                         has_msg = bool(slots_to_send.get("message") and len(slots_to_send["message"].strip()) >= 2)
                         has_phone = bool(slots_to_send.get("phone") and len("".join(filter(str.isdigit, str(slots_to_send["phone"])))) == 10)
 
-                        if (has_fn and has_city and has_doc and has_msg and has_phone) or bool(confirmed_slots):
+                        if is_cancel_req or (has_fn and has_city and has_msg and has_phone):
+                            slots_to_send["is_cancel"] = is_cancel_req
+                            slots_to_send["is_update"] = bool(self.session.booking_slots.get("submission_id")) or bool(self.session.booking_slots.get("is_submitted"))
                             slots_to_send["submission_id"] = self.session.booking_slots.get("submission_id")
+                            if self.session.booking_slots.get("godaddy_id"):
+                                slots_to_send["godaddy_id"] = self.session.booking_slots.get("godaddy_id")
+                            if self.session.booking_slots.get("api_id"):
+                                slots_to_send["api_id"] = self.session.booking_slots.get("api_id")
                             res = await submit_consultation_appointment(slots_to_send)
                             if res.get("status") == "success":
                                 self.session.booking_slots["is_submitted"] = True
-                                if "details" in res and "data" in res["details"] and "id" in res["details"]["data"]:
-                                    if not self.session.booking_slots.get("submission_id"):
-                                        self.session.booking_slots["submission_id"] = res["details"]["data"]["id"]
+                                if is_cancel_req:
+                                    self.session.booking_slots["is_cancel"] = True
+                                if isinstance(res.get("details"), dict):
+                                    ret_id = res["details"].get("id") or res["details"].get("submission_id")
+                                    if ret_id:
+                                        self.session.booking_slots["submission_id"] = ret_id
+                                    if res["details"].get("godaddy_id"):
+                                        self.session.booking_slots["godaddy_id"] = res["details"]["godaddy_id"]
+                                    if res["details"].get("api_id"):
+                                        self.session.booking_slots["api_id"] = res["details"]["api_id"]
                                 await self.send_json({
                                     "type": "sync_slots",
                                     "slots": self.session.booking_slots
                                 })
+                                act_type = "cancelled" if is_cancel_req else "submitted"
+                                print(f"[INFO] Fast-path appointment {act_type} in Voice Mode: {slots_to_send}")
                                 print(f"[INFO] Fast-path appointment submitted in Voice Mode: {slots_to_send}")
 
                     if len(current_assistant_audio) > 0 or len(clean_text) > 0:
@@ -654,14 +829,16 @@ class GeminiClient:
                                 
                                 try:
                                     json_data = json.loads(payload_data)
-                                    delta = json_data.get("candidates", [{}])[0].get("content", {}).get("parts", [{}])[0].get("text", "")
-                                    if delta:
-                                        display_str += delta
-                                        await self.send_json({
-                                            "type": "bot_text_chunk",
-                                            "text": delta,
-                                            "tag": best_tag
-                                        })
+                                    parts = json_data.get("candidates", [{}])[0].get("content", {}).get("parts", [])
+                                    for part in parts:
+                                        delta = part.get("text", "")
+                                        if delta and not part.get("thought"):
+                                            display_str += delta
+                                            await self.send_json({
+                                                "type": "bot_text_chunk",
+                                                "text": delta,
+                                                "tag": best_tag
+                                            })
                                 except Exception:
                                     pass
                     success = True

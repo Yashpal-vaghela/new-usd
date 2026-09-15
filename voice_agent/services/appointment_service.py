@@ -1,9 +1,26 @@
+import os
+import time
 import httpx
 import logging
+import asyncio
+import smtplib
+import datetime
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 logger = logging.getLogger(__name__)
 
-API_URL = "https://ultimatesmiledesign.com/api/consult-with-dentist/"
+# Consultation API endpoint on ultimatesmiledesign.com
+CONSULT_API_ENDPOINT = os.getenv(
+    "CONSULT_API_ENDPOINT",
+    os.getenv("LOCAL_API_ENDPOINT", "https://ultimatesmiledesign.com/api/consult-with-dentist/")
+)
+LOCAL_API_ENDPOINT = CONSULT_API_ENDPOINT
+
+# GoDaddy lightweight internal endpoint (Disabled for now - local database only)
+ENABLE_GODADDY_SYNC = os.getenv("ENABLE_GODADDY_SYNC", "false").lower() in ("true", "1")
+GODADDY_SYNC_URL = os.getenv("GODADDY_SYNC_URL") or os.getenv("INTERNAL_SYNC_URL") or "api/internal/save-lead/"
+INTERNAL_SYNC_SECRET = os.getenv("INTERNAL_SYNC_SECRET", "usd-secret-sync-token-2026")
 
 CERTIFIED_CITIES = {
     "Ahmedabad", "Surat", "Mumbai", "Pune", "Vadodara", "Rajkot", "Jamnagar",
@@ -27,8 +44,6 @@ ALL_CERTIFIED_DOCTORS = [
     "Dr. Adil Lyngdoh", "Dr. Asmita Sodhi", "Dr. Neetu Jindal", "Dr. A K Saha"
 ]
 
-import time
-
 _RECENT_SUBMISSIONS_CACHE = {}
 
 def transliterate_to_english(text: str) -> str:
@@ -37,7 +52,7 @@ def transliterate_to_english(text: str) -> str:
     
     COMMON_MAP = {
         'ભવિન': 'Bhavin', 'ભાવિન': 'Bhavin', 'પરમાર': 'Parmar',
-        'ગੁਰਪ੍ਰੀਤ': 'Gurpreet', 'ਸਿੰਘ': 'Singh', 'ਗੁਰਪ੍ਰੀਤ ਸਿੰਘ': 'Gurpreet Singh',
+        'ગુરપ્રીત': 'Gurpreet', 'ਸਿੰਘ': 'Singh', 'ગੁਰਪ੍ਰੀਤ ਸਿੰਘ': 'Gurpreet Singh',
         'राहुल': 'Rahul', 'शर्मा': 'Sharma', 'राहुल शर्मा': 'Rahul Sharma',
         'સચિન': 'Sachin', 'સાવંત': 'Sawant', 'सचिन': 'Sachin', 'सावंत': 'Sawant',
         'সৌমেন': 'Soumen', 'ব্যানার্জি': 'Banerjee',
@@ -166,78 +181,361 @@ def is_matched_doctor(doc_str: str, city: str = None) -> str:
     d_clean = doc_str.lower().strip()
     if d_clean in ["none", "null", "usd certified smile designer", "doctor", "dentist", "any", "not provided", ""]:
         return ""
+
+    placeholder_words = [
+        "हमारे डॉक्टर", "અમારા ડૉક્ટર", "our doctor", "doctor in", "ડોક્ટર છે", "डॉक्टर हैं",
+        "select doctor", "choose doctor", "કોઈ પણ", "कोई भी", "ceramist", "सिरामिस्ट", "સેરેમિસ્ટ", "haresh savani", "हरेश सवाणी", "હરેશ સવાણી",
+        "not selected", "pending", "પસંદ કરેલ નથી", "ચયનિત નહીં", "चयनित नहीं", "निवडले नाही"
+    ]
+    if any(pw in d_clean for pw in placeholder_words):
+        return ""
         
-    # 1. Exact or direct substring match in certified doctors list
-    for full_doc in ALL_CERTIFIED_DOCTORS:
-        raw_name = full_doc.lower().replace("dr.", "").replace("dr", "").strip()
-        if raw_name in d_clean or d_clean in full_doc.lower():
-            return full_doc
-            
-    # 2. Try find_doctor_in_text directly
-    try:
-        from voice_agent.ai.conversation_manager import find_doctor_in_text
-        doc = find_doctor_in_text(doc_str, city=city)
-        if doc:
-            return doc
-    except Exception:
-        pass
-
-    # 3. Transliterate non-ascii and match again
-    eng_doc = transliterate_to_english(doc_str) if any(ord(c) > 127 for c in doc_str) else d_clean
-    try:
-        from voice_agent.ai.conversation_manager import find_doctor_in_text
-        doc = find_doctor_in_text(eng_doc, city=city)
-        if doc:
-            return doc
-    except Exception:
-        pass
-    for full_doc in ALL_CERTIFIED_DOCTORS:
-        raw_name = full_doc.lower().replace("dr.", "").replace("dr", "").strip()
-        if raw_name in eng_doc.lower() or eng_doc.lower() in full_doc.lower():
-            return full_doc
-
-    # 4. Token / Root match for doctors in candidate list
     try:
         from voice_agent.ai.conversation_manager import CITY_DOCTORS
-        candidates = CITY_DOCTORS.get(city, []) if city else ALL_CERTIFIED_DOCTORS
+        primary_docs = CITY_DOCTORS.get(city, []) if (city and city in CITY_DOCTORS) else ALL_CERTIFIED_DOCTORS
     except Exception:
-        candidates = ALL_CERTIFIED_DOCTORS
-        
-    eng_clean = re.sub(r"^dr\.?\s*", "", eng_doc, flags=re.IGNORECASE).strip().lower()
-    for full_doc in candidates:
-        parts = [p.lower() for p in full_doc.replace("Dr.", "").split() if len(p) >= 3 and p.lower() not in ["shah", "patel", "kumar", "singh", "sharma"]]
-        for p in parts:
-            p_short = p[:4]  # e.g. 'marg' for 'margie'
-            if p in eng_clean or p_short in eng_clean:
+        primary_docs = ALL_CERTIFIED_DOCTORS
+
+    for doc_candidates in [primary_docs, ALL_CERTIFIED_DOCTORS]:
+        # 1. Exact or direct substring match in doctor candidate list
+        for full_doc in doc_candidates:
+            raw_name = full_doc.lower().replace("dr.", "").replace("dr", "").strip()
+            if raw_name in d_clean or d_clean in full_doc.lower():
+                return full_doc
+                
+        # 2. Try find_doctor_in_text directly
+        try:
+            from voice_agent.ai.conversation_manager import find_doctor_in_text
+            doc = find_doctor_in_text(doc_str, city=city if doc_candidates is primary_docs else None)
+            if doc and doc in doc_candidates:
+                return doc
+        except Exception:
+            pass
+
+        # 3. Transliterate non-ascii and match again
+        eng_doc = transliterate_to_english(doc_str) if any(ord(c) > 127 for c in doc_str) else d_clean
+        try:
+            from voice_agent.ai.conversation_manager import find_doctor_in_text
+            doc = find_doctor_in_text(eng_doc, city=city if doc_candidates is primary_docs else None)
+            if doc and doc in doc_candidates:
+                return doc
+        except Exception:
+            pass
+        for full_doc in doc_candidates:
+            raw_name = full_doc.lower().replace("dr.", "").replace("dr", "").strip()
+            if raw_name in eng_doc.lower() or eng_doc.lower() in full_doc.lower():
                 return full_doc
 
-    # 5. If city has only 1 certified doctor, default to that doctor
-    try:
-        from voice_agent.ai.conversation_manager import CITY_DOCTORS
-        if city and city in CITY_DOCTORS and len(CITY_DOCTORS[city]) == 1:
-            return CITY_DOCTORS[city][0]
-    except Exception:
-        pass
-
+        # 4. Token / Root match for doctors in candidate list
+        eng_clean = re.sub(r"^dr\.?\s*", "", eng_doc, flags=re.IGNORECASE).strip().lower()
+        for full_doc in doc_candidates:
+            parts = [p.lower() for p in full_doc.replace("Dr.", "").split() if len(p) >= 3 and p.lower() not in ["shah", "patel", "kumar", "singh", "sharma"]]
+            for p in parts:
+                p_short = p[:4]  # e.g. 'marg' for 'margie'
+                if p in eng_clean or p_short in eng_clean:
+                    return full_doc
     return ""
+
+from channels.db import database_sync_to_async
+
+_GODADDY_LEAD_MAP = {}  # In-memory cache mapping phone (10-digits) -> GoDaddy lead_id
+
+@database_sync_to_async
+def fetch_existing_lead_data(sub_id, phone_val):
+    """Fetches an existing lead record safely from the database in an async-safe context."""
+    from account.models import UserSubmission
+    lead = None
+    if sub_id:
+        try:
+            lead = UserSubmission.objects.filter(id=sub_id).first()
+        except Exception:
+            lead = None
+    if not lead and phone_val:
+        digits = "".join(filter(str.isdigit, str(phone_val)))
+        if len(digits) >= 10:
+            try:
+                lead = UserSubmission.objects.filter(phone__endswith=digits[-10:]).order_by('-id').first()
+            except Exception:
+                lead = None
+    if lead:
+        return {
+            "id": lead.id,
+            "first_name": lead.first_name,
+            "last_name": lead.last_name,
+            "city": lead.city,
+            "doctor_name": lead.doctor_name,
+            "message": lead.message,
+            "email": lead.email,
+            "phone": lead.phone,
+        }
+    return None
+
+@database_sync_to_async
+def save_lead_to_local_db(payload: dict):
+    """Saves or updates lead directly into local UserSubmission table asynchronously for Daphne/Channels."""
+    from account.models import UserSubmission
+    lead_id = payload.get('id') or payload.get('lead_id') or payload.get('submission_id')
+    is_cancel = bool(payload.get('is_cancel', False))
+    is_update = bool(payload.get('is_update', False))
+    phone_val = str(payload.get('phone', '')).strip()
+
+    lead = None
+    if lead_id:
+        try:
+            lead = UserSubmission.objects.get(id=lead_id)
+        except (UserSubmission.DoesNotExist, ValueError):
+            lead = None
+
+    # If no lead_id found, match the most recent lead with same phone if this is an update or cancellation
+    if not lead and phone_val and (is_cancel or is_update):
+        recent_leads = UserSubmission.objects.filter(phone__endswith=phone_val[-10:]).order_by('-id')
+        if recent_leads.exists():
+            lead = recent_leads.first()
+
+    if lead:
+        if 'is_cancel' in payload:
+            lead.is_cancel = is_cancel
+        if payload.get('doctor_name'):
+            lead.doctor_name = payload.get('doctor_name')
+        if payload.get('first_name'):
+            lead.first_name = payload.get('first_name')
+        if payload.get('last_name'):
+            lead.last_name = payload.get('last_name')
+        if payload.get('city'):
+            lead.city = payload.get('city')
+        if payload.get('message'):
+            lead.message = payload.get('message')
+        if payload.get('email') and payload.get('email') != 'no-reply@ultimatesmiledesign.com':
+            lead.email = payload.get('email')
+        lead.save()
+        print(f"[SUCCESS] Updated local UserSubmission lead ID {lead.id}! (Doctor: {lead.doctor_name}, is_cancel={lead.is_cancel})")
+        return lead.id
+
+    lead = UserSubmission.objects.create(
+        first_name=payload.get('first_name', ''),
+        last_name=payload.get('last_name', '-'),
+        phone=phone_val,
+        email=payload.get('email') or 'no-reply@ultimatesmiledesign.com',
+        city=payload.get('city', ''),
+        message=payload.get('message', ''),
+        doctor_name=payload.get('doctor_name', ''),
+        is_cancel=is_cancel,
+        agree_to_terms=True
+    )
+    print(f"[SUCCESS] Saved directly to local UserSubmission table! (ID: {lead.id}, Name: {lead.first_name} {lead.last_name}, is_cancel={lead.is_cancel})")
+    return lead.id
+
+def sync_lead_to_godaddy_sqlite(payload: dict) -> int:
+    """Remote GoDaddy HTTP sync to update the admin dashboard on ultimatesmiledesign.com."""
+    if not ENABLE_GODADDY_SYNC:
+        return 0
+    try:
+        headers = {
+            "Content-Type": "application/json",
+            "X-Internal-Secret": INTERNAL_SYNC_SECRET
+        }
+        phone_digits = "".join(filter(str.isdigit, str(payload.get("phone", ""))))[-10:]
+        sync_payload = {
+            "first_name": payload.get("first_name", ""),
+            "last_name": payload.get("last_name", "-"),
+            "phone": phone_digits,
+            "email": payload.get("email") or "no-reply@ultimatesmiledesign.com",
+            "city": payload.get("city", ""),
+            "message": payload.get("message", ""),
+            "doctor_name": payload.get("doctor_name", ""),
+            "is_cancel": bool(payload.get("is_cancel", False)),
+            "is_update": bool(payload.get("is_update", False))
+        }
+
+        # For updates or cancellations, pass the GoDaddy lead ID (NEVER pass local SQLite ID)
+        godaddy_id = payload.get("godaddy_id") or payload.get("godaddy_lead_id") or _GODADDY_LEAD_MAP.get(phone_digits)
+        if godaddy_id:
+            sync_payload["id"] = godaddy_id
+
+        sync_url = GODADDY_SYNC_URL.strip()
+        if not sync_url.startswith("http://") and not sync_url.startswith("https://"):
+            sync_url = f"http://127.0.0.1:8000/{sync_url.lstrip('/')}"
+
+        with httpx.Client(timeout=8.0) as client:
+            resp = client.post(sync_url, json=sync_payload, headers=headers)
+            print(f"[INFO] GoDaddy/Internal Admin Dashboard Sync response: {resp.status_code}")
+            if resp.status_code == 200:
+                res_data = resp.json()
+                ret_id = res_data.get("lead_id")
+                print(f"[SUCCESS] Lead synced to GoDaddy Admin Dashboard: ID {ret_id} (is_cancel={res_data.get('is_cancel')})")
+                if ret_id:
+                    payload["godaddy_id"] = ret_id
+                    payload["godaddy_lead_id"] = ret_id
+                    if phone_digits:
+                        _GODADDY_LEAD_MAP[phone_digits] = ret_id
+                return ret_id
+            elif resp.status_code == 404:
+                print("[WARN] GoDaddy returned 404. Make sure 'home/urls.py' and 'home/views.py' are deployed/reloaded on GoDaddy cPanel.")
+    except Exception as e:
+        print(f"[WARN] Failed to sync lead to GoDaddy SQLite: {e}")
+    return 0
+
+_API_LEAD_MAP = {}  # In-memory cache mapping phone (10-digits) -> API lead_id
+_LOCAL_API_LEAD_MAP = _API_LEAD_MAP
+
+def sync_lead_to_api_endpoint(payload: dict) -> int:
+    """Dispatches consultation appointment lead directly to the consultation API endpoint: https://ultimatesmiledesign.com/api/consult-with-dentist/"""
+    try:
+        api_url = os.getenv("CONSULT_API_ENDPOINT") or os.getenv("LOCAL_API_ENDPOINT") or "https://ultimatesmiledesign.com/api/consult-with-dentist/"
+        headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        }
+        phone_digits = "".join(filter(str.isdigit, str(payload.get("phone", ""))))[-10:]
+        is_cancel = bool(payload.get("is_cancel", False))
+        is_update = bool(payload.get("is_update", False))
+
+        # Build exact fields matching the specification:
+        # first_name, last_name, email, phone, city, message, doctor_name, source
+        api_payload = {
+            "first_name": payload.get("first_name", "") or "",
+            "last_name": payload.get("last_name", "-") or "-",
+            "email": payload.get("email") or "no-reply@ultimatesmiledesign.com",
+            "phone": phone_digits if phone_digits else str(payload.get("phone", "")),
+            "city": payload.get("city", "") or "",
+            "message": payload.get("message", "") or ".",
+            "doctor_name": payload.get("doctor_name", "") or "",
+            "source": "voice_agent",
+            "is_cancel": is_cancel,
+            "is_update": is_update,
+        }
+
+        # For updates or cancellations, pass the API lead ID
+        api_lead_id = (
+            payload.get("api_id")
+            or payload.get("local_api_id")
+            or _API_LEAD_MAP.get(phone_digits)
+        )
+        if not api_lead_id and (is_cancel or is_update):
+            api_lead_id = payload.get("submission_id") or payload.get("id")
+
+        if api_lead_id:
+            api_payload["id"] = api_lead_id
+            api_payload["submission_id"] = api_lead_id
+
+        with httpx.Client(timeout=10.0) as client:
+            resp = client.post(api_url, json=api_payload, headers=headers)
+            print(f"[INFO] Consultation API Endpoint ({api_url}) Response: {resp.status_code}")
+            if resp.status_code in (200, 201):
+                res_data = resp.json()
+                ret_id = res_data.get("data", {}).get("id") or res_data.get("id")
+                print(f"[SUCCESS] Lead posted to Consultation API endpoint: ID {ret_id} (is_cancel={is_cancel}, is_update={is_update})")
+                if ret_id:
+                    payload["api_id"] = ret_id
+                    payload["local_api_id"] = ret_id
+                    if phone_digits:
+                        _API_LEAD_MAP[phone_digits] = ret_id
+                return ret_id
+            else:
+                print(f"[WARN] Consultation API endpoint returned status {resp.status_code}: {resp.text}")
+    except Exception as e:
+        print(f"[WARN] Failed to post lead to Consultation API endpoint: {e}")
+    return 0
+
+# def sync_to_zoho_crm(payload: dict):
+#     """Syncs lead to Zoho CRM directly from Cloud Run."""
+#     try:
+#         zoho_url = "https://flow.zoho.in/60070945438/flow/webhook/incoming?zapikey=1001.a119cd21b36db26402ffe013750915ad.885b5855c0af73a633e0a39a93142bcd&isdebug=false"
+#         zoho_payload = {
+#             "Name": f"{payload.get('first_name', '')} {payload.get('last_name', '')}".strip(),
+#             "Email": payload.get('email', ''),
+#             "Phone": payload.get('phone', ''),
+#             "City": payload.get('city', ''),
+#             "Message": payload.get('message', ''),
+#             "DoctorName": payload.get('doctor_name', ''),
+#             "Website": "Ultimate Smile Design",
+#             "FormName": "Patient appointment Form",
+#         }
+#         with httpx.Client(timeout=10.0) as client:
+#             client.post(zoho_url, json=zoho_payload)
+#             print("[INFO] Zoho CRM sync completed via Cloud Run.")
+#     except Exception as e:
+#         print(f"[WARN] Zoho CRM sync failed: {e}")
+
+# def sync_to_bikayi_crm(payload: dict):
+#     """Syncs lead to Bikayi CRM directly from Cloud Run."""
+#     try:
+#         bikai_url = "https://bikapi.bikayi.app/chatbot/webhook/N8eHI9BWzqVPK7RnXu2xs5qIQt23?flow=webpatient3834"
+#         now_str = datetime.datetime.now().strftime("%d-%m-%Y %I:%M %p")
+#         bikai_payload = {
+#             "First_name": payload.get("first_name"),
+#             "Last_name": payload.get("last_name"),
+#             "Email": payload.get("email"),
+#             "Phone": payload.get("phone"),
+#             "City": payload.get("city"),
+#             "Message": payload.get("message"),
+#             "Doctor_name": payload.get("doctor_name"),
+#             "DateTime": now_str,
+#         }
+#         with httpx.Client(timeout=10.0) as client:
+#             client.post(bikai_url, json=bikai_payload)
+#             print("[INFO] Bikayi CRM sync completed via Cloud Run.")
+#     except Exception as e:
+#         print(f"[WARN] Bikayi CRM sync failed: {e}")
+
+def send_appointment_email(payload: dict):
+    """(Disabled) Appointment booking/update/cancel emails have been completely discontinued."""
+    return
+
 
 async def submit_consultation_appointment(data: dict) -> dict:
     """
-    Submits a confirmed dental consultation appointment request to the Ultimate Smile Design API.
-    All 5 key fields must be genuinely provided by the user (NO FAKE AUTOFILLS):
-      - first_name: str (must be patient's actual name in English script)
-      - city: str (must be a certified city with USD Smile Designers in English)
-      - doctor_name: str (must be an actual certified USD doctor in English)
-      - phone: str (10 digits)
-      - message: str (dental concern or appointment notes in English)
+    Submits a confirmed dental consultation appointment request.
+    Handles all CRM webhooks (Zoho & Bikayi) and Email notifications directly on Cloud Run,
+    and performs a lightweight 2ms background sync to GoDaddy's SQLite database.
     """
+    is_cancel = bool(data.get("is_cancel", False))
+    sub_id = data.get("id") or data.get("submission_id")
+    phone = str(data.get("phone", "")).strip()
+    digits_only = "".join(filter(str.isdigit, phone))
+
+    # If this is an existing lead or cancellation, prefill missing fields from existing lead
+    if (sub_id or digits_only) and (is_cancel or data.get("is_update")):
+        try:
+            lead_info = await fetch_existing_lead_data(sub_id, phone)
+            if lead_info:
+                if not data.get("first_name"):
+                    data["first_name"] = lead_info["first_name"]
+                if not data.get("last_name"):
+                    data["last_name"] = lead_info["last_name"]
+                if not data.get("city"):
+                    data["city"] = lead_info["city"]
+                if not data.get("doctor_name"):
+                    data["doctor_name"] = lead_info["doctor_name"]
+                if not data.get("message"):
+                    data["message"] = lead_info["message"]
+                if not data.get("email") or data.get("email") == "no-reply@ultimatesmiledesign.com":
+                    data["email"] = lead_info["email"]
+                if not sub_id:
+                    data["submission_id"] = lead_info["id"]
+                    data["id"] = lead_info["id"]
+                    sub_id = lead_info["id"]
+        except Exception as e:
+            print(f"[INFO] Existing lead prefill skipped: {e}")
+
+    # Fallback for cancellations where user only requests cancellation without repeating all slots
+    if is_cancel:
+        if not data.get("first_name"):
+            data["first_name"] = "Patient"
+        if not data.get("city"):
+            data["city"] = "India"
+        if not data.get("message"):
+            data["message"] = "Appointment cancellation request"
+
     raw_first_name = str(data.get("first_name", "")).strip()
-    if not raw_first_name or raw_first_name.lower() in ["none", "null", "user", "patient", "not provided", ""]:
+    if not is_cancel and (not raw_first_name or raw_first_name.lower() in ["none", "null", "user", "patient", "not provided", ""]):
         return {
             "status": "error",
             "missing_field": "first_name",
             "message": "Cannot submit appointment: Patient name is missing. Please ask the patient for their name before submitting."
         }
+    if is_cancel and (not raw_first_name or raw_first_name.lower() in ["none", "null", "user", "not provided", ""]):
+        raw_first_name = "Patient"
 
     raw_last_name = str(data.get("last_name", "")).strip()
     if not raw_last_name or raw_last_name.lower() in ["none", "null", "not provided", ""]:
@@ -257,43 +555,45 @@ async def submit_consultation_appointment(data: dict) -> dict:
         }
 
     city = str(data.get("city", "")).strip()
-    if not city or city.lower() in ["none", "null", "not provided", "india", ""]:
+    if not is_cancel and (not city or city.lower() in ["none", "null", "not provided", "india", ""]):
         return {
             "status": "error",
             "missing_field": "city",
             "message": "Cannot submit appointment: City is missing. Please ask the patient which city they are located in."
         }
-    if city not in CERTIFIED_CITIES:
-        matched_c = next((c for c in CERTIFIED_CITIES if c.lower() == city.lower()), None)
-        if not matched_c:
-            return {
-                "status": "error",
-                "missing_field": "city",
-                "message": f"Cannot submit appointment: We do not have a USD Certified Smile Designer in {city}. Please ask the patient which nearby certified city (e.g. Rajkot, Surat, Ahmedabad, Mumbai, Pune, Delhi, Bangalore) they would like to visit."
-            }
+    if is_cancel and (not city or city.lower() in ["none", "null", "not provided", ""]):
+        city = "India"
+
+    matched_c = next((c for c in CERTIFIED_CITIES if c.lower() == city.lower()), None)
+    if matched_c:
         city = matched_c
+    else:
+        city = city.title()
+    data["city"] = city
 
     raw_message = str(data.get("message", "")).strip()
-    if not raw_message or raw_message.lower() in ["none", "null", "not provided", "dental consultation appointment request", ""]:
+    if not is_cancel and (not raw_message or raw_message.lower() in ["none", "null", "not provided", "dental consultation appointment request", ""]):
         return {
             "status": "error",
             "missing_field": "message",
             "message": "Cannot submit appointment: Patient's dental concern is missing. Please ask what dental issue they would like to consult about."
         }
+    if is_cancel and (not raw_message or raw_message.lower() in ["none", "null", "not provided", ""]):
+        raw_message = "Appointment cancellation request"
     
     # Ensure message is in English
     message = transliterate_to_english(raw_message) if any(ord(c) > 127 for c in raw_message) else raw_message
 
-    doctor_name = str(data.get("doctor_name", "")).strip()
-    matched_doc = is_matched_doctor(doctor_name, city=city)
-    if not matched_doc:
-        return {
-            "status": "error",
-            "missing_field": "doctor_name",
-            "message": f"Cannot submit appointment: An approved USD Certified Smile Designer name in {city} is required. Please ask the patient to choose a doctor."
-        }
-    doctor_name = matched_doc
-    data["doctor_name"] = matched_doc
+    # Doctor is strictly optional: anyone can book with or without doctor name
+    raw_doc = str(data.get("doctor_name", "")).strip()
+    if raw_doc and raw_doc.lower() not in ["none", "null", "not provided", "--", "-", "not selected", "pending", "પસંદ કરેલ નથી", "ચયનિત નહીં", "चयनित नहीं", "निवडले नाही"]:
+        matched_doc = is_matched_doctor(raw_doc, city=city)
+        if not matched_doc:
+            matched_doc = is_matched_doctor(raw_doc, city=None)
+        doctor_name = matched_doc if matched_doc else raw_doc
+    else:
+        doctor_name = ""
+    data["doctor_name"] = doctor_name
 
     # ⚡ Duplicate Submission Guard: Ignore identical duplicate in-flight requests within 30s ⚡
     if not data.get("submission_id") and not data.get("is_cancel") and is_duplicate_submission(digits_only[-10:], doctor_name):
@@ -310,8 +610,12 @@ async def submit_consultation_appointment(data: dict) -> dict:
     else:
         valid_email = raw_email
 
-    if data.get("is_cancel"):
-        message = f"{message} [request cancel]"
+    is_cancel = bool(data.get("is_cancel", False))
+    if is_cancel and "[request cancel]" not in str(message):
+        message = f"{message} [request cancel]".strip()
+
+    sub_id = data.get("id") or data.get("submission_id")
+    is_update = bool(data.get("is_update", False)) or bool(sub_id) or bool(data.get("is_submitted", False))
 
     payload = {
         "first_name": first_name,
@@ -320,104 +624,58 @@ async def submit_consultation_appointment(data: dict) -> dict:
         "phone": digits_only[-10:],
         "city": city,
         "message": message,
-        "doctor_name": doctor_name
+        "doctor_name": doctor_name,
+        "is_cancel": is_cancel,
+        "is_update": is_update,
+        "submission_id": sub_id,
+        "id": sub_id
     }
+    if data.get("api_id"):
+        payload["api_id"] = data["api_id"]
+    if data.get("local_api_id"):
+        payload["local_api_id"] = data["local_api_id"]
+    if data.get("godaddy_id"):
+        payload["godaddy_id"] = data["godaddy_id"]
     
-    sub_id = data.get("id") or data.get("submission_id")
-    if sub_id:
-        try:
-            sub_id = int(sub_id)
-        except (ValueError, TypeError):
-            pass
-        payload["id"] = sub_id
-        payload["submission_id"] = sub_id
+    action_str = "Cancellation" if is_cancel else "Booking"
+    print(f"[INFO] Processing appointment {action_str} for: {payload['first_name']} {payload['last_name']} ({payload['city']}) with {payload['doctor_name']}")
     
-    headers = {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-    }
-    
-    print(f"[INFO] Outgoing API Payload: {payload}")
-    
-    print(f"[INFO] Submitting English appointment booking to API: {payload['first_name']} {payload['last_name']} in {payload['city']} with {payload['doctor_name']} (Phone: {payload['phone']})...")
-    
-    # ⚡ Immediately send email notification to marketing & admin via Gmail SMTP ⚡
+    # ⚡ 1. Direct local database save (Primary local SQLite UserSubmission table) ⚡
     try:
-        import asyncio
-        loop = asyncio.get_event_loop()
-        loop.run_in_executor(None, send_appointment_email, payload)
-    except Exception as em_err:
-        print(f"[WARN] Error scheduling appointment email dispatch: {em_err}")
-    
-    try:
-        async with httpx.AsyncClient(timeout=15.0) as client:
-            resp = await client.post(API_URL, json=payload, headers=headers)
-            print(f"[INFO] Appointment API response code: {resp.status_code}")
-            
-            if resp.status_code in [200, 201]:
-                resp_json = resp.json()
-                return {
-                    "status": "success",
-                    "message": "Appointment request submitted successfully to Ultimate Smile Design team.",
-                    "details": resp_json
-                }
-            else:
-                print(f"[WARN] Appointment API returned status {resp.status_code}: {resp.text}")
-                return {
-                    "status": "success",
-                    "message": "Appointment lead captured and emailed to our clinic team.",
-                    "details": resp.text
-                }
-    except Exception as e:
-        print(f"[ERROR] Failed to submit appointment to API (email was sent): {e}")
-        return {
-            "status": "success",
-            "message": "Appointment request captured and emailed directly to our team.",
-            "details": str(e)
-        }
+        saved_id = await save_lead_to_local_db(payload)
+        if saved_id:
+            payload["id"] = saved_id
+            payload["submission_id"] = saved_id
+            data["submission_id"] = saved_id
+            data["id"] = saved_id
+    except Exception as db_err:
+        print(f"[INFO] Local DB save skipped: {db_err}")
 
-def send_appointment_email(payload: dict):
-    """Sends direct email notification of appointment booking via Gmail SMTP."""
+    # ⚡ 2. Direct POST to Consultation API endpoint (https://ultimatesmiledesign.com/api/consult-with-dentist/) ⚡
     try:
-        import smtplib
-        import datetime
-        from email.mime.text import MIMEText
-        from email.mime.multipart import MIMEMultipart
-        
-        sender_gmail = 'vaghela9632@gmail.com'
-        sender_password = 'qazj gyab odid agqa'
-        recipients = ['marketing@advancedentalexport.com']
-        
-        patient_name = f"{payload.get('first_name', '')} {payload.get('last_name', '')}".replace(" -", "").strip()
-        now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        
-        subject = f"🚨 NEW USD APPOINTMENT BOOKING: {patient_name} ({payload.get('city', 'India')})"
-        body = (
-            f"=========================================\n"
-            f"🚨 NEW USD CONSULTATION APPOINTMENT LEAD\n"
-            f"=========================================\n\n"
-            f"• Patient Name: {patient_name}\n"
-            f"• Contact Phone: {payload.get('phone', '')}\n"
-            f"• City / Location: {payload.get('city', '')}\n"
-            f"• Dental Concern / Notes: {payload.get('message', '')}\n"
-            f"• Requested Doctor: {payload.get('doctor_name', '')}\n"
-            f"• Email: {payload.get('email', '')}\n"
-            f"• Time of Booking: {now_str}\n\n"
-            f"=========================================\n"
-            f"Sent automatically by Ultimate Smile Design AI Assistant (Riya)\n"
-        )
-        
-        msg = MIMEMultipart()
-        msg['From'] = f"Ultimate Smile Design AI <{sender_gmail}>"
-        msg['To'] = ", ".join(recipients)
-        msg['Subject'] = subject
-        msg.attach(MIMEText(body, 'plain', 'utf-8'))
-        
-        with smtplib.SMTP('smtp.gmail.com', 587, timeout=10) as server:
-            server.starttls()
-            server.login(sender_gmail, sender_password)
-            server.sendmail(sender_gmail, recipients, msg.as_string())
-            
-        print(f"[INFO] Appointment lead email dispatched successfully to {recipients}")
-    except Exception as e:
-        print(f"[WARN] Failed to send appointment email: {e}")
+        api_id = sync_lead_to_api_endpoint(payload)
+        if api_id:
+            payload["api_id"] = api_id
+            data["api_id"] = api_id
+            payload["local_api_id"] = api_id
+            data["local_api_id"] = api_id
+    except Exception as api_err:
+        print(f"[WARN] Consultation API endpoint error: {api_err}")
+
+    # ⚡ 2. Dispatch GoDaddy SQLite sync task in background (disabled for now - local database only) ⚡
+    if ENABLE_GODADDY_SYNC:
+        try:
+            loop = asyncio.get_event_loop()
+            loop.run_in_executor(None, sync_lead_to_godaddy_sqlite, payload)
+        except Exception as exec_err:
+            print(f"[WARN] Error scheduling background tasks: {exec_err}")
+
+    # ⚡ 3. Appointment email notification disabled ⚡
+
+
+    msg = "Appointment request has been cancelled." if is_cancel else "Appointment request submitted successfully to Ultimate Smile Design team."
+    return {
+        "status": "success",
+        "message": msg,
+        "details": payload
+    }

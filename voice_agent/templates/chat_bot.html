@@ -771,6 +771,7 @@
   });
 </script>
 <script>
+  const CLOUD_RUN_URL = 'https://usd-chat-bot-705379243140.asia-southeast1.run.app';
   const RENDER_BACKEND_URL = window.location.origin;
   const WS_URL = (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host + '/ws/voice-agent/';
  {% comment %} const WS_URL = 'wss://usd-chat-bot-705379243140.asia-southeast1.run.app/ws/voice-agent/';{% endcomment %}
@@ -796,6 +797,7 @@
           sessionStorage.removeItem('usd_session_slots');
           sessionStorage.removeItem('usd_chat_active');
           sessionStorage.removeItem('usd_submission_id');
+          sessionStorage.removeItem('usd_api_id');
           sessionStorage.removeItem('usd_is_voice_mode');
       }
   } catch (e) {
@@ -1333,12 +1335,136 @@
       }
   }
 
+  let vocalMasterNode = null;
+  let callAudioElement = null;
+  let callAudioDestination = null;
+
   async function initAudio() {
       if (!audioCtx) {
           audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       }
-      if (audioCtx.state === 'suspended') {
-          audioCtx.resume();
+      if (audioCtx && audioCtx.state === 'suspended') {
+          try { await audioCtx.resume(); } catch (e) { }
+      }
+
+      if (!vocalMasterNode && audioCtx) {
+          try {
+              // ========================================================
+              // 🎙️ USD STUDIO AURA & HEAVY VOCAL DEPTH ENGINE
+              // ========================================================
+              const inputNode = audioCtx.createGain();
+
+              // 1. CHEST RESONANCE & HEAVY VOCAL WEIGHT (Gives Despina that deep, rich, authoritative body)
+              const chestResonance = audioCtx.createBiquadFilter();
+              chestResonance.type = 'peaking';
+              chestResonance.frequency.value = 210; // 210Hz fundamental chest resonance
+              chestResonance.gain.value = 3.8;       // +3.8dB rich heavy presence
+              chestResonance.Q.value = 1.2;
+
+              // 2. VOCAL BODY WARMTH
+              const vocalWarmth = audioCtx.createBiquadFilter();
+              vocalWarmth.type = 'peaking';
+              vocalWarmth.frequency.value = 450;
+              vocalWarmth.gain.value = 2.0;
+              vocalWarmth.Q.value = 1.0;
+
+              // 3. INTIMATE SPEECH ARTICULATION
+              const vocalPresence = audioCtx.createBiquadFilter();
+              vocalPresence.type = 'peaking';
+              vocalPresence.frequency.value = 2800;
+              vocalPresence.gain.value = 2.2;
+              vocalPresence.Q.value = 1.0;
+
+              // 4. DE-HARSHING LOW-PASS (Silky top-end, zero digital fatigue)
+              const deHarsh = audioCtx.createBiquadFilter();
+              deHarsh.type = 'lowpass';
+              deHarsh.frequency.value = 10000;
+              deHarsh.Q.value = 0.7;
+
+              // Direct Dry Path
+              const dryGain = audioCtx.createGain();
+              dryGain.gain.value = 0.85;
+
+              inputNode.connect(chestResonance);
+              chestResonance.connect(vocalWarmth);
+              vocalWarmth.connect(vocalPresence);
+              vocalPresence.connect(deHarsh);
+              deHarsh.connect(dryGain);
+
+              // ========================================================
+              // 🌌 PARALLEL ACOUSTIC AURA & EARLY REFLECTION ENGINE
+              // (Sub-35ms multi-tap: creates acoustic mass & spatial weight without repeating echo)
+              // ========================================================
+              const auraBandpass = audioCtx.createBiquadFilter();
+              auraBandpass.type = 'bandpass';
+              auraBandpass.frequency.value = 1200;
+              auraBandpass.Q.value = 0.6; // Soft, wide room acoustic band
+
+              const tap1 = audioCtx.createDelay();
+              tap1.delayTime.value = 0.014; // 14ms
+              const tap1Gain = audioCtx.createGain();
+              tap1Gain.gain.value = 0.24;
+
+              const tap2 = audioCtx.createDelay();
+              tap2.delayTime.value = 0.024; // 24ms
+              const tap2Gain = audioCtx.createGain();
+              tap2Gain.gain.value = 0.18;
+
+              const tap3 = audioCtx.createDelay();
+              tap3.delayTime.value = 0.035; // 35ms
+              const tap3Gain = audioCtx.createGain();
+              tap3Gain.gain.value = 0.12;
+
+              const auraMasterGain = audioCtx.createGain();
+              auraMasterGain.gain.value = 0.38; // The magic blend for that heavy aura!
+
+              deHarsh.connect(auraBandpass);
+              auraBandpass.connect(tap1);
+              tap1.connect(tap1Gain);
+              tap1Gain.connect(auraMasterGain);
+
+              auraBandpass.connect(tap2);
+              tap2.connect(tap2Gain);
+              tap2Gain.connect(auraMasterGain);
+
+              auraBandpass.connect(tap3);
+              tap3.connect(tap3Gain);
+              tap3Gain.connect(auraMasterGain);
+
+              // ========================================================
+              // 🎚️ MASTER DYNAMICS COMPRESSOR (Glues the aura and voice into one thick, velvety presence)
+              // ========================================================
+              const masterCompressor = audioCtx.createDynamicsCompressor();
+              masterCompressor.threshold.value = -18;
+              masterCompressor.knee.value = 14;
+              masterCompressor.ratio.value = 3.2;
+              masterCompressor.attack.value = 0.003;
+              masterCompressor.release.value = 0.09;
+
+              dryGain.connect(masterCompressor);
+              auraMasterGain.connect(masterCompressor);
+
+              // Master Output to AudioContext Destination
+              masterCompressor.connect(audioCtx.destination);
+
+              // Output to MediaStream <audio> element to maintain Call Audio stream
+              callAudioDestination = audioCtx.createMediaStreamDestination();
+              masterCompressor.connect(callAudioDestination);
+
+              if (!callAudioElement) {
+                  callAudioElement = document.createElement('audio');
+                  callAudioElement.autoplay = true;
+                  callAudioElement.playsInline = true;
+                  callAudioElement.muted = true;
+                  callAudioElement.srcObject = callAudioDestination.stream;
+                  document.body.appendChild(callAudioElement);
+                  callAudioElement.play().catch(() => {});
+              }
+
+              vocalMasterNode = inputNode;
+          } catch (err) {
+              console.warn("Vocal master node setup error:", err);
+          }
       }
   }
 
@@ -1395,7 +1521,12 @@
 
           const source = audioCtx.createBufferSource();
           source.buffer = audioBuffer;
-          source.connect(audioCtx.destination);
+          
+          if (vocalMasterNode) {
+              source.connect(vocalMasterNode);
+          } else {
+              source.connect(audioCtx.destination);
+          }
 
           if (window.recordDest) {
               source.connect(window.recordDest);
@@ -1582,7 +1713,7 @@
           if (turn.role === 'user' && turn.parts && turn.parts[0] && turn.parts[0].text) {
               const text = turn.parts[0].text.trim();
 
-              let expMatch = text.match(/(?:my name is|myself|call me|mera naam|maru naam|i am|i'm|this is|hu)\s+([A-Za-z]+)(?:\s+([A-Za-z]+))?/i);
+              let expMatch = text.match(/(?:my name is|myself|call me|mera naam|maru naam|i am|i'm|this is|hu)\s+([A-Za-z\u0900-\u097F\u0A80-\u0AFF]+)(?:\s+([A-Za-z\u0900-\u097F\u0A80-\u0AFF]+))?/i);
               if (expMatch && expMatch[1]) {
                   const fn = expMatch[1].charAt(0).toUpperCase() + expMatch[1].slice(1).toLowerCase();
                   const ln = expMatch[2] ? expMatch[2].charAt(0).toUpperCase() + expMatch[2].slice(1).toLowerCase() : "";
@@ -1600,7 +1731,7 @@
               }
 
               if (prevBotAskedName || i === 0 || i === 1) {
-                  const bareMatch = text.match(/^([A-Za-z]{2,20})(?:\s+([A-Za-z]{2,20}))?$/i);
+                  const bareMatch = text.match(/^([A-Za-z\u0900-\u097F\u0A80-\u0AFF]{2,20})(?:\s+([A-Za-z\u0900-\u097F\u0A80-\u0AFF]{2,20}))?$/i);
                   if (bareMatch && bareMatch[1]) {
                       const fn = bareMatch[1].charAt(0).toUpperCase() + bareMatch[1].slice(1).toLowerCase();
                       const ln = bareMatch[2] ? bareMatch[2].charAt(0).toUpperCase() + bareMatch[2].slice(1).toLowerCase() : "";
@@ -1634,7 +1765,8 @@
               }
               if (text.includes("crooked") || text.includes("misaligned") || text.includes("crowded") || text.includes("overlap") ||
                   text.includes("straighten") || text.includes("unorganise") || text.includes("unorganized") || text.includes("irregular") ||
-                  text.includes("uneven") || text.includes("tedhe") || text.includes("terhe") || text.includes("alignment") || text.includes("baanka")) {
+                  text.includes("uneven") || text.includes("tedhe") || text.includes("terhe") || text.includes("alignment") || text.includes("baanka") ||
+                  text.includes("વાંકા") || text.includes("વાંકાચૂંકા") || text.includes("ટેઢા") || text.includes("ટેઢે") || text.includes("टेढ़े") || text.includes("nibha chuka")) {
                   return "irregular and misaligned teeth";
               }
               if (text.includes("yellow") || text.includes("stain") || text.includes("discolor") || text.includes("bleach") || text.includes("shade") || text.includes("dull") || text.includes("peela") || text.includes("pila")) {
@@ -1723,32 +1855,63 @@
           }
       }
 
-      const docCityMap = {
-          "khushbu": "Vadodara", "kaveena": "Vadodara", "rakesh": "Ahmedabad", "jigar": "Ahmedabad",
-          "ankit": "Ahmedabad", "neerav": "Ahmedabad", "alap": "Ahmedabad", "abbas": "Ahmedabad",
-          "purvesh": "Ahmedabad", "janu": "Ahmedabad", "bharat r": "Surat", "parita": "Surat",
-          "viren": "Surat", "purvi": "Surat", "priyanka": "Surat", "jay": "Surat", "vinita": "Mumbai",
-          "deepika": "Mumbai", "nikita": "Mumbai", "rohan": "Mumbai", "moez": "Mumbai", "aarti": "Pune",
-          "margie": "Rajkot", "pagisha": "Rajkot", "vishvaraj": "Rajkot", "hetal": "Rajkot",
-          "chetariya": "Jamnagar", "prasanna": "Jamnagar", "katarmal": "Jamnagar", "hafsha": "Bharuch",
-          "pankaj": "Halvad", "dilip": "Dhrangadhra", "sanjit": "New Delhi", "minu": "New Delhi",
-          "agrawal": "Gurugram", "surangana": "Indore", "jaydev roy": "Indore", "himanshu": "Indore",
-          "singhal": "Gwalior", "issak": "Bangalore", "srilakshmi": "Hyderabad", "jaydev": "Hyderabad",
-          "reuben": "Chennai", "praneeth": "Guntur", "jagdale": "Sangli", "deshpande": "Sangli",
-          "lyngdoh": "Guwahati", "sodhi": "Faridkot", "jindal": "Sri Ganganagar", "saha": "Malda"
-      };
       const uDoc = (sessionStorage.getItem('usd_user_doctor') || savedSlots.doctor_name || "").toLowerCase();
+      return getCityForDoctor(uDoc);
+  }
+
+  const docCityMap = {
+      "khushbu": "Vadodara", "kaveena": "Vadodara", "rakesh": "Ahmedabad", "jigar": "Ahmedabad",
+      "ankit": "Ahmedabad", "neerav": "Ahmedabad", "alap": "Ahmedabad", "abbas": "Ahmedabad",
+      "purvesh": "Ahmedabad", "janu": "Ahmedabad", "bharat r": "Surat", "parita": "Surat",
+      "viren": "Surat", "purvi": "Surat", "priyanka": "Surat", "jay": "Surat", "vinita": "Mumbai",
+      "deepika": "Mumbai", "nikita": "Mumbai", "rohan": "Mumbai", "moez": "Mumbai", "aarti": "Pune",
+      "margie": "Rajkot", "pagisha": "Rajkot", "vishvaraj": "Rajkot", "hetal": "Rajkot",
+      "chetariya": "Jamnagar", "prasanna": "Jamnagar", "katarmal": "Jamnagar", "hafsha": "Bharuch",
+      "pankaj": "Halvad", "dilip": "Dhrangadhra", "sanjit": "New Delhi", "minu": "New Delhi",
+      "agrawal": "Gurugram", "surangana": "Indore", "jaydev roy": "Indore", "himanshu": "Indore",
+      "singhal": "Gwalior", "issak": "Bangalore", "srilakshmi": "Hyderabad", "jaydev": "Hyderabad",
+      "reuben": "Chennai", "praneeth": "Guntur", "jagdale": "Sangli", "deshpande": "Sangli",
+      "lyngdoh": "Guwahati", "sodhi": "Faridkot", "jindal": "Sri Ganganagar", "saha": "Malda"
+  };
+
+  function getCityForDoctor(docName) {
+      if (!docName) return "";
+      const dl = docName.toLowerCase();
       for (const [dKey, cVal] of Object.entries(docCityMap)) {
-          if (uDoc.includes(dKey)) return cVal;
+          if (dl.includes(dKey)) return cVal;
       }
       return "";
   }
 
   function extractUserDoctor() {
+      const userCity = sessionStorage.getItem('usd_user_city') || extractUserCity();
       const existing = sessionStorage.getItem('usd_user_doctor');
-      if (existing && existing.trim()) return existing.trim();
+      if (existing && existing.trim()) {
+          if (userCity) {
+              const dCity = getCityForDoctor(existing);
+              if (dCity && dCity.toLowerCase() !== userCity.toLowerCase()) {
+                  sessionStorage.removeItem('usd_user_doctor');
+              } else {
+                  return existing.trim();
+              }
+          } else {
+              return existing.trim();
+          }
+      }
       const savedSlots = JSON.parse(sessionStorage.getItem('usd_booking_slots') || '{}');
-      if (savedSlots.doctor_name) return savedSlots.doctor_name;
+      if (savedSlots.doctor_name) {
+          if (userCity) {
+              const dCity = getCityForDoctor(savedSlots.doctor_name);
+              if (dCity && dCity.toLowerCase() !== userCity.toLowerCase()) {
+                  delete savedSlots.doctor_name;
+                  sessionStorage.setItem('usd_booking_slots', JSON.stringify(savedSlots));
+              } else {
+                  return savedSlots.doctor_name;
+              }
+          } else {
+              return savedSlots.doctor_name;
+          }
+      }
 
       const allDocs = [
           "Dr. Rakesh Patel", "Dr. Jigar P. Thakkar", "Dr. Ankit Mataliya", "Dr. Neerav Jhaveri", "Dr. Alap D Shah", "Dr. Abbas Noorani", "Dr. Purvesh Chauhan", "Dr. Ravi Shah", "Dr. Janu Shah",
@@ -1772,6 +1935,12 @@
               for (const doc of allDocs) {
                   const docClean = doc.replace(/^dr\.?\s*/i, '').toLowerCase();
                   if (text.includes(docClean) || text.includes(doc.toLowerCase())) {
+                      if (userCity) {
+                          const dCity = getCityForDoctor(doc);
+                          if (dCity && dCity.toLowerCase() !== userCity.toLowerCase()) {
+                              continue;
+                          }
+                      }
                       return doc;
                   }
               }
@@ -2030,6 +2199,8 @@
                   if (userConcern && !savedSlots.message) savedSlots.message = userConcern;
                   if (userDoctor && !savedSlots.doctor_name) savedSlots.doctor_name = userDoctor;
                   if (userPhone && !savedSlots.phone) savedSlots.phone = userPhone;
+                  const userApiId = sessionStorage.getItem('usd_api_id');
+                  if (userApiId && !savedSlots.api_id) savedSlots.api_id = userApiId;
                   sessionStorage.setItem('usd_booking_slots', JSON.stringify(savedSlots));
 
                   const reconnectPhrase = userName ? `So ${userName}, can you continue from where you left off?` : `So, can you continue from where you left off?`;
@@ -2099,7 +2270,10 @@
                   }
 
                   try {
-                      const recOptions = recMimeType ? { mimeType: recMimeType } : {};
+                      const recOptions = {
+                        audioBitsPerSecond: 16000
+                      };
+                      if (recMimeType) recOptions.mimeType = recMimeType;
                       const recordStream = (window.recordDest && window.recordDest.stream && window.recordDest.stream.getAudioTracks().length > 0) ? window.recordDest.stream : globalStream;
                       mediaRecorder = new MediaRecorder(recordStream, recOptions);
                       mediaRecorder.ondataavailable = (e) => {
@@ -2115,7 +2289,8 @@
                   } catch (e) {
                       console.warn("Primary recorder init failed, trying direct mic stream:", e);
                       try {
-                          mediaRecorder = new MediaRecorder(globalStream);
+                        const fallbackOpts = recMimeType ? { mimeType: recMimeType, audioBitsPerSecond: 16000 } : { audioBitsPerSecond: 16000 };
+                          mediaRecorder = new MediaRecorder(globalStream, fallbackOpts);
                           mediaRecorder.ondataavailable = (e) => { if (e.data && e.data.size > 0) recordedAudioChunks.push(e.data); };
                           mediaRecorder.onstop = () => {
                               if (recordedAudioChunks.length > 0) {
@@ -2124,7 +2299,18 @@
                           };
                           mediaRecorder.start(500);
                       } catch (err2) {
-                          console.error("Direct recorder failed:", err2);
+                          try {
+                              mediaRecorder = new MediaRecorder(globalStream);
+                              mediaRecorder.ondataavailable = (e) => { if (e.data && e.data.size > 0) recordedAudioChunks.push(e.data); };
+                              mediaRecorder.onstop = () => {
+                                  if (recordedAudioChunks.length > 0) {
+                                      window.recordedAudioBlob = new Blob(recordedAudioChunks, { type: mediaRecorder.mimeType || 'audio/webm' });
+                                  }
+                              };
+                              mediaRecorder.start(500);
+                          } catch (err3) {
+                              console.error("Direct recorder failed:", err3);
+                          }
                       }
                   }
 
@@ -2212,13 +2398,7 @@
               }
 
               if (isVoiceMode && data.turnId !== undefined) {
-                  if (localTurnId === 0) {
-                      localTurnId = data.turnId;
-                  } else if (data.turnId < localTurnId) {
-                      return;
-                  } else if (data.turnId > localTurnId) {
-                      localTurnId = data.turnId;
-                  }
+                  localTurnId = data.turnId;
               }
 
               if (data.type === 'interrupted' || (data.serverContent && data.serverContent.interrupted)) {
@@ -2491,6 +2671,9 @@
                       if (data.slots.submission_id) {
                           sessionStorage.setItem('usd_submission_id', data.slots.submission_id);
                       }
+                      if (data.slots.api_id) {
+                          sessionStorage.setItem('usd_api_id', data.slots.api_id);
+                      }
                       if (data.slots.first_name) {
                           const fn = (data.slots.first_name + (data.slots.last_name && data.slots.last_name !== '-' ? ' ' + data.slots.last_name : '')).trim();
                           sessionStorage.setItem('usd_user_name', fn);
@@ -2503,10 +2686,8 @@
               }
               else if (data.type === 'audio_chunk') {
                   removeBotThinkingIndicator();
-                  if (isVoiceMode) {
-                      audioChunkQueue.push(data);
-                      processAudioQueue();
-                  }
+                  audioChunkQueue.push(data);
+                  processAudioQueue();
               }
               else if (data.type === 'reply_complete') {
                   removeBotThinkingIndicator();
@@ -2520,6 +2701,9 @@
                       sessionStorage.setItem('usd_session_slots', JSON.stringify(data.slots));
                       if (data.slots.submission_id) {
                           sessionStorage.setItem('usd_submission_id', data.slots.submission_id);
+                      }
+                      if (data.slots.api_id) {
+                          sessionStorage.setItem('usd_api_id', data.slots.api_id);
                       }
                       if (data.slots.first_name) {
                           const fn = (data.slots.first_name + (data.slots.last_name && data.slots.last_name !== '-' ? ' ' + data.slots.last_name : '')).trim();
@@ -2614,7 +2798,7 @@
           logMessage('bot', goodbyeText);
 
           if (isVoiceMode) {
-              fetch(`/voice-agent/api/tts/`, {
+              fetch(`${CLOUD_RUN_URL}/voice-agent/api/tts/`, {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({ text: goodbyeText, lang: 'en-IN' })
@@ -2839,9 +3023,9 @@
       const msgDiv = document.createElement('div');
 
       if (sender === 'user') {
-          msgDiv.className = 'user_message';
+          msgDiv.className = 'user_message usd-msg-user';
       } else if (sender === 'bot') {
-          msgDiv.className = 'bot_message';
+          msgDiv.className = 'bot_message usd-msg-bot';
       } else {
           msgDiv.className = 'msg msg-system';
       }
@@ -2881,72 +3065,120 @@
       if (window.isSubmittingChatData) return;
       window.isSubmittingChatData = true;
 
-      let transcriptText = "";
-      const log = document.getElementById('usd-chat-log');
-      if (log) {
-          const msgs = log.querySelectorAll('.user_message, .bot_message, .msg');
-          msgs.forEach(m => {
-              const isUser = m.classList.contains('user_message');
-              const isBot = m.classList.contains('bot_message');
-              const p = m.querySelector('.usd-msg-text');
-              const txt = p ? p.innerText.trim() : m.innerText.trim();
-              if (txt && !txt.includes("Riya is typing") && !txt.includes("Riya is thinking") && !txt.includes("Listening...")) {
-                  if (isUser) transcriptText += `User: ${txt}\n\n`;
-                  else if (isBot) transcriptText += `Assistant (Riya): ${txt}\n\n`;
-              }
-          });
-      }
-
-      if (!transcriptText.trim() && chatHistory && chatHistory.length > 0) {
-          chatHistory.forEach(turn => {
-              const role = turn.role === 'model' ? 'Assistant (Riya)' : 'User';
-              const txt = turn.parts && turn.parts[0] ? turn.parts[0].text : '';
-              if (txt && !txt.startsWith('SYSTEM INSTRUCTION')) {
-                  transcriptText += `${role}: ${txt}\n\n`;
-              }
-          });
-      }
-
-      if (!transcriptText.trim()) {
-          transcriptText = "Conversation completed (no text messages exchanged).";
-      }
-
-      // Finalize media recorder if active
-      if (typeof mediaRecorder !== 'undefined' && mediaRecorder && mediaRecorder.state === 'recording') {
-          try {
-              if (typeof mediaRecorder.requestData === 'function') mediaRecorder.requestData();
-              mediaRecorder.stop();
-              await new Promise(r => setTimeout(r, 300));
-          } catch (e) { }
-      }
-
-      if (!window.recordedAudioBlob && recordedAudioChunks && recordedAudioChunks.length > 0) {
-          const mimeType = (typeof mediaRecorder !== 'undefined' && mediaRecorder && mediaRecorder.mimeType) ? mediaRecorder.mimeType : 'audio/webm';
-          window.recordedAudioBlob = new Blob(recordedAudioChunks, { type: mimeType });
-      }
-
-      const formData = new FormData();
-      formData.append('rating', ratingLabel);
-      formData.append('transcript', transcriptText);
-
-      if (window.recordedAudioBlob && window.recordedAudioBlob.size > 0) {
-          const ext = (window.recordedAudioBlob.type && window.recordedAudioBlob.type.includes('mp4')) ? 'mp4' : 'webm';
-          formData.append('audio', window.recordedAudioBlob, `voice_recording.${ext}`);
-          console.log(`[INFO] Submitting feedback with audio attachment: ${window.recordedAudioBlob.size} bytes (${window.recordedAudioBlob.type})`);
-      } else {
-          console.log("[INFO] Submitting feedback (transcript only, no audio blob)");
-      }
-
       try {
-          const resp = await fetch('/voice-agent/api/submit-feedback/', {
-              method: 'POST',
-              body: formData
-          });
-          const resJson = await resp.json();
-          console.log("[INFO] Transcript and audio submitted successfully to marketing email:", resJson);
-          window.isChatFeedbackSubmitted = true;
+          let transcriptText = "";
+          const log = document.getElementById('usd-chat-log');
+          if (log) {
+              const msgs = log.querySelectorAll('.user_message, .bot_message, .msg, .usd-msg-user, .usd-msg-bot');
+              msgs.forEach(m => {
+                  const isUser = m.classList.contains('user_message') || m.classList.contains('usd-msg-user');
+                  const isBot = m.classList.contains('bot_message') || m.classList.contains('usd-msg-bot');
+                  const p = m.querySelector('.usd-msg-text');
+                  const txt = p ? p.innerText.trim() : m.innerText.trim();
+                  if (txt && !txt.includes("Riya is typing") && !txt.includes("Riya is thinking") && !txt.includes("Listening...") && !txt.includes("Riya is submitting")) {
+                      if (isUser) transcriptText += `User: ${txt}\n\n`;
+                      else if (isBot) transcriptText += `Assistant (Riya): ${txt}\n\n`;
+                  }
+              });
+          }
+
+          if (!transcriptText.trim() && chatHistory && chatHistory.length > 0) {
+              chatHistory.forEach(turn => {
+                  const role = turn.role === 'model' ? 'Assistant (Riya)' : 'User';
+                  const txt = turn.parts && turn.parts[0] ? turn.parts[0].text : '';
+                  if (txt && !txt.startsWith('SYSTEM INSTRUCTION')) {
+                      transcriptText += `${role}: ${txt}\n\n`;
+                  }
+              });
+          }
+
+          if (!transcriptText.trim()) {
+              transcriptText = "Conversation completed (no text messages exchanged).";
+          }
+
+          // Finalize media recorder if active
+          if (typeof mediaRecorder !== 'undefined' && mediaRecorder && mediaRecorder.state === 'recording') {
+              try {
+                  if (typeof mediaRecorder.requestData === 'function') mediaRecorder.requestData();
+                  mediaRecorder.stop();
+                  await new Promise(r => setTimeout(r, 300));
+              } catch (e) { }
+          }
+
+          if (!window.recordedAudioBlob && recordedAudioChunks && recordedAudioChunks.length > 0) {
+              const mimeType = (typeof mediaRecorder !== 'undefined' && mediaRecorder && mediaRecorder.mimeType) ? mediaRecorder.mimeType : 'audio/webm';
+              window.recordedAudioBlob = new Blob(recordedAudioChunks, { type: mimeType });
+          }
+
+          let audioBase64 = null;
+          let audioFilename = 'voice_recording.webm';
+
+          if (window.recordedAudioBlob && window.recordedAudioBlob.size > 0) {
+              const ext = (window.recordedAudioBlob.type && window.recordedAudioBlob.type.includes('mp4')) ? 'mp4' : 'webm';
+              audioFilename = `voice_recording.${ext}`;
+              try {
+                  audioBase64 = await new Promise((resolve) => {
+                      const reader = new FileReader();
+                      reader.onloadend = () => {
+                          resolve(typeof reader.result === 'string' ? reader.result : null);
+                      };
+                      reader.onerror = () => resolve(null);
+                      reader.readAsDataURL(window.recordedAudioBlob);
+                  });
+                  console.log(`[INFO] Submitting feedback with audio attachment: ${window.recordedAudioBlob.size} bytes (${window.recordedAudioBlob.type})`);
+              } catch (convErr) {
+                  console.warn("[WARN] Could not convert audio blob to base64:", convErr);
+              }
+          } else {
+              console.log("[INFO] Submitting feedback (transcript only, no audio blob)");
+          }
+
+          const payload = {
+              rating: ratingLabel,
+              transcript: transcriptText,
+              audio_base64: audioBase64,
+              audio_filename: audioFilename
+          };
+
+          // 1. Dispatch over active WebSocket if available (instant delivery, zero CORS)
+          if (socket && socket.readyState === WebSocket.OPEN) {
+              try {
+                  socket.send(JSON.stringify({
+                      type: 'submit_feedback',
+                      payload: payload
+                  }));
+                  console.log("[INFO] Dispatched transcript and audio over active WebSocket");
+              } catch (wsErr) {
+                  console.warn("[WARN] Could not send feedback over WebSocket:", wsErr);
+              }
+          }
+
+          // 2. Dispatch via HTTP POST (with dual fallback: local/origin endpoint first, then Cloud Run)
+          let submittedSuccessfully = false;
+
+          try {
+              const localUrl = (window.location.origin && window.location.origin.startsWith('http')) 
+                  ? `${window.location.origin}/voice-agent/api/submit-feedback/` 
+                  : '/voice-agent/api/submit-feedback/';
+              const resp = await fetch(localUrl, {
+                  method: 'POST',
+                  body: JSON.stringify(payload),
+                  headers: { 'Content-Type': 'application/json' }
+              });
+              if (resp.ok) {
+                  const resJson = await resp.json();
+                  console.log("[INFO] Transcript and audio submitted successfully to marketing email (via local origin):", resJson);
+                  submittedSuccessfully = true;
+              }
+          } catch (localErr) {
+              console.warn("[WARN] Origin submit-feedback failed:", localErr);
+          }
+
+          if (submittedSuccessfully) {
+              window.isChatFeedbackSubmitted = true;
+          }
       } catch (err) {
-          console.error("[ERROR] Failed to submit transcript to marketing email:", err);
+          console.error("[ERROR] in submitChatData:", err);
       } finally {
           window.isSubmittingChatData = false;
       }

@@ -7629,3 +7629,12 @@ position: relative;
     height: 42px;
   }
 }
+
+@media(max-width:370px) {
+  .quick-link-wrapper .social-media-content p{
+    display: none !important;
+  }
+  .social-media-content p{
+    display: none !important;
+  }
+}

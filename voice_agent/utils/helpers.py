@@ -11,6 +11,28 @@ MULTILINGUAL_CITY_MAP = {
     "ભરૂચ": "Bharuch", "bharuch": "Bharuch", "भरूच": "Bharuch",
     "હળવદ": "Halvad", "halvad": "Halvad", "हलवद": "Halvad",
     "ધ્રાંગધ્રા": "Dhrangadhra", "dhrangadhra": "Dhrangadhra", "ध्रांगध्रा": "Dhrangadhra",
+    # Regional residence cities (e.g. Surendranagar, Bhavnagar, Morbi, Anand, etc.)
+    "સુરેન્દ્રનગર": "Surendranagar", "surendranagar": "Surendranagar", "सुरेंद्रनगर": "Surendranagar",
+    "ભાવનગર": "Bhavnagar", "bhavnagar": "Bhavnagar", "भावनगर": "Bhavnagar",
+    "મોરબી": "Morbi", "morbi": "Morbi", "मोरबी": "Morbi",
+    "આણંદ": "Anand", "anand": "Anand", "आनंद": "Anand",
+    "નડિયાદ": "Nadiad", "nadiad": "Nadiad", "नडियाद": "Nadiad",
+    "મહેસાણા": "Mehsana", "mehsana": "Mehsana", "मेहसाणा": "Mehsana",
+    "ગાંધીનગર": "Gandhinagar", "gandhinagar": "Gandhinagar", "गांधीनगर": "Gandhinagar",
+    "નવસારી": "Navsari", "navsari": "Navsari", "नवसारी": "Navsari",
+    "વલસાડ": "Valsad", "valsad": "Valsad", "वलसाड": "Valsad",
+    "જૂનાગઢ": "Junagadh", "junagadh": "Junagadh", "जूनागढ़": "Junagadh",
+    "પોરબંદર": "Porbandar", "porbandar": "Porbandar", "पोरबंदर": "Porbandar",
+    "ભુજ": "Bhuj", "bhuj": "Bhuj", "भुज": "Bhuj",
+    "ગાંધીધામ": "Gandhidham", "gandhidham": "Gandhidham", "गांधीधाम": "Gandhidham",
+    "પાટણ": "Patan", "patan": "Patan", "पाटन": "Patan",
+    "પાલનપુર": "Palanpur", "palanpur": "Palanpur", "पालनपुर": "Palanpur",
+    "ગોધરા": "Godhra", "godhra": "Godhra", "गोधरा": "Godhra",
+    "દાહોદ": "Dahod", "dahod": "Dahod", "दाहोद": "Dahod",
+    "વાપી": "Vapi", "vapi": "Vapi", "वापी": "Vapi",
+    "અંકલેશ્વર": "Ankleshwar", "ankleshwar": "Ankleshwar", "अंकलेश्वर": "Ankleshwar",
+    "બોટાદ": "Botad", "botad": "Botad", "बोटाद": "Botad",
+    "અમરેલી": "Amreli", "amreli": "Amreli", "अमरेली": "Amreli",
     # India Metro & Others
     "મુંબઈ": "Mumbai", "मुंबई": "Mumbai", "mumbai": "Mumbai", "bombay": "Mumbai", "மும்பை": "Mumbai", "ముంబై": "Mumbai", "ಮುಂಬೈ": "Mumbai", "മുംബൈ": "Mumbai", "ਮੁੰਬਈ": "Mumbai", "মুম্বাই": "Mumbai", "ମୁମ୍ବାଇ": "Mumbai",
     "પુણે": "Pune", "पुणे": "Pune", "pune": "Pune",
@@ -27,7 +49,21 @@ MULTILINGUAL_CITY_MAP = {
     "guntur": "Guntur", "गुंटूर": "Guntur", "గుంటూరు": "Guntur",
     "faridkot": "Faridkot", "fareedakot": "Faridkot", "फरीदकोट": "Faridkot", "ਫ਼ਰੀਦਕੋਟ": "Faridkot", "ਫਰੀਦਕੋਟ": "Faridkot",
     "sri ganganagar": "Sri Ganganagar", "ganganagar": "Sri Ganganagar", "श्रीगंगानगर": "Sri Ganganagar", "गंगानगर": "Sri Ganganagar",
-    "malda": "Malda", "मालदा": "Malda", "মালদা": "Malda"
+    "malda": "Malda", "मालदा": "Malda", "মালদা": "Malda",
+    "jaipur": "Jaipur", "जयपुर": "Jaipur", "જયપુર": "Jaipur",
+    "lucknow": "Lucknow", "लखनऊ": "Lucknow", "લખનૌ": "Lucknow",
+    "kanpur": "Kanpur", "कानपुर": "Kanpur", "કાનપુર": "Kanpur",
+    "nagpur": "Nagpur", "नागपुर": "Nagpur", "નાગપુર": "Nagpur",
+    "nashik": "Nashik", "नासिक": "Nashik", "નાશિક": "Nashik",
+    "bhopal": "Bhopal", "भोपाल": "Bhopal", "ભોપાલ": "Bhopal",
+    "patna": "Patna", "पटना": "Patna", "પટના": "Patna",
+    "ranchi": "Ranchi", "राँची": "Ranchi", "રાંચી": "Ranchi",
+    "chandigarh": "Chandigarh", "चंडीगढ़": "Chandigarh", "ચંદીગઢ": "Chandigarh",
+    "amritsar": "Amritsar", "अमृतसर": "Amritsar", "અમૃતસર": "Amritsar",
+    "ludhiana": "Ludhiana", "लुधियाना": "Ludhiana", "લુધિયાણા": "Ludhiana",
+    "jodhpur": "Jodhpur", "जोधपुर": "Jodhpur", "જોધપુર": "Jodhpur",
+    "udaipur": "Udaipur", "उदयपुर": "Udaipur", "ઉદયપુર": "Udaipur",
+    "kolkata": "Kolkata", "calcutta": "Kolkata", "कोलकाता": "Kolkata", "કોલકાતા": "Kolkata", "কলকাতা": "Kolkata"
 }
 
 ALL_CERTIFIED_DOCTORS_LIST = [
@@ -84,13 +120,66 @@ def clean_hallucinations(text):
         return ""
     return text_str.strip()
 
+def is_submit_review_summary(text: str) -> bool:
+    if not text:
+        return False
+    t_lower = text.lower()
+    has_submit_or_cancel = any(w in t_lower for w in ['submit', 'cancel', 'સબમિટ', 'सबमिट', 'કેન્સલ', 'રદ', 'રદ્દ', 'रद्द'])
+    has_review_labels = bool(re.search(r'(?:નામ|नाम|name|શહેર|शहर|city|સમસ્યા|problem|concern|ફોન|फोन|phone|ડૉક્ટર|ડોક્ટર|doctor|डॉक्टर)\s*:', text, re.IGNORECASE))
+    if not (has_submit_or_cancel and has_review_labels):
+        return False
+    return True
+
+def sanitize_doctor_names_outside_submit(text: str) -> str:
+    """Ensures Riya NEVER speaks any dentist/doctor name anywhere in the conversation except at submit time."""
+    if not text or is_submit_review_summary(text):
+        return text
+
+    is_gu = any('\u0a80' <= c <= '\u0aff' for c in text)
+    is_hi = any('\u0900' <= c <= '\u097f' for c in text)
+    rep_certified = 'અમારા USD સર્ટિફાઇડ સ્માઇલ ડિઝાઇનર' if is_gu else ('हमारे USD सर्टिफाइड स्माइल डिज़ाइनर' if is_hi else 'our USD Certified Smile Designer')
+    rep_that_doc = 'તે ડૉક્ટર' if is_gu else ('वे डॉक्टर' if is_hi else 'that doctor')
+
+    # 1. Match all certified doctor names with or without Dr.
+    for doc in sorted(ALL_CERTIFIED_DOCTORS_LIST, key=len, reverse=True):
+        raw_name = doc.replace('Dr. ', '').strip()
+        pat_with_title = re.compile(r'\b(?:Dr\.?|Doctor|ડોક્ટર|ડૉક્ટર|डॉक्टर)\s*' + re.escape(raw_name) + r'\b', re.IGNORECASE)
+        text = pat_with_title.sub(rep_certified, text)
+        pat_full = re.compile(r'\b' + re.escape(raw_name) + r'\b', re.IGNORECASE)
+        text = pat_full.sub(rep_certified, text)
+
+    # 2. Match uncertified English doctor titles: "Dr. <Name>" (ignoring generic words)
+    text = re.sub(r'\bDr\.?\s+(?!(?:USD|Smile|Design|Consultant|Clinic|Dentist)\b)[A-Z][a-z]{2,}(?:\s+[A-Z][a-z]{2,})?\b', rep_that_doc, text)
+    return text
+
 def clean_assistant_text(input_text=""):
     text = str(input_text or "")
     text = re.sub(r"\[(hi|bn|ta|te|mr|gu|kn|ml|pa|or|en)-IN\]", "", text, flags=re.IGNORECASE)
     text = re.sub(r"<!--[\s\S]*?-->", "", text)
     text = re.sub(r"\d{1,2}:\d{2}(:\d{2})?(\.\d+)?\s*-->\s*\d{1,2}:\d{2}(:\d{2})?", "", text)
     text = re.sub(r"\b\d{1,2}:\d{2}(:\d{2})?\b", "", text)
+
+    # 🚨 STRICT MEDICAL DISCLAIMER SCRUBBER (Gujarati, Hindi, English)
+    disclaimer_patterns = [
+        # Gujarati
+        r"(?:અમે|હું)\s+તમને\s+કોઈ\s*(?:પણ\s*)?તબીબી\s+સલાહ\s+કે\s+નિદાન\s+આપતા\s+નથી\s*[.,!।]*(?:\s*કૃપા\s+કરીને\s+કોઈ\s+મદદ\s+માટે\s+ડૉક્ટરને\s+મળો\s*[.,!।]*)?",
+        r"કૃપા\s+કરીને\s+કોઈ\s+મદદ\s+માટે\s+ડૉક્ટરને\s+મળો\s*[.,!।]?",
+        r"[^.,!?।\n]*તબીબી\s+સલાહ[^.,!?।\n]*[.,!?।]*",
+        r"[^.,!?।\n]*તબીબી\s+નિદાન[^.,!?।\n]*[.,!?।]*",
+        # Hindi
+        r"(?:हम|मैं)\s+(?:आपको\s+)?कोई\s*(?:भी\s*)?(?:चिकित્सीय|चिकित्सीय|मेडिकल)\s+सलाह\s+या\s+निदान\s+नहीं\s+(?:देते|दे\s+रहे\s+हैं|दे\s+रहे\s+हैં)\s*[.,!।]*(?:\s*कृपया\s+(?:किसी\s+सहायता\s+के\s+लिए\s+)?डॉक्टर\s+से\s+(?:मिलें|संपर्क\s+करें)\s*[.,!।]*)?",
+        r"[^.,!?।\n]*(?:चिकित્सीय|चिकित्सीय|मेडिकल|डॉक्टरी)\s+सलाह[^.,!?।\n]*[.,!?।]*",
+        r"[^.,!?।\n]*कृपया\s+(?:किसी\s+सहायता\s+के\s+लिए\s+)?डॉक्टर\s+से\s+(?:मिलें|संपर्क\s+करें)[^.,!?।\n]*[.,!?।]*",
+        # English
+        r"(?:We|I)\s+(?:do\s+not|don't)\s+provide\s+(?:any\s+)?medical\s+advice\s+or\s+diagnosis\s*[.,!]*(?:\s*Please\s+consult\s+a\s+(?:qualified\s+)?(?:doctor|dentist)\s*(?:for\s+diagnosis)?[.,!]*)?",
+        r"[^.!?\n]*(?:not\s+provide|do\s+not\s+give)\s+(?:any\s+)?medical\s+advice[^.!?\n]*[.!?]*",
+        r"[^.!?\n]*Please\s+consult\s+a\s+(?:qualified\s+)?(?:doctor|dentist)\s+(?:for\s+(?:any\s+)?medical\s+advice|for\s+diagnosis)[^.!?\n]*[.!?]*"
+    ]
+    for pat in disclaimer_patterns:
+        text = re.sub(pat, "", text, flags=re.IGNORECASE)
+
     text = re.sub(r"\s+", " ", text)
+    text = sanitize_doctor_names_outside_submit(text)
     return text.strip()
 
 import unicodedata
@@ -188,10 +277,35 @@ def extract_slots_from_review_summary(text: str) -> dict:
                     doc_found = is_matched_doctor(raw_v, city=extracted.get("city"))
                 except Exception:
                     pass
-            if doc_found:
+
+            # Explicitly reject placeholder phrases and ceramist mentions
+            placeholder_doc_phrases = [
+                "हमारे डॉक्टर", "અમારા ડૉક્ટર", "our doctor", "doctor in", "ડોક્ટર છે", "डॉक्टर हैं",
+                "select doctor", "choose doctor", "કોઈ પણ", "कोई भी", "not selected", "pending",
+                "ceramist", "सिरामिस्ट", "સેરેમિસ્ટ", "haresh savani", "हरेश सवाणी", "હરેશ સવાણી",
+                "પસંદ કરેલ નથી", "અમારી ટીમ માર્ગદર્શન આપશે", "ચયનિત નહીં", "चयनित नहीं", "मार्गदर्शन करेगी",
+                "our team will guide you", "guide you", "not chosen", "unassigned"
+            ]
+            raw_v_lower = raw_v.lower()
+            is_placeholder = any(p in raw_v_lower for p in placeholder_doc_phrases)
+
+            if doc_found and not is_placeholder:
                 extracted["doctor_name"] = doc_found
+            elif is_placeholder:
+                extracted["doctor_name"] = ""
             elif len(raw_v) >= 3 and raw_v.lower() not in ["none", "null", "-", "--"]:
-                extracted["doctor_name"] = raw_v if raw_v.lower().startswith("dr") else f"Dr. {raw_v}"
+                # Only accept if it actually matches a known doctor in ALL_CERTIFIED_DOCTORS_LIST
+                matched = None
+                for d in ALL_CERTIFIED_DOCTORS_LIST:
+                    if d.lower() in raw_v_lower or raw_v_lower in d.lower():
+                        matched = d
+                        break
+                if matched:
+                    extracted["doctor_name"] = matched
+                else:
+                    extracted["doctor_name"] = ""
+            else:
+                extracted["doctor_name"] = ""
             continue
 
         # C. CITY (City key or City match)
@@ -277,5 +391,14 @@ def extract_slots_from_review_summary(text: str) -> dict:
                 if ck in text or (ck.isascii() and re.search(r"\b" + re.escape(ck) + r"\b", tl)):
                     extracted["city"] = standard_name
                     break
+
+    # Enforce Doctor-City consistency & validity:
+    if extracted.get("doctor_name"):
+        if extracted["doctor_name"] not in DOCTOR_HOME_CITIES:
+            extracted.pop("doctor_name", None)
+        elif extracted.get("city"):
+            doc_city = DOCTOR_HOME_CITIES.get(extracted["doctor_name"])
+            if doc_city and doc_city.lower() != extracted["city"].lower():
+                extracted.pop("doctor_name", None)
 
     return extracted

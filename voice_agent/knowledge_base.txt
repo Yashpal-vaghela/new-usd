@@ -1,6 +1,6 @@
 One refinement I'd make after seeing your architecture: don't expose "LEVEL_1/LEVEL_2/LEVEL_3" in the knowledge base. Store them internally as short, medium, and detailed, and let the dialogue manager decide which one to use based on the conversation state or when the user says things like "tell me more" or "explain in detail." That keeps the content clean and the voice flow natural.
 (make sure whenever u pronounce haresh savani so you pronounce like this :Huh-resh, Suh-vah-nee)
-(in hindi and any indian languge pronounce haresh savani like this : हरेश सवानी (हर + ईशः, स + वाणी ))
+(in hindi and any indian languge pronounce haresh savani like this : हरेश सवानी (हर + एशः, स + वाणी ))
 -------------------------
 
 Never confirm that a Certified Smile Designer exists in any city or country.
@@ -268,11 +268,11 @@ skeptical
 
 voice_response:
 
-Think of a Maruti and a BMW.
+Think of a Maruti and a Mercedes.
 
 Both are cars. Both take you from one destination to another.
 
-But a BMW delivers a premium experience, superior aesthetics, refined craftsmanship, and a higher standard of quality.
+But a Mercedes delivers a premium experience, superior aesthetics, refined craftsmanship, and a higher standard of quality.
 
 Smile designing is the same.
 
@@ -1866,13 +1866,14 @@ emotion:
 curious / skeptical
 
 voice_response:
-If you want to choose your local dentist, that is completely fine! But before deciding, you may want to ask them a few important questions:
+If you want to choose your dentist, that is completely fine! But you should ask them a few important questions:
 
-1. Does your dentist provide an official USD Authentication Card and a verifiable warranty?
-2. Can they show you real, live patient case results handcrafted specifically by master ceramists?
-3. Do they provide 100% transparent, all-inclusive pricing with zero hidden lab or revision fees?
+1. Does your dentist provide an Authentication Card?
+2. Do they provide a documented Warranty?
+3. Can they show you real live patient case results?
+4. Does your dentist provide 100% transparent pricing with no hidden charges?
 
-At Ultimate Smile Design, transparency, verified warranties, and master artistry are guaranteed. If your dentist can genuinely guarantee all of these standards, you should definitely proceed with them!
+Ask your dentist, and if their answer is yes to all of these, then you should definitely go to your dentist! Because our USD Certified Smile Designers provide every single one of these standards.
 
 follow_up:
 Would you like to learn more about our Certified Smile Designer protocol or our transparent pricing philosophy?
@@ -1884,6 +1885,46 @@ keywords:
 - my dentist is cheaper
 - normal dentist vs usd
 - dentist comparison
+
+--------------------------
+
+intent: usd_dentist_difference
+
+user_questions:
+- My dentist has all four.
+- My dentist provides all of these things.
+- My dentist has the same standards.
+- My dentist does all of that too.
+- My dentist has authentication, warranty, cases, and transparent pricing.
+- So what's different about USD?
+- What's the difference between my dentist and USD?
+- Ye to mere dentist bhi karte hai.
+- Mere dentist ke paas bhi ye sab hai.
+- Mara dentist pase pan aa badhu che.
+
+emotion:
+curious / challenging
+
+voice_response:
+Oh, nice! Your dentist may provide all of these things too, and that's completely fine.
+
+The main difference is that our USD Certified Smile Designers are specially trained in Smile Design. They complete the USD course and are trained in our specialised protocol.
+
+follow_up:
+Would you like to know more about how our specialised Smile Design protocol works?
+
+keywords:
+- my dentist has all four
+- my dentist provides all of these things
+- my dentist has the same standards
+- my dentist does all of that too
+- my dentist has authentication warranty cases and transparent pricing
+- so what's different about usd
+- what's the difference between my dentist and usd
+- ye to mere dentist bhi karte hai
+- mere dentist ke paas bhi ye sab hai
+- specialised protocol
+- usd protocol
 
 --------------------------
 
@@ -2169,5 +2210,563 @@ keywords:
 - partner dentist
 - doctor registration
 
+-------------------------
 
+intent: smile_superiority
 
+title: Beyond Good Smile - Good vs Superior Smile Philosophy
+
+trigger_when:
+- User shares information related to their smile, appearance, personality, confidence, or Smile Design.
+- User is discussing whether they need Smile Design.
+- User says their smile is already good or perfect.
+- User argues that they don't need Smile Design.
+- User is unsure whether Smile Design can improve their smile.
+- User is discussing their teeth but does not have an obvious dental problem.
+- Use naturally when there is a suitable conversational opportunity.
+- Do not force this intent into unrelated conversations.
+
+photo_self_reflection_prompt:
+  voice_response: >
+    Just open your phone, take a photo of your smile, and look at it for a moment.
+    Then ask yourself one simple question: “Could my smile look even more natural?”
+
+good_vs_superior_response:
+  user_scenarios:
+  - My smile is already perfect.
+  - I don't need Smile Design.
+  - My smile is good.
+  - I don't think I need it.
+  - There is nothing wrong with my smile.
+  - My teeth are healthy and fine.
+  voice_response: >
+    I completely understand, and I’m not saying your smile is bad.
+    But having a good smile doesn't mean there isn't a possibility of making it even better. At USD, we believe there is a difference between good and superior.
+    With more than 1 lakh smiles designed and over two decades of experience, our focus is not simply to fix smiles that have a problem. We also focus on enhancing smiles that are already good and making them feel even more natural, balanced and personalised.
+    The question isn't “Are your teeth good or bad?”
+    The question is “How can your overall smile become even better?”
+
+superior_smile_details:
+  user_questions:
+  - What do you mean by superiority?
+  - What do you mean by a superior smile?
+  - How do you improve a good smile?
+  - How can you make my smile better if my teeth are already good?
+  - What would you actually change?
+  voice_response: >
+    We don't focus only on whether your teeth are good or bad. We look at your overall smile.
+    That includes your gums, your teeth, how much of your teeth are visible when you smile, the proportions and alignment, and even the colour and different shades of the teeth.
+    All these details work together to create a natural-looking smile.
+    That's where Smile Design becomes important—not just making teeth look good, but making the whole smile work beautifully together.
+
+follow_up:
+  question: Would you like to know how our philosophy works?
+
+keywords:
+- my smile is perfect
+- my smile is good
+- I don't need smile design
+- don't need smile design
+- teeth are already good
+- nothing wrong with my teeth
+- improve my smile
+- make my smile better
+- superior smile
+• Bharuch: Dr. Hafsha Saiyed
+• Halvad: Dr. Pankaj Patel
+• Dhrangadhra: Dr. Dilip J Parejiya
+• New Delhi: Dr. Sanjit Singh, Dr. Minu Arora
+• Gurugram: Dr. Amit Kr. Agrawal
+• Indore: Dr. Surangana Gupta, Dr. Jaydev Roy, Dr. Himanshu Sharma
+• Gwalior: Dr. Aman Singhal
+• Bangalore: Dr. Mohammed Issak
+• Hyderabad: Dr. Srilakshmi CH, Dr. M Jaydev
+• Chennai: Dr. Reuben Joseph
+• Guntur: Dr. Praneeth Kumar
+• Sangli: Dr. Kalyani Jagdale, Dr. Digvijay Deshpande
+• Guwahati: Dr. Adil Lyngdoh
+• Faridkot: Dr. Asmita Sodhi
+• Sri Ganganagar: Dr. Neetu Jindal
+• Malda: Dr. A K Saha
+
+follow_up:
+Which city is most convenient for your smile consultation?
+
+keywords:
+- certified dentist
+- dentist in city
+- smile designer list
+- doctors near me
+- dentist location
+- find doctor
+
+--------------------------
+
+intent: closest_city_routing
+
+user_questions:
+- I am from Nashik, do you have a dentist?
+- Do you have a clinic in Noida or Ghaziabad?
+- I live in Gandhinagar, who is closest?
+- I am from Navsari or Valsad or Vapi.
+- I live in Bhopal or Ujjain.
+- Do you have someone in Kolhapur, Satara, or Solapur?
+- I am from Vijayawada or Visakhapatnam.
+- Is there a designer in Mysore or Mangalore?
+- I am from Ludhiana or Amritsar.
+- Do you have a designer in Kolkata?
+- I live in a city not listed.
+
+emotion:
+seeking_recommendation
+
+voice_response:
+If we do not currently have a USD Certified Smile Designer directly in your city, we guide you to our nearest certified city hub:
+
+• Nashik / Thane / Navi Mumbai -> Closest hub: Mumbai or Pune
+• Noida / Ghaziabad / Faridabad / Chandigarh -> Closest hub: New Delhi or Gurugram
+• Gandhinagar / Mehsana / Anand / Nadiad -> Closest hub: Ahmedabad
+• Navsari / Valsad / Vapi / Bilimora / Ankleshwar -> Closest hub: Surat or Bharuch
+• Bhavnagar / Junagadh / Morbi / Surendranagar -> Closest hub: Rajkot or Halvad/Dhrangadhra
+• Bhopal / Ujjain / Jabalpur -> Closest hub: Indore or Gwalior
+• Agra / Jhansi / Mathura / Kanpur / Lucknow -> Closest hub: Gwalior or New Delhi
+• Kolhapur / Satara / Solapur / Aurangabad -> Closest hub: Sangli or Pune/Mumbai
+• Vijayawada / Visakhapatnam / Nellore -> Closest hub: Guntur or Hyderabad or Chennai
+• Mysore / Mangalore / Hubli -> Closest hub: Bangalore
+• Ludhiana / Amritsar / Jalandhar / Bathinda -> Closest hub: Faridkot or New Delhi
+• Kolkata / Siliguri / Durgapur -> Closest hub: Malda or Guwahati
+• Shillong / Dibrugarh / Tezpur -> Closest hub: Guwahati
+• Bikaner / Jodhpur / Ajmer / Udaipur -> Closest hub: Sri Ganganagar or Delhi/Ahmedabad
+
+When a user asks from a city without a local designer, say:
+"Currently, we don't have a Certified Smile Designer directly in [City], but our closest Certified Smile Designer is in [Closest Hub]. Would you like to know our certified designer's name in [Closest Hub]?"
+
+follow_up:
+Would you like to connect with our nearest Certified Smile Designer?
+
+keywords:
+- closest city
+- near me
+- no dentist in my city
+- nearest doctor
+- travel for treatment
+
+--------------------------
+
+intent: unknown_non_usd_dentist_inquiry
+
+user_questions:
+- Is Dr. Sharma part of USD?
+- Do you know Dr. ABC?
+- Can my dentist Dr. XYZ do USD veneers?
+- Is my local doctor certified by you?
+- Check if this doctor is in USD.
+
+emotion:
+curious / verifying
+
+voice_response:
+We do not have information on that dentist as they are not currently a USD Certified Smile Designer. We only maintain verified records and treatment protocols for our official USD Certified Smile Designers.
+
+follow_up:
+Would you like to consult one of our official USD Certified Smile Designers?
+
+keywords:
+- non usd dentist
+- check doctor
+- is my doctor certified
+- unknown dentist
+
+--------------------------
+
+intent: dentist_join_usd_partnership
+
+user_questions:
+- How can my dentist join USD?
+- How can a dentist become a Certified Smile Designer?
+- I am a dentist, how do I join?
+- How do dentists register with Ultimate Smile Design?
+- Where is the dentist connect page?
+
+emotion:
+interested / professional
+
+voice_response:
+Dentists who wish to become USD Certified Smile Designers can easily apply with us! On your screen, you can see the 'For Dentists' option. If you are on a mobile phone, tap the 3-line menu icon in the header, select 'For Dentists', and fill out your details. Our team will get in touch with you!
+
+follow_up:
+[LINK_CONNECT]
+
+keywords:
+- join usd
+- dentist connect
+- for dentists
+- become certified
+- partner dentist
+- doctor registration
+
+-------------------------
+
+intent: smile_superiority
+
+title: Beyond Good Smile - Good vs Superior Smile Philosophy
+
+trigger_when:
+- User shares information related to their smile, appearance, personality, confidence, or Smile Design.
+- User is discussing whether they need Smile Design.
+- User says their smile is already good or perfect.
+- User argues that they don't need Smile Design.
+- User is unsure whether Smile Design can improve their smile.
+- User is discussing their teeth but does not have an obvious dental problem.
+- Use naturally when there is a suitable conversational opportunity.
+- Do not force this intent into unrelated conversations.
+
+photo_self_reflection_prompt:
+  voice_response: >
+    Just open your phone, take a photo of your smile, and look at it for a moment.
+    Then ask yourself one simple question: “Could my smile look even more natural?”
+
+good_vs_superior_response:
+  user_scenarios:
+  - My smile is already perfect.
+  - I don't need Smile Design.
+  - My smile is good.
+  - I don't think I need it.
+  - There is nothing wrong with my smile.
+  - My teeth are healthy and fine.
+  voice_response: >
+    I completely understand, and I’m not saying your smile is bad.
+    But having a good smile doesn't mean there isn't a possibility of making it even better. At USD, we believe there is a difference between good and superior.
+    With more than 1 lakh smiles designed and over two decades of experience, our focus is not simply to fix smiles that have a problem. We also focus on enhancing smiles that are already good and making them feel even more natural, balanced and personalised.
+    The question isn't “Are your teeth good or bad?”
+    The question is “How can your overall smile become even better?”
+
+superior_smile_details:
+  user_questions:
+  - What do you mean by superiority?
+  - What do you mean by a superior smile?
+  - How do you improve a good smile?
+  - How can you make my smile better if my teeth are already good?
+  - What would you actually change?
+  voice_response: >
+    We don't focus only on whether your teeth are good or bad. We look at your overall smile.
+    That includes your gums, your teeth, how much of your teeth are visible when you smile, the proportions and alignment, and even the colour and different shades of the teeth.
+    All these details work together to create a natural-looking smile.
+    That's where Smile Design becomes important—not just making teeth look good, but making the whole smile work beautifully together.
+
+follow_up:
+  question: Would you like to know how our philosophy works?
+
+keywords:
+- my smile is perfect
+- my smile is good
+- I don't need smile design
+- don't need smile design
+- teeth are already good
+- nothing wrong with my teeth
+- improve my smile
+- make my smile better
+- superior smile
+- better smile
+- natural smile
+- superiority
+- difference between good and superior
+- photo of smile
+- look even more natural
+- good vs superior
+- beyond good smile
+
+-------------------------
+
+intent: profession_smile_connection
+
+title: Profession and Smile Connection - Personalized Smile Design Philosophy
+
+purpose: >
+  When a user mentions their profession or says they work in a profession where appearance, communication,
+  confidence, presentation, or meeting people is important, connect their profession naturally with their smile
+  and explain how personalised Smile Design can complement their professional personality.
+
+master_rules:
+- Never assume the user's smile is bad.
+- Never make the user feel insecure or judged.
+- Do not say they NEED treatment.
+- Make the connection personal, warm and conversational.
+- Use the profession-specific analogy.
+- Do not give every profession response unless that profession is relevant.
+- Do not simply mention the user's profession and immediately sell Smile Design.
+- First connect their profession to something they genuinely experience ("Because of what you do every day, you already understand why this matters.").
+- Profession is not the trigger to sell; profession is the bridge to make the Smile Design philosophy personally meaningful.
+
+exploratory_prompt:
+  english: "By the way, what do you do for work?"
+  hindi: "वैसे, अगर मैं पूछ सकती हूँ, आप क्या काम करते हैं?"
+  gujarati: "તેમ છતાં, જો હું પૂછી શકું, તમે શું કામ કરો છો?"
+
+professions:
+  receptionist:
+    profession: Receptionist
+    analogy: "Smile = welcome sign / first impression"
+    voice_response: >
+      As a receptionist, you meet new people almost every day, and your smile is often part of their first impression of you.
+      You may already look confident and professional, but your smile should feel like it belongs with your personality too.
+      Think of it as the welcome sign of a place—the first thing people notice. That's why we focus on creating a smile that feels natural to you.
+
+  salesperson:
+    profession: Salesperson
+    analogy: "Smile = presentation"
+    voice_response: >
+      As a salesperson, you meet new people, build relationships and create first impressions every day.
+      Your smile is part of that interaction. Think of it like your presentation—you want every part of your presentation to represent you naturally.
+      That's why we design the smile around your face and personality, rather than simply making the teeth look good.
+
+  teacher:
+    profession: Teacher
+    analogy: "Smile = communication"
+    voice_response: >
+      As a teacher, you spend your day speaking, explaining and connecting with people. Your expressions and smile naturally become part of how you communicate.
+      Think of your smile as another part of your communication. We focus on making it feel natural with your face and personality, so it supports the way you naturally express yourself.
+
+  doctor:
+    profession: Doctor
+    analogy: "Smile = trust and reassurance"
+    voice_response: >
+      As a doctor, people look to you for confidence, trust and reassurance. You communicate with patients face-to-face every day.
+      Your smile is part of that first connection. We focus on creating something natural and balanced that complements your professional personality rather than simply creating perfect-looking teeth.
+
+  lawyer:
+    profession: Lawyer
+    analogy: "Smile = professional presence"
+    voice_response: >
+      As a lawyer, confidence and presence are important every time you meet a client or speak in front of people.
+      Think of your smile as part of your professional presence. A personalised Smile Design can make sure your smile complements the confidence and personality you already carry.
+
+  business_owner:
+    profession: Business Owner
+    analogy: "Smile = personal brand"
+    voice_response: >
+      As a business owner, your personality often becomes part of your personal brand. You meet clients, partners and new people all the time.
+      Your smile is part of that personal brand too. Think of it like your business identity—we don't want to copy someone else's; we want it to represent you.
+
+  real_estate_agent:
+    profession: Real Estate Agent
+    analogy: "Smile = a beautiful property where every detail works together"
+    voice_response: >
+      As a real estate agent, you meet new clients, show properties and build trust face-to-face.
+      Think about showing someone a beautiful home—you notice how all the details work together. We take the same approach to your smile, making sure your teeth, gums and overall smile work naturally together.
+
+  hr_professional:
+    profession: HR Professional
+    analogy: "Smile = human connection"
+    voice_response: >
+      As an HR professional, you meet and communicate with people every day. Creating a comfortable first connection is a big part of your role.
+      Your smile naturally becomes part of that connection. We focus on creating a smile that complements your personality and helps your natural expression come through.
+
+  flight_attendant:
+    profession: Flight Attendant
+    analogy: "Smile = part of the uniform"
+    voice_response: >
+      As a flight attendant, you meet hundreds of people and create a welcoming experience every day.
+      Think of your smile like part of your uniform—it should look polished and professional, but still feel like you.
+      That's the idea behind personalised Smile Design.
+
+  hospitality_professional:
+    profession: Hospitality / Hotel Professional
+    analogy: "Smile = complete guest experience"
+    voice_response: >
+      In hospitality, you welcome people and create an experience from the moment they arrive.
+      Think of a beautiful hotel—the experience isn't created by one detail, but by everything working together.
+      We look at your smile in the same way, creating harmony between your teeth, gums, facial features and personality.
+
+  model:
+    profession: Model
+    analogy: "Smile = finishing detail in photography"
+    voice_response: >
+      As a model, your face is part of your profession, so even small details can influence your overall appearance.
+      Think of your smile as the finishing detail of a photograph. It shouldn't overpower your face—it should complement it naturally.
+      That's what personalised Smile Design focuses on.
+
+  actor:
+    profession: Actor
+    analogy: "Smile = part of storytelling"
+    voice_response: >
+      As an actor, your face and expressions are part of how you tell a story.
+      Your smile needs to work naturally with those expressions. That's why we don't simply focus on creating beautiful teeth—we focus on creating a smile that belongs to your face and personality.
+
+  influencer:
+    profession: Influencer
+    analogy: "Smile = visual signature"
+    voice_response: >
+      As an influencer, your face and smile are often part of your content and personal identity.
+      Think of your smile like your visual signature. Just like your signature represents you, your smile should feel uniquely yours.
+      That's the philosophy we follow at USD.
+
+  content_creator:
+    profession: Content Creator
+    analogy: "Smile = on-camera identity"
+    voice_response: >
+      As a content creator, you're constantly communicating through a camera, so your expressions and smile naturally become part of your identity.
+      Think of your smile like part of your on-camera style. It should complement your face and personality instead of looking like something copied from someone else.
+
+  public_speaker:
+    profession: Public Speaker
+    analogy: "Smile = stage presence"
+    voice_response: >
+      As a public speaker, people don't just hear your words—they see your expressions, confidence and presence.
+      Your smile is part of that presence. We design it to work naturally with your face and expressions, so it supports your personality rather than distracting from it.
+
+  consultant:
+    profession: Consultant
+    analogy: "Smile = credibility and trust"
+    voice_response: >
+      As a consultant, you help people make important decisions, so confidence and trust are naturally part of your professional presence.
+      Your smile is part of that first connection. We focus on designing one that feels natural to you and complements the personality you bring into the room.
+
+  sales_executive:
+    profession: Sales Executive
+    analogy: "Smile = first conversation"
+    voice_response: >
+      As a sales executive, you meet new people and create relationships every day.
+      Think of your smile as part of your first conversation—it speaks before you do.
+      That's why we focus on a smile that feels natural, confident and aligned with your personality.
+
+  marketing_professional:
+    profession: Marketing Professional
+    analogy: "Smile = personal presentation"
+    voice_response: >
+      In marketing, you know that presentation changes how people perceive something.
+      Your smile is part of your own presentation too. But instead of following a standard design, we create one that complements your face, personality and natural expressions.
+
+  banker_financial_advisor:
+    profession: Banker / Financial Advisor
+    analogy: "Smile = trust"
+    voice_response: >
+      When you're dealing with someone's finances, trust and confidence matter from the very first interaction.
+      Your smile is part of that first impression. We focus on creating a natural smile that complements the professional confidence you already bring to your clients.
+
+  professor_lecturer:
+    profession: Professor / Lecturer
+    analogy: "Smile = expression + communication"
+    voice_response: >
+      As a professor, you spend so much time speaking, explaining and engaging with people.
+      Your expressions become part of how you communicate. We believe your smile should work naturally with those expressions and complement the personality people see when you teach.
+
+  wedding_event_professional:
+    profession: Wedding / Event Professional
+    analogy: "Smile = details creating a complete experience"
+    voice_response: >
+      You spend your time creating beautiful experiences for other people, so you understand how much the small details matter.
+      Your smile is one of those details in your own appearance. We look at the complete picture, creating harmony rather than focusing on just one tooth.
+
+  photographer:
+    profession: Photographer
+    analogy: "Smile = photography composition"
+    voice_response: >
+      As a photographer, you already know that lighting, angles and small details can completely change how someone looks.
+      We look at your smile with the same attention to detail. It's not just about your teeth, but how your teeth, gums, smile line and facial features come together.
+
+  fashion_designer:
+    profession: Fashion Designer
+    analogy: "Smile = custom-designed clothing"
+    voice_response: >
+      As a fashion designer, you understand that something can look beautiful but still not be right for the person wearing it.
+      Smile Design follows the same idea. We don't choose a standard smile—we design one that complements your face, personality and overall appearance.
+
+  architect:
+    profession: Architect
+    analogy: "Smile = architecture / proportion + balance"
+    voice_response: >
+      As an architect, you know that great design isn't just about making something beautiful—proportion, balance and harmony matter.
+      We apply that same thinking to your smile. We look at the proportions and relationship between your teeth, gums, smile and face to create something that feels naturally balanced.
+
+  interior_designer:
+    profession: Interior Designer
+    analogy: "Smile = interior design"
+    voice_response: >
+      As an interior designer, you know that one beautiful piece doesn't automatically make the whole room beautiful.
+      The colours, proportions and details have to work together.
+      We look at your smile the same way—your teeth, gums, colour, proportions and facial features should all work together naturally.
+
+  engineer:
+    profession: Engineer
+    analogy: "Smile = engineered system"
+    voice_response: >
+      As an engineer, you know that precision matters. Even a small difference can affect how the whole system works.
+      Smile Design is also about more than one tooth. We look at how the different elements of your smile work together to create overall balance and harmony.
+
+  software_developer:
+    profession: Software Developer / IT Professional
+    analogy: "Smile = complete system"
+    voice_response: >
+      You know how a small change in one part of a system can affect the whole experience.
+      A smile can work the same way. We don't look at just one tooth—we look at the complete smile and how every element works together to create a natural result.
+
+  entrepreneur:
+    profession: Entrepreneur
+    analogy: "Smile = personal identity / brand"
+    voice_response: >
+      As an entrepreneur, your personality is often a big part of your identity and how people remember you.
+      Think of your smile as part of your personal brand. It shouldn't look like everyone else's—it should complement the person behind the brand.
+
+  real_estate_developer:
+    profession: Real Estate Developer
+    analogy: "Smile = complete project planning"
+    voice_response: >
+      You understand better than most that great results come from planning the complete picture, not just one part.
+      That's exactly how we approach Smile Design. We look at the complete smile and plan how the different elements should work together naturally.
+
+  founder:
+    profession: Founder
+    analogy: "Smile = founder's personal brand"
+    voice_response: >
+      As a founder, people often connect with you before they connect with your company.
+      Your personality becomes part of the brand. Your smile is part of that personal identity too, so we focus on creating something that feels naturally yours rather than copying someone else's smile.
+
+keywords:
+- profession
+- job
+- work
+- what do you do
+- career
+- receptionist
+- sales
+- salesperson
+- teacher
+- doctor
+- lawyer
+- advocate
+- business owner
+- real estate
+- hr
+- flight attendant
+- cabin crew
+- hotel
+- hospitality
+- model
+- actor
+- actress
+- influencer
+- content creator
+- youtuber
+- public speaker
+- consultant
+- sales executive
+- marketing
+- banker
+- financial advisor
+- professor
+- lecturer
+- wedding planner
+- event manager
+- photographer
+- fashion designer
+- architect
+- interior designer
+- engineer
+- software engineer
+- developer
+- coder
+- it professional
+- entrepreneur
+- real estate developer
+- founder

@@ -1,0 +1,117 @@
+intent: smile_superiority
+
+title: Beyond Good Smile - Good vs Superior Smile Philosophy
+
+trigger_when:
+- User shares information related to their smile, appearance, personality, confidence, or Smile Design.
+- User is discussing whether they need Smile Design.
+- User says their smile is already good or perfect.
+- User argues that they don't need Smile Design.
+- User is unsure whether Smile Design can improve their smile.
+- User is discussing their teeth but does not have an obvious dental problem.
+- Use naturally when there is a suitable conversational opportunity.
+- Do not force this intent into unrelated conversations.
+
+photo_self_reflection_prompt:
+  voice_response: >
+    Just open your phone, take a photo of your smile, and look at it for a moment.
+    Then ask yourself one simple question: “Could my smile look even more natural?”
+  hindi_response: >
+    बस आप अपना फोन खोलें, अपनी स्माइल की एक तस्वीर लें, और उसे एक पल के लिए देखें। फिर खुद से एक साधारण सा सवाल पूछें: “क्या मेरी स्माइल और भी प्राकृतिक दिख सकती है?”
+  gujarati_response: >
+    બસ તમારો ફોન ખોલો, તમારી સ્માઇલનો એક ફોટો લો, અને તેને એક ક્ષણ માટે જુઓ. પછી તમારી જાતને એક સરળ પ્રશ્ન પૂછો: “શું મારી સ્માઇલ વધુ નેચરલ દેખાઈ શકે છે?”
+  follow_up:
+    question: So, what's your thought?
+    hindi_question: तो आपका क्या विचार है?
+    gujarati_question: તો તમારો શું વિચાર છે?
+
+good_vs_superior_response:
+  user_scenarios:
+  - My smile is already perfect.
+  - I don't need Smile Design.
+  - My smile is good.
+  - I don't think I need it.
+  - There is nothing wrong with my smile.
+  - My teeth are healthy and fine.
+  - Meri smile achhi hai.
+  - Meri smile prakritik hai.
+  voice_response: >
+    I completely understand, and I’m not saying your smile is bad.
+    But having a good smile doesn't mean there isn't a possibility of making it even better. At USD, we believe there is a difference between good and superior.
+    With more than 1 lakh smiles designed and over two decades of experience, our focus is not simply to fix smiles that have a problem. We also focus on enhancing smiles that are already good and making them feel even more natural, balanced and personalised.
+    The question isn't “Are your teeth good or bad?”
+    The question is “How can your overall smile become even better?”
+  hindi_response: >
+    मैं पूरी तरह समझ सकती हूँ, और मैं यह नहीं कह रही कि आपकी स्माइल ठीक नहीं है।
+    लेकिन एक अच्छी स्माइल होने का मतलब यह नहीं है कि इसे और बेहतर नहीं बनाया जा सकता। USD में, हम मानते हैं कि एक अच्छी और उत्कृष्ट (superior) स्माइल में फर्क होता है।
+    1 लाख से अधिक स्माइल डिज़ाइन्स और दो दशकों से अधिक के अनुभव के साथ, हमारा ध्यान केवल समस्या वाले दाँतों को ठीक करने पर नहीं है, बल्कि पहले से अच्छी स्माइલ को और भी अधिक प्राकृतिक, संतुलित और पर्सनलाइज़्ड बनाने पर है।
+    सवाल यह नहीं है कि आपके दाँत अच्छे हैं या बुरे, सवाल यह है कि आपकी पूरी स्माइલ और भी बेहतर कैसे बन सकती है।
+  gujarati_response: >
+    હું પૂરી રીતે સમજી શકું છું, અને હું એવું નથી કહેતી કે તમારી સ્માઇલ સારી નથી.
+    પરંતુ એક સારી સ્માઇલ હોવાનો અર્થ એ નથી કે તેને વધુ સારી ન બનાવી શકાય. USD માં, અમે માનીએ છીએ કે સારી અને ઉત્કૃષ્ટ (superior) સ્માઇલ વચ્ચે ફરક હોય છે.
+    1 લાખથી વધુ સ્માઇલ ડિઝાઇન અને બે દાયકાથી વધુના અનુભવ સાથે, અમારું ધ્યાન માત્ર સમસ્યાવાળા દાંત સુધારવા પર નથી, પણ પહેલેથી સારી સ્માઇલને વધુ નેચરલ, સંતુલિત અને પર્સનલાઇઝ્ડ બનાવવા પર છે.
+    સવાલ એ નથી કે તમારા દાંત કેવા છે, સવાલ એ છે કે તમારી ઓવરઓલ સ્માઇલ વધુ શ્રેષ્ઠ કેવી રીતે બની શકે.
+  follow_up:
+    question: Would you like to know how we make a smile superior?
+    hindi_question: क्या आप जानना चाहेंगे कि हम स्माइल को और बेहतर (superior) कैसे बनाते हैं?
+    gujarati_question: શું તમે જાણવા માંગો છો કે અમે સ્માઇલને વધુ સુપીરીયર (ઉત્કૃષ્ટ) કેવી રીતે બનાવીએ છીએ?
+
+superior_smile_details:
+  user_questions:
+  - What do you mean by superiority?
+  - What do you mean by a superior smile?
+  - How do you improve a good smile?
+  - How can you make my smile better if my teeth are already good?
+  - What would you actually change?
+  - Utkrisht smile ke baare me batao.
+  voice_response: >
+    We don't focus only on whether your teeth are good or bad. We look at your overall smile.
+    That includes your gums, your teeth, how much of your teeth are visible when you smile, the proportions and alignment, and even the colour and different shades of the teeth.
+    All these details work together to create a natural-looking smile.
+    That's where Smile Design becomes important—not just making teeth look good, but making the whole smile work beautifully together.
+  hindi_response: >
+    हम सिर्फ इस बात पर ध्यान नहीं देते कि दाँत अच्छे हैं या नहीं, हम आपकी पूरी स्माइल को देखते हैं।
+    इसमें आपके मसूड़े, दाँत, मुस्कुराते समय दाँत कितने दिखते हैं, अनुपात और अलाइनमेंट, और यहाँ तक कि दाँतों के अलग-अलग शेड्स और रंग भी शामिल हैं।
+    ये सभी बातें मिलकर एक प्राकृतिक स्माइल बनाती हैं। यही वजह है कि स्माइल डिज़ाइन महत्वपूर्ण है—सिर्फ दाँतों को ठीक करना नहीं, बल्कि पूरी स्माइल को खूबसूरती से एक साथ प्रस्तुत करना।
+  gujarati_response: >
+    અમે ફક્ત દાંત સારા છે કે નહીં તેના પર ધ્યાન નથી આપતા, અમે તમારી આખી સ્માઇલ જોઈએ છીએ.
+    તેમાં તમારા પેઢાં, તમારા દાંત, હસતી વખતે દાંત કેટલા દેખાય છે, પ્રમાણ અને અલાઇનમેન્ટ, અને દાંતના કલર અને અલગ-અલગ શેડ્સ પણ સામેલ છે.
+    આ બધી વિગતો ભેગી મળીને એક નેચરલ સ્માઇલ બનાવે છે. એ જ કારણ છે કે સ્માઇલ ડિઝાઇન મહત્વપૂર્ણ છે—માત્ર દાંત સારા દેખાય તે નહીં, પણ આખી સ્માઇલ એકસાથે સુંદર દેખાય.
+  follow_up:
+    question: Would you like to know how our philosophy works?
+    hindi_question: क्या आप जानना चाहेंगे कि हमारी फिलॉसफी कैसे काम करती है?
+    gujarati_question: શું તમે જાણવા માંગો છો કે અમારી ફિલોસોફી કેવી રીતે કામ કરે છે?
+
+keywords:
+- my smile is perfect
+- my smile is good
+- I don't need smile design
+- don't need smile design
+- teeth are already good
+- nothing wrong with my teeth
+- improve my smile
+- make my smile better
+- superior smile
+- better smile
+- natural smile
+- superiority
+- difference between good and superior
+- photo of smile
+- look even more natural
+- good vs superior
+- beyond good smile
+- 1 lakh smiles
+- 2 decades of experience
+- do dashak
+- be dayaka
+- natural smile
+- superiority
+- difference between good and superior
+- photo of smile
+- look even more natural
+- good vs superior
+- beyond good smile
+- 1 lakh smiles
+- 2 decades of experience
+- do dashak
+- be dayaka

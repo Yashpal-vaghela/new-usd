@@ -1,3 +1,4 @@
+import time
 import asyncio
 from voice_agent.utils.constants import DEFAULT_LANGUAGE
 from voice_agent.audio.vad import SileroVADState
@@ -31,7 +32,11 @@ class Session:
         
         # Long-term Session Memory
         self.user_name = ""
+        self.name_confirmed = False
         self.user_concern = ""
+        self.consultation_agreed = False
+        self.asking_for_field = None
+        self.slot_just_updated = False
         self.booking_slots = {
             "first_name": "",
             "last_name": "",
@@ -45,7 +50,7 @@ class Session:
         }
         
         # Timing trackers
-        self.last_activity_time = asyncio.get_event_loop().time()
+        self.last_activity_time = time.time()
         
         # Async tasks
         self.user_transcription_task = None
@@ -55,7 +60,17 @@ class Session:
         # Gemini WebSocket connection and background listener task
         self.gemini_ws = None
         self.gemini_recv_task = None
-        self.setup_complete_event = asyncio.Event()
+        self._setup_complete_event = None
+
+    @property
+    def setup_complete_event(self):
+        if not hasattr(self, '_setup_complete_event') or self._setup_complete_event is None:
+            self._setup_complete_event = asyncio.Event()
+        return self._setup_complete_event
+
+    @setup_complete_event.setter
+    def setup_complete_event(self, val):
+        self._setup_complete_event = val
 
     def reset_activity_timer(self):
-        self.last_activity_time = asyncio.get_event_loop().time()
+        self.last_activity_time = time.time()

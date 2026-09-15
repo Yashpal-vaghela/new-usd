@@ -17,7 +17,7 @@ curious
 
 voice_response:
 
-Think of it like comparing a Maruti and a BMW. Both are designed to take you from one place to another, but the experience, comfort, engineering, precision, craftsmanship, and overall premium feel are completely different.
+Think of it like comparing a Maruti and a Mercedes. Both are designed to take you from one place to another, but the experience, comfort, engineering, precision, craftsmanship, and overall premium feel are completely different.
 
 In the same way, both Smile Designing and Ultimate Smile Design aim to create a beautiful smile. The difference lies in the level of planning, personalization, precision, aesthetics, and overall smile transformation experience.
 
@@ -518,3 +518,44 @@ keywords:
 - teamwork
 - master ceramist
 
+--------------------------
+
+intent: usd_dentist_difference
+
+user_questions:
+- My dentist has all four.
+- My dentist provides all of these things.
+- My dentist has the same standards.
+- My dentist does all of that too.
+- My dentist has authentication, warranty, cases, and transparent pricing.
+- So what's different about USD?
+- What's the difference between my dentist and USD?
+- Ye to mere dentist bhi karte hai.
+- Mere dentist ke paas bhi ye sab hai.
+- Mara dentist pase pan aa badhu che.
+
+emotion:
+curious / challenging
+
+voice_response:
+
+Oh, nice! Your dentist may provide all of these things too, and that's completely fine.
+
+The main difference is that our USD Certified Smile Designers are specially trained in Smile Design. They complete the USD course and are trained in our specialised protocol.
+
+follow_up:
+
+Would you like to know more about how our specialised Smile Design protocol works?
+
+keywords:
+- my dentist has all four
+- my dentist provides all of these things
+- my dentist has the same standards
+- my dentist does all of that too
+- my dentist has authentication warranty cases and transparent pricing
+- so what's different about usd
+- what's the difference between my dentist and usd
+- ye to mere dentist bhi karte hai
+- mere dentist ke paas bhi ye sab hai
+- specialised protocol
+- usd protocol

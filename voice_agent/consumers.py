@@ -1,10 +1,13 @@
 import json
 import asyncio
+import base64
+import threading
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from voice_agent.ai.session_manager import Session
 from voice_agent.ai.conversation_manager import ConversationManager
 from voice_agent.gemini.client import GeminiClient
 from voice_agent.ai.prompt_builder import get_system_prompt
+from voice_agent.views import dispatch_feedback_email
 
 class VoiceAgentConsumer(AsyncJsonWebsocketConsumer):
     async def connect(self):
@@ -74,6 +77,28 @@ class VoiceAgentConsumer(AsyncJsonWebsocketConsumer):
                     slots = data.get("slots", {})
                     if slots:
                         self.session.booking_slots.update(slots)
+                    return
+                if data.get("type") == "submit_feedback":
+                    payload = data.get("payload", {}) or data.get("data", {})
+                    rating = payload.get("rating", "Call Completed")
+                    transcript = payload.get("transcript", "No transcript provided.")
+                    audio_b64 = payload.get("audio_base64")
+                    audio_filename = payload.get("audio_filename", "voice_recording.webm")
+                    audio_bytes = None
+                    if audio_b64:
+                        if "," in audio_b64:
+                            audio_b64 = audio_b64.split(",", 1)[1]
+                        try:
+                            audio_bytes = base64.b64decode(audio_b64)
+                        except Exception as e:
+                            print(f"[WARN] Error decoding audio base64 over WS: {e}")
+                    
+                    threading.Thread(
+                        target=dispatch_feedback_email,
+                        args=(rating, transcript, audio_bytes, audio_filename),
+                        daemon=False
+                    ).start()
+                    await self.send_json({"type": "feedback_ack", "status": "success"})
                     return
                 # Delegate JSON events to NLU coordinator
                 await self.conversation_manager.handle_client_json(data, self.system_prompt)

@@ -3,12 +3,14 @@ import json
 import base64
 import uuid
 import datetime
+import threading
 import httpx
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.core.mail import EmailMessage, get_connection
+from voice_agent.audio.transcoder import wrap_pcm_to_wav_base64
 
 def chat_bot(request):
     return render(request, 'chat_bot.html')
@@ -36,7 +38,7 @@ def api_tts(request):
             "speechConfig": {
                 "voiceConfig": {
                     "prebuiltVoiceConfig": {
-                        "voiceName": "Leda"
+                        "voiceName": "Despina"
                     }
                 }
             }
@@ -60,50 +62,48 @@ def api_tts(request):
             return JsonResponse({'error': 'No audio returned from Gemini TTS'}, status=500)
         
         # Convert raw PCM base64 payload to WAV base64
-        wav_base64 = wrap_pcm_to_wav_base64(audio_data, 24000)
+        pcm_bytes = base64.b64decode(audio_data)
+        wav_base64 = wrap_pcm_to_wav_base64(pcm_bytes, 24000)
         return JsonResponse({'audioBase64': wav_base64})
         
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
-# ==========================================
-# Voice Agent Independent Email Configuration
-# ==========================================
-# The Gmail address that sends the emails:
-SENDER_GMAIL = 'vaghela9632@gmail.com'
+# ==============================================================================
+# Voice Agent Independent Email Configuration (ONLY Voice Agent - not other mails)
+# FROM (Sender)   : vaghela9632@gmail.com
+# TO (Destination): marketing@advancedentalexport.com
+# ==============================================================================
+SENDER_GMAIL = os.getenv('SENDER_GMAIL', 'vaghela9632@gmail.com')
+SENDER_GMAIL_APP_PASSWORD = os.getenv('SENDER_GMAIL_APP_PASSWORD', 'ooby stkw cvkn wzwy')
+FEEDBACK_RECIPIENT_EMAILS = [
+    os.getenv('MARKETING_EMAIL', 'marketing@advancedentalexport.com'),
+]
 
-# 16-character Google App Password for SENDER_GMAIL (from: https://myaccount.google.com/apppasswords)
-# If set, voice agent authenticates 100% independently from this account:
-SENDER_GMAIL_APP_PASSWORD = 'qazj gyab odid agqa'
-
-# The destination where all transcripts and audio recordings are delivered:
-MARKETING_EMAIL = 'marketing@advancedentalexport.com'
-
-@csrf_exempt
-def submit_feedback(request):
-    """
-    Receives transcript, rating, and optional raw recorded audio file.
-    Directly sends email to marketing@advancedentalexport.com via Django SMTP (Gmail),
-    attaching the audio file directly in-memory without saving to local disk.
-    """
-    if request.method != 'POST':
-        return JsonResponse({'error': 'Only POST method is allowed'}, status=405)
-    
+def dispatch_feedback_email(rating_label='Call Completed', transcript='No transcript provided.', audio_bytes=None, audio_filename='voice_recording.webm'):
+    """Sends independent Gmail SMTP email with transcript and attached in-memory audio recording."""
     try:
-        rating_label = request.POST.get('rating', 'Call Completed')
-        transcript = request.POST.get('transcript', 'No transcript provided.')
-        audio_file = request.FILES.get('audio') or request.FILES.get('file')
+        now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        email_body = (
+            f"=========================================\n"
+            f"🌟 ULTIMATE SMILE DESIGN VOICE AGENT LOG\n"
+            f"=========================================\n\n"
+            f"• Event / Status: {rating_label}\n"
+            f"• Timestamp: {now_str}\n\n"
+            f"=========================================\n"
+            f"CONVERSATION TRANSCRIPT:\n"
+            f"=========================================\n\n"
+            f"{transcript.strip()}\n\n"
+            f"=========================================\n"
+        )
         
-        email_body = f"Event / Rating: {rating_label}\n\n====================\nCONVERSATION TRANSCRIPT:\n====================\n\n{transcript}"
-        
-        # Independent SMTP connection if password is provided
         if SENDER_GMAIL and SENDER_GMAIL_APP_PASSWORD:
             connection = get_connection(
                 backend='django.core.mail.backends.smtp.EmailBackend',
                 host='smtp.gmail.com',
                 port=587,
                 username=SENDER_GMAIL,
-                password=SENDER_GMAIL_APP_PASSWORD.replace(" ", ""),
+                password=SENDER_GMAIL_APP_PASSWORD,
                 use_tls=True,
             )
             from_email_str = f"USD Voice Agent <{SENDER_GMAIL}>"
@@ -115,35 +115,107 @@ def submit_feedback(request):
             subject=f"🌟 USD Voice Agent: {rating_label}",
             body=email_body,
             from_email=from_email_str,
-            to=[MARKETING_EMAIL],
+            to=FEEDBACK_RECIPIENT_EMAILS,
             reply_to=[SENDER_GMAIL],
             connection=connection
         )
         
-        if audio_file:
+        if audio_bytes and len(audio_bytes) > 0:
             try:
-                filename = audio_file.name or 'voice_recording.webm'
-                audio_bytes = audio_file.read()
-                if audio_bytes and len(audio_bytes) > 0:
-                    email_msg.attach(filename, audio_bytes, 'audio/webm')
-                    email_msg.body += f"\n\n🎙️ RAW AUDIO RECORDING:\nAttached as {filename} ({len(audio_bytes)} bytes)"
+                mime_type = 'audio/webm'
+                if audio_filename.endswith('.mp4'):
+                    mime_type = 'audio/mp4'
+                elif audio_filename.endswith('.wav'):
+                    mime_type = 'audio/wav'
+                elif audio_filename.endswith('.opus'):
+                    mime_type = 'audio/ogg'
+                email_msg.attach(audio_filename, audio_bytes, mime_type)
+                size_kb = round(len(audio_bytes) / 1024, 1)
+                email_msg.body += f"\n🎙️ AUDIO RECORDING ATTACHED:\n• File: {audio_filename} (~{size_kb} KB, Opus compressed)\n"
             except Exception as att_err:
                 print(f"[WARNING] Failed to attach in-memory audio: {att_err}")
+                
+        email_msg.send(fail_silently=False)
+        print(f"[INFO] Direct Gmail SMTP delivery successful from {from_email_str} to {FEEDBACK_RECIPIENT_EMAILS} (Audio attached: {bool(audio_bytes)})")
+        return True
+    except Exception as e:
+        import traceback
+        print(f"[ERROR] Direct Gmail SMTP delivery error: {e}")
+        traceback.print_exc()
+        return False
 
-        try:
-            email_msg.send(fail_silently=False)
-            print(f"[INFO] Direct Gmail SMTP delivery successful from {from_email_str} to {MARKETING_EMAIL}!")
-        except Exception as mail_err:
-            print(f"[WARNING] Email delivery failed (network/SMTP restriction on host): {mail_err}")
+@csrf_exempt
+def submit_feedback(request):
+    """
+    Receives transcript, rating, and optional raw recorded audio file.
+    Accepts both application/json (with base64 audio) and multipart/form-data.
+    Directly sends email to recipients via Django SMTP (Gmail),
+    attaching the audio file directly in-memory without saving to local disk.
+    """
+    if request.method == 'OPTIONS':
+        response = JsonResponse({'status': 'ok'})
+        response['Access-Control-Allow-Origin'] = '*'
+        response['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+        response['Access-Control-Allow-Headers'] = 'Content-Type, X-CSRFToken'
+        return response
+        
+    if request.method != 'POST':
+        response = JsonResponse({'error': 'Only POST method is allowed'}, status=405)
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
+    
+    try:
+        rating_label = 'Call Completed'
+        transcript = 'No transcript provided.'
+        audio_bytes = None
+        audio_filename = 'voice_recording.webm'
+        
+        # Check if request is JSON
+        if request.content_type and 'application/json' in request.content_type:
+            try:
+                body_data = json.loads(request.body.decode('utf-8'))
+            except Exception:
+                body_data = {}
+            rating_label = body_data.get('rating', 'Call Completed')
+            transcript = body_data.get('transcript', 'No transcript provided.')
+            audio_b64 = body_data.get('audio_base64')
+            if audio_b64:
+                if ',' in audio_b64:
+                    audio_b64 = audio_b64.split(',', 1)[1]
+                try:
+                    audio_bytes = base64.b64decode(audio_b64)
+                    audio_filename = body_data.get('audio_filename', 'voice_recording.webm')
+                except Exception as b64_err:
+                    print(f"[WARN] Error decoding audio base64: {b64_err}")
+        else:
+            rating_label = request.POST.get('rating', 'Call Completed')
+            transcript = request.POST.get('transcript', 'No transcript provided.')
+            audio_file = request.FILES.get('audio') or request.FILES.get('file')
+            if audio_file:
+                audio_filename = audio_file.name or 'voice_recording.webm'
+                audio_bytes = audio_file.read()
+        
+        # ⚡ Dispatch email asynchronously so web worker finishes immediately without freezing the website ⚡
+        t = threading.Thread(
+            target=dispatch_feedback_email,
+            args=(rating_label, transcript, audio_bytes, audio_filename),
+            daemon=False
+        )
+        t.start()
 
-        return JsonResponse({
+        response = JsonResponse({
             'status': 'success',
-            'rating': rating_label
+            'rating': rating_label,
+            'audio_attached': bool(audio_bytes)
         })
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
         
     except Exception as e:
         print(f"[ERROR] submit_feedback failed: {e}")
-        return JsonResponse({'status': 'error', 'message': str(e)}, status=200)
+        response = JsonResponse({'error': str(e)}, status=500)
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
 
 def wrap_pcm_to_wav_base64(base64_pcm, sample_rate=24000):
     pcm_data = base64.b64decode(base64_pcm)

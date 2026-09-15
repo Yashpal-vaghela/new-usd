@@ -39,9 +39,12 @@ def detect_tag_from_text(input_text=""):
     if not text:
         return None
         
-    tag_match = re.search(r"<!--\s*\[?(LINK_[A-Z_]+|END_CHAT)\]?\s*-->", input_text, re.IGNORECASE)
+    tag_match = re.search(r"(?:<!--\s*)?\[?(LINK_[A-Z_]+|END_CHAT)\]?(?:\s*-->)?", input_text, re.IGNORECASE)
     if tag_match:
-        return f"[{tag_match.group(1).upper()}]"
+        t_found = tag_match.group(1).upper()
+        if t_found == "LINK_FIND_DENTIST":
+            return "[LINK_DENTISTS]"
+        return f"[{t_found}]"
         
     if "end chat" in text or "goodbye" in text or "bye" in text or "take care" in text or "see you" in text:
         return "[END_CHAT]"
