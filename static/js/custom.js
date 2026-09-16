@@ -99,8 +99,17 @@ All JavaScript fuctions Start
 	 
 	// Mobile side drawer function by = custom.js
 	function mobile_side_drawer(){
-		jQuery('#mobile-side-drawer').on('click', function () { 
+		jQuery('#mobile-side-drawer').on('click', function (e) { 
+			e.stopPropagation();
 			jQuery('.mobile-sider-drawer-menu').toggleClass('active');
+		});
+
+		jQuery(document).on('click touchstart', function (e) {
+			if (jQuery('.mobile-sider-drawer-menu').hasClass('active')) {
+				if (!jQuery(e.target).closest('.header-nav, #mobile-side-drawer').length) {
+					jQuery('.mobile-sider-drawer-menu').removeClass('active');
+				}
+			}
 		});
 	}
 /*--------------------------------------------------------------------------------------------

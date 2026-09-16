@@ -75,13 +75,13 @@
                                 </button>
                             </a>
                         </li>      
-                        {% comment %} <li class="hea-shrink-btn">
+                        <li class="hea-shrink-btn">
                             <a href="{% url 'home:dentist' %}">
                                 <button type="submit" class="bat text-center hea-shrink-btn-inner">
-                                    For Patients
+                                    Book Appointment
                                 </button>
                             </a>
-                        </li> {% endcomment %}
+                        </li>
                         <li class="hea-shrink-btn">
                             <a href="{% url 'home:dentist_connect' %}">
                                 <button type="submit" class="bat text-center hea-shrink-btn-inner">
@@ -119,9 +119,9 @@
                         <a href="{% url 'home:verify_warranty' %}" method="GET" class="aon-add-listing m-l20 header-buttons bat">
                             <p class="">Verify Warranty</p>
                         </a>
-                        {% comment %} <a href="{% url 'home:dentist' %}" method="GET" class="aon-add-listing m-l20 header-buttons bat" onClick="localStorage.removeItem('selectedDoctor')">
-                            <p class="">For Patients</p>   
-                        </a> {% endcomment %}
+                        <a href="{% url 'home:dentist' %}" method="GET" class="aon-add-listing m-l20 header-buttons bat" onClick="localStorage.removeItem('selectedDoctor')">
+                            <p class="">Book Appointment</p>   
+                        </a>
                         <a href="{% url 'home:dentist_connect' %}" method="GET" class="bat aon-add-listing m-l20 header-buttons ">
                             <p class="">For Dentist</p>
                         </a>
