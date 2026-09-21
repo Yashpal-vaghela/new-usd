@@ -3,9 +3,9 @@
 <title>Best Dentists in {{city_name | capfirst}} for Smile Designing | ✅ USD Certified</title>
 <meta name="description" content="Find the best dentists in {{city_name | capfirst}} for smile designing treatment. Find top cosmetic dentists and qualified smile design experts near you in {{city_name | capfirst}}." />
 {% if data.number > 1 %}
-<link rel="canonical" href="https://ultimatesmiledesign.com/certified-dentists/city/{{city_name}}/?page={{data.number}}" />
+<link rel="canonical" href="https://ultimatesmiledesign.com/certified-dentists/city/{{city_name|lower}}/?page={{data.number}}" />
 {% else %}
-<link rel="canonical" href="https://ultimatesmiledesign.com/certified-dentists/city/{{city_name}}/" />
+<link rel="canonical" href="https://ultimatesmiledesign.com/certified-dentists/city/{{city_name|lower}}/" />
 {% endif %}
 <meta property="og:image" content="{% static 'feature-2.webp'%}">
 <meta property="og:image:secure_url" content="{% static 'feature-2.webp'%}">
@@ -16,7 +16,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Best Dentists in {{city_name | capfirst}} for Smile Designing | ✅ USD Certified" />
 <meta property="og:description" content="Find the best dentists in {{city_name | capfirst}} for smile designing treatment. Find top cosmetic dentists and qualified smile design experts near you in {{city_name | capfirst}}." />
-<meta property="og:url" content="https://ultimatesmiledesign.com/certified-dentists/city/{{city_name}}/" />
+<meta property="og:url" content="https://ultimatesmiledesign.com/certified-dentists/city/{{city_name|lower}}/" />
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Best Dentists in {{city_name | capfirst}} for Smile Designing | ✅ USD Certified">
 <meta name="twitter:description" content="Find the best dentists in {{city_name | capfirst}} for smile designing treatment. Find top cosmetic dentists and qualified smile design experts near you in {{city_name | capfirst}}.">
@@ -118,8 +118,8 @@
     "@graph": [
       {
         "@type": "WebPage",
-        "@id": "https://ultimatesmiledesign.com/certified-dentists/city/{{city_name}}/",
-        "url": "https://ultimatesmiledesign.com/certified-dentists/city/{{city_name}}/",
+        "@id": "https://ultimatesmiledesign.com/certified-dentists/city/{{city_name|lower}}/",
+        "url": "https://ultimatesmiledesign.com/certified-dentists/city/{{city_name|lower}}/",
         "name": "Best Dentists in {{ city_name|capfirst }} for Smile Designing | ✅ USD certified",
         "description": "Find the best dentists in {{ city_name|capfirst }}  for smile designing treatment. Find top cosmetic dentists and qualified smile design experts near you in {{ city_name|capfirst }}.",
         "inLanguage": "en-IN",
@@ -199,7 +199,7 @@
             "@type": "ListItem",
             "position": 3,
             "name": "Certified Dentists in {{ city_name|capfirst }}",
-            "item": "https://ultimatesmiledesign.com/certified-dentists/city/{{city_name}}/"
+            "item": "https://ultimatesmiledesign.com/certified-dentists/city/{{city_name|lower}}/"
           }
         ]
       },
@@ -222,7 +222,7 @@
           }
         }, 
         "description": "Explore verified dentists in {{ city_name|capfirst }} near me offering expert digital smile design and customized smile design treatment. Get a complete list of best dentist in {{ city_name|capfirst }}.",
-        "url": "https://ultimatesmiledesign.com/certified-dentists/city/{{city_name}}/"
+        "url": "https://ultimatesmiledesign.com/certified-dentists/city/{{city_name|lower}}/"
       }
     ]
   }

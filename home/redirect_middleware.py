@@ -9,7 +9,7 @@ class RedirectToNewUrl:
         path = request.path.lower().strip('/')
 
         if path.startswith('best-dentist/'):
-            city_slug = path.split('best-dentist/')[1].strip('/')
+            city_slug = path.split('best-dentist/')[1].strip('/').lower()
             try:
                 # city = City.objects.get(city__iexact=city_slug.replace("-", " "))
                 new_url = f'/certified-dentists/city/{city_slug}/'

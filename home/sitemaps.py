@@ -1,6 +1,7 @@
 from django.contrib.sitemaps import Sitemap
 from django.shortcuts import reverse
 from django.db.models import Count, Q
+from django.utils.text import slugify
 from account.models import *
 
 class HomePageSitemap(Sitemap):
@@ -46,8 +47,7 @@ class CityDentistSitemap(Sitemap):
     def items(self):
         return City.objects.all()
     def location(self, obj):
-        city_name = obj.city
-        city_name = city_name[0].lower() + city_name[1:] if city_name else ''
+        city_name = slugify(obj.city) if obj.city else ''
         return reverse('home:search_city_dentists', args=[city_name])
     
 class DentistDetailsSitemap(Sitemap):
