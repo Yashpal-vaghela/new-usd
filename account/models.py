@@ -80,6 +80,7 @@ class Dentist(models.Model):
     clinic_name = models.CharField(max_length=300,blank=True, null=True)
     bio = models.TextField(max_length=1300,blank=True, null=True)
     address = models.TextField(max_length = 15622, blank=True, null=True)
+    pincode = models.CharField(max_length = 6, blank=True, null=True)
     education = RichTextUploadingField(blank=True, null=True)
     awards = RichTextUploadingField(blank=True, null=True)
     experience = RichTextUploadingField(blank=True, null=True)
@@ -300,6 +301,7 @@ class Contact(models.Model):
     name =models.CharField(max_length = 1256,blank=True, null=True)
     email = models.CharField(max_length = 1256,blank=True, null=True)
     phone = models.CharField(max_length = 156)
+    pincode = models.CharField(max_length = 10, blank=True, null=True)
     city = models.CharField(max_length = 156,blank=True, null=True)
     subject = models.CharField(max_length = 156)
     message = models.TextField()
@@ -324,6 +326,7 @@ class DentistConnectNew(models.Model):
     email = models.CharField(max_length = 180,blank=True, null=True) 
     phone = models.CharField(max_length=156)  
     clinic_name= models.CharField(max_length=2084, blank=True, null=True)
+    pincode = models.CharField(max_length = 10, blank=True, null=True)
     city = models.CharField(max_length=1084, blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True)
 
@@ -336,9 +339,12 @@ class UserSubmission(models.Model):
     last_name = models.CharField(max_length=50)
     phone = models.CharField(max_length=15)
     email = models.EmailField()
+    pincode  = models.CharField(max_length=10, blank=True, null=True)
     city = models.CharField(max_length=100, blank=True, null=True)
+    is_cancel = models.BooleanField(default=False)
     message = models.TextField(blank=True, null=True)
     doctor_name = models.CharField(max_length=100, blank=True, null=True)
+    source = models.CharField(max_length=50, default='website', blank=True, null=True, help_text="Lead source: calling_agent, voice_agent, website, etc.")
     agree_to_terms = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
@@ -373,6 +379,7 @@ class NewsletterSubscriber(models.Model):
 class SmileDesignLead(models.Model):
     name = models.CharField(max_length=150)
     phone = models.IntegerField()
+    pincode = models.CharField(max_length = 10, blank=True, null=True)
     city = models.CharField(max_length=150)
     message = models.TextField(blank=True, null=True)
     submitted_at = models.DateTimeField(auto_now_add=True)
@@ -391,10 +398,32 @@ class ContactHomePage(models.Model):
     name =models.CharField(max_length = 1256,blank=True, null=True)
     email = models.CharField(max_length = 1256,blank=True, null=True)
     phone = models.CharField(max_length = 156)
+    pincode = models.CharField(max_length = 10, blank=True, null=True)
     city = models.CharField(max_length = 156,blank=True, null=True)
     message = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return self.name or self.email or f"Contact #{self.id}"
+
+
+class CallRecordingTest(models.Model):
+    name = models.CharField(max_length=255, blank=True, null=True)
+    email = models.CharField(max_length=255, blank=True, null=True)
+    phone = models.CharField(max_length=156, blank=True, null=True)
+    city = models.CharField(max_length=156, blank=True, null=True)
+    subject = models.CharField(max_length=255, blank=True, null=True)
+    message = models.TextField(blank=True, null=True)
+    
+    call_id = models.CharField(max_length=255, blank=True, null=True)
+    call_status = models.CharField(max_length=100, blank=True, null=True)
+    recording_url = models.URLField(max_length=2048, blank=True, null=True)
+    audio_file = models.FileField(upload_to="call_recordings/", blank=True, null=True)
+    zoho_id = models.CharField(max_length=255, blank=True, null=True, editable=False)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name or 'Test Call'} - {self.phone} ({self.call_status or 'Pending'})"
+
 

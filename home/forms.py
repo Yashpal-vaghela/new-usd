@@ -19,14 +19,16 @@ class DentistConnectForm(forms.ModelForm):
 class UserSubmissionForm(forms.ModelForm):
     class Meta:
         model = UserSubmission
-        fields = ['first_name', 'last_name', 'phone', 'email', 'city', 'message', 'doctor_name', 'agree_to_terms']
+        fields = ['first_name', 'last_name', 'phone', 'email', 'city', 'message', 'doctor_name', 'source', 'agree_to_terms']
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control ', 'placeholder': 'First Name'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control ', 'placeholder': 'Last Name'}),
             'phone': forms.TextInput(attrs={'class': 'form-control ', 'placeholder': 'Phone'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
+            'pincode': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Pincode'}),
             'city' : forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'City'}),
             'message' : forms.TextInput(attrs={'class':'form-control','placeholder': 'Message'}),
             'doctor_name': forms.HiddenInput(),
+            'source': forms.HiddenInput(),
             'agree_to_terms': forms.CheckboxInput(attrs={'id': 'td33'}),
         }
