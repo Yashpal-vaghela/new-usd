@@ -94,15 +94,36 @@
                 </div>
             </div>
 
+            <div class="input_filds_main pincode_field_wrapper">
+                <div class="pincode_label_row">
+                    <label class="input_labal" for="pincodeInput">Pincode / Postal Code</label>
+                    <span id="pincodeStatusBadge" class="pincode-status-badge"></span>
+                </div>
+                <div class="input_filds_and_icon_main pincode_field_box" id="pincodeFieldBox">
+                    <div class="icon_main">
+                        <svg class="input_icon" viewBox="0 0 24 24" fill="none" stroke="#2c2c2c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                    </div>
+                    <div class="input_fild_main d-flex align-items-center position-relative">
+                        <input type="text" name="pincode" id="pincodeInput" placeholder="Enter pincode / zip code..." class="input_filds" value="{{ request.POST.pincode }}" autocomplete="postal-code" required />
+                        <div id="pincodeSpinner" class="pincode-spinner" style="display: none;"></div>
+                        <div id="pincodeStatusIcon" class="pincode-status-icon"></div>
+                    </div>
+                </div>
+                <div id="pincodeFeedback" class="pincode-feedback-msg" style="display: none;"></div>
+            </div>
+
             <div class="input_filds_main">
                 <label class="input_labal">City</label>
                 <div class="input_filds_and_icon_main">
                     <div class="icon_main">
-                        <img src="{% static 'images/contect_form_icon_image/city_icon.svg' %}" alt="user icon"
+                        <img src="{% static 'images/contect_form_icon_image/city_icon.svg' %}" alt="city icon"
                             class="input_icon" />
                     </div>
                     <div class="input_fild_main">
-                        <input type="text" name="city" placeholder="Enter your city..." class="input_filds" value="{{ request.POST.city }}" required />
+                        <input type="text" name="city" id="cityInput" placeholder="Auto-fetched from pincode..." class="input_filds" value="{{ request.POST.city }}" readonly required />
                     </div>
                 </div>
             </div>
@@ -121,9 +142,9 @@
                 </div>
             </div>
 
-            <div class="contact_recaptcha_main mb-3">
+            {% comment %} <div class="contact_recaptcha_main mb-3">
                 <div class="g-recaptcha d-flex justify-content-center" data-sitekey="{{ RECAPTCHA_SITE_KEY }}"></div>
-            </div>
+            </div> {% endcomment %}
 
             <div class="submit_button_main bat">
                 <button type="submit">Contact Now</button>
@@ -205,8 +226,19 @@
         const selectedCode = document.getElementById("selectedCode");
         const phoneInput = document.getElementById("phoneInput");
         const fullPhoneInput = document.getElementById("fullPhoneInput");
+        const pincodeInput = document.getElementById("pincodeInput");
+        const cityInput = document.getElementById("cityInput");
+        const pincodeFieldBox = document.getElementById("pincodeFieldBox");
+        const pincodeStatusBadge = document.getElementById("pincodeStatusBadge");
+        const pincodeSpinner = document.getElementById("pincodeSpinner");
+        const pincodeStatusIcon = document.getElementById("pincodeStatusIcon");
+        const pincodeFeedback = document.getElementById("pincodeFeedback");
         const wrapper = document.querySelector(".country-phone-wrapper");
         const form = document.querySelector(".left_side_main form") || document.querySelector("form");
+
+        let pincodeDebounceTimer = null;
+        let pincodeAbortCtrl = null;
+        const pincodeCache = {};
 
         function getFlagUrl(code) {
             return `https://flagcdn.com/w40/${code.toLowerCase()}.png`;
@@ -227,12 +259,12 @@
                 li.dataset.name = country.name;
 
                 li.innerHTML = `
-        <div class="country-item-info">
-          <img src="${getFlagUrl(country.code)}" alt="${country.code}" class="country-flag-img" loading="lazy" />
-          <span class="country-item-name">${country.name}</span>
-        </div>
-        <span class="country-item-code">${country.dialCode}</span>
-      `;
+                    <div class="country-item-info">
+                      <img src="${getFlagUrl(country.code)}" alt="${country.code}" class="country-flag-img" loading="lazy" />
+                      <span class="country-item-name">${country.name}</span>
+                    </div>
+                    <span class="country-item-code">${country.dialCode}</span>
+                `;
 
                 li.addEventListener("click", function () {
                     selectCountry(country);
@@ -258,6 +290,24 @@
             });
 
             updateFullPhone();
+
+            // Update pincode placeholder according to country
+            if (pincodeInput) {
+                if (currentSelected.code === "IN") {
+                    pincodeInput.placeholder = "Enter 6-digit PIN code (e.g. 365601)...";
+                } else if (currentSelected.code === "US") {
+                    pincodeInput.placeholder = "Enter 5-digit ZIP code (e.g. 90210)...";
+                } else if (currentSelected.code === "GB") {
+                    pincodeInput.placeholder = "Enter UK Postcode (e.g. SW1A 1AA)...";
+                } else {
+                    pincodeInput.placeholder = `Enter postal code for ${currentSelected.name}...`;
+                }
+
+                // If pincode is already entered, re-validate with newly selected country
+                if (pincodeInput.value.trim().length > 0) {
+                    triggerPincodeLookup(true);
+                }
+            }
         }
 
         function updateFullPhone() {
@@ -303,6 +353,241 @@
                 countrySelectBtn.classList.remove("active");
                 countrySelectBtn.setAttribute("aria-expanded", "false");
             }
+        }
+
+        /* PINCODE & REAL-TIME VALIDATION & AUTO-FETCH LOGIC */
+        function setPincodeStatus(state, message = '', badgeText = '') {
+            pincodeFieldBox.classList.remove('is-valid', 'is-invalid');
+            pincodeStatusBadge.className = 'pincode-status-badge';
+            pincodeFeedback.className = 'pincode-feedback-msg';
+
+            if (state === 'loading') {
+                pincodeSpinner.style.display = 'block';
+                pincodeStatusIcon.innerHTML = '';
+                pincodeStatusBadge.textContent = 'Checking...';
+                pincodeStatusBadge.classList.add('loading');
+                pincodeFeedback.style.display = 'none';
+            } else if (state === 'valid') {
+                pincodeSpinner.style.display = 'none';
+                pincodeStatusIcon.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+                pincodeFieldBox.classList.add('is-valid');
+                pincodeStatusBadge.textContent = badgeText || 'Valid PIN';
+                pincodeStatusBadge.classList.add('valid');
+                if (message) {
+                    pincodeFeedback.textContent = message;
+                    pincodeFeedback.classList.add('valid');
+                    pincodeFeedback.style.display = 'block';
+                } else {
+                    pincodeFeedback.style.display = 'none';
+                }
+            } else if (state === 'invalid') {
+                pincodeSpinner.style.display = 'none';
+                pincodeStatusIcon.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
+                pincodeFieldBox.classList.add('is-invalid');
+                pincodeStatusBadge.textContent = badgeText || 'Invalid';
+                pincodeStatusBadge.classList.add('invalid');
+                if (message) {
+                    pincodeFeedback.textContent = message;
+                    pincodeFeedback.classList.add('invalid');
+                    pincodeFeedback.style.display = 'block';
+                } else {
+                    pincodeFeedback.style.display = 'none';
+                }
+            } else {
+                pincodeSpinner.style.display = 'none';
+                pincodeStatusIcon.innerHTML = '';
+                pincodeStatusBadge.style.display = 'none';
+                pincodeFeedback.style.display = 'none';
+            }
+        }
+
+        function applyPincodeResult(result) {
+            if (result.valid) {
+                setPincodeStatus('valid', result.message, result.badge);
+                if (result.city && cityInput) {
+                    cityInput.value = result.city;
+                    const cityContainer = cityInput.closest('.input_filds_and_icon_main');
+                    if (cityContainer) {
+                        cityContainer.classList.remove('city-highlight-pulse');
+                        void cityContainer.offsetWidth; // Reflow
+                        cityContainer.classList.add('city-highlight-pulse');
+                    }
+                }
+            } else {
+                setPincodeStatus('invalid', result.message, result.badge);
+                if (cityInput) {
+                    cityInput.value = '';
+                }
+            }
+        }
+
+        async function fallbackNominatim(rawPin, countryCode, countryName, cacheKey, signal) {
+            try {
+                const url = `https://nominatim.openstreetmap.org/search?postalcode=${encodeURIComponent(rawPin)}&countrycodes=${countryCode.toLowerCase()}&format=json&addressdetails=1`;
+                const res = await fetch(url, { signal });
+                if (!res.ok) throw new Error('Network error');
+                const data = await res.json();
+                if (data && data.length > 0) {
+                    const addr = data[0].address || {};
+                    const city = addr.city || addr.town || addr.village || addr.municipality || addr.county || addr.suburb || addr.state || data[0].name || '';
+                    const state = addr.state || '';
+                    const result = {
+                        valid: true,
+                        city: city,
+                        state: state,
+                        message: `✓ Located: ${city}${state ? ', ' + state : ''} (${countryName})`,
+                        badge: 'Valid Code'
+                    };
+                    pincodeCache[cacheKey] = result;
+                    applyPincodeResult(result);
+                } else {
+                    const result = {
+                        valid: false,
+                        message: `Invalid postal code for ${countryName}`,
+                        badge: 'Invalid'
+                    };
+                    pincodeCache[cacheKey] = result;
+                    applyPincodeResult(result);
+                }
+            } catch (err) {
+                if (err.name === 'AbortError') return;
+                setPincodeStatus('invalid', `Unable to verify postal code for ${countryName}`, 'Invalid');
+            }
+        }
+
+        async function validateAndFetchPincode(pinValue, countryCode, countryName) {
+            const rawPin = pinValue.trim();
+            if (!rawPin) {
+                setPincodeStatus('idle');
+                if (cityInput) cityInput.value = '';
+                return;
+            }
+
+            const cacheKey = `${countryCode}_${rawPin.toUpperCase()}`;
+            if (pincodeCache[cacheKey]) {
+                applyPincodeResult(pincodeCache[cacheKey]);
+                return;
+            }
+
+            if (pincodeAbortCtrl) {
+                pincodeAbortCtrl.abort();
+            }
+            pincodeAbortCtrl = new AbortController();
+            const signal = pincodeAbortCtrl.signal;
+
+            setPincodeStatus('loading');
+
+            // 1. India specific postal lookup
+            if (countryCode === 'IN') {
+                const cleanPin = rawPin.replace(/\D/g, '');
+                if (cleanPin.length !== 6) {
+                    setPincodeStatus('invalid', 'Please enter a 6-digit Indian PIN code (e.g. 365601)', 'Invalid PIN');
+                    if (cityInput) cityInput.value = '';
+                    return;
+                }
+
+                try {
+                    const res = await fetch(`https://api.postalpincode.in/pincode/${cleanPin}`, { signal });
+                    const data = await res.json();
+                    if (data && data[0] && data[0].Status === 'Success' && data[0].PostOffice && data[0].PostOffice.length > 0) {
+                        const po = data[0].PostOffice[0];
+                        const city = po.District || po.Block || po.Taluk || po.Circle || po.Name;
+                        const state = po.State || '';
+                        const result = {
+                            valid: true,
+                            city: city,
+                            state: state,
+                            message: `✓ Located: ${city}${state ? ', ' + state : ''}`,
+                            badge: 'Valid PIN'
+                        };
+                        pincodeCache[cacheKey] = result;
+                        applyPincodeResult(result);
+                    } else {
+                        const result = {
+                            valid: false,
+                            message: 'PIN code not found in India Post database',
+                            badge: 'Invalid PIN'
+                        };
+                        pincodeCache[cacheKey] = result;
+                        applyPincodeResult(result);
+                    }
+                } catch (err) {
+                    if (err.name === 'AbortError') return;
+                    await fallbackNominatim(rawPin, countryCode, countryName, cacheKey, signal);
+                }
+                return;
+            }
+
+            // 2. International (Zippopotam)
+            try {
+                const cleanPin = encodeURIComponent(rawPin.replace(/\s+/g, ''));
+                const res = await fetch(`https://api.zippopotam.us/${countryCode.toLowerCase()}/${cleanPin}`, { signal });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data && data.places && data.places.length > 0) {
+                        const place = data.places[0];
+                        const city = place['place name'] || '';
+                        const state = place['state'] || place['state abbreviation'] || '';
+                        const result = {
+                            valid: true,
+                            city: city,
+                            state: state,
+                            message: `✓ Located: ${city}${state ? ', ' + state : ''} (${countryName})`,
+                            badge: 'Valid Code'
+                        };
+                        pincodeCache[cacheKey] = result;
+                        applyPincodeResult(result);
+                        return;
+                    }
+                }
+                await fallbackNominatim(rawPin, countryCode, countryName, cacheKey, signal);
+            } catch (err) {
+                if (err.name === 'AbortError') return;
+                await fallbackNominatim(rawPin, countryCode, countryName, cacheKey, signal);
+            }
+        }
+
+        function triggerPincodeLookup(immediate = false) {
+            clearTimeout(pincodeDebounceTimer);
+            const val = pincodeInput.value.trim();
+
+            if (!val) {
+                setPincodeStatus('idle');
+                if (cityInput) cityInput.value = '';
+                return;
+            }
+
+            // For Indian pin, if length < 6 and not immediate, wait until 6 digits or user stops
+            if (currentSelected.code === 'IN') {
+                const digits = val.replace(/\D/g, '');
+                if (digits.length < 6 && !immediate) {
+                    setPincodeStatus('idle');
+                    return;
+                }
+            } else if (val.length < 2 && !immediate) {
+                setPincodeStatus('idle');
+                return;
+            }
+
+            if (immediate) {
+                validateAndFetchPincode(val, currentSelected.code, currentSelected.name);
+            } else {
+                pincodeDebounceTimer = setTimeout(() => {
+                    validateAndFetchPincode(val, currentSelected.code, currentSelected.name);
+                }, 400);
+            }
+        }
+
+        if (pincodeInput) {
+            pincodeInput.addEventListener("input", function () {
+                triggerPincodeLookup(false);
+            });
+
+            pincodeInput.addEventListener("blur", function () {
+                if (this.value.trim().length > 0) {
+                    triggerPincodeLookup(true);
+                }
+            });
         }
 
         countrySearchInput.addEventListener("input", function () {

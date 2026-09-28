@@ -19,7 +19,7 @@ class DentistConnectForm(forms.ModelForm):
 class UserSubmissionForm(forms.ModelForm):
     class Meta:
         model = UserSubmission
-        fields = ['first_name', 'last_name', 'phone', 'email', 'city', 'message', 'doctor_name', 'source', 'agree_to_terms']
+        fields = ['first_name', 'last_name', 'phone', 'email', 'pincode', 'city', 'message', 'doctor_name', 'source', 'agree_to_terms']
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control ', 'placeholder': 'First Name'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control ', 'placeholder': 'Last Name'}),

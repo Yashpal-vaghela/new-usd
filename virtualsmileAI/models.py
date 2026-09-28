@@ -3,6 +3,7 @@ from django.db import models
 class SmileDesignLead(models.Model):
     name = models.CharField(max_length=120)
     phone = models.CharField(max_length=20, blank=True)
+    pincode = models.CharField(max_length=20, blank=True, null=True)
     city = models.CharField(max_length=80, blank=True)
     email = models.EmailField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

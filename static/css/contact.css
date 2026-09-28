@@ -677,7 +677,7 @@
   }
 
   .contact-form {
-    padding: 50px 0px 55px;
+     padding: 36px 0px 36px;
   }
 
   .contact-title {
@@ -1443,4 +1443,366 @@ div:where(.swal2-container).swal2-top-right>.swal2-popup {
 
 .dentist_number_input.active .arrow_icon_dentist img {
   transform: rotate(180deg);
+}
+
+/* Pincode & City Auto-fetch Styles for Contact Form */
+.pincode-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.pincode-input-container .form-control {
+  padding-right: 45px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pincode-input-container .form-control.is-valid {
+  border: 1px solid #10b981 !important;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.25);
+}
+
+.pincode-input-container .form-control.is-invalid {
+  border: 1px solid #ef4444 !important;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.25);
+}
+
+.pincode-spinner {
+  position: absolute;
+  right: 14px;
+  top: 33%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #60a5fa;
+  border-radius: 50%;
+  animation: contactPinSpin 0.7s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes contactPinSpin {
+  to {
+    transform: translateY(-50%) rotate(360deg);
+  }
+}
+
+.pincode-status-icon {
+  position: absolute;
+  right: 14px;
+  top: 33%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.pincode-status-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 12px;
+  display: none;
+  align-items: center;
+  gap: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.pincode-status-badge.valid {
+  display: inline-flex;
+  background: rgba(16, 185, 129, 0.18);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.pincode-status-badge.invalid {
+  display: inline-flex;
+  background: rgba(239, 68, 68, 0.18);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.pincode-status-badge.loading {
+  display: inline-flex;
+  background: rgba(59, 130, 246, 0.18);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.4);
+}
+
+.pincode-feedback-msg {
+  font-size: 12px;
+  line-height: 1.3;
+  margin-top: 2px;
+  transition: all 0.3s ease;
+}
+
+.pincode-feedback-msg.valid {
+  color: #34d399;
+}
+
+.pincode-feedback-msg.invalid {
+  color: #f87171;
+}
+
+.contact-form #cityInput:read-only {
+  cursor: not-allowed;
+  color: #fff !important;
+  user-select: none;
+}
+
+.city-highlight-pulse {
+  animation: contactCityPulse 1s ease;
+}
+
+@keyframes contactCityPulse {
+  0% {
+    border: 1px solid transparent;
+  }
+  50% {
+    border: 1px solid #10b981 !important;
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+  }
+  100% {
+    border: 1px solid transparent;
+  }
+}
+
+/* Dentist Connect Form Inputs - Underline Style & Transparent Background */
+.dentist-connect-form .form-control,
+.dentist-connect-form input,
+.dentist-connect-form input:read-only,
+.dentist-connect-form .form-control:read-only,
+.dentist-connect-form .form-control[readonly] {
+  background-color: transparent !important;
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.918) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: #fff !important;
+}
+
+.dentist-connect-form input:focus,
+.dentist-connect-form .form-control:focus {
+  outline: none !important;
+  background-color: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid #c7a041 !important;
+  box-shadow: none !important;
+}
+
+/* Dentist Connect Pincode & City Auto-fetch Styles */
+.dentist-pincode-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.dentist-connect-form #pincodeInput {
+  padding-right: 40px !important;
+}
+
+/* Dentist Connect Pincode Validation - Bottom Border ONLY */
+.dentist-connect-form #pincodeInput.is-valid,
+.dentist-connect-form input#pincodeInput.is-valid,
+.dentist-connect-form .dentist-pincode-container #pincodeInput.is-valid,
+.dentist-connect-form .pincode-input-container #pincodeInput.is-valid {
+  border: none !important;
+  border-bottom: 1px solid #10b981 !important;
+  box-shadow: none !important;
+  background-image: none !important;
+  background-color: transparent !important;
+  border-radius: 0 !important;
+}
+
+.dentist-connect-form #pincodeInput.is-invalid,
+.dentist-connect-form input#pincodeInput.is-invalid,
+.dentist-connect-form .dentist-pincode-container #pincodeInput.is-invalid,
+.dentist-connect-form .pincode-input-container #pincodeInput.is-invalid {
+  border: none !important;
+  border-bottom: 1px solid #ef4444 !important;
+  box-shadow: none !important;
+  background-image: none !important;
+  background-color: transparent !important;
+  border-radius: 0 !important;
+}
+
+.dentist-pincode-spinner {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #c7a041;
+  border-radius: 50%;
+  animation: dentistPinSpin 0.7s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes dentistPinSpin {
+  to {
+    transform: translateY(-50%) rotate(360deg);
+  }
+}
+
+.dentist-pincode-status-icon {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.dentist-pincode-status-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 12px;
+  display: none;
+  align-items: center;
+  gap: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.dentist-pincode-status-badge.valid {
+  display: inline-flex;
+  background: rgba(16, 185, 129, 0.18);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.dentist-pincode-status-badge.invalid {
+  display: inline-flex;
+  background: rgba(239, 68, 68, 0.18);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.dentist-pincode-status-badge.loading {
+  display: inline-flex;
+  background: rgba(199, 160, 65, 0.18);
+  color: #c7a041;
+  border: 1px solid rgba(199, 160, 65, 0.4);
+}
+
+.dentist-pincode-feedback-msg {
+  font-size: 12px;
+  line-height: 1.3;
+  margin-top: 4px;
+  transition: all 0.3s ease;
+}
+
+.dentist-pincode-feedback-msg.valid {
+  color: #34d399;
+}
+
+.dentist-pincode-feedback-msg.invalid {
+  color: #f87171;
+}
+
+/* Dentist Connect Readonly City Field */
+.dentist-connect-form #cityInput:read-only,
+.dentist-connect-form #cityInput[readonly],
+.dentist-connect-form .form-control#cityInput:read-only,
+.dentist-connect-form .form-control#cityInput[readonly] {
+  cursor: not-allowed !important;
+  background-color: transparent !important;
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.918) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: #fff !important;
+  user-select: none;
+}
+
+.dentist-city-pulse {
+  animation: dentistCityPulse 1s ease;
+}
+
+@keyframes dentistCityPulse {
+  0% {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.918);
+  }
+  50% {
+    border-bottom: 1px solid #10b981 !important;
+  }
+  100% {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.918);
+  }
+}
+
+/* Request Page (Patient Appointment) Pincode & City Auto-fetch Styles */
+.inputicon-box #pincodeInput {
+  padding-right: 42px !important;
+}
+
+.inputicon-box #pincodeInput.is-valid,
+.inputicon-box input#pincodeInput.is-valid {
+  border: 1px solid #10b981 !important;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.3) !important;
+  background-image: none !important;
+}
+
+.inputicon-box #pincodeInput.is-invalid,
+.inputicon-box input#pincodeInput.is-invalid {
+  border: 1px solid #ef4444 !important;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.3) !important;
+  background-image: none !important;
+}
+
+.request-pincode-spinner {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #c7a041;
+  border-radius: 50%;
+  animation: requestPinSpin 0.7s linear infinite;
+  pointer-events: none;
+  z-index: 6;
+}
+
+@keyframes requestPinSpin {
+  to {
+    transform: translateY(-50%) rotate(360deg);
+  }
+}
+
+.request-pincode-status-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  pointer-events: none;
+  z-index: 6;
+}
+
+.inputicon-box #cityInput:read-only,
+.inputicon-box #cityInput[readonly],
+.inputicon-box .form-control#cityInput:read-only,
+.inputicon-box .form-control#cityInput[readonly] {
+  cursor: not-allowed !important;
+  color: #ffffff !important;
+  user-select: none;
 }

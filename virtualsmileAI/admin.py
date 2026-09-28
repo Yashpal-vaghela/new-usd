@@ -7,3 +7,4 @@ class SmileDesignLeadAdmin(ImportExportModelAdmin):
     list_display = ("name", "phone", "city", "created_at")
     search_fields = ("name", "phone", "city")
     list_filter = ('created_at',)
+    ordering = ('-created_at',)

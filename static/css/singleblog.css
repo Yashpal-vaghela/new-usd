@@ -984,3 +984,98 @@
     }
 
 }
+
+/* Blog Form Pincode & City Auto-fetch Styles */
+.pincode-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.pincode-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.single-blog-content2 #pincodeInput,
+.single-blog-content2 .pincode-input-container .form-control {
+    padding-right: 42px !important;
+}
+
+.single-blog-content2 #pincodeInput.is-valid,
+.single-blog-content2 input#pincodeInput.is-valid,
+.single-blog-content2 .pincode-input-container #pincodeInput.is-valid {
+    border-color: #10b981 !important;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.3) !important;
+    background-image: none !important;
+}
+
+.single-blog-content2 #pincodeInput.is-invalid,
+.single-blog-content2 input#pincodeInput.is-invalid,
+.single-blog-content2 .pincode-input-container #pincodeInput.is-invalid {
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 8px rgba(239, 68, 68, 0.3) !important;
+    background-image: none !important;
+}
+
+.pincode-spinner {
+    position: absolute;
+    right: 14px;
+    top: 33%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-top-color: #c7a041;
+    border-radius: 50%;
+    animation: blogPinSpin 0.7s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes blogPinSpin {
+    to {
+        transform: translateY(-50%) rotate(360deg);
+    }
+}
+
+.pincode-status-icon {
+    position: absolute;
+    right: 14px;
+    top: 33%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    pointer-events: none;
+}
+
+.single-blog-content2 #cityInput:read-only,
+.single-blog-content2 #cityInput[readonly],
+.single-blog-content2 .form-control#cityInput:read-only,
+.single-blog-content2 .form-control#cityInput[readonly] {
+    cursor: not-allowed !important;
+    background-color: #000000 !important;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+    color: #ffffff !important;
+    user-select: none;
+}
+
+.blog-city-pulse {
+    animation: blogCityPulse 1s ease;
+}
+
+@keyframes blogCityPulse {
+    0% {
+        border-color: #282828;
+    }
+    50% {
+        border-color: #10b981 !important;
+        box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+    }
+    100% {
+        border-color: #282828;
+    }
+}

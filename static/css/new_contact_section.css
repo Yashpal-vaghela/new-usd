@@ -590,3 +590,125 @@ textarea.input_filds::-webkit-scrollbar {
     margin-top: 10px;
   }
 }
+
+/* Pincode & Real-Time Validation Styles */
+.pincode_label_row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.pincode-status-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 12px;
+  display: none;
+  align-items: center;
+  gap: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.pincode-status-badge.valid {
+  display: inline-flex;
+  background: rgba(16, 185, 129, 0.18);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.pincode-status-badge.invalid {
+  display: inline-flex;
+  background: rgba(239, 68, 68, 0.18);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.pincode-status-badge.loading {
+  display: inline-flex;
+  background: rgba(59, 130, 246, 0.18);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.4);
+}
+
+.pincode_field_box {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pincode_field_box.is-valid {
+  border-color: #10b981 !important;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.25);
+}
+
+.pincode_field_box.is-invalid {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.25);
+}
+
+.pincode-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #60a5fa;
+  border-radius: 50%;
+  animation: pincodeSpin 0.7s linear infinite;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+@keyframes pincodeSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.pincode-status-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 6px;
+  flex-shrink: 0;
+  font-size: 16px;
+}
+
+.pincode-feedback-msg {
+  font-size: 12px;
+  margin-top: 4px;
+  margin-left: 4px;
+  line-height: 1.3;
+  transition: all 0.3s ease;
+}
+
+.pincode-feedback-msg.valid {
+  color: #34d399;
+}
+
+.pincode-feedback-msg.invalid {
+  color: #f87171;
+}
+
+.city-highlight-pulse {
+  animation: cityPulse 1s ease;
+}
+
+@keyframes cityPulse {
+  0% {
+    border-color: rgba(44, 44, 44, 1);
+  }
+  50% {
+    border-color: #10b981;
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+  }
+  100% {
+    border-color: rgba(44, 44, 44, 1);
+  }
+}
+
+/* Readonly Auto-Fetched City Field */
+#cityInput:read-only {
+  cursor: not-allowed;
+  color: #fff;
+  user-select: none;
+}
