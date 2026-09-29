@@ -427,3 +427,19 @@ class CallRecordingTest(models.Model):
         return f"{self.name or 'Test Call'} - {self.phone} ({self.call_status or 'Pending'})"
 
 
+class RedirectRule(models.Model):
+    old_url = models.CharField(max_length=500, unique=True, help_text="Old URL path to redirect from (e.g. /old-page/ or old-page)")
+    new_url = models.CharField(max_length=500, help_text="New URL path or full URL to redirect to (e.g. /new-page/ or https://example.com/new-page)")
+    is_active = models.BooleanField(default=True, help_text="Enable or disable this 301 redirect rule")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "301 Redirect Rule"
+        verbose_name_plural = "301 Redirect Rules"
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.old_url} -> {self.new_url}"
+
+
