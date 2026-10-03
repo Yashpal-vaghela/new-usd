@@ -9,6 +9,7 @@
   const msg = document.getElementById("msg");
   const guideLine = document.getElementById("smileGuideLine");
   const faceOverlay = document.getElementById("faceOverlay");
+  const switchCameraBtn = document.getElementById("switchCameraBtn");
 
   const resultWrap = document.getElementById("resultWrap");
   const resultStatus = document.getElementById("resultStatus");
@@ -22,6 +23,7 @@
   const leadForm = document.getElementById("leadForm");
   const leadName = document.getElementById("leadName");
   const leadPhone = document.getElementById("leadPhone");
+  const leadPincode = document.getElementById("leadPincode") || document.getElementById("pincodeInput");
   const leadCity = document.getElementById("leadCity");
   const leadEmail = document.getElementById("leadEmail");
   const leadFormMsg = document.getElementById("leadFormMsg");
@@ -44,7 +46,7 @@
     }).catch(() => { });
   }
 
-  pingDetectApi();
+  // pingDetectApi();
 
   let stream = null;
   let running = false;
@@ -57,6 +59,9 @@
   let leadId = null;
   let captureNonce = null;
   let isCapturing = false;
+  let currentFacingMode = "user"; // "user" or "environment"
+  let hasMultipleCameras = false;
+  const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
   // ✅ WhatsApp dedupe flags
   let whatsappTriggered = false;
@@ -160,25 +165,67 @@
     confirmBtn.classList.add("hidden");
 
     captureBtn.disabled = true;
-    captureBtn.textContent = "Verifying...";
-    if (guideLine) guideLine.classList.add("hidden", "d-none");
+    captureBtn.innerHTML = '<span class="capture-inner">Verifying...</span>';
+    updateSwitchCameraButtonVisibility();
   }
 
+
+  async function checkCameraDevices() {
+    try {
+      if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const videoDevices = devices.filter((d) => d.kind === "videoinput");
+        hasMultipleCameras = videoDevices.length > 1;
+
+        // Log the detected cameras to the console for easy verification
+        console.log("--- Detected Camera Devices ---");
+        console.table(videoDevices.map(c => ({ Name: c.label || 'Unnamed Camera', ID: c.deviceId })));
+      }
+    } catch (e) {
+      console.warn("enumerateDevices failed:", e);
+    }
+    updateSwitchCameraButtonVisibility();
+  }
+
+  function updateSwitchCameraButtonVisibility() {
+    if (!switchCameraBtn) return;
+    if (running && !isCapturing && !capturedDataUrl) {
+      switchCameraBtn.classList.remove("hidden");
+    } else {
+      switchCameraBtn.classList.add("hidden");
+    }
+  }
 
   async function startCamera() {
     stopCamera();
 
-    stream = await navigator.mediaDevices.getUserMedia({
-      video: { width: 1184, height: 864 },
+    const cameraDeniedOverlay = document.getElementById("cameraDeniedOverlay");
+    if (cameraDeniedOverlay) cameraDeniedOverlay.classList.add("d-none");
+
+    const constraints = {
+      video: {
+        width: { ideal: 1184 },
+        height: { ideal: 864 },
+        facingMode: { ideal: currentFacingMode }
+      },
       audio: false,
-    });
+    };
+
+    stream = await navigator.mediaDevices.getUserMedia(constraints);
 
     video.srcObject = stream;
+
+    if (currentFacingMode === "environment") {
+      video.classList.add("no-mirror");
+    } else {
+      video.classList.remove("no-mirror");
+    }
 
     hideFreeze();
     video.classList.remove("hidden");
 
     await video.play();
+    await checkCameraDevices();
   }
 
   function stopCamera() {
@@ -190,6 +237,7 @@
     } catch (e) { }
     video.srcObject = null;
     stream = null;
+    updateSwitchCameraButtonVisibility();
   }
 
   async function detectOnce(canvas) {
@@ -211,7 +259,7 @@
       data = { detail: text };
     }
 
-    console.log("DETECT RESPONSE", data);
+    // console.log("DETECT RESPONSE", data);
 
     if (!resp.ok) {
       throw new Error(data?.detail || `Detect failed: ${resp.status}`);
@@ -259,38 +307,38 @@
   function updateCaptureButtonState(enabled) {
     if (!captureBtn) return;
 
+    captureBtn.classList.remove("hidden", "d-none");
+
     if (enabled) {
-      captureBtn.classList.remove("hidden", "d-none");
       captureBtn.disabled = false;
-      captureBtn.textContent = "Capture Now";
-      if (guideLine) guideLine.classList.add("hidden", "d-none");
+      captureBtn.innerHTML = '<span class="capture-inner">Capture Now</span>';
       if (faceOverlay) {
         faceOverlay.classList.add("ready");
         faceOverlay.style.border = "none";
       }
     } else {
-      captureBtn.classList.add("hidden", "d-none");
       captureBtn.disabled = true;
-      if (guideLine) guideLine.classList.remove("hidden", "d-none");
+      captureBtn.innerHTML = '<span class="capture-inner">Capture Now</span>';
       if (faceOverlay) {
         faceOverlay.classList.remove("ready");
         faceOverlay.style.border = "4px dashed rgba(255, 255, 255, 0.8)"
       }
     }
+    updateSwitchCameraButtonVisibility();
   }
 
   function setControlsForLive() {
-    captureBtn.classList.add("hidden", "d-none");
+    captureBtn.classList.remove("hidden", "d-none");
     recaptureBtn.classList.add("hidden");
     confirmBtn.classList.add("hidden");
-    captureBtn.textContent = "Capture";
+    captureBtn.innerHTML = '<span class="capture-inner">Capture Now</span>';
     captureBtn.disabled = true;
     confirmBtn.disabled = true;
-    if (guideLine) guideLine.classList.remove("hidden", "d-none");
     if (faceOverlay) {
       faceOverlay.classList.remove("ready");
       faceOverlay.style.border = "4px dashed rgba(255, 255, 255, 0.8)";
     }
+    updateSwitchCameraButtonVisibility();
   }
 
   function setControlsForCaptured() {
@@ -299,7 +347,7 @@
     confirmBtn.classList.remove("hidden");
     confirmBtn.disabled = !capturedDataUrl;
     captureBtn.disabled = true;
-    if (guideLine) guideLine.classList.add("hidden", "d-none");
+    updateSwitchCameraButtonVisibility();
   }
 
   function drawCurrentFrameToCanvas() {
@@ -307,20 +355,23 @@
     canvas.height = video.videoHeight || 864;
 
     ctx.save();
-    ctx.translate(canvas.width, 0);
-    ctx.scale(-1, 1);
+    if (currentFacingMode === "user") {
+      ctx.translate(canvas.width, 0);
+      ctx.scale(-1, 1);
+    }
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     ctx.restore();
   }
 
   function setVerifyingUI(isVerifying) {
     if (!captureBtn) return;
+    captureBtn.classList.remove("hidden", "d-none");
     if (isVerifying) {
       captureBtn.disabled = true;
-      captureBtn.textContent = "Verifying...";
+      captureBtn.innerHTML = '<span class="capture-inner">Verifying...</span>';
     } else {
       captureBtn.disabled = false;
-      captureBtn.textContent = "Capture";
+      captureBtn.innerHTML = '<span class="capture-inner">Capture Now</span>';
     }
   }
 
@@ -504,9 +555,6 @@
     }
   });
 
-
-
-
   recaptureBtn.addEventListener("click", async () => {
     showError("");
     resetResult();
@@ -528,6 +576,33 @@
       console.error(e);
       setMessage("Camera access failed: " + e.message, "error");
       showError("Allow camera access in browser, then refresh.");
+      const cameraDeniedOverlay = document.getElementById("cameraDeniedOverlay");
+      if (cameraDeniedOverlay) cameraDeniedOverlay.classList.remove("d-none");
+    }
+  });
+
+  switchCameraBtn?.addEventListener("click", async () => {
+    if (isCapturing || !running) return;
+
+    currentFacingMode = currentFacingMode === "user" ? "environment" : "user";
+
+    setMessage("Switching camera...", "muted");
+
+    try {
+      await startCamera();
+      setMessage("Camera switched.", "muted");
+      if (!running) detectLoop();
+    } catch (e) {
+      console.error(e);
+      // Fallback: switch back
+      currentFacingMode = currentFacingMode === "user" ? "environment" : "user";
+      try {
+        await startCamera();
+      } catch (err) {
+        setMessage("Failed to switch camera: " + e.message, "error");
+        const cameraDeniedOverlay = document.getElementById("cameraDeniedOverlay");
+        if (cameraDeniedOverlay) cameraDeniedOverlay.classList.remove("d-none");
+      }
     }
   });
 
@@ -657,12 +732,46 @@
 
       if (leadSubmitBtn) leadSubmitBtn.disabled = true;
 
+      // Show processing message while ensuring Gemini generation completes
+      if (leadFormMsg) {
+        leadFormMsg.style.color = "white";
+        leadFormMsg.innerHTML = `
+            <div class="d-flex align-items-center justify-content-center gap-2">
+              <span class="spinner-border spinner-border-sm"></span>
+              <span>Processing smile design… please wait</span>
+            </div>`;
+      }
+
+      // ✅ Wait for Gemini generation to finish if still in flight
+      if (generationPromise) {
+        try {
+          await generationPromise;
+        } catch (err) {
+          console.warn("Generation promise error:", err);
+        }
+      }
+
+      const selectedCodeEl = document.getElementById("selectedCode");
+      const selectedDialCode = selectedCodeEl ? selectedCodeEl.textContent.trim().replace(/[^\d+]/g, "") : "+91";
+      const rawDigits = leadPhone ? leadPhone.value.trim().replace(/\D/g, "") : "";
+      const fullInputVal = document.getElementById("fullPhoneInput") ? document.getElementById("fullPhoneInput").value.trim().replace(/\s+/g, "") : "";
+
+      let phoneToSend = fullInputVal;
+      if (!phoneToSend && rawDigits) {
+        phoneToSend = `${selectedDialCode}${rawDigits}`;
+      } else if (rawDigits && !phoneToSend.startsWith("+")) {
+        phoneToSend = `${selectedDialCode}${rawDigits}`;
+      }
+
       const payload = {
         name: leadName ? leadName.value.trim() : "",
-        phone: leadPhone ? leadPhone.value.trim() : "",
+        phone: phoneToSend,
+        pincode: leadPincode ? leadPincode.value.trim() : "",
         city: leadCity ? leadCity.value.trim() : "",
         email: leadEmail ? leadEmail.value.trim() : "",
         nonce: captureNonce,
+        before_image: generationResult?.beforeUrl || capturedDataUrl || "",
+        after_image: generationResult?.afterUrl || "",
       };
 
       try {
@@ -680,6 +789,7 @@
         if (!res.ok || !data.ok) {
           leadFormMsg.style.color = "red";
           leadFormMsg.textContent = data?.error || "Form error. Please check fields.";
+          if (leadSubmitBtn) leadSubmitBtn.disabled = false;
           return;
         }
 
@@ -714,6 +824,7 @@
 
   if (smileModalEl) {
     smileModalEl.addEventListener("shown.bs.modal", async () => {
+      currentFacingMode = "user";
       generationPromise = null;
       generationResult = null;
       capturedDataUrl = null;
@@ -750,10 +861,13 @@
         console.error(e);
         setMessage("Camera access failed: " + e.message, "error");
         showError("Allow camera access in browser, then refresh.");
+        const cameraDeniedOverlay = document.getElementById("cameraDeniedOverlay");
+        if (cameraDeniedOverlay) cameraDeniedOverlay.classList.remove("d-none");
       }
     });
 
     smileModalEl.addEventListener("hidden.bs.modal", () => {
+      currentFacingMode = "user";
       running = false;
       stopCamera();
       hideFreeze();

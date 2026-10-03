@@ -54,11 +54,15 @@ def smile(request):
     )
 
 def send_smile_lead_email_async(context_dict):
-    send_mail(
-        to_email="vaghela9632@gmail.com",
-        subject=f"New Smile Ai Design Lead from {context_dict.get('Name', 'Unknown')}",
-        context_dict=context_dict
-    )
+    try:
+        send_mail(
+            to_email="vaghela9632@gmail.com",
+            subject=f"New Smile Ai Design Lead from {context_dict.get('Name', 'Unknown')}",
+            context_dict=context_dict
+        )
+        print(f"✅ Lead email sent successfully for {context_dict.get('Name')}")
+    except Exception as e:
+        print(f"❌ Lead email sending failed for {context_dict.get('Name')}: {e}")
 
 @require_POST
 @csrf_protect
@@ -79,16 +83,23 @@ def create_smile_lead_api(request):
         )
 
     # ✅ ensure before image exists
-    before_img = request.session.get("smile_before")
+    before_img = request.session.get("smile_before") or payload.get("before_image") or ""
+    after_img = request.session.get("smile_after") or payload.get("after_image") or ""
+
     if not before_img:
         return JsonResponse(
             {"ok": False, "error": "Please capture your photo first."},
             status=403
         )
 
+    raw_phone = (payload.get("phone") or "").strip()
+    digits = "".join(ch for ch in raw_phone if ch.isdigit())
+    formatted_phone = f"+{digits}" if digits else raw_phone
+
     data = {
         "name": (payload.get("name") or "").strip(),
-        "phone": (payload.get("phone") or "").strip(),
+        "phone": formatted_phone,
+        "pincode": (payload.get("pincode") or "").strip(),
         "city": (payload.get("city") or "").strip(),
         "email": (payload.get("email") or "").strip(),
     }
@@ -97,17 +108,57 @@ def create_smile_lead_api(request):
     if not form.is_valid():
         return JsonResponse({"ok": False, "errors": form.errors}, status=400)
 
+    # Helper function to save base64 image to media disk if needed
+    def save_image_file(img_data, prefix="before"):
+        if not img_data:
+            return ""
+        if img_data.startswith("data:image"):
+            try:
+                img_bgr = decode_base64_image(img_data)
+                out_dir = os.path.join(settings.MEDIA_ROOT, "smile_design", prefix)
+                os.makedirs(out_dir, exist_ok=True)
+                ts = int(time.time())
+                uid = uuid.uuid4().hex[:10]
+                filename = f"{prefix}_{ts}_{uid}.jpg"
+                filepath = os.path.join(out_dir, filename)
+                import cv2
+                cv2.imwrite(filepath, img_bgr)
+                return f"smile_design/{prefix}/{filename}"
+            except Exception as e:
+                print(f"Error saving {prefix} image:", e)
+                return ""
+        if img_data.startswith(settings.MEDIA_URL):
+            return img_data[len(settings.MEDIA_URL):].lstrip("/")
+        return img_data
+
+    before_saved = save_image_file(before_img, "before")
+    after_saved = save_image_file(after_img, "after")
+
+    # ✅ Fallback: If after image was not generated yet, auto-generate on backend immediately
+    if not after_saved and before_saved:
+        try:
+            ts = int(time.time())
+            uid = uuid.uuid4().hex[:10]
+            after_filename = f"after_{ts}_{uid}.jpg"
+            after_dir = os.path.join(settings.MEDIA_ROOT, "smile_design", "after")
+            os.makedirs(after_dir, exist_ok=True)
+            after_filepath = os.path.join(after_dir, after_filename)
+            before_filepath = os.path.join(settings.MEDIA_ROOT, before_saved)
+
+            generate_smile_design(before_filepath, after_filepath)
+            after_saved = f"smile_design/after/{after_filename}"
+            print(f"✅ Auto-generated after image on backend: {after_saved}")
+        except Exception as e:
+            print(f"⚠️ Auto-generation of after image failed: {e}")
+
     obj = form.save(commit=False)
-    obj.before_image = before_img
-    after_img = request.session.get("smile_after", "")
-    obj.after_image = after_img
+    obj.before_image = before_saved
+    obj.after_image = after_saved
     obj.save()
 
     def get_absolute_image_url(path):
         if not path:
             return "N/A"
-        if path.startswith("data:image"):
-            return "Image Provided as Base64 Data URL"
         if path.startswith("http://") or path.startswith("https://"):
             return path
         return request.build_absolute_uri(settings.MEDIA_URL + path.lstrip("/"))
@@ -116,6 +167,7 @@ def create_smile_lead_api(request):
         "Name": obj.name,
         "Email": obj.email,
         "Phone": obj.phone,
+        "Pincode": obj.pincode or "",
         "City": obj.city,
         "Before Image": get_absolute_image_url(obj.before_image),
         "After Image": get_absolute_image_url(obj.after_image), 
@@ -176,24 +228,20 @@ def trigger_whatsapp_api(request):
             return url[len(abs_media):]
         return url
 
-    if before_url and not lead.before_image:
+    if before_url and (not lead.before_image or lead.before_image == "N/A"):
         lead.before_image = normalize_media_path(before_url)
-    if after_url and not lead.after_image:
+    if after_url and (not lead.after_image or lead.after_image == "N/A"):
         lead.after_image = normalize_media_path(after_url)
     if before_url or after_url:
         lead.save(update_fields=["before_image", "after_image"])
 
-    # Phone normalization
-    raw_phone = (lead.phone or "").strip()
-    cleaned = "".join(ch for ch in raw_phone if ch.isdigit() or ch == "+")
-    if cleaned and not cleaned.startswith("+"):
-        if cleaned.startswith("91"):
-            cleaned = "+" + cleaned
-        elif len(cleaned) == 10:
-            cleaned = "+91" + cleaned
+    # Phone normalization - take country code and phone as passed in payload / lead
+    raw_phone = (incoming.get("phone") or lead.phone or "").strip()
+    digits = "".join(ch for ch in raw_phone if ch.isdigit())
+    if not digits or len(digits) < 7 or len(digits) > 15:
+        return JsonResponse({"ok": False, "error": f"Invalid phone: {raw_phone}"}, status=400)
 
-    if not cleaned or not cleaned.startswith("+") or len(cleaned) < 12:
-        return JsonResponse({"ok": False, "error": f"Invalid phone: {cleaned}"}, status=400)
+    cleaned = f"+{digits}"
 
     out_payload = {
         "Name": lead.name,

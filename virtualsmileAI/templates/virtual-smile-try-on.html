@@ -1,396 +1,1215 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block header %}
-{% endblock header %}
-{% block seo%}
+{% extends 'base.html' %} {% load static %} {% block seo%}
 <title>Ultimate AI Smile Design | Preview Your Future Smile</title>
-<meta name="description"
-    content="Try our Ultimate AI smile design. Design your perfect smile with AI. Capture your smile photo and preview a personalized digital smile designed for your face." />
-<link rel="canonical" href="https://ultimatesmiledesign.com/virtual-smile-try-on/" />
-<meta property="og:image" content="{% static 'feature-usd.webp'%}">
-<meta property="og:image:secure_url" content="{% static 'feature-usd.webp'%}">
+<meta
+  name="description"
+  content="Try our Ultimate AI smile design. Design your perfect smile with AI. Capture your smile photo and preview a personalized digital smile designed for your face."
+/>
+<link
+  rel="canonical"
+  href="https://ultimatesmiledesign.com/virtual-smile-try-on/"
+/>
+<meta property="og:image" content="{% static 'feature-usd.webp'%}" />
+<meta property="og:image:secure_url" content="{% static 'feature-usd.webp'%}" />
 <meta property="og:image:type" content="image/webp" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:locale" content="en_IN" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Ultimate AI Smile Design | Preview Your Future Smile" />
-<meta property="og:description"
-    content="Try our Ultimate AI smile design. Design your perfect smile with AI. Capture your smile photo and preview a personalized digital smile designed for your face." />
-<meta property="og:url" content="https://ultimatesmiledesign.com/virtual-smile-try-on/" />
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Ultimate AI Smile Design | Preview Your Future Smile">
-<meta name="twitter:description"
-    content="Try our Ultimate AI smile design. Design your perfect smile with AI. Capture your smile photo and preview a personalized digital smile designed for your face.">
-{% endblock seo%}
-{% block css %}
-{% endblock %}
+<meta
+  property="og:title"
+  content="Ultimate AI Smile Design | Preview Your Future Smile"
+/>
+<meta
+  property="og:description"
+  content="Try our Ultimate AI smile design. Design your perfect smile with AI. Capture your smile photo and preview a personalized digital smile designed for your face."
+/>
+<meta
+  property="og:url"
+  content="https://ultimatesmiledesign.com/virtual-smile-try-on/"
+/>
+<meta name="twitter:card" content="summary_large_image" />
+<meta
+  name="twitter:title"
+  content="Ultimate AI Smile Design | Preview Your Future Smile"
+/>
+<meta
+  name="twitter:description"
+  content="Try our Ultimate AI smile design. Design your perfect smile with AI. Capture your smile photo and preview a personalized digital smile designed for your face."
+/>
+{% endblock seo%} 
+{% block css %} 
+{% endblock %} 
 {% block body %}
 <div class="virtualpage">
-    <section class="banner_section mt-4 mb-3 mt-sm-4 mb-sm-4 pb-3">
-        <div class="container">
-            <div class="row justify-content-between align-items-center mb-2 mb-sm-2 mb-md-2 mb-lg-4">
-                <div class="col-lg-6 col-md-8 col-12">
-                    <span
-                        class="d-flex justify-content-center justify-content-sm-between justify-content-xl-center align-items-center banner-highlight"><img
-                            src="{% static 'banner-vector.svg'%}" class="img-fluid mx-2" alt="banner-vector" /><b
-                            class="cool">AI-Powered Smile Simulation</b></span>
-                    <h1>Preview Your Future Smile with <b class="cool">Ultimate AI.</b></h1>
-                    <p>See your future smile with our advanced AI virtual smile design try-on.</p>
-                    <button class="btn bat d-flex align-items-center justify-content-between" data-bs-toggle="modal"
-                        data-bs-target="#smileModal">Design My Smile Now <img src="{% static 'arrow-left.svg'%}"
-                            class="mx-1 img-fluid" alt="arrow-left" /></button>
-                    <!-- <button class="btn bat d-flex align-items-center justify-content-between" data-bs-toggle="modal"
+  <section class="banner_section mt-4 mb-3 mt-sm-4 mb-sm-4 pb-3">
+    <div class="container">
+      <div
+        class="row justify-content-between align-items-center mb-2 mb-sm-2 mb-md-2 mb-lg-4"
+      >
+        <div class="col-lg-6 col-md-8 col-12">
+          <span
+            class="d-flex justify-content-center justify-content-sm-between justify-content-xl-center align-items-center banner-highlight"
+            ><img
+              src="{% static 'banner-vector.svg'%}"
+              class="img-fluid mx-2"
+              alt="banner-vector"
+            /><b class="cool">AI-Powered Smile Simulation</b></span
+          >
+          <h1>
+            Preview Your Future Smile with <b class="cool">Ultimate AI.</b>
+          </h1>
+          <p>
+            See your future smile with our advanced AI virtual smile design
+            try-on.
+          </p>
+          <button
+            class="btn bat d-flex align-items-center justify-content-between"
+            data-bs-toggle="modal"
+            data-bs-target="#smileModal"
+          >
+            Design My Smile Now
+            <img
+              src="{% static 'arrow-left.svg'%}"
+              class="mx-1 img-fluid"
+              alt="arrow-left"
+            />
+          </button>
+          <!-- <button class="btn bat d-flex align-items-center justify-content-between" data-bs-toggle="modal"
                         data-bs-target='#contactModal'>Contact Modal</button>
                     <button class="btn bat d-flex align-items-center justify-content-between" data-bs-toggle="modal"
                         data-bs-target='#PreviewModal'>Preview Modal</button> -->
-                </div>
-                <div class="col-lg-4 col-md-4 col-12 banner-content">
-                    {% comment %} <img src="{% static 'bg-vector7.png'%}" class="bg-vector d-block d-md-none img-fluid"
-                        alt="bg-vector" /> {% endcomment %}
-                    <img src="{% static 'bg-vector3.png'%}" class="bg-vector d-none d-md-block img-fluid"
-                        alt="bg-vector" />
-                    <img src="{% static 'bg-vector13.png'%}" class="bg-vector d-block d-md-none img-fluid"
-                        alt="bg-vector" />
-                    <div class="d-flex align-items-center justify-content-start">
-                        <img src="{% static 'banner-img2.webp' %}" class="banner-img1 img-fluid" alt="" />
-                    </div>
-                </div>
-            </div>
         </div>
-    </section>
-    <section class="tips-section text-center py-4 pt-md-4 pb-md-3 pt-lg-5 pb-lg-5">
-        <div class="container">
-            <div class="mt-2">
-                <h2 class="text-center tips-title cool">Tips for a Perfect Smile Try-On</h2>
-                <p class="tips-subtitle">Transform your smile in three simple steps. No waiting, no appointments — just
-                    instant results.</p>
-            </div>
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="tips-card">
-                        <div class="tips-icon-wrapper d-flex justify-content-between align-items-center">
-                            <img src="{% static 'tips-icon11.svg'%}" class="img-fluid" alt="tips-icon1" />
-                            <span>01</span>
-                        </div>
-                        <h2>Camera Access</h2>
-                        <p>Allow camera access to capture your photo.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="tips-card">
-                        <div class="tips-icon-wrapper d-flex justify-content-between align-items-center">
-                            <img src="{% static 'tips-icon2.svg'%}" class="img-fluid" alt="tips-icon1" />
-                            <span>02</span>
-                        </div>
-                        <h2>Face Detection</h2>
-                        <p>Keep your face centred and clearly visible on the screen.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="tips-card">
-                        <div class="tips-icon-wrapper d-flex justify-content-between align-items-center">
-                            <img src="{% static 'tips-icon3.svg'%}" class="img-fluid" alt="tips-icon1" />
-                            <span>03</span>
-                        </div>
-                        <h2>Smile Naturally</h2>
-                        <p>Smile naturally and make sure your teeth are visible.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="tips-card">
-                        <div class="tips-icon-wrapper d-flex justify-content-between align-items-center">
-                            <img src="{% static 'tips-icon4.svg'%}" class="img-fluid" alt="tips-icon1" />
-                            <span>04</span>
-                        </div>
-                        <h2>Capture Smile</h2>
-                        <p>Click on capture now once a proper smile is detected.</p>
-                    </div>
-                </div>
-            </div>
+        <div class="col-lg-4 col-md-4 col-12 banner-content">
+          {% comment %}
+          <img
+            src="{% static 'bg-vector7.png'%}"
+            class="bg-vector d-block d-md-none img-fluid"
+            alt="bg-vector"
+          />
+          {% endcomment %}
+          <img
+            src="{% static 'bg-vector3.png'%}"
+            class="bg-vector d-none d-md-block img-fluid"
+            alt="bg-vector"
+          />
+          <img
+            src="{% static 'bg-vector13.png'%}"
+            class="bg-vector d-block d-md-none img-fluid"
+            alt="bg-vector"
+          />
+          <div class="d-flex align-items-center justify-content-start">
+            <img
+              src="{% static 'banner-img2.webp' %}"
+              class="banner-img1 img-fluid"
+              alt=""
+            />
+          </div>
         </div>
-    </section>
-    <section class="ai-smile-section my-5">
-        <div class="container">
-            <div class="ai-smile-wrapper text-center">
-                <h2 class="cool">Ready to See Your New Smile?</h2>
-                <p>See your personalized smile transformation in just 30 seconds—no commitment, instant results.</p>
-                <button class="btn bat d-flex align-items-center justify-content-center mx-auto" data-bs-toggle="modal"
-                    data-bs-target="#smileModal">Design My Smile Now <img src="{% static 'arrow-left.svg'%}"
-                        class="mx-1 img-fluid" alt="arrow-left" /></button>
-            </div>
-        </div>
-    </section>
-    <div class="modal fade smileModal" id="smileModal" tabIndex="-1" aria-labelledby="exampleModalLabel"
-        data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="row align-items-center justify-content-center  h-100">
-                        <div class="col-lg-6 col-12 ">
-                            <button type="button" class="d-lg-none d-block btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                            <div class="video-capture-wrapper my-3 my-lg-4">
-                                <div class="video-inner">
-                                    <video id="video" playsinline muted></video>
-                                    <img id="freezeImg" class="visually-hidden hidden" alt="Captured">
-                                    <canvas id="canvas" width="1184" height="864"
-                                        class="visually-hidden hidden"></canvas>
-                                    <div id="faceOverlay" class="face-overlay"></div>
-                                </div>
-                            </div>
-                            <p id="smileGuideLine" class="text-center mb-3 text-secondary"
-                                style="font-size: 1.1rem; font-weight: 500; min-height: 1.5rem; transition: opacity 0.5s;">
-                                Please smile widely until your full teeth are visible</p>
-                            <div class="d-flex align-items-center justify-content-center gap-5 btn-wrapper">
-                                <button id="recaptureBtn" class="btn hidden">ReCapture</button>
-
-                                <button id="captureBtn" class="btn d-none" disabled>
-                                    Capture
-                                </button>
-
-                                <button id="confirmBtn" type="button"
-                                    class="btn d-flex align-items-center justify-content-between hidden">
-                                    Continue <img src="{% static 'light-arrow-left.svg'%}" class="img-fluid"
-                                        alt="arrow-left" />
-                                </button>
-                                <!-- <br /> -->
-                                <span id="status" class="d-none">
-                                    Confidence: 0.00 — Visible: false
-                                </span>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-12 d-none d-lg-block">
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            <div class="modal-content-wrapper">
-                                <h2 class="modal-title cool">For your best results</h2>
-                                <ul class="modal-ul">
-                                    <li>Make sure your face is well-lit</li>
-                                    <li>Look directly into your camera</li>
-                                    <li>Smile fully so your teeth are visible</li>
-                                </ul>
-                                <h2 class="modal-title cool">Example</h2>
-                                <div class="d-flex align-items-center justify-content-center">
-                                    <img src="{% static 'user-smile1.png'%}" class="py-4 user-smile-img img-fluid"
-                                        alt="user-smile-img" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
-    <div class="modal fade" id="contactModal" tabIndex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                <div class="modal-body contact-wrapper">
-                    <a href="/">
-                        <img src="{% static 'USD_NEW_LOGO.svg'%}" class="img-fluid usd-logo-img" alt="usd-logo-img" />
-                    </a>
-                    <h2 class="contact-title">Contact Information</h2>
-                    <form id="leadForm" method="post" class="contact-form form"
-                        action="{% url 'virtualsmileAI:smile' %}">
-                        {% csrf_token %}
-                        {{ form.non_field_errors }}
-
-                        <div class="row align-items-center justify-content-center">
-                            <div class="col-12">
-                                <div class="contact-input">
-                                    {{ form.name.errors }}
-                                    <input id="leadName" class="form-control" type="text" name="name" placeholder="Name"
-                                        value="{{ form.name.value|default:'' }}" required />
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 col-12">
-                                <div class="contact-input">
-                                    <input id="leadPhone" class="form-control" type="number" name="phone"
-                                        placeholder="Contact" required />
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 col-12">
-                                <div class="contact-input">
-                                    <input id="leadCity" class="form-control" type="text" name="city" placeholder="city"
-                                        required />
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <div class="contact-input">
-                                    <input id="leadEmail" class="form-control" type="email" name="email"
-                                        placeholder="email" required />
-                                </div>
-                            </div>
-
-                            <!-- ✅ This shows success/error message without page reload -->
-                            <div id="leadFormMsg" class="mt-2 small text-center"></div>
-
-                            <div class="col-12 d-flex align-items-center justify-content-center">
-                                <button id="leadSubmitBtn" class="btn bat" type="submit">Submit</button>
-                            </div>
-                        </div>
-                    </form>
-                    {% if success %}
-                    <p class="text-success mt-3">Thank you! Your submission was successful.</p>
-                    {% endif %}
-                </div>
+  </section>
+  <section
+    class="tips-section text-center py-4 pt-md-4 pb-md-3 pt-lg-5 pb-lg-5"
+  >
+    <div class="container">
+      <div class="mt-2">
+        <h2 class="text-center tips-title cool">
+          Tips for a Perfect Smile Try-On
+        </h2>
+        <p class="tips-subtitle">
+          Transform your smile in three simple steps. No waiting, no
+          appointments — just instant results.
+        </p>
+      </div>
+      <div class="row">
+        <div class="col-lg-3 col-md-6 col-12">
+          <div class="tips-card">
+            <div
+              class="tips-icon-wrapper d-flex justify-content-between align-items-center"
+            >
+              <img
+                src="{% static 'tips-icon11.svg'%}"
+                class="img-fluid"
+                alt="tips-icon1"
+              />
+              <span>01</span>
             </div>
+            <h2>Camera Access</h2>
+            <p>Allow camera access to capture your photo.</p>
+          </div>
         </div>
+        <div class="col-lg-3 col-md-6 col-12">
+          <div class="tips-card">
+            <div
+              class="tips-icon-wrapper d-flex justify-content-between align-items-center"
+            >
+              <img
+                src="{% static 'tips-icon2.svg'%}"
+                class="img-fluid"
+                alt="tips-icon1"
+              />
+              <span>02</span>
+            </div>
+            <h2>Face Detection</h2>
+            <p>Keep your face centred and clearly visible on the screen.</p>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-12">
+          <div class="tips-card">
+            <div
+              class="tips-icon-wrapper d-flex justify-content-between align-items-center"
+            >
+              <img
+                src="{% static 'tips-icon3.svg'%}"
+                class="img-fluid"
+                alt="tips-icon1"
+              />
+              <span>03</span>
+            </div>
+            <h2>Smile Naturally</h2>
+            <p>Smile naturally and make sure your teeth are visible.</p>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-12">
+          <div class="tips-card">
+            <div
+              class="tips-icon-wrapper d-flex justify-content-between align-items-center"
+            >
+              <img
+                src="{% static 'tips-icon4.svg'%}"
+                class="img-fluid"
+                alt="tips-icon1"
+              />
+              <span>04</span>
+            </div>
+            <h2>Capture Smile</h2>
+            <p>Click on capture now once a proper smile is detected.</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="modal fade" id="PreviewModal" tabIndex="-1" aria-labelledby="PreviewModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                <div class="modal-body">
-                    <div class="preview-wrapper">
-                        <h2 class="preview-title">Your AI-Designed Smile Preview</h2>
-                        <p>This AI-designed smile is the first step toward your real smile transformation. With expert
-                            dentist consultation, this design can be confidently brought to life</p>
-                        <div class="preview-modal-wrapper">
-                            <div class="preview_img_wrapper">
-                                <img id="previewBeforeImg" class="img-fluid" alt="before" />
-                            </div>
-                            <div class="preview_img_wrapper">
-                                <img id="previewAfterImg" class="img-fluid" alt="After" />
-                            </div>
-                            <div id="preview-line"></div>
-                            {% comment %} <span class="preview-label before">Before</span> {% endcomment %}
-                            {% comment %} <span class="preview-label after">After</span> {% endcomment %}
-                            <input id="slider" class="before-input" type="range" min="0" max="100" value="50">
-                        </div>
-                        <div class="row justify-content-center mt-4 mb-0 my-lg-4">
-                            <div class="col-lg-3 col-md-3 col-sm-6 col-12 order-1 order-md-1">
-                                <button class="btn bat btn-before" id="downloadBeforeBtn">Before
-                                    & After
-                                    <svg width="20" height="20" viewBox="0 0 28 28" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M24.4987 22.1668H3.4987C3.18928 22.1668 2.89253 22.2897 2.67374 22.5085C2.45495 22.7273 2.33203 23.0241 2.33203 23.3335C2.33203 23.6429 2.45495 23.9397 2.67374 24.1585C2.89253 24.3772 3.18928 24.5002 3.4987 24.5002H24.4987C24.8081 24.5002 25.1049 24.3772 25.3237 24.1585C25.5424 23.9397 25.6654 23.6429 25.6654 23.3335C25.6654 23.0241 25.5424 22.7273 25.3237 22.5085C25.1049 22.2897 24.8081 22.1668 24.4987 22.1668ZM13.9987 2.3335C13.6893 2.3335 13.3925 2.45641 13.1737 2.6752C12.9549 2.894 12.832 3.19074 12.832 3.50016V15.8552L8.9937 12.0052C8.77401 11.7855 8.47605 11.6621 8.16537 11.6621C7.85468 11.6621 7.55672 11.7855 7.33703 12.0052C7.11734 12.2248 6.99392 12.5228 6.99392 12.8335C6.99392 13.1442 7.11734 13.4421 7.33703 13.6618L13.1704 19.4952C13.2788 19.6045 13.4079 19.6913 13.55 19.7505C13.6922 19.8098 13.8447 19.8403 13.9987 19.8403C14.1527 19.8403 14.3052 19.8098 14.4474 19.7505C14.5895 19.6913 14.7186 19.6045 14.827 19.4952L20.6604 13.6618C20.7691 13.5531 20.8554 13.4239 20.9143 13.2818C20.9732 13.1397 21.0035 12.9873 21.0035 12.8335C21.0035 12.6797 20.9732 12.5273 20.9143 12.3852C20.8554 12.2431 20.7691 12.1139 20.6604 12.0052C20.5516 11.8964 20.4224 11.8101 20.2803 11.7512C20.1382 11.6924 19.9859 11.6621 19.832 11.6621C19.6782 11.6621 19.5259 11.6924 19.3837 11.7512C19.2416 11.8101 19.1125 11.8964 19.0037 12.0052L15.1654 15.8552V3.50016C15.1654 3.19074 15.0424 2.894 14.8237 2.6752C14.6049 2.45641 14.3081 2.3335 13.9987 2.3335Z"
-                                            fill="black" />
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-12 order-3 order-md-2">
-                                <button class="btn btn-default btn-appoinment">
-                                    <a href="/certified-dentists/">Book Appointment
-                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M13.3372 7.845L6.16466 15.0175L4.98633 13.8392L12.158 6.66667H5.83716V5H15.0038V14.1667H13.3372V7.845Z"
-                                                fill="white" />
-                                        </svg>
-                                    </a>
-                                </button>
-                            </div>
-                        </div>
+  </section>
+  <section class="ai-smile-section my-5">
+    <div class="container">
+      <div class="ai-smile-wrapper text-center">
+        <h2 class="cool">Ready to See Your New Smile?</h2>
+        <p>
+          See your personalized smile transformation in just 30 seconds—no
+          commitment, instant results.
+        </p>
+        <button
+          class="btn bat d-flex align-items-center justify-content-center mx-auto"
+          data-bs-toggle="modal"
+          data-bs-target="#smileModal"
+        >
+          Design My Smile Now
+          <img
+            src="{% static 'arrow-left.svg'%}"
+            class="mx-1 img-fluid"
+            alt="arrow-left"
+          />
+        </button>
+      </div>
+    </div>
+  </section>
+  <div
+    class="modal fade smileModal"
+    id="smileModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="row align-items-center justify-content-center h-100">
+            <div class="col-lg-6 col-12">
+              <div>
+                <h2 class="cool text-center smile-modal-title">Ultimate Ai</h2>
+                <p
+                  id="smileGuideLine"
+                  class="text-center mb-3 text-secondary"
+                  style="
+                    font-size: 1.1rem;
+                    font-weight: 500;
+                    min-height: 1.5rem;
+                    transition: opacity 0.5s;
+                  "
+                >
+                  Smile widely with all teeth visible.
+                </p>
+              </div>
+              <button
+                type="button"
+                class="d-lg-none d-block btn-close smile-close-btn"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+              <div class="video-capture-wrapper my-3 my-lg-4">
+                <div class="video-inner">
+                  <video id="video" playsinline muted></video>
+                  <img
+                    id="freezeImg"
+                    class="visually-hidden hidden"
+                    alt="Captured"
+                  />
+                  <canvas
+                    id="canvas"
+                    width="1184"
+                    height="864"
+                    class="visually-hidden hidden"
+                  ></canvas>
+                  <div
+                    id="cameraDeniedOverlay"
+                    class="camera-denied-overlay d-none"
+                  >
+                    <img
+                      src="{% static 'camera.svg' %}"
+                      alt="Camera"
+                      class="camera-icon mb-3"
+                    />
+                    {% comment %}
+                    <p>Capture Your Smile With Camera<br />Access.</p>
+                    {% endcomment %}
+                    <p>Allow Camera Access To Capture Your Smile.</p>
+                  </div>
+                  {% comment %}
+                  <div id="faceOverlay" class="face-overlay"></div>
+                  {% endcomment %}
+                  <button
+                    id="switchCameraBtn"
+                    type="button"
+                    class="btn-switch-camera hidden"
+                    title="Switch Camera"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path
+                        d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3L21.5 8M22 12.5a10 10 0 0 1-18.8 4.2L2.5 16"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div
+                class="d-flex align-items-center justify-content-center gap-5 btn-wrapper"
+              >
+                <button id="recaptureBtn" class="btn hidden">ReCapture</button>
+
+                <button id="captureBtn" class="btn capture-now-btn" disabled>
+                  <span class="capture-inner">Capture Now</span>
+                </button>
+
+                <button
+                  id="confirmBtn"
+                  type="button"
+                  class="btn d-flex align-items-center justify-content-between hidden"
+                >
+                  Continue
+                  <img
+                    src="{% static 'light-arrow-left.svg'%}"
+                    class="img-fluid"
+                    alt="arrow-left"
+                  />
+                </button>
+                <!-- <br /> -->
+                <span id="status" class="d-none">
+                  Confidence: 0.00 — Visible: false
+                </span>
+              </div>
+            </div>
+            <div class="col-lg-6 col-12 d-none d-lg-block">
+              <button
+                type="button"
+                class="btn-close smile-close-btn"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+              <div class="modal-content-wrapper mt-5">
+                <h2 class="modal-title cool">For Your Best Results</h2>
+                <div class="modal-steps-container">
+                  <div class="modal-step-box">
+                    <img
+                      src="{% static 'frist-step.svg' %}"
+                      class="img-fluid step-icon"
+                      alt="Step 1"
+                    />
+                    <p>Make sure your face is well-lit</p>
+                  </div>
+                  <div class="modal-step-box">
+                    <img
+                      src="{% static 'center-step.svg' %}"
+                      class="img-fluid step-icon"
+                      alt="Step 2"
+                    />
+                    <p>Look directly into your camera</p>
+                  </div>
+                  <div class="modal-step-box">
+                    <img
+                      src="{% static 'smile-ai-step.svg' %}"
+                      class="img-fluid step-icon"
+                      alt="Step 3"
+                    />
+                    <p>Smile fully so your teeth are visible</p>
+                  </div>
+                </div>
+                <h2 class="modal-title cool">Example</h2>
+                <div class="d-flex align-items-center justify-content-center">
+                  <img
+                    src="{% static 'user-smile1.png'%}"
+                    class="py-4 user-smile-img img-fluid"
+                    alt="user-smile-img"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="modal fade"
+    id="contactModal"
+    tabindex="-1"
+    aria-labelledby="contactModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+        <div class="modal-body contact-wrapper">
+          <a href="/">
+            <img
+              src="{% static 'USD_NEW_LOGO.svg'%}"
+              class="img-fluid usd-logo-img"
+              alt="usd-logo-img"
+            />
+          </a>
+          <h2 class="contact-title">Contact Information</h2>
+          <form
+            id="leadForm"
+            method="post"
+            class="contact-form form"
+            action="{% url 'virtualsmileAI:smile' %}"
+          >
+            {% csrf_token %} {{ form.non_field_errors }}
+
+            <div class="row align-items-center justify-content-center">
+              <div class="col-md-6 col-12">
+                <div class="contact-input">
+                  {{ form.name.errors }}
+                  <input
+                    id="leadName"
+                    class="form-control"
+                    type="text"
+                    name="name"
+                    placeholder="Name"
+                    value="{{ form.name.value|default:'' }}"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-6 col-12">
+                <div class="contact-input contact_input_phone">
+                  <div
+                    class="flag_icon_ai_main"
+                    id="countrySelectBtn"
+                    tabindex="0"
+                    role="button"
+                    aria-expanded="false"
+                  >
+                    <div class="flag_image">
+                      <img
+                        src="https://flagcdn.com/w40/in.png"
+                        alt="flag"
+                        id="selectedFlag"
+                        class="flag_image"
+                      />
                     </div>
+                    <span id="selectedCode" class="selected_code_text"
+                      >+91</span
+                    >
+                    <div class="arrow_icon">
+                      <img
+                        src="{% static 'angle-down-in-country-code.svg' %}"
+                        alt="down arrow"
+                      />
+                    </div>
+                  </div>
+                  <!-- Country Dropdown Menu -->
+                  <div class="country-dropdown-menu" id="countryDropdown">
+                    <div class="country-search-box">
+                      <input
+                        type="text"
+                        id="countrySearchInput"
+                        placeholder="Search country or code..."
+                        autocomplete="off"
+                      />
+                    </div>
+                    <ul class="country-list" id="countryList">
+                      <!-- JS Populated -->
+                    </ul>
+                  </div>
+                  <input
+                    id="leadPhone"
+                    class="form-control custom_input_phone"
+                    type="tel"
+                    placeholder="Contact"
+                    required
+                  />
+                  <input type="hidden" name="phone" id="fullPhoneInput" />
                 </div>
+              </div>
+
+              <div class="col-md-6 col-12">
+                <div class="contact-input pincode-input-wrapper position-relative">
+                  <div class="pincode-input-container position-relative">
+                    <input
+                      id="leadPincode"
+                      class="form-control"
+                      type="text"
+                      name="pincode"
+                      placeholder="Enter 6-digit PIN code (e.g. 365601)..."
+                      autocomplete="postal-code"
+                      required
+                    />
+                    <div id="pincodeSpinner" class="smile-pincode-spinner" style="display: none;"></div>
+                    <div id="pincodeStatusIcon" class="smile-pincode-status-icon"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-12">
+                <div class="contact-input">
+                  <input
+                    id="leadCity"
+                    class="form-control"
+                    type="text"
+                    name="city"
+                    placeholder="Auto-fetched from pincode..."
+                    readonly
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="contact-input">
+                  <input
+                    id="leadEmail"
+                    class="form-control"
+                    type="email"
+                    name="email"
+                    placeholder="email"
+                    required
+                  />
+                </div>
+              </div>
+
+              <!-- ✅ This shows success/error message without page reload -->
+              <div id="leadFormMsg" class="mt-2 small text-center"></div>
+
+              <div
+                class="col-12 d-flex align-items-center justify-content-center"
+              >
+                <button id="leadSubmitBtn" class="btn bat" type="submit">
+                  Submit
+                </button>
+              </div>
             </div>
+          </form>
+          {% if success %}
+          <p class="text-success mt-3">
+            Thank you! Your submission was successful.
+          </p>
+          {% endif %}
         </div>
+      </div>
     </div>
+  </div>
+  <div
+    class="modal fade"
+    id="PreviewModal"
+    tabindex="-1"
+    aria-labelledby="PreviewModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+        <div class="modal-body">
+          <div class="preview-wrapper">
+            <h2 class="preview-title">Your AI-Designed Smile Preview</h2>
+            <p>
+              This AI-designed smile is the first step toward your real smile
+              transformation. With expert dentist consultation, this design can
+              be confidently brought to life
+            </p>
+            <div class="preview-modal-wrapper">
+              <div class="preview_img_wrapper">
+                <img id="previewBeforeImg" class="img-fluid" alt="before" />
+              </div>
+              <div class="preview_img_wrapper">
+                <img id="previewAfterImg" class="img-fluid" alt="After" />
+              </div>
+              <div id="preview-line"></div>
+              {% comment %} <span class="preview-label before">Before</span> {%
+              endcomment %} {% comment %}
+              <span class="preview-label after">After</span> {% endcomment %}
+              <input
+                id="slider"
+                class="before-input"
+                type="range"
+                min="0"
+                max="100"
+                value="50"
+              />
+            </div>
+            <div class="row justify-content-center mt-4 mb-0 my-lg-4">
+              <div class="col-lg-3 col-md-3 col-sm-6 col-12 order-1 order-md-1">
+                <button class="btn bat btn-before" id="downloadBeforeBtn">
+                  Before & After
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 28 28"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M24.4987 22.1668H3.4987C3.18928 22.1668 2.89253 22.2897 2.67374 22.5085C2.45495 22.7273 2.33203 23.0241 2.33203 23.3335C2.33203 23.6429 2.45495 23.9397 2.67374 24.1585C2.89253 24.3772 3.18928 24.5002 3.4987 24.5002H24.4987C24.8081 24.5002 25.1049 24.3772 25.3237 24.1585C25.5424 23.9397 25.6654 23.6429 25.6654 23.3335C25.6654 23.0241 25.5424 22.7273 25.3237 22.5085C25.1049 22.2897 24.8081 22.1668 24.4987 22.1668ZM13.9987 2.3335C13.6893 2.3335 13.3925 2.45641 13.1737 2.6752C12.9549 2.894 12.832 3.19074 12.832 3.50016V15.8552L8.9937 12.0052C8.77401 11.7855 8.47605 11.6621 8.16537 11.6621C7.85468 11.6621 7.55672 11.7855 7.33703 12.0052C7.11734 12.2248 6.99392 12.5228 6.99392 12.8335C6.99392 13.1442 7.11734 13.4421 7.33703 13.6618L13.1704 19.4952C13.2788 19.6045 13.4079 19.6913 13.55 19.7505C13.6922 19.8098 13.8447 19.8403 13.9987 19.8403C14.1527 19.8403 14.3052 19.8098 14.4474 19.7505C14.5895 19.6913 14.7186 19.6045 14.827 19.4952L20.6604 13.6618C20.7691 13.5531 20.8554 13.4239 20.9143 13.2818C20.9732 13.1397 21.0035 12.9873 21.0035 12.8335C21.0035 12.6797 20.9732 12.5273 20.9143 12.3852C20.8554 12.2431 20.7691 12.1139 20.6604 12.0052C20.5516 11.8964 20.4224 11.8101 20.2803 11.7512C20.1382 11.6924 19.9859 11.6621 19.832 11.6621C19.6782 11.6621 19.5259 11.6924 19.3837 11.7512C19.2416 11.8101 19.1125 11.8964 19.0037 12.0052L15.1654 15.8552V3.50016C15.1654 3.19074 15.0424 2.894 14.8237 2.6752C14.6049 2.45641 14.3081 2.3335 13.9987 2.3335Z"
+                      fill="black"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div class="col-lg-4 col-md-4 col-12 order-3 order-md-2">
+                <button class="btn btn-default btn-appoinment">
+                  <a href="/certified-dentists/"
+                    >Book Appointment
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M13.3372 7.845L6.16466 15.0175L4.98633 13.8392L12.158 6.66667H5.83716V5H15.0038V14.1667H13.3372V7.845Z"
+                        fill="white"
+                      />
+                    </svg>
+                  </a>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-{% endblock %}
-{% block js %}
+{% endblock %} {% block js %}
 <script>
-    const THRESHOLD = parseFloat("{{ threshold|default:'0.55' }}");
+  const THRESHOLD = parseFloat("{{ threshold|default:'0.55' }}");
 </script>
 <script>
-    const imgAfter = document.querySelector('.preview_img_wrapper:nth-of-type(2)');
-    const line = document.getElementById('preview-line');
-    const slider = document.getElementById('slider');
+  const imgAfter = document.querySelector(
+    ".preview_img_wrapper:nth-of-type(2)",
+  );
+  const line = document.getElementById("preview-line");
+  const slider = document.getElementById("slider");
 
-    slider.addEventListener('input', () => {
-        line.style.left = `${slider.value}%`;
-        imgAfter.style.clipPath = `inset(0px 0px 0px ${slider.value}%)`;
-    });
+  slider.addEventListener("input", () => {
+    line.style.left = `${slider.value}%`;
+    imgAfter.style.clipPath = `inset(0px 0px 0px ${slider.value}%)`;
+  });
 
-    // Reset on double-click
-    slider.addEventListener('dblclick', () => {
-        slider.value = 50;
-        line.style.left = '50%';
-        imgAfter.style.clipPath = 'inset(0px 0px 0px 50%)';
-    });
+  // Reset on double-click
+  slider.addEventListener("dblclick", () => {
+    slider.value = 50;
+    line.style.left = "50%";
+    imgAfter.style.clipPath = "inset(0px 0px 0px 50%)";
+  });
 </script>
+{% comment %}
 <script>
-    document.getElementById("confirmBtn").addEventListener("click", function () {
-        const smileModalEl = document.getElementById("smileModal");
-        const smileModal = bootstrap.Modal.getInstance(smileModalEl);
-        if (smileModal) smileModal.hide();
+  document.getElementById("confirmBtn").addEventListener("click", function () {
+    const smileModalEl = document.getElementById("smileModal");
+    const smileModal = bootstrap.Modal.getInstance(smileModalEl);
+    if (smileModal) smileModal.hide();
 
-        const contactModal = new bootstrap.Modal(
-            document.getElementById("contactModal")
-        );
-        contactModal.show();
-    });
+    const contactModal = new bootstrap.Modal(
+      document.getElementById("contactModal"),
+    );
+    contactModal.show();
+  });
 </script>
+{% endcomment %}
 <script>
-    function downloadImage(url, filename) {
-        if (!url) {
-            alert("Image not ready yet.");
-            return;
-        }
-
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+  function downloadImage(url, filename) {
+    if (!url) {
+      alert("Image not ready yet.");
+      return;
     }
 
-    document.getElementById("downloadBeforeBtn")?.addEventListener("click", () => {
-        const beforeImg = document.getElementById("previewBeforeImg");
-        downloadImage(
-            beforeImg?.src,
-            "smile-before.jpg"
-        );
-    });
-    document.getElementById("downloadBeforeBtn")?.addEventListener("click", () => {
-        const afterImg = document.getElementById("previewAfterImg");
-        downloadImage(
-            afterImg?.src,
-            "smile-after.jpg"
-        );
-    });
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
 
+  document
+    .getElementById("downloadBeforeBtn")
+    ?.addEventListener("click", () => {
+      const beforeImg = document.getElementById("previewBeforeImg");
+      downloadImage(beforeImg?.src, "smile-before.jpg");
+    });
+  document
+    .getElementById("downloadBeforeBtn")
+    ?.addEventListener("click", () => {
+      const afterImg = document.getElementById("previewAfterImg");
+      downloadImage(afterImg?.src, "smile-after.jpg");
+    });
 </script>
 <script>
-    async function shareImageFromUrl(imageUrl) {
-        if (!imageUrl) {
-            alert("Image not ready yet.");
-            return;
+  async function shareImageFromUrl(imageUrl) {
+    if (!imageUrl) {
+      alert("Image not ready yet.");
+      return;
+    }
+
+    try {
+      // fetch image as blob
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+
+      const file = new File([blob], "smile-after.jpg", { type: blob.type });
+
+      if (navigator.share && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          title: "My AI Smile Preview",
+          text: "Check out my AI-designed smile ✨",
+          files: [file],
+        });
+      } else {
+        alert("Sharing not supported on this browser.");
+      }
+    } catch (err) {
+      console.error("Share failed:", err);
+      alert("Failed to share image.");
+    }
+  }
+
+  document.getElementById("shareAfterBtn")?.addEventListener("click", () => {
+    const afterImg = document.getElementById("previewAfterImg");
+    shareImageFromUrl(afterImg?.src);
+  });
+</script>
+<script src="{% static 'js/smile_ai.js' %}"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const defaultCountries = [
+      { name: "India", code: "IN", dialCode: "+91" },
+      { name: "United States", code: "US", dialCode: "+1" },
+      { name: "United Kingdom", code: "GB", dialCode: "+44" },
+      { name: "United Arab Emirates", code: "AE", dialCode: "+971" },
+      { name: "Canada", code: "CA", dialCode: "+1" },
+      { name: "Australia", code: "AU", dialCode: "+61" },
+      { name: "Saudi Arabia", code: "SA", dialCode: "+966" },
+      { name: "Germany", code: "DE", dialCode: "+49" },
+      { name: "France", code: "FR", dialCode: "+33" },
+      { name: "Singapore", code: "SG", dialCode: "+65" },
+      { name: "Oman", code: "OM", dialCode: "+968" },
+      { name: "Qatar", code: "QA", dialCode: "+974" },
+      { name: "Kuwait", code: "KW", dialCode: "+965" },
+      { name: "Bahrain", code: "BH", dialCode: "+973" },
+      { name: "Nepal", code: "NP", dialCode: "+977" },
+      { name: "Bangladesh", code: "BD", dialCode: "+880" },
+      { name: "Pakistan", code: "PK", dialCode: "+92" },
+      { name: "Sri Lanka", code: "LK", dialCode: "+94" },
+      { name: "Malaysia", code: "MY", dialCode: "+60" },
+      { name: "Indonesia", code: "ID", dialCode: "+62" },
+      { name: "Thailand", code: "TH", dialCode: "+66" },
+      { name: "Vietnam", code: "VN", dialCode: "+84" },
+      { name: "Philippines", code: "PH", dialCode: "+63" },
+      { name: "Japan", code: "JP", dialCode: "+81" },
+      { name: "South Korea", code: "KR", dialCode: "+82" },
+      { name: "China", code: "CN", dialCode: "+86" },
+      { name: "Hong Kong", code: "HK", dialCode: "+852" },
+      { name: "Taiwan", code: "TW", dialCode: "+886" },
+      { name: "Russia", code: "RU", dialCode: "+7" },
+      { name: "Italy", code: "IT", dialCode: "+39" },
+      { name: "Spain", code: "ES", dialCode: "+34" },
+      { name: "Netherlands", code: "NL", dialCode: "+31" },
+      { name: "Switzerland", code: "CH", dialCode: "+41" },
+      { name: "Sweden", code: "SE", dialCode: "+46" },
+      { name: "Norway", code: "NO", dialCode: "+47" },
+      { name: "Denmark", code: "DK", dialCode: "+45" },
+      { name: "Finland", code: "FI", dialCode: "+358" },
+      { name: "Ireland", code: "IE", dialCode: "+353" },
+      { name: "New Zealand", code: "NZ", dialCode: "+64" },
+      { name: "South Africa", code: "ZA", dialCode: "+27" },
+      { name: "Nigeria", code: "NG", dialCode: "+234" },
+      { name: "Egypt", code: "EG", dialCode: "+20" },
+      { name: "Kenya", code: "KE", dialCode: "+254" },
+      { name: "Brazil", code: "BR", dialCode: "+55" },
+      { name: "Mexico", code: "MX", dialCode: "+52" },
+      { name: "Argentina", code: "AR", dialCode: "+54" },
+      { name: "Turkey", code: "TR", dialCode: "+90" },
+      { name: "Israel", code: "IL", dialCode: "+972" },
+      { name: "Greece", code: "GR", dialCode: "+30" },
+      { name: "Portugal", code: "PT", dialCode: "+351" },
+      { name: "Poland", code: "PL", dialCode: "+48" },
+      { name: "Austria", code: "AT", dialCode: "+43" },
+      { name: "Belgium", code: "BE", dialCode: "+32" },
+    ];
+
+    let countriesList = [...defaultCountries];
+    let currentSelected = { name: "India", code: "IN", dialCode: "+91" };
+
+    const countrySelectBtn = document.getElementById("countrySelectBtn");
+    const countryDropdown = document.getElementById("countryDropdown");
+    const countrySearchInput = document.getElementById("countrySearchInput");
+    const countryListEl = document.getElementById("countryList");
+    const selectedFlag = document.getElementById("selectedFlag");
+    const selectedCode = document.getElementById("selectedCode");
+    const phoneInput = document.getElementById("leadPhone");
+    const fullPhoneInput = document.getElementById("fullPhoneInput");
+    const pincodeInput = document.getElementById("leadPincode");
+    const cityInput = document.getElementById("leadCity");
+    const pincodeSpinner = document.getElementById("pincodeSpinner");
+    const pincodeStatusIcon = document.getElementById("pincodeStatusIcon");
+    const wrapper = document.querySelector(".contact_input_phone");
+    const form =
+      document.querySelector(".left_side_main form") ||
+      document.querySelector("form");
+
+    let pincodeDebounceTimer = null;
+    let pincodeAbortCtrl = null;
+    let pincodeCache = {};
+
+    function getFlagUrl(code) {
+      return `https://flagcdn.com/w40/${code.toLowerCase()}.png`;
+    }
+
+    function renderList(list) {
+      countryListEl.innerHTML = "";
+      if (list.length === 0) {
+        countryListEl.innerHTML = `<li class="no-country-found">No country found</li>`;
+        return;
+      }
+
+      list.forEach((country) => {
+        const li = document.createElement("li");
+        li.className = `country-item ${country.code === currentSelected.code ? "active" : ""}`;
+        li.dataset.code = country.code;
+        li.dataset.dialCode = country.dialCode;
+        li.dataset.name = country.name;
+
+        li.innerHTML = `
+        <div class="country-item-info">
+          <img src="${getFlagUrl(country.code)}" alt="${country.code}" class="country-flag-img" loading="lazy" />
+          <span class="country-item-name">${country.name}</span>
+        </div>
+        <span class="country-item-code">${country.dialCode}</span>
+      `;
+
+        li.addEventListener("click", function () {
+          selectCountry(country);
+          closeDropdown();
+        });
+
+        countryListEl.appendChild(li);
+      });
+    }
+
+    function selectCountry(country) {
+      currentSelected = country;
+      selectedFlag.src = getFlagUrl(country.code);
+      selectedFlag.alt = country.code;
+      selectedCode.textContent = country.dialCode;
+
+      document.querySelectorAll(".country-item").forEach((el) => {
+        if (el.dataset.code === country.code) {
+          el.classList.add("active");
+        } else {
+          el.classList.remove("active");
+        }
+      });
+
+      if (pincodeInput) {
+        if (country.code === "IN") {
+          pincodeInput.placeholder = "Enter 6-digit PIN code (e.g. 365601)...";
+        } else {
+          pincodeInput.placeholder = `Enter postal code for ${country.name}...`;
+        }
+        if (pincodeInput.value.trim().length > 0) {
+          pincodeCache = {};
+          triggerPincodeLookup(true);
+        }
+      }
+
+      updateFullPhone();
+    }
+
+    /* PINCODE & REAL-TIME VALIDATION & AUTO-FETCH LOGIC */
+    function setPincodeStatus(state) {
+      if (pincodeInput) {
+        pincodeInput.classList.remove("is-valid", "is-invalid");
+      }
+
+      if (state === "loading") {
+        if (pincodeSpinner) pincodeSpinner.style.display = "block";
+        if (pincodeStatusIcon) pincodeStatusIcon.innerHTML = "";
+      } else if (state === "valid") {
+        if (pincodeSpinner) pincodeSpinner.style.display = "none";
+        if (pincodeStatusIcon) {
+          pincodeStatusIcon.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+        }
+        if (pincodeInput) pincodeInput.classList.add("is-valid");
+      } else if (state === "invalid") {
+        if (pincodeSpinner) pincodeSpinner.style.display = "none";
+        if (pincodeStatusIcon) {
+          pincodeStatusIcon.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
+        }
+        if (pincodeInput) pincodeInput.classList.add("is-invalid");
+      } else {
+        if (pincodeSpinner) pincodeSpinner.style.display = "none";
+        if (pincodeStatusIcon) pincodeStatusIcon.innerHTML = "";
+      }
+    }
+
+    function applyPincodeResult(result) {
+      if (result.valid) {
+        setPincodeStatus("valid");
+        if (result.city && cityInput) {
+          cityInput.value = result.city;
+          cityInput.classList.remove("smile-city-pulse");
+          void cityInput.offsetWidth; // Reflow
+          cityInput.classList.add("smile-city-pulse");
+        }
+      } else {
+        setPincodeStatus("invalid");
+        if (cityInput) {
+          cityInput.value = "";
+        }
+      }
+    }
+
+    async function fallbackNominatim(rawPin, countryCode, countryName, cacheKey, signal) {
+      try {
+        const url = `https://nominatim.openstreetmap.org/search?postalcode=${encodeURIComponent(rawPin)}&countrycodes=${countryCode.toLowerCase()}&format=json&addressdetails=1`;
+        const res = await fetch(url, { signal });
+        if (!res.ok) throw new Error("Network error");
+        const data = await res.json();
+        if (data && data.length > 0) {
+          const addr = data[0].address || {};
+          const city = addr.city || addr.town || addr.village || addr.municipality || addr.county || addr.suburb || addr.state || data[0].name || "";
+          const state = addr.state || "";
+          const result = {
+            valid: true,
+            city: city,
+            state: state
+          };
+          pincodeCache[cacheKey] = result;
+          applyPincodeResult(result);
+        } else {
+          const result = {
+            valid: false
+          };
+          pincodeCache[cacheKey] = result;
+          applyPincodeResult(result);
+        }
+      } catch (err) {
+        if (err.name === "AbortError") return;
+        setPincodeStatus("invalid");
+        if (cityInput) cityInput.value = "";
+      }
+    }
+
+    async function validateAndFetchPincode(pinValue, countryCode, countryName) {
+      const rawPin = pinValue.trim();
+      if (!rawPin) {
+        setPincodeStatus("idle");
+        if (cityInput) cityInput.value = "";
+        return;
+      }
+
+      const cacheKey = `${countryCode}_${rawPin.toUpperCase()}`;
+      if (pincodeCache[cacheKey]) {
+        applyPincodeResult(pincodeCache[cacheKey]);
+        return;
+      }
+
+      if (pincodeAbortCtrl) {
+        pincodeAbortCtrl.abort();
+      }
+      pincodeAbortCtrl = new AbortController();
+      const signal = pincodeAbortCtrl.signal;
+
+      setPincodeStatus("loading");
+
+      // 1. India specific postal lookup
+      if (countryCode === "IN") {
+        const cleanPin = rawPin.replace(/\D/g, "");
+        if (cleanPin.length !== 6) {
+          setPincodeStatus("invalid");
+          if (cityInput) cityInput.value = "";
+          return;
         }
 
         try {
-            // fetch image as blob
-            const response = await fetch(imageUrl);
-            const blob = await response.blob();
-
-            const file = new File([blob], "smile-after.jpg", { type: blob.type });
-
-            if (navigator.share && navigator.canShare({ files: [file] })) {
-                await navigator.share({
-                    title: "My AI Smile Preview",
-                    text: "Check out my AI-designed smile ✨",
-                    files: [file],
-                });
-            } else {
-                alert("Sharing not supported on this browser.");
-            }
+          const res = await fetch(`https://api.postalpincode.in/pincode/${cleanPin}`, { signal });
+          const data = await res.json();
+          if (data && data[0] && data[0].Status === "Success" && data[0].PostOffice && data[0].PostOffice.length > 0) {
+            const po = data[0].PostOffice[0];
+            const city = po.District || po.Block || po.Taluk || po.Circle || po.Name;
+            const state = po.State || "";
+            const result = {
+              valid: true,
+              city: city,
+              state: state
+            };
+            pincodeCache[cacheKey] = result;
+            applyPincodeResult(result);
+          } else {
+            const result = {
+              valid: false
+            };
+            pincodeCache[cacheKey] = result;
+            applyPincodeResult(result);
+          }
         } catch (err) {
-            console.error("Share failed:", err);
-            alert("Failed to share image.");
+          if (err.name === "AbortError") return;
+          await fallbackNominatim(rawPin, countryCode, countryName, cacheKey, signal);
         }
+        return;
+      }
+
+      // 2. International (Zippopotam)
+      try {
+        const cleanPin = encodeURIComponent(rawPin.replace(/\s+/g, ""));
+        const res = await fetch(`https://api.zippopotam.us/${countryCode.toLowerCase()}/${cleanPin}`, { signal });
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.places && data.places.length > 0) {
+            const place = data.places[0];
+            const city = place["place name"] || "";
+            const state = place["state"] || place["state abbreviation"] || "";
+            const result = {
+              valid: true,
+              city: city,
+              state: state
+            };
+            pincodeCache[cacheKey] = result;
+            applyPincodeResult(result);
+            return;
+          }
+        }
+        await fallbackNominatim(rawPin, countryCode, countryName, cacheKey, signal);
+      } catch (err) {
+        if (err.name === "AbortError") return;
+        await fallbackNominatim(rawPin, countryCode, countryName, cacheKey, signal);
+      }
     }
 
-    document.getElementById("shareAfterBtn")?.addEventListener("click", () => {
-        const afterImg = document.getElementById("previewAfterImg");
-        shareImageFromUrl(afterImg?.src);
+    function triggerPincodeLookup(immediate = false) {
+      clearTimeout(pincodeDebounceTimer);
+      if (!pincodeInput) return;
+      const val = pincodeInput.value.trim();
+
+      if (!val) {
+        setPincodeStatus("idle");
+        if (cityInput) cityInput.value = "";
+        return;
+      }
+
+      if (currentSelected.code === "IN") {
+        const digits = val.replace(/\D/g, "");
+        if (digits.length < 6 && !immediate) {
+          setPincodeStatus("idle");
+          return;
+        }
+      } else if (val.length < 2 && !immediate) {
+        setPincodeStatus("idle");
+        return;
+      }
+
+      if (immediate) {
+        validateAndFetchPincode(val, currentSelected.code, currentSelected.name);
+      } else {
+        pincodeDebounceTimer = setTimeout(() => {
+          validateAndFetchPincode(val, currentSelected.code, currentSelected.name);
+        }, 400);
+      }
+    }
+
+    if (pincodeInput) {
+      pincodeInput.addEventListener("input", function () {
+        triggerPincodeLookup(false);
+      });
+
+      pincodeInput.addEventListener("blur", function () {
+        if (this.value.trim().length > 0) {
+          triggerPincodeLookup(true);
+        }
+      });
+    }
+
+    function updateFullPhone() {
+      if (!phoneInput || !fullPhoneInput) return;
+      const number = phoneInput.value.trim().replace(/\D/g, "");
+      if (number) {
+        fullPhoneInput.value = `${currentSelected.dialCode}${number}`;
+      } else {
+        fullPhoneInput.value = "";
+      }
+    }
+
+    function toggleDropdown() {
+      const isShowing = countryDropdown.classList.contains("show");
+      if (isShowing) {
+        closeDropdown();
+      } else {
+        openDropdown();
+      }
+    }
+
+    function openDropdown() {
+      if (countryDropdown) countryDropdown.classList.add("show");
+      if (wrapper) wrapper.classList.add("active");
+      if (countrySelectBtn) {
+        countrySelectBtn.classList.add("active");
+        countrySelectBtn.setAttribute("aria-expanded", "true");
+      }
+      if (countrySearchInput) {
+        countrySearchInput.value = "";
+        setTimeout(() => countrySearchInput.focus(), 50);
+      }
+      renderList(countriesList);
+    }
+
+    function closeDropdown() {
+      if (countryDropdown) countryDropdown.classList.remove("show");
+      if (wrapper) wrapper.classList.remove("active");
+      if (countrySelectBtn) {
+        countrySelectBtn.classList.remove("active");
+        countrySelectBtn.setAttribute("aria-expanded", "false");
+      }
+    }
+
+    countrySearchInput.addEventListener("input", function () {
+      const query = this.value.toLowerCase().trim();
+      const filtered = countriesList.filter((c) => {
+        return (
+          c.name.toLowerCase().includes(query) ||
+          c.dialCode.includes(query) ||
+          c.code.toLowerCase().includes(query)
+        );
+      });
+      renderList(filtered);
     });
+
+    countrySelectBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      toggleDropdown();
+    });
+
+    countryDropdown.addEventListener("click", function (e) {
+      e.stopPropagation();
+    });
+
+    document.addEventListener("click", function (e) {
+      if (wrapper && !wrapper.contains(e.target)) {
+        closeDropdown();
+      }
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        closeDropdown();
+      }
+    });
+
+    if (phoneInput) {
+      phoneInput.addEventListener("input", updateFullPhone);
+    }
+
+    if (form) {
+      form.addEventListener("submit", function () {
+        updateFullPhone();
+      });
+    }
+
+    selectCountry(currentSelected);
+
+    // REST API fetch to enrich country list
+    fetch("https://restcountries.com/v3.1/all?fields=name,cca2,idd,flags")
+      .then((res) => {
+        if (!res.ok) throw new Error("API response error");
+        return res.json();
+      })
+      .then((data) => {
+        const apiList = [];
+        data.forEach((item) => {
+          if (item.idd && item.idd.root) {
+            const root = item.idd.root;
+            let suffix = "";
+            if (item.idd.suffixes && item.idd.suffixes.length === 1) {
+              suffix = item.idd.suffixes[0];
+            }
+            const dialCode = root + suffix;
+            if (dialCode && item.cca2 && item.name && item.name.common) {
+              apiList.push({
+                name: item.name.common,
+                code: item.cca2.toUpperCase(),
+                dialCode: dialCode,
+              });
+            }
+          }
+        });
+
+        if (apiList.length > 0) {
+          apiList.sort((a, b) => a.name.localeCompare(b.name));
+          const inIdx = apiList.findIndex((c) => c.code === "IN");
+          if (inIdx > -1) {
+            const indiaObj = apiList.splice(inIdx, 1)[0];
+            apiList.unshift(indiaObj);
+          }
+          countriesList = apiList;
+          if (countryDropdown.classList.contains("show")) {
+            renderList(countriesList);
+          }
+        }
+      })
+      .catch((err) => {
+        console.log("Using built-in country database", err);
+      });
+  });
 </script>
-<script src="{% static 'js/smile_ai.js' %}"></script>
 {% endblock %}
