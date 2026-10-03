@@ -165,6 +165,7 @@
     confirmBtn.classList.add("hidden");
 
     captureBtn.disabled = true;
+    captureBtn.classList.remove("btn-capture-ready");
     captureBtn.innerHTML = '<span class="capture-inner">Verifying...</span>';
     updateSwitchCameraButtonVisibility();
   }
@@ -189,7 +190,7 @@
 
   function updateSwitchCameraButtonVisibility() {
     if (!switchCameraBtn) return;
-    if (running && !isCapturing && !capturedDataUrl) {
+    if (!isCapturing && !capturedDataUrl) {
       switchCameraBtn.classList.remove("hidden");
     } else {
       switchCameraBtn.classList.add("hidden");
@@ -200,7 +201,6 @@
     stopCamera();
 
     const cameraDeniedOverlay = document.getElementById("cameraDeniedOverlay");
-    if (cameraDeniedOverlay) cameraDeniedOverlay.classList.add("d-none");
 
     const constraints = {
       video: {
@@ -226,6 +226,11 @@
 
     await video.play();
     await checkCameraDevices();
+
+    // Camera stream playing: hide permission overlay and show camera UI
+    const cameraViewport = document.getElementById("cameraViewport");
+    if (cameraViewport) cameraViewport.classList.remove("permission-pending");
+    if (cameraDeniedOverlay) cameraDeniedOverlay.classList.add("d-none");
   }
 
   function stopCamera() {
@@ -311,17 +316,17 @@
 
     if (enabled) {
       captureBtn.disabled = false;
+      captureBtn.classList.add("btn-capture-ready");
       captureBtn.innerHTML = '<span class="capture-inner">Capture Now</span>';
       if (faceOverlay) {
         faceOverlay.classList.add("ready");
-        faceOverlay.style.border = "none";
       }
     } else {
       captureBtn.disabled = true;
+      captureBtn.classList.remove("btn-capture-ready");
       captureBtn.innerHTML = '<span class="capture-inner">Capture Now</span>';
       if (faceOverlay) {
         faceOverlay.classList.remove("ready");
-        faceOverlay.style.border = "4px dashed rgba(255, 255, 255, 0.8)"
       }
     }
     updateSwitchCameraButtonVisibility();
@@ -333,20 +338,24 @@
     confirmBtn.classList.add("hidden");
     captureBtn.innerHTML = '<span class="capture-inner">Capture Now</span>';
     captureBtn.disabled = true;
+    captureBtn.classList.remove("btn-capture-ready");
     confirmBtn.disabled = true;
     if (faceOverlay) {
       faceOverlay.classList.remove("ready");
-      faceOverlay.style.border = "4px dashed rgba(255, 255, 255, 0.8)";
     }
     updateSwitchCameraButtonVisibility();
   }
 
   function setControlsForCaptured() {
     captureBtn.classList.add("hidden", "d-none");
+    captureBtn.classList.remove("btn-capture-ready");
     recaptureBtn.classList.remove("hidden");
     confirmBtn.classList.remove("hidden");
     confirmBtn.disabled = !capturedDataUrl;
     captureBtn.disabled = true;
+    if (faceOverlay) {
+      faceOverlay.classList.remove("ready");
+    }
     updateSwitchCameraButtonVisibility();
   }
 
@@ -821,6 +830,68 @@
   }
 
   const smileModalEl = document.getElementById("smileModal");
+  const smileIntroView = document.getElementById("smileIntroView");
+  const smileCameraView = document.getElementById("smileCameraView");
+  const nextIntroBtn = document.getElementById("nextIntroBtn");
+  const backToIntroBtn = document.getElementById("backToIntroBtn");
+  const guidelineVideo = document.getElementById("guidelineVideo");
+
+  async function openLiveCamera() {
+    if (guidelineVideo) {
+      try { guidelineVideo.pause(); } catch (e) { }
+    }
+    if (smileIntroView) smileIntroView.classList.add("d-none");
+    if (smileCameraView) smileCameraView.classList.remove("d-none");
+
+    // Show Image 2 permission prompt until camera is allowed
+    const cameraViewport = document.getElementById("cameraViewport");
+    if (cameraViewport) cameraViewport.classList.add("permission-pending");
+    const cameraDeniedOverlay = document.getElementById("cameraDeniedOverlay");
+    if (cameraDeniedOverlay) cameraDeniedOverlay.classList.remove("d-none");
+
+    setControlsForLive();
+    try {
+      await startCamera();
+      if (!running) detectLoop();
+      setMessage(
+        "Camera started. Smile and the Capture button will enable automatically.",
+        "muted"
+      );
+    } catch (e) {
+      console.error(e);
+      setMessage("Camera access failed: " + e.message, "error");
+      showError("Allow camera access in browser, then refresh.");
+      if (cameraViewport) cameraViewport.classList.add("permission-pending");
+      if (cameraDeniedOverlay) cameraDeniedOverlay.classList.remove("d-none");
+    }
+  }
+
+  function returnToIntroGuide() {
+    running = false;
+    stopCamera();
+    hideFreeze();
+    resetResult();
+
+    if (smileCameraView) smileCameraView.classList.add("d-none");
+    if (smileIntroView) smileIntroView.classList.remove("d-none");
+
+    if (guidelineVideo) {
+      guidelineVideo.currentTime = 0;
+      guidelineVideo.play().catch(() => { });
+    }
+  }
+
+  if (nextIntroBtn) {
+    nextIntroBtn.addEventListener("click", () => {
+      openLiveCamera();
+    });
+  }
+
+  if (backToIntroBtn) {
+    backToIntroBtn.addEventListener("click", () => {
+      returnToIntroGuide();
+    });
+  }
 
   if (smileModalEl) {
     smileModalEl.addEventListener("shown.bs.modal", async () => {
@@ -849,20 +920,14 @@
       resetResult();
       hideFreeze();
 
-      try {
-        setControlsForLive();
-        await startCamera();
-        if (!running) detectLoop();
-        setMessage(
-          "Camera started. Smile and the Capture button will enable automatically.",
-          "muted"
-        );
-      } catch (e) {
-        console.error(e);
-        setMessage("Camera access failed: " + e.message, "error");
-        showError("Allow camera access in browser, then refresh.");
-        const cameraDeniedOverlay = document.getElementById("cameraDeniedOverlay");
-        if (cameraDeniedOverlay) cameraDeniedOverlay.classList.remove("d-none");
+      // Show Figma Intro View first
+      if (smileCameraView) smileCameraView.classList.add("d-none");
+      if (smileIntroView) smileIntroView.classList.remove("d-none");
+
+      // Autoplay guideline video non-stop
+      if (guidelineVideo) {
+        guidelineVideo.currentTime = 0;
+        guidelineVideo.play().catch(() => { });
       }
     });
 
@@ -872,6 +937,13 @@
       stopCamera();
       hideFreeze();
       resetResult();
+
+      if (guidelineVideo) {
+        try { guidelineVideo.pause(); } catch (e) { }
+      }
+
+      if (smileCameraView) smileCameraView.classList.add("d-none");
+      if (smileIntroView) smileIntroView.classList.remove("d-none");
 
       generationPromise = null;
       generationResult = null;

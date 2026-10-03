@@ -41,6 +41,9 @@
 {% endblock %} 
 {% block body %}
 <div class="virtualpage">
+  <!-- ======================================================================= -->
+  <!-- 🏠 LANDING PAGE - HERO BANNER SECTION (Open Smile Modal Button)         -->
+  <!-- ======================================================================= -->
   <section class="banner_section mt-4 mb-3 mt-sm-4 mb-sm-4 pb-3">
     <div class="container">
       <div
@@ -108,6 +111,10 @@
       </div>
     </div>
   </section>
+
+  <!-- ======================================================================= -->
+  <!-- 💡 LANDING PAGE - TIPS SECTION (4 Steps Guide Cards)                   -->
+  <!-- ======================================================================= -->
   <section
     class="tips-section text-center py-4 pt-md-4 pb-md-3 pt-lg-5 pb-lg-5"
   >
@@ -189,6 +196,10 @@
       </div>
     </div>
   </section>
+
+  <!-- ======================================================================= -->
+  <!-- 🚀 LANDING PAGE - CTA SECTION (Ready to See Your New Smile?)           -->
+  <!-- ======================================================================= -->
   <section class="ai-smile-section my-5">
     <div class="container">
       <div class="ai-smile-wrapper text-center">
@@ -212,6 +223,9 @@
       </div>
     </div>
   </section>
+  <!-- ======================================================================= -->
+  <!-- 🟢 STEP 1: CAMERA & SMILE CAPTURE MODAL (PEHLA STEP - CAMERA & PHOTO) -->
+  <!-- ======================================================================= -->
   <div
     class="modal fade smileModal"
     id="smileModal"
@@ -223,162 +237,187 @@
   >
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <div class="modal-body">
-          <div class="row align-items-center justify-content-center h-100">
-            <div class="col-lg-6 col-12">
-              <div>
-                <h2 class="cool text-center smile-modal-title">Ultimate Ai</h2>
-                <p
-                  id="smileGuideLine"
-                  class="text-center mb-3 text-secondary"
-                  style="
-                    font-size: 1.1rem;
-                    font-weight: 500;
-                    min-height: 1.5rem;
-                    transition: opacity 0.5s;
-                  "
-                >
-                  Smile widely with all teeth visible.
-                </p>
+        <div class="modal-body p-0">
+          
+          <!-- ================================================================= -->
+          <!-- 🎬 [STEP 1A - FIGMA DESIGN] INTRO & NON-STOP AUTOPLAY VIDEO       -->
+          <!-- ================================================================= -->
+          <div id="smileIntroView" class="smile-intro-wrapper p-3">
+            <!-- Top Bar: Badge (Left) & Close Button (Right) -->
+            <div class="intro-header-bar d-flex justify-content-between align-items-center mb-1">
+              <div class="ai-scan-badge">
+              <img
+              src="{% static 'banner-vector.svg'%}"
+              class="img-fluid"
+              alt="banner-vector"
+            />
+                <span class="cool">AI-Smile Scan</span>
               </div>
               <button
                 type="button"
-                class="d-lg-none d-block btn-close smile-close-btn"
+                class="btn-close custom-intro-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
-              <div class="video-capture-wrapper my-3 my-lg-4">
-                <div class="video-inner">
-                  <video id="video" playsinline muted></video>
-                  <img
-                    id="freezeImg"
-                    class="visually-hidden hidden"
-                    alt="Captured"
-                  />
-                  <canvas
-                    id="canvas"
-                    width="1184"
-                    height="864"
-                    class="visually-hidden hidden"
-                  ></canvas>
-                  <div
-                    id="cameraDeniedOverlay"
-                    class="camera-denied-overlay d-none"
-                  >
-                    <img
-                      src="{% static 'camera.svg' %}"
-                      alt="Camera"
-                      class="camera-icon mb-3"
-                    />
-                    {% comment %}
-                    <p>Capture Your Smile With Camera<br />Access.</p>
-                    {% endcomment %}
-                    <p>Allow Camera Access To Capture Your Smile.</p>
-                  </div>
-                  {% comment %}
-                  <div id="faceOverlay" class="face-overlay"></div>
-                  {% endcomment %}
-                  <button
-                    id="switchCameraBtn"
-                    type="button"
-                    class="btn-switch-camera hidden"
-                    title="Switch Camera"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path
-                        d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3L21.5 8M22 12.5a10 10 0 0 1-18.8 4.2L2.5 16"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-              <div
-                class="d-flex align-items-center justify-content-center gap-5 btn-wrapper"
+            </div>
+
+            <!-- Title & Subtitle -->
+            <div class="text-center">
+              <h2 class="intro-modal-title">Let’s Capture Your Smile</h2>
+              <p class="intro-modal-subtitle cool">Just 3 Simple Steps</p>
+            </div>
+
+            <!-- Center Video Container (Autoplay Loop Non-stop) -->
+            <div class="guideline-video-wrapper">
+              <!-- 📹 VIDEO SOURCE: Is video tag me aap apna video path change kar sakte hain (autoplay, loop, muted) -->
+              <video
+                id="guidelineVideo"
+                class="guideline-video"
+                autoplay
+                loop
+                muted
+                playsinline
+                poster="{% static 'user-smile1.png' %}"
               >
-                <button id="recaptureBtn" class="btn hidden">ReCapture</button>
+                <source src="{% static 'guide_video_pc.mp4' %}" type="video/mp4" />
+                <img src="{% static 'user-smile1.png' %}" alt="Capture Smile" class="img-fluid" />
+              </video>
+              </div>
 
-                <button id="captureBtn" class="btn capture-now-btn" disabled>
-                  <span class="capture-inner">Capture Now</span>
-                </button>
+            <!-- Bottom Action: Next Button -->
+            <div class="d-flex justify-content-center mt-3">
+              <button id="nextIntroBtn" type="button" class="btn btn-intro-next">
+                Next
+                <svg width="16" height="16" class="mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <!-- ================================================================= -->
+          <!-- 🎬 [STEP 1A END]                                                  -->
+          <!-- ================================================================= -->
 
-                <button
-                  id="confirmBtn"
-                  type="button"
-                  class="btn d-flex align-items-center justify-content-between hidden"
-                >
-                  Continue
-                  <img
-                    src="{% static 'light-arrow-left.svg'%}"
-                    class="img-fluid"
-                    alt="arrow-left"
-                  />
-                </button>
-                <!-- <br /> -->
+          <!-- ================================================================= -->
+          <!-- 📷 [STEP 1B - LIVE CAMERA VIEW] (FIGMA DESIGN - IMAGE 1 & 2)      -->
+          <!-- ================================================================= -->
+          <div id="smileCameraView" class="smile-camera-wrapper d-none">
+            <div id="cameraViewport" class="camera-viewport-container permission-pending">
+              <!-- Live Video Stream -->
+              <video id="video" playsinline muted></video>
+              <img
+                id="freezeImg"
+                class="visually-hidden hidden"
+                alt="Captured"
+              />
+              <canvas
+                id="canvas"
+                width="1184"
+                height="864"
+                class="visually-hidden hidden"
+              ></canvas>
+
+              <!-- Top-Left: Camera Switch Button -->
+              <button
+                id="switchCameraBtn"
+                type="button"
+                class="btn-switch-camera"
+                title="Switch Camera"
+              >
+                <svg width="36" height="36" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="14" cy="14" r="2.8" fill="white"/>
+                  <path d="M7 11.5C7.8 8.2 10.6 5.8 14 5.8C17.2 5.8 19.9 7.8 21 10.7" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+                  <path d="M10 11.5H6.5V8" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M21 16.5C20.2 19.8 17.4 22.2 14 22.2C10.8 22.2 8.1 20.2 7 17.3" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+                  <path d="M18 16.5H21.5V20" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+
+              <!-- Top-Right: Close Button -->
+              <button
+                type="button"
+                class="custom-camera-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                title="Close"
+              >
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+
+              <!-- Center: 4 Corner Guide Brackets (matching Image 1) -->
+              <div id="faceOverlay" class="face-frame-brackets">
+                <span class="corner-bracket corner-tl"></span>
+                <span class="corner-bracket corner-tr"></span>
+                <span class="corner-bracket corner-bl"></span>
+                <span class="corner-bracket corner-br"></span>
+              </div>
+
+              <!-- Bottom Overlay: Guide Text & Action Buttons (matching Image 1) -->
+              <div class="camera-bottom-overlay">
+                <p id="smileGuideLine" class="camera-guide-text">
+                  Please align your smile to the guide
+                </p>
+
+                <!-- Action Buttons: Capture Now / ReCapture / Continue -->
+                <div class="camera-action-buttons">
+                  <button id="captureBtn" class="btn btn-capture-main" disabled>
+                    <span class="capture-inner">Capture Now</span>
+                  </button>
+
+                  <div class="captured-actions-group d-flex align-items-center justify-content-center gap-3">
+                    <button id="recaptureBtn" class="btn btn-recapture-main hidden">ReCapture</button>
+                    <button id="confirmBtn" type="button" class="btn btn-confirm-main hidden">
+                      Continue
+                      <img src="{% static 'light-arrow-left.svg'%}" class="img-fluid ms-1" alt="arrow-left" />
+                    </button>
+                  </div>
+                </div>
+
                 <span id="status" class="d-none">
                   Confidence: 0.00 — Visible: false
                 </span>
               </div>
-            </div>
-            <div class="col-lg-6 col-12 d-none d-lg-block">
-              <button
-                type="button"
-                class="btn-close smile-close-btn"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-              <div class="modal-content-wrapper mt-5">
-                <h2 class="modal-title cool">For Your Best Results</h2>
-                <div class="modal-steps-container">
-                  <div class="modal-step-box">
+
+              <!-- 🖼️ IMAGE 2: Camera Access Permission Screen (Allow Camera Access To Capture Your Smile) -->
+              <div
+                id="cameraDeniedOverlay"
+                class="camera-denied-overlay"
+              >
+                <div class="permission-overlay-content">
+                  <div class="camera-icon-wrapper mb-3">
                     <img
-                      src="{% static 'frist-step.svg' %}"
-                      class="img-fluid step-icon"
-                      alt="Step 1"
+                      src="{% static 'camera.svg' %}"
+                      alt="Camera"
+                      class="permission-camera-icon"
                     />
-                    <p>Make sure your face is well-lit</p>
                   </div>
-                  <div class="modal-step-box">
-                    <img
-                      src="{% static 'center-step.svg' %}"
-                      class="img-fluid step-icon"
-                      alt="Step 2"
-                    />
-                    <p>Look directly into your camera</p>
-                  </div>
-                  <div class="modal-step-box">
-                    <img
-                      src="{% static 'smile-ai-step.svg' %}"
-                      class="img-fluid step-icon"
-                      alt="Step 3"
-                    />
-                    <p>Smile fully so your teeth are visible</p>
-                  </div>
-                </div>
-                <h2 class="modal-title cool">Example</h2>
-                <div class="d-flex align-items-center justify-content-center">
-                  <img
-                    src="{% static 'user-smile1.png'%}"
-                    class="py-4 user-smile-img img-fluid"
-                    alt="user-smile-img"
-                  />
+                  <h3 class="permission-prompt-title">
+                    Allow Camera Access To Capture Your Smile.
+                  </h3>
                 </div>
               </div>
+
             </div>
           </div>
+          <!-- ================================================================= -->
+          <!-- 📷 [STEP 1B END]                                                  -->
+          <!-- ================================================================= -->
+
         </div>
       </div>
     </div>
   </div>
+  <!-- ======================================================================= -->
+  <!-- 🟢 STEP 1 END                                                           -->
+  <!-- ======================================================================= -->
+
+  <!-- ======================================================================= -->
+  <!-- 🟡 STEP 2: USER CONTACT INFORMATION MODAL (DUSRA STEP - LEAD FORM)      -->
+  <!-- ======================================================================= -->
   <div
     class="modal fade"
     id="contactModal"
@@ -412,6 +451,7 @@
             {% csrf_token %} {{ form.non_field_errors }}
 
             <div class="row align-items-center justify-content-center">
+              <!-- Name Input Field -->
               <div class="col-md-6 col-12">
                 <div class="contact-input">
                   {{ form.name.errors }}
@@ -427,6 +467,7 @@
                 </div>
               </div>
 
+              <!-- Phone + Country Code Dropdown -->
               <div class="col-md-6 col-12">
                 <div class="contact-input contact_input_phone">
                   <div
@@ -479,6 +520,7 @@
                 </div>
               </div>
 
+              <!-- Pincode Input (Auto-fetch City) -->
               <div class="col-md-6 col-12">
                 <div class="contact-input pincode-input-wrapper position-relative">
                   <div class="pincode-input-container position-relative">
@@ -496,6 +538,8 @@
                   </div>
                 </div>
               </div>
+
+              <!-- City Input (Auto-filled) -->
               <div class="col-md-6 col-12">
                 <div class="contact-input">
                   <input
@@ -510,6 +554,7 @@
                 </div>
               </div>
 
+              <!-- Email Input Field -->
               <div class="col-12">
                 <div class="contact-input">
                   <input
@@ -526,6 +571,7 @@
               <!-- ✅ This shows success/error message without page reload -->
               <div id="leadFormMsg" class="mt-2 small text-center"></div>
 
+              <!-- Submit Button -->
               <div
                 class="col-12 d-flex align-items-center justify-content-center"
               >
@@ -544,6 +590,13 @@
       </div>
     </div>
   </div>
+  <!-- ======================================================================= -->
+  <!-- 🟡 STEP 2 END                                                           -->
+  <!-- ======================================================================= -->
+
+  <!-- ======================================================================= -->
+  <!-- 🔵 STEP 3: SMILE PREVIEW & COMPARISON MODAL (TEESRA STEP - BEFORE/AFTER)-->
+  <!-- ======================================================================= -->
   <div
     class="modal fade"
     id="PreviewModal"
@@ -553,6 +606,7 @@
   >
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
+        <!-- Close Button -->
         <button
           type="button"
           class="btn-close"
@@ -561,12 +615,15 @@
         ></button>
         <div class="modal-body">
           <div class="preview-wrapper">
+            <!-- Step 3 Title & Description -->
             <h2 class="preview-title">Your AI-Designed Smile Preview</h2>
             <p>
               This AI-designed smile is the first step toward your real smile
               transformation. With expert dentist consultation, this design can
               be confidently brought to life
             </p>
+
+            <!-- [STEP 3] Before & After Comparison Image Slider -->
             <div class="preview-modal-wrapper">
               <div class="preview_img_wrapper">
                 <img id="previewBeforeImg" class="img-fluid" alt="before" />
@@ -587,7 +644,10 @@
                 value="50"
               />
             </div>
+
+            <!-- [STEP 3 ACTION BUTTONS] Download & Book Appointment -->
             <div class="row justify-content-center mt-4 mb-0 my-lg-4">
+              <!-- Download Before & After Image Button -->
               <div class="col-lg-3 col-md-3 col-sm-6 col-12 order-1 order-md-1">
                 <button class="btn bat btn-before" id="downloadBeforeBtn">
                   Before & After
@@ -605,6 +665,8 @@
                   </svg>
                 </button>
               </div>
+
+              <!-- Book Certified Dentist Appointment Button -->
               <div class="col-lg-4 col-md-4 col-12 order-3 order-md-2">
                 <button class="btn btn-default btn-appoinment">
                   <a href="/certified-dentists/"
@@ -630,6 +692,9 @@
       </div>
     </div>
   </div>
+  <!-- ======================================================================= -->
+  <!-- 🔵 STEP 3 END                                                           -->
+  <!-- ======================================================================= -->
 </div>
 {% endblock %} {% block js %}
 <script>
