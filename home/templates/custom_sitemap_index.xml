@@ -3,9 +3,9 @@
   <sitemap>
     <loc>{{ request.scheme }}://{{ request.get_host }}/sitemap-static.xml</loc>
   </sitemap>
-  <sitemap>
+  <!-- <sitemap>
     <loc>{{ request.scheme }}://{{ request.get_host }}/sitemap-news.xml</loc>
-  </sitemap>
+  </sitemap> -->
   <sitemap>
     <loc>{{ request.scheme }}://{{ request.get_host }}/sitemap-blog.xml</loc>
   </sitemap>

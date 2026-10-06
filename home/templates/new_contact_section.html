@@ -123,7 +123,7 @@
                             class="input_icon" />
                     </div>
                     <div class="input_fild_main">
-                        <input type="text" name="city" id="cityInput" placeholder="Auto-fetched from pincode..." class="input_filds" value="{{ request.POST.city }}" readonly required />
+                        <input type="text" name="city" id="cityInput" placeholder="Enter Your City Name" class="input_filds" value="{{ request.POST.city }}" required />
                     </div>
                 </div>
             </div>
@@ -157,6 +157,7 @@
 {% block js %}
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script src="{% static 'js/recaptcha-api.js' %}" async defer></script>
+<script src="{% static 'js/country_utils.js' %}"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const defaultCountries = [
@@ -292,20 +293,10 @@
             updateFullPhone();
 
             // Update pincode placeholder according to country
-            if (pincodeInput) {
-                if (currentSelected.code === "IN") {
-                    pincodeInput.placeholder = "Enter 6-digit PIN code (e.g. 365601)...";
-                } else if (currentSelected.code === "US") {
-                    pincodeInput.placeholder = "Enter 5-digit ZIP code (e.g. 90210)...";
-                } else if (currentSelected.code === "GB") {
-                    pincodeInput.placeholder = "Enter UK Postcode (e.g. SW1A 1AA)...";
-                } else {
-                    pincodeInput.placeholder = `Enter postal code for ${currentSelected.name}...`;
-                }
-
-                // If pincode is already entered, re-validate with newly selected country
-                if (pincodeInput.value.trim().length > 0) {
-                    triggerPincodeLookup(true);
+            if (typeof pincodeCtrl !== "undefined" && pincodeCtrl) {
+                pincodeCtrl.updatePlaceholder(currentSelected);
+                if (pincodeInput && pincodeInput.value.trim().length > 0) {
+                    pincodeCtrl.triggerLookup(true);
                 }
             }
         }
@@ -355,240 +346,18 @@
             }
         }
 
-        /* PINCODE & REAL-TIME VALIDATION & AUTO-FETCH LOGIC */
-        function setPincodeStatus(state, message = '', badgeText = '') {
-            pincodeFieldBox.classList.remove('is-valid', 'is-invalid');
-            pincodeStatusBadge.className = 'pincode-status-badge';
-            pincodeFeedback.className = 'pincode-feedback-msg';
-
-            if (state === 'loading') {
-                pincodeSpinner.style.display = 'block';
-                pincodeStatusIcon.innerHTML = '';
-                pincodeStatusBadge.textContent = 'Checking...';
-                pincodeStatusBadge.classList.add('loading');
-                pincodeFeedback.style.display = 'none';
-            } else if (state === 'valid') {
-                pincodeSpinner.style.display = 'none';
-                pincodeStatusIcon.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
-                pincodeFieldBox.classList.add('is-valid');
-                pincodeStatusBadge.textContent = badgeText || 'Valid PIN';
-                pincodeStatusBadge.classList.add('valid');
-                if (message) {
-                    pincodeFeedback.textContent = message;
-                    pincodeFeedback.classList.add('valid');
-                    pincodeFeedback.style.display = 'block';
-                } else {
-                    pincodeFeedback.style.display = 'none';
-                }
-            } else if (state === 'invalid') {
-                pincodeSpinner.style.display = 'none';
-                pincodeStatusIcon.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
-                pincodeFieldBox.classList.add('is-invalid');
-                pincodeStatusBadge.textContent = badgeText || 'Invalid';
-                pincodeStatusBadge.classList.add('invalid');
-                if (message) {
-                    pincodeFeedback.textContent = message;
-                    pincodeFeedback.classList.add('invalid');
-                    pincodeFeedback.style.display = 'block';
-                } else {
-                    pincodeFeedback.style.display = 'none';
-                }
-            } else {
-                pincodeSpinner.style.display = 'none';
-                pincodeStatusIcon.innerHTML = '';
-                pincodeStatusBadge.style.display = 'none';
-                pincodeFeedback.style.display = 'none';
-            }
-        }
-
-        function applyPincodeResult(result) {
-            if (result.valid) {
-                setPincodeStatus('valid', result.message, result.badge);
-                if (result.city && cityInput) {
-                    cityInput.value = result.city;
-                    const cityContainer = cityInput.closest('.input_filds_and_icon_main');
-                    if (cityContainer) {
-                        cityContainer.classList.remove('city-highlight-pulse');
-                        void cityContainer.offsetWidth; // Reflow
-                        cityContainer.classList.add('city-highlight-pulse');
-                    }
-                }
-            } else {
-                setPincodeStatus('invalid', result.message, result.badge);
-                if (cityInput) {
-                    cityInput.value = '';
-                }
-            }
-        }
-
-        async function fallbackNominatim(rawPin, countryCode, countryName, cacheKey, signal) {
-            try {
-                const url = `https://nominatim.openstreetmap.org/search?postalcode=${encodeURIComponent(rawPin)}&countrycodes=${countryCode.toLowerCase()}&format=json&addressdetails=1`;
-                const res = await fetch(url, { signal });
-                if (!res.ok) throw new Error('Network error');
-                const data = await res.json();
-                if (data && data.length > 0) {
-                    const addr = data[0].address || {};
-                    const city = addr.city || addr.town || addr.village || addr.municipality || addr.county || addr.suburb || addr.state || data[0].name || '';
-                    const state = addr.state || '';
-                    const result = {
-                        valid: true,
-                        city: city,
-                        state: state,
-                        message: `✓ Located: ${city}${state ? ', ' + state : ''} (${countryName})`,
-                        badge: 'Valid Code'
-                    };
-                    pincodeCache[cacheKey] = result;
-                    applyPincodeResult(result);
-                } else {
-                    const result = {
-                        valid: false,
-                        message: `Invalid postal code for ${countryName}`,
-                        badge: 'Invalid'
-                    };
-                    pincodeCache[cacheKey] = result;
-                    applyPincodeResult(result);
-                }
-            } catch (err) {
-                if (err.name === 'AbortError') return;
-                setPincodeStatus('invalid', `Unable to verify postal code for ${countryName}`, 'Invalid');
-            }
-        }
-
-        async function validateAndFetchPincode(pinValue, countryCode, countryName) {
-            const rawPin = pinValue.trim();
-            if (!rawPin) {
-                setPincodeStatus('idle');
-                if (cityInput) cityInput.value = '';
-                return;
-            }
-
-            const cacheKey = `${countryCode}_${rawPin.toUpperCase()}`;
-            if (pincodeCache[cacheKey]) {
-                applyPincodeResult(pincodeCache[cacheKey]);
-                return;
-            }
-
-            if (pincodeAbortCtrl) {
-                pincodeAbortCtrl.abort();
-            }
-            pincodeAbortCtrl = new AbortController();
-            const signal = pincodeAbortCtrl.signal;
-
-            setPincodeStatus('loading');
-
-            // 1. India specific postal lookup
-            if (countryCode === 'IN') {
-                const cleanPin = rawPin.replace(/\D/g, '');
-                if (cleanPin.length !== 6) {
-                    setPincodeStatus('invalid', 'Please enter a 6-digit Indian PIN code (e.g. 365601)', 'Invalid PIN');
-                    if (cityInput) cityInput.value = '';
-                    return;
-                }
-
-                try {
-                    const res = await fetch(`https://api.postalpincode.in/pincode/${cleanPin}`, { signal });
-                    const data = await res.json();
-                    if (data && data[0] && data[0].Status === 'Success' && data[0].PostOffice && data[0].PostOffice.length > 0) {
-                        const po = data[0].PostOffice[0];
-                        const city = po.District || po.Block || po.Taluk || po.Circle || po.Name;
-                        const state = po.State || '';
-                        const result = {
-                            valid: true,
-                            city: city,
-                            state: state,
-                            message: `✓ Located: ${city}${state ? ', ' + state : ''}`,
-                            badge: 'Valid PIN'
-                        };
-                        pincodeCache[cacheKey] = result;
-                        applyPincodeResult(result);
-                    } else {
-                        const result = {
-                            valid: false,
-                            message: 'PIN code not found in India Post database',
-                            badge: 'Invalid PIN'
-                        };
-                        pincodeCache[cacheKey] = result;
-                        applyPincodeResult(result);
-                    }
-                } catch (err) {
-                    if (err.name === 'AbortError') return;
-                    await fallbackNominatim(rawPin, countryCode, countryName, cacheKey, signal);
-                }
-                return;
-            }
-
-            // 2. International (Zippopotam)
-            try {
-                const cleanPin = encodeURIComponent(rawPin.replace(/\s+/g, ''));
-                const res = await fetch(`https://api.zippopotam.us/${countryCode.toLowerCase()}/${cleanPin}`, { signal });
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data && data.places && data.places.length > 0) {
-                        const place = data.places[0];
-                        const city = place['place name'] || '';
-                        const state = place['state'] || place['state abbreviation'] || '';
-                        const result = {
-                            valid: true,
-                            city: city,
-                            state: state,
-                            message: `✓ Located: ${city}${state ? ', ' + state : ''} (${countryName})`,
-                            badge: 'Valid Code'
-                        };
-                        pincodeCache[cacheKey] = result;
-                        applyPincodeResult(result);
-                        return;
-                    }
-                }
-                await fallbackNominatim(rawPin, countryCode, countryName, cacheKey, signal);
-            } catch (err) {
-                if (err.name === 'AbortError') return;
-                await fallbackNominatim(rawPin, countryCode, countryName, cacheKey, signal);
-            }
-        }
-
-        function triggerPincodeLookup(immediate = false) {
-            clearTimeout(pincodeDebounceTimer);
-            const val = pincodeInput.value.trim();
-
-            if (!val) {
-                setPincodeStatus('idle');
-                if (cityInput) cityInput.value = '';
-                return;
-            }
-
-            // For Indian pin, if length < 6 and not immediate, wait until 6 digits or user stops
-            if (currentSelected.code === 'IN') {
-                const digits = val.replace(/\D/g, '');
-                if (digits.length < 6 && !immediate) {
-                    setPincodeStatus('idle');
-                    return;
-                }
-            } else if (val.length < 2 && !immediate) {
-                setPincodeStatus('idle');
-                return;
-            }
-
-            if (immediate) {
-                validateAndFetchPincode(val, currentSelected.code, currentSelected.name);
-            } else {
-                pincodeDebounceTimer = setTimeout(() => {
-                    validateAndFetchPincode(val, currentSelected.code, currentSelected.name);
-                }, 400);
-            }
-        }
-
-        if (pincodeInput) {
-            pincodeInput.addEventListener("input", function () {
-                triggerPincodeLookup(false);
-            });
-
-            pincodeInput.addEventListener("blur", function () {
-                if (this.value.trim().length > 0) {
-                    triggerPincodeLookup(true);
-                }
-            });
-        }
+        /* PINCODE REAL-TIME VALIDATION & AUTO-FETCH via country_utils.js */
+        const pincodeCtrl = attachPincodeAutofill({
+            pincodeInput: pincodeInput,
+            cityInput: cityInput,
+            getCountry: () => currentSelected,
+            spinner: pincodeSpinner,
+            statusIcon: pincodeStatusIcon,
+            statusBadge: pincodeStatusBadge,
+            feedback: pincodeFeedback,
+            form: form,
+            pulseClass: 'city-highlight-pulse'
+        });
 
         countrySearchInput.addEventListener("input", function () {
             const query = this.value.toLowerCase().trim();
@@ -626,55 +395,30 @@
         phoneInput.addEventListener("input", updateFullPhone);
 
         if (form) {
-            form.addEventListener("submit", function () {
+            form.addEventListener("submit", function (e) {
                 updateFullPhone();
+                if (cityInput && !cityInput.value.trim()) {
+                    e.preventDefault();
+                    cityInput.focus();
+                    if (typeof cityInput.reportValidity === 'function') {
+                        cityInput.reportValidity();
+                    }
+                    return false;
+                }
             });
         }
 
         selectCountry(currentSelected);
 
         // REST API fetch to enrich country list
-        fetch("https://restcountries.com/v3.1/all?fields=name,cca2,idd,flags")
-            .then((res) => {
-                if (!res.ok) throw new Error("API response error");
-                return res.json();
-            })
-            .then((data) => {
-                const apiList = [];
-                data.forEach((item) => {
-                    if (item.idd && item.idd.root) {
-                        const root = item.idd.root;
-                        let suffix = "";
-                        if (item.idd.suffixes && item.idd.suffixes.length === 1) {
-                            suffix = item.idd.suffixes[0];
-                        }
-                        const dialCode = root + suffix;
-                        if (dialCode && item.cca2 && item.name && item.name.common) {
-                            apiList.push({
-                                name: item.name.common,
-                                code: item.cca2.toUpperCase(),
-                                dialCode: dialCode,
-                            });
-                        }
-                    }
-                });
-
-                if (apiList.length > 0) {
-                    apiList.sort((a, b) => a.name.localeCompare(b.name));
-                    const inIdx = apiList.findIndex((c) => c.code === "IN");
-                    if (inIdx > -1) {
-                        const indiaObj = apiList.splice(inIdx, 1)[0];
-                        apiList.unshift(indiaObj);
-                    }
-                    countriesList = apiList;
-                    if (countryDropdown.classList.contains("show")) {
-                        renderList(countriesList);
-                    }
+        if (typeof window.fetchCountryList === "function") {
+            window.fetchCountryList(function (apiList) {
+                countriesList = apiList;
+                if (countryDropdown && countryDropdown.classList.contains("show")) {
+                    renderList(countriesList);
                 }
-            })
-            .catch((err) => {
-                console.log("Using built-in country database", err);
             });
+        }
     });
 </script>
 {% endblock js %}
