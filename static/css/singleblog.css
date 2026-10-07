@@ -268,7 +268,7 @@
     background-color: #000;
     border-radius: 12px;
     color: #fff !important;
-    border: 1px solid #000;
+    border: 1px solid #000 !important;
 }
 
 .single-blog-content2 .form-control:focus {
@@ -752,6 +752,12 @@
         white-space: normal !important;
     }
 
+
+    #phoneInput {
+        border-top-left-radius: 0px !important;
+        border-bottom-left-radius: 0px !important;
+    }
+
 }
 
 @media(max-width:480px) {
@@ -980,7 +986,32 @@
 
 @media (max-width: 576px) {
     .flag_icon_main {
-        height: 40px;
+        height: 44px;
+    }
+
+    .flag_icon_main {
+    border-top-left-radius: 25px !important;
+    border-bottom-left-radius:25px !important;
+    padding-left: 12px;
+    }
+
+    .input_number_main{
+    margin-bottom: 8px;
+    }
+
+    .pincode-input-wrapper{
+    margin-bottom: 8px;
+    }
+    .single-blog-content2 #cityInput:read-only,
+    .single-blog-content2 #cityInput[readonly],
+    .single-blog-content2 .form-control#cityInput:read-only,
+    .single-blog-content2 .form-control#cityInput[readonly] {
+        cursor: not-allowed !important;
+        background-color: #000000 !important;
+        border-radius: 12px !important;
+        box-shadow: none !important;
+        color: #ffffff !important;
+        user-select: none;
     }
 
 }
@@ -1078,4 +1109,12 @@
     100% {
         border-color: #282828;
     }
+}
+
+.contact-form .form-control:focus {
+    background: #000000;
+    border-color: black !important;
+    color: #fff;
+    box-shadow: none !important;
+    outline: none !important;
 }

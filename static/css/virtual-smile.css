@@ -314,7 +314,7 @@
 /* Top-Left: Camera Switch Button */
 .btn-switch-camera {
   position: absolute;
-   background-color: transparent !important;
+  background-color: transparent !important;
   top: 18px;
   left: 18px;
   width: 40px;
@@ -370,7 +370,7 @@
 /* Center: 4 Corner Guide Brackets (matching Image 1) */
 .face-frame-brackets {
   position: absolute;
-  top: 47%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 300px;
@@ -385,9 +385,9 @@
   position: absolute;
   width: 38px;
   height: 38px;
-  border-color:white;
+  border-color: white;
   border-style: solid;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: opacity 1.2s ease, visibility 1.2s ease;
 }
 
 .corner-bracket.corner-tl {
@@ -414,10 +414,76 @@
   border-width: 0 2.5px 2.5px 0;
 }
 
+/* Green Dashed Oval with 1.5s Smooth Transition:
+   1. Dark backdrop smoothly closes in from all 4 sides over 1.5s
+   2. Green dashed border line transitions in with butter-smooth timing
+*/
+.face-detected-oval {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1.5s cubic-bezier(0.25, 1, 0.5, 1), visibility 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Layer 1: Dark outside backdrop shadow */
+.face-detected-oval::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.68);
+  opacity: 0;
+  transform: scale(1.06);
+  pointer-events: none;
+  transition: opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1), transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Layer 2: Green dashed border */
+.face-detected-oval::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2.5px dashed #28c76f;
+  opacity: 0;
+  transform: scale(0.96);
+  pointer-events: none;
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+}
+
 /* When smile is detected by AI model */
 .face-frame-brackets.ready .corner-bracket {
-  border-color: #dfc86f;
-  box-shadow: 0 0 16px rgba(223, 200, 111, 0.7);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.face-frame-brackets.ready .face-detected-oval {
+  opacity: 1;
+  visibility: visible;
+}
+
+.face-frame-brackets.ready .face-detected-oval::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.face-frame-brackets.ready .face-detected-oval::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Hide guide brackets and text when photo is captured or set to d-none */
+.face-frame-brackets.d-none,
+.camera-viewport-container.is-captured .face-frame-brackets,
+.camera-guide-text.d-none,
+.camera-viewport-container.is-captured .camera-guide-text {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
 }
 
 /* Bottom Overlay: Guide Text & Button (matching Image 1) */
@@ -435,7 +501,7 @@
 
 .camera-guide-text {
   color: white;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 400;
   text-align: center;
   margin-bottom: 12px;
@@ -444,17 +510,17 @@
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95);
 }
 
-/* Capture Now Button (matching Image 1) */
+/* Capture Now Button (matching screenshot) */
 .btn-capture-main {
-  background: rgba(42, 42, 46, 0.85) !important;
+  background: #4D4D4D33 !important;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
   color: #a5a5a5 !important;
   padding: 10px 42px;
   min-width: 175px;
-  border-radius: 12px;
-  font-size: 15px !important;
+  border-radius: 10px;
+  font-size: 16px !important;
   font-weight: 500;
   letter-spacing: 0.3px;
   transition: all 0.25s ease;
@@ -462,9 +528,9 @@
 }
 
 .btn-capture-main:disabled {
-  opacity: 0.55 !important;
+  opacity: 0.45 !important;
   cursor: not-allowed !important;
-  border-color: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
   color: #888888 !important;
   box-shadow: none !important;
 }
@@ -473,38 +539,59 @@
 .btn-capture-main.btn-capture-ready {
   opacity: 1 !important;
   cursor: pointer !important;
-  border-color: rgba(223, 200, 111, 0.85) !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
   color: #ffffff !important;
-  background: linear-gradient(180deg, #3a3a3e 0%, #1e1e22 100%) !important;
-  box-shadow: 0 0 18px rgba(223, 200, 111, 0.4), 0 4px 15px rgba(0, 0, 0, 0.6) !important;
+  background: #4D4D4D33 !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6) !important;
   transform: translateY(-1px);
 }
 
-/* ReCapture & Continue buttons */
-.btn-recapture-main {
-  background: rgba(30, 30, 30, 0.85) !important;
-  backdrop-filter: blur(10px);
-  border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
-  color: #ffffff !important;
-  padding: 10px 24px;
-  border-radius: 12px;
-  font-size: 14px !important;
-  font-weight: 500;
-  transition: all 0.2s ease;
+/* ReCapture & Continue buttons (matching Screenshot 2: dark glass style with white text) */
+.captured-actions-group {
+  margin-top: 4px;
 }
 
+.btn-recapture-main,
 .btn-confirm-main {
-  background: linear-gradient(100deg, #c3942f 0%, #d89c27 50%, #c99c30 100%) !important;
-  color: #000000 !important;
-  border: none !important;
-  padding: 10px 28px;
-  border-radius: 12px;
-  font-size: 14px !important;
-  font-weight: 600;
+  background: #4D4D4D33 !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  color: #ffffff !important;
+  padding: 10px 24px;
+  min-width: 140px;
+  border-radius: 10px;
+  font-family: "Barlow", sans-serif;
+  font-size: 16px !important;
+  font-weight: 500;
+  letter-spacing: 0.3px;
   display: inline-flex;
   align-items: center;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 15px rgba(216, 156, 39, 0.35);
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.25s ease;
+  box-shadow: none !important;
+  cursor: pointer;
+}
+
+/* .btn-recapture-main:hover,
+.btn-confirm-main:hover {
+  background: rgba(55, 55, 62, 0.96) !important;
+  border-color: rgba(255, 255, 255, 0.35) !important;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+} */
+
+.btn-recapture-main:active,
+.btn-confirm-main:active {
+  transform: translateY(0);
+}
+
+.btn-confirm-main:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
 }
 
 /* 🖼️ IMAGE 2: Camera Access Permission Screen (Solid black, centered icon & prompt only) */
@@ -756,7 +843,7 @@
 }
 
 .user-smile-img {
-  width: 60%; 
+  width: 60%;
 }
 
 .video-capture-wrapper {
@@ -792,6 +879,7 @@
   margin: auto;
   object-fit: cover;
 }
+
 /* 🟢 [STEP 1 CSS END] ====================================================== */
 
 /* ========================================================================== */
@@ -864,38 +952,61 @@
     border-image-source: linear-gradient(100.47deg, #C3942F 28.12%, #D89C27 41.31%, #E7DC96 53.42%, #DFC86F 65.82%, #D89C27 75.96%, #C99C30 84.47%);
 } */
 .contact-form .form-control {
-  background:
-    linear-gradient(#000, #000) padding-box,
-    linear-gradient(130deg,
-      #c3942f 0%,
-      #d89c27 18%,
-      #dfc86f 37%,
-      #e7dc96 50%,
-      #dfc86f 64%,
-      #d89c27 82%,
-      #c99c30 100%) border-box;
-  border: 1.5px solid transparent;
+  background: #000000;
+  border: 1px solid #9E9E9E !important;
   border-radius: 25px;
   padding: 12px 16px;
   color: #fff;
   margin-bottom: 25px;
-  /* background-color: #000;
-    padding: 6px 12px;
-    border-radius: 25px;
-    margin-bottom: 20px;
-    color:#fff; */
-  /* border: 1px solid;
-    border-image-source: linear-gradient(100.47deg, #C3942F 28.12%, #D89C27 41.31%, #E7DC96 53.42%, #DFC86F 65.82%, #D89C27 75.96%, #C99C30 84.47%);
-    border: 1.5px solid;
-    border-image-slice: 1;
-    border-image-width: 1.5px;
-    border-radius: 20px;
-    border-image-source: linear-gradient(130deg, #C3942F 0%, #D89C27 18%, #DFC86F 37%, #E7DC96 50%, #DFC86F 64%, #D89C27 82%, #C99C30 100%) !important; */
 }
 
-.contact-form .btn {
-  padding: 7px 30px;
+.contact-form .form-control:focus {
+  background: #000000;
+  border-color: #9E9E9E !important;
+  color: #fff;
+  box-shadow: 0 0 0 0.15rem rgba(158, 158, 158, 0.25);
 }
+
+#contactModal #leadSubmitBtn,
+.contact-form .btn {
+  background: #4D4D4D33 !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  color: #ffffff !important;
+  padding: 10px 42px;
+  min-width: 140px;
+  border-radius: 10px;
+  font-family: "Barlow", sans-serif;
+  font-size: 16px !important;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  box-shadow: none !important;
+  cursor: pointer;
+}
+
+#contactModal #leadSubmitBtn:hover,
+.contact-form .btn:hover {
+
+  border-color: white !important;
+}
+
+#contactModal #leadSubmitBtn:focus,
+.contact-form .btn:focus {
+  box-shadow: none !important;
+  color: #ffffff !important;
+}
+
+#contactModal #leadSubmitBtn:disabled,
+.contact-form .btn:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
+
 
 #contactModal .btn-close {
   background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center / 1em auto no-repeat;
@@ -907,6 +1018,7 @@
 #PreviewModal .btn-close:focus {
   box-shadow: 0 0 0 0.25rem rgba(216, 156, 39, 0.25);
 }
+
 /* 🟡 [STEP 2 CSS END] ====================================================== */
 
 /* ========================================================================== */
@@ -923,16 +1035,14 @@
 
 .preview-modal-wrapper {
   position: relative;
-  display: flex;
+  display: block;
   width: 100%;
-  max-width: 420px;
-  /* width: 70%; */
-  /* height: 100%; */
-  margin: auto;
+  max-width: 440px;
+  margin: 0 auto;
   border-radius: 10px;
   border: 1px solid #ffffff;
-  aspect-ratio: 11/8;
-  object-fit: cover;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .preview_img_wrapper {
@@ -940,13 +1050,37 @@
   inset: 0;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 
-.preview_img_wrapper img {
+/* First image dictates natural aspect ratio and height of wrapper */
+.preview_img_wrapper:first-child {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  height: auto;
+}
+
+.preview_img_wrapper:first-child img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* Second (After) image sits right on top with slider clip-path */
+.preview_img_wrapper:nth-child(2) {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  clip-path: inset(0px 0px 0px 50%);
+}
+
+.preview_img_wrapper:nth-child(2) img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* cover behaves like your camera, contain if you prefer */
   display: block;
 }
 
@@ -973,33 +1107,69 @@
   padding: 0.5rem 1rem;
 }
 
-.preview_img_wrapper {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  /* height: 300px; */
-  overflow: hidden;
-  border-radius: 10px;
-}
-
-.preview_img_wrapper:nth-child(2) {
-  clip-path: inset(0px 0px 0px 50%);
-}
-
-.preview_img_wrapper img {
-  width: 100%;
-  height: 100%;
-  /* object-fit: none; */
-  object-fit: contain;
-}
-
 #preview-line {
   position: absolute;
+  top: 0;
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 0.2rem;
+  width: 2px;
   height: 100%;
-  background-color: #f5c842;
+  background-color: #ffffff;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.slider-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.slider-button svg {
+  display: block;
+}
+
+.preview-modal-wrapper .before-input {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  cursor: ew-resize;
+  opacity: 0;
+}
+
+.preview-modal-wrapper .before-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 2.25rem;
+  height: 2.25rem;
+  cursor: ew-resize;
+}
+
+.preview-modal-wrapper .before-input::-moz-range-thumb {
+  width: 2.25rem;
+  height: 2.25rem;
+  cursor: ew-resize;
 }
 
 .preview-label {
@@ -1052,6 +1222,7 @@
 .preview-wrapper svg {
   margin: 0px 5px;
 }
+
 /* 🔵 [STEP 3 CSS END] ====================================================== */
 
 /* ========================================================================== */
@@ -1670,7 +1841,7 @@
     padding: 6px 15px;
     height: 42px;
     margin-bottom: 18px;
-    border: 1.2px solid transparent;
+    border: 1px solid #9E9E9E !important;
   }
 
   #PreviewModal .modal-content {
@@ -1807,101 +1978,697 @@
     margin-bottom: 20px;
   }
 
-  /* modal */
-  #contactModal .contact-wrapper {
-    padding: 45px 15px 22px;
+  /* ======================================================================== */
+  /* 📱 [MOBILE FULLSCREEN POPUPS] FOR MAX-WIDTH: 576px                       */
+  /* ======================================================================== */
+  #smileModal,
+  #contactModal,
+  #PreviewModal {
+    padding: 0 !important;
+  }
+
+  body.modal-open .site-header,
+  body.modal-open header,
+  body.modal-open .main-bar,
+  body.modal-open .is-fixed {
+    display: none !important;
+  }
+
+  .modal-backdrop.show {
+    opacity: 1 !important;
+    background-color: #000000 !important;
+  }
+
+  #smileModal .modal-dialog,
+  #contactModal .modal-dialog,
+  #PreviewModal .modal-dialog {
+    margin: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    display: flex !important;
+    align-items: stretch !important;
+    transform: none !important;
+  }
+
+  #smileModal .modal-content,
+  #contactModal .modal-content,
+  #PreviewModal .modal-content {
+    width: 100% !important;
+    height: 100% !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    border-radius: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background-color: #000000 !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+  }
+
+  #smileModal .modal-body,
+  #contactModal .modal-body,
+  #PreviewModal .modal-body {
+    width: 100% !important;
+    height: 100% !important;
+    flex: 1 1 auto !important;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  /* ------------------------------------------------------------------------ */
+  /* 1️⃣ POPUP 1A: INTRO GUIDE VIEW (#smileIntroView)                          */
+  /* ------------------------------------------------------------------------ */
+  #smileIntroView:not(.d-none) {
+    flex: 1 1 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center;
+    height: 100% !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    padding: 14px 16px calc(14px + env(safe-area-inset-bottom, 0px)) 16px !important;
+    box-sizing: border-box !important;
+    background: #000000 !important;
+    overflow: hidden !important;
+  }
+
+  #smileIntroView.d-none {
+    display: none !important;
+  }
+
+  #smileIntroView .intro-header-bar {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 6px !important;
+    flex: 0 0 auto !important;
+  }
+
+  #smileIntroView .intro-modal-title {
+    font-size: 20px !important;
+    font-weight: 500 !important;
+    margin-top: 2px !important;
+    margin-bottom: 2px !important;
+    text-align: center !important;
+    flex: 0 0 auto !important;
+  }
+
+  #smileIntroView .intro-modal-subtitle {
+    font-size: 14px !important;
+    margin-bottom: 6px !important;
+    text-align: center !important;
+    flex: 0 0 auto !important;
+  }
+
+  #smileIntroView .guideline-video-wrapper {
+    flex: 1 1 0 !important;
+    min-height: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 4px auto !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+  }
+
+  #smileIntroView .guideline-video {
+    width: 100% !important;
+    height: auto !important;
+    max-height: auto !important;
+    object-fit: contain !important;
+    border-radius: 16px !important;
+  }
+
+  .guideline-video-wrapper::after {
+    display: none;
+  }
+
+  #smileIntroView .btn-intro-next {
+    width: 100% !important;
+    max-width: 260px !important;
+    height: 44px !important;
+    padding: 0 24px !important;
+    font-size: 16px !important;
+    border-radius: 10px !important;
+    margin: 8px auto 0 auto !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex: 0 0 auto !important;
+  }
+
+  /* ------------------------------------------------------------------------ */
+  /* 2️⃣ POPUP 1B: LIVE CAMERA VIEW & CAPTURED STATE (#smileCameraView)         */
+  /* ------------------------------------------------------------------------ */
+  .smile-camera-wrapper:not(.d-none),
+  #smileCameraView:not(.d-none) {
+    width: 100% !important;
+    height: 100% !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  .smile-camera-wrapper.d-none,
+  #smileCameraView.d-none,
+  #smileModal .d-none,
+  #smileModal .hidden {
+    display: none !important;
+  }
+
+  .camera-viewport-container {
+    width: 100% !important;
+    height: 100% !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    aspect-ratio: auto !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    position: relative !important;
+    overflow: hidden !important;
+    background: #000000 !important;
+  }
+
+  .camera-viewport-container #video,
+  .camera-viewport-container #freezeImg {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    position: absolute !important;
+    inset: 0 !important;
+  }
+
+  .btn-switch-camera {
+    top: 20px !important;
+    left: 20px !important;
+    z-index: 30 !important;
+  }
+
+  .custom-camera-close {
+    top: 20px !important;
+    right: 20px !important;
+    z-index: 30 !important;
+  }
+
+  .face-frame-brackets {
+    top: 40% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 272px !important;
+    height: 359px !important;
+    max-width: 72% !important;
+    max-height: 52% !important;
+  }
+
+  .camera-bottom-overlay {
+    position: absolute !important;
+    bottom: calc(18px + env(safe-area-inset-bottom, 0px)) !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 0 16px !important;
+    z-index: 25 !important;
+  }
+
+  .camera-guide-text {
+    font-size: 13px !important;
+    margin-bottom: 12px !important;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9) !important;
+  }
+
+  #captureBtn.btn-capture-main {
+    min-width: 180px !important;
+    padding: 11px 28px !important;
+    font-size: 15px !important;
+    border-radius: 12px !important;
+  }
+
+  .camera-btn-captured {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+
+  .camera-btn-captured .btn-recapture-main,
+  .camera-btn-captured .btn-confirm-main {
+    flex: 1 1 0 !important;
+    max-width: 160px !important;
+    padding: 11px 16px !important;
+    font-size: 14px !important;
+    white-space: nowrap !important;
+    border-radius: 10px !important;
+  }
+
+  /* ------------------------------------------------------------------------ */
+  /* 3️⃣ POPUP 2: CONTACT INFORMATION MODAL (#contactModal)                     */
+  /* ------------------------------------------------------------------------ */
+  #contactModal .modal-dialog {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 100% !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  #contactModal .modal-content {
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    background: #000000 !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    position: relative !important;
+    height: 100% !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+  }
+
+  #contactModal .modal-body {
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 16px !important;
+    box-sizing: border-box !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  #contactModal .contact-wrapper,
+  #contactModal .modal-body.contact-wrapper {
+    width: calc(100% - 32px) !important;
+    max-width: 360px !important;
+    margin: auto !important;
+    flex: 0 0 auto !important;
+    height: auto !important;
+    max-height: none !important;
+    padding: 34px 18px 20px 18px !important;
+    border-radius: 20px !important;
+    /* border: 1.5px solid #2e2e2e !important; */
+    position: relative !important;
+    background: #000000 !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+  }
+
+  #contactModal .btn-close {
+    position: absolute !important;
+    top: 20px !important;
+    right: 20px !important;
+    margin: 0 !important;
+    z-index: 1060 !important;
+    opacity: 0.85 !important;
+  }
+
+  #contactModal .contact-wrapper>a {
+    position: absolute !important;
+    top: 0 !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    z-index: 1050 !important;
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
   }
 
   #contactModal .contact-wrapper .usd-logo-img {
-    width: 27%;
-    left: 38.5%;
-    padding: 0px 12px;
-    top: -6.5%;
+    background-image: none !important;
+    background-color: #000000 !important;
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    width: 145px !important;
+    max-width: 48vw !important;
+    height: auto !important;
+    padding: 2px 10px !important;
+    display: block !important;
+  }
+
+  #contactModal .contact-title {
+    font-size: 19px !important;
+    font-weight: 600 !important;
+    color: #ffffff !important;
+    margin-top: 4px !important;
+    margin-bottom: 20px !important;
+    text-align: center !important;
+    letter-spacing: 0.3px !important;
+    font-family: "Barlow", sans-serif !important;
   }
 
   .contact-form .form-control {
-    height: 40px;
-    margin-bottom: 20px;
+    height: 44px !important;
+    border-radius: 25px !important;
+    border: 1px solid #9E9E9E !important;
+    background: #000000 !important;
+    color: #ffffff !important;
+    padding: 10px 18px !important;
+    margin-bottom: 14px !important;
+    font-size: 14px !important;
   }
 
-  .preview-title {
-    font-size: 22px;
+  .contact_input_phone {
+    display: flex !important;
+    width: 100% !important;
+    margin-bottom: 14px !important;
   }
 
-  /* .preview-modal-wrapper {
-    width: 100%;
-    height: 278px;
-    margin: 1rem auto 1.5rem;
-  } */
-  .preview-wrapper .row .col-6,
-  .preview-wrapper .row .col-12 {
-    margin-bottom: 16px;
+  .flag_icon_ai_main {
+    height: 44px !important;
+    border-radius: 25px 0 0 25px !important;
+    border: 1px solid #9E9E9E !important;
+    border-right: none !important;
+    background: #000000 !important;
+    padding: 0 10px 0 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    flex-shrink: 0 !important;
+  }
+
+  #contactModal #leadPhone.custom_input_phone {
+    height: 44px !important;
+    border-radius: 0 25px 25px 0 !important;
+    border: 1px solid #9E9E9E !important;
+    border-left: 1px solid #9E9E9E !important;
+    background: #000000 !important;
+    margin-bottom: 0 !important;
+    padding: 10px 16px !important;
+  }
+
+  #contactModal #leadSubmitBtn {
+    width: 140px !important;
+    max-width: 160px !important;
+    height: 42px !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 8px auto 0 auto !important;
+    border-radius: 10px !important;
+    background: #141414 !important;
+    border: 1px solid #333333 !important;
+    color: #ffffff !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    box-shadow: none !important;
+    letter-spacing: 0.3px !important;
+  }
+
+  /* ------------------------------------------------------------------------ */
+  /* 4️⃣ POPUP 3: PREVIEW BEFORE & AFTER MODAL (#PreviewModal)                  */
+  /* ------------------------------------------------------------------------ */
+  #PreviewModal {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+    background: #000000 !important;
+    background-color: #000000 !important;
+    z-index: 99999 !important;
+    overflow: hidden !important;
+  }
+
+  #PreviewModal .modal-dialog {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: #000000 !important;
   }
 
   #PreviewModal .modal-content {
-    padding: 15px 20px;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    background: #000000 !important;
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    overflow: hidden !important;
+    border: none !important;
+    box-shadow: none !important;
   }
 
-  /* .preview-modal-wrapper{
-    width: 82%;
-  } */
-  .preview_img_wrapper img {
-    object-fit: cover;
-    /* object-fit: contain; */
+  #PreviewModal .btn-close {
+    position: absolute !important;
+    top: 16px !important;
+    right: 16px !important;
+    margin: 0 !important;
+    z-index: 1060 !important;
+    opacity: 0.85 !important;
+  }
+
+  #PreviewModal .modal-body {
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex: 1 1 auto !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 100dvh !important;
+    overflow: hidden !important;
+    background: #000000 !important;
+  }
+
+  .preview-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    padding: 14px 16px calc(14px + env(safe-area-inset-bottom, 0px)) 16px !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  .preview-title {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    margin-top: 0 !important;
+    margin-bottom: 7px !important;
+    padding: 0 10px !important;
+    text-align: center !important;
+    letter-spacing: 0.2px !important;
+    font-family: "Barlow", sans-serif !important;
+    flex: 0 0 auto !important;
+  }
+
+  .preview-wrapper p {
+    font-size: 11px !important;
+    line-height: 1.3 !important;
+    margin-bottom: 16px !important;
+    padding: 0 10px !important;
+    color: #b0b0b0 !important;
+    text-align: center !important;
+    max-width: 320px !important;
+    flex: 0 0 auto !important;
+  }
+
+  .preview-modal-wrapper {
+    width: 100% !important;
+    max-width: 320px !important;
+    height: auto !important;
+    aspect-ratio: auto !important;
+    max-height: calc(100dvh - 215px) !important;
+    margin: 0 auto 6px auto !important;
+    border-radius: 16px !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.85) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    background: #000000 !important;
+    touch-action: none !important;
+    flex: 0 1 auto !important;
+  }
+
+  .preview-modal-wrapper .preview_img_wrapper:first-child {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    overflow: hidden !important;
+  }
+
+  .preview-modal-wrapper .preview_img_wrapper:first-child img {
+    width: 100% !important;
+    height: auto !important;
+    max-height: calc(100dvh - 215px) !important;
+    display: block !important;
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+
+  .preview-modal-wrapper .preview_img_wrapper:nth-child(2) {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    clip-path: inset(0px 0px 0px 50%);
+    -webkit-clip-path: inset(0px 0px 0px 50%);
+  }
+
+  .preview-modal-wrapper .preview_img_wrapper:nth-child(2) img {
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+
+  .preview-modal-wrapper .before-input {
+    touch-action: none !important;
+  }
+
+  .preview-wrapper .row {
+    margin: 8 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 8px !important;
+    width: 100% !important;
+    max-width: 310px !important;
+    flex: 0 0 auto !important;
+  }
+
+  .preview-wrapper .row .col-lg-3,
+  .preview-wrapper .row .col-lg-4,
+  .preview-wrapper .row .col-sm-6,
+  .preview-wrapper .row .col-12 {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .preview-wrapper #downloadBeforeBtn {
+    width: 100% !important;
+    height: 40px !important;
+    padding: 0 16px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    border-radius: 10px !important;
+    background: linear-gradient(180deg, #d8d8d8 0%, #a8a8a8 100%) !important;
+    color: #000000 !important;
+    border: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    box-shadow: none !important;
+  }
+
+  .preview-wrapper #downloadBeforeBtn svg path {
+    fill: #000000 !important;
+  }
+
+  .preview-wrapper .btn-appoinment {
+    width: 100% !important;
+    height: 40px !important;
+    padding: 0 16px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    border-radius: 10px !important;
+    background: #000000 !important;
+    border: 1.5px solid #444444 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: none !important;
+  }
+
+  .preview-wrapper .btn-appoinment a {
+    color: #ffffff !important;
+    text-decoration: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    width: 100% !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+  }
+
+  #PreviewModal,
+  #PreviewModal .modal-dialog,
+  #PreviewModal .modal-content,
+  #PreviewModal .modal-body,
+  #PreviewModal .preview-wrapper {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+
+  #PreviewModal::-webkit-scrollbar,
+  #PreviewModal .modal-dialog::-webkit-scrollbar,
+  #PreviewModal .modal-content::-webkit-scrollbar,
+  #PreviewModal .modal-body::-webkit-scrollbar,
+  #PreviewModal .preview-wrapper::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
   }
 }
 
 @media (max-width: 480px) {
-  #contactModal .contact-wrapper .usd-logo-img {
-    width: 33%;
-    left: 33.5%;
-    padding: 0px 10px;
-    top: -4.8%;
-  }
-
   .banner-highlight {
     width: 100%;
-  }
-
-  /* .preview-modal-wrapper{
-    height: 250px;
-  }
-  .preview-modal-wrapper{
-    width: 100%;
-  } */
-  .preview_img_wrapper img {
-    object-fit: cover;
-    /* object-fit: contain; */
-  }
-}
-
-#captureBtn:not(:disabled) {
-  animation: pulse 1.2s infinite;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.05);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-}
-
-
-
-@media (max-width: 576px) {
-  #contactModal .contact-wrapper .usd-logo-img {
-    background-image: none !important;
-    background-color: #000 !important;
-    top: 0 !important;
-    transform: translateY(-50%) !important;
-    z-index: 1050 !important;
   }
 }
 
@@ -1913,9 +2680,9 @@
 .flag_icon_ai_main {
   width: auto;
   height: 50px;
-  border-top: 1px solid #c6952e;
-  border-bottom: 1px solid #c6952e;
-  border-left: 1px solid #c6952e;
+  border-top: 1px solid #9E9E9E;
+  border-bottom: 1px solid #9E9E9E;
+  border-left: 1px solid #9E9E9E;
   border-right: none;
   border-bottom-left-radius: 25px;
   border-top-left-radius: 25px;
@@ -2037,7 +2804,7 @@
 
 .country-search-box input:focus,
 .country_search_box input:focus {
-  border-color: #c6952e;
+  border-color: #9E9E9E;
 }
 
 .country-list,
@@ -2114,53 +2881,7 @@
   }
 }
 
-@media (max-width:576px) {
-  .flag_icon_ai_main {
-    height: 40px !important;
-  }
 
-  #smileModal .modal-content {
-    border-radius: 18px;
-    padding-bottom: 10px;
-  }
-
-  #smileModal .btn-wrapper {
-    padding: 10px 10px 10px;
-  }
-
-  #smileGuideLine {
-    margin-bottom: 0px !important;
-    font-size: 16px !important;
-  }
-
-  .video-capture-wrapper .video-inner {
-    max-height: 350px;
-    overflow: hidden;
-  }
-
-  #smileModal .smile-close-btn {
-    width: 24px;
-    height: 24px;
-    top: 10px;
-    right: 10px;
-  }
-
-  .capture-inner{
-    font-size: 16px !important;
-    padding: 10px 0px !important;
-  }
-
-  .video-capture-wrapper .video-inner #video, .video-capture-wrapper .video-inner #freezeImg {
-    object-fit: cover !important;
-  }
-  .preview_img_wrapper img {
-    object-fit: cover;
-    /* object-fit: contain; */
-  }
-  .video-capture-wrapper {
-    aspect-ratio: 13 / 8;
-  }
-}
 
 /* Virtual Smile Contact Form Pincode & City Styles */
 .pincode-input-wrapper {
@@ -2233,17 +2954,8 @@
 #contactModal #cityInput:read-only,
 #contactModal #cityInput[readonly] {
   cursor: default !important;
-  background:
-    linear-gradient(#000, #000) padding-box,
-    linear-gradient(130deg,
-      #c3942f 0%,
-      #d89c27 18%,
-      #dfc86f 37%,
-      #e7dc96 50%,
-      #dfc86f 64%,
-      #d89c27 82%,
-      #c99c30 100%) border-box !important;
-  border: 1.5px solid transparent !important;
+  background: #000000 !important;
+  border: 1px solid #9E9E9E !important;
   border-radius: 25px !important;
   box-shadow: none !important;
   color: #ffffff !important;
@@ -2257,12 +2969,90 @@
   0% {
     box-shadow: none;
   }
+
   50% {
     box-shadow: 0 0 12px rgba(16, 185, 129, 0.6) !important;
   }
+
   100% {
     box-shadow: none;
   }
 }
 
+@media (max-width:576px) {
+  .flag_icon_ai_main {
+    height: 44px !important;
+  }
 
+  #smileModal .modal-content {
+    border-radius: 18px;
+    padding-bottom: 10px;
+  }
+
+  #smileModal .btn-wrapper {
+    padding: 10px 10px 10px;
+  }
+
+  #smileGuideLine {
+    margin-bottom: 16px !important;
+    font-size: 16px !important;
+  }
+
+  .video-capture-wrapper .video-inner {
+    max-height: 350px;
+    overflow: hidden;
+  }
+
+  #smileModal .smile-close-btn {
+    width: 24px;
+    height: 24px;
+    top: 10px;
+    right: 10px;
+  }
+
+  .capture-inner {
+    font-size: 16px !important;
+    padding: 10px 0px !important;
+  }
+
+  .video-capture-wrapper .video-inner #video,
+  .video-capture-wrapper .video-inner #freezeImg {
+    object-fit: cover !important;
+  }
+
+  .preview_img_wrapper img {
+    object-fit: cover;
+    /* object-fit: contain; */
+  }
+
+  .video-capture-wrapper {
+    aspect-ratio: 13 / 8;
+  }
+
+  .smile-pincode-spinner {
+    position: absolute;
+    right: 16px;
+    top: calc(58% - 12px);
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-top-color: #c7a041;
+    border-radius: 50%;
+    animation: smilePinSpin 0.7s linear infinite;
+    pointer-events: none;
+  }
+
+
+  .smile-pincode-status-icon {
+    position: absolute;
+    right: 16px;
+    top: calc(58% - 12px);
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    pointer-events: none;
+  }
+}

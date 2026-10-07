@@ -67,6 +67,16 @@
   let whatsappTriggered = false;
   let whatsappInFlight = false;
 
+  // Modal flow transition state
+  let isTransitioningStep = false;
+
+  function cleanupModalBackdrops() {
+    document.querySelectorAll(".modal-backdrop").forEach((el) => el.remove());
+    document.body.classList.remove("modal-open");
+    document.body.style.removeProperty("overflow");
+    document.body.style.removeProperty("padding-right");
+  }
+
   // ✅ NEW: last detect snapshot + freshness
   let lastDetectAt = 0;
   let lastVisible = false;
@@ -87,18 +97,50 @@
       const pBefore = document.getElementById("previewBeforeImg");
       const pAfter = document.getElementById("previewAfterImg");
 
-      if (pBefore) pBefore.src = generationResult.beforeUrl || capturedDataUrl;
+      if (pBefore) {
+        pBefore.src = generationResult.beforeUrl || capturedDataUrl;
+        const syncAspect = () => {
+          const wrap = document.querySelector(".preview-modal-wrapper");
+          if (wrap && pBefore.naturalWidth && pBefore.naturalHeight) {
+            wrap.style.aspectRatio = `${pBefore.naturalWidth} / ${pBefore.naturalHeight}`;
+          }
+        };
+        if (pBefore.complete && pBefore.naturalWidth) {
+          syncAspect();
+        } else {
+          pBefore.onload = syncAspect;
+        }
+      }
       if (pAfter) pAfter.src = generationResult.afterUrl || generationResult.beforeUrl;
 
-      const contactModal = bootstrap.Modal.getInstance(
-        document.getElementById("contactModal")
-      );
-      contactModal?.hide();
+      isTransitioningStep = true;
+
+      // Close smileModal completely if still open
+      const smileModal = bootstrap.Modal.getInstance(smileModalEl);
+      if (smileModal && smileModalEl && smileModalEl.classList.contains("show")) {
+        smileModal.hide();
+      }
+
+      const contactModalEl = document.getElementById("contactModal");
+      const contactModal = contactModalEl ? bootstrap.Modal.getInstance(contactModalEl) : null;
 
       const previewEl = document.getElementById("PreviewModal");
       const previewModal =
         bootstrap.Modal.getInstance(previewEl) || new bootstrap.Modal(previewEl);
-      previewModal.show();
+
+      if (contactModal && contactModalEl && contactModalEl.classList.contains("show")) {
+        contactModalEl.addEventListener(
+          "hidden.bs.modal",
+          () => {
+            previewModal.show();
+          },
+          { once: true }
+        );
+        contactModal.hide();
+      } else {
+        contactModal?.hide();
+        previewModal.show();
+      }
 
       previewOpened = true;
       leadForm?.reset();
@@ -121,6 +163,15 @@
     freezeImg.classList.remove("hidden");
     freezeImg.classList.remove("visually-hidden");
     video.classList.add("hidden");
+    const camVp = document.getElementById("cameraViewport");
+    if (camVp) camVp.classList.add("is-captured");
+    if (faceOverlay) {
+      faceOverlay.classList.remove("ready");
+      faceOverlay.classList.add("d-none");
+    }
+    if (guideLine) {
+      guideLine.classList.add("d-none");
+    }
   }
 
   function hideFreeze() {
@@ -128,6 +179,14 @@
     freezeImg.classList.add("visually-hidden");
     freezeImg.src = "";
     video.classList.remove("hidden");
+    const camVp = document.getElementById("cameraViewport");
+    if (camVp) camVp.classList.remove("is-captured");
+    if (faceOverlay) {
+      faceOverlay.classList.remove("d-none");
+    }
+    if (guideLine) {
+      guideLine.classList.remove("d-none");
+    }
   }
 
   function showError(text) {
@@ -161,12 +220,19 @@
 
   function setControlsForVerifying() {
     captureBtn.classList.remove("hidden", "d-none");
-    recaptureBtn.classList.add("hidden");
-    confirmBtn.classList.add("hidden");
+    recaptureBtn.classList.add("hidden", "d-none");
+    confirmBtn.classList.add("hidden", "d-none");
 
     captureBtn.disabled = true;
     captureBtn.classList.remove("btn-capture-ready");
     captureBtn.innerHTML = '<span class="capture-inner">Verifying...</span>';
+    if (faceOverlay) {
+      faceOverlay.classList.remove("ready");
+      faceOverlay.classList.add("d-none");
+    }
+    if (guideLine) {
+      guideLine.classList.add("d-none");
+    }
     updateSwitchCameraButtonVisibility();
   }
 
@@ -334,14 +400,20 @@
 
   function setControlsForLive() {
     captureBtn.classList.remove("hidden", "d-none");
-    recaptureBtn.classList.add("hidden");
-    confirmBtn.classList.add("hidden");
+    recaptureBtn.classList.add("hidden", "d-none");
+    confirmBtn.classList.add("hidden", "d-none");
     captureBtn.innerHTML = '<span class="capture-inner">Capture Now</span>';
     captureBtn.disabled = true;
     captureBtn.classList.remove("btn-capture-ready");
     confirmBtn.disabled = true;
+    const camVp = document.getElementById("cameraViewport");
+    if (camVp) camVp.classList.remove("is-captured");
     if (faceOverlay) {
       faceOverlay.classList.remove("ready");
+      faceOverlay.classList.remove("d-none");
+    }
+    if (guideLine) {
+      guideLine.classList.remove("d-none");
     }
     updateSwitchCameraButtonVisibility();
   }
@@ -349,12 +421,18 @@
   function setControlsForCaptured() {
     captureBtn.classList.add("hidden", "d-none");
     captureBtn.classList.remove("btn-capture-ready");
-    recaptureBtn.classList.remove("hidden");
-    confirmBtn.classList.remove("hidden");
+    recaptureBtn.classList.remove("hidden", "d-none");
+    confirmBtn.classList.remove("hidden", "d-none");
     confirmBtn.disabled = !capturedDataUrl;
     captureBtn.disabled = true;
+    const camVp = document.getElementById("cameraViewport");
+    if (camVp) camVp.classList.add("is-captured");
     if (faceOverlay) {
       faceOverlay.classList.remove("ready");
+      faceOverlay.classList.add("d-none");
+    }
+    if (guideLine) {
+      guideLine.classList.add("d-none");
     }
     updateSwitchCameraButtonVisibility();
   }
@@ -663,10 +741,24 @@
     }
 
     try {
+      isTransitioningStep = true;
       const contactModalEl = document.getElementById("contactModal");
       const contactModal =
         bootstrap.Modal.getInstance(contactModalEl) || new bootstrap.Modal(contactModalEl);
-      contactModal.show();
+
+      const smileModal = bootstrap.Modal.getInstance(smileModalEl);
+      if (smileModal && smileModalEl && smileModalEl.classList.contains("show")) {
+        smileModalEl.addEventListener(
+          "hidden.bs.modal",
+          () => {
+            contactModal.show();
+          },
+          { once: true }
+        );
+        smileModal.hide();
+      } else {
+        contactModal.show();
+      }
     } catch (e) {
       console.warn("Contact modal show error:", e);
     }
@@ -866,6 +958,20 @@
     }
   }
 
+  function playGuidelineVideo() {
+    if (!guidelineVideo) return;
+    try {
+      const sources = Array.from(guidelineVideo.querySelectorAll("source"));
+      const matched = sources.find((s) => !s.media || window.matchMedia(s.media).matches);
+      if (matched && guidelineVideo.currentSrc && !guidelineVideo.currentSrc.endsWith(matched.getAttribute("src"))) {
+        guidelineVideo.src = matched.src || matched.getAttribute("src");
+        guidelineVideo.load();
+      }
+    } catch (_) {}
+    guidelineVideo.currentTime = 0;
+    guidelineVideo.play().catch(() => { });
+  }
+
   function returnToIntroGuide() {
     running = false;
     stopCamera();
@@ -875,10 +981,7 @@
     if (smileCameraView) smileCameraView.classList.add("d-none");
     if (smileIntroView) smileIntroView.classList.remove("d-none");
 
-    if (guidelineVideo) {
-      guidelineVideo.currentTime = 0;
-      guidelineVideo.play().catch(() => { });
-    }
+    playGuidelineVideo();
   }
 
   if (nextIntroBtn) {
@@ -896,6 +999,7 @@
   if (smileModalEl) {
     smileModalEl.addEventListener("shown.bs.modal", async () => {
       currentFacingMode = "user";
+      isTransitioningStep = false;
       generationPromise = null;
       generationResult = null;
       capturedDataUrl = null;
@@ -924,11 +1028,8 @@
       if (smileCameraView) smileCameraView.classList.add("d-none");
       if (smileIntroView) smileIntroView.classList.remove("d-none");
 
-      // Autoplay guideline video non-stop
-      if (guidelineVideo) {
-        guidelineVideo.currentTime = 0;
-        guidelineVideo.play().catch(() => { });
-      }
+      // Autoplay guideline video non-stop (mobile / pc responsive)
+      playGuidelineVideo();
     });
 
     smileModalEl.addEventListener("hidden.bs.modal", () => {
@@ -945,24 +1046,104 @@
       if (smileCameraView) smileCameraView.classList.add("d-none");
       if (smileIntroView) smileIntroView.classList.remove("d-none");
 
+      if (!isTransitioningStep) {
+        generationPromise = null;
+        generationResult = null;
+        capturedDataUrl = null;
+
+        // ✅ reset detect snapshot
+        lastConf = 0;
+        lastVisible = false;
+        lastDetectAt = 0;
+
+        leadSubmitted = false;
+        leadId = null;
+        captureNonce = null;
+
+        // ✅ reset WhatsApp flags
+        whatsappTriggered = false;
+        whatsappInFlight = false;
+
+        setControlsForLive();
+      }
+    });
+  }
+
+  // ✅ Contact modal lifecycle events
+  const contactModalEl = document.getElementById("contactModal");
+  if (contactModalEl) {
+    contactModalEl.addEventListener("shown.bs.modal", () => {
+      isTransitioningStep = false;
+    });
+
+    contactModalEl.addEventListener("hidden.bs.modal", () => {
+      // If user manually closed contactModal without moving to Preview
+      if (!isTransitioningStep && !previewOpened && !leadSubmitted) {
+        const smileModal = bootstrap.Modal.getInstance(smileModalEl);
+        if (smileModal && smileModalEl && smileModalEl.classList.contains("show")) {
+          smileModal.hide();
+        }
+
+        cleanupModalBackdrops();
+        hideFreeze();
+        resetResult();
+        setControlsForLive();
+
+        generationPromise = null;
+        generationResult = null;
+        capturedDataUrl = null;
+        lastConf = 0;
+        lastVisible = false;
+        lastDetectAt = 0;
+        leadSubmitted = false;
+        leadId = null;
+        captureNonce = null;
+        whatsappTriggered = false;
+        whatsappInFlight = false;
+      }
+    });
+  }
+
+  // ✅ Preview modal lifecycle events - ensure clean close and no leftover modals
+  const previewEl = document.getElementById("PreviewModal");
+  if (previewEl) {
+    previewEl.addEventListener("shown.bs.modal", () => {
+      isTransitioningStep = false;
+    });
+
+    previewEl.addEventListener("hidden.bs.modal", () => {
+      isTransitioningStep = false;
+      previewOpened = false;
+
+      // Ensure smileModal and contactModal are definitely closed
+      const smileModal = bootstrap.Modal.getInstance(smileModalEl);
+      if (smileModal && smileModalEl && smileModalEl.classList.contains("show")) {
+        smileModal.hide();
+      }
+
+      const contactModal = contactModalEl ? bootstrap.Modal.getInstance(contactModalEl) : null;
+      if (contactModal && contactModalEl && contactModalEl.classList.contains("show")) {
+        contactModal.hide();
+      }
+
+      cleanupModalBackdrops();
+
+      hideFreeze();
+      resetResult();
+      setControlsForLive();
+
+      // Reset flow data for next run
       generationPromise = null;
       generationResult = null;
       capturedDataUrl = null;
-
-      // ✅ reset detect snapshot
       lastConf = 0;
       lastVisible = false;
       lastDetectAt = 0;
-
       leadSubmitted = false;
       leadId = null;
-
-      // ✅ reset WhatsApp flags
+      captureNonce = null;
       whatsappTriggered = false;
       whatsappInFlight = false;
-
-      setControlsForLive();
-      // console.log("Camera stopped (modal closed)");
     });
   }
 })();
