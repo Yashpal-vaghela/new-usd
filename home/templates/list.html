@@ -54,7 +54,7 @@
         </button>
     </div>
   </div>
-  <div class="new-browser-wrapper d-none m-auto justify-content-center text-center py-5" id="browser-permission-helper" style="display:'flex'">
+  <div class="new-browser-wrapper d-none m-auto justify-content-center text-center py-5" id="browser-permission-helper">
     <div class="container">
       <span class="fw-600 fs-4 cool mb-2 d-inline-block" style="font-family: 'Gilda Display', serif">Your Browser’s Location Access is Disabled</span>
       <p class="mx-auto text-center text-white" style="max-width: 700px;">To find certified Ultimate Smile Designer dentists near you, please enable your location. Follow the steps below to reset your browser’s location permissions.</p>
@@ -177,9 +177,9 @@
               aria-label="Select Location"
               onchange="this.form.submit()" 
             >
-              {% comment %} <option value="">Select Location</option> {% endcomment %}
+              <option value="" {% if not city_id and not city %}selected{% endif %}>Select Location</option>
               {% for ie in a_city %}
-              <option value="{{ ie.id }}" {% if city|stringformat:"s" == ie.id|stringformat:"s" %}selected{% endif %}>
+              <option value="{{ ie.id }}" {% if city_id|stringformat:"s" == ie.id|stringformat:"s" or city == ie.city %}selected{% endif %}>
                 {{ ie.city }}
               </option>
 
@@ -206,9 +206,9 @@
     </div>
   </section>
 
-  <section class="dentist-section">
+  <section class="dentist-section {% if location_required %}d-none{% endif %}">
     <div class="container">
-      {% if city != "all" %}
+      {% if city and city != "all" %}
       <div class="row mb-4">
         <div class="col-12">
           <p class="text-white text-center fs-5">
@@ -231,7 +231,7 @@
                   alt="{{ ie.name }}, Dentist – Profile Picture, Ultimate Smile Designer"
                 />
                 {% else %}
-                <img src="{% static 'noimage-team.webp' %}" class="mb-3" alt="Image" />
+                <img src="{% static 'noimage-team.webp' %}" alt="Image" />
                 {% endif %}
               </a>
 
@@ -241,7 +241,7 @@
                 <button class="btn bookAppoinment-btn mt-0 w-100 bat" onclick="BookAppoinment('{{ie.name}}')">
                   Book Appointment
                 </button>
-                <span class="cool d-inline-block">ADE Cerified Dentist</span>
+                <span class="cool d-inline-block">ADE Certified Dentist</span>
               </div>
               
             </div>
@@ -249,7 +249,7 @@
         </div>
         <div class="col-lg-5 col-md-8 col-sm-8 col-12 mb-4">
           <div class="dentist-content1">
-            <h2 class="mt-3 cool d-inline-block font-Glida-display">{{ie.name}}</h2>
+            <h2 class="mt-3 cool d-inline-block">{{ie.name}}</h2>
             <p class="fw-600" style="font-size: 1.125rem;">{{ie.city}}</p>
             <p>{{ie.bio}}</p>
             <p class="cool profile_btn"><a href="{% url 'home:find_dentist_d' ie.slug %}">View Profile <i class="fa-solid fa-angles-right" style="font-size:12px"></i></a></p>
@@ -271,7 +271,7 @@
         {% endfor %} {% include 'pagination.html' %}
       </div>
       {% else %}
-      <h3 class="d-flex justify-content-center text-white">Not Found in {{city}}</h3>
+      <h3 class="d-flex justify-content-center text-white my-5">Not Found in {{ city }}</h3>
       {% endif %}
     </div>
   </section>
@@ -283,7 +283,8 @@
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => showPosition(position, manual),
-        handleLocationError
+        handleLocationError,
+        { timeout: 10000, enableHighAccuracy: true }
       );
     } else {
       showFallbackMessage();
@@ -291,13 +292,13 @@
   }
 
   function showPosition(position, manual = false) {
-    x.innerHTML =
-      "Latitude: " + position.coords.latitude +
-      "<br>Longitude: " + position.coords.longitude;
-
-    if (manual) {
-      storeLocation(position.coords);
+    if (x) {  
+        x.innerHTML =
+          "Latitude: " + position.coords.latitude +
+          "<br>Longitude: " + position.coords.longitude;
     }
+
+    storeLocation(position.coords);
   }
 
   function storeLocation(coords) {
@@ -307,6 +308,8 @@
     // store lat/long immediately
     sessionStorage.setItem("latitude", latitude);
     sessionStorage.setItem("longitude", longitude);
+    
+    const csrfToken = $('input[name=csrfmiddlewaretoken]').val();
 
     // send to backend to resolve city/state
     $.ajax({
@@ -315,7 +318,7 @@
       data: {
         latitude: latitude,
         longitude: longitude,
-        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+        csrfmiddlewaretoken: csrfToken,
       },
       success: function (response) {
         if (response.status === "success") {
@@ -330,7 +333,9 @@
           localStorage.setItem('permission_access', JSON.stringify(true));
 
           // reload to update page data
-          location.reload();
+          const currentUrl = new URL(window.location.href);
+          currentUrl.searchParams.delete("city");
+          window.location.href = currentUrl.toString();
         }
       },
       error: function (error) {
@@ -340,17 +345,18 @@
   }
 
   function handleLocationError(error) {
-    console.warn("Location access denied or unavailable.");
-    showFallbackMessage();
+    console.warn("Location access denied or unavailable:", error);
+    sessionStorage.removeItem("latitude");
+    sessionStorage.removeItem("longitude");
+    sessionStorage.removeItem("city");
+    localStorage.removeItem('permission_access');
 
-    const lat = sessionStorage.getItem("latitude");
-    const lng = sessionStorage.getItem("longitude");
+    const card = document.getElementById("location-required-card");
+    if (card) card.classList.remove("d-none");
 
-    if (!lat || !lng) {
-      setTimeout(() => {
-        showPermissionModal();
-      }, 1500);
-    }
+    setTimeout(() => {
+      showPermissionModal();
+    }, 1200);
   }
 
   function showPermissionModal() {
@@ -363,13 +369,8 @@
   }
 
   function showFallbackMessage() {
-    const message = document.getElementById("location-fallback-message");
-    const form = document.querySelector(".searchbar-wrap");
-    const dentistSection = document.querySelector(".dentist-section");
-
-    if (message) message.classList.remove("d-none");
-    if (form) form.classList.add("d-none");
-    if (dentistSection) dentistSection.classList.add("d-none");
+    const card = document.getElementById("location-required-card");
+    if (card) card.classList.remove("d-none");
   }
 
   //Main logic — run on page load
@@ -377,13 +378,15 @@
     const latitude = sessionStorage.getItem("latitude");
     const longitude = sessionStorage.getItem("longitude");
     const permission = JSON.parse(localStorage.getItem('permission_access'));
+    const urlParams = new URLSearchParams(window.location.search);
+    const cityParam = urlParams.get("city");
 
-    if (!latitude || !longitude || !permission) {
-      // 👉 Ask for permission
+    if ((!latitude || !longitude || !permission) && !cityParam) {
       Swal.fire({
         title: "Allow Your Location for Nearest Smile Designers.",
+        text: "Please allow location access to find certified dentists nearest to you.",
         showCancelButton: false,
-        confirmButtonText: "Allow",
+        confirmButtonText: "Allow Location",
         showCloseButton: true,
         customClass: {
           popup: "custom-swal-popup"
@@ -394,11 +397,10 @@
         if (result.isConfirmed) {
           getLocation(true);
         } else if (result.dismiss === Swal.DismissReason.close) {
-          showFallbackMessage();
+          const card = document.getElementById("location-required-card");
+          if (card) card.classList.remove("d-none");
         }
       });
-    } else {
-      console.log("📍 Location already stored in sessionStorage — skipping popup.");
     }
   });
 </script>
@@ -495,277 +497,6 @@
   }
 </script>
 <!--Location Access-->
-{% comment %} <script>
-  var x = document.getElementById("demo");
-
-    function getLocation(manual = false) {
-        if (navigator.geolocation) {
-          //console.log("navigator",navigator,navigator.geolocation)
-            navigator.geolocation.getCurrentPosition((position) => showPosition(position, manual), handleLocationError);
-        } else {
-            showFallbackMessage();
-        }
-    }
-     function showPosition(position, manual = false) {
-        x.innerHTML =
-            "Latitude: " + position.coords.latitude + 
-            "<br>Longitude: " + position.coords.longitude;
-         var a = JSON.parse(localStorage.getItem('permission_access')); 
-         //console.log("a",a)
-        if (sessionStorage.getItem("latitude") !== null && a === true) {
-            //console.log("Session data exists!");
-        } else {
-            // Store latitude and longitude in sessionStorage
-            sessionStorage.setItem("latitude", position.coords.latitude);
-            sessionStorage.setItem("longitude", position.coords.longitude);
-
-            var latitude = sessionStorage.getItem("latitude");
-            var longitude = sessionStorage.getItem("longitude");
-
-            if (latitude && longitude) {
-                // Send the location data to the server
-                $.ajax({
-                    url: "/receive_location/", // URL of your Django view
-                    type: "POST",
-                    data: {
-                        latitude: latitude,
-                        longitude: longitude,
-                        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(), // CSRF token is required for POST requests
-                    },
-                    success: function (response) {
-                        //console.log("Data sent to server:", response);
-
-                        // Check if the server returned city and state
-                        if (response.status === "success") {
-                            const city = response.city || "unknown";
-                            const state = response.state || "unknown";
-
-                            // Store city and state in sessionStorage or localStorage
-                            sessionStorage.setItem("city", city);
-                            sessionStorage.setItem("state", state);
-
-                            // Optionally store in localStorage
-                            localStorage.setItem("city", city);
-                            localStorage.setItem("state", state);
-
-                            //console.log("City and State saved:", { city, state });
-                        }
-                    },
-                    error: function (error) {
-                        console.error("Error sending data:", error);
-                    },
-                });
-            }
-            if (manual){
-              localStorage.setItem('permission_access', JSON.stringify(true));
-              location.reload();
-            } else{
-              // Display confirmation dialog after storing location
-            setTimeout(() => {
-                Swal.fire({
-                    title: "Allow Your Location for Nearest Smile Designers.",
-                    showCancelButton: false,
-                    confirmButtonText: "Allow",
-                    showCloseButton: true,
-                    customClass: {
-                        popup: "custom-swal-popup" },
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                      localStorage.setItem('permission_access',JSON.parse(true))
-                      location.reload();
-                    } else if(result.dismiss === Swal.DismissReason.close){
-                      //console.log("User clicked close. Location access denied.")
-                      const message = document.getElementById("location-fallback-message");
-                      const form = document.querySelector(".searchbar-wrap");
-                      const dentistSection = document.querySelector(".dentist-section");
-
-                      if (message) message.classList.remove("d-none");
-                      if (form) form.classList.add("d-none");
-                      if (dentistSection) dentistSection.classList.add("d-none");
-                    }
-                });
-            }, 1000);
-            } 
-        }
-    }
-    // Fallback if user denies location
-    function handleLocationError(error) {
-      console.warn("Location access denied or unavailable.");
-      showFallbackMessage();
-
-      const lat = sessionStorage.getItem("latitude");
-      const lng = sessionStorage.getItem("longitude");
-
-      if(!lat || !lng){
-        setTimeout(()=>{
-          showPermissionModal();
-        },1500)
-      }
-    }
-    function showPermissionModal() {
-      document.getElementById("browser-permission-modal").classList.remove("d-none");
-    }
-    function closePermissionModal() {
-      document.getElementById("browser-permission-modal").classList.add("d-none");
-    }
-
-    function showFallbackMessage() {
-      const message = document.getElementById("location-fallback-message");
-      const form = document.querySelector(".searchbar-wrap");
-      const dentistSection = document.querySelector(".dentist-section");
-
-      if (message) message.classList.remove("d-none");
-      if (form) form.classList.add("d-none");
-      if (dentistSection) dentistSection.classList.add("d-none");
-    }
-    document.addEventListener("DOMContentLoaded",function() {
-      // console.log("location")
-       getLocation();
-    })
-    
-</script>  {% endcomment %}
-
-{% comment %} <script>
-  var x = document.getElementById("demo");
-
-  function getLocation(manual = false) {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => showPosition(position, manual),
-        handleLocationError
-      );
-    } else {
-      showFallbackMessage();
-    }
-  }
-
-  function showPosition(position, manual = false) {
-    x.innerHTML =
-      "Latitude: " + position.coords.latitude +
-      "<br>Longitude: " + position.coords.longitude;
-
-    const a = JSON.parse(localStorage.getItem('permission_access'));
-
-    if (sessionStorage.getItem("latitude") !== null && a === true) {
-      return;
-    }
-
-    if (manual) {
-      localStorage.setItem('permission_access', JSON.stringify(true));
-      storeLocation(position.coords);
-      location.reload();
-    } else {
-      setTimeout(() => {
-        Swal.fire({
-          title: "Allow Your Location for Nearest Smile Designers.",
-          showCancelButton: false,
-          confirmButtonText: "Allow",
-          showCloseButton: true,
-          customClass: {
-            popup: "custom-swal-popup"
-          },
-          allowOutsideClick:false,
-          allowEscapeKey:false,
-        }).then((result) => {
-          if (result.isConfirmed) {
-            // localStorage.setItem('permission_access', JSON.stringify(true));
-            // storeLocation(position.coords);
-            // location.reload();
-            requestLocationAccess();
-          } else if (result.dismiss === Swal.DismissReason.close) {
-            const message = document.getElementById("location-fallback-message");
-            const form = document.querySelector(".searchbar-wrap");
-            const dentistSection = document.querySelector(".dentist-section");
-
-            if (message) message.classList.remove("d-none");
-            if (form) form.classList.add("d-none");
-            if (dentistSection) dentistSection.classList.add("d-none");
-          }
-        });
-      }, 1000);
-    }
-  }
-
-  function storeLocation(coords) {
-    const latitude = coords.latitude;
-    const longitude = coords.longitude;
-
-    sessionStorage.setItem("latitude", latitude);
-    sessionStorage.setItem("longitude", longitude);
-
-    $.ajax({
-      url: "/receive_location/",
-      type: "POST",
-      data: {
-        latitude: latitude,
-        longitude: longitude,
-        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-      },
-      success: function (response) {
-        if (response.status === "success") {
-          const city = response.city || "unknown";
-          const state = response.state || "unknown";
-
-          sessionStorage.setItem("city", city);
-          sessionStorage.setItem("state", state);
-
-          localStorage.setItem("city", city);
-          localStorage.setItem("state", state);
-
-          // ✅ Show nearest dentists now that we have city/state
-          if (typeof showNearestDentists === "function") {
-            showNearestDentists(city, state);
-          } else {
-            console.warn("showNearestDentists(city, state) is not defined.");
-          }
-        }
-      },
-      error: function (error) {
-        console.error("Error sending data:", error);
-      },
-    });
-  }
-
-  function handleLocationError(error) {
-    console.warn("Location access denied or unavailable.");
-    showFallbackMessage();
-
-    const lat = sessionStorage.getItem("latitude");
-    const lng = sessionStorage.getItem("longitude");
-
-    if (!lat || !lng) {
-      setTimeout(() => {
-        showPermissionModal();
-      }, 1500);
-    }
-  }
-
-  function showPermissionModal() {
-    const a = document.getElementById("browser-permission-modal");
-    if(a !== null ){
-      a.classList.remove("d-none");
-    }
-  //  document.getElementById("browser-permission-modal").classList.remove("d-none");
-  }
-
-  function closePermissionModal() {
-    document.getElementById("browser-permission-modal").classList.add("d-none");
-  }
-
-  function showFallbackMessage() {
-    const message = document.getElementById("location-fallback-message");
-    const form = document.querySelector(".searchbar-wrap");
-    const dentistSection = document.querySelector(".dentist-section");
-
-    if (message) message.classList.remove("d-none");
-    if (form) form.classList.add("d-none");
-    if (dentistSection) dentistSection.classList.add("d-none");
-  }
-
-  document.addEventListener("DOMContentLoaded", function () {
-    getLocation();
-  });
-</script> {% endcomment %}
 <script>
   function requestLocationAccess() {
     const message = document.getElementById("location-fallback-message");
@@ -812,57 +543,15 @@
           });
         },
         function (error) {
-          if (error.code === error.PERMISSION_DENIED) {
-            showPermissionReminder();  
-          } else {
-            alert("Location access failed. Please try again.");
-          }
+          console.warn("Location permission denied or unavailable:", error);
+          showPermissionReminder();
         },
-        { timeout: 10000 }
+        { timeout: 10000, enableHighAccuracy: true }
       );
     } else {
       showPermissionReminder(); 
     }
   }
-
-  {% comment %} function handleNextButton(){
-    const image1 = document.getElementById("Resetlocation-img1");
-    const image2 = document.getElementById("Resetlocation-img2");
-    const image3 = document.getElementById("Resetlocation-img3");
-
-    const matchclass = image1.classList.contains("resetlocation-img1");
-   
-    if(image1 && image1.classList.contains("d-block")){
-      console.log("image1");
-      image1.classList.add("d-none");
-      image1.classList.remove("d-block");
-      image2.classList.add("d-block");
-      image2.classList.remove("d-none");
-    } else if(image2 && image2.classList.contains("d-block")){
-      console.warn("image2");
-      image2.classList.add("d-none");
-      image3.classList.add("d-block");
-      image3.classList.remove("d-none")
-    }
-  }
-  function handlePrevButton(){
-    const image1 = document.getElementById("Resetlocation-img1");
-    const image2 = document.getElementById("Resetlocation-img2");
-    const image3 = document.getElementById("Resetlocation-img3");
-
-    if(image1 && image1.classList.contains("d-block")){
-      console.log("image1");
-      image1.classList.add("d-none");
-      image1.classList.remove("d-block");
-      image2.classList.add("d-block");
-      image2.classList.remove("d-none");
-    } else if(image2 && image2.classList.contains("d-block")){
-      console.warn("image2");
-      image2.classList.add("d-none");
-      image3.classList.add("d-block");
-      image3.classList.remove("d-none")
-    }
-  } {% endcomment %}
 
   function showPermissionReminder() {
     const reminder = document.getElementById("browser-permission-helper");
@@ -967,6 +656,7 @@
     });
   });
 </script>
+
 
 
 
