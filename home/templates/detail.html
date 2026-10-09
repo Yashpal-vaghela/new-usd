@@ -324,7 +324,7 @@
                     <img src="{% static 'angle-down-in-country-code.svg' %}" alt="down arrow" />
                   </div>
                 </div>
-                <input class="form-control remove-padding-left" id="phoneInput" type="text" placeholder="Phone Number" value="{{ request.POST.phone }}" required />
+                <input class="form-control remove-padding-left" id="phoneInput" type="number" placeholder="Phone Number" value="{{ request.POST.phone }}" required />
                 <input type="hidden" name="phone" id="fullPhoneInput" value="{{ request.POST.phone }}" />
                 <!-- Country Dropdown Menu -->
                 <div class="country-dropdown-menu" id="countryDropdown">

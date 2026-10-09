@@ -37,6 +37,7 @@
 
 .contact-form .row .btn {
   padding: 8px 18px;
+  border-bottom: none !important;
 }
 
 .contact-form .form-control {
@@ -46,11 +47,10 @@
   color: #fff !important;
 }
 #countrySelectBtn{
-     background-color: black !important;
-      border-bottom: none !important;
-      border-top: none !important;
-      border-left: none !important;
-       min-width: 100px;
+  background-color: black !important;
+  border-top: none !important;
+  border-left: none !important;
+  min-width: 100px;
 }
  .contact-form .btn:hover {
     border-color:#2e2e2e !important;

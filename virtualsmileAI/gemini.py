@@ -4,6 +4,107 @@ import requests
 from typing import Optional
 from PIL import Image, ImageDraw
 from django.conf import settings
+from google import genai
+
+# ------------------------------------------------------------------
+# Google Gemini official Interactions API configuration
+# (Based on official documentation: https://ai.google.dev/gemini-api/docs/image-generation)
+#
+# Available Image Editing Models:
+#   - gemini-nano-banana-2.1    (Nano Banana 2.1 - default, thinking-capable)
+#   - nano-banana-pro-preview   (Nano Banana Pro preview)
+#   - gemini-3.1-flash-image    (Gemini 3.1 Flash Image)
+#   - gemini-3.1-flash-lite-image
+#   - gemini-3-pro-image
+#   - gemini-2.5-flash-image
+#
+# Thinking Level Options:
+#   - "high"    (Required for strict dental boundary & lip-lock adherence)
+#   - "medium"  (Google's default for Nano Banana 2.1)
+#   - "minimal" (Faster, but can move lips and rush negative constraints)
+# ------------------------------------------------------------------
+# ------------------------------------------------------------------
+# Direct Environment Configuration (.env driven)
+# Changing GEMINI_MODEL_NAME or GEMINI_THINKING_LEVEL in .env will
+# immediately update the flow at runtime without touching this code.
+# ------------------------------------------------------------------
+GEMINI_MODEL_DEFAULT = os.environ.get("GEMINI_MODEL_NAME", "gemini-nano-banana-2.1")
+GEMINI_THINKING_LEVEL_DEFAULT = os.environ.get("GEMINI_THINKING_LEVEL", "medium")
+
+
+def reload_env() -> None:
+    """
+    Dynamically re-reads .env from the project root on every request so any
+    update made directly in .env immediately updates the runtime flow without
+    needing a server restart or file edit.
+    """
+    try:
+        from dotenv import load_dotenv
+        base_dir = getattr(settings, "BASE_DIR", None) or os.getcwd()
+        env_file = os.path.join(base_dir, ".env")
+        if os.path.isfile(env_file):
+            load_dotenv(env_file, override=True)
+    except Exception:
+        pass
+
+
+def get_api_key() -> Optional[str]:
+    """Read GEMINI_API_KEY from environment or Django settings, reloaded dynamically."""
+    reload_env()
+    return (
+        os.environ.get("GEMINI_API_KEY")
+        or getattr(settings, "GEMINI_API_KEY", None)
+        or os.environ.get("GEMINI_API_KEY_NEW")
+        or getattr(settings, "GEMINI_API_KEY_NEW", None)
+    )
+
+
+def get_model_name() -> str:
+    """
+    Get the normalized Google Gemini model identifier directly from .env.
+    Dynamically re-reads .env so changing .env updates the active flow immediately.
+    """
+    reload_env()
+    raw_name = (
+        os.environ.get("SMILE_GEMINI_MODEL_NAME")
+        or os.environ.get("GEMINI_MODEL_NAME")
+        or os.environ.get("GEMINI_MODEL")
+        or getattr(settings, "GEMINI_MODEL_NAME", None)
+        or GEMINI_MODEL_DEFAULT
+    )
+    name = (raw_name or "").strip().strip('"\'')
+    if name in ["nano-banana-2.1", "gemini-nano-banana-2.1"]:
+        return "gemini-nano-banana-2.1"
+    if name in ["nano-banana-pro", "nano-banana-pro-preview"]:
+        return "nano-banana-pro-preview"
+    if name in ["3.1-flash-image", "gemini-3.1-flash-image"]:
+        return "gemini-3.1-flash-image"
+    if name in ["3.1-flash-lite-image", "gemini-3.1-flash-lite-image"]:
+        return "gemini-3.1-flash-lite-image"
+    if name in ["3-pro-image", "gemini-3-pro-image"]:
+        return "gemini-3-pro-image"
+    if name in ["2.5-flash-image", "gemini-2.5-flash-image"]:
+        return "gemini-2.5-flash-image"
+    return name
+
+
+def get_thinking_level() -> str:
+    """
+    Get thinking level directly from .env: 'high', 'medium', or 'minimal'.
+    Dynamically re-reads .env so changing .env updates the active flow immediately.
+    """
+    reload_env()
+    raw = (
+        os.environ.get("SMILE_GEMINI_THINKING_LEVEL")
+        or os.environ.get("GEMINI_THINKING_LEVEL")
+        or os.environ.get("THINKING_LEVEL")
+        or getattr(settings, "GEMINI_THINKING_LEVEL", None)
+        or GEMINI_THINKING_LEVEL_DEFAULT
+    )
+    level = (raw or "").strip().lower().strip('"\'')
+    if level in ["high", "medium", "minimal"]:
+        return level
+    return "medium"
 # --------------------------------------------------Prompt for Ai 1----------------------------------------------------------------------------------- 
 # PROMPT = r"""
 # TASK: Using [INPUT_IMAGE], perform a high-end cosmetic dentistry digital smile design. Only modify the visible teeth – all other features must remain unchanged.
@@ -169,119 +270,140 @@ from django.conf import settings
 
 # Return only the final edited photograph with no text, borders, or layout changes.
 # """
-# --------------------------------------------------New updatedPrompt for Ai craete by nikhil (05-10-2026)-----------------------------------------------------------------------------------
-PROMPT = r"""TASK: Create a conservative, photorealistic cosmetic smile preview by editing the supplied photograph.
+# --------------------------------------------------New updatedPrompt for Ai craete by nikhil (08-10-2026)-----------------------------------------------------------------------------------
+PROMPT = r"""TASK: In-place natural dental refinement of TEETH ONLY on the input photograph. Re-structure, align, and close gaps on visible teeth while strictly matching the original tooth color, natural matte/satin enamel finish, and ambient lighting with ZERO artificial shine or fake bleach look.
 
-Use the input photograph as the absolute source of truth. Replace only the visible enamel surfaces of teeth that already exist inside the original mouth opening. The result must look like the same unedited photograph with naturally improved teeth, not like a newly generated portrait or a generic set of veneers.
+CRITICAL DIRECTIVE 1 — STRICT LIP & FACE LOCK (LIPS ARE OUTSIDE YOUR AREA):
+- THE PATIENT'S LIPS MUST REMAIN 100% UNTOUCHED AND PIXEL-IDENTICAL TO THE ORIGINAL PHOTO.
+- DO NOT FIX OR BEAUTIFY THE LIPS: Even if you think the lips look imperfect, crooked, uneven, asymmetrical, dry, thin, or not proper, DO NOT FIX, SMOOTH, OR ALTER THEM. The lips are strictly OUTSIDE of your editing area. Your sole task is inside the mouth on tooth enamel only.
+- DO NOT TOUCH, RESHAPE, RECOLOR, THIN, THICKEN, PLUMP, OR ALTER THE LIPS IN ANY WAY.
+- Preserve the exact upper lip drape, lower lip contour, lip corners (commissures), vermilion border, lip creases, and natural lip color/lipstick.
+- DO NOT OPEN THE MOUTH WIDER, widen the smile, shift the mouth opening, or alter the facial expression.
+- Keep the skin, facial hair, eyes, face, lighting, and background 100% UNTOUCHED and identical to the original photo.
 
-EDIT BOUNDARY - HIGHEST PRIORITY
-- Keep the exact original mouth opening, lip contours, lip corners, expression, gumline, tongue, oral cavity, face, skin, hair, clothing, background, framing, focus, grain, and lighting.
-- Teeth must remain behind the original lips and gums. Respect every original occlusion: anything hidden by a lip, gum, shadow, or another tooth stays hidden.
-- Preserve upper and lower teeth independently. If even a small, partial patch of lower-tooth enamel is visible in the input, the lower teeth are considered visible and must remain visible in the result. Only when absolutely no lower enamel is visible may the lower arch remain hidden. Never expose a new tooth or complete a hidden dental arch.
-- Keep the redesigned enamel within the original visible dental envelope. Do not widen the arch, enlarge the mouth, lower a lip, add gum, fill dark oral-cavity space, or extend white pixels into soft tissue.
+CRITICAL DIRECTIVE 2 — LOCK TOP OF UPPER TEETH TO UPPER LIP (ZERO LINE OR GAP ABOVE TEETH):
+- MAINTAIN NATURAL TOOTH HEIGHT: Do NOT pull down, lower, or unnaturally elongate the upper teeth downward into the mouth.
+- The upper teeth must meet the bottom edge of the upper lip directly, leaving ZERO space, zero gap, zero border, and zero visible line between the top of the teeth and the upper lip.
+- DO NOT DRAW A TOP BORDER OR CERVICAL OUTLINE ON THE UPPER TEETH: In the input photograph, the upper lip naturally overlaps the top of the teeth. Do NOT round off the top of the teeth crowns. The enamel must continue straight up into the upper lip drape, exactly matching the original photo.
+- ABSOLUTELY ZERO GUM LINE ABOVE TOP TEETH: If no gumline is visible above the top teeth in the original photo, DO NOT generate or draw any line, margin, or tissue above them. The top contact boundary between teeth and upper lip must remain in the exact same vertical position as the original photo.
 
-HEAD POSE AND DENTAL-PLANE MATCH - CRITICAL
-- First infer the exact 3D head pose and dental orientation from the original nose, lips, jaw, facial midline, and visible teeth. Match the original pitch, yaw, roll, occlusal plane, arch curvature, and camera elevation. Never default to a straight-on dental view.
-- All generated crowns must belong to the same 3D perspective as the head. Their long axes, facial planes, side-to-side height, foreshortening, and incisal-edge curve must rotate naturally with the face and mouth.
-- When the chin is raised or the camera views the mouth from below, render the upper teeth from that same slightly upward viewpoint: the crowns recede naturally upward and backward beneath the upper lip, with only anatomically appropriate subtle incisal thickness. Do not make the teeth face downward, hang vertically toward the camera, or look like a front-facing row pasted into an upward-tilted mouth.
-- When the chin is lowered or the camera is above the mouth, apply the corresponding opposite perspective. Always copy the viewpoint demonstrated by the original visible teeth rather than inventing a new one.
+CRITICAL DIRECTIVE 3 — PRESERVE NATURAL ORAL CAVITY SHADOWS (DO NOT FILL THE MOUTH):
+- RESPECT DARK MOUTH INTERIOR: The dark shadows, oral cavity depth, and empty space inside the mouth must remain 100% NATURAL DARK SHADOW.
+- DO NOT FILL THE MOUTH WITH TEETH. Do NOT paint teeth across dark empty areas or into corners of the mouth where teeth were not visible.
+- IF LOWER TEETH ARE NOT VISIBLE OR ARE IN SHADOW, DO NOT GENERATE LOWER TEETH. Leave the lower mouth in its original natural shadow.
+- RESTRICT REFINEMENT STRICTLY TO THE EXISTING VISIBLE TOOTH FOOTPRINT: Only refine the exact teeth currently exposed. Do not expand the smile area or make the tooth display larger than in the original photo.
 
-UPPER ATTACHMENT AND FULL-CROWN CONTINUITY - CRITICAL
-- Every upper crown must begin at its anatomically correct cervical origin at the original gumline, or continue naturally behind the upper lip where the gumline is occluded. It must remain physically attached to the upper dental arch.
-- Replace the intended visible crown as one continuous enamel surface from its cervical origin to its incisal edge. Complete the upper portion within the established tooth footprint; do not generate only the lower half of a crown.
-- Leave no dark horizontal band, black pocket, unfilled strip, original-tooth remnant, seam, or floating space between an upper tooth and its gum or upper-lip occlusion boundary.
-- Never solve attachment by painting enamel over visible pink gum or genuine oral-cavity space. The correct result is a full crown emerging naturally from the existing gumline or disappearing naturally behind the unchanged upper lip.
+CRITICAL DIRECTIVE 4 — NO CARTOON FILTER OR STICKER OVERLAY:
+- The teeth must NEVER look like a digital filter, sticker, or painted white overlay.
+- In blurry, grainy, low-resolution, or dim webcam photos, the teeth MUST match the authentic photo texture, camera sensor noise, grain, low contrast, and lighting of the surrounding face.
+- Do NOT draw high-contrast, opaque, glowing, or unnaturally sharp teeth over a grainy or dim photograph.
+- The lighting on the teeth must be 100% consistent with the person's real facial lighting—dim in dim light, shadowed in shadow.
 
-LOWER-TEETH PRESERVATION - CRITICAL
-- Inspect the input specifically for small, short, partially occluded, shadowed, or irregular lower teeth. Any visible lower enamel, however small, is mandatory image content and must not disappear in the result.
-- Preserve the same lower-tooth locations, visible count, exposure height, silhouette, spacing, perspective, and occlusion behind the unchanged lower lip. Redesign only their already visible enamel surfaces at their original size.
-- Rerender every visible lower-enamel surface as part of the same dental treatment as the upper arch. Do not leave original yellow stains, discoloration, old enamel patches, doubled edges, or a source-tooth layer showing beneath the redesign.
-- Upper and lower teeth must share one coherent healthy ivory shade and photographic material response, with natural small variations but no isolated yellow tooth or yellow patch, especially at the lower-right or lower-left edges.
-- Never replace visible lower teeth with black oral cavity, tongue, shadow, or empty space. Never interpret a short lower tooth as a highlight or non-dental detail.
-- Upper teeth must not extend downward over the lower-tooth region, close the bite, reduce the original inter-arch opening, or hide lower teeth that were visible in the input.
-- Maintain the original spatial relationship between the upper and lower arches. Preserve the original vertical separation or overlap and keep both arches on the same head-pose perspective.
-- If lower-tooth visibility is uncertain, preserve the original visible lower enamel rather than deleting it. Do not invent portions that are fully hidden behind the lip.
+CRITICAL DIRECTIVE 5 — NO FAKE SHINE OR PLASTIC GLOSS:
+- ABSOLUTELY ZERO FAKE HIGH-SHINE, SPECULAR HOT-SPOTS, OR GLOSSY PLASTIC HIGHLIGHTS.
+- Real biological enamel has a soft, natural satin/semi-matte organic texture—it is NOT polished glass, wet plastic, or shiny acrylic.
+- Do NOT add bright white shiny reflection spots on the front of each tooth.
+- Teeth must look 100% authentic, organic, and real—NEVER like fake dentures, plastic teeth, or artificial veneers.
 
-NATURAL DENTAL DESIGN
-- Create a healthy, gently aligned smile tailored to this person's existing dental arch, facial proportions, mouth opening, and camera angle. Correct distracting staining, chips, irregular edges, crowding, or spacing only within the visible dental envelope.
-- Render every visible tooth as a separate anatomical tooth, not a repeated template. Preserve subtle human asymmetry; the left and right sides should be harmonious but not mirrored clones.
-- Use credible anterior-tooth proportions: upper central incisors are subtly dominant, lateral incisors slightly narrower and usually a little shorter, canines have modest cusp definition and stronger corner curvature, and posterior teeth progressively recede with the arch perspective.
-- Follow one smooth, natural smile arc that relates to the lower-lip curve without touching or moving the lip. Side teeth should appear naturally foreshortened as they turn away from the camera, while every originally visible side-tooth surface remains continuous, clearly readable enamel.
-- Form believable contact areas and small incisal embrasures that gradually open toward the canines. Separate teeth through crown shape and a narrow, subtle, low-contrast value transition, never through black outlines, black wedges, or uniform gaps.
-- Give each crown realistic convex facial planes, restrained line angles, softly varied incisal edges, and anatomically plausible thickness. Avoid perfectly flat faces, identical widths, identical lengths, or ruler-straight edges.
+CRITICAL DIRECTIVE 6 — NARROW LIPS & SMALL VISIBLE TEETH (CROP NATURALLY):
+- WHEN LIPS ARE NARROW OR TOOTH EXPOSURE IS SMALL:
+  * Keep the narrow lips 100% UNCHANGED. Never widen, stretch, or pull open narrow lips to show more teeth.
+  * No need to move teeth position or force full tall crowns.
+  * If the narrow lips naturally crop or cut off the top or bottom of the teeth, THAT IS COMPLETELY FINE AND EXPECTED. Keep the teeth naturally cropped by the lips.
+  * Simply refine whatever small visible enamel segments exist into a clean, structured, well-aligned, gap-free row of teeth within that exact narrow opening.
+  * Make the small visible teeth neat, harmonious, and structured without changing their compact footprint or their natural framing by the lips.
 
-SIDE-TOOTH INTEGRITY - CRITICAL
-- Preserve the complete visible enamel footprint of every original canine, premolar, and other side tooth. Do not erase, cut into, shorten, or cover any visible side-tooth enamel with oral-cavity darkness.
-- The dark buccal corridor may exist only outside the distal edge of the outermost visible tooth, exactly where it exists in the input. Do not enlarge it or move it inward across a tooth.
-- Never create a black triangle, wedge, notch, hole, stripe, stain, void, or near-black shadow on a visible tooth surface or at its gum transition.
-- Interproximal separation must be minimal and softly graded. Do not introduce any separator or contact shadow darker or wider than the corresponding separation in the input photograph.
-- If a side-tooth boundary is uncertain, preserve the continuous visible enamel supported by the input; never resolve uncertainty by painting a black gap.
+CRITICAL DIRECTIVE 7 — PRESERVE VERTICAL GAP / SPACE BETWEEN TOP AND BOTTOM TEETH:
+- IF THERE IS VERTICAL SPACE OR A CENTRAL GAP BETWEEN UPPER AND LOWER TEETH:
+  * PRESERVE THAT EXACT GAP: If the top teeth and bottom teeth do not touch in the original photo, DO NOT force them together.
+  * The output image MUST maintain the vertical space, open bite, and dark gap between the upper and lower teeth lines, exactly like the input photo.
+  * Do NOT elongate teeth vertically to close the space between upper and lower arches.
+  * Close only horizontal spaces between neighboring teeth (side-by-side gaps) — NEVER close the vertical opening between the top and bottom arches.
+  * Lips must remain 100% unchanged.
 
-ENAMEL AND PHOTOGRAPHIC REALISM
-- Use natural healthy enamel in a warm-neutral ivory shade matched to the photograph's white balance. Teeth may be attractively bright, but never pure white, blue-white, gray, glowing, or uniformly one color.
-- Treat all visible enamel in both arches as one atomic replacement. The final image must contain a single clean dental layer, never newly generated crowns overlaid on top of visible original teeth.
-- Enamel and its contact shadows must contain no green, cyan, blue, purple, or other foreign-color speck, reflection, stain, edge pixel, or masking remnant. Replace any such artifact with continuous locally matched enamel color and texture.
-- Include subtle cervical warmth, gentle value variation between teeth, slight incisal translucency, realistic internal depth, restrained specular highlights, and very fine enamel texture. These details must remain subtle at the input image's resolution.
-- Match the original light direction, highlight size, shadows, sharpness, depth of field, noise, compression, and reflections. Keep side-tooth shading gentle and continuous, with no abrupt dark patches. Preserve oral-cavity darkness only in genuine non-tooth areas so the teeth feel embedded rather than pasted on.
-- Produce a seamless tooth-to-gum and tooth-to-shadow transition with no halos, cutout edges, double teeth, overlapping enamel layers, or leftover stained patches.
+CRITICAL DIRECTIVE 8 — NATURAL PROPORTIONS & SIZE LOCK (DO NOT MAKE TOP TEETH BIG OR OVERSIZED):
+- STRICTLY FORBIDDEN: DO NOT MAKE THE TOP TEETH BIG, LONG, WIDE, OR BULKY. OVERSIZED TEETH RUIN NATURALNESS.
+- KEEP NATURAL TOOTH SCALE: The new teeth must strictly maintain the patient's authentic, natural tooth size, height, and width from the input photo.
+- CENTRAL INCISORS MUST NOT BE ENLARGED: Never make the front central teeth oversized, dominant, elongated, or horse-like.
+- IF TEETH ARE SMALL OR COMPACT IN INPUT, KEEP THEM SMALL AND COMPACT: Do NOT enlarge the teeth. Refine them into a neat, beautiful, symmetrical shape strictly within their original compact footprint.
+- NATURAL BIOLOGICAL PROPORTIONS (GOLDEN PROPORTIONS): Maintain genuine dental harmony. Lateral incisors must remain slightly narrower and shorter than central incisors; canines must have subtle natural distinction.
+- DO NOT ELONGATE BITING EDGES DOWNWARD: Never extend or stretch the incisal biting edges downward into the mouth opening or oral cavity. Keep the natural smile curve graceful and proportional.
+- NATURAL BEAUTY OVER BULK: The teeth should look clean, aesthetic, and naturally beautiful—like the patient's own healthy, perfect teeth—NEVER like oversized, fake, bulky chicklet veneers.
 
-REJECT THESE ARTIFACTS
-- No piano-key smile, continuous white band, fused teeth, cloned crowns, oversized central incisors, rabbit teeth, long rectangular veneers, flat dental arch, excessive symmetry, black separator lines, black triangular side artifacts, missing side-tooth enamel, missing visible lower teeth, floating teeth, invented teeth or dental rows beyond those visible in the input, artificial gums, plastic opacity, or over-sharpened CGI texture.
+THE TOOTH TRANSFORMATION PROTOCOL:
+1. COMPLETE SIDE-BY-SIDE GAP CLOSURE (PRESERVE VERTICAL ARCH GAP):
+- Completely close 100% of visible horizontal gaps, midline diastemas, and spaces between adjacent neighboring teeth.
+- CRITICAL: Do NOT close vertical space or an open bite between the top and bottom tooth rows. If the top teeth line and bottom teeth line have a gap or space between them in the input photo, KEEP THAT EXACT GAP OPEN between the arches.
+- Close side-by-side gaps by properly structuring and distributing space across adjacent teeth: subtly widen contact edges so neighboring teeth meet seamlessly with delicate, natural incisal embrasures — NEVER fuse teeth into a solid bar.
 
-Before rendering, internally inspect the original head pitch, camera elevation, dental plane, cervical attachment, upper-tooth exposure, lower-tooth exposure, tooth count, arch perspective, occlusions, light direction, color, and image sharpness. Before returning the image, verify that the new teeth share the head's 3D viewpoint, every upper crown is continuously attached with no unfilled band above it, and every lower tooth visible in the input is still visible at the same exposure. Prioritize anatomical plausibility and photographic integration over perfect whiteness or perfect symmetry.
+2. FLAWLESS SURFACE RESTORATION (CLEAN, SMOOTH ORGANIC ENAMEL):
+- Smooth rough, chipped, or uneven tooth edges into clean, healthy, aesthetic natural enamel surfaces without any fake shiny coating.
+- Even out discoloration and dark marks into a balanced, natural baseline enamel shade.
 
-Return only the final edited photograph, with no text, labels, explanation, border, or comparison layout.
+3. SYMMETRICAL ANATOMY & NATURAL ALIGNMENT (NO OVERSIZING):
+- Re-contour visible teeth into balanced, aesthetic proportions strictly within their existing natural footprint.
+- Correct chipping, uneven wear, tilting, rotation, and crowding without increasing tooth height or width.
+- Level and smooth the incisal biting edges into a clean, symmetrical dental arch that fits naturally behind the unchanged lips without looking bulky.
+
+4. ONLY REFINE TEETH THAT ARE ACTUALLY VISIBLE:
+- If only upper front teeth are visible (lower teeth hidden or shadowed), refine ONLY those upper front teeth. NEVER generate lower teeth if they are in dark shadow or concealed by lips.
+- If lower teeth ARE clearly exposed, refine them cleanly with proper individual boundaries.
+- If teeth are in side corners or in shadow, keep them in their natural shadow.
+
+5. MATCH ORIGINAL TOOTH COLOR & NATURAL LIGHTING (NO ARTIFICIAL BLEACH):
+- STRICT COLOR MATCH: Match the patient's ORIGINAL natural tooth color, temperature, and undertone from the input photo (e.g., natural warm ivory, soft cream, or off-white).
+- Do NOT bleach the teeth into an unnatural stark paper-white or glowing bleach shade.
+- Even out discoloration and stains into the person's clean natural baseline tooth shade.
+- NATURAL AMBIENT LIGHTING & ORAL SHADOWS:
+  * Do NOT light up the teeth artificially like lightbulbs.
+  * Teeth deeper inside the mouth must sit naturally in the soft shadow of the oral cavity.
+  * Tooth brightness must perfectly match the surrounding skin and photo exposure—if the photo is a webcam, indoor room, or dim lighting, teeth must stay completely natural in that exact light.
+
+6. MATCH CAMERA BLUR, FOCUS & GRAIN (SEAMLESS RESOLUTION MATCH):
+- STRICT BLUR & SHARPNESS MATCH: The restored teeth MUST match the exact amount of camera blur, lens softness, focal depth, grain, and sensor noise that the input photo contains.
+- If the input photo is soft, slightly blurry, or has low-resolution/webcam softness, the generated teeth MUST have that EXACT same degree of blur and softness.
+- Absolutely DO NOT render the teeth with hyper-crisp, razor-sharp, or ultra-HD definition if the surrounding face, lips, and image contain natural blur or softness.
+- The optical focus, blur radius, pixel texture, and grain of the teeth must blend 100% seamlessly with the rest of the image so they never look artificially sharp or pasted in.
+
+PRE-RETURN AUDIT:
+- Are the LIPS 100% identical to the original photo with ZERO attempt to "fix", smooth, or reshape them (lips are outside editing area)? (YES, STRICTLY UNTOUCHED).
+- Are the top teeth natural in size and proportion WITHOUT being enlarged, elongated, or made too big? (YES, PERFECT NATURAL HUMAN TOOTH SCALE).
+- Do the teeth look like authentic, good-looking natural teeth rather than oversized veneers or bulky chicklets? (YES, AUTHENTIC NATURAL DENTAL ANATOMY).
+- Is the dark mouth interior/oral cavity shadow preserved without being filled up with teeth? (YES).
+- Was zero gum tissue generated where none existed in the input photo? (YES).
+- Do the teeth blend with the authentic photo grain, blur, and lighting rather than looking like a cartoon filter or sticker? (YES).
+- If lower teeth were hidden in shadow in the original, are they STILL in shadow with no fake lower teeth drawn? (YES).
+- If the lips are narrow and tooth exposure is small, did the lips remain unchanged with small teeth cleanly structured and naturally cropped? (YES).
+- If there was vertical space or a gap between top and bottom teeth in the input photo, is that gap between the arches preserved without forcing teeth to touch? (YES).
+- Are 100% of visible horizontal gaps and spaces between adjacent visible teeth completely closed? (YES).
+- Do the top teeth extend all the way up to meet the upper lip directly with ZERO line, border, or gap created above them? (YES).
+- Is the tooth color an authentic match to the patient's original natural tooth tone rather than an artificial bleach white? (YES).
+- Are the teeth free of fake shiny reflections, glossy plastic glare, and artificial bright spots? (YES, NATURAL SATIN ENAMEL).
+
+OUTPUT: Return only the final edited photograph with no text, watermark, borders, or side-by-side layout.
 """
 
+PROMPT_CHAR_COUNT = len(PROMPT)
 
-def get_api_key() -> Optional[str]:
-    return (
-        getattr(settings, "GEMINI_API_KEY", None)
-        or os.environ.get("GEMINI_API_KEY")
-        or getattr(settings, "GEMINI_API_KEY_NEW", None)
-        or os.environ.get("GEMINI_API_KEY_NEW")
-    )
 
-def get_model_name() -> str:
-    raw_name = (
-        getattr(settings, "SMILE_GEMINI_MODEL_NAME", None)
-        or os.environ.get("SMILE_GEMINI_MODEL_NAME")
-        or getattr(settings, "GEMINI_MODEL_NAME", None)
-        or os.environ.get("GEMINI_MODEL_NAME")
-        or "gemini-2.5-flash-image"   # default
-    )
-    name = raw_name.strip()
-    # Normalize aliases to official Google Gemini API model identifier
-    if name in ["3.1-flash-image-lite", "gemini-3.1-flash-image-lite", "3.1-flash-lite-image", "gemini-3.1-flash-lite-image", "3.1-flash-lite", "gemini-3.1-flash-lite"]:
-        return "gemini-3.1-flash-lite-image"
-    if name in ["3.1-flash-image", "gemini-3.1-flash-image", "3.1-flash", "gemini-3.1-flash"]:
-        return "gemini-3.1-flash-image"
-    if name in ["2.5-flash-image", "gemini-2.5-flash-image"]:
-        return "gemini-2.5-flash-image"
-    return name
+class PromptTooLongError(RuntimeError):
+    """Retained for backwards-compatibility."""
+    pass
 
-def get_thinking_level() -> str:
-    raw_level = getattr(settings, "GEMINI_THINKING_LEVEL", None) or os.environ.get("GEMINI_THINKING_LEVEL") or "HIGH"
-    level = raw_level.strip().upper()
-    return level if level in ["HIGH", "MINIMAL", "LOW", "MEDIUM"] else "HIGH"
 
 def add_logo_on_right(image_path: str, logo_path: str) -> None:
+    """Overlays the clinic logo on the bottom right corner with a subtle gradient shadow."""
     base = Image.open(image_path).convert("RGBA")
     logo = Image.open(logo_path).convert("RGBA")
 
     base_w, base_h = base.size
-
-    shadow_height = int(base_h * 0.18)  
+    shadow_height = int(base_h * 0.18)
 
     gradient = Image.new("RGBA", (base_w, shadow_height), (0, 0, 0, 0))
     draw = ImageDraw.Draw(gradient)
-
     for y in range(shadow_height):
-        alpha = int(255 * (y / shadow_height))  
-        draw.line(
-            [(0, y), (base_w, y)],
-            fill=(0, 0, 0, alpha)
-        )
+        alpha = int(255 * (y / shadow_height))
+        draw.line([(0, y), (base_w, y)], fill=(0, 0, 0, alpha))
 
     base.paste(gradient, (0, base_h - shadow_height), gradient)
 
@@ -290,121 +412,110 @@ def add_logo_on_right(image_path: str, logo_path: str) -> None:
     target_h = int(logo.height * ratio)
     logo = logo.resize((target_w, target_h), Image.LANCZOS)
 
-    padding_x = int(base_w * 0.02)   
-    padding_y = int(base_h * 0.02)   
-
+    padding_x = int(base_w * 0.02)
+    padding_y = int(base_h * 0.02)
     x = base_w - target_w - padding_x
     y = base_h - target_h - padding_y
 
     base.paste(logo, (x, y), logo)
     base.convert("RGB").save(image_path, "JPEG", quality=95)
-    
+
+
 def generate_smile_design(input_path: str, output_path: str) -> None:
     """
-    Sends input image + prompt to Gemini (e.g. gemini-3.1-flash-image) via REST API,
-    logs thought/reasoning steps, and writes the resulting rendered image to output_path.
+    Sends input photograph + dental clinical refinement prompt directly to Google's
+    official Gemini Interactions API using the official google.genai SDK.
+    Follows official Google documentation:
+      - input: [ {"type": "text", ...}, {"type": "image", ...} ]
+      - generation_config: { "thinking_level": "high" }
+    Guarantees pixel-perfect before/after slider alignment by preserving and restoring
+    original image dimensions.
     """
+    import io
+
     api_key = get_api_key()
     if not api_key:
-        raise RuntimeError("GEMINI_API_KEY not configured. Set env var GEMINI_API_KEY or Django setting GEMINI_API_KEY.")
+        raise RuntimeError(
+            "GEMINI_API_KEY not configured. "
+            "Set env var GEMINI_API_KEY or Django setting GEMINI_API_KEY."
+        )
 
     model_name = get_model_name()
     thinking_level = get_thinking_level()
-    print(f"[SmileAI] Generating smile design using model: {model_name} (Thinking Level: {thinking_level})")
+
+    # Capture exact original dimensions for pixel-perfect comparison alignment
+    with Image.open(input_path) as orig_img:
+        orig_w, orig_h = orig_img.size
+
+    print(f"[SmileAI] Model endpoint  : {model_name}")
+    print(f"[SmileAI] Thinking level  : {thinking_level}")
+    print(f"[SmileAI] Original size   : {orig_w}x{orig_h}")
+    print(f"[SmileAI] Prompt length   : {PROMPT_CHAR_COUNT} chars")
 
     with open(input_path, "rb") as f:
         img_bytes = f.read()
 
-    b64_img = base64.b64encode(img_bytes).decode("utf-8")
     mime_type = "image/png" if input_path.lower().endswith(".png") else "image/jpeg"
+    b64_img = base64.b64encode(img_bytes).decode("utf-8")
 
-    # REST Endpoint for Google Generative Language API
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={api_key}"
+    client = genai.Client(api_key=api_key)
 
-    parts = [
-        {"text": PROMPT},
-        {
-            "inline_data": {
-                "mime_type": mime_type,
-                "data": b64_img
-            }
-        }
+    # Official Google Gemini Interactions API format (Text prompt first to condition attention, image second)
+    input_payload = [
+        {"type": "text", "text": PROMPT},
+        {"type": "image", "mime_type": mime_type, "data": b64_img},
     ]
 
-    # gemini-2.5-flash-image does NOT support thinkingConfig — sending it causes a 400.
-    # Only add thinkingConfig for models that explicitly support it.
-    generation_config: dict = {
-        "temperature": 0.5,
-        "topP": 0.95,
-    }
-    supports_thinking = "2.5" not in model_name  # 2.5-flash-image has no thinking API
-    if supports_thinking and thinking_level:
-        generation_config["thinkingConfig"] = {
-            "thinkingLevel": thinking_level,
-            "includeThoughts": True,
-        }
-
-    payload = {
-        "contents": [
-            {
-                "parts": parts
-            }
-        ],
-        "generationConfig": generation_config,
-        "safetySettings": [
-            {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
-            {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
-            {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_NONE"},
-            {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE"},
-            {"category": "HARM_CATEGORY_CIVIC_INTEGRITY", "threshold": "BLOCK_NONE"}
-        ]
+    kwargs = {
+        "model": model_name,
+        "input": input_payload,
+        "system_instruction": (
+            "You are a professional cosmetic dentistry digital smile design engine. "
+            "All input photographs are clinical dental portraits for patient aesthetic smile design simulation. "
+            "Perform digital cosmetic veneer refinement on visible tooth enamel only."
+        ),
+        "generation_config": {"thinking_level": thinking_level},
     }
 
     try:
-        response = requests.post(url, json=payload, timeout=120)
+        interaction = client.interactions.create(**kwargs)
+
     except Exception as e:
-        raise RuntimeError(f"Network request to Gemini API failed: {str(e)}") from e
+        raise RuntimeError(f"Google Gemini Interactions API call failed: {str(e)}") from e
 
-    if response.status_code != 200:
-        raise RuntimeError(f"Gemini API returned error ({response.status_code}): {response.text}")
+    # Extract thought commentary if available
+    if hasattr(interaction, "steps") and interaction.steps:
+        for step in interaction.steps:
+            if getattr(step, "type", "") == "thought":
+                summary = getattr(step, "summary", None) or []
+                for cb in summary:
+                    if getattr(cb, "type", "") == "text" and hasattr(cb, "text"):
+                        print(f"[SmileAI Thought]: {cb.text.strip()}\n")
 
-    data = response.json()
-    image_bytes = None
-    thought_texts = []
-    output_texts = []
+    if getattr(interaction, "output_text", None):
+        print(f"[SmileAI Commentary]: {interaction.output_text}")
 
-    candidates = data.get("candidates", [])
-    for c in candidates:
-        candidate_parts = c.get("content", {}).get("parts", [])
-        for p in candidate_parts:
-            is_thought = p.get("thought", False)
-            if "text" in p and p["text"]:
-                if is_thought:
-                    thought_texts.append(p["text"].strip())
-                else:
-                    output_texts.append(p["text"].strip())
+    if not interaction.output_image or not interaction.output_image.data:
+        status_val = getattr(interaction, "status", "unknown")
+        errors_val = getattr(interaction, "errors", None)
+        print(f"[SmileAI Warning] Gemini returned no image. Status: {status_val}, Errors: {errors_val}")
+        if status_val == "BLOCKED" or "block" in str(status_val).lower():
+            raise RuntimeError(
+                "Google Gemini safety moderation flagged this image. "
+                "Ensure the photo shows the full lower face with clear lighting and is not cropped too tightly on the lips."
+            )
+        raise RuntimeError(
+            f"Gemini did not return an output image. Status: {status_val} (Errors: {errors_val})"
+        )
 
-            inline = p.get("inlineData") or p.get("inline_data")
-            if inline and inline.get("data"):
-                image_bytes = base64.b64decode(inline["data"])
+    raw_bytes = base64.b64decode(interaction.output_image.data)
+    rendered_img = Image.open(io.BytesIO(raw_bytes))
 
-    if thought_texts:
-        print("\n[SmileAI] --- Model Thinking / Reasoning Process ---")
-        for idx, th in enumerate(thought_texts, 1):
-            print(f"[Thought Step {idx}]:\n{th}\n")
-        print("[SmileAI] --------------------------------------------\n")
+    # Resize back to exact original canvas dimensions so split-slider has 0 pixel jitter
+    if rendered_img.size != (orig_w, orig_h):
+        print(f"[SmileAI] Resizing {rendered_img.size} -> ({orig_w}, {orig_h}) with Lanczos for 100% frame alignment.")
+        rendered_img = rendered_img.resize((orig_w, orig_h), Image.LANCZOS)
 
-    if output_texts:
-        print(f"[SmileAI] Model output commentary: {' '.join(output_texts)}")
+    rendered_img.convert("RGB").save(output_path, "JPEG", quality=95)
 
-    if image_bytes is None:
-        raise RuntimeError(f"Gemini did not return an image. Response text: {response.text[:500]}")
-
-    with open(output_path, "wb") as f:
-        f.write(image_bytes)
-
-    # logo_path = os.path.join(settings.MEDIA_ROOT, "logo", "usd-logo.png")
-    # if os.path.exists(logo_path):
-    #     add_logo_on_right(output_path, logo_path)
-
-    print(f"[SmileAI] AI smile design generated and saved successfully to {output_path}")
+    print(f"[SmileAI] AI smile design successfully generated and saved to {output_path} (size: {orig_w}x{orig_h})")
