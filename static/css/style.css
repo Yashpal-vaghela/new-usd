@@ -87,6 +87,23 @@ GENERAL
 
 ---------------------------------------------------
 */
+/* Chrome, Edge, Safari */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
 
 @import url("https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@400;700&family=Gilda+Display:wght@400;700&display=swap");
 
@@ -619,6 +636,12 @@ ol li {
     width: 100%;
     left: 0px;
   }
+
+  .header-nav .nav>a {
+    background-color: black !important;
+    color: white !important;
+    border-bottom: 1px solid #2d2d2d !important;
+  }
 }
 
 @media (max-width: 991px) {
@@ -699,10 +722,10 @@ ol li {
     margin: 20px;
   }
 
-  .header-nav .nav>a:hover {
+  /* .header-nav .nav>a:hover {
     background-color: #f8f5f0 !important;
     color: #000;
-  }
+  } */
 
   /* .header-nav .nav > a:hover li {
     color: #000 !important;
@@ -729,7 +752,6 @@ ol li {
 }
 
 @media (max-width: 991px) {
-
   .header-nav .nav>a:hover,
   .header-nav .nav>a:active,
   .header-nav .nav>a:focus {
@@ -936,12 +958,14 @@ ol li {
     position: fixed;
     width: 250px !important;
     z-index: 999;
-    height: 100vh !important;
+    height: 100dvh !important;
     overflow-y: inherit !important;
     left: -250px;
     top: 0px;
     transition: all 0.5s linear;
-    background-color: #f8f5f0;
+    background-color: #000000;
+    border-bottom: 0px !important;
+    box-shadow: -16px -6px 20px 20px rgba(165, 165, 165, 0.5);
   }
 
   .mobile-sider-drawer-menu .header-nav .nav>a>li:hover>.sub-menu {
@@ -4876,7 +4900,7 @@ input[placeholder],
   }
 
   .header-nav .nav li {
-    background-color: #f8f5f0;
+    background-color: #000000;
   }
 
   .hea-shrink-btn {
@@ -7647,6 +7671,18 @@ body.modal-open {
   }
 }
 
+
+@media(max-width: 1350px){
+  .header-nav .nav>a{
+    font-size:13px;
+  }
+    .header-buttons {
+    font-size: 13px !important;
+    padding: 7px 12px;
+    margin-left: 14px;
+  }
+    
+}
 @media (max-width:1250px) {
   .header-nav .nav>a {
     font-size: 14px;
@@ -7671,6 +7707,20 @@ body.modal-open {
     padding: 5px 10px;
     margin-left: 9px;
   }
+}
+
+@media(max-width:1045px){
+  .header-nav .nav>a {
+    font-size: 11px;
+    padding: 15px 8px;
+  }
+
+  .header-buttons {
+    font-size: 11px !important;
+    padding: 5px 10px;
+    margin-left: 9px;
+  }
+
 }
 
 @media(max-width:576px) {
@@ -7743,5 +7793,3 @@ body.modal-open {
   color: #ffffff !important;
   user-select: none;
 }
-
-

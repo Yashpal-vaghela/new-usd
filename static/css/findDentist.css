@@ -548,4 +548,7 @@ input:-internal-autofill-selected {
     --clip-shift: 0px !important;
     --clip-path: 0px !important;
   }
+  .responsive-text{
+    font-size: 15px !important;
+  }
 }
