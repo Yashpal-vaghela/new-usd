@@ -3,7 +3,6 @@ import json
 import time
 import uuid
 import urllib.request
-
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
@@ -14,9 +13,9 @@ import threading
 from home.utils import send_mail
 from virtualsmileAI.forms import SmileDesignLeadForm
 from virtualsmileAI.gemini import add_logo_on_right
-from .yolo import decode_base64_image, run_inference_on_bgr, encode_image_to_base64_jpeg
-from .gemini import generate_smile_design
 from .models import SmileDesignLead
+from .yolo import decode_base64_image, run_inference_on_bgr, encode_image_to_base64_jpeg
+from .gemini import generate_smile_design, PromptTooLongError
 
 THRESHOLD = getattr(settings, "TEETH_DETECTION_THRESHOLD", 0.55)
 
@@ -292,36 +291,36 @@ def trigger_whatsapp_api(request):
         return JsonResponse({"ok": False, "error": str(e)}, status=502)
 
 @csrf_exempt
-# def detect_api(request):
-#     """
-#     POST JSON: { image: <base64 dataURL> }
-#     Returns: { conf: float, visible: bool, annotated: <base64 dataURL> }
-#     """
-#     if request.method != "POST":
-#         return HttpResponseBadRequest("POST required")
+def detect_api(request):
+    """
+    POST JSON: { image: <base64 dataURL> }
+    Returns: { conf: float, visible: bool, annotated: <base64 dataURL> }
+    """
+    if request.method != "POST":
+        return HttpResponseBadRequest("POST required")
 
-#     try:
-#         payload = json.loads(request.body.decode("utf-8"))
-#     except Exception:
-#         return HttpResponseBadRequest("Invalid JSON")
+    try:
+        payload = json.loads(request.body.decode("utf-8"))
+    except Exception:
+        return HttpResponseBadRequest("Invalid JSON")
 
-#     img_b64 = payload.get("image")
-#     if not img_b64:
-#         return HttpResponseBadRequest("Missing image")
+    img_b64 = payload.get("image")
+    if not img_b64:
+        return HttpResponseBadRequest("Missing image")
 
-#     try:
-#         img_bgr = decode_base64_image(img_b64)
-#         out = run_inference_on_bgr(img_bgr)
+    try:
+        img_bgr = decode_base64_image(img_b64)
+        out = run_inference_on_bgr(img_bgr)
 
-#         conf = float(out["max_conf"])
-#         visible = bool(out["visible"])
+        conf = float(out["max_conf"])
+        visible = bool(out["visible"])
 
-#         # You can keep returning annotated (even if you hide in UI)
-#         annotated = encode_image_to_base64_jpeg(out["annotated_bgr"], quality=80)
+        # You can keep returning annotated (even if you hide in UI)
+        annotated = encode_image_to_base64_jpeg(out["annotated_bgr"], quality=80)
 
-#         return JsonResponse({"conf": conf, "visible": visible, "annotated": annotated})
-#     except Exception as e:
-#         return JsonResponse({"error": str(e)}, status=400)
+        return JsonResponse({"conf": conf, "visible": visible, "annotated": annotated})
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=400)
 
 @require_POST
 @csrf_exempt
@@ -397,16 +396,31 @@ def smile_design_api(request):
         # If logo fails, still continue with Gemini
         print("⚠️ Logo add failed:", e)
 
-    # ✅ Run Gemini (full image)
+    # ✅ Run Gemini (calls generate_smile_design from gemini.py)
     try:
         generate_smile_design(before_path, after_path)
+    except PromptTooLongError as e:
+        import traceback
+        traceback.print_exc()
+        return JsonResponse({"error": str(e)}, status=422)
     except RuntimeError as e:
+        import traceback
+        traceback.print_exc()
         msg = str(e)
-        if "GEMINI_API_KEY" in msg or "not installed" in msg.lower() or "not configured" in msg.lower():
+        if "FAL_API_KEY" in msg or "GEMINI_API_KEY" in msg or "not configured" in msg.lower():
             return JsonResponse({"error": msg}, status=501)
         return JsonResponse({"error": msg}, status=400)
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         return JsonResponse({"error": str(e)}, status=500)
+
+    # ✅ Attached seamless lip-lock post-processing from seamless_blend.py
+    try:
+        from virtualsmileAI.seamless_blend import apply_seamless_lip_lock
+        apply_seamless_lip_lock(before_path=before_path, after_path=after_path, output_path=after_path)
+    except Exception as blend_err:
+        print(f"[SmileDesignAPI Warning] seamless_blend note: {blend_err}")
 
     request.session["smile_before"] = f"smile_design/before/{before_name}"
     request.session["smile_after"] = f"smile_design/after/{after_name}"

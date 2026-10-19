@@ -1,6 +1,5 @@
 import os
 import base64
-import requests
 from typing import Optional
 from PIL import Image, ImageDraw
 from django.conf import settings
@@ -269,118 +268,104 @@ def get_thinking_level() -> str:
 # 7. Did any gums appear that were hidden before? (NO allowed).
 
 # Return only the final edited photograph with no text, borders, or layout changes.
-# """
-# --------------------------------------------------New updatedPrompt for Ai craete by nikhil (08-10-2026)-----------------------------------------------------------------------------------
-PROMPT = r"""TASK: In-place natural dental refinement of TEETH ONLY on the input photograph. Re-structure, align, and close gaps on visible teeth while strictly matching the original tooth color, natural matte/satin enamel finish, and ambient lighting with ZERO artificial shine or fake bleach look.
+# ===================================================================================================
+# ===================================================================================================
+# 💡 KEY AESTHETIC DIRECTIVES:
+# - Exact Tooth Size Lock    : KEEP TEETH SIZE AS IT IS WHICH ORIGINAL INPUT CONTAINS! DO NOT MAKE TEETH WIDE OR TALL! Preserve exact original tooth height and width!
+# - Scope Limit             : ONLY refine visible tooth enamel and visible gums (if visible) — DO NOT change the rest of the mouth!
+# - Strict Gum Protocol     : IF GUM IS VISIBLE THEN ONLY CHANGES! Refine visible gums into healthy coral-pink scalloped margins. If gums are NOT visible, NEVER generate or reveal any gums!
+# - Preserve Mouth Interior : Keep tongue, lower teeth, and natural oral depth 100% unchanged
+# - Bottom Teeth Visibility : If bottom teeth are NOT visible in the input photo, DO NOT GENERATE THEM! Zero bottom teeth!
+# - Strict Bottom Teeth Lock: When bottom teeth ARE visible, they MUST NEVER drop down, sink, or be pushed too much to the bottom! Keep bottom teeth standing tall at their authentic vertical baseline—never enlarge the gap or replace bottom teeth with tongue!
+# - Connected Whole Smile   : If there is any gap between top and bottom bite line, FILL IT! Even if only two teeth attach, count as a connected WHOLE SMILE with both arches treated and beautifully aligned!
+# - Protect Bottom Teeth    : When visible, keep authentic forward scale, vertical height, and full visibility! When not visible, DO NOT DRAW ANY!
+# - Radiant Natural Shine   : MAXIMUM natural wet ceramic shininess! Dynamic, glistening specular highlights & liquid glaze! Enamel must gleam and catch light dynamically!
+# - Lifelike Translucency   : PRONOUNCED glassy 3D incisal depth, incisal halo effect & natural light transmission! NEVER opaque flat white!
+# - Organic Micro-Texture   : Fine anatomical vertical developmental lobes, gentle micro-ridges & perikymata! NEVER flat smooth plastic!
+# - Authentic Dental Arch   : Faithfully follow patient's real dental curvature & alignment ('dent') — NEVER flat bar!
+# - Flush In-Line Arch      : Front 2 teeth MUST NOT stick out forward or look outside the other teeth! Central incisors sit flush in-line with lateral incisors along one continuous arch!
+# - Lighting & Warmth Match : 100% match face's ambient lighting & warmth — ZERO blue/cool tint!
+# - Slender-Curvy Proportions: Delicate, slightly narrower width (NEVER extra wide, NEVER slightly big!)
+# - Buccal Corridors & Cheeks: Never touch side cheeks or lip corners, keep natural spaces (in CRITICAL DIRECTIVE 3)
+# ===================================================================================================
+# --------------------------------------------------New updated Prompt for AI created by Nikhil (08-10-2026)-----------------------------------------------------------------------------------
+PROMPT = r"""TASK
+Create a natural cosmetic dental refinement of the supplied photograph. Edit all visible teeth across both upper and lower rows. Strictly preserve whether the smile is ATTACHED (upper and lower teeth touching with zero black gap) or OPEN (separated by a gap). Keep upper teeth at their original short height, fill the lower row with refined lower teeth touching the upper teeth when attached, close 100% of horizontal side-by-side gaps, remove all black dots between teeth, render rich natural wet-ceramic shininess across the tooth faces, and place an exact, visible 1.0mm natural translucent edge strictly along the bottom horizontal cutting edge of the top teeth (never in the center).
 
-CRITICAL DIRECTIVE 1 — STRICT LIP & FACE LOCK (LIPS ARE OUTSIDE YOUR AREA):
-- THE PATIENT'S LIPS MUST REMAIN 100% UNTOUCHED AND PIXEL-IDENTICAL TO THE ORIGINAL PHOTO.
-- DO NOT FIX OR BEAUTIFY THE LIPS: Even if you think the lips look imperfect, crooked, uneven, asymmetrical, dry, thin, or not proper, DO NOT FIX, SMOOTH, OR ALTER THEM. The lips are strictly OUTSIDE of your editing area. Your sole task is inside the mouth on tooth enamel only.
-- DO NOT TOUCH, RESHAPE, RECOLOR, THIN, THICKEN, PLUMP, OR ALTER THE LIPS IN ANY WAY.
-- Preserve the exact upper lip drape, lower lip contour, lip corners (commissures), vermilion border, lip creases, and natural lip color/lipstick.
-- DO NOT OPEN THE MOUTH WIDER, widen the smile, shift the mouth opening, or alter the facial expression.
-- Keep the skin, facial hair, eyes, face, lighting, and background 100% UNTOUCHED and identical to the original photo.
+The source photograph is the sole authority for identity, lip boundaries, attached vs. open bite contact, small tooth scale, and perspective.
 
-CRITICAL DIRECTIVE 2 — LOCK TOP OF UPPER TEETH TO UPPER LIP (ZERO LINE OR GAP ABOVE TEETH):
-- MAINTAIN NATURAL TOOTH HEIGHT: Do NOT pull down, lower, or unnaturally elongate the upper teeth downward into the mouth.
-- The upper teeth must meet the bottom edge of the upper lip directly, leaving ZERO space, zero gap, zero border, and zero visible line between the top of the teeth and the upper lip.
-- DO NOT DRAW A TOP BORDER OR CERVICAL OUTLINE ON THE UPPER TEETH: In the input photograph, the upper lip naturally overlaps the top of the teeth. Do NOT round off the top of the teeth crowns. The enamel must continue straight up into the upper lip drape, exactly matching the original photo.
-- ABSOLUTELY ZERO GUM LINE ABOVE TOP TEETH: If no gumline is visible above the top teeth in the original photo, DO NOT generate or draw any line, margin, or tissue above them. The top contact boundary between teeth and upper lip must remain in the exact same vertical position as the original photo.
+PRIORITY ORDER
+When requirements conflict, apply this order:
+1. Preserve non-dental anatomy, identity, lip boundaries, expression, and framing.
+2. Preserve ATTACHED vs. OPEN bite exactly: if teeth touch with no black space in the source photo, keep upper and lower teeth 100% attached and touching with ZERO invented black gap above the lower lip.
+3. Keep upper teeth at their original short height and render visible lower teeth directly underneath them at their original position; close 100% of side-by-side horizontal gaps and remove all black interdental dots.
+4. Keep the center/middle of every tooth 100% solid pearlescent white with rich natural wet shininess, and restrict natural translucency strictly to an exact, visible 1.0mm natural translucent edge along the bottom horizontal edge (tip) of the top teeth.
 
-CRITICAL DIRECTIVE 3 — PRESERVE NATURAL ORAL CAVITY SHADOWS (DO NOT FILL THE MOUTH):
-- RESPECT DARK MOUTH INTERIOR: The dark shadows, oral cavity depth, and empty space inside the mouth must remain 100% NATURAL DARK SHADOW.
-- DO NOT FILL THE MOUTH WITH TEETH. Do NOT paint teeth across dark empty areas or into corners of the mouth where teeth were not visible.
-- IF LOWER TEETH ARE NOT VISIBLE OR ARE IN SHADOW, DO NOT GENERATE LOWER TEETH. Leave the lower mouth in its original natural shadow.
-- RESTRICT REFINEMENT STRICTLY TO THE EXISTING VISIBLE TOOTH FOOTPRINT: Only refine the exact teeth currently exposed. Do not expand the smile area or make the tooth display larger than in the original photo.
+1. PROTECTED IMAGE CONTENT
+Keep all content outside the authorized dental edit 100% unchanged:
+- Lips, lip borders, mouth corners (commissures), and mouth opening size.
+- Cheeks, smile folds, skin tone, skin texture, and facial hair.
+- Gums, tongue, and unrelated oral-cavity content.
+- Eyes, glasses, hair, clothing, background, and composition.
 
-CRITICAL DIRECTIVE 4 — NO CARTOON FILTER OR STICKER OVERLAY:
-- The teeth must NEVER look like a digital filter, sticker, or painted white overlay.
-- In blurry, grainy, low-resolution, or dim webcam photos, the teeth MUST match the authentic photo texture, camera sensor noise, grain, low contrast, and lighting of the surrounding face.
-- Do NOT draw high-contrast, opaque, glowing, or unnaturally sharp teeth over a grainy or dim photograph.
-- The lighting on the teeth must be 100% consistent with the person's real facial lighting—dim in dim light, shadowed in shadow.
+Do not lift the upper lip, lower the lower lip, widen the smile, alter the expression, or reveal additional anatomy.
+Preserve existing gums exactly. If gums are hidden, keep them hidden.
+Preserve the natural spaces at the extreme outer mouth corners (buccal corridors) without expanding the arch width into the cheeks.
 
-CRITICAL DIRECTIVE 5 — NO FAKE SHINE OR PLASTIC GLOSS:
-- ABSOLUTELY ZERO FAKE HIGH-SHINE, SPECULAR HOT-SPOTS, OR GLOSSY PLASTIC HIGHLIGHTS.
-- Real biological enamel has a soft, natural satin/semi-matte organic texture—it is NOT polished glass, wet plastic, or shiny acrylic.
-- Do NOT add bright white shiny reflection spots on the front of each tooth.
-- Teeth must look 100% authentic, organic, and real—NEVER like fake dentures, plastic teeth, or artificial veneers.
+2. ATTACHED SMILE vs. OPEN GAP RULE (CRITICAL — ZERO FAKE BLACK GAPS)
+Match the vertical contact between upper and lower teeth 100% to the source photograph:
 
-CRITICAL DIRECTIVE 6 — NARROW LIPS & SMALL VISIBLE TEETH (CROP NATURALLY):
-- WHEN LIPS ARE NARROW OR TOOTH EXPOSURE IS SMALL:
-  * Keep the narrow lips 100% UNCHANGED. Never widen, stretch, or pull open narrow lips to show more teeth.
-  * No need to move teeth position or force full tall crowns.
-  * If the narrow lips naturally crop or cut off the top or bottom of the teeth, THAT IS COMPLETELY FINE AND EXPECTED. Keep the teeth naturally cropped by the lips.
-  * Simply refine whatever small visible enamel segments exist into a clean, structured, well-aligned, gap-free row of teeth within that exact narrow opening.
-  * Make the small visible teeth neat, harmonious, and structured without changing their compact footprint or their natural framing by the lips.
+- CASE 1: IF TEETH ARE ATTACHED / TOUCHING IN THE SOURCE PHOTO (CLOSED BITE):
+  * MAKE AN ATTACHED SMILE: When the upper and lower teeth touch or fill the vertical space between the upper and lower lips with no black gap in the source photo, they MUST remain 100% attached and touching in the output!
+  * NEVER CREATE A BLACK GAP ABOVE THE LOWER LIP: Do NOT erase the lower teeth and do NOT paint a black space, dark void, or open gap between the upper teeth and the lower lip.
+  * FILL THE LOWER ROW WITH TOUCHING LOWER TEETH: Keep the upper teeth at their original short height, and fill the space directly beneath the upper teeth (above the lower lip) with the visible lower teeth touching the bottom edge of the upper teeth—separated only by a fine, clean horizontal tooth-contact line.
 
-CRITICAL DIRECTIVE 7 — PRESERVE VERTICAL GAP / SPACE BETWEEN TOP AND BOTTOM TEETH:
-- IF THERE IS VERTICAL SPACE OR A CENTRAL GAP BETWEEN UPPER AND LOWER TEETH:
-  * PRESERVE THAT EXACT GAP: If the top teeth and bottom teeth do not touch in the original photo, DO NOT force them together.
-  * The output image MUST maintain the vertical space, open bite, and dark gap between the upper and lower teeth lines, exactly like the input photo.
-  * Do NOT elongate teeth vertically to close the space between upper and lower arches.
-  * Close only horizontal spaces between neighboring teeth (side-by-side gaps) — NEVER close the vertical opening between the top and bottom arches.
-  * Lips must remain 100% unchanged.
+- CASE 2: IF TEETH HAVE AN OPEN VERTICAL GAP IN THE SOURCE PHOTO (OPEN BITE):
+  * KEEP OPEN ONLY WHEN ORIGINALLY OPEN: Only if the source photograph clearly shows an open dark space or separation between the upper and lower teeth, preserve that exact open gap without fusing the arches together.
 
-CRITICAL DIRECTIVE 8 — NATURAL PROPORTIONS & SIZE LOCK (DO NOT MAKE TOP TEETH BIG OR OVERSIZED):
-- STRICTLY FORBIDDEN: DO NOT MAKE THE TOP TEETH BIG, LONG, WIDE, OR BULKY. OVERSIZED TEETH RUIN NATURALNESS.
-- KEEP NATURAL TOOTH SCALE: The new teeth must strictly maintain the patient's authentic, natural tooth size, height, and width from the input photo.
-- CENTRAL INCISORS MUST NOT BE ENLARGED: Never make the front central teeth oversized, dominant, elongated, or horse-like.
-- IF TEETH ARE SMALL OR COMPACT IN INPUT, KEEP THEM SMALL AND COMPACT: Do NOT enlarge the teeth. Refine them into a neat, beautiful, symmetrical shape strictly within their original compact footprint.
-- NATURAL BIOLOGICAL PROPORTIONS (GOLDEN PROPORTIONS): Maintain genuine dental harmony. Lateral incisors must remain slightly narrower and shorter than central incisors; canines must have subtle natural distinction.
-- DO NOT ELONGATE BITING EDGES DOWNWARD: Never extend or stretch the incisal biting edges downward into the mouth opening or oral cavity. Keep the natural smile curve graceful and proportional.
-- NATURAL BEAUTY OVER BULK: The teeth should look clean, aesthetic, and naturally beautiful—like the patient's own healthy, perfect teeth—NEVER like oversized, fake, bulky chicklet veneers.
+3. STRICT UPPER & LOWER SIZE LOCK (DO NOT OVERWRITE LOWER TEETH)
+- KEEP TOP TEETH SHORT: The bottom cutting edges of the upper teeth must stop at their exact original vertical pixel level. Never stretch upper teeth downward to the lower lip.
+- PRESERVE AND REFINE LOWER TEETH IN PLACE: Whenever lower teeth sit between the upper teeth and the lower lip (even a thin or partial row), keep 100% of those lower teeth visible, standing tall against the upper teeth, and refine, align, and whiten them to match the upper row.
+- SLENDER, COMPACT WIDTHS: Keep every upper and lower tooth at its original small, slender, compact width. The front two upper central incisors must stay short and level with the adjacent lateral incisors—never wide, bulky, or protruding forward.
 
-THE TOOTH TRANSFORMATION PROTOCOL:
-1. COMPLETE SIDE-BY-SIDE GAP CLOSURE (PRESERVE VERTICAL ARCH GAP):
-- Completely close 100% of visible horizontal gaps, midline diastemas, and spaces between adjacent neighboring teeth.
-- CRITICAL: Do NOT close vertical space or an open bite between the top and bottom tooth rows. If the top teeth line and bottom teeth line have a gap or space between them in the input photo, KEEP THAT EXACT GAP OPEN between the arches.
-- Close side-by-side gaps by properly structuring and distributing space across adjacent teeth: subtly widen contact edges so neighboring teeth meet seamlessly with delicate, natural incisal embrasures — NEVER fuse teeth into a solid bar.
+4. 100% SIDE-BY-SIDE GAP CLOSURE, BLACK-DOT REMOVAL & CHIP REPAIR AND DETAILED LOWER ARCHITECTURE
+- CLOSE ALL SIDE-BY-SIDE HORIZONTAL GAPS: Close 100% of horizontal gaps and midline diastemas between adjacent side-by-side teeth within the same row at compact scale, without inflating tooth size.
+- REMOVE ALL BLACK DOTS & DARK TRIANGLES BETWEEN TEETH:
+  * Completely remove and fill every small black dot, dark pinhole, interproximal stain, and dark triangular pocket ("black triangle") between adjacent teeth or along the contact line between upper and lower teeth.
+  * Replace dark interdental dots with clean, flush pearlescent enamel so zero black dots remain anywhere between the teeth.
+- DETAILED LOWER ARCH ARCHITECTURE (IF VISIBLE): If the bottom teeth are visible in any amount, they MUST be fully generated and refined beneath the upper arch. Ensure they match the top teeth's natural size and spacing, and avoid any flat, fused "bar" or monolithic zipper look on the lower arch. Inspect and restore the natural 3D anatomical contours of every individual lower tooth. Sculpt each lower incisor and canine with its own distinct incisal edge, curved boundary, fine vertical developmental lines, mamelon-derived micro-ridges, and dark interproximal separation lines so they have authentic 3D structure, depth, and character matching the upper arch.
+- SUBTLE 3D CONTOUR DEFINITION: Define individual teeth and the horizontal contact line between attached upper and lower rows using smooth, natural 3D enamel contours rather than black gaps or dark holes.
+- CHIP REPAIR: Rebuild chipped or worn tooth edges smoothly within their original compact silhouettes.
 
-2. FLAWLESS SURFACE RESTORATION (CLEAN, SMOOTH ORGANIC ENAMEL):
-- Smooth rough, chipped, or uneven tooth edges into clean, healthy, aesthetic natural enamel surfaces without any fake shiny coating.
-- Even out discoloration and dark marks into a balanced, natural baseline enamel shade.
+5. STRICT ZONAL NATURAL TRANSLUCENCY — EXTRANEOUS NATURAL 1.0mm MICRO-EDGE ONLY (NEVER IN THE CENTER, NO BLUE/GREY BANDING)
+Divide each upper tooth vertically into two strict optical zones:
+- ZONE 1: TOP & CENTER OF TOOTH (90% OF THE CROWN) = 100% SOLID PEARLESCENT WHITE:
+  * The upper portion and the entire center/middle face of every tooth must be 100% solid, dense, opaque, spotless pearlescent ivory-white (Vita A1/BL2) harmonized with the scene lighting.
+  * ZERO NATURAL TRANSLUCENCY IN THE CENTER: Never place translucent shading, grey/dark patches, or hollow texture in the center/middle of a tooth face or along the vertical midline between the front teeth.
+- ZONE 2: EXACT 1mm NATURAL MICRO-EDGE (BOTTOM 1.0mm TIP ONLY — MORE  NATURAL TRANSLUCENCY):
+  * Place a highly visible, exact 1.0mm natural translucent rim strictly along the extreme micro-edge (the bottom-most horizontal cutting tip where the top teeth end) to show realistic, glassy, three-dimensional depth, where the dark mouth cavity background can be seen.
+  * NATURAL OPALESCENCE: The edge must display a natural, semi-translucent, glass-like transition with subtle opalescent depth (faint cool-blue/grey) where the light captures it organically, entirely natural and without solid artificial blue or dark banding. Merge this natural incisal halo gracefully into the solid white crown above it (Zone 1) with zero harsh borders or outlines.
+- give extra normal and natural transulency at edge of top teeth,
+- blue natural transulency generate kar top teeth na niche,
+- do geneerate blue line as natural transulency
 
-3. SYMMETRICAL ANATOMY & NATURAL ALIGNMENT (NO OVERSIZING):
-- Re-contour visible teeth into balanced, aesthetic proportions strictly within their existing natural footprint.
-- Correct chipping, uneven wear, tilting, rotation, and crowding without increasing tooth height or width.
-- Level and smooth the incisal biting edges into a clean, symmetrical dental arch that fits naturally behind the unchanged lips without looking bulky.
+6. GLASS-LIKE WET SHININESS AND SPECULAR CONTRAST
+- RICH GLASS-LIKE WET SHININESS: Coat both upper and lower visible teeth in a vibrant, heavily hydrated, mirror-like saliva glaze (glossy, glass-like polished e.max ceramic finish).
+- CRISP NATURAL SPECULAR HIGHLIGHTS ON THE TOOTH FACE: Render bright, natural specular light reflections, glistening wet highlight ribbons, and pinpoint reflection pings across the solid center faces and vertical developmental ridges of both arches. The enamel must catch the photograph's ambient lighting with high specular contrast so the teeth look authentically moist, wet, and glassy.
+- NATURAL MOUTH DEPTH & CAMERA BLEND: Allow the lower row and posterior side teeth to carry subtle, natural oral shading while sharing the same wet gloss, clean ivory tone, and detailed anatomical architecture. Match the source photo's ambient color temperature, focus softness, and sensor grain seamlessly.
 
-4. ONLY REFINE TEETH THAT ARE ACTUALLY VISIBLE:
-- If only upper front teeth are visible (lower teeth hidden or shadowed), refine ONLY those upper front teeth. NEVER generate lower teeth if they are in dark shadow or concealed by lips.
-- If lower teeth ARE clearly exposed, refine them cleanly with proper individual boundaries.
-- If teeth are in side corners or in shadow, keep them in their natural shadow.
+7. FINAL SOURCE COMPARISON
+Before returning the result, verify all conditions:
+- If bottom teeth are visible in the original photo, are they fully generated, refined, and matching the upper arch directly underneath them, while keeping original bite contact attached (zero black gap)?
+- Is there a highly visible, exact 1.0mm natural translucent micro-edge on the bottom tip of the top teeth, without blue, grey, or dark-colored bands or any center natural translucency?
+- Do the teeth display a rich, natural, glass-like wet specular shininess across both arches?
+- Are 100% of horizontal gaps and dark dots between teeth closed at compact scale?
+- Are the lips, mouth opening, skin, and expression 100% unchanged?
 
-5. MATCH ORIGINAL TOOTH COLOR & NATURAL LIGHTING (NO ARTIFICIAL BLEACH):
-- STRICT COLOR MATCH: Match the patient's ORIGINAL natural tooth color, temperature, and undertone from the input photo (e.g., natural warm ivory, soft cream, or off-white).
-- Do NOT bleach the teeth into an unnatural stark paper-white or glowing bleach shade.
-- Even out discoloration and stains into the person's clean natural baseline tooth shade.
-- NATURAL AMBIENT LIGHTING & ORAL SHADOWS:
-  * Do NOT light up the teeth artificially like lightbulbs.
-  * Teeth deeper inside the mouth must sit naturally in the soft shadow of the oral cavity.
-  * Tooth brightness must perfectly match the surrounding skin and photo exposure—if the photo is a webcam, indoor room, or dim lighting, teeth must stay completely natural in that exact light.
-
-6. MATCH CAMERA BLUR, FOCUS & GRAIN (SEAMLESS RESOLUTION MATCH):
-- STRICT BLUR & SHARPNESS MATCH: The restored teeth MUST match the exact amount of camera blur, lens softness, focal depth, grain, and sensor noise that the input photo contains.
-- If the input photo is soft, slightly blurry, or has low-resolution/webcam softness, the generated teeth MUST have that EXACT same degree of blur and softness.
-- Absolutely DO NOT render the teeth with hyper-crisp, razor-sharp, or ultra-HD definition if the surrounding face, lips, and image contain natural blur or softness.
-- The optical focus, blur radius, pixel texture, and grain of the teeth must blend 100% seamlessly with the rest of the image so they never look artificially sharp or pasted in.
-
-PRE-RETURN AUDIT:
-- Are the LIPS 100% identical to the original photo with ZERO attempt to "fix", smooth, or reshape them (lips are outside editing area)? (YES, STRICTLY UNTOUCHED).
-- Are the top teeth natural in size and proportion WITHOUT being enlarged, elongated, or made too big? (YES, PERFECT NATURAL HUMAN TOOTH SCALE).
-- Do the teeth look like authentic, good-looking natural teeth rather than oversized veneers or bulky chicklets? (YES, AUTHENTIC NATURAL DENTAL ANATOMY).
-- Is the dark mouth interior/oral cavity shadow preserved without being filled up with teeth? (YES).
-- Was zero gum tissue generated where none existed in the input photo? (YES).
-- Do the teeth blend with the authentic photo grain, blur, and lighting rather than looking like a cartoon filter or sticker? (YES).
-- If lower teeth were hidden in shadow in the original, are they STILL in shadow with no fake lower teeth drawn? (YES).
-- If the lips are narrow and tooth exposure is small, did the lips remain unchanged with small teeth cleanly structured and naturally cropped? (YES).
-- If there was vertical space or a gap between top and bottom teeth in the input photo, is that gap between the arches preserved without forcing teeth to touch? (YES).
-- Are 100% of visible horizontal gaps and spaces between adjacent visible teeth completely closed? (YES).
-- Do the top teeth extend all the way up to meet the upper lip directly with ZERO line, border, or gap created above them? (YES).
-- Is the tooth color an authentic match to the patient's original natural tooth tone rather than an artificial bleach white? (YES).
-- Are the teeth free of fake shiny reflections, glossy plastic glare, and artificial bright spots? (YES, NATURAL SATIN ENAMEL).
-
-OUTPUT: Return only the final edited photograph with no text, watermark, borders, or side-by-side layout.
+OUTPUT
+Return only one final edited photograph.
+Preserve the source aspect ratio, framing, and dimensions.
+No added text, watermark, border, collage, or before-and-after layout.
 """
 
 PROMPT_CHAR_COUNT = len(PROMPT)
@@ -421,6 +406,274 @@ def add_logo_on_right(image_path: str, logo_path: str) -> None:
     base.convert("RGB").save(image_path, "JPEG", quality=95)
 
 
+
+def match_teeth_blur_and_whiteness(
+    before_path: str,
+    after_path: str,
+    output_path: Optional[str] = None,
+) -> bool:
+    """
+    Measures the optical blur / softness and ambient luminance of the input photograph
+    and adaptively matches the generated teeth to that exact blurriness and lighting.
+
+    1. Optical Blur Matching (Resolves 'photo is low-res but teeth are HD'):
+       If the input photo is soft or blurry (e.g. mobile camera, motion blur, webcam softness),
+       hyper-crisp HD teeth look pasted-on. This function measures the input photo's facial
+       softness and applies matching Gaussian blur to the teeth so their optical sharpness
+       matches the photograph exactly.
+
+    2. Adaptive Whiteness Balancing (Resolves 'teeth still look too white in some outputs'):
+       Prevents teeth from looking unnaturally stark white, chalky, or fluorescent in dim
+       or medium-lit photos. Compresses excessive luminance in CIELAB space to harmonize with
+       the scene's ambient lighting while preserving enamel contrast, specular shine, and natural translucency.
+    """
+    if output_path is None:
+        output_path = after_path
+
+    try:
+        import cv2
+        import numpy as np
+
+        if not os.path.isfile(before_path) or not os.path.isfile(after_path):
+            return False
+
+        b_img = cv2.imread(before_path)
+        a_img = cv2.imread(after_path)
+        if b_img is None or a_img is None:
+            return False
+
+        h, w = b_img.shape[:2]
+        if a_img.shape[:2] != (h, w):
+            a_img = cv2.resize(a_img, (w, h), interpolation=cv2.INTER_LANCZOS4)
+
+        # 1. Retrieve oral aperture and YOLO enamel masks directly from seamless_blend.py
+        from virtualsmileAI.seamless_blend import get_accurate_teeth_mask, _get_mask_from_yolo
+        mask = get_accurate_teeth_mask(b_img=b_img, a_img=a_img, before_path=before_path, binary=True)
+
+        if mask is None or np.sum(mask) == 0:
+            print("[SmileAI BlurMatch] No mouth mask detected; skipping post-blur/whiteness match.")
+            return False
+
+        # Accurate teeth enamel mask for texture, shine, and shade enhancement
+        yolo_teeth = _get_mask_from_yolo(a_img, conf=0.15)
+        if yolo_teeth is not None and np.sum(yolo_teeth > 0) > 50:
+            enamel_mask = yolo_teeth
+        else:
+            enamel_mask = mask
+
+        # 2. Perioral Skin & Aperture Boundary Isolation
+        skin_kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (35, 35))
+        dilated_mask = cv2.dilate(mask, skin_kernel)
+        skin_mask = (dilated_mask > 0) & (mask == 0)
+
+        b_gray = cv2.cvtColor(b_img, cv2.COLOR_BGR2GRAY)
+        a_gray = cv2.cvtColor(a_img, cv2.COLOR_BGR2GRAY)
+
+        # 3. Optical Blur / Softness Matching: Measure camera softness to match at final output pass
+        orig_teeth_var = float(np.var(cv2.Laplacian(b_gray, cv2.CV_64F)[mask > 0]))
+        curr_teeth_var = float(np.var(cv2.Laplacian(a_gray, cv2.CV_64F)[mask > 0]))
+        target_var = max(5.0, orig_teeth_var * 1.08)
+
+        # If AI teeth are noticeably sharper than the input photo, calculate matching Gaussian blur sigma
+        best_sigma = 0.0
+        if curr_teeth_var > target_var * 1.10:
+            for s in np.arange(0.2, 3.0, 0.1):
+                bl_gray = cv2.GaussianBlur(a_gray, (0, 0), s)
+                v = float(np.var(cv2.Laplacian(bl_gray, cv2.CV_64F)[mask > 0]))
+                if v <= target_var:
+                    best_sigma = float(s)
+                    break
+        best_sigma = min(0.30, best_sigma)
+
+        print(f"[SmileAI BlurMatch] Input teeth var: {orig_teeth_var:.1f}, AI teeth var: {curr_teeth_var:.1f}, Target var: {target_var:.1f} -> best_sigma: {best_sigma:.1f}")
+
+        # 4. Whiteness, Lighting & Ambient Luminance Balancing
+        b_lab = cv2.cvtColor(b_img, cv2.COLOR_BGR2LAB)
+        a_lab = cv2.cvtColor(a_img, cv2.COLOR_BGR2LAB)
+        b_L = b_lab[:, :, 0]
+        a_L = a_lab[:, :, 0].astype(np.float32)
+
+        skin_L_90 = float(np.percentile(b_L[skin_mask], 90)) if np.sum(skin_mask) > 100 else 150.0
+        orig_teeth_L_90 = float(np.percentile(b_L[mask > 0], 90))
+        curr_teeth_L_80 = float(np.percentile(a_L[mask > 0], 80))
+
+        # Target diffuse body luminance - Unconstrained natural porcelain whiteness (Vita A1 / BL2)
+        target_max_body_L = 248.0
+
+        print(f"[SmileAI LightingMatch] Skin 90th L: {skin_L_90:.1f}, Orig teeth L: {orig_teeth_L_90:.1f}, Current teeth 80th L: {curr_teeth_L_80:.1f}, Target Lighting L: {target_max_body_L:.1f}")
+
+        if curr_teeth_L_80 > target_max_body_L:
+            diff = curr_teeth_L_80 - target_max_body_L
+            print(f"[SmileAI LightingMatch] Harmonizing diffuse body lighting by {diff:.1f} points to match environment.")
+            ratio = target_max_body_L / max(curr_teeth_L_80, 1.0)
+            threshold = target_max_body_L * 0.90
+            teeth_pixels = (mask > 0) & (a_L > threshold)
+            if np.any(teeth_pixels):
+                excess = (a_L[teeth_pixels] - threshold) / max(curr_teeth_L_80 - threshold, 1.0)
+                excess = np.clip(excess, 0.0, 1.0)
+                diffuse_factor = 1.0 - (1.0 - ratio) * excess
+                a_L[teeth_pixels] = a_L[teeth_pixels] * diffuse_factor
+                a_lab[:, :, 0] = np.clip(a_L, 0, 255).astype(np.uint8)
+
+        # 5. Natural Pearlescent Ivory Shade Balancing (Vita A1 / Bleach BL2)
+        # Avoids dingy yellow stain without artificial cyan tint
+        kernel_3 = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
+        inner_enamel = cv2.erode((enamel_mask > 0).astype(np.uint8) * 255, kernel_3)
+        feathered_weight = cv2.GaussianBlur(inner_enamel.astype(np.float32) / 255.0, (5, 5), 1.0)
+
+        enamel_bool = feathered_weight > 0.05
+        if np.sum(enamel_bool) > 50:
+            a_B = a_lab[:, :, 2].astype(np.float32)
+            mean_B = float(np.mean(a_B[enamel_bool]))
+
+            if mean_B > 135.0:
+                excess_yellow = mean_B - 134.0
+                L_norm = np.clip(a_L / 240.0, 0.0, 1.0)
+                b_shift = excess_yellow * 0.70 * L_norm * feathered_weight
+                a_B = np.clip(a_B - b_shift, 128.0, 255.0)
+                a_lab[:, :, 2] = a_B.astype(np.uint8)
+                print(f"[SmileAI Shade] Balanced enamel towards clean pearlescent ivory (-{excess_yellow*0.70:.1f} b*).")
+            elif mean_B < 118.0:
+                cool_deficit = (120.0 - mean_B) * feathered_weight
+                a_B = np.clip(a_B + cool_deficit, 0.0, 255.0)
+                a_lab[:, :, 2] = a_B.astype(np.uint8)
+                print(f"[SmileAI Shade] Corrected extreme cool tint (+{120.0 - mean_B:.1f} b*).")
+
+        # 6. Automatic Lower-Lip Moisture & Specular Luster Sync
+        lip_moisture_factor = 0.50
+        try:
+            from virtualsmileAI.seamless_blend import get_face_landmarker
+            detector = get_face_landmarker()
+            if detector is not None:
+                import mediapipe as mp
+                mp_img = mp.Image(image_format=mp.ImageFormat.SRGB, data=cv2.cvtColor(b_img, cv2.COLOR_BGR2RGB))
+                res = detector.detect(mp_img)
+                if res.face_landmarks:
+                    lms = res.face_landmarks[0]
+                    lower_lip_indices = [14, 87, 178, 88, 95, 78, 61, 146, 91, 181, 84, 17, 314, 405, 321, 375, 291, 308, 324, 318, 402, 317]
+                    pts_lip = [[int(np.clip(lms[idx].x * w, 0, w - 1)), int(np.clip(lms[idx].y * h, 0, h - 1))] for idx in lower_lip_indices]
+                    lip_poly = np.zeros((h, w), dtype=np.uint8)
+                    cv2.fillPoly(lip_poly, [np.array(pts_lip, dtype=np.int32)], 255)
+                    lip_pixels = b_L[lip_poly > 0]
+                    if len(lip_pixels) > 50:
+                        p95_lip = float(np.percentile(lip_pixels, 95))
+                        p50_lip = float(np.percentile(lip_pixels, 50))
+                        lip_spread = p95_lip - p50_lip
+                        lip_moisture_factor = float(np.clip((lip_spread - 15.0) / 25.0, 0.25, 1.10))
+                        print(f"[SmileAI LipMoisture] Lower-lip specular spread: {lip_spread:.1f} -> moisture factor: {lip_moisture_factor:.2f}")
+        except Exception as e:
+            print(f"[SmileAI LipMoisture Note]: {e}")
+
+        # Combined Physical Luster Factor: 55% ambient skin lighting + 45% lower-lip moisture
+        ambient_light_factor = float(np.clip((skin_L_90 - 80.0) / 100.0, 0.25, 1.0))
+        env_factor = 0.55 * ambient_light_factor + 0.45 * lip_moisture_factor
+
+        # 7. Environment-Adaptive Specular Shine & Incisal Translucency (Both Arches)
+        if np.sum(enamel_bool) > 50:
+            a_L_channel = a_lab[:, :, 0].astype(np.float32)
+            enamel_L = a_L_channel[enamel_bool]
+
+            # High-pass filter for vertical developmental lobes & perikymata micro-ridges
+            blur_lobe = cv2.GaussianBlur(a_L_channel, (0, 0), 1.2)
+            lobe_detail = a_L_channel - blur_lobe
+
+            # Morphological Top-Hat extracts specular highlights
+            tophat_kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (7, 7))
+            tophat = cv2.morphologyEx(a_L_channel.astype(np.uint8), cv2.MORPH_TOPHAT, tophat_kernel).astype(np.float32)
+
+            p78 = float(np.percentile(enamel_L, 78))
+            specular_curve = np.clip((a_L_channel - p78) / max(255.0 - p78, 1.0), 0.0, 1.0) ** 1.6
+
+            # Unconstrained specular shine, wet luster ribbons & micro-glints
+            # User mandate: Remove all artificial limits on shine and translucency
+            specular_boost = specular_curve * 22.0 * feathered_weight
+            glint_boost = (tophat / 255.0) * specular_curve * 25.0 * feathered_weight
+            lobe_boost = lobe_detail * 0.75 * feathered_weight
+
+            # 3D optical depth across enamel gradient
+            p25 = float(np.percentile(enamel_L, 25))
+            shadow_depth = np.clip((p25 - a_L_channel) / max(p25, 1.0), 0.0, 1.0) * 3.5 * feathered_weight
+
+            enhanced_L = a_L_channel + lobe_boost + specular_boost + glint_boost - shadow_depth
+
+            a_lab[:, :, 0] = np.clip(enhanced_L, 0, 255).astype(np.uint8)
+            print(f"[SmileAI SpecularShine] Applied unconstrained specular shine & wet luster (boost=+22.0, glint=+25.0).")
+
+            # 8. Delicate Incisal Translucency (Strictly at bottom cutting edge — NEVER in the center!)
+            try:
+                from virtualsmileAI.seamless_blend import detect_bite_space_line
+                bite_data = detect_bite_space_line(b_img, before_path=before_path)
+                has_lower_teeth = bite_data.get("bottom_teeth_exist", False)
+                valley_y_line = bite_data.get("valley_y")
+
+                ys, xs = np.where(enamel_bool)
+                ymin, ymax = int(np.min(ys)), int(np.max(ys))
+                span_y = ymax - ymin
+                if span_y > 15:
+                    incisal_mask = np.zeros((h, w), dtype=np.float32)
+                    halo_depth = max(3, min(8, int(span_y * 0.08)))
+
+                    for x_col in np.unique(xs):
+                        col_ys = ys[xs == x_col]
+                        if len(col_ys) > 6:
+                            if not has_lower_teeth:
+                                # UPPER ARCH ONLY: Cutting edge is strictly at the BOTTOM of upper crowns!
+                                # Center of teeth must remain 100% solid opaque porcelain!
+                                u_edge = int(np.max(col_ys))
+                                for y in range(max(0, u_edge - halo_depth), u_edge + 1):
+                                    incisal_mask[y, x_col] = max(incisal_mask[y, x_col], (1.0 - (u_edge - y) / float(halo_depth)))
+                            else:
+                                # DUAL ARCH: Upper teeth edge at bottom of crowns, lower teeth edge at top of crowns
+                                mid_split = valley_y_line if valley_y_line is not None else (ymin + ymax) // 2
+                                u_ys = col_ys[col_ys < mid_split]
+                                if len(u_ys) > 4:
+                                    u_edge = int(np.max(u_ys))
+                                    for y in range(max(0, u_edge - halo_depth), u_edge + 1):
+                                        incisal_mask[y, x_col] = max(incisal_mask[y, x_col], (1.0 - (u_edge - y) / float(halo_depth)))
+                                l_ys = col_ys[col_ys >= mid_split]
+                                if len(l_ys) > 4:
+                                    l_edge = int(np.min(l_ys))
+                                    for y in range(l_edge, min(h, l_edge + halo_depth)):
+                                        incisal_mask[y, x_col] = max(incisal_mask[y, x_col], (1.0 - (y - l_edge) / float(halo_depth)))
+
+                    incisal_feathered = cv2.GaussianBlur(incisal_mask, (5, 5), 1.0) * feathered_weight
+                    if np.sum(incisal_feathered > 0.05) > 15:
+                        a_B_ch = a_lab[:, :, 2].astype(np.float32)
+                        a_A_ch = a_lab[:, :, 1].astype(np.float32)
+
+                        # Natural dental ceramic opalescent reflex:
+                        # Keep subtle micro-accentuation without artificial blue dots or lines
+                        a_B_ch = np.clip(a_B_ch - incisal_feathered * 0.8, 0.0, 255.0)
+                        a_A_ch = np.clip(a_A_ch - incisal_feathered * 0.4, 0.0, 255.0)
+
+                        a_lab[:, :, 2] = a_B_ch.astype(np.uint8)
+                        a_lab[:, :, 1] = a_A_ch.astype(np.uint8)
+                        print("[SmileAI Natural Translucency] Applied delicate ceramic incisal Natural translucency without color tinting.")
+            except Exception as tr_err:
+                print(f"[SmileAI Natural Translucency Note]: {tr_err}")
+
+        a_img = cv2.cvtColor(a_lab, cv2.COLOR_LAB2BGR)
+
+        # 9. Optical Camera Softness / Blur Matching (Final Lens Pass)
+        if best_sigma > 0:
+            print(f"[SmileAI BlurMatch] Applying optical blur (sigma={best_sigma:.1f}) to match camera lens softness.")
+            feather_blur = cv2.GaussianBlur(mask.astype(np.float32) / 255.0, (9, 9), 2.0)
+            feather_blur_3 = np.repeat(feather_blur[:, :, np.newaxis], 3, axis=2)
+            a_blurred = cv2.GaussianBlur(a_img, (0, 0), best_sigma)
+            a_img = (a_blurred.astype(np.float32) * feather_blur_3 + a_img.astype(np.float32) * (1.0 - feather_blur_3)).astype(np.uint8)
+            curr_post_var = float(np.var(cv2.Laplacian(cv2.cvtColor(a_img, cv2.COLOR_BGR2GRAY), cv2.CV_64F)[mask > 0]))
+            print(f"[SmileAI BlurMatch] Post-blur teeth variance: {curr_post_var:.1f} (matched to original: {orig_teeth_var:.1f})")
+        else:
+            print("[SmileAI BlurMatch] Input image is crisp; preserving 100% sharp texture.")
+
+        cv2.imwrite(output_path, a_img, [int(cv2.IMWRITE_JPEG_QUALITY), 95])
+        return True
+
+    except Exception as e:
+        print(f"[SmileAI Warning] Optical blur/whiteness matching error: {e}")
+        return False
+
+
 def generate_smile_design(input_path: str, output_path: str) -> None:
     """
     Sends input photograph + dental clinical refinement prompt directly to Google's
@@ -430,7 +683,21 @@ def generate_smile_design(input_path: str, output_path: str) -> None:
       - generation_config: { "thinking_level": "high" }
     Guarantees pixel-perfect before/after slider alignment by preserving and restoring
     original image dimensions.
+    
+    DUAL-CONCURRENCY ARCHITECTURE:
+    Fires 2 parallel free-hand generations concurrently, scores both with the Computer
+    Vision dental quality scoring engine (teeth size, dual-arch separation, lip fidelity,
+     natural translucency depth), and writes the superior winner directly to output_path.
     """
+    disable_dual = os.environ.get("SMILE_DISABLE_DUAL", "").lower() in ["1", "true", "yes"]
+    if not disable_dual:
+        try:
+            from virtualsmileAI.dual_generation import run_dual_generation_and_select_best
+            run_dual_generation_and_select_best(input_path=input_path, output_path=output_path)
+            return
+        except Exception as dual_err:
+            print(f"[SmileAI Warning] Dual parallel generation note ({dual_err}). Falling back to single pass...")
+
     import io
 
     api_key = get_api_key()
@@ -450,7 +717,7 @@ def generate_smile_design(input_path: str, output_path: str) -> None:
     print(f"[SmileAI] Model endpoint  : {model_name}")
     print(f"[SmileAI] Thinking level  : {thinking_level}")
     print(f"[SmileAI] Original size   : {orig_w}x{orig_h}")
-    print(f"[SmileAI] Prompt length   : {PROMPT_CHAR_COUNT} chars")
+    print(f"[SmileAI] Prompt length   : {len(PROMPT)} chars")
 
     with open(input_path, "rb") as f:
         img_bytes = f.read()
@@ -460,20 +727,68 @@ def generate_smile_design(input_path: str, output_path: str) -> None:
 
     client = genai.Client(api_key=api_key)
 
-    # Official Google Gemini Interactions API format (Text prompt first to condition attention, image second)
-    input_payload = [
-        {"type": "text", "text": PROMPT},
-        {"type": "image", "mime_type": mime_type, "data": b64_img},
-    ]
+    # 1. Computer Vision Bite & Arch Pre-Scan
+    import cv2
+    import numpy as np
+    from virtualsmileAI.seamless_blend import detect_bite_space_line
+
+    b_img_cv = cv2.imread(input_path)
+    bite_info = detect_bite_space_line(b_img_cv, before_path=input_path)
+
+    if bite_info.get("bottom_teeth_exist", False) or bite_info.get("has_space_line") or bite_info.get("is_touching_bite"):
+        bite_header = (
+            "🚨 COMPUTER VISION SCAN CONFIRMED BITE GEOMETRY — MANDATORY CLINICAL DIRECTIVE:\n"
+            "- ARCH ARCHITECTURE: DUAL ARCH WITH VISIBLE / CONNECTING TEETH (WHOLE SMILE DESIGN).\n"
+            "- MANDATE 1 (FILL ANY GAP BETWEEN TOP AND BOTTOM LINE — CONNECTED WHOLE SMILE): If there is any space, gap, or opening between the top and bottom bite line, FILL IT with clean, beautifully sculpted enamel! Even if only two teeth attach or connect at the bite line, count as a complete WHOLE SMILE which is connected! DO NOT leave dark holes, empty gaps, or disconnected arches between the top and bottom teeth! Connect and align both arches into a gorgeous, continuous, unbroken whole smile with individual tooth contours cleanly delineated by fine anatomical contact lines!\n"
+            "- MANDATE 2 (WHOLE SMILE MANDATE — BOTH ARCHES ACTIVELY REGENERATED): Both UPPER and LOWER teeth are visible. Actively regenerate, beautify, and whiten BOTH rows completely! NEVER leave lower teeth dull, yellow, stained, or untreated! Create a bright, uniform, natural ceramic shade across both upper and lower arches!\n"
+            "- MANDATE 3 (KEEP LIPS 100% AS IT IS): The patient's lips (upper lip, lower lip, lip corners, cupid's bow) must remain 100% FROZEN in their exact original position, shape, and thickness! Do NOT alter the lips, do NOT move the lips, and do NOT paint teeth over the lips!\n"
+            "- MANDATE 4 (INCISAL NATURAL TRANSLUCENCY AT EDGE WITH SHINE — LIKE DENTAL CERAMIC REFERENCE): Apply exquisite, glassy incisal enamel natural translucency with delicate opalescent bluish light-transmission strictly along the very bottom cutting edge tips of the upper teeth (and top edge of lower teeth). The entire tooth body above the edge must be 100% solid, bright, opaque pearlescent ivory white. Add rich, wet-enamel specular highlights and liquid ceramic shine across all crowns!\n"
+            "- MANDATE 5 (NATURAL OVERLAP & DEPTH): Top teeth are in front (outside) and bottom teeth are behind (inside). Maintain this authentic front-to-back dental relationship and natural smile curve.\n"
+            "- MANDATE 6 (EXACT VISIBLE TEETH & STRUCTURE — NOT BIG OR SMALL): Rebuild exact teeth visible in the source—no extra teeth, no fewer teeth. Close horizontal gaps/diastemas between adjacent teeth, remove all stains, and maintain compact, natural tooth proportions (NEVER oversized, horse-like, or bulky teeth)!\n\n"
+        )
+    else:
+        bite_header = (
+            "🚨 COMPUTER VISION SCAN CONFIRMED BITE GEOMETRY — MANDATORY CLINICAL DIRECTIVE:\n"
+            "- ARCH ARCHITECTURE: UPPER ARCH ONLY EXPOSED. Zero bottom teeth are visible in this photograph.\n"
+            "- MANDATE 1 (UPPER ARCH ONLY — ZERO BOTTOM TEETH): ONLY upper teeth are visible in this photograph. DO NOT invent, fabricate, draw, or render ANY bottom teeth! The mouth cavity below the upper teeth and the lower lip must remain 100% dark, untouched, and original!\n"
+            "- MANDATE 2 (KEEP LIPS 100% AS IT IS): Keep the patient's lips EXACTLY AS THEY ARE in the original photograph! Do NOT alter the lip shape, do NOT move the lips, do NOT raise or lower the lips, do NOT thin or thicken the lips, and do NOT draw teeth over the lower lip! The lips must remain 100% frozen in their exact original position, contours, and color.\n"
+            "- MANDATE 3 (INCISAL NATURAL TRANSLUCENCY AT BOTTOM ONLY WITH SHINE — LIKE DENTAL CERAMIC REFERENCE): Apply exquisite, glassy enamel natural translucency with delicate opalescent light transmission strictly along the very bottom cutting edges of the upper teeth (the bottom 1.0mm edge). The entire center and middle of every tooth must be 100% dense, solid, opaque, bright pearlescent ivory white. Add rich wet specular shine and liquid ceramic gloss!\n"
+            "- MANDATE 4 (EXACT VISIBLE TEETH & STRUCTURE — NOT BIG OR SMALL): Rebuild exact teeth visible in the source—no extra teeth, no fewer teeth. Close horizontal gaps/diastemas between adjacent teeth, remove all stains, and keep upper teeth small, compact, and terminating at their original baseline (NEVER elongated or oversized)!\n\n"
+        )
+
+    # 2. Reference Image for Incisal Translucency (translucency_reference.png)
+    ref_image_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "translucency_reference.png")
+    use_ref_img = os.path.isfile(ref_image_path) and os.environ.get("ENABLE_TRANSLUCENCY_REF", "false").strip().lower() in ["true", "1", "yes"]
+
+    if use_ref_img:
+        with open(ref_image_path, "rb") as rf:
+            ref_bytes = rf.read()
+        b64_ref = base64.b64encode(ref_bytes).decode("utf-8")
+        ref_header = (
+            "IMAGE 1 is the patient photograph to edit in-place.\n"
+            "IMAGE 2 is the clinical reference demonstrating target natural incisal enamel natural translucency, internal mamelon structure, and delicate incisal halo along the cutting edges.\n\n"
+            "TASK: Perform in-place cosmetic refinement of VISIBLE TOOTH ENAMEL ONLY on IMAGE 1.\n"
+            "- NATURAL TRANSLUCENCY REFERENCE: Emulate the natural incisal enamel natural translucency, internal mamelon depth, and delicate cutting edge halo shown in IMAGE 2 along the biting edges of visible teeth in IMAGE 1.\n"
+            "- NATURAL ARCH & BITE INTEGRITY: Replicate ONLY the optical enamel natural translucency and mamelon texture from IMAGE 2. Do NOT copy IMAGE 2's single-arch layout, gumline, or tooth shape—IMAGE 1's authentic dual-arch geometry, bite space line, and full lower teeth MUST remain 100% intact!\n"
+            "- FLAWLESS ENAMEL & RESTORATION: Rebuild any broken or chipped teeth with full solid enamel, with ZERO brown spots and zero residual defect. Obey all non-negotiable rules: freeze lips 100%, preserve authentic bite, zero extra teeth.\n"
+            "Return ONLY the final edited photograph of IMAGE 1.\n\n"
+        )
+        input_payload = [
+            {"type": "text", "text": ref_header + bite_header + PROMPT},
+            {"type": "image", "mime_type": mime_type, "data": b64_img},
+            {"type": "image", "mime_type": "image/png", "data": b64_ref},
+        ]
+        print("[SmileAI] Dental incisal natural translucency reference image active (IMAGE 2: translucency_reference.png).")
+    else:
+        ref_header = ""
+        input_payload = [
+            {"type": "text", "text": bite_header + PROMPT},
+            {"type": "image", "mime_type": mime_type, "data": b64_img},
+        ]
 
     kwargs = {
         "model": model_name,
         "input": input_payload,
-        "system_instruction": (
-            "You are a professional cosmetic dentistry digital smile design engine. "
-            "All input photographs are clinical dental portraits for patient aesthetic smile design simulation. "
-            "Perform digital cosmetic veneer refinement on visible tooth enamel only."
-        ),
         "generation_config": {"thinking_level": thinking_level},
     }
 
@@ -516,6 +831,70 @@ def generate_smile_design(input_path: str, output_path: str) -> None:
         print(f"[SmileAI] Resizing {rendered_img.size} -> ({orig_w}, {orig_h}) with Lanczos for 100% frame alignment.")
         rendered_img = rendered_img.resize((orig_w, orig_h), Image.LANCZOS)
 
+    # 3. Quality Gate: Verify lower teeth were not suppressed when they existed originally
+    if bite_info.get("bottom_teeth_exist", False):
+        rendered_cv = cv2.cvtColor(np.array(rendered_img), cv2.COLOR_RGB2BGR)
+        rendered_bite = detect_bite_space_line(rendered_cv)
+        if not rendered_bite.get("bottom_teeth_exist", False):
+            print("[SmileAI QualityGate] Lower teeth were suppressed on attempt 1. Executing auto-retry with reinforced dual-arch mandate...")
+            retry_prompt = (
+                "🚨 CRITICAL MANDATORY RETRY CORRECTION:\n"
+                "The patient's original photo clearly has BOTH upper AND lower teeth visible! "
+                "You MUST render both upper teeth AND lower teeth standing tall with their full visible crown height. "
+                "DO NOT erase or hide the lower teeth!\n\n"
+                + bite_header + PROMPT
+            )
+            if use_ref_img:
+                retry_payload = [
+                    {"type": "text", "text": ref_header + retry_prompt},
+                    {"type": "image", "mime_type": mime_type, "data": b64_img},
+                    {"type": "image", "mime_type": "image/png", "data": b64_ref},
+                ]
+            else:
+                retry_payload = [
+                    {"type": "text", "text": retry_prompt},
+                    {"type": "image", "mime_type": mime_type, "data": b64_img},
+                ]
+            try:
+                retry_kwargs = {
+                    "model": model_name,
+                    "input": retry_payload,
+                    "generation_config": {"thinking_level": thinking_level},
+                }
+                retry_interaction = client.interactions.create(**retry_kwargs)
+                if retry_interaction.output_image and retry_interaction.output_image.data:
+                    retry_bytes = base64.b64decode(retry_interaction.output_image.data)
+                    retry_img = Image.open(io.BytesIO(retry_bytes))
+                    if retry_img.size != (orig_w, orig_h):
+                        retry_img = retry_img.resize((orig_w, orig_h), Image.LANCZOS)
+                    rendered_img = retry_img
+                    print("[SmileAI QualityGate] Auto-retry completed successfully with dual-arch restored.")
+            except Exception as retry_err:
+                print(f"[SmileAI QualityGate] Auto-retry note: {retry_err}, keeping initial output.")
+
     rendered_img.convert("RGB").save(output_path, "JPEG", quality=95)
+
+    # 4. Match Optical Softness/Blurriness & Balance Whiteness to Input Photo
+    try:
+        match_teeth_blur_and_whiteness(before_path=input_path, after_path=output_path, output_path=output_path)
+    except Exception as e:
+        print(f"[SmileAI Warning] Optical blur/whiteness matching note: {e}")
+
+    # 5. Anatomical Lip-Lock & Space Line Shadow Guard
+    try:
+        from virtualsmileAI.seamless_blend import apply_seamless_lip_lock
+        print("[SmileAI] Fetching and applying seamless lip-lock from seamless_blend.py...")
+        blend_res = apply_seamless_lip_lock(
+            before_path=input_path,
+            after_path=output_path,
+            output_path=output_path,
+            bite_info=bite_info,
+        )
+        if blend_res:
+            print("[SmileAI] Confirmed: Image successfully blended using seamless_blend.py")
+        else:
+            print("[SmileAI Warning] seamless_blend.py returned False, kept raw image.")
+    except Exception as e:
+        print(f"[SmileAI Warning] Seamless lip-lock post-process bypassed: {e}")
 
     print(f"[SmileAI] AI smile design successfully generated and saved to {output_path} (size: {orig_w}x{orig_h})")
