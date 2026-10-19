@@ -1,7 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block seo %}
-<title>About Us</title>
+<title>About Us | Ultimate Smile Design</title>
+<meta name="description" content="Discover Ultimate Smile Design, a premium smile design approach by Advance Dental Export, combining cosmetic dentistry, personalised smile planning and expert craftsmanship to create beautiful, natural-looking smiles." />
+<link rel="canonical" href="https://ultimatesmiledesign.com/about-us/" />
+<meta property="og:image" content="{% static 'feature-usd.webp'%}">
+<meta property="og:image:secure_url" content="{% static 'feature-usd.webp'%}">
+<meta property="og:image:type" content="image/webp" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
 {% endblock seo %}
 {% block header %}
 {% endblock header %}
@@ -19,364 +26,254 @@
                 <a href="{% url 'home:home' %}"> Home </a>
                 <i class="fa fa-solid fa-angles-right"></i> about
             </div>
-            <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool">
-                about As
-            </h1>
+            <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool">About Us</h1>
         </div>
     </section>
 </div>
 
+<!-- smile_story_section  -->
 <section class="smile_story_main">
     <div class="container d-flex justify-content-center align-items-center flex-column">
-        <h1 class="smile_story_title cool">Smile Story - The <br>Unique Sense of Beauty</h1>
-        <p class="smile_story_subtitle">A smile designed with care captures your personality and enhances your natural
-            beauty.”That belief is at the heart of Ultimate Smile Design. We are dedicated to bringing people the joy of
-            smiling by combining the science of dentistry with the art of aesthetics. We create The Unique sense of
-            Beauty by designing a perfect smile.</p>
+        <h2 class="smile_story_title cool" data-aos="fade-left" data-aos-duration="400" data-aos-delay="300">Smile Story - The Unique<br>Sense of Beauty</h2>
+        <p class="smile_story_subtitle" data-aos="fade-right" data-aos-duration="400" data-aos-delay="400">“A smile designed with care captures your personality and enhances your natural beauty.”
+            That belief is at the heart of Ultimate Smile Design. We are dedicated to bringing people the joy of smiling by combining the science of dentistry with the art of aesthetics. We create “The Unique sense of Beauty” by designing a perfect smile.
+        </p>
     </div>
     <div class="smile_story_images_main">
         <div class="swiper smile-story-swiper">
             <div class="swiper-wrapper">
-                <div class="swiper-slide story-slide">
-                    <img src="/media/SEO/before-after-1.webp" alt="Ultimate Smile Story 1">
+                {% for gallery in all_img %}
+                {% if gallery.image %}
+                <div class="swiper-slide story-slide" onclick="window.openStoryLightbox && window.openStoryLightbox('{{ gallery.image.url }}')">
+                    <img src="{{ gallery.image.url }}" alt="Ultimate Smile Story">
                 </div>
-                <div class="swiper-slide story-slide">
-                    <img src="/media/SEO/before-after-2.webp" alt="Ultimate Smile Story 2">
-                </div>
-                <div class="swiper-slide story-slide">
-                    <img src="/media/SEO/before-after-3.webp" alt="Ultimate Smile Story 3">
-                </div>
-                <div class="swiper-slide story-slide">
-                    <img src="/media/SEO/before-after-4.webp" alt="Ultimate Smile Story 4">
-                </div>
-                <div class="swiper-slide story-slide">
-                    <img src="/media/SEO/before-after-5.webp" alt="Ultimate Smile Story 5">
-                </div>
-                <div class="swiper-slide story-slide">
-                    <img src="/media/SEO/before-after-6.webp" alt="Ultimate Smile Story 6">
-                </div>
-                <div class="swiper-slide story-slide">
-                    <img src="/media/SEO/before-after-7.webp" alt="Ultimate Smile Story 7">
-                </div>
-                <div class="swiper-slide story-slide">
-                    <img src="/media/SEO/before-after-8.webp" alt="Ultimate Smile Story 8">
-                </div>
-                <div class="swiper-slide story-slide">
-                    <img src="/media/SEO/before-after-9.webp" alt="Ultimate Smile Story 9">
-                </div>
-                <div class="swiper-slide story-slide">
-                    <img src="/media/SEO/before-after-10.webp" alt="Ultimate Smile Story 10">
-                </div>
-                <div class="swiper-slide story-slide">
-                    <img src="/media/SEO/before-after-11.webp" alt="Ultimate Smile Story 11">
-                </div>
-                <div class="swiper-slide story-slide">
-                    <img src="/media/SEO/before-after-12.webp" alt="Ultimate Smile Story 12">
-                </div>
-                <div class="swiper-slide story-slide">
-                    <img src="/media/SEO/before-after-13.webp" alt="Ultimate Smile Story 13">
-                </div>
-                <div class="swiper-slide story-slide">
-                    <img src="/media/SEO/before-after-14.webp" alt="Ultimate Smile Story 14">
-                </div>
-                <div class="swiper-slide story-slide">
-                    <img src="/media/SEO/before-after-15_3fFCIr5.webp" alt="Ultimate Smile Story 15">
-                </div>
+                {% endif %}
+                {% endfor %}
             </div>
         </div>
     </div>
 </section>
 
-<!-- <div class="container smile_philosophy_section_main">
+<!-- smile_philosophy_section -->
+<div class="container smile_philosophy_section_main">
     <div class="smile_philosophy_text_side">
-        <h2 class="smile_philosophy_heading cool">Smile Philosophy - Who We Are?</h2>
-        <p class="smile_philosophy_subheading">Ultimate Smile Design (USD) is the premium innovation of Advance Dental
-            Export, a global name in advanced dentistry solutions. Headquartered in Surat, USD is recognized for
-            dedication to artistry, precision, and the science of creating bespoke smiles.
-        </p>
-        <p class="smile_philosophy_subheading">
-            At Ultimate Smile Design, our journey began with a simple vision: to deliver beautiful smiles through smile
-            dentistry. Too often, dental care is seen as clinical and routine. We wanted to create something different,
-            a premium, personalized experience where patients feel cared for, valued, and understood.
-        </p>
-        <p class="smile_philosophy_subheading">
-            Guided by a vision of excellence, we redefine the standards of cosmetic dentistry through our premium smile
-            design treatments and restorations. Our treatments are crafted with meticulous detail to deliver natural
-            aesthetics and enduring strength.
-        </p>
-        <p class="smile_philosophy_subheading">
-
-            Backed by years of experience and a team of unparalleled USD certified smile design dentists, we have earned
-            our reputation as the best in smile design.
-        </p>
+        <h2 class="smile_philosophy_heading cool" data-aos="fade-left" data-aos-duration="400" data-aos-delay="300">Smile Philosophy - Who We Are?</h2>
+        <p class="smile_philosophy_subheading" data-aos="fade-right" data-aos-duration="400" data-aos-delay="400">Ultimate Smile Design (USD) is the premium innovation of Advance Dental Export, a global name in advanced dentistry solutions. Headquartered in Surat, Ultimate Smile Design is recognized for dedication to artistry, precision, and the science of creating bespoke smiles.</p>
+        <p class="smile_philosophy_subheading" data-aos="fade-right" data-aos-duration="400" data-aos-delay="400">At Ultimate Smile Design, our journey began with a simple vision: to deliver beautiful smiles through cosmetic dentistry. Too often, dental care is seen as clinical and routine. We wanted to create something different, a premium, personalized experience where patients feel cared for, valued, and understood.</p>
+        <p class="smile_philosophy_subheading" data-aos="fade-right" data-aos-duration="400" data-aos-delay="400">Backed by years of experience and a team of unparalleled Ultimate Smile Design certified smile design dentists, we have earned our reputation as the best in smile design.</p>
     </div>
     <div class="smile_philosophy_reel_side">
         <div class="smile_philosophy_reel_left_side">
-            <a href="#">
+            <a href="https://www.instagram.com/reel/DYq9rWBoyMo/">
                 <div class="smile_philosophy_reels">
                     <video autoplay muted loop playsinline>
-                        <source src="https://daedzhbgqwmn0.cloudfront.net/reel-8.mp4" type="video/mp4">
+                        <source src="https://daedzhbgqwmn0.cloudfront.net/usd-new-reel-1.mp4" type="video/mp4">
                     </video>
                 </div>
             </a>
-            <a href="#">
+            <a href="https://www.instagram.com/reel/DZwpFnKNdff/">
                 <div class="smile_philosophy_reels">
                     <video autoplay muted loop playsinline>
-                        <source src="https://daedzhbgqwmn0.cloudfront.net/reel-2.mp4" type="video/mp4">
+                        <source src="https://daedzhbgqwmn0.cloudfront.net/usd-new-reel-2.mp4" type="video/mp4">
                     </video>
                 </div>
             </a>
-            <a href="#">
+            <a href="https://www.instagram.com/reel/DazNIQ6sGzb/">
                 <div class="smile_philosophy_reels">
                     <video autoplay muted loop playsinline>
-                        <source src="https://daedzhbgqwmn0.cloudfront.net/reel-9.mp4" type="video/mp4">
+                        <source src="https://daedzhbgqwmn0.cloudfront.net/usd-new-reel-3.mp4" type="video/mp4">
                     </video>
                 </div>
             </a>
-            <a href="#">
+            <a href="https://www.instagram.com/reel/DbIAtG2C0Tu/">
                 <div class="smile_philosophy_reels">
                     <video autoplay muted loop playsinline>
-                        <source src="https://daedzhbgqwmn0.cloudfront.net/reel-4.mp4" type="video/mp4">
+                        <source src="https://daedzhbgqwmn0.cloudfront.net/usd-new-reel-4.mp4" type="video/mp4">
                     </video>
                 </div>
             </a>
         </div>
         <div class="smile_philosophy_reel_right_side">
-            <a href="#">
+            <a href="https://www.instagram.com/reel/DaNS9XPhjuR/">
                 <div class="smile_philosophy_reels">
                     <video autoplay muted loop playsinline>
-                        <source src="https://daedzhbgqwmn0.cloudfront.net/reel-3.mp4" type="video/mp4">
+                        <source src="https://daedzhbgqwmn0.cloudfront.net/usd-new-reel-5.mp4" type="video/mp4">
                     </video>
                 </div>
             </a>
-            <a href="#">
+            <a href="https://www.instagram.com/reel/DXjQ8CAAndH/">
                 <div class="smile_philosophy_reels">
                     <video autoplay muted loop playsinline>
-                        <source src="https://daedzhbgqwmn0.cloudfront.net/reel-1.mp4" type="video/mp4">
+                        <source src="https://daedzhbgqwmn0.cloudfront.net/usd-new-reel-6.mp4" type="video/mp4">
                     </video>
                 </div>
             </a>
-            <a href="#">
+            <a href="https://www.instagram.com/reel/DamdrUjxREc/">
                 <div class="smile_philosophy_reels">
                     <video autoplay muted loop playsinline>
-                        <source src="https://daedzhbgqwmn0.cloudfront.net/reel-6.mp4" type="video/mp4">
+                        <source src="https://daedzhbgqwmn0.cloudfront.net/usd-new-reel-7.mp4" type="video/mp4">
                     </video>
                 </div>
             </a>
-            <a href="#">
+            <a href="https://www.instagram.com/reel/DNQcAreKk4A/">
                 <div class="smile_philosophy_reels">
                     <video autoplay muted loop playsinline>
-                        <source src="https://daedzhbgqwmn0.cloudfront.net/reel-7.mp4" type="video/mp4">
+                        <source src="https://daedzhbgqwmn0.cloudfront.net/usd-new-reel-8.mp4" type="video/mp4">
                     </video>
                 </div>
             </a>
         </div>
     </div>
-</div> -->
+</div> 
 
-<!-- <section>
-    <div class="container smile_solutions_section_main">
-        <h2 class="smile_solutions_heading cool">Smile Solutions - The Art of a Beautiful Smile</h2>
-        <p class="smile_solutions_subheading">We don’t believe in one-size-fits-all smiles. Each smile design treatment
-            is tailored to an individual's unique facial features, lifestyle, and expectations, creating a
-            transformation that feels natural and truly yours. We craft custom smile design solutions, specializing in:
-        </p>
-    </div>
-    <div class="container smile_solutions_cards_main">
-        <div class="container overflow-hidden hmp-container">
-            <div class="swiper-container">
-                <div class="swiper hmpswiper">
-                    <div class="swiper-wrapper">
-
-                        <div class="swiper-slide">
-                            <div class="hm-product-card">
-                                <div class="hm-product-image">
-                                    <img src="{% static 'smile_solutions_cards_Product_img_1.webp' %}"
-                                        alt="Crown & Bridges" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="swiper-slide hm-product-slide">
-                            <div class="hm-product-card">
-                                <div class="hm-product-image">
-                                    <img src="{% static 'smile_solutions_cards_Product_img_2.webp' %}" alt="E-Max" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="swiper-slide hm-product-slide">
-                            <div class="hm-product-card">
-                                <div class="hm-product-image">
-                                    <img src="{% static 'smile_solutions_cards_Product_img_3.webp' %}" alt="implant" />
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="swiper-slide hm-product-slide">
-                            <div class="hm-product-card">
-                                <div class="hm-product-image">
-                                    <img src="{% static 'smile_solutions_cards_Product_img_4.webp' %}" alt="Zirconia" />
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="swiper-slide hm-product-slide">
-                            <div class="hm-product-card">
-                                <div class="hm-product-image">
-                                    <img src="{% static 'smile_solutions_cards_Product_img_5.webp' %}" alt="Veneers" />
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="home-product-pagination"></div>
-            </div>
+<!-- The masters behind section -->
+<section>
+    <div class="container masters_behind_section_main">
+        <div class="masters_behind_section_heading_side" data-aos="fade-right" data-aos-duration="400" data-aos-delay="400">
+            <p class="masters_behind_title">The <span class=" add_some_background"><span class="cool">MASTERS</span></span> <br>Behind Every <br> <span class="add_some_background ps-0"><span class="cool">ARTISTIC SMILE</span></span></p>
+            <p class="masters_behind_subtitle">A team built on connection consistency and growth.</p>
         </div>
-    </div>
-    <div class="container">
-        <p class="smile_solutions_subheading">Beyond treatment, Ultimate Smile Design offers an elevated experience:
-            connecting patients to expert cosmetic dentists, guiding their journey, and ensuring every detail reflects
-            excellence. By connecting patients with expert cosmetic dentists, scheduling their appointments, and
-            overseeing their journey, Ultimate Smile Design ensures a seamless and personalized smile design treatment
-            experience.
-        </p>
-    </div>
-</section> -->
-
-<!-- <section>
-    <div class="container smile_promise_section_main">
-        <h2 class="smile_promise_heading cool">Smile Promise - 100% Money-back Guarantee</h2>
-    </div>
-    <div class="smile_promise_cruv_line_main">
-        <svg class="smile-promise-curve-svg hello_slice" viewBox="0 0 1930 680" preserveAspectRatio="xMidYMid slice">
-            <path id="promise-curve-path"
-                d="M-28.8477 337.516C308.323 -67.0808 645.494 -67.0808 982.665 337.516C1319.84 742.112 1630.08 705.072 1967.25 300.475"
-                fill="transparent" stroke="#221a08" stroke-width="55" />
-            <text class="smile-promise-curve-text" dominant-baseline="middle">
-                <textPath href="#promise-curve-path" startOffset="0%">
-                    100% money-back guarantee &nbsp; 100% money-back guarantee &nbsp; 100% money-back guarantee &nbsp;
-                    100% money-back guarantee &nbsp; 100% money-back guarantee &nbsp; 100% money-back guarantee &nbsp;
-                    100% money-back guarantee &nbsp; 100% money-back guarantee &nbsp; 100% money-back guarantee &nbsp;
-                    100% money-back guarantee &nbsp; 100% money-back guarantee &nbsp; 100% money-back guarantee &nbsp;
-                    100% money-back guarantee &nbsp; 100% money-back guarantee &nbsp; 100% money-back guarantee &nbsp;
-                    100% money-back guarantee &nbsp; 100% money-back guarantee &nbsp; 100% money-back guarantee &nbsp;
-                    <animate attributeName="startOffset" from="0%" to="-100%" begin="0s" dur="60s"
-                        repeatCount="indefinite" />
-                </textPath>
-            </text>
-        </svg>
-        <svg class="smile-promise-curve-svg hello_meet" viewBox="0 0 1930 680" preserveAspectRatio="xMidYMid meet">
-            <path id="promise-curve-path"
-                d="M-28.8477 337.516C308.323 -67.0808 645.494 -67.0808 982.665 337.516C1319.84 742.112 1630.08 705.072 1967.25 300.475"
-                fill="transparent" stroke="#221a08" stroke-width="55" />
-            <text class="smile-promise-curve-text" dominant-baseline="middle">
-                <textPath href="#promise-curve-path" startOffset="0%">
-                    100% money-back guarantee &nbsp; 100% money-back guarantee &nbsp; 100% money-back guarantee &nbsp;
-                    100% money-back guarantee &nbsp; 100% money-back guarantee &nbsp; 100% money-back guarantee &nbsp;
-                    100% money-back guarantee &nbsp; 100% money-back guarantee &nbsp; 100% money-back guarantee &nbsp;
-                    100% money-back guarantee &nbsp; 100% money-back guarantee &nbsp; 100% money-back guarantee &nbsp;
-                    100% money-back guarantee &nbsp; 100% money-back guarantee &nbsp; 100% money-back guarantee &nbsp;
-                    100% money-back guarantee &nbsp; 100% money-back guarantee &nbsp; 100% money-back guarantee &nbsp;
-                    <animate attributeName="startOffset" from="0%" to="-100%" begin="0s" dur="60s"
-                        repeatCount="indefinite" />
-                </textPath>
-            </text>
-        </svg>
-        <div class="container">
-            <div class="container smile_promise_cruv_line_center_text">
-                <p class="smile_promise_cruv_line_center_inside_text">
-                    Promise is built on a foundation of absolutetrust. At
-                    Ultimate Smile Design, our dedication to crafting the perfect smile is matched only by our
-                    commitment to your complete peace of mind. This is why we give a Smile Promise, which is a
-                    <span>100% money-back guarantee</span> on your smile design journey. It is our signature on a
-                    flawless work of art. This pledge is a testament to our profound confidence in our artistry and a
-                    guarantee that your experience will be nothing short of exceptional.
-                </p>
-            </div>
-
-        </div>
-    </div>
-</section> -->
-
- <section class="smile_values_section_main">
-    <div class="container smile_values_heading_main">
-        <h2 class="smile_values_heading cool">Smile Values - What Makes Us the Best?</h2>
-    </div>
-    <div class="container smile_values_cards_main">
-        <div class="smile_values_card">
-            <div class="smile_values_card_number">
-                <p class="smile_values_card_number_inside">01</p>
-                <p class="smile_values_card_number_inside_text">Crafted by Haresh Savani</p>
-            </div>
-            <div class="smile_values_card_text">
-                <p class="smile_values_card_text_inside">We deliver smile designs guided by Haresh Savani’s expert
-                    craftmanship, precision, and refined artistic vision.
-                </p>
-            </div>
-        </div>
-        <div class="smile_values_card">
-            <div class="smile_values_card_number">
-                <p class="smile_values_card_number_inside">02</p>
-                <p class="smile_values_card_number_inside_text">Unrivaled Expertise</p>
-            </div>
-            <div class="smile_values_card_text">
-                <p class="smile_values_card_text_inside">We partner with hand-picked cosmetic dentists known for their
-                    precision and artistry.
-                </p>
-            </div>
-        </div>
-        <div class="smile_values_card">
-            <div class="smile_values_card_number">
-                <p class="smile_values_card_number_inside">03</p>
-                <p class="smile_values_card_number_inside_text">Pioneering Innovation</p>
-            </div>
-            <div class="smile_values_card_text">
-                <p class="smile_values_card_text_inside">Our use of advanced technology and premium techniques ensures
-                    flawless, lasting results.
-                </p>
-            </div>
-        </div>
-        <div class="smile_values_card">
-            <div class="smile_values_card_number">
-                <p class="smile_values_card_number_inside">04</p>
-                <p class="smile_values_card_number_inside_text">Bespoke Approach</p>
-            </div>
-            <div class="smile_values_card_text">
-                <p class="smile_values_card_text_inside">We craft every treatment plan to harmonize with one’s unique
-                    features and aspirations.
-                </p>
-            </div>
-        </div>
-        <div class="smile_values_card">
-            <div class="smile_values_card_number">
-                <p class="smile_values_card_number_inside">05</p>
-                <p class="smile_values_card_number_inside_text">Exceptional Materials</p>
-            </div>
-            <div class="smile_values_card_text">
-                <p class="smile_values_card_text_inside"> We use only the finest materials like Zirconia and Emax for
-                    unmatched strength and beauty.
-                </p>
-            </div>
-        </div>
-        <div class="smile_values_card">
-            <div class="smile_values_card_number">
-                <p class="smile_values_card_number_inside">06</p>
-                <p class="smile_values_card_number_inside_text">Timeless Elegance</p>
-            </div>
-            <div class="smile_values_card_text">
-                <p class="smile_values_card_text_inside">Our goal is to create authentic, beautiful smiles that last a
-                    lifetime.
-                </p>
-            </div>
+        <div class="masters_behind_section_image_side" data-aos="fade-left" data-aos-duration="400" data-aos-delay="300">
+            <img src="{% static '/images/aboutPage-img/masters_in_one_fream.webp' %}" alt="all team members">
         </div>
     </div>
 </section>
 
-<!-- <section class="get_in_touch_section_main">
+<!-- smile_solutions_section -->
+<section>
+    <div class="container smile_solutions_section_main">
+        <h2 class="smile_solutions_heading cool" data-aos="fade-left" data-aos-duration="400" data-aos-delay="300">Smile Solutions - The Art of a Beautiful Smile</h2>
+        <p class="smile_solutions_subheading" data-aos="fade-right" data-aos-duration="400" data-aos-delay="400">We don’t believe in one-size-fits-all smiles. Each smile design treatment is tailored to an individual's unique facial features, lifestyle, and expectations, creating a transformation that feels natural and truly yours. We craft custom smile design solutions, specializing in:</p>
+    </div>
+    <div class="container Product_images_slider_main">
+        <div class="swiper smile-solutions-swiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide smile_solutions_images_slider">
+                    <img src="{% static '/images/aboutPage-img/product E-max.webp' %}" alt="product E-max">
+                    <div class="round_icon_main">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+                <div class="swiper-slide smile_solutions_images_slider">
+                    <img src="{% static '/images/aboutPage-img/product-crown&bridges.webp' %}" alt="product-crown&bridges">
+                    <div class="round_icon_main">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+                <div class="swiper-slide smile_solutions_images_slider">
+                    <img src="{% static '/images/aboutPage-img/product-implant.webp' %}" alt="product-implant">
+                    <div class="round_icon_main">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+                <div class="swiper-slide smile_solutions_images_slider">
+                    <img src="{% static '/images/aboutPage-img/product-veneers.webp' %}" alt="product-veneers">
+                    <div class="round_icon_main">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+                <div class="swiper-slide smile_solutions_images_slider">
+                    <img src="{% static '/images/aboutPage-img/product-zirconia.webp' %}" alt="product-zirconia">
+                    <div class="round_icon_main">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination smile-solutions-pagination"></div>
+        </div>
+    </div>
+    <div class="container">
+        <p class="smile_solutions_subheading" data-aos="fade-left" data-aos-duration="400" data-aos-delay="300">Beyond treatment, Ultimate Smile Design offers an elevated experience connecting patients to expert cosmetic dentists, guiding their journey, and ensuring every detail reflects excellence. By connecting patients with expert cosmetic dentists, scheduling their appointments, and overseeing their journey, Ultimate Smile Design ensures a seamless and personalized smile design treatment experience.</p>
+    </div>
+</section>
+
+<!-- Smile Values — What Makes Us The Best section -->
+<div class="container smile_values_section_main">
+    <h2 class="smile_values_title cool" data-aos="fade-right" data-aos-duration="400" data-aos-delay="400">Smile Values - What Makes Us the Best?</h2>
+    <div class="smile_values_cards_main">
+        <div class="smile_values_card_main" data-aos="fade-down-right">
+            <div class="inside_icon_and_description_main">
+                <div class="inside_icon_main">
+                    <div class="i-cons">
+                        <img src="{% static '/images/aboutPage-img/diamond-icon.svg' %}" alt="diamond-icon">
+                    </div>
+                </div>
+                <div class="inside_description_main">
+                    <p class="inside_description_title">Crafted by Haresh Savani</p>
+                    <p class="inside_description_desc">We deliver smile designs guided by Haresh Savani’s expert craftmanship, precision, and refined artistic vision.</p>
+                </div>
+            </div>
+        </div>
+        <div class="smile_values_card_main" data-aos="fade-down">
+            <div class="inside_icon_and_description_main">
+                <div class="inside_icon_main">
+                    <div class="i-cons">
+                        <img src="{% static '/images/aboutPage-img/erth-icon.svg' %}" alt="erth-icon">
+                    </div>
+                </div>
+                <div class="inside_description_main">
+                    <p class="inside_description_title">Unrivaled Expertise</p>
+                    <p class="inside_description_desc">We partner with hand-picked cosmetic dentists known for their precision and artistry.</p>
+                </div>
+            </div>
+        </div>
+        <div class="smile_values_card_main" data-aos="fade-down-left">
+            <div class="inside_icon_and_description_main">
+                <div class="inside_icon_main">
+                    <div class="i-cons">
+                        <img src="{% static '/images/aboutPage-img/eye-icon.svg' %}" alt="eye-icon">
+                    </div>
+                </div>
+                <div class="inside_description_main">
+                    <p class="inside_description_title">Pioneering Innovation</p>
+                    <p class="inside_description_desc">Our use of advanced technology and premium techniques ensures flawless, lasting results.</p>
+                </div>
+            </div>
+        </div>
+        <div class="smile_values_card_main" data-aos="fade-up-right">
+            <div class="inside_icon_and_description_main">
+                <div class="inside_icon_main">
+                    <div class="i-cons">
+                        <img src="{% static '/images/aboutPage-img/shield-icon.svg' %}" alt="shield-icon">
+                    </div>
+                </div>
+                <div class="inside_description_main">
+                    <p class="inside_description_title">Bespoke Approach</p>
+                    <p class="inside_description_desc">We craft every treatment plan to harmonize with one’s unique features and aspirations.</p>
+                </div>
+            </div>
+        </div>
+        <div class="smile_values_card_main" data-aos="fade-up">
+            <div class="inside_icon_and_description_main">
+                <div class="inside_icon_main">
+                    <div class="i-cons">
+                        <img src="{% static '/images/aboutPage-img/heart-icon.svg' %}" alt="heart-icon">
+                    </div>
+                </div>
+                <div class="inside_description_main">
+                    <p class="inside_description_title">Exceptional Materials</p>
+                    <p class="inside_description_desc">We use only the finest materials like Zirconia and Emax for unmatched strength and beauty.</p>
+                </div>
+            </div>
+        </div>
+        <div class="smile_values_card_main" data-aos="fade-up-left">
+            <div class="inside_icon_and_description_main">
+                <div class="inside_icon_main">
+                    <div class="i-cons">
+                        <img src="{% static '/images/aboutPage-img/star-icon.svg' %}" alt="star-icon">
+                    </div>
+                </div>
+                <div class="inside_description_main">
+                    <p class="inside_description_title">Timeless Elegance</p>
+                    <p class="inside_description_desc">Our goal is to create authentic, beautiful smiles that last a lifetime.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- get_in_touch_section -->
+<section class="get_in_touch_section_main">
     <div class="container get_in_touch_section_form_main">
         <div class="get_in_touch_section_form">
             <div class="contact_section_tag_main">
@@ -385,7 +282,7 @@
             </div>
             <div class="get_in_touch_section_form_heading_and_details">
                 <div class="get_in_touch_section_form_heading">
-                    <h2 class="get_in_touch_section_heading cool">Get in Touch<svg
+                    <h2 class="get_in_touch_section_heading cool" data-aos="fade-left" data-aos-duration="400" data-aos-delay="300">Smile Connect - Get in Touch<svg
                             class="get_in_touch_section_heading_icon" viewBox="0 0 72 72" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -405,50 +302,103 @@
                             </defs>
                         </svg>
                     </h2>
-                    <p class="get_in_touch_section_sub_heading">Your journey to a perfect smile begins here. We invite
-                        you to schedule a consultation with one of our USD certified dental professionals. Our team is
-                        dedicated to guiding you through every step, ensuring a seamless and personalized experience
-                    </p>
+                    <p class="get_in_touch_section_sub_heading" data-aos="fade-right" data-aos-duration="400" data-aos-delay="400">Your journey to a perfect smile begins here. We invite you to schedule a consultation with one of our Ultimate Smile Design-certified dental professionals.</p>
                 </div>
                 <div class="get_in_touch_section_form_details_img">
-                    <div class="get_in_touch_section_form_image_main">
-                        <img src="{% static 'get_in_touch_hand_img.webp' %}" alt="get_in_touch_hand_img">
-                    </div>
-                    <div class="get_in_touch_section_form_details_main">
-                        <a href="https://www.google.com/maps/search/?api=1&query=Advance+Dental+Export,+Plot+No.+1+to+8,+Marutidham+Industrial+Estate,+Behind+Hotel+Royal,+Velanja+Road,+Umra,+Surat,+Gujarat+394130"
-                            target="_blank">
-                            <p class="address_heading">Address</p>
-                        </a>
-                        <a href="https://www.google.com/maps/search/?api=1&query=Advance+Dental+Export,+Plot+No.+1+to+8,+Marutidham+Industrial+Estate,+Behind+Hotel+Royal,+Velanja+Road,+Umra,+Surat,+Gujarat+394130"
-                            target="_blank">
-                            <p class="address_details">Advance Dental Export, Plot No. 1 to 8, Marutidham Industrial
-                                Estate,
-                                Behind Hotel Royal, Velanja Road, Umra Surat - 394 130. (Gujarat) INDIA
-                            </p>
-                        </a>
-                        <a href="tel:+917265888877">
-                            <p class="phone_number_heading">Phone Number <span>+91 72 65 88 88 77</span></p>
-                        </a>
-                        <a href="mailto:ultimatesmiledesigning@gmail.com">
-                            <p class="email_heading">Email <span>ultimatesmiledesigning@gmail.com</span></p>
-                        </a>
-                    </div>
+                    <img src="{% static 'images/aboutPage-img/woman&robot-finger-tuch.webp' %}" alt="woman&robot-finger-tuch">
+                </div>
+                <div class="contact_form_sectiom">
+                    <form method="POST" action="{% url 'home:aboutPage' %}" class="contact_form_main" id="aboutContactForm">
+                        {% csrf_token %}
+                        <input type="hidden" name="is_ajax" value="1">
+                        <div class="input_filds_main">
+                            <div class="input_filds">
+                                <input type="text" name="name" id="nameInput" placeholder="Full Name:" required>
+                            </div>
+                            <div class="input_filds">
+                                 <input type="email" name="email" id="emailInput" placeholder="Email:" required>
+                            </div>
+                        </div>
+                        <div class="input_filds_main">
+                            <div class="input_filds numbar_input_filds country-phone-wrapper position-relative">
+                                <div class="counry_code_main flag_icon_main" id="countrySelectBtn" tabindex="0" role="button" aria-expanded="false" title="Select country">
+                                    <div class="flag_image">
+                                        <img src="https://flagcdn.com/w40/in.png" alt="flag" id="selectedFlag" class="flag_image" />
+                                    </div>
+                                    <span id="selectedCode" class="selected_code_text">+91</span>
+                                    <div class="arrow_icon">
+                                        <img src="{% static 'angle-down-in-country-code.svg' %}" alt="down arrow" />
+                                    </div>
+                                </div>
+                                <div class="country-dropdown-menu" id="countryDropdown">
+                                    <div class="country-search-box">
+                                        <input type="text" id="countrySearchInput" placeholder="Search country or code..." autocomplete="off" />
+                                    </div>
+                                    <ul class="country-list" id="countryList">
+                                    </ul>
+                                </div>
+
+                                <input type="tel" id="phoneInput" placeholder="Phone number:" required>
+                                <input type="hidden" name="phone" id="realPhoneInput">
+                                <input type="hidden" name="full_phone" id="fullPhoneInput">
+                            </div>
+                            <div class="input_filds pincode_input_filds">
+                                 <input type="text" name="pincode" id="pincodeInput" placeholder="Pincode:" required>
+                                 <div id="pincodeSpinner" class="pincode-spinner" style="display: none;"></div>
+                                 <div id="pincodeStatusIcon" class="pincode-status-icon" style="display: none;"></div>
+                            </div>
+                        </div>
+                        <div class="input_filds_main">
+                            <div class="input_filds">
+                                <input type="text" name="city" id="cityInput" placeholder="City:" readonly required>
+                            </div>
+                            <div class="input_filds">
+                                 <input type="text" name="message" id="messageInput" placeholder="Your Message:" required>
+                            </div>
+                        </div>
+                        <div class="recptch_main">
+                            <div class="g-recaptcha" data-sitekey="{{ RECAPTCHA_SITE_KEY }}"></div>
+                        </div>
+                        <div class="submit_button_main">
+                            <button type="submit" id="aboutFormSubmitBtn">Send Message</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
     <div class="world_map_ball_main">
-        <img src="{% static 'world_map_ball.svg' %}" alt="">
+        <img src="{% static '/images/aboutPage-img/world_map_ball.svg' %}" alt="">
     </div>
-</section> -->
+</section>
 
-
+<!-- Image Lightbox Popup Modal -->
+<div id="imageLightboxModal" class="img-lightbox-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Image Preview">
+    <div class="img-lightbox-backdrop" id="lightboxBackdrop"></div>
+    <button type="button" class="img-lightbox-close" id="lightboxCloseBtn" aria-label="Close popup">
+        <i class="fa fa-times" aria-hidden="true"></i>
+    </button>
+    <button type="button" class="img-lightbox-nav img-lightbox-prev" id="lightboxPrevBtn" aria-label="Previous image">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+    </button>
+    <button type="button" class="img-lightbox-nav img-lightbox-next" id="lightboxNextBtn" aria-label="Next image">
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+    </button>
+    <div class="img-lightbox-content">
+        <img id="lightboxImg" src="" alt="Popup Preview" />
+    </div>
+</div>
 
 {% endblock body %}
 {% block js %}
+<script src="{% static 'js/country_utils.js' %}"></script>
 <script src="{% static 'js/aboutPage.js' %}"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({
+    offset: 100,
+  });
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-
 {% endblock js %}
