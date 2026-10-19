@@ -863,4 +863,30 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
   
+    // -------------------------------------------------------------
+    // Responsive AOS for Smile Values Cards (fade-up on <= 576px)
+    // -------------------------------------------------------------
+    function updateSmileValuesAos() {
+        const isMobile = window.innerWidth <= 576;
+        const cards = document.querySelectorAll(".smile_values_cards_main .smile_values_card_main");
+        cards.forEach((card) => {
+            if (!card.dataset.aosDesktop) {
+                card.dataset.aosDesktop = card.getAttribute("data-aos") || "fade-up";
+            }
+            const desiredAos = isMobile ? "fade-up" : card.dataset.aosDesktop;
+            if (card.getAttribute("data-aos") !== desiredAos) {
+                card.setAttribute("data-aos", desiredAos);
+            }
+        });
+    }
+
+    updateSmileValuesAos();
+
+    window.addEventListener("resize", function () {
+        updateSmileValuesAos();
+        if (typeof AOS !== "undefined" && typeof AOS.refresh === "function") {
+            AOS.refresh();
+        }
+    });
+
 });

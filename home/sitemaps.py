@@ -18,7 +18,7 @@ class NormalStaticPageSitemap(Sitemap):
     changefreq = 'weekly'
 
     def items(self):
-        return['home:contact', 'home:dentist', 'home:gallery', 'virtualsmileAI:smile', 'home:dentist_connect']
+        return['home:contact', 'home:dentist', 'home:gallery', 'virtualsmileAI:smile', 'home:dentist_connect', 'home:aboutPage']
     def location(self, item):
         return reverse(item)
 
@@ -103,6 +103,12 @@ class StaticPageSitemap(Sitemap):
             },
             {
                 'name': 'home:dentist_connect',
+                'priority': 0.8,
+                'changefreq': 'weekly',
+                'images': []
+            },
+            {
+                'name': 'home:aboutPage',
                 'priority': 0.8,
                 'changefreq': 'weekly',
                 'images': []

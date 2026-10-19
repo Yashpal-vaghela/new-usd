@@ -15,7 +15,7 @@ sitemaps_dict ={
 }
 urlpatterns = [
     path('', views.home, name='home'),
-    path('about/', views.aboutPage, name='aboutPage'),
+    path('about-us/', views.aboutPage, name='aboutPage'),
     # path('find-dentist/', views.find_dentist, name='find_dentist'),
     # path('gallery/', views.gallery, name='gallery'),
     path('gallery/', views.beforeaftergallery, name='gallery'),
