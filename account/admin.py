@@ -1,19 +1,57 @@
 from django.contrib import admin
 from django.db import models
 from import_export.admin import ImportExportModelAdmin
-from django.utils.html import format_html
+from django.utils.html import format_html, mark_safe
 from django_json_widget.widgets import JSONEditorWidget
 from .models import *
 
 class DentistAdmin(ImportExportModelAdmin):
-    list_display = ('name', 'city', 'contact', 'status')
+    list_display = ('image_preview', 'name', 'city', 'contact', 'status')
+    list_display_links = ('name',)
     search_fields = ('name', 'city__city', 'contact')
     list_filter = ('status', 'city')
+    readonly_fields = ('image_preview',)
+
+    def image_preview(self, obj):
+        image = obj.dentist_image or obj.profile
+        if image:
+            try:
+                return format_html(
+                    '<a href="{}" target="_blank" rel="noopener noreferrer">'
+                    '<img src="{}" width="120" height="120" style="object-fit: contain; border-radius: 6px; display: block; cursor: pointer;" />'
+                    '</a>',
+                    image.url,
+                    image.url
+                )
+            except Exception:
+                pass
+        return mark_safe('<span style="color: #888;">(No Image)</span>')
+
+    image_preview.short_description = "Image"
 
 class DentistDetailsAdmin(ImportExportModelAdmin):
-    list_display = ('name', 'city', 'contact', 'status')
+    list_display = ('image_preview', 'name', 'city', 'contact', 'status')
+    list_display_links = ('name',)
     search_fields = ('name', 'city__city', 'contact')
     list_filter = ('status', 'city')
+    readonly_fields = ('image_preview',)
+
+    def image_preview(self, obj):
+        image = obj.list_page_image or obj.details_page_image
+        if image:
+            try:
+                return format_html(
+                    '<a href="{}" target="_blank" rel="noopener noreferrer">'
+                    '<img src="{}" width="120" height="120" style="object-fit: contain; border-radius: 6px; display: block; cursor: pointer;" />'
+                    '</a>',
+                    image.url,
+                    image.url
+                )
+            except Exception:
+                pass
+        return mark_safe('<span style="color: #888;">(No Image)</span>')
+
+    image_preview.short_description = "Image"
 
 class BlogAdmin(admin.ModelAdmin):
     list_display = ('h1', 'author', 'published', 'status')
@@ -109,7 +147,13 @@ class ContactHomePageAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'phone','city', 'date', 'message')
     search_fields = ('name', 'email', 'phone')
     list_filter = ('date',)
-    
+
+class RedirectRuleAdmin(admin.ModelAdmin):
+    list_display = ('old_url', 'new_url', 'is_active', 'created_at', 'updated_at')
+    list_filter = ('is_active', 'created_at')
+    search_fields = ('old_url', 'new_url')
+    list_editable = ('is_active',)
+
 
 admin.site.register(Location)
 admin.site.register(City)
@@ -137,3 +181,4 @@ admin.site.register(NewsletterSubscriber, NewsletterSubscriberAdmin)
 admin.site.register(SmileDesignLead, SmileDesignLeadAdmin)
 admin.site.register(Awards, AwardsAdmin)
 admin.site.register(ContactHomePage, ContactHomePageAdmin)
+admin.site.register(RedirectRule, RedirectRuleAdmin)

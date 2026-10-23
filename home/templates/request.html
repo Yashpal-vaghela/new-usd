@@ -19,7 +19,98 @@
   href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
   rel="stylesheet"
 />
+<style>
+  /* Phone and Pincode Validation - Green/Red borders and status icons */
+  .inputicon-box #phoneInput {
+    padding-right: 42px !important;
+  }
 
+  .inputicon-box #phoneInput.is-valid,
+  .inputicon-box input#phoneInput.is-valid,
+  .inputicon-box.is-valid #phoneInput,
+  .inputicon-box #phoneInput.is-valid:focus,
+  .inputicon-box input#phoneInput.is-valid:focus,
+  .inputicon-box.is-valid #phoneInput:focus {
+    border: 1px solid #10b981 !important;
+    background-image: none !important;
+    outline: none !important;
+  }
+
+  .inputicon-box #phoneInput.is-invalid,
+  .inputicon-box input#phoneInput.is-invalid,
+  .inputicon-box.is-invalid #phoneInput,
+  .inputicon-box #phoneInput.is-invalid:focus,
+  .inputicon-box input#phoneInput.is-invalid:focus,
+  .inputicon-box.is-invalid #phoneInput:focus {
+    border: 1px solid #ef4444 !important;
+    background-image: none !important;
+    outline: none !important;
+  }
+
+  .request-phone-status-icon {
+    position: absolute;
+    right: 14px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 24px !important;
+    height: 24px !important;
+    pointer-events: none !important;
+    z-index: 10 !important;
+  }
+
+  .inputicon-box #pincodeInput {
+    padding-right: 42px !important;
+  }
+
+  .inputicon-box #pincodeInput.is-valid,
+  .inputicon-box input#pincodeInput.is-valid,
+  .inputicon-box #pincodeInput.is-valid:focus,
+  .inputicon-box input#pincodeInput.is-valid:focus {
+    border: 1px solid #10b981 !important;
+    background-image: none !important;
+    outline: none !important;
+  }
+
+  .inputicon-box #pincodeInput.is-invalid,
+  .inputicon-box input#pincodeInput.is-invalid,
+  .inputicon-box #pincodeInput.is-invalid:focus,
+  .inputicon-box input#pincodeInput.is-invalid:focus {
+    border: 1px solid #ef4444 !important;
+    background-image: none !important;
+    outline: none !important;
+  }
+
+  .request-pincode-spinner {
+    position: absolute;
+    right: 14px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 18px !important;
+    height: 18px !important;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-top-color: #c7a041;
+    border-radius: 50%;
+    animation: requestPinSpin 0.7s linear infinite;
+    pointer-events: none;
+    z-index: 10 !important;
+  }
+
+  .request-pincode-status-icon {
+    position: absolute;
+    right: 14px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 16px;
+    pointer-events: none;
+    z-index: 10 !important;
+  }
+</style>
 {% endblock css %} {% block body %}
 <link rel="stylesheet" href="{% static 'css/contact.css' %}" />
 <link rel="stylesheet" href="{% static 'css/common.css' %}" />
@@ -88,16 +179,22 @@
 
               <div class="col-lg-6">
                 {% comment %} <label class="form-label">Phone Number</label> {% endcomment %}
-                <div class="inputicon-box">
+                <div class="inputicon-box position-relative">
                   <input
                     class="form-control phone_input"
                     id="phoneInput"
-                    type="number"
-                    placeholder="Phone Number"
+                    type="tel"
+                    inputmode="numeric"
+                    placeholder="Enter 10-digit mobile number..."
                     value="{{ request.POST.phone }}"
+                    maxlength="10"
+                    autocomplete="tel"
                     required
                   />
+                  <div id="phoneStatusIcon" class="request-phone-status-icon"></div>
+                  <input type="hidden" name="country_code" id="countryCodeInput" value="{{ request.POST.country_code|default:'+91' }}" />
                   <input type="hidden" name="phone" id="fullPhoneInput" value="{{ request.POST.phone }}" />
+                  <input type="hidden" name="full_phone" id="fullPhoneHidden" value="" />
                   <i class="flag_icon_man" id="countrySelectBtn" tabindex="0" role="button" aria-expanded="false">
                     <div class="flag_icon">
                        <img src="https://flagcdn.com/w40/in.png" alt="flag" id="selectedFlag" class="flag_image" />
@@ -141,7 +238,7 @@
                     name="pincode"
                     id="pincodeInput"
                     type="text"
-                    placeholder="Enter your Pincode"
+                    placeholder="Enter 6-digit PIN code (e.g. 365601)..."
                     value="{{ request.POST.pincode }}"
                     autocomplete="postal-code"
                     required
@@ -278,12 +375,34 @@
         const cityInput = document.getElementById("cityInput");
         const pincodeSpinner = document.getElementById("pincodeSpinner");
         const pincodeStatusIcon = document.getElementById("pincodeStatusIcon");
-        const wrapper = document.querySelector(".country-phone-wrapper") || document.querySelector(".inputicon-box");
-        const form = document.querySelector("form");
+        const wrapper = document.querySelector(".country-phone-wrapper") || (phoneInput ? phoneInput.closest(".inputicon-box") : document.querySelector(".inputicon-box"));
+        const form = document.querySelector(".login-form") || document.querySelector(".aon-login-form") || document.querySelector("form");
 
-        let pincodeDebounceTimer = null;
-        let pincodeAbortCtrl = null;
-        let pincodeCache = {};
+        /* PHONE REAL-TIME VALIDATION via country_utils.js */
+        let phoneCtrl = null;
+        if (typeof attachPhoneValidation === "function") {
+            phoneCtrl = attachPhoneValidation({
+                phoneInput: phoneInput,
+                fullPhoneInput: fullPhoneInput,
+                getCountry: () => currentSelected,
+                fieldBox: phoneInput ? phoneInput.closest('.inputicon-box') : null,
+                statusIcon: document.getElementById("phoneStatusIcon"),
+            });
+        }
+
+        /* PINCODE REAL-TIME VALIDATION & AUTO-FETCH via country_utils.js */
+        let pincodeCtrl = null;
+        if (typeof attachPincodeAutofill === "function") {
+            pincodeCtrl = attachPincodeAutofill({
+                pincodeInput: pincodeInput,
+                cityInput: cityInput,
+                getCountry: () => currentSelected,
+                spinner: pincodeSpinner,
+                statusIcon: pincodeStatusIcon,
+                form: form,
+                pulseClass: 'request-city-pulse'
+            });
+        }
 
         function getFlagUrl(code) {
             return `https://flagcdn.com/w40/${code.toLowerCase()}.png`;
@@ -328,6 +447,10 @@
                 selectedFlag.alt = country.code;
             }
             if (selectedCode) selectedCode.textContent = country.dialCode;
+            const countryCodeInput = document.getElementById("countryCodeInput");
+            if (countryCodeInput) {
+                countryCodeInput.value = country.dialCode;
+            }
 
             document.querySelectorAll(".country-item").forEach((el) => {
                 if (el.dataset.code === country.code) {
@@ -337,36 +460,35 @@
                 }
             });
 
-            if (typeof pincodeCtrl !== "undefined" && pincodeCtrl) {
-                pincodeCtrl.updatePlaceholder(currentSelected);
-                if (pincodeInput && pincodeInput.value.trim().length > 0) {
-                    pincodeCtrl.triggerLookup(true);
-                }
+            // Dynamically update phone validation rules & limits
+            if (phoneCtrl) {
+                phoneCtrl.updateCountry(currentSelected);
+            } else {
+                updateFullPhone();
             }
 
-            updateFullPhone();
+            // Dynamically update pincode validation rules & limits
+            if (pincodeCtrl) {
+                pincodeCtrl.updateCountry(currentSelected);
+            }
         }
 
-        /* PINCODE REAL-TIME VALIDATION & AUTO-FETCH via country_utils.js */
-        const pincodeCtrl = attachPincodeAutofill({
-            pincodeInput: pincodeInput,
-            cityInput: cityInput,
-            getCountry: () => currentSelected,
-            spinner: pincodeSpinner,
-            statusIcon: pincodeStatusIcon,
-            form: form,
-            pulseClass: 'request-city-pulse'
-        });
-
         function updateFullPhone() {
-            if (!phoneInput) return;
-            const number = phoneInput.value.trim();
-            if (fullPhoneInput) {
-                if (number) {
-                    fullPhoneInput.value = `${currentSelected.dialCode} ${number}`;
-                } else {
-                    fullPhoneInput.value = "";
+            if (phoneCtrl) {
+                phoneCtrl.updateFullPhone();
+            } else if (phoneInput) {
+                const number = phoneInput.value.trim();
+                if (fullPhoneInput) {
+                    if (number) {
+                        fullPhoneInput.value = `${currentSelected.dialCode} ${number}`;
+                    } else {
+                        fullPhoneInput.value = "";
+                    }
                 }
+            }
+            const fullPhoneHidden = document.getElementById("fullPhoneHidden");
+            if (fullPhoneHidden && fullPhoneInput) {
+                fullPhoneHidden.value = fullPhoneInput.value;
             }
         }
 
@@ -430,8 +552,10 @@
         }
 
         document.addEventListener("click", function (e) {
-            if (wrapper && !wrapper.contains(e.target)) {
-                closeDropdown();
+            if (countryDropdown && countryDropdown.classList.contains("show")) {
+                if (!countryDropdown.contains(e.target) && (!countrySelectBtn || !countrySelectBtn.contains(e.target))) {
+                    closeDropdown();
+                }
             }
         });
 
@@ -441,13 +565,35 @@
             }
         });
 
-        if (phoneInput) {
-            phoneInput.addEventListener("input", updateFullPhone);
-        }
-
         if (form) {
             form.addEventListener("submit", function (e) {
                 updateFullPhone();
+
+                // 1. Phone validation
+                if (phoneCtrl) {
+                    const phoneValid = phoneCtrl.validate(true);
+                    if (!phoneValid) {
+                        e.preventDefault();
+                        if (phoneInput) phoneInput.focus();
+                        return false;
+                    }
+                }
+
+                // 2. Pincode validation
+                const pinVal = (pincodeInput ? pincodeInput.value : "").trim();
+                if (typeof validatePostalCode === "function") {
+                    const pinRes = validatePostalCode(pinVal, currentSelected.code, currentSelected.name);
+                    if (!pinRes.valid) {
+                        e.preventDefault();
+                        if (pincodeCtrl) {
+                            pincodeCtrl.setStatus('invalid', pinRes.message, pinRes.badge);
+                        }
+                        if (pincodeInput) pincodeInput.focus();
+                        return false;
+                    }
+                }
+
+                // 3. City check
                 if (cityInput && !cityInput.value.trim()) {
                     e.preventDefault();
                     cityInput.focus();
@@ -460,6 +606,10 @@
         }
 
         selectCountry(currentSelected);
+
+        if (pincodeCtrl && pincodeInput && pincodeInput.value.trim()) {
+            pincodeCtrl.triggerLookup(true);
+        }
 
         // REST API fetch to enrich country list
         if (typeof window.fetchCountryList === "function") {

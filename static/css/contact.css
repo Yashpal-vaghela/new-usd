@@ -1044,6 +1044,7 @@ div:where(.swal2-container).swal2-top-right>.swal2-popup {
   align-items: center;
   border-radius: 8px;
   overflow: hidden;
+  position: relative !important;
 }
 
 
@@ -1492,20 +1493,70 @@ div:where(.swal2-container).swal2-top-right>.swal2-popup {
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.pincode-input-container .form-control.is-valid {
-  border: 1px solid #10b981 !important;
-  box-shadow: 0 0 10px rgba(16, 185, 129, 0.25);
+.pincode-input-container .form-control.is-valid,
+.pincode-input-container .form-control.is-invalid {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  background-image: none !important;
 }
 
-.pincode-input-container .form-control.is-invalid {
-  border: 1px solid #ef4444 !important;
-  box-shadow: 0 0 10px rgba(239, 68, 68, 0.25);
+/* Contact Form: Strict NO BORDER and NO BOX-SHADOW on valid/invalid (only icons) */
+.contact-form .pincode-input-container .form-control.is-valid,
+.contact-form .pincode-input-container .form-control.is-invalid,
+.contact-form #pincodeInput.is-valid,
+.contact-form #pincodeInput.is-invalid,
+.contact-form #phoneInput.is-valid,
+.contact-form #phoneInput.is-invalid,
+.contact-form .phone-number-input.is-valid,
+.contact-form .phone-number-input.is-invalid,
+.contact-form .country-phone-wrapper.is-valid,
+.contact-form .country-phone-wrapper.is-invalid,
+.contact-form .country-phone-group.is-valid,
+.contact-form .country-phone-group.is-invalid,
+.contact-form .country-select-btn.is-valid,
+.contact-form .country-select-btn.is-invalid,
+.contact-form .form-control.is-valid,
+.contact-form .form-control.is-invalid,
+.contact-form input.is-valid,
+.contact-form input.is-invalid {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  background-image: none !important;
+}
+
+.contact-phone-status-icon {
+  position: absolute;
+  right: 14px !important;
+  top: 31% !important;
+  transform: translateY(-50%) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  pointer-events: none;
+  z-index: 10 !important;
+}
+
+.contact-form #phoneInput {
+  padding-right: 42px !important;
+}
+
+.contact-form .pincode-input-container #pincodeInput {
+  padding-right: 42px !important;
+}
+
+.contact-form .pincode-status-icon,
+.contact-form .pincode-spinner {
+  top: 31% !important;
+  transform: translateY(-50%) !important;
 }
 
 .pincode-spinner {
   position: absolute;
   right: 14px;
-  top: 33%;
+  top: 31%;
   transform: translateY(-50%);
   width: 18px;
   height: 18px;
@@ -1525,7 +1576,7 @@ div:where(.swal2-container).swal2-top-right>.swal2-popup {
 .pincode-status-icon {
   position: absolute;
   right: 14px;
-  top: 33%;
+  top: 31%;
   transform: translateY(-50%);
   display: flex;
   align-items: center;
@@ -1589,22 +1640,6 @@ div:where(.swal2-container).swal2-top-right>.swal2-popup {
   user-select: none;
 }
 
-.city-highlight-pulse {
-  animation: contactCityPulse 1s ease;
-}
-
-@keyframes contactCityPulse {
-  0% {
-    border: 1px solid transparent;
-  }
-  50% {
-    border: 1px solid #10b981 !important;
-    box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
-  }
-  100% {
-    border: 1px solid transparent;
-  }
-}
 
 /* Dentist Connect Form Inputs - Underline Style & Transparent Background */
 .dentist-connect-form .form-control,
@@ -1665,6 +1700,53 @@ div:where(.swal2-container).swal2-top-right>.swal2-popup {
   background-image: none !important;
   background-color: transparent !important;
   border-radius: 0 !important;
+}
+
+.dentist-connect-form #phoneInput {
+  padding-right: 32px !important;
+}
+
+.dentist-connect-form #phoneInput.is-valid,
+.dentist-connect-form input#phoneInput.is-valid,
+.dentist_number_input.is-valid .dentist_flag_icon_main,
+.dentist_number_input.is-valid:focus-within .dentist_flag_icon_main,
+.dentist-connect-form .dentist_number_input:has(#phoneInput.is-valid) .dentist_flag_icon_main,
+.dentist_flag_icon_main.is-valid,
+#countrySelectBtn.is-valid {
+  border: none !important;
+  border-bottom: 1px solid #10b981 !important;
+  box-shadow: none !important;
+  background-image: none !important;
+  background-color: transparent !important;
+  border-radius: 0 !important;
+}
+
+.dentist-connect-form #phoneInput.is-invalid,
+.dentist-connect-form input#phoneInput.is-invalid,
+.dentist_number_input.is-invalid .dentist_flag_icon_main,
+.dentist_number_input.is-invalid:focus-within .dentist_flag_icon_main,
+.dentist-connect-form .dentist_number_input:has(#phoneInput.is-invalid) .dentist_flag_icon_main,
+.dentist_flag_icon_main.is-invalid,
+#countrySelectBtn.is-invalid {
+  border: none !important;
+  border-bottom: 1px solid #ef4444 !important;
+  box-shadow: none !important;
+  background-image: none !important;
+  background-color: transparent !important;
+  border-radius: 0 !important;
+}
+
+.dentist-phone-status-icon {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  pointer-events: none;
+  z-index: 5;
 }
 
 .dentist-pincode-spinner {
@@ -1764,21 +1846,6 @@ div:where(.swal2-container).swal2-top-right>.swal2-popup {
   user-select: none;
 }
 
-.dentist-city-pulse {
-  animation: dentistCityPulse 1s ease;
-}
-
-@keyframes dentistCityPulse {
-  0% {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.918);
-  }
-  50% {
-    border-bottom: 1px solid #10b981 !important;
-  }
-  100% {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.918);
-  }
-}
 
 /* Request Page (Patient Appointment) Pincode & City Auto-fetch Styles */
 .inputicon-box #pincodeInput {
@@ -1786,32 +1853,76 @@ div:where(.swal2-container).swal2-top-right>.swal2-popup {
 }
 
 .inputicon-box #pincodeInput.is-valid,
-.inputicon-box input#pincodeInput.is-valid {
+.inputicon-box input#pincodeInput.is-valid,
+.inputicon-box #pincodeInput.is-valid:focus,
+.inputicon-box input#pincodeInput.is-valid:focus {
   border: 1px solid #10b981 !important;
-  box-shadow: 0 0 8px rgba(16, 185, 129, 0.3) !important;
   background-image: none !important;
+  outline: none !important;
 }
 
 .inputicon-box #pincodeInput.is-invalid,
-.inputicon-box input#pincodeInput.is-invalid {
+.inputicon-box input#pincodeInput.is-invalid,
+.inputicon-box #pincodeInput.is-invalid:focus,
+.inputicon-box input#pincodeInput.is-invalid:focus {
   border: 1px solid #ef4444 !important;
-  box-shadow: 0 0 8px rgba(239, 68, 68, 0.3) !important;
   background-image: none !important;
+  outline: none !important;
+}
+
+.inputicon-box #phoneInput {
+  padding-right: 42px !important;
+}
+
+.inputicon-box #phoneInput.is-valid,
+.inputicon-box input#phoneInput.is-valid,
+.inputicon-box.is-valid #phoneInput,
+.inputicon-box #phoneInput.is-valid:focus,
+.inputicon-box input#phoneInput.is-valid:focus,
+.inputicon-box.is-valid #phoneInput:focus {
+  border: 1px solid #10b981 !important;
+  background-image: none !important;
+  outline: none !important;
+}
+
+.inputicon-box #phoneInput.is-invalid,
+.inputicon-box input#phoneInput.is-invalid,
+.inputicon-box.is-invalid #phoneInput,
+.inputicon-box #phoneInput.is-invalid:focus,
+.inputicon-box input#phoneInput.is-invalid:focus,
+.inputicon-box.is-invalid #phoneInput:focus {
+  border: 1px solid #ef4444 !important;
+  background-image: none !important;
+  outline: none !important;
+}
+
+.request-phone-status-icon {
+  position: absolute;
+  right: 14px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 24px !important;
+  height: 24px !important;
+  pointer-events: none !important;
+  z-index: 10 !important;
 }
 
 .request-pincode-spinner {
   position: absolute;
-  right: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
+  right: 14px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 18px !important;
+  height: 18px !important;
   border: 2px solid rgba(255, 255, 255, 0.2);
   border-top-color: #c7a041;
   border-radius: 50%;
   animation: requestPinSpin 0.7s linear infinite;
   pointer-events: none;
-  z-index: 6;
+  z-index: 10 !important;
 }
 
 @keyframes requestPinSpin {
@@ -1822,15 +1933,15 @@ div:where(.swal2-container).swal2-top-right>.swal2-popup {
 
 .request-pincode-status-icon {
   position: absolute;
-  right: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  right: 14px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   font-size: 16px;
-  pointer-events: none;
-  z-index: 6;
+  pointer-events: none !important;
+  z-index: 10 !important;
 }
 
 .inputicon-box #cityInput:read-only,
@@ -1847,4 +1958,13 @@ div:where(.swal2-container).swal2-top-right>.swal2-popup {
     color: #fff;
     box-shadow: none !important;
     outline: none !important;
+}
+
+@media(max-width:576px) {
+  .contact-phone-status-icon {
+    top: 39% !important;
+  }
+  .contact-form .pincode-status-icon, .contact-form .pincode-spinner {
+    top: 39% !important;
+  }
 }

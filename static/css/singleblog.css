@@ -998,6 +998,9 @@
     .input_number_main{
     margin-bottom: 8px;
     }
+    #cityInput{
+        border-radius: 24px;
+    }
 
     .pincode-input-wrapper{
     margin-bottom: 8px;
@@ -1034,20 +1037,52 @@
     padding-right: 42px !important;
 }
 
+/* Blog Form: Strict NO BORDER and NO BOX-SHADOW on valid/invalid (only icons) */
+.single-blog-content2 .pincode-input-container .form-control.is-valid,
+.single-blog-content2 .pincode-input-container .form-control.is-invalid,
 .single-blog-content2 #pincodeInput.is-valid,
-.single-blog-content2 input#pincodeInput.is-valid,
-.single-blog-content2 .pincode-input-container #pincodeInput.is-valid {
-    border-color: #10b981 !important;
-    box-shadow: 0 0 8px rgba(16, 185, 129, 0.3) !important;
+.single-blog-content2 #pincodeInput.is-invalid,
+.single-blog-content2 #phoneInput.is-valid,
+.single-blog-content2 #phoneInput.is-invalid,
+.single-blog-content2 .input_number.is-valid,
+.single-blog-content2 .input_number.is-invalid,
+.single-blog-content2 .input_number_main.is-valid,
+.single-blog-content2 .input_number_main.is-invalid,
+.single-blog-content2 .flag_icon_main.is-valid,
+.single-blog-content2 .flag_icon_main.is-invalid,
+.single-blog-content2 .form-control.is-valid,
+.single-blog-content2 .form-control.is-invalid,
+.single-blog-content2 input.is-valid,
+.single-blog-content2 input.is-invalid {
+    border-color: #000 !important;
+    box-shadow: none !important;
+    outline: none !important;
     background-image: none !important;
 }
 
-.single-blog-content2 #pincodeInput.is-invalid,
-.single-blog-content2 input#pincodeInput.is-invalid,
-.single-blog-content2 .pincode-input-container #pincodeInput.is-invalid {
-    border-color: #ef4444 !important;
-    box-shadow: 0 0 8px rgba(239, 68, 68, 0.3) !important;
-    background-image: none !important;
+.blog-phone-status-icon {
+    position: absolute;
+    right: 14px;
+    top:33% !important;
+    transform: translateY(-50%) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+    z-index: 10 !important;
+}
+
+.single-blog-content2 #phoneInput {
+    padding-right: 42px !important;
+}
+
+.single-blog-content2 .pincode-status-icon,
+.single-blog-content2 .pincode-spinner {
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    z-index: 10 !important;
 }
 
 .pincode-spinner {
@@ -1092,23 +1127,6 @@
     box-shadow: none !important;
     color: #ffffff !important;
     user-select: none;
-}
-
-.blog-city-pulse {
-    animation: blogCityPulse 1s ease;
-}
-
-@keyframes blogCityPulse {
-    0% {
-        border-color: #282828;
-    }
-    50% {
-        border-color: #10b981 !important;
-        box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
-    }
-    100% {
-        border-color: #282828;
-    }
 }
 
 .contact-form .form-control:focus {

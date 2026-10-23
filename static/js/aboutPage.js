@@ -402,11 +402,24 @@ document.addEventListener("DOMContentLoaded", function () {
     const countryListEl = document.getElementById("countryList");
     const selectedFlag = document.getElementById("selectedFlag");
     const selectedCode = document.getElementById("selectedCode");
+    const nameInput = document.getElementById("nameInput");
+    const emailInput = document.getElementById("emailInput");
     const phoneInput = document.getElementById("phoneInput");
     const realPhoneInput = document.getElementById("realPhoneInput");
     const fullPhoneInput = document.getElementById("fullPhoneInput");
+    const phoneFieldBox = document.getElementById("phoneFieldBox");
+    const phoneStatusIcon = document.getElementById("phoneStatusIcon");
+    const phoneStatusBadge = document.getElementById("phoneStatusBadge");
+    const phoneFeedback = document.getElementById("phoneFeedback");
+
     const pincodeInput = document.getElementById("pincodeInput");
+    const pincodeFieldBox = document.getElementById("pincodeFieldBox");
     const cityInput = document.getElementById("cityInput");
+    const messageInput = document.getElementById("messageInput");
+    const pincodeSpinner = document.getElementById("pincodeSpinner");
+    const pincodeStatusIcon = document.getElementById("pincodeStatusIcon");
+    const pincodeStatusBadge = document.getElementById("pincodeStatusBadge");
+    const pincodeFeedback = document.getElementById("pincodeFeedback");
     const aboutFormSubmitBtn = document.getElementById("aboutFormSubmitBtn");
 
     if (aboutContactForm && countrySelectBtn && phoneInput) {
@@ -445,6 +458,36 @@ document.addEventListener("DOMContentLoaded", function () {
 
         function getFlagUrl(code) {
             return `https://flagcdn.com/w40/${code.toLowerCase()}.png`;
+        }
+
+        /* PHONE REAL-TIME VALIDATION via country_utils.js */
+        let phoneCtrl = null;
+        if (typeof attachPhoneValidation === "function") {
+            phoneCtrl = attachPhoneValidation({
+                phoneInput: phoneInput,
+                fullPhoneInput: fullPhoneInput,
+                getCountry: () => currentSelected,
+                fieldBox: phoneFieldBox,
+                statusIcon: phoneStatusIcon,
+                statusBadge: phoneStatusBadge,
+                feedback: phoneFeedback
+            });
+        }
+
+        /* PINCODE REAL-TIME VALIDATION & AUTO-FETCH via country_utils.js */
+        let pincodeCtrl = null;
+        if (typeof attachPincodeAutofill === "function") {
+            pincodeCtrl = attachPincodeAutofill({
+                pincodeInput: pincodeInput,
+                cityInput: cityInput,
+                getCountry: () => currentSelected,
+                fieldBox: pincodeFieldBox,
+                spinner: pincodeSpinner,
+                statusIcon: pincodeStatusIcon,
+                statusBadge: pincodeStatusBadge,
+                feedback: pincodeFeedback,
+                pulseClass: 'city-highlight-pulse'
+            });
         }
 
         function renderCountryList(list) {
@@ -500,15 +543,31 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             }
 
-            updateFullPhone();
+            // Dynamically update phone validation rules & limits
+            if (phoneCtrl) {
+                phoneCtrl.updateCountry(currentSelected);
+            } else {
+                updateFullPhone();
+            }
+
+            // Dynamically update pincode validation rules & limits
+            if (pincodeCtrl) {
+                pincodeCtrl.updateCountry(currentSelected); 
+            }
         }
 
         function updateFullPhone() {
-            if (!phoneInput) return;
-            const number = phoneInput.value.trim();
-            const formatted = number ? `${currentSelected.dialCode} ${number}` : "";
-            if (fullPhoneInput) fullPhoneInput.value = formatted;
-            if (realPhoneInput) realPhoneInput.value = formatted;
+            if (phoneCtrl) {
+                phoneCtrl.updateFullPhone();
+            } else {
+                if (!phoneInput) return;
+                const number = phoneInput.value.trim();
+                const formatted = number ? `${currentSelected.dialCode} ${number}` : "";
+                if (fullPhoneInput) fullPhoneInput.value = formatted;
+            }
+            if (realPhoneInput && fullPhoneInput) {
+                realPhoneInput.value = fullPhoneInput.value;
+            }
         }
 
         function openCountryDropdown() {
@@ -557,8 +616,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
 
-        phoneInput.addEventListener("input", updateFullPhone);
-
         document.addEventListener("click", function (e) {
             if (countryDropdown && !countryDropdown.contains(e.target) && !countrySelectBtn.contains(e.target)) {
                 closeCountryDropdown();
@@ -573,9 +630,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Initialize country list
         renderCountryList(countriesList);
-        updateFullPhone();
+        selectCountry(currentSelected);
 
-        // Optionally fetch extended country list from REST countries if available
+        // Fetch extended country list from REST countries API
         if (typeof fetchCountryList === "function") {
             try {
                 fetchCountryList(function (apiList) {
@@ -589,172 +646,105 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-        // Pincode auto-lookup for city if country_utils.js is loaded
-        const pincodeSpinner = document.getElementById("pincodeSpinner");
-        const pincodeStatusIcon = document.getElementById("pincodeStatusIcon");
-
-        function setPincodeStatus(state) {
-            if (state === "loading") {
-                if (pincodeSpinner) pincodeSpinner.style.display = "block";
-                if (pincodeStatusIcon) {
-                    pincodeStatusIcon.style.display = "none";
-                    pincodeStatusIcon.innerHTML = "";
-                }
-            } else if (state === "valid") {
-                if (pincodeSpinner) pincodeSpinner.style.display = "none";
-                if (pincodeStatusIcon) {
-                    pincodeStatusIcon.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
-                    pincodeStatusIcon.style.display = "flex";
-                }
-            } else if (state === "invalid") {
-                if (pincodeSpinner) pincodeSpinner.style.display = "none";
-                if (pincodeStatusIcon) {
-                    pincodeStatusIcon.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
-                    pincodeStatusIcon.style.display = "flex";
-                }
-            } else {
-                if (pincodeSpinner) pincodeSpinner.style.display = "none";
-                if (pincodeStatusIcon) {
-                    pincodeStatusIcon.style.display = "none";
-                    pincodeStatusIcon.innerHTML = "";
-                }
-            }
-        }
-
-        if (pincodeInput && cityInput && typeof lookupPincode === "function") {
-            // City input is readonly by default until pincode is evaluated
-            cityInput.readOnly = true;
-
-            let pinTimer = null;
-            let lastFetchedPin = "";
-
-            function handlePincodeInput(immediate = false) {
-                clearTimeout(pinTimer);
-                const pin = pincodeInput.value.trim();
-
-                // If pincode is completely removed or empty, remove city, lock it to readOnly, and reset to idle
-                if (!pin) {
-                    cityInput.value = "";
-                    cityInput.readOnly = true;
-                    lastFetchedPin = "";
-                    setPincodeStatus("idle");
-                    return;
-                }
-
-                // Real-time loader: show golden spinner immediately on input change
-                setPincodeStatus("loading");
-
-                const isIndia = (currentSelected.code || "IN").toUpperCase() === "IN";
-                const digits = pin.replace(/\D/g, "");
-
-                const doValidate = async () => {
-                    const currentPin = pincodeInput.value.trim();
-                    if (!currentPin) {
-                        cityInput.value = "";
-                        cityInput.readOnly = true;
-                        lastFetchedPin = "";
-                        setPincodeStatus("idle");
-                        return;
-                    }
-
-                    // For India, PIN must be exactly 6 digits. If not, it is invalid (allow user to manually add city)
-                    if (isIndia && digits.length !== 6) {
-                        if (cityInput.readOnly) {
-                            cityInput.value = "";
-                        }
-                        cityInput.readOnly = false;
-                        lastFetchedPin = currentPin;
-                        setPincodeStatus("invalid");
-                        return;
-                    }
-
-                    // For non-India, minimum 3 characters
-                    if (!isIndia && currentPin.length < 3) {
-                        if (cityInput.readOnly) {
-                            cityInput.value = "";
-                        }
-                        cityInput.readOnly = false;
-                        lastFetchedPin = currentPin;
-                        setPincodeStatus("invalid");
-                        return;
-                    }
-
-                    try {
-                        const searchPin = isIndia ? digits : currentPin;
-                        const res = await lookupPincode(searchPin, currentSelected.code, currentSelected.name);
-
-                        // If user changed input while fetching, avoid stale update
-                        if (pincodeInput.value.trim() !== currentPin) {
-                            return;
-                        }
-
-                        if (res && res.valid && res.city) {
-                            cityInput.value = res.city;
-                            cityInput.readOnly = true; // Auto-fetched city cannot be manually edited
-                            lastFetchedPin = currentPin;
-                            setPincodeStatus("valid");
-                        } else {
-                            // Invalid pincode or no city found: allow user to manually add city
-                            if (cityInput.readOnly) {
-                                cityInput.value = "";
-                            }
-                            cityInput.readOnly = false;
-                            lastFetchedPin = currentPin;
-                            setPincodeStatus("invalid");
-                        }
-                    } catch (err) {
-                        if (pincodeInput.value.trim() === currentPin) {
-                            if (cityInput.readOnly) {
-                                cityInput.value = "";
-                            }
-                            cityInput.readOnly = false;
-                            lastFetchedPin = currentPin;
-                            setPincodeStatus("invalid");
-                        }
-                    }
-                };
-
-                if (immediate) {
-                    doValidate();
-                } else {
-                    pinTimer = setTimeout(doValidate, 350);
-                }
-            }
-
-            pincodeInput.addEventListener("input", () => handlePincodeInput(false));
-            pincodeInput.addEventListener("change", () => handlePincodeInput(true));
-            pincodeInput.addEventListener("blur", () => {
-                if (pincodeInput.value.trim()) {
-                    handlePincodeInput(true);
-                }
-            });
-        }
-
-        // Handle AJAX Form Submission with SweetAlert
+        // Handle AJAX Form Submission with SweetAlert & strict country-based validations
         aboutContactForm.addEventListener("submit", async function (e) {
             e.preventDefault();
+            updateFullPhone();
 
-            // Validate phone
-            const rawPhone = (phoneInput.value || "").trim();
-            if (!rawPhone) {
+            // 1. Validate Full Name
+            if (nameInput && !nameInput.value.trim()) {
                 if (typeof Swal !== "undefined") {
                     Swal.fire({
                         icon: "warning",
-                        title: "Phone Required",
-                        text: "Please enter your phone number.",
+                        title: "Name Required",
+                        text: "Please enter your full name.",
                         confirmButtonColor: "#C3942F"
                     });
                 } else {
-                    alert("Please enter your phone number.");
+                    alert("Please enter your full name.");
                 }
-                phoneInput.focus();
+                nameInput.focus();
                 return;
             }
 
-            // Sync phone fields
-            updateFullPhone();
+            // 2. Validate Email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (emailInput && (!emailInput.value.trim() || !emailRegex.test(emailInput.value.trim()))) {
+                if (typeof Swal !== "undefined") {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "Invalid Email",
+                        text: "Please enter a valid email address.",
+                        confirmButtonColor: "#C3942F"
+                    });
+                } else {
+                    alert("Please enter a valid email address.");
+                }
+                emailInput.focus();
+                return;
+            }
 
-            // Check reCAPTCHA if present
+            // 3. Country-Based Phone Validation
+            if (phoneCtrl) {
+                const phoneValid = phoneCtrl.validate(true);
+                if (!phoneValid) {
+                    phoneInput.focus();
+                    return;
+                }
+            } else {
+                const rawPhone = (phoneInput.value || "").trim();
+                if (!rawPhone) {
+                    phoneInput.focus();
+                    return;
+                }
+            }
+
+            // 4. Country-Based Pincode Validation
+            const pinVal = (pincodeInput.value || "").trim();
+            if (typeof validatePostalCode === "function") {
+                const pinRes = validatePostalCode(pinVal, currentSelected.code, currentSelected.name);
+                if (!pinRes.valid) {
+                    if (pincodeCtrl) {
+                        pincodeCtrl.setStatus('invalid', pinRes.message, pinRes.badge);
+                    }
+                    pincodeInput.focus();
+                    return;
+                }
+            }
+
+            // 5. Validate City
+            if (cityInput && !cityInput.value.trim()) {
+                if (typeof Swal !== "undefined") {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "City Required",
+                        text: "Please enter your city name or enter a valid PIN code to auto-locate.",
+                        confirmButtonColor: "#C3942F"
+                    });
+                } else {
+                    alert("Please enter your city name.");
+                }
+                cityInput.focus();
+                return;
+            }
+
+            // 6. Validate Message
+            if (messageInput && !messageInput.value.trim()) {
+                if (typeof Swal !== "undefined") {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "Message Required",
+                        text: "Please enter your message.",
+                        confirmButtonColor: "#C3942F"
+                    });
+                } else {
+                    alert("Please enter your message.");
+                }
+                messageInput.focus();
+                return;
+            }
+
+            // 7. Check reCAPTCHA if present
             const recaptchaWidget = aboutContactForm.querySelector(".g-recaptcha");
             if (recaptchaWidget) {
                 let captchaResponse = "";
@@ -820,8 +810,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
 
                     aboutContactForm.reset();
-                    cityInput.readOnly = true;
-                    setPincodeStatus("idle");
+                    if (phoneCtrl) phoneCtrl.reset();
+                    if (pincodeCtrl) pincodeCtrl.reset();
                     selectCountry({ name: "India", code: "IN", dialCode: "+91" });
 
                     if (typeof grecaptcha !== "undefined" && grecaptcha.reset) {

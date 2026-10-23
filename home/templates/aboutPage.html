@@ -312,48 +312,65 @@
                         {% csrf_token %}
                         <input type="hidden" name="is_ajax" value="1">
                         <div class="input_filds_main">
-                            <div class="input_filds">
-                                <input type="text" name="name" id="nameInput" placeholder="Full Name:" required>
+                            <div class="field_wrapper">
+                                <div class="input_filds" id="nameFieldBox">
+                                    <input type="text" name="name" id="nameInput" placeholder="Full Name:" required>
+                                </div>
                             </div>
-                            <div class="input_filds">
-                                 <input type="email" name="email" id="emailInput" placeholder="Email:" required>
+                            <div class="field_wrapper">
+                                <div class="input_filds" id="emailFieldBox">
+                                     <input type="email" name="email" id="emailInput" placeholder="Email:" required>
+                                </div>
                             </div>
                         </div>
                         <div class="input_filds_main">
-                            <div class="input_filds numbar_input_filds country-phone-wrapper position-relative">
-                                <div class="counry_code_main flag_icon_main" id="countrySelectBtn" tabindex="0" role="button" aria-expanded="false" title="Select country">
-                                    <div class="flag_image">
-                                        <img src="https://flagcdn.com/w40/in.png" alt="flag" id="selectedFlag" class="flag_image" />
+                            <div class="field_wrapper">
+                                <div class="input_filds numbar_input_filds country-phone-wrapper phone_field_box position-relative" id="phoneFieldBox">
+                                    <div class="counry_code_main flag_icon_main" id="countrySelectBtn" tabindex="0" role="button" aria-expanded="false" title="Select country">
+                                        <div class="flag_image">
+                                            <img src="https://flagcdn.com/w40/in.png" alt="flag" id="selectedFlag" class="flag_image" />
+                                        </div>
+                                        <span id="selectedCode" class="selected_code_text">+91</span>
+                                        <div class="arrow_icon">
+                                            <img src="{% static 'angle-down-in-country-code.svg' %}" alt="down arrow" />
+                                        </div>
                                     </div>
-                                    <span id="selectedCode" class="selected_code_text">+91</span>
-                                    <div class="arrow_icon">
-                                        <img src="{% static 'angle-down-in-country-code.svg' %}" alt="down arrow" />
+                                    <div class="country-dropdown-menu" id="countryDropdown">
+                                        <div class="country-search-box">
+                                            <input type="text" id="countrySearchInput" placeholder="Search country or code..." autocomplete="off" />
+                                        </div>
+                                        <ul class="country-list" id="countryList">
+                                        </ul>
                                     </div>
-                                </div>
-                                <div class="country-dropdown-menu" id="countryDropdown">
-                                    <div class="country-search-box">
-                                        <input type="text" id="countrySearchInput" placeholder="Search country or code..." autocomplete="off" />
-                                    </div>
-                                    <ul class="country-list" id="countryList">
-                                    </ul>
-                                </div>
 
-                                <input type="tel" id="phoneInput" placeholder="Phone number:" required>
-                                <input type="hidden" name="phone" id="realPhoneInput">
-                                <input type="hidden" name="full_phone" id="fullPhoneInput">
+                                    <input type="tel" inputmode="numeric" id="phoneInput" placeholder="Enter 10-digit mobile number..." maxlength="10" autocomplete="tel" required>
+                                    <input type="hidden" name="phone" id="realPhoneInput">
+                                    <input type="hidden" name="full_phone" id="fullPhoneInput">
+                                    {% comment %} <span id="phoneStatusBadge" class="phone-status-badge"></span> {% endcomment %}
+                                    <div id="phoneStatusIcon" class="phone-status-icon"></div>
+                                </div>
+                                {% comment %} <div id="phoneFeedback" class="phone-feedback-msg text-start" style="display: none;"></div> {% endcomment %}
                             </div>
-                            <div class="input_filds pincode_input_filds">
-                                 <input type="text" name="pincode" id="pincodeInput" placeholder="Pincode:" required>
-                                 <div id="pincodeSpinner" class="pincode-spinner" style="display: none;"></div>
-                                 <div id="pincodeStatusIcon" class="pincode-status-icon" style="display: none;"></div>
+                            <div class="field_wrapper">
+                                <div class="input_filds pincode_input_filds pincode_field_box position-relative" id="pincodeFieldBox">
+                                     <input type="text" name="pincode" id="pincodeInput" placeholder="Enter 6-digit PIN code (e.g. 365601)..." maxlength="6" autocomplete="postal-code" required>
+                                     {% comment %} <span id="pincodeStatusBadge" class="pincode-status-badge"></span> {% endcomment %}
+                                     <div id="pincodeSpinner" class="pincode-spinner" style="display: none;"></div>
+                                     <div id="pincodeStatusIcon" class="pincode-status-icon"></div>
+                                </div>
+                                {% comment %} <div id="pincodeFeedback" class="pincode-feedback-msg text-start" style="display: none;"></div> {% endcomment %}
                             </div>
                         </div>
                         <div class="input_filds_main">
-                            <div class="input_filds">
-                                <input type="text" name="city" id="cityInput" placeholder="City:" readonly required>
+                            <div class="field_wrapper">
+                                <div class="input_filds" id="cityFieldBox">
+                                    <input type="text" name="city" id="cityInput" placeholder="City:" readonly required>
+                                </div>
                             </div>
-                            <div class="input_filds">
-                                 <input type="text" name="message" id="messageInput" placeholder="Your Message:" required>
+                            <div class="field_wrapper">
+                                <div class="input_filds" id="messageFieldBox">
+                                     <input type="text" name="message" id="messageInput" placeholder="Your Message:" required>
+                                </div>
                             </div>
                         </div>
                         <div class="recptch_main">

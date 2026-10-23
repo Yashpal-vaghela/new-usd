@@ -28,6 +28,43 @@
 />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<style>
+  /* Borderless validation: No green/red borders, status icons only */
+  .dentists-input-box #pincodeInput.is-valid,
+  .dentists-input-box input#pincodeInput.is-valid,
+  .dentists-input-box #pincodeInput.is-invalid,
+  .dentists-input-box input#pincodeInput.is-invalid,
+  .dentists-input-box #phoneInput.is-valid,
+  .dentists-input-box input#phoneInput.is-valid,
+  .dentists-input-box #phoneInput.is-invalid,
+  .dentists-input-box input#phoneInput.is-invalid,
+  .dentists-input-box .input_nuber_and_fleg_mian.is-valid,
+  .dentists-input-box .input_nuber_and_fleg_mian.is-invalid,
+  .dentists-input-box .country_code_with_fleg_main.is-valid,
+  .dentists-input-box .country_code_with_fleg_main.is-invalid,
+  .dentists-request-wrapper .form-control.is-valid,
+  .dentists-request-wrapper .form-control.is-invalid,
+  .dentists-request-wrapper input.is-valid,
+  .dentists-request-wrapper input.is-invalid {
+    border: 0px !important;
+    box-shadow: none !important;
+    outline: none !important;
+    background-image: none !important;
+  }
+
+  .dentists-input-box .country_code_with_fleg_main.is-valid,
+  .dentists-input-box .country_code_with_fleg_main.is-invalid {
+    border-right: 2px solid #362b16 !important;
+  }
+
+  .dentists-input-box #phoneInput {
+    padding-right: 42px !important;
+  }
+
+  .dentists-input-box #pincodeInput {
+    padding-right: 44px !important;
+  }
+</style>
 {% endblock css %} 
 {% block body %}
 <!-- Content -->
@@ -324,8 +361,21 @@
                     <img src="{% static 'angle-down-in-country-code.svg' %}" alt="down arrow" />
                   </div>
                 </div>
-                <input class="form-control remove-padding-left" id="phoneInput" type="number" placeholder="Phone Number" value="{{ request.POST.phone }}" required />
+                <input
+                  class="form-control remove-padding-left"
+                  id="phoneInput"
+                  type="tel"
+                  inputmode="numeric"
+                  placeholder="Enter 10-digit mobile number..."
+                  value="{{ request.POST.phone }}"
+                  maxlength="10"
+                  autocomplete="tel"
+                  required
+                />
+                <div id="phoneStatusIcon" class="dentists-phone-status-icon"></div>
+                <input type="hidden" name="country_code" id="countryCodeInput" value="{{ request.POST.country_code|default:'+91' }}" />
                 <input type="hidden" name="phone" id="fullPhoneInput" value="{{ request.POST.phone }}" />
+                <input type="hidden" name="full_phone" id="fullPhoneHidden" value="" />
                 <!-- Country Dropdown Menu -->
                 <div class="country-dropdown-menu" id="countryDropdown">
                   <div class="country-search-box">
@@ -924,8 +974,10 @@ document.addEventListener("DOMContentLoaded", function () {
         const selectedCode = document.getElementById("selectedCode");
         const phoneInput = document.getElementById("phoneInput") || document.querySelector('input[name="phone"]');
         const fullPhoneInput = document.getElementById("fullPhoneInput");
+        const pincodeInput = document.getElementById("pincodeInput");
+        const cityInput = document.getElementById("cityInput");
         const wrapper = document.querySelector(".input_nuber_and_fleg_mian") || document.querySelector(".country-phone-wrapper");
-        const form = document.querySelector(".left_side_main form") || document.querySelector("form");
+        const form = document.querySelector(".dentists-request-wrapper form") || document.querySelector(".left_side_main form") || document.querySelector("form");
 
         function getFlagUrl(code) {
             return `https://flagcdn.com/w40/${code.toLowerCase()}.png`;
@@ -964,6 +1016,32 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
 
+        /* PHONE REAL-TIME VALIDATION via country_utils.js */
+        let phoneCtrl = null;
+        if (typeof attachPhoneValidation === "function") {
+            phoneCtrl = attachPhoneValidation({
+                phoneInput: phoneInput,
+                fullPhoneInput: fullPhoneInput,
+                getCountry: () => currentSelected,
+                fieldBox: wrapper,
+                statusIcon: document.getElementById("phoneStatusIcon"),
+            });
+        }
+
+        /* PINCODE REAL-TIME VALIDATION & AUTO-FETCH via country_utils.js */
+        let pincodeCtrl = null;
+        if (typeof attachPincodeAutofill === "function") {
+            pincodeCtrl = attachPincodeAutofill({
+                pincodeInput: pincodeInput,
+                cityInput: cityInput,
+                getCountry: () => currentSelected,
+                spinner: '#pincodeSpinner',
+                statusIcon: '#pincodeStatusIcon',
+                form: form,
+                pulseClass: 'dentists-city-pulse'
+            });
+        }
+
         function selectCountry(country) {
             currentSelected = country;
             if (selectedFlag) {
@@ -972,6 +1050,10 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             if (selectedCode) {
                 selectedCode.textContent = country.dialCode;
+            }
+            const countryCodeInput = document.getElementById("countryCodeInput");
+            if (countryCodeInput) {
+                countryCodeInput.value = country.dialCode;
             }
 
             document.querySelectorAll(".country-item").forEach((el) => {
@@ -982,35 +1064,37 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             });
 
-            updateFullPhone();
+            // Dynamically update phone validation rules & limits
+            if (phoneCtrl) {
+                phoneCtrl.updateCountry(currentSelected);
+            } else {
+                updateFullPhone();
+            }
 
-            if (typeof pincodeCtrl !== "undefined" && pincodeCtrl) {
-                pincodeCtrl.triggerLookup(true);
+            // Dynamically update pincode validation rules & limits
+            if (pincodeCtrl) {
+                pincodeCtrl.updateCountry(currentSelected);
             }
         }
 
         function updateFullPhone() {
-            if (!phoneInput) return;
-            const number = phoneInput.value.trim();
-            if (fullPhoneInput) {
-                if (number) {
-                    fullPhoneInput.value = `${currentSelected.dialCode} ${number}`;
-                } else {
-                    fullPhoneInput.value = "";
+            if (phoneCtrl) {
+                phoneCtrl.updateFullPhone();
+            } else if (phoneInput) {
+                const number = phoneInput.value.trim();
+                if (fullPhoneInput) {
+                    if (number) {
+                        fullPhoneInput.value = `${currentSelected.dialCode} ${number}`;
+                    } else {
+                        fullPhoneInput.value = "";
+                    }
                 }
             }
+            const fullPhoneHidden = document.getElementById("fullPhoneHidden");
+            if (fullPhoneHidden && fullPhoneInput) {
+                fullPhoneHidden.value = fullPhoneInput.value;
+            }
         }
-
-        // Pincode & City Auto-fetch Logic via country_utils.js
-        const pincodeCtrl = attachPincodeAutofill({
-            pincodeInput: '#pincodeInput',
-            cityInput: '#cityInput',
-            getCountry: () => currentSelected,
-            spinner: '#pincodeSpinner',
-            statusIcon: '#pincodeStatusIcon',
-            form: form,
-            pulseClass: 'dentists-city-pulse'
-        });
 
         function toggleDropdown() {
             const isShowing = countryDropdown && countryDropdown.classList.contains("show");
@@ -1085,13 +1169,35 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        if (phoneInput) {
-            phoneInput.addEventListener("input", updateFullPhone);
-        }
-
         if (form) {
             form.addEventListener("submit", function (e) {
                 updateFullPhone();
+
+                // 1. Phone validation
+                if (phoneCtrl) {
+                    const phoneValid = phoneCtrl.validate(true);
+                    if (!phoneValid) {
+                        e.preventDefault();
+                        if (phoneInput) phoneInput.focus();
+                        return false;
+                    }
+                }
+
+                // 2. Pincode validation
+                const pinVal = (pincodeInput ? pincodeInput.value : "").trim();
+                if (typeof validatePostalCode === "function") {
+                    const pinRes = validatePostalCode(pinVal, currentSelected.code, currentSelected.name);
+                    if (!pinRes.valid) {
+                        e.preventDefault();
+                        if (pincodeCtrl) {
+                            pincodeCtrl.setStatus('invalid', pinRes.message, pinRes.badge);
+                        }
+                        if (pincodeInput) pincodeInput.focus();
+                        return false;
+                    }
+                }
+
+                // 3. City check
                 if (cityInput && !cityInput.value.trim()) {
                     e.preventDefault();
                     cityInput.focus();
@@ -1105,7 +1211,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         selectCountry(currentSelected);
 
-        if (pincodeCtrl && document.getElementById("pincodeInput") && document.getElementById("pincodeInput").value.trim()) {
+        if (pincodeCtrl && pincodeInput && pincodeInput.value.trim()) {
             pincodeCtrl.triggerLookup(true);
         }
 

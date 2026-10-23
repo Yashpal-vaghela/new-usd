@@ -7736,19 +7736,50 @@ body.modal-open {
 }
 
 
-/* Dentists Form Pincode & City validation styles */
+/* Dentists Form Validation Styles - Borderless with status icons only */
 .dentists-input-box #pincodeInput.is-valid,
-.dentists-input-box input#pincodeInput.is-valid {
-  border: 1px solid #10b981 !important;
-  box-shadow: 0 0 8px rgba(16, 185, 129, 0.3) !important;
+.dentists-input-box input#pincodeInput.is-valid,
+.dentists-input-box #pincodeInput.is-invalid,
+.dentists-input-box input#pincodeInput.is-invalid,
+.dentists-input-box #phoneInput.is-valid,
+.dentists-input-box input#phoneInput.is-valid,
+.dentists-input-box #phoneInput.is-invalid,
+.dentists-input-box input#phoneInput.is-invalid,
+.dentists-input-box .input_nuber_and_fleg_mian.is-valid,
+.dentists-input-box .input_nuber_and_fleg_mian.is-invalid,
+.dentists-input-box .country_code_with_fleg_main.is-valid,
+.dentists-input-box .country_code_with_fleg_main.is-invalid,
+.dentists-request-wrapper .form-control.is-valid,
+.dentists-request-wrapper .form-control.is-invalid,
+.dentists-request-wrapper input.is-valid,
+.dentists-request-wrapper input.is-invalid {
+  border: 0px !important;
+  box-shadow: none !important;
+  outline: none !important;
   background-image: none !important;
 }
 
-.dentists-input-box #pincodeInput.is-invalid,
-.dentists-input-box input#pincodeInput.is-invalid {
-  border: 1px solid #ef4444 !important;
-  box-shadow: 0 0 8px rgba(239, 68, 68, 0.3) !important;
-  background-image: none !important;
+.dentists-input-box .country_code_with_fleg_main.is-valid,
+.dentists-input-box .country_code_with_fleg_main.is-invalid {
+  border-right: 2px solid #362b16 !important;
+}
+
+.dentists-phone-status-icon {
+  position: absolute;
+  right: 14px;
+  top: 56% !important;
+  transform: translateY(-50%) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+  z-index: 10 !important;
+}
+
+.dentists-input-box #phoneInput {
+  padding-right: 42px !important;
 }
 
 .dentists-pincode-spinner {
@@ -7783,6 +7814,10 @@ body.modal-open {
   font-size: 16px;
   pointer-events: none;
   z-index: 6;
+}
+
+.dentists-input-box #pincodeInput {
+  padding-right: 44px !important;
 }
 
 .dentists-input-box #cityInput:read-only,

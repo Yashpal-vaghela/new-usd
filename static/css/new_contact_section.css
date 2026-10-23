@@ -589,7 +589,21 @@ textarea.input_filds::-webkit-scrollbar {
   .contact_recaptcha_main {
     margin-top: 10px;
   }
+
+  .phone-status-badge,
+  .pincode-status-badge {
+    font-size: 10px;
+    padding: 1px 6px;
+  }
+
+  .phone-feedback-msg,
+  .pincode-feedback-msg,
+  .field-feedback-msg {
+    font-size: 11px;
+    margin-top: 3px;
+  }
 }
+
 
 /* Pincode & Real-Time Validation Styles */
 .pincode_label_row {
@@ -711,4 +725,100 @@ textarea.input_filds::-webkit-scrollbar {
   cursor: not-allowed;
   color: #fff;
   user-select: none;
+}
+
+/* Phone Field Real-Time Validation Styles */
+.phone_label_row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.phone-status-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 12px;
+  display: none;
+  align-items: center;
+  gap: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.phone-status-badge.valid {
+  display: inline-flex;
+  background: rgba(16, 185, 129, 0.18);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.phone-status-badge.invalid {
+  display: inline-flex;
+  background: rgba(239, 68, 68, 0.18);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.phone_field_box {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.phone_field_box.is-valid,
+.country-phone-wrapper.is-valid {
+  border-color: #10b981 !important;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.25);
+}
+
+.phone_field_box.is-invalid,
+.country-phone-wrapper.is-invalid {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.25);
+}
+
+.phone-status-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 6px;
+  flex-shrink: 0;
+  font-size: 16px;
+}
+
+.phone-feedback-msg {
+  font-size: 12px;
+  margin-top: 4px;
+  margin-left: 4px;
+  line-height: 1.3;
+  transition: all 0.3s ease;
+}
+
+.phone-feedback-msg.valid {
+  color: #34d399;
+}
+
+.phone-feedback-msg.invalid {
+  color: #f87171;
+}
+
+/* General Input Field Feedback and Status */
+.field-feedback-msg {
+  font-size: 12px;
+  margin-top: 4px;
+  margin-left: 4px;
+  line-height: 1.3;
+  color: #f87171;
+  display: none;
+}
+
+.input_filds_and_icon_main.is-invalid {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.25);
+}
+
+.input_filds_and_icon_main.is-valid {
+  border-color: #10b981 !important;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.25);
 }
