@@ -46,7 +46,7 @@
           onclick="toggleChatMode()"
           title="Switch to Voice Mode"
         >
-          <img src="{% static 'header_voice_icon.svg' %}" alt="close_icon" />
+          <img src="{% static 'header_voice_icon.svg' %}" alt="voice icon" />
         </div>
         <div class="header_title">
           <p class="chat_bot_label cool">Ultimate Ai</p>
@@ -762,6 +762,8 @@
             video: false,
           });
           console.log("Microphone access granted");
+          // iOS: permission check only; the live mic stream is opened separately in startWebSocket()
+          if (IS_IOS) stream.getTracks().forEach(track => track.stop());
         } catch (err) {
           console.error("Microphone access denied", err);
           voiceIconMain.classList.remove("is-listening");
@@ -771,10 +773,13 @@
   });
 </script>
 <script>
-  const CLOUD_RUN_URL = 'https://usd-chat-bot-705379243140.asia-southeast1.run.app';
-  const RENDER_BACKEND_URL = window.location.origin;
-  const WS_URL = (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host + '/ws/voice-agent/';
- {% comment %} const WS_URL = 'wss://usd-chat-bot-705379243140.asia-southeast1.run.app/ws/voice-agent/';{% endcomment %}
+  const VOICE_AI_HOST = 'detect.ultimatesmiledesign.com';
+  const VOICE_AI_BASE = (window.location.protocol === 'https:' ? 'https://' : 'http://') + VOICE_AI_HOST;
+  const WS_URL = (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + VOICE_AI_HOST + '/ws/voice-agent/';
+  const RENDER_BACKEND_URL = VOICE_AI_BASE;
+ {% comment %}  const WS_URL = (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host + '/ws/voice-agent/';{% endcomment %}
+ // const WS_URL = 'wss://usd-chat-bot-705379243140.asia-southeast1.run.app/ws/voice-agent/';
+ 
   // ⚡ Hard Refresh / Page Reload Session Reset: Fresh conversation on full page reload ⚡
   try {
       let isPageReload = false;
@@ -810,6 +815,163 @@
   let globalStream = null;
   let isVoiceMode = true;
 
+  // ===================== iOS AUDIO FIXES (Android path unchanged) =====================
+  // iOS (incl. iPadOS 13+, which reports itself as a Mac) needs extra audio handling; Android stays on the original path
+  const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  // Playback cushion before a reply starts; on iOS it grows a little each time a reply runs dry mid-way (network jitter)
+  let playbackLeadSec = IS_IOS ? 0.25 : 0.05;
+  const IOS_MAX_PLAYBACK_LEAD_SEC = 0.6;
+
+  // iOS adaptive mic gate (Android keeps the original fixed rms < 1200 echo guard).
+  // It learns the room noise floor, the bot's echo level and the user's own speaking level, then:
+  //  - while the bot plays: passes only sustained voice well above the echo (barge-in)
+  //  - while listening: passes voice well above the room noise and near the user's level (filters far-away voices)
+  // After closing, ~1 s of silence is sent (so Gemini sees the end of the user's turn), then nothing until it reopens.
+  const IOS_GATE_OPEN_FRAMES_BOT = 3;      // bot playing: ~130 ms of sustained voice before opening (not an echo burst)
+  const IOS_GATE_OPEN_FRAMES_LISTEN = 2;   // listening: ~85 ms, so a single crowd/noise spike doesn't open it
+  const IOS_GATE_PREROLL_FRAMES = 2;       // ~85 ms of audio from just before opening, so soft word onsets aren't lost
+  const IOS_GATE_HANG_FRAMES = 12;         // ~500 ms hangover so word endings and short pauses aren't clipped
+  const IOS_GATE_SILENCE_TAIL_FRAMES = 24; // ~1 s of silence after closing (Gemini ends the turn after 650 ms)
+  const IOS_GATE_FLOOR_MULT = 2.5;         // listening: ~8 dB above room / crowd noise
+  const IOS_GATE_LISTEN_MIN = 400;         // listening threshold never drops below this
+  const IOS_GATE_USER_FRACTION = 0.25;     // listening: no more than ~12 dB below the user's learned level
+  const IOS_GATE_USER_THR_MAX = 1200;      // ...but a loud user never pushes the listening threshold above this
+  const IOS_GATE_ECHO_MULT = 3;            // bot playing: ~10 dB above the measured echo
+  const IOS_GATE_BARGE_MIN = 1200;         // bot playing: never below the original Android echo threshold
+  // Noise floor = 10th percentile of the last ~5 s of listening frame levels (the quiet moments between words).
+  // Tracked whether the gate is open or not, so sustained crowd noise raises it instead of holding the gate open.
+  const IOS_FLOOR_WINDOW_FRAMES = 115;
+  const iosFloorWindow = [];
+  let iosSilentFramesSent = 0;
+  let iosNoiseFloor = 300;
+  let iosEchoLevel = 500;
+  let iosUserLevel = 0;
+  let iosGateThreshold = 0;
+  let iosGateOpen = false;
+  let iosGateHang = 0;
+  let iosLoudFrameCount = 0;
+  let iosPendingMicFrames = [];
+  let iosPreRollFrames = [];
+
+  // Returns the frames to send for this mic frame (possibly none, or held frames being flushed)
+  function iosMicGate(pcm16, rms, botPlaying) {
+      if (botPlaying) {
+          // Echo level: fall fast, rise slowly, learned only from frames that didn't open the gate
+          if (!iosGateOpen) {
+              iosEchoLevel += (rms - iosEchoLevel) * (rms > iosEchoLevel ? 0.02 : 0.1);
+              iosEchoLevel = Math.min(3000, Math.max(50, iosEchoLevel));
+          }
+      } else {
+          iosFloorWindow.push(rms);
+          if (iosFloorWindow.length > IOS_FLOOR_WINDOW_FRAMES) iosFloorWindow.shift();
+          const sorted = iosFloorWindow.slice().sort((a, b) => a - b);
+          iosNoiseFloor = Math.min(4000, Math.max(50, sorted[Math.floor(sorted.length * 0.1)]));
+      }
+      iosGateThreshold = botPlaying
+          ? Math.max(IOS_GATE_BARGE_MIN, iosEchoLevel * IOS_GATE_ECHO_MULT, iosNoiseFloor * IOS_GATE_ECHO_MULT)
+          : Math.max(IOS_GATE_LISTEN_MIN, iosNoiseFloor * IOS_GATE_FLOOR_MULT, Math.min(iosUserLevel * IOS_GATE_USER_FRACTION, IOS_GATE_USER_THR_MAX));
+      const loud = rms >= iosGateThreshold;
+
+      if (iosGateOpen) {
+          if (loud) {
+              iosGateHang = IOS_GATE_HANG_FRAMES;
+              // Learn the user's level only from clearly voiced frames, so soft noise can't drag the threshold down
+              if (!botPlaying && rms >= iosNoiseFloor * 4) {
+                  iosUserLevel = iosUserLevel ? iosUserLevel + (rms - iosUserLevel) * 0.05 : rms;
+              }
+              return [pcm16.buffer];
+          }
+          if (--iosGateHang > 0) return [pcm16.buffer];
+          iosGateOpen = false;
+      }
+
+      if (loud) {
+          // Hold frames until the voice is sustained (longer while the bot plays), then flush them with the pre-roll
+          iosPendingMicFrames.push(pcm16.buffer);
+          if (++iosLoudFrameCount < (botPlaying ? IOS_GATE_OPEN_FRAMES_BOT : IOS_GATE_OPEN_FRAMES_LISTEN)) return [];
+          iosGateOpen = true;
+          iosGateHang = IOS_GATE_HANG_FRAMES;
+          iosSilentFramesSent = 0;
+          const out = iosPreRollFrames.concat(iosPendingMicFrames);
+          iosPreRollFrames = [];
+          iosLoudFrameCount = 0;
+          iosPendingMicFrames = [];
+          return out;
+      }
+
+      // Closed: send silence of the same length for held + current frames, and keep their real audio as pre-roll
+      const closed = iosPendingMicFrames.concat([pcm16.buffer]);
+      iosLoudFrameCount = 0;
+      iosPendingMicFrames = [];
+      iosPreRollFrames = iosPreRollFrames.concat(closed).slice(-IOS_GATE_PREROLL_FRAMES);
+      // Gemini has seen the end of the turn after ~1 s of silence; send nothing more to save upload bandwidth
+      if (iosSilentFramesSent >= IOS_GATE_SILENCE_TAIL_FRAMES) return [];
+      iosSilentFramesSent += closed.length;
+      return closed.map(b => new ArrayBuffer(b.byteLength));
+  }
+
+  // iOS: play the bot through a MediaStream + <audio> element instead of audioCtx.destination. Safari then renders it
+  // like call audio: it becomes the echo-cancellation reference and is not ducked as "other audio" (volume up/down fix).
+  let iosStreamOutDest = null;
+  let iosStreamOutEl = null;
+  function getPlaybackDestination() {
+      if (!IS_IOS) return audioCtx.destination;
+      if (!iosStreamOutDest) {
+          iosStreamOutDest = audioCtx.createMediaStreamDestination();
+          iosStreamOutEl = document.createElement('audio');
+          iosStreamOutEl.autoplay = true;
+          iosStreamOutEl.setAttribute('playsinline', '');
+          iosStreamOutEl.srcObject = iosStreamOutDest.stream;
+          document.body.appendChild(iosStreamOutEl);
+      }
+      ensureIOSStreamOutPlaying();
+      return iosStreamOutDest;
+  }
+  function ensureIOSStreamOutPlaying() {
+      if (iosStreamOutEl && iosStreamOutEl.paused) {
+          iosStreamOutEl.play().catch(e => console.warn('iOS stream output play() blocked, will retry on next chunk/tap:', e));
+      }
+  }
+
+  // iOS only: keep the audio session in play-and-record while the mic is live, and hand it back when the call ends
+  function setIOSAudioSession(type) {
+      if (IS_IOS && navigator.audioSession) {
+          try { navigator.audioSession.type = type; } catch (e) { }
+      }
+  }
+  function resetIOSAudioSession() {
+      setIOSAudioSession('auto');
+  }
+
+  if (IS_IOS) {
+      // iOS reliably resumes an interrupted AudioContext only from a user gesture
+      document.addEventListener('touchend', () => {
+          if (audioCtx && audioCtx.state !== 'running' && audioCtx.state !== 'closed' && currentAgentState !== 'off') {
+              audioCtx.resume().catch(() => { });
+          }
+          ensureIOSStreamOutPlaying();
+      }, { passive: true });
+  }
+
+  // Builds an AudioBuffer straight from a mono 16-bit PCM WAV (what the backend sends), skipping async decodeAudioData.
+  // Returns null for anything else so the caller falls back to decodeAudioData.
+  function wavBase64ToAudioBuffer(base64) {
+      const bin = window.atob(base64);
+      if (bin.length <= 44 || bin.slice(0, 4) !== 'RIFF' || bin.slice(36, 40) !== 'data') return null;
+      const u16 = (p) => bin.charCodeAt(p) | (bin.charCodeAt(p + 1) << 8);
+      if (u16(20) !== 1 || u16(22) !== 1 || u16(34) !== 16) return null;
+      const sampleRate = (u16(24) | (u16(26) << 16)) >>> 0;
+      const n = (bin.length - 44) >> 1;
+      let buffer;
+      try { buffer = audioCtx.createBuffer(1, n, sampleRate); } catch (e) { return null; }
+      const ch = buffer.getChannelData(0);
+      for (let i = 0, p = 44; i < n; i++, p += 2) {
+          const s = u16(p);
+          ch[i] = (s >= 0x8000 ? s - 0x10000 : s) / 32768;
+      }
+      return buffer;
+  }
+  // =================== END iOS AUDIO FIXES ===================
   let audioCtx = null;
   let audioChunkQueue = [];
   let isAudioPlaying = false;
@@ -978,6 +1140,7 @@
           try { globalStream.getTracks().forEach(track => track.stop()); } catch (e) { }
           globalStream = null;
       }
+      resetIOSAudioSession();
 
       updateState('off', 'Offline');
       const interimBox = document.getElementById('usd-interim-text');
@@ -1054,6 +1217,10 @@
   }
 
   document.addEventListener('visibilitychange', async () => {
+      // iOS can leave the AudioContext 'suspended'/'interrupted' after backgrounding
+      if (IS_IOS && document.visibilityState === 'visible' && currentAgentState !== 'off' && audioCtx && audioCtx.state !== 'running') {
+          try { await audioCtx.resume(); } catch (e) { }
+      }
       if (wakeLock !== null && document.visibilityState === 'visible' && currentAgentState !== 'off') {
           await requestWakeLock();
       }
@@ -1342,8 +1509,16 @@
   async function initAudio() {
       if (!audioCtx) {
           audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          if (IS_IOS) {
+              // Calls, Siri, notifications or lock screen move the context to 'interrupted'; bring it back automatically
+              audioCtx.onstatechange = () => {
+                  if (audioCtx.state !== 'running' && audioCtx.state !== 'closed' && currentAgentState !== 'off') {
+                      audioCtx.resume().catch(() => { });
+                  }
+              };
+          }
       }
-      if (audioCtx && audioCtx.state === 'suspended') {
+      if (audioCtx && (audioCtx.state === 'suspended' || audioCtx.state === 'interrupted')) {
           try { await audioCtx.resume(); } catch (e) { }
       }
 
@@ -1445,7 +1620,7 @@
               auraMasterGain.connect(masterCompressor);
 
               // Master Output to AudioContext Destination
-              masterCompressor.connect(audioCtx.destination);
+              masterCompressor.connect(getPlaybackDestination());
 
               // Output to MediaStream <audio> element to maintain Call Audio stream
               callAudioDestination = audioCtx.createMediaStreamDestination();
@@ -1509,15 +1684,19 @@
 
       try {
           await initAudio();
-          const binaryString = window.atob(base64);
-          const bytes = new Uint8Array(binaryString.length);
-          for (let i = 0; i < binaryString.length; i++) {
-              bytes[i] = binaryString.charCodeAt(i);
-          }
+          // iOS: decodeAudioData is slow and resamples each chunk separately (gaps/clicks), so build the buffer directly
+          let audioBuffer = IS_IOS ? wavBase64ToAudioBuffer(base64) : null;
+          if (!audioBuffer) {
+              const binaryString = window.atob(base64);
+              const bytes = new Uint8Array(binaryString.length);
+              for (let i = 0; i < binaryString.length; i++) {
+                  bytes[i] = binaryString.charCodeAt(i);
+              }
 
-          pendingAudioDecodes++;
-          const audioBuffer = await audioCtx.decodeAudioData(bytes.buffer);
-          pendingAudioDecodes--;
+              pendingAudioDecodes++;
+              audioBuffer = await audioCtx.decodeAudioData(bytes.buffer);
+              pendingAudioDecodes--;
+          }
 
           const source = audioCtx.createBufferSource();
           source.buffer = audioBuffer;
@@ -1525,8 +1704,10 @@
           if (vocalMasterNode) {
               source.connect(vocalMasterNode);
           } else {
-              source.connect(audioCtx.destination);
+              source.connect(getPlaybackDestination());
           }
+          // iOS: autoplay of the stream-output <audio> element may only be allowed once the mic is live, so retry here
+          ensureIOSStreamOutPlaying();
 
           if (window.recordDest) {
               source.connect(window.recordDest);
@@ -1535,7 +1716,11 @@
           source.playbackRate.value = 1.0;
 
           if (nextPlayTime < audioCtx.currentTime) {
-              nextPlayTime = audioCtx.currentTime + 0.05;
+              // iOS: running dry in the middle of a reply (not at its start) means jitter, so grow the cushion a little
+              if (IS_IOS && nextPlayTime > 0 && audioCtx.currentTime - nextPlayTime < 2.0) {
+                  playbackLeadSec = Math.min(IOS_MAX_PLAYBACK_LEAD_SEC, playbackLeadSec + 0.1);
+              }
+              nextPlayTime = audioCtx.currentTime + playbackLeadSec;
           }
 
           source.start(nextPlayTime);
@@ -2239,6 +2424,7 @@
                       globalStream = null;
                   }
 
+                  setIOSAudioSession('play-and-record');
                   globalStream = await navigator.mediaDevices.getUserMedia({
                       audio: {
                           echoCancellation: { ideal: true },
@@ -2366,6 +2552,17 @@
                       // ⚡ ACOUSTIC SPEAKER ECHO GUARD ⚡
                       // Only suppress soft mic audio if the speaker is PHYSICALLY playing audio right at this moment
                       const isPhysicallyPlaying = activeSources.length > 0 || (audioCtx && audioCtx.currentTime < nextPlayTime);
+                      if (IS_IOS) {
+                          const frames = iosMicGate(pcm16, rms, isPhysicallyPlaying);
+                          if (iosGateOpen) {
+                              silenceNudgeCount = 0;
+                              if (window.resetSilenceTimer) window.resetSilenceTimer();
+                          }
+                          if (socket && socket.readyState === WebSocket.OPEN) {
+                              frames.forEach(frame => socket.send(frame));
+                          }
+                          return;
+                      }
                       if (isPhysicallyPlaying) {
                           if (rms < 1200) {
                               return;
@@ -2798,7 +2995,7 @@
           logMessage('bot', goodbyeText);
 
           if (isVoiceMode) {
-              fetch(`${CLOUD_RUN_URL}/voice-agent/api/tts/`, {
+              fetch(`${VOICE_AI_BASE}/voice-agent/api/tts/`, {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({ text: goodbyeText, lang: 'en-IN' })
@@ -2855,6 +3052,7 @@
           globalStream.getTracks().forEach(track => track.stop());
           globalStream = null;
       }
+      resetIOSAudioSession();
 
       // ⚡ GUARANTEE SUBMISSION: Submit transcript and recording immediately when chat closes/ends ⚡
       if (!window.isChatFeedbackSubmitted) {
