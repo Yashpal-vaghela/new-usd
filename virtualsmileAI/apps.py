@@ -7,6 +7,9 @@ class VirtualsmileaiConfig(AppConfig):
     name = 'virtualsmileAI'
 
     def ready(self):
+        # Register signals for automatic file cleanup on model deletion
+        import virtualsmileAI.signals
+
         # Pre-warm AI segmentation models in a background daemon thread
         # Eliminates the 7-8 second cold-start disk loading delay for users
         def _prewarm_models():
