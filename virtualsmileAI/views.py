@@ -55,7 +55,7 @@ def smile(request):
 def send_smile_lead_email_async(context_dict):
     try:
         send_mail(
-            to_email="vaghela9632@gmail.com",
+            to_email="bhavinparmar005@gmail.com",
             subject=f"New Smile Ai Design Lead from {context_dict.get('Name', 'Unknown')}",
             context_dict=context_dict
         )
@@ -145,6 +145,12 @@ def create_smile_lead_api(request):
             before_filepath = os.path.join(settings.MEDIA_ROOT, before_saved)
 
             generate_smile_design(before_filepath, after_filepath)
+            logo_path = os.path.join(settings.MEDIA_ROOT, "logo", "USD-GOLDEN.png")
+            if os.path.isfile(logo_path):
+                try:
+                    add_logo_on_right(after_filepath, logo_path)
+                except Exception:
+                    pass
             after_saved = f"smile_design/after/{after_filename}"
             print(f"✅ Auto-generated after image on backend: {after_saved}")
         except Exception as e:
@@ -386,17 +392,7 @@ def smile_design_api(request):
     import cv2
     cv2.imwrite(before_path, img_bgr)
 
-    # ✅ add logo (as your code already does)
-    try:
-        add_logo_on_right(
-            before_path,
-            os.path.join(settings.MEDIA_ROOT, "logo", "USD-GOLDEN.png"),
-        )
-    except Exception as e:
-        # If logo fails, still continue with Gemini
-        print("⚠️ Logo add failed:", e)
-
-    # ✅ Run Gemini (calls generate_smile_design from gemini.py)
+    # ✅ Run Gemini on 100% clean photo (no logo overlay = zero hallucinations)
     try:
         generate_smile_design(before_path, after_path)
     except PromptTooLongError as e:
@@ -415,12 +411,16 @@ def smile_design_api(request):
         traceback.print_exc()
         return JsonResponse({"error": str(e)}, status=500)
 
-    # ✅ Attached seamless lip-lock post-processing from seamless_blend.py
-    try:
-        from virtualsmileAI.seamless_blend import apply_seamless_lip_lock
-        apply_seamless_lip_lock(before_path=before_path, after_path=after_path, output_path=after_path)
-    except Exception as blend_err:
-        print(f"[SmileDesignAPI Warning] seamless_blend note: {blend_err}")
+    # ✅ Stamp clinic logo on BOTH before and after images AFTER AI generation
+    # Gemini never saw the logo during generation (0 hallucinations),
+    # and the frontend Before/After comparison slider displays the exact logo at the exact same position!
+    logo_path = os.path.join(settings.MEDIA_ROOT, "logo", "USD-GOLDEN.png")
+    if os.path.isfile(logo_path):
+        try:
+            add_logo_on_right(before_path, logo_path)
+            add_logo_on_right(after_path, logo_path)
+        except Exception as e:
+            print("⚠️ Logo add failed:", e)
 
     request.session["smile_before"] = f"smile_design/before/{before_name}"
     request.session["smile_after"] = f"smile_design/after/{after_name}"

@@ -162,11 +162,141 @@ def _get_mask_from_yolo(img_bgr: np.ndarray, conf: float = 0.15) -> Optional[np.
         return None
 
 
-def get_side_fade_mask(img_bgr: np.ndarray, margin_px: int = 8, feather_px: int = 8, yolo_teeth: Optional[np.ndarray] = None) -> np.ndarray:
+def _enforce_mask_boundary_box(
+    mask: np.ndarray,
+    y_top: int,
+    y_bot: int,
+    x_left: int,
+    x_right: int,
+    feather_px: int = 6,
+) -> np.ndarray:
     """
-    Computes a horizontal attenuation mask that fades smoothly to 0.0 outside the patient's
-    actual dental arch footprint (buccal corridors and mouth commissures).
-    Guarantees 0% bleed, double-edge, or smearing on the lateral sides of the mouth.
+    Hard-clips a float mask to a bounding box [y_top:y_bot, x_left:x_right]
+    with a smooth linear feather ramp on all four sides so there is zero bleed
+    outside the detected dental arch region.
+    """
+    h, w = mask.shape[:2]
+    result = mask.copy()
+
+    # Zero out everything strictly outside bounding box
+    result[:max(0, y_top - feather_px), :] = 0.0
+    result[min(h, y_bot + feather_px):, :] = 0.0
+    result[:, :max(0, x_left - feather_px)] = 0.0
+    result[:, min(w, x_right + feather_px):] = 0.0
+
+    # Top feather ramp (y_top - feather_px  →  y_top)
+    for dy in range(feather_px):
+        row = y_top - feather_px + dy
+        if 0 <= row < h:
+            alpha = dy / float(max(feather_px, 1))
+            result[row, :] = result[row, :] * alpha
+
+    # Bottom feather ramp (y_bot  →  y_bot + feather_px)
+    for dy in range(feather_px):
+        row = y_bot + dy
+        if 0 <= row < h:
+            alpha = 1.0 - dy / float(max(feather_px, 1))
+            result[row, :] = result[row, :] * alpha
+
+    # Left feather ramp (x_left - feather_px  →  x_left)
+    for dx in range(feather_px):
+        col = x_left - feather_px + dx
+        if 0 <= col < w:
+            alpha = dx / float(max(feather_px, 1))
+            result[:, col] = result[:, col] * alpha
+
+    # Right feather ramp (x_right  →  x_right + feather_px)
+    for dx in range(feather_px):
+        col = x_right + dx
+        if 0 <= col < w:
+            alpha = 1.0 - dx / float(max(feather_px, 1))
+            result[:, col] = result[:, col] * alpha
+
+    return np.clip(result, 0.0, 1.0)
+
+
+def _tooth_vs_lip_colour(
+    img_bgr: np.ndarray,
+    tooth_ref: np.ndarray,
+    lip_ref: np.ndarray,
+):
+    """
+    Per-patient LAB colour split between this patient's teeth and their lips/skin.
+    Returns (tooth_like, lip_like) boolean maps, or (None, None) when the references are too
+    small or the colours are not separable (e.g. very dark photo).
+    """
+    tooth_ref = tooth_ref > 0
+    lip_ref = lip_ref > 0
+    if np.count_nonzero(tooth_ref) < 30 or np.count_nonzero(lip_ref) < 30:
+        return None, None
+
+    lab = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2LAB)
+    L = lab[:, :, 0].astype(np.float32)
+    A = lab[:, :, 1].astype(np.float32)
+    lt, ll = float(np.median(L[tooth_ref])), float(np.median(L[lip_ref]))
+    at, al = float(np.median(A[tooth_ref])), float(np.median(A[lip_ref]))
+    dL, dA = lt - ll, al - at
+
+    score = np.zeros(L.shape, dtype=np.float32)
+    if abs(dL) > 5.0:
+        score += (L - (lt + ll) / 2.0) / dL
+    if dA > 3.0:
+        score += ((at + al) / 2.0 - A) / dA
+    if abs(dL) <= 5.0 and dA <= 3.0:
+        return None, None
+
+    tooth_like = score > 0.0
+    lip_like = (A > (at + al) / 2.0 + 0.25 * dA) if dA > 3.0 else (score < -0.5)
+    return tooth_like, lip_like
+
+
+def _surrounding_ring(binary: np.ndarray, inner: int = 6, outer: int = 18) -> np.ndarray:
+    """Band of pixels just outside a mouth mask (mostly lip/skin), used as the lip colour reference."""
+    b = (binary > 0).astype(np.uint8)
+    near = cv2.dilate(b, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * inner + 1, 2 * inner + 1)))
+    far = cv2.dilate(b, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * outer + 1, 2 * outer + 1)))
+    return (far > 0) & (near == 0)
+
+
+def _outward_feather(binary: np.ndarray, w: int, grow_allowed: Optional[np.ndarray] = None) -> np.ndarray:
+    """
+    Fills holes, grows the mask slightly and feathers OUTWARD only: the mask is 1.0 over every
+    original tooth pixel, so no rim of the original teeth survives the blend.
+    With grow_allowed, growth only enters tooth-coloured pixels: it covers yellow enamel rims
+    but never creeps onto the lip (that is what made the lower lip look lowered at the corners).
+    """
+    binary = (binary > 0).astype(np.uint8)
+    cnts, _ = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    if cnts:
+        cv2.drawContours(binary, cnts, -1, 1, -1)
+
+    grow = max(3, min(8, int(round(w * 0.006))))
+    if grow_allowed is not None:
+        allowed = (grow_allowed > 0).astype(np.uint8)
+        k3 = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
+        for _ in range(grow):
+            binary = binary | (cv2.dilate(binary, k3) & allowed)
+        grow_px = 1
+    else:
+        grow_px = 2
+    binary = cv2.dilate(binary, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * grow_px + 1, 2 * grow_px + 1)))
+
+    # Smooth the outline: pixel-level colour decisions leave a zigzag edge along the lip that
+    # shows up as a jagged cut on top of the teeth. A real lip line is a smooth curve.
+    smooth_sigma = max(1.5, w * 0.0015)
+    binary = (cv2.GaussianBlur(binary.astype(np.float32), (0, 0), smooth_sigma) > 0.5).astype(np.uint8)
+
+    dist_out = cv2.distanceTransform(1 - binary, cv2.DIST_L2, 5)
+    r = max(2.5, min(5.0, float(w) * 0.003))
+    t = np.clip(1.0 - dist_out / r, 0.0, 1.0)
+    return (t * t * (3.0 - 2.0 * t)).astype(np.float32)
+
+
+def get_side_fade_mask(img_bgr: np.ndarray, margin_px: int = 6, feather_px: int = 10, yolo_teeth: Optional[np.ndarray] = None) -> np.ndarray:
+    """
+    Computes a 2-D attenuation mask (values 0-1) that fades smoothly to 0.0 outside the
+    patient's actual dental arch footprint on LEFT, RIGHT, TOP and BOTTOM.
+    Guarantees 0% bleed on all four boundaries.
     """
     h, w = img_bgr.shape[:2]
     side_fade = np.ones((h, w), dtype=np.float32)
@@ -174,22 +304,45 @@ def get_side_fade_mask(img_bgr: np.ndarray, margin_px: int = 8, feather_px: int 
         yolo_teeth = _get_mask_from_yolo(img_bgr)
 
     if yolo_teeth is not None and np.sum(yolo_teeth > 0) > 50:
-        xs = np.where(yolo_teeth > 0)[1]
+        ys, xs = np.where(yolo_teeth > 0)
         x_min, x_max = int(np.min(xs)), int(np.max(xs))
+        y_min, y_max = int(np.min(ys)), int(np.max(ys))
         teeth_w = x_max - x_min
-        eff_margin = max(margin_px, int(teeth_w * 0.04))
+        teeth_h = y_max - y_min
 
-        x_left_start = max(0, x_min - eff_margin - feather_px)
-        x_left_end = x_min - eff_margin
-        side_fade[:, :x_left_start] = 0.0
-        for x in range(x_left_start, x_left_end):
-            side_fade[:, x] = (x - x_left_start) / float(max(feather_px, 1))
+        # Scale margin with arch size — tighter on small arches
+        eff_margin_x = max(margin_px, int(teeth_w * 0.03))
+        eff_margin_y = max(margin_px, int(teeth_h * 0.04))
 
-        x_right_start = x_max + eff_margin
-        x_right_end = min(w, x_max + eff_margin + feather_px)
-        side_fade[:, x_right_end:] = 0.0
-        for x in range(x_right_start, x_right_end):
-            side_fade[:, x] = 1.0 - (x - x_right_start) / float(max(feather_px, 1))
+        # ── LEFT boundary ───────────────────────────────────────────────────────
+        x_left_hard = max(0, x_min - eff_margin_x)
+        x_left_feather_start = max(0, x_left_hard - feather_px)
+        side_fade[:, :x_left_feather_start] = 0.0
+        for x in range(x_left_feather_start, x_left_hard):
+            side_fade[:, x] = (x - x_left_feather_start) / float(max(feather_px, 1))
+        # hard zero left of arch
+        side_fade[:, :x_left_feather_start] = 0.0
+
+        # ── RIGHT boundary ──────────────────────────────────────────────────────
+        x_right_hard = min(w, x_max + eff_margin_x)
+        x_right_feather_end = min(w, x_right_hard + feather_px)
+        side_fade[:, x_right_feather_end:] = 0.0
+        for x in range(x_right_hard, x_right_feather_end):
+            side_fade[:, x] = 1.0 - (x - x_right_hard) / float(max(feather_px, 1))
+
+        # ── TOP boundary (prevent bleed above upper lip) ─────────────────────
+        y_top_hard = max(0, y_min - eff_margin_y)
+        y_top_feather_start = max(0, y_top_hard - feather_px)
+        side_fade[:y_top_feather_start, :] = 0.0
+        for y in range(y_top_feather_start, y_top_hard):
+            side_fade[y, :] = (y - y_top_feather_start) / float(max(feather_px, 1))
+
+        # ── BOTTOM boundary (prevent bleed into chin/neck) ───────────────────
+        y_bot_hard = min(h, y_max + eff_margin_y)
+        y_bot_feather_end = min(h, y_bot_hard + feather_px)
+        side_fade[y_bot_feather_end:, :] = 0.0
+        for y in range(y_bot_hard, y_bot_feather_end):
+            side_fade[y, :] = 1.0 - (y - y_bot_hard) / float(max(feather_px, 1))
 
     return side_fade
 
@@ -237,18 +390,19 @@ def _get_mask_from_mediapipe(img_bgr: np.ndarray, before_path: Optional[str] = N
 
 def _get_mask_from_bisenet(
     b_img: np.ndarray,
+    a_img: Optional[np.ndarray] = None,
     before_path: Optional[str] = None,
     feather_kernel_size: int = 11,
     feather_sigma: float = 2.5,
 ) -> Optional[np.ndarray]:
     """
-    BiSeNet ResNet-34 Semantic Face-Parsing + Consensus Fusion:
-    - BiSeNet provides semantic separation of Oral Cavity (11), Upper Lip (12), Lower Lip (13), Skin (1).
-    - YOLO Ground-Truth Teeth and MediaPipe aperture are fused into oral_core to guarantee
-      that open-mouth smiles and dual arches are NEVER cut in half.
-    - Eliminates glitch dots: Dark hair / shadow masking is strictly constrained OUTSIDE the mouth cavity,
-      preventing dark interdental shadows from being punched into new teeth as black specks.
-    - Strictly freezes upper lip, lower lip, and facial skin where genuine teeth do not exist.
+    Sub-pixel Continuous BiSeNet ResNet-34 Face-Parsing + Color-Adaptive Boundary:
+    1. Extracts continuous softmax probability fields at 512x512 and upsamples with
+       smooth bilinear interpolation to camera resolution (eliminates blocky staircases).
+    2. Uses patient's real lip chroma (LAB a* channel) and YOLO ground-truth enamel to
+       dynamically snap to the true anatomical lip border.
+    3. Employs signed distance fields for continuous Hermite smoothstep feathering:
+       Eliminates all hard boolean cliff cuts, scratches, and artificial artifacts.
     """
     session = get_bisenet_model()
     if session is None or b_img is None:
@@ -257,87 +411,258 @@ def _get_mask_from_bisenet(
     try:
         h, w = b_img.shape[:2]
         rgb = cv2.cvtColor(b_img, cv2.COLOR_BGR2RGB)
-        resized = cv2.resize(rgb, (512, 512), interpolation=cv2.INTER_LINEAR)
-        tensor = resized.astype(np.float32) / 255.0
-        mean = np.array([0.485, 0.456, 0.406], dtype=np.float32)
-        std = np.array([0.229, 0.224, 0.225], dtype=np.float32)
-        tensor = (tensor - mean) / std
-        tensor = np.transpose(tensor, (2, 0, 1))[np.newaxis, ...]
 
-        out = session.run(['output'], {'input': tensor})[0]
-        pred = np.argmax(out[0], axis=0)  # shape (512, 512)
-        pred_orig = cv2.resize(pred.astype(np.uint8), (w, h), interpolation=cv2.INTER_NEAREST)
-
-        # Class 11 is oral cavity (mouth opening with teeth and gums)
-        mouth_raw = (pred_orig == 11).astype(np.uint8) * 255
-        u_lip = (pred_orig == 12)
-        l_lip = (pred_orig == 13)
-        skin = (pred_orig == 1)
-
-        # Clean mouth_raw to only keep largest connected component in mouth region
-        if np.sum(mouth_raw > 0) > 40:
-            num_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(mouth_raw)
-            if num_labels > 2:
-                largest_idx = 1 + int(np.argmax(stats[1:, cv2.CC_STAT_AREA]))
-                clean_mouth = np.zeros_like(mouth_raw)
-                clean_mouth[labels == largest_idx] = 255
-                mouth_raw = clean_mouth
-
-        # Consensus Fusion: Include YOLO teeth and MediaPipe landmarks so open mouths & dual arches are complete
+        # Ground-truth teeth from YOLO (anchored on genuine enamel across both b_img and a_img)
         yb = _get_mask_from_yolo(b_img, conf=0.10)
-        mp_mask = _get_mask_from_mediapipe(b_img, before_path=before_path)
+        ya = _get_mask_from_yolo(a_img, conf=0.10) if a_img is not None else None
+        if yb is not None and ya is not None:
+            yolo_enamel = cv2.bitwise_or(yb, ya)
+        else:
+            yolo_enamel = yb if yb is not None else ya
 
-        oral_core = np.zeros((h, w), dtype=np.uint8)
-        if np.sum(mouth_raw > 0) > 40:
-            oral_core = cv2.bitwise_or(oral_core, mouth_raw)
-        if yb is not None and np.sum(yb > 0) > 40:
-            oral_core = cv2.bitwise_or(oral_core, yb)
-        if mp_mask is not None and np.sum(mp_mask > 0) > 40:
-            oral_core = cv2.bitwise_or(oral_core, mp_mask)
+        has_yolo_teeth = yolo_enamel is not None and np.sum(yolo_enamel > 0) > 40
 
-        if np.sum(oral_core > 0) < 40:
+        def _parse(x0: int, y0: int, x1: int, y1: int):
+            crop = cv2.resize(rgb[y0:y1, x0:x1], (512, 512), interpolation=cv2.INTER_LINEAR)
+            tensor = crop.astype(np.float32) / 255.0
+            mean = np.array([0.485, 0.456, 0.406], dtype=np.float32)
+            std = np.array([0.229, 0.224, 0.225], dtype=np.float32)
+            tensor = (tensor - mean) / std
+            tensor = np.transpose(tensor, (2, 0, 1))[np.newaxis, ...]
+
+            logits = session.run(['output'], {'input': tensor})[0][0]  # (19, 512, 512)
+
+            # Softmax for smooth continuous probabilities across classes
+            exp_logits = np.exp(logits - np.max(logits, axis=0, keepdims=True))
+            probs = exp_logits / np.sum(exp_logits, axis=0, keepdims=True)
+
+            # Class 11: oral cavity, 12: upper lip, 13: lower lip.
+            # Smooth sub-pixel resize back into the crop's place in the full frame.
+            def up(p):
+                full = np.zeros((h, w), dtype=np.float32)
+                full[y0:y1, x0:x1] = cv2.resize(p, (x1 - x0, y1 - y0), interpolation=cv2.INTER_LINEAR)
+                return full
+            return up(probs[11]), up(probs[12]), up(probs[13])
+
+        # Parse a face-sized square around the mouth at its true aspect ratio. Squashing the
+        # whole frame to 512x512 shrinks the mouth to ~100px and blurs the lip line by 2-4px,
+        # which is worst on angled/side photos. Same single inference, ~2x more mouth detail.
+        p_mouth = None
+        if has_yolo_teeth:
+            ys_y, xs_y = np.where(yolo_enamel > 0)
+            side = int(min(max(h, w), max(256, 3.5 * (xs_y.max() - xs_y.min()))))
+            cx = int((xs_y.min() + xs_y.max()) / 2)
+            cy = int((ys_y.min() + ys_y.max()) / 2 - 0.2 * side)  # mouth sits ~70% down a face crop
+            x0 = int(np.clip(cx - side // 2, 0, max(0, w - side)))
+            y0 = int(np.clip(cy - side // 2, 0, max(0, h - side)))
+            p_mouth, p_upper_lip, p_lower_lip = _parse(x0, y0, min(w, x0 + side), min(h, y0 + side))
+            if np.sum(p_mouth > 0.28) < 50:
+                p_mouth = None  # crop missed the mouth (stray YOLO hit) -> parse full frame
+        if p_mouth is None:
+            p_mouth, p_upper_lip, p_lower_lip = _parse(0, 0, w, h)
+        p_lips = p_upper_lip + p_lower_lip
+
+        # Optical lip chroma discrimination using LAB color space
+        # Lips have prominent magenta/red chroma (a* > 132 in 8-bit LAB)
+        # Teeth enamel is neutral (a* ~ 126-132) with higher lightness
+        lab = cv2.cvtColor(b_img, cv2.COLOR_BGR2LAB)
+        a_ch = lab[:, :, 1].astype(np.float32)
+        chroma_lip = np.clip((a_ch - 132.0) / 12.0, 0.0, 1.0)
+
+        # Combined lip confidence: model agreement + optical color confirmation from input image
+        lip_confidence = np.clip(p_lips * (0.60 + 0.40 * chroma_lip), 0.0, 1.0)
+
+        # Oral cavity core: high mouth probability OR confirmed YOLO enamel from input image
+        if has_yolo_teeth:
+            mouth_seed = (p_mouth > 0.28) | (yolo_enamel > 0)
+        else:
+            mouth_seed = (p_mouth > 0.40)
+
+        # Teeth opening: mouth cavity minus confirmed lip tissue
+        teeth_binary = (mouth_seed & (lip_confidence < 0.60)).astype(np.uint8)
+
+        # LIP EXCLUSION: only where lip clearly beats mouth (low thresholds ate the outer
+        # 3-8px of real teeth after 512px upsampling, leaving original enamel visible)
+        teeth_binary[(p_upper_lip > 0.60) & (p_upper_lip > p_mouth)] = 0
+        teeth_binary[(p_lower_lip > 0.60) & (p_lower_lip > p_mouth)] = 0
+
+        # Patient-specific teeth/lip colour split: drop lip-coloured pixels on the lip border
+        # (keeps the real lip line, incl. the thin corners) and let the mask grow only into
+        # tooth-coloured rims later.
+        tooth_ref = (yolo_enamel > 0) if has_yolo_teeth else ((p_mouth > 0.6) & (lip_confidence < 0.2))
+        tooth_like, lip_like = _tooth_vs_lip_colour(b_img, tooth_ref, p_lips > 0.7)
+        if lip_like is not None:
+            border = (p_lips > 0.30) & lip_like
+            if has_yolo_teeth:
+                border &= ~(yolo_enamel > 0)
+            teeth_binary[border] = 0
+
+        # Mouth-opening extent from the face parser (used so YOLO misses can't cut the mask)
+        ys_m, xs_m = np.where(p_mouth > 0.28)
+        mouth_ext = (int(ys_m.min()), int(ys_m.max()), int(xs_m.min()), int(xs_m.max())) if len(ys_m) > 50 else None
+
+        # Landmark Perimeter Lock: If MediaPipe detects the patient's oral aperture on b_img,
+        # confine the mask strictly within the oral aperture, preserving 100% of upper & lower lips.
+        mp_aperture = _get_mask_from_mediapipe(b_img, before_path=before_path)
+        ap_x_left, ap_x_right = None, None
+        ap_y_top, ap_y_bot = None, None
+
+        if mp_aperture is not None and np.sum(mp_aperture > 0) > 40:
+            ys_ap, xs_ap = np.where(mp_aperture > 0)
+            if len(ys_ap) > 50:
+                ap_y_top = int(np.min(ys_ap))
+                ap_y_bot = int(np.max(ys_ap))
+                ap_x_left = int(np.min(xs_ap))
+                ap_x_right = int(np.max(xs_ap))
+                ap_height = ap_y_bot - ap_y_top
+
+                # STRICT upper lip lock: NO upward expansion into upper lip!
+                mp_allowed_zone = mp_aperture.copy()
+                mp_allowed_zone[:ap_y_top, :] = 0
+
+                # HARD bottom lock: zero out any allowed zone below aperture bottom + small margin
+                bottom_lock_row = min(h, ap_y_bot + max(4, int(ap_height * 0.06)))
+                mp_allowed_zone[bottom_lock_row:, :] = 0
+
+                # Allow full horizontal mouth opening width (corner to corner)
+                left_lock_col = max(0, ap_x_left - max(15, int((ap_x_right - ap_x_left) * 0.08)))
+                right_lock_col = min(w, ap_x_right + max(15, int((ap_x_right - ap_x_left) * 0.08)))
+                mp_allowed_zone[:, :left_lock_col] = 0
+                mp_allowed_zone[:, right_lock_col:] = 0
+
+            # Confine teeth_binary inside mp_allowed_zone
+            teeth_binary = (teeth_binary & (mp_allowed_zone > 0)).astype(np.uint8)
+
+        # Compute YOLO-based bounding box spanning full oral aperture
+        yolo_bbox = None
+        if yolo_enamel is not None and np.sum(yolo_enamel > 0) > 40:
+            ys_y, xs_y = np.where(yolo_enamel > 0)
+            yolo_bl = int(np.min(xs_y))
+            yolo_br = int(np.max(xs_y))
+            if ap_x_left is not None:
+                yolo_bl = min(yolo_bl, ap_x_left)
+                yolo_br = max(yolo_br, ap_x_right)
+            y_top_yolo = int(np.min(ys_y))
+            if ap_y_top is not None:
+                y_top_yolo = max(y_top_yolo, ap_y_top)
+            yolo_bbox = (
+                y_top_yolo, int(np.max(ys_y)),   # y_top, y_bot
+                yolo_bl, yolo_br,                 # x_left, x_right
+            )
+
+        # Anatomical column lock on teeth_binary
+        ys_teeth, xs_teeth = np.where(teeth_binary > 0)
+        teeth_bbox = None
+        if len(ys_teeth) > 50:
+            y_top_tb = int(np.min(ys_teeth))
+            y_bot_tb = int(np.max(ys_teeth))
+            x_left_tb = int(np.min(xs_teeth))
+            x_right_tb = int(np.max(xs_teeth))
+            tb_height = y_bot_tb - y_top_tb
+
+            eff_left = x_left_tb
+            eff_right = x_right_tb
+            if ap_x_left is not None:
+                eff_left = min(eff_left, ap_x_left)
+            if ap_x_right is not None:
+                eff_right = max(eff_right, ap_x_right)
+            if yolo_enamel is not None and np.sum(yolo_enamel > 0) > 0:
+                ys_ye, xs_ye = np.where(yolo_enamel > 0)
+                eff_left = min(eff_left, int(np.min(xs_ye)))
+                eff_right = max(eff_right, int(np.max(xs_ye)))
+
+            if mouth_ext is not None:
+                y_bot_tb = max(y_bot_tb, mouth_ext[1])
+                eff_left = min(eff_left, mouth_ext[2])
+                eff_right = max(eff_right, mouth_ext[3])
+                tb_height = y_bot_tb - y_top_tb
+
+            eff_top = max(y_top_tb, ap_y_top) if ap_y_top is not None else y_top_tb
+            teeth_bbox = (eff_top, y_bot_tb, eff_left, eff_right)
+
+            # STRICT top lock: NO upward dilation into upper lip!
+            if ap_y_top is not None:
+                teeth_binary[:ap_y_top, :] = 0
+
+            # STRICT bottom row lock: anything below bottom + 5% of height is noise → zero
+            hard_bot = min(h, y_bot_tb + max(3, int(tb_height * 0.05)))
+            teeth_binary[hard_bot:, :] = 0
+
+            # Left/right column lock: eff_left/right already span the parser's full mouth opening,
+            # so a small margin is enough (a wide one let Gemini's corners replace the real ones)
+            arch_w = eff_right - eff_left
+            hard_left = max(0, eff_left - max(8, int(arch_w * 0.04)))
+            hard_right = min(w, eff_right + max(8, int(arch_w * 0.04)))
+            teeth_binary[:, :hard_left] = 0
+            teeth_binary[:, hard_right:] = 0
+
+        # Clean isolated noise blobs; keep all components with significant area inside mouth
+        if np.sum(teeth_binary > 0) < 40:
             return None
 
-        # Close all internal holes inside oral cavity (interdental gaps, shadows)
+        num_labels, labels, stats, _ = cv2.connectedComponentsWithStats(teeth_binary)
+        if num_labels > 2:
+            clean_mask = np.zeros_like(teeth_binary)
+            for i in range(1, num_labels):
+                if stats[i, cv2.CC_STAT_AREA] >= 20:
+                    clean_mask[labels == i] = 1
+            teeth_binary = clean_mask
+
+        # Morphological close to seal interdental shadows and small gaps
         k_close = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (9, 9))
-        oral_closed = cv2.morphologyEx(oral_core, cv2.MORPH_CLOSE, k_close)
+        teeth_binary = cv2.morphologyEx(teeth_binary, cv2.MORPH_CLOSE, k_close)
 
-        # Subtle dilation (2-3px) so new enamel tucks cleanly under inner vermilion border
-        k_tuck = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
-        dilated = cv2.dilate(oral_closed, k_tuck)
+        # Upper-lip band: right under the upper lip only replace pixels that were tooth in the
+        # original. Otherwise Gemini's upper teeth climb into the dark band under the lip and the
+        # teeth look moved up / the lip looks moved.
+        if tooth_like is not None and np.any(teeth_binary):
+            ys_t = np.where(teeth_binary > 0)[0]
+            band_h = max(3, int((ys_t.max() - ys_t.min()) * 0.15))
+            top_band = (np.cumsum(teeth_binary, axis=0) <= band_h) & (teeth_binary > 0) & (p_upper_lip > 0.10)
+            keep = tooth_like | (yolo_enamel > 0) if has_yolo_teeth else tooth_like
+            # Only drop pixels that are positively lip-coloured or dark (shadow band), never
+            # merely "not tooth-like": pale lips vs grey teeth would otherwise notch real teeth.
+            L_ch = lab[:, :, 0].astype(np.float32)
+            tooth_L = float(np.median(L_ch[tooth_ref])) if np.any(tooth_ref) else float(np.median(L_ch[teeth_binary > 0]))
+            dark = L_ch < 0.55 * tooth_L
+            teeth_binary[top_band & ~keep & (lip_like | dark)] = 0
 
-        # Anatomical lip cores: Only freeze the outer body of the lips where YOLO detected NO teeth!
-        k_lip = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (7, 7))
-        l_lip_core = cv2.erode(l_lip.astype(np.uint8) * 255, k_lip) > 0
-        u_lip_core = cv2.erode(u_lip.astype(np.uint8) * 255, k_lip) > 0
+        # Whole opening covered, outward-only feather (no original-tooth rim)
+        smooth_mask = _outward_feather(teeth_binary, w, grow_allowed=tooth_like)
 
-        # If genuine teeth exist in the lip border region (e.g. open bite), never freeze those teeth!
-        if yb is not None:
-            l_lip_core = l_lip_core & ~(yb > 0)
-            u_lip_core = u_lip_core & ~(yb > 0)
+        # Final 4-side boundary enforcement using full mouth aperture bbox
+        bbox_ref = yolo_bbox or teeth_bbox
+        if bbox_ref is not None:
+            bt, bb, bl, br = bbox_ref
+            if mouth_ext is not None:
+                bb = max(bb, mouth_ext[1])
+                bl = min(bl, mouth_ext[2])
+                br = max(br, mouth_ext[3])
+            if ap_x_left is not None:
+                bl = min(bl, ap_x_left)
+            if ap_x_right is not None:
+                br = max(br, ap_x_right)
+            if yolo_enamel is not None and np.sum(yolo_enamel > 0) > 0:
+                ys_ye, xs_ye = np.where(yolo_enamel > 0)
+                bl = min(bl, int(np.min(xs_ye)))
+                br = max(br, int(np.max(xs_ye)))
+            arch_h = max(bb - bt, 1)
+            arch_w2 = max(br - bl, 1)
+            y_top_clamp = max(ap_y_top, bt) if ap_y_top is not None else bt
+            smooth_mask = _enforce_mask_boundary_box(
+                smooth_mask,
+                y_top=y_top_clamp,   # STRICT upper lip freeze - NEVER dilate or climb up into upper lip
+                y_bot=min(h - 1, bb + max(4, int(arch_h * 0.05))),
+                x_left=max(0, bl - max(8, int(arch_w2 * 0.04))),
+                x_right=min(w - 1, br + max(8, int(arch_w2 * 0.04))),
+                feather_px=6,
+            )
 
-        # Gaussian feathering
-        k_sz = max(5, feather_kernel_size if feather_kernel_size % 2 == 1 else feather_kernel_size + 1)
-        mask_f = cv2.GaussianBlur(dilated.astype(np.float32) / 255.0, (k_sz, k_sz), feather_sigma)
+        print(f"[SeamlessLipLock] Sub-pixel 4-side boundary-locked mask generated ({np.sum(smooth_mask > 0.05)} px).")
+        return smooth_mask.astype(np.float32)
 
-        # STRICT ZERO BLEED & LIP-LOCK:
-        # Zero out core lower lip, upper lip, and perioral facial skin OUTSIDE oral cavity
-        mask_f[l_lip_core] = 0.0
-        mask_f[u_lip_core] = 0.0
-        mask_f[skin & ~(oral_closed > 0)] = 0.0
-
-        # Facial hair lock: ONLY apply to dark hair OUTSIDE the mouth aperture!
-        # CRITICAL BUGFIX: Never punch holes into dark shadows/crevices inside the teeth!
-        b, g, r = cv2.split(b_img)
-        is_dark_hair = (r < 65) & (g < 60) & (b < 60)
-        is_outside_mouth = ~(oral_closed > 0)
-        mask_f[is_dark_hair & is_outside_mouth] = 0.0
-
-        res_mask = np.clip(mask_f, 0.0, 1.0)
-        print(f"[SeamlessLipLock] BiSeNet Consensus successfully segmented oral cavity ({np.sum(res_mask > 0.05)} px) with absolute lip-lock & zero glitch dots.")
-        return res_mask
     except Exception as e:
-        print(f"[SeamlessLipLock] BiSeNet segmentation note: {e}")
+        print(f"[SeamlessLipLock] Dynamic BiSeNet segmentation note: {e}")
         return None
 
 
@@ -352,17 +677,17 @@ def get_accurate_teeth_mask(
 ) -> np.ndarray:
     """
     Produces the clinically accurate, coordinate-locked composite mask:
-    1. Primary: BiSeNet ResNet-34 semantic face parser + Multi-Sensor Consensus (Class 11 oral aperture + YOLO + MediaPipe).
-    2. Secondary: MediaPipe FaceLandmarker inner lip aperture coordinates (if full face detected).
-    3. Tertiary: YOLO dental segmentation strictly constrained to patient's original anatomy (never expands into lower lip).
+    1. Primary: BiSeNet ResNet-34 sub-pixel face parsing + color-adaptive boundary.
+    2. Secondary: MediaPipe FaceLandmarker inner lip aperture + YOLO consensus with signed distance feathering.
+    3. Tertiary: YOLO dental segmentation strictly constrained to patient's original anatomy.
     """
     h, w = b_img.shape[:2]
 
     try:
         # 1. Primary SOTA Face-Parsing: BiSeNet ResNet-34 Consensus Fusion
-        # Pixel-perfect oral aperture with mathematical lip and skin lock and zero glitch dots
         bisenet_mask = _get_mask_from_bisenet(
             b_img=b_img,
+            a_img=a_img,
             before_path=before_path,
             feather_kernel_size=feather_kernel_size,
             feather_sigma=feather_sigma,
@@ -376,19 +701,19 @@ def get_accurate_teeth_mask(
         yb = _get_mask_from_yolo(b_img, conf=0.10)
         ya = _get_mask_from_yolo(a_img, conf=0.10) if a_img is not None else None
         if ya is not None and ya.shape[:2] != (h, w):
-            ya = cv2.resize(ya, (w, h), interpolation=cv2.INTER_NEAREST)
+            ya = cv2.resize(ya, (w, h), interpolation=cv2.INTER_LINEAR)
 
-        # Fallback dental core: strictly anchored on original patient enamel yb!
-        # Do not allow AI hallucinations (ya) to dilate downward into the lower lip.
+        # Dental core: combine genuine enamel detections from both b_img and a_img
         k_tuck = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
-        if yb is not None and np.sum(yb > 0) > 50:
+        if yb is not None and ya is not None:
+            teeth_core = cv2.dilate(cv2.bitwise_or(yb, ya), k_tuck)
+        elif yb is not None and np.sum(yb > 0) > 50:
             teeth_core = cv2.dilate(yb, k_tuck)
         elif ya is not None and np.sum(ya > 0) > 50:
             teeth_core = cv2.dilate(ya, k_tuck)
         else:
             teeth_core = None
 
-        # Clean rogue outlier blobs from teeth_core (keep only largest contours in mouth center)
         if teeth_core is not None:
             cnts, _ = cv2.findContours(teeth_core, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
             clean_teeth = np.zeros_like(teeth_core)
@@ -400,11 +725,9 @@ def get_accurate_teeth_mask(
                         cv2.drawContours(clean_teeth, [c], -1, 255, -1)
             teeth_core = clean_teeth
 
-        # 2. Extract MediaPipe inner lip aperture polygon & corner protection if face is present
+        # Extract MediaPipe inner lip aperture polygon (if full face detected)
         detector = get_face_landmarker()
         aperture_poly = None
-        p78, p308 = None, None
-        corner_r = 10
 
         if detector is not None:
             try:
@@ -418,69 +741,94 @@ def get_accurate_teeth_mask(
                     lms = res.face_landmarks[0]
                     pts = [[int(np.clip(lms[idx].x * w, 0, w - 1)), int(np.clip(lms[idx].y * h, 0, h - 1))] for idx in INNER_LIP_INDICES]
                     aperture_poly = np.zeros((h, w), dtype=np.uint8)
-                    cv2.fillPoly(aperture_poly, [np.array(pts, dtype=np.int32)], 255)
-
-                    p78 = (int(lms[78].x * w), int(lms[78].y * h))
-                    p308 = (int(lms[308].x * w), int(lms[308].y * h))
-                    mouth_w = abs(p308[0] - p78[0])
-                    corner_r = max(10, int(mouth_w * 0.045))
+                    cv2.fillPoly(aperture_poly, [np.array(pts, dtype=np.int32)], 1)
             except Exception as mp_err:
                 pass
 
-        # 3. Form Full Oral Aperture Mask:
-        # Inside the vermilion border of the lips, give EVERYTHING to the mask
-        # (all teeth crowns, visible gums, gingival margins, and oral smile aperture)
-        # Outside the lips (skin, moustache, beard, upper and lower lips) remain 100% frozen.
         if aperture_poly is not None:
-            raw_mask = aperture_poly.copy()
-            if p78 is not None and p308 is not None:
-                cv2.circle(raw_mask, p78, corner_r, 0, -1)
-                cv2.circle(raw_mask, p308, corner_r, 0, -1)
+            combined_binary = aperture_poly.copy()
+            if teeth_core is not None:
+                combined_binary = cv2.bitwise_or(combined_binary, (teeth_core > 0).astype(np.uint8))
 
-            # Inward feathering so alpha NEVER expands past the inner lip vermilion border
-            k_inner = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
-            eroded_aperture = cv2.erode(raw_mask, k_inner)
-            mask_f = cv2.GaussianBlur(eroded_aperture.astype(np.float32) / 255.0, (9, 9), 1.8)
-            # Strictly multiply by aperture_poly so every single pixel on the lips is mathematically 0.0000000!
-            # ZERO bleed onto lips, moustache, beard, or skin.
-            final_mask = mask_f * (aperture_poly.astype(np.float32) / 255.0)
+            # Compute bounding box for 4-side lock
+            ys_cb, xs_cb = np.where(combined_binary > 0)
+            cb_bbox = None
+            if len(ys_cb) > 50:
+                y_top = int(np.min(ys_cb))
+                y_bot = int(np.max(ys_cb))
+                x_left = int(np.min(xs_cb))
+                x_right = int(np.max(xs_cb))
+                cb_height = y_bot - y_top
+                cb_width = x_right - x_left
+                cb_bbox = (y_top, y_bot, x_left, x_right)
+
+                # Hard bottom lock
+                hard_bot = min(h, y_bot + max(3, int(cb_height * 0.05)))
+                combined_binary[hard_bot:, :] = 0
+
+                # Left/right column lock: generous margin so corner teeth are NEVER clipped
+                hard_left = max(0, x_left - max(15, int(cb_width * 0.08)))
+                hard_right = min(w, x_right + max(15, int(cb_width * 0.08)))
+                combined_binary[:, :hard_left] = 0
+                combined_binary[:, hard_right:] = 0
+
+            tooth_like, _ = _tooth_vs_lip_colour(
+                b_img,
+                teeth_core if teeth_core is not None else combined_binary,
+                _surrounding_ring(combined_binary),
+            )
+            final_mask = _outward_feather(combined_binary, w, grow_allowed=tooth_like)
+
+            # Apply 4-side boundary box clamp
+            if cb_bbox is not None:
+                bt, bb, bl, br = cb_bbox
+                ah = max(bb - bt, 1)
+                aw = max(br - bl, 1)
+                final_mask = _enforce_mask_boundary_box(
+                    final_mask,
+                    y_top=bt,   # Strict upper lip lock
+                    y_bot=min(h - 1, bb + max(3, int(ah * 0.05))),
+                    x_left=max(0, bl - max(15, int(aw * 0.08))),
+                    x_right=min(w - 1, br + max(15, int(aw * 0.08))),
+                    feather_px=6,
+                )
 
         elif teeth_core is not None:
-            # Fallback when MediaPipe returns 0 faces (e.g. eyes covered with hand or tight mouth close-up):
-            # Expand teeth_core vertically & horizontally to cover full crowns, roots, and visible gums inside lips
-            ys, xs = np.where(teeth_core > 0)
-            h_span = int(np.max(ys) - np.min(ys))
-            w_span = int(np.max(xs) - np.min(xs))
-            ymin, ymax = int(np.min(ys)), int(np.max(ys))
+            teeth_binary = (teeth_core > 0).astype(np.uint8)
+            ys_tb, xs_tb = np.where(teeth_binary > 0)
+            tc_bbox = None
+            if len(ys_tb) > 50:
+                y_top = int(np.min(ys_tb))
+                y_bot = int(np.max(ys_tb))
+                x_left = int(np.min(xs_tb))
+                x_right = int(np.max(xs_tb))
+                tc_height = y_bot - y_top
+                tc_width = x_right - x_left
+                tc_bbox = (y_top, y_bot, x_left, x_right)
 
-            k_v = max(5, int(h_span * 0.28))
-            k_h = max(3, int(w_span * 0.05))
-            k_expand = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k_h * 2 + 1, k_v * 2 + 1))
-            expanded = cv2.dilate(teeth_core, k_expand)
+                # Hard bottom/left/right lock
+                hard_bot = min(h, y_bot + max(3, int(tc_height * 0.05)))
+                teeth_binary[hard_bot:, :] = 0
+                hard_left = max(0, x_left - max(15, int(tc_width * 0.08)))
+                hard_right = min(w, x_right + max(15, int(tc_width * 0.08)))
+                teeth_binary[:, :hard_left] = 0
+                teeth_binary[:, hard_right:] = 0
 
-            # Strict Lip & Facial Hair Lock:
-            # 1. Dark facial hair (mustache and beard) must be 100% frozen
-            b, g, r = cv2.split(b_img)
-            is_dark_hair = (r < 65) & (g < 60) & (b < 60)
+            tooth_like, _ = _tooth_vs_lip_colour(b_img, teeth_binary, _surrounding_ring(teeth_binary))
+            final_mask = _outward_feather(teeth_binary, w, grow_allowed=tooth_like)
 
-            # 2. Outer lower lip margin (below ymax + 35% h_span)
-            is_lower_outer_lip = np.zeros((h, w), dtype=bool)
-            is_lower_outer_lip[int(ymax + h_span * 0.35):, :] = True
-            b_hsv = cv2.cvtColor(b_img, cv2.COLOR_BGR2HSV)
-            is_lip_mucosa = (r > 130) & (r.astype(int) - g.astype(int) > 40) & (b_hsv[:, :, 1] > 60)
-            is_frozen_lip = is_lower_outer_lip & is_lip_mucosa
-
-            # 3. Outer upper lip margin (above ymin - 35% h_span)
-            is_upper_outer_lip = np.zeros((h, w), dtype=bool)
-            is_upper_outer_lip[:max(0, int(ymin - h_span * 0.35)), :] = True
-
-            # Never touch frozen areas
-            expanded[is_dark_hair] = 0
-            expanded[is_frozen_lip] = 0
-            expanded[is_upper_outer_lip] = 0
-
-            mask_f = cv2.GaussianBlur(expanded.astype(np.float32) / 255.0, (9, 9), 1.8)
-            final_mask = np.clip(mask_f, 0.0, 1.0)
+            if tc_bbox is not None:
+                bt, bb, bl, br = tc_bbox
+                ah = max(bb - bt, 1)
+                aw = max(br - bl, 1)
+                final_mask = _enforce_mask_boundary_box(
+                    final_mask,
+                    y_top=bt,   # Strict upper lip lock
+                    y_bot=min(h - 1, bb + max(3, int(ah * 0.05))),
+                    x_left=max(0, bl - max(15, int(aw * 0.08))),
+                    x_right=min(w - 1, br + max(15, int(aw * 0.08))),
+                    feather_px=6,
+                )
         else:
             return np.zeros((h, w), dtype=np.uint8 if binary else np.float32)
 
@@ -495,7 +843,12 @@ def get_accurate_teeth_mask(
         return np.zeros((h, w), dtype=np.uint8 if binary else np.float32)
 
 
-def detect_bite_space_line(img_bgr: np.ndarray, before_path: Optional[str] = None) -> dict:
+def detect_bite_space_line(
+    img_bgr: np.ndarray,
+    before_path: Optional[str] = None,
+    cached_mask: Optional[np.ndarray] = None,
+    cached_mask_float: Optional[np.ndarray] = None,
+) -> dict:
     """
     Scans the patient's oral aperture and dental arch geometry to deterministically determine:
     1. If lower teeth exist (dual arch vs single upper arch).
@@ -509,6 +862,7 @@ def detect_bite_space_line(img_bgr: np.ndarray, before_path: Optional[str] = Non
         "bottom_teeth_exist": False,
         "has_space_line": False,
         "is_touching_bite": False,
+        "is_closed_smile": False,
         "valley_y": None,
         "valley_val": None,
         "top_peak": None,
@@ -517,14 +871,40 @@ def detect_bite_space_line(img_bgr: np.ndarray, before_path: Optional[str] = Non
         "ymax": None,
         "xmin": None,
         "xmax": None,
+        "cached_mask": None,
+        "cached_mask_float": None,
     }
     if img_bgr is None:
         return default_res
 
+    h, w = img_bgr.shape[:2]
+
     try:
-        mask = get_accurate_teeth_mask(b_img=img_bgr, a_img=img_bgr, before_path=before_path, binary=True)
+        if cached_mask is not None:
+            mask = cached_mask
+            mask_float = cached_mask_float if cached_mask_float is not None else (mask > 0).astype(np.float32)
+        else:
+            mask_float = get_accurate_teeth_mask(b_img=img_bgr, a_img=img_bgr, before_path=before_path, binary=False)
+            mask = (mask_float > 0.10).astype(np.uint8) * 255 if mask_float is not None else None
+
         if mask is None or np.sum(mask > 0) < 50:
-            return default_res
+            return {
+                "status": "closed_smile",
+                "bottom_teeth_exist": False,
+                "has_space_line": False,
+                "is_touching_bite": False,
+                "is_closed_smile": True,
+                "valley_y": None,
+                "valley_val": None,
+                "top_peak": None,
+                "bot_peak": None,
+                "ymin": None,
+                "ymax": None,
+                "xmin": None,
+                "xmax": None,
+                "cached_mask": mask,
+                "cached_mask_float": mask_float,
+            }
 
         gray = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2GRAY)
         ys, xs = np.where(mask > 0)
@@ -532,12 +912,13 @@ def detect_bite_space_line(img_bgr: np.ndarray, before_path: Optional[str] = Non
         xmin, xmax = int(np.min(xs)), int(np.max(xs))
 
         span_y = ymax - ymin
-        if span_y < 15:
+        if span_y < 12:
             return {
-                "status": "narrow_slit",
+                "status": "closed_smile",
                 "bottom_teeth_exist": False,
                 "has_space_line": False,
                 "is_touching_bite": False,
+                "is_closed_smile": True,
                 "valley_y": None,
                 "valley_val": None,
                 "top_peak": None,
@@ -546,6 +927,8 @@ def detect_bite_space_line(img_bgr: np.ndarray, before_path: Optional[str] = Non
                 "ymax": ymax,
                 "xmin": xmin,
                 "xmax": xmax,
+                "cached_mask": mask,
+                "cached_mask_float": mask_float,
             }
 
         # Analyze central 60% of the dental arch width (incisor region)
@@ -594,53 +977,79 @@ def detect_bite_space_line(img_bgr: np.ndarray, before_path: Optional[str] = Non
             bot_peak = 0.0
             bot_y = ymax
 
-        # 4. Color & Saturation Analysis: distinguish true dental enamel from lower lip
-        lower_sample_y1 = min(valley_y + 1, ymax - 1)
-        lower_sample_y2 = max(lower_sample_y1 + 1, min(bot_y, ymax))
-        bgr_row = np.mean(img_bgr[lower_sample_y1:lower_sample_y2, cx1:cx2], axis=(0, 1))
-        hsv_px = cv2.cvtColor(np.uint8([[[bgr_row[0], bgr_row[1], bgr_row[2]]]]), cv2.COLOR_BGR2HSV)[0][0]
-        hue = int(hsv_px[0])
-        sat = int(hsv_px[1])
-        red_excess = float(bgr_row[2] - bgr_row[1])
+        lower_arch_height = ymax - valley_y
+        lower_ratio = lower_arch_height / max(1, span_y)
+        # 4. Accurate Dual-Arch vs Single-Arch Discrimination:
+        # A true dual arch has:
+        # a) A distinct top peak (upper teeth),
+        # b) A distinct incisal valley / dark space below the top peak,
+        # c) A distinct second peak (lower teeth) strictly below the valley with genuine elevation,
+        # d) A genuine vertical separation: valley_drop >= 12.0 and lower_arch_height >= 14.
+        valley_drop = min(top_peak - valley_val, bot_peak - valley_val)
+        peak_dist_y = abs(bot_y - top_y)
 
-        # Lip tissue has true pink/red/magenta hue (hue <= 13 or > 165) and high red excess (> 38)
-        # Stained or yellow dental enamel has yellow hue (16-38) or low red excess (< 36) and is enamel
-        is_lip = bool(((hue <= 13) or (hue > 165)) and (sat > 75) and (red_excess > 38.0))
+        # Check YOLO for genuine enamel detections strictly in the lower region below the detected valley
+        yb_detect = _get_mask_from_yolo(img_bgr, conf=0.10)
+        yolo_bot_px = 0
+        if yb_detect is not None and valley_y is not None:
+            lower_split = max(valley_y + 2, ymin + int(span_y * 0.50))
+            if lower_split < ymax:
+                yolo_bot_px = int(np.sum(yb_detect[lower_split:ymax, xmin:xmax] > 0))
 
-        # Criteria: Bottom teeth exist if there is a distinct enamel peak below the valley
-        # Standard distinct dual-arch peak (must be genuine enamel, not lip, and higher than valley)
-        standard_bottom = bool(
-            not is_lip
-            and (bot_peak > 110.0)
-            and (bot_peak - valley_val >= 5.0)
-            and (bot_peak >= 0.50 * top_peak)
+        # Bottom teeth exist ONLY when there is clear physical and optical proof of a second arch:
+        # 1. Distinct two peaks separated by a valley (valley_drop >= 12.0 and peak_dist >= 12px)
+        # 2. Or strong YOLO enamel detection in the lower half AND a discernible valley separating them
+        has_dual_peak = bool(
+            (valley_drop >= 12.0)
+            and (peak_dist_y >= 10)
+            and (bot_peak > 65.0)
+            and (lower_arch_height >= 12)
+            and (lower_ratio >= 0.20)
+        )
+        has_yolo_lower = bool(
+            (yolo_bot_px >= 80)
+            and (valley_drop >= 8.0)
+            and (peak_dist_y >= 10)
+            and (lower_arch_height >= 12)
         )
 
-        # MANDATORY WHOLE SMILE RULE: Even if only 2 teeth connect to top and bottom line, count as whole smile!
-        # Check lower arch region (lower 50% of mouth box) for connecting teeth or enamel cluster
-        lower_half_y = ymin + int(span_y * 0.48)
-        lower_enamel_mask = (mask[lower_half_y:ymax, cx1:cx2] > 0)
-        has_connecting_teeth = False
-        if not is_lip and np.sum(lower_enamel_mask) >= 15:
-            # Genuine enamel cluster: must rise above the valley and have enamel brightness
-            if bot_peak > valley_val + 3.0 and bot_peak > 105.0:
-                has_connecting_teeth = True
-                print(f"[DetectBite] Detected connecting teeth in lower arch ({np.sum(lower_enamel_mask)} enamel px, bot_peak={bot_peak:.1f}) -> Counting as Whole Smile!")
+        bottom_teeth_exist = bool(has_dual_peak or has_yolo_lower)
 
-        bottom_teeth_exist = bool(standard_bottom or has_connecting_teeth)
+        # Criteria: Genuine open bite space line: Must be dark oral cavity shadow (valley_val < 78.0) AND deep drop (> 30.0 below peaks)
+        # Width of the dark dip relative to the upper-to-lower peak distance (scale-free).
+        # A touching bite still has a dark contact line, but it is narrow (ratio ~0.2-0.28);
+        # a real open bite gap is wide (~0.4). Without this a dark contact line was called
+        # "open" and Gemini opened a gap and pushed the lower teeth down.
+        bot_i = bot_idx if valley_idx < L - 2 else L - 1
+        half_level = valley_val + 0.5 * max(min(top_peak, bot_peak) - valley_val, 1.0)
+        lo = valley_idx
+        while lo > top_peak_idx and profile[lo - 1] < half_level:
+            lo -= 1
+        hi = valley_idx
+        while hi < bot_i and profile[hi + 1] < half_level:
+            hi += 1
+        gap_rows = hi - lo + 1
+        gap_ratio = gap_rows / float(max(1, bot_i - top_peak_idx))
 
-        # Criteria: Clear space line if valley dips significantly below both top and bottom peaks
-        has_space_line = bool(bottom_teeth_exist and (valley_val < top_peak - 20.0) and (valley_val < bot_peak - 15.0))
-        # Touching bite / connected teeth whole smile (teeth meet in contact with shallow or zero space line)
+        has_space_line = bool(
+            bottom_teeth_exist
+            and (valley_val < 85.0)
+            and (valley_val < top_peak - 28.0)
+            and (valley_val < bot_peak - 25.0)
+            and (gap_ratio >= 0.33)
+            and (gap_rows >= 5)
+        )
+        # Touching bite / closed bite: Upper and lower teeth touch in continuous contact
         is_touching_bite = bool(bottom_teeth_exist and not has_space_line)
 
-        print(f"[DetectBite] bottom_teeth={bottom_teeth_exist}, space_line={has_space_line}, touching={is_touching_bite}, valley_y={valley_y} (val={valley_val:.1f} vs top={top_peak:.1f}, bot={bot_peak:.1f})")
+        print(f"[DetectBite] bottom_teeth={bottom_teeth_exist}, space_line={has_space_line}, touching={is_touching_bite}, valley_y={valley_y} (val={valley_val:.1f} vs top={top_peak:.1f}, bot={bot_peak:.1f}, drop={valley_drop:.1f}, gap={gap_rows}px ratio={gap_ratio:.2f})")
 
         return {
             "status": "ok",
             "bottom_teeth_exist": bool(bottom_teeth_exist),
             "has_space_line": bool(has_space_line),
             "is_touching_bite": bool(is_touching_bite),
+            "is_closed_smile": False,
             "valley_y": valley_y,
             "valley_val": valley_val,
             "top_peak": top_peak,
@@ -649,10 +1058,65 @@ def detect_bite_space_line(img_bgr: np.ndarray, before_path: Optional[str] = Non
             "ymax": ymax,
             "xmin": xmin,
             "xmax": xmax,
+            "cached_mask": mask,
+            "cached_mask_float": mask_float,
         }
     except Exception as e:
         print(f"[DetectBite Note]: {e}")
         return default_res
+
+
+def align_after_to_before(
+    b_img: np.ndarray,
+    a_img: np.ndarray,
+    exclude_mask: Optional[np.ndarray] = None,
+    max_dim: int = 768,
+) -> np.ndarray:
+    """
+    Registers Gemini's output onto the original photo (affine ECC on the face, mouth excluded).
+    Gemini often returns a slightly reframed/rescaled image, which makes the generated teeth
+    sit lower/higher than the original mouth opening and the mask appear to "slide".
+    """
+    h, w = b_img.shape[:2]
+    if a_img.shape[:2] != (h, w):
+        a_img = cv2.resize(a_img, (w, h), interpolation=cv2.INTER_LANCZOS4)
+
+    s = min(1.0, max_dim / float(max(h, w)))
+    sw, sh = max(1, int(w * s)), max(1, int(h * s))
+    bg = cv2.GaussianBlur(cv2.cvtColor(cv2.resize(b_img, (sw, sh)), cv2.COLOR_BGR2GRAY), (5, 5), 0).astype(np.float32)
+    ag = cv2.GaussianBlur(cv2.cvtColor(cv2.resize(a_img, (sw, sh)), cv2.COLOR_BGR2GRAY), (5, 5), 0).astype(np.float32)
+
+    # Ignore the mouth itself (it is supposed to change) when estimating the alignment
+    in_mask = np.full((sh, sw), 255, dtype=np.uint8)
+    if exclude_mask is not None and np.any(exclude_mask > 0):
+        em = cv2.resize((exclude_mask > 0).astype(np.uint8) * 255, (sw, sh), interpolation=cv2.INTER_NEAREST)
+        k = max(9, int(sw * 0.03)) | 1
+        em = cv2.dilate(em, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k)))
+        in_mask[em > 0] = 0
+
+    warp = np.eye(2, 3, dtype=np.float32)
+    try:
+        criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 80, 1e-5)
+        _, warp = cv2.findTransformECC(bg, ag, warp, cv2.MOTION_AFFINE, criteria, in_mask, 5)
+    except cv2.error as e:
+        print(f"[SeamlessLipLock] Alignment skipped (ECC did not converge): {e}")
+        return a_img
+
+    # Sanity check: reject implausible warps (keep raw image instead of distorting it)
+    scale_x = float(np.hypot(warp[0, 0], warp[1, 0]))
+    scale_y = float(np.hypot(warp[0, 1], warp[1, 1]))
+    warp[:, 2] /= s
+    shift = float(np.hypot(warp[0, 2], warp[1, 2]))
+    if not (0.85 < scale_x < 1.15 and 0.85 < scale_y < 1.15) or shift > 0.10 * max(h, w):
+        print(f"[SeamlessLipLock] Alignment rejected (scale={scale_x:.3f}/{scale_y:.3f}, shift={shift:.1f}px).")
+        return a_img
+
+    print(f"[SeamlessLipLock] Aligned AI output to original (dx={warp[0, 2]:.1f}, dy={warp[1, 2]:.1f}, scale={scale_x:.3f}/{scale_y:.3f}).")
+    return cv2.warpAffine(
+        a_img, warp, (w, h),
+        flags=cv2.INTER_LINEAR + cv2.WARP_INVERSE_MAP,
+        borderMode=cv2.BORDER_REPLICATE,
+    )
 
 
 def preserve_space_line_shadow(
@@ -675,6 +1139,7 @@ def apply_seamless_lip_lock(
     feather_sigma: float = 3.0,
     dilate_px: int = 2,
     bite_info: Optional[dict] = None,
+    cached_mask: Optional[np.ndarray] = None,
 ) -> bool:
     """
     Seamless Anatomical Lip-Lock Composite:
@@ -712,20 +1177,29 @@ def apply_seamless_lip_lock(
         if a_img.shape[:2] != (h, w):
             a_img = cv2.resize(a_img, (w, h), interpolation=cv2.INTER_LANCZOS4)
 
-        # Build clinically accurate teeth mask directly from seamless_blend.py
-        mask_blurred = get_accurate_teeth_mask(
-            b_img=b_img,
-            a_img=a_img,
-            before_path=before_path,
-            binary=False,
-            dilate_px=dilate_px,
-            feather_kernel_size=feather_kernel_size,
-            feather_sigma=feather_sigma,
-        )
+        # Mask comes from the ORIGINAL photo only: the patient's real mouth opening is the
+        # ground truth. Using Gemini's teeth here lets the mask slide down over the lower lip.
+        if cached_mask is not None:
+            mask_blurred = cached_mask
+            if mask_blurred.shape[:2] != (h, w):
+                mask_blurred = cv2.resize(mask_blurred, (w, h), interpolation=cv2.INTER_LINEAR)
+        else:
+            mask_blurred = get_accurate_teeth_mask(
+                b_img=b_img,
+                a_img=None,
+                before_path=before_path,
+                binary=False,
+                dilate_px=dilate_px,
+                feather_kernel_size=feather_kernel_size,
+                feather_sigma=feather_sigma,
+            )
 
         if np.sum(mask_blurred > 0.05) == 0:
             print("[SeamlessLipLock] No mouth region detected; using raw AI image.")
             return False
+
+        # Snap Gemini's teeth back onto the original mouth before compositing
+        a_img = align_after_to_before(b_img, a_img, exclude_mask=(mask_blurred > 0.05))
 
         mask_3ch = np.repeat(mask_blurred[:, :, np.newaxis], 3, axis=2)
 
@@ -733,6 +1207,33 @@ def apply_seamless_lip_lock(
         # Inside dental footprint = 100% Gemini refined teeth & ceramic luster (both arches)
         # Outside footprint = 100% Original lips, mustache, cheeks, corners, skin
         blended = (a_img.astype(np.float32) * mask_3ch + b_img.astype(np.float32) * (1.0 - mask_3ch))
+
+        # Depth shading so teeth sit INSIDE the mouth instead of looking pasted on top of it:
+        # 1) soft shadow where the upper lip overhangs the teeth,
+        # 2) teeth darken toward the mouth corners (the arch curves back into the cheeks).
+        inside = (mask_blurred > 0.5).astype(np.float32)
+        ys_in, xs_in = np.where(inside > 0)
+        if len(ys_in) > 0:
+            shade_h = max(3.0, (ys_in.max() - ys_in.min()) * 0.10)
+            depth = np.cumsum(inside, axis=0)  # px below the mask's top edge, per column
+            lip_shade = (1.0 - np.clip((depth - 1.0) / shade_h, 0.0, 1.0)) ** 2 * 0.30
+
+            x_c = (xs_in.min() + xs_in.max()) / 2.0
+            half_w = max(1.0, (xs_in.max() - xs_in.min()) / 2.0)
+            dx = np.abs(np.arange(w, dtype=np.float32) - x_c) / half_w
+            corridor = (np.clip((dx - 0.35) / 0.65, 0.0, 1.0) ** 1.5 * 0.45)[np.newaxis, :]
+
+            shade = 1.0 - (1.0 - lip_shade) * (1.0 - corridor)
+            shade = cv2.GaussianBlur(shade * inside, (0, 0), max(1.5, shade_h / 3.0))
+
+            # Shade bright enamel only. Darkening the seam pixels (lip edge / dark gap) right at
+            # the mask border drew a crisp black outline along the upper lip.
+            a_gray = cv2.cvtColor(a_img, cv2.COLOR_BGR2GRAY).astype(np.float32)
+            p40, p85 = np.percentile(a_gray[inside > 0], [40, 85])
+            enamel_w = np.clip((a_gray - p40) / max(p85 - p40, 1.0), 0.0, 1.0)
+            shade *= enamel_w * mask_blurred
+            blended *= (1.0 - shade)[:, :, np.newaxis]
+
         blended = np.clip(blended, 0, 255).astype(np.uint8)
 
         # Space Line Shadow Guard: If before image had a space line, ensure it remains dark and crisp
