@@ -5,6 +5,18 @@ from typing import Optional
 import cv2
 import numpy as np
 
+# Keep OpenCV / torch single-threaded so the hosting process limit is never hit
+try:
+    cv2.setNumThreads(1)
+except Exception:
+    pass
+try:
+    import torch
+    torch.set_num_threads(1)
+    torch.set_num_interop_threads(1)
+except Exception:
+    pass
+
 # Global model singletons
 _BISENET_SESSION = None
 _BISENET_FAILED = False

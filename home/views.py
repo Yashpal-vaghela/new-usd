@@ -17,13 +17,14 @@ from home.forms import UserSubmissionForm
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
 from datetime import date
-from .utils import send_mail
+from .utils import send_mail, queue_mail
 import json
 import re
 import requests
 import random
 import threading
 from django.utils import timezone
+from django.utils.text import slugify
 from .sitemaps import *
 
 @csrf_exempt  # This bypasses CSRF protection for demonstration purposes only
@@ -51,7 +52,7 @@ def receive_location(request):
     return JsonResponse({'status': 'error'}, status=400)
 
 def send_contact_email_async(context_dict):
-    send_mail(
+    queue_mail(
         to_email=["vaghela9632@gmail.com","vyashpalsinh9@gmail.com"],  # company email
         subject=f"New Contact Form Submission from {context_dict['Name']}",
         context_dict=context_dict
@@ -62,6 +63,7 @@ def home(request):
     # data1 = City.objects.all()[:10]
     dentist = Dentist.objects.all().order_by("?")[:6]
     gallery = Gallery.objects.all().order_by("?")
+    hgallery = list(Hgallery.objects.all().order_by('-id')[:11])
     cities = City.objects.annotate(
         countdr=Count('dentist', filter=Q(dentist__status=True))
     ).filter(countdr__gt=0).order_by('-countdr')[:6]
@@ -106,17 +108,6 @@ def home(request):
         if post_data.get('full_phone'):
             post_data['phone'] = post_data.get('full_phone')
         form = ContactHomePageForm(post_data)
-        # recaptcha_response = request.POST.get('g-recaptcha-response')
-        # data = {
-        #     'secret': settings.RECAPTCHA_SECRET_KEY,
-        #     'response': recaptcha_response,
-        # }
-        # r = requests.post("https://www.google.com/recaptcha/api/siteverify", data=data)  # <-- FIXED
-        # result = r.json()
-
-        # if not result.get('success'):
-        #     messages.error(request, 'Invalid reCAPTCHA. Please try again.')
-        #     return redirect(request.META.get('HTTP_REFERER','home:home'))
         if form.is_valid():
             submission = form.save()
             current_datetime_ist = timezone.localtime(timezone.now())
@@ -125,20 +116,18 @@ def home(request):
                 "Name": submission.name,
                 "Email": submission.email,
                 "Phone": submission.phone,
+                "Pincode": submission.pincode or "",
                 "City": submission.city,
                 "Message": submission.message,
                 "Page URL": request.META.get("HTTP_REFERER", "Not available")
             }
-            threading.Thread(
-                target=send_contact_email_async,
-                args=(context_dict,),
-                daemon=True
-            ).start()
+            send_contact_email_async(context_dict)
 
             bikai_payload  ={
                 "Name": submission.name,
                 "Email": submission.email,
                 "Contact": submission.phone,
+                "Pincode": submission.pincode or "",
                 "City": submission.city,
                 "Message": submission.message,
                 "DateTime": formatted_datetime,
@@ -160,8 +149,9 @@ def home(request):
 
             return redirect('home:thankyou')
         else:
-            messages.error(request, 'Something went wrong! Please try again.')
-            return redirect('home:home')
+            messages.error(request, 'Something went wrong! Please check your details.')
+    else:
+        form = ContactHomePageForm()
     
     reviews = [
         {id:1,'doctor_name':'Dr. Priyanka Sharma','review':"I never imagined my smile could look this great. The entire process was smooth and tailored to my needs. I'm so grateful to the team and my smile designer!"},
@@ -195,6 +185,7 @@ def home(request):
     context = {
       'data1':data1,
       'gallery':gallery,
+      'hgallery':hgallery,
       'cities': cities,
       'search_message': search_message,
       'query': query,
@@ -359,7 +350,6 @@ def search_all_usd(request, city_name=None):
         return JsonResponse(suggestion, safe=False)
 
     city_id = request.GET.get('city', '').strip()
-    data1 = Dentist.objects.filter(status=True).order_by('name')
     search_message = None
 
     user_latitude = request.session.get('latitude')
@@ -372,43 +362,105 @@ def search_all_usd(request, city_name=None):
             user_longitude = float(user_longitude)
         else:
             user_latitude = user_longitude = None
-    except ValueError:
+    except (ValueError, TypeError):
         user_latitude = user_longitude = None
 
-    # Location filtering by city
-    if city_id:
-        city = get_object_or_404(City, id=city_id)
-        data1 = data1.filter(city=city)
-        city_name = city.city
-    elif city_name:
-        try:
-            city = City.objects.get(city__iexact=city_name.replace("-", " "))
-            data1 = data1.filter(city=city)
-        except City.DoesNotExist:
-            search_message = f"No Ultimate Designers Found in {city_name}."
-    else:
-        session_city = request.session.get('city')
-        if session_city:
-            try:
-                city = City.objects.get(city=session_city)
-                data1 = data1.filter(city=city)
-                city_name = city.city
-            except City.DoesNotExist:
-                search_message = f"No Ultimate Designers Found in {session_city}."
-        else:
-            search_message = "No city selected."
+    # Get all cities that currently have active dentists and coordinates
+    cities_with_dentists = City.objects.annotate(
+        active_count=Count('dentist', filter=Q(dentist__status=True))
+    ).filter(active_count__gt=0, latitude__isnull=False, longitude__isnull=False)
 
-    # Location-based sorting using dentist.lat and dentist.long
-    if user_latitude and user_longitude:
+    city = None
+    city_name_display = None
+    location_required = False
+
+    # 1. Explicitly selected city from dropdown
+    if city_id:
+        city = City.objects.filter(id=city_id).first()
+        if city:
+            city_name_display = city.city
+
+    # 2. City name passed in URL path
+    elif city_name:
+        city = City.objects.filter(city__iexact=city_name.replace("-", " ")).first()
+        if city:
+            city_name_display = city.city
+
+    # 3. Location-based resolution (when user coordinates are available in session)
+    elif user_latitude and user_longitude:
+        session_city = request.session.get('city')
+
+        # Check if the user's detected city has active dentists
+        if session_city and session_city.lower() != 'unknown':
+            matched_city = City.objects.filter(
+                Q(city__iexact=session_city.strip()) | Q(city__icontains=session_city.strip()),
+                dentist__status=True
+            ).distinct().first()
+            if matched_city:
+                city = matched_city
+                city_name_display = city.city
+
+        # If user's city has no active dentists (e.g. Ankleshwar) but user coordinates exist,
+        # find the single nearest city that has active dentists
+        if not city and cities_with_dentists.exists():
+            user_point = (user_latitude, user_longitude)
+            nearest_city = min(
+                cities_with_dentists,
+                key=lambda c: geodesic(user_point, (c.latitude, c.longitude)).km
+            )
+            city = nearest_city
+            city_name_display = nearest_city.city
+
+    # 4. Neither city selected nor location granted: compulsory location prompt (DO NOT default to Surat!)
+    else:
+        location_required = True
+        city = None
+        city_name_display = None
+
+    # Filter ONLY dentists for the resolved city (never all dentists nationwide)
+    if city:
+        data1 = Dentist.objects.filter(city=city, status=True)
+    else:
+        data1 = Dentist.objects.none()
+
+    # If the explicitly selected city has 0 active dentists, fallback to nearest active city
+    if city and not data1.exists():
+        ref_point = None
+        if user_latitude and user_longitude:
+            ref_point = (user_latitude, user_longitude)
+        elif city.latitude and city.longitude:
+            ref_point = (city.latitude, city.longitude)
+
+        if ref_point and cities_with_dentists.exists():
+            nearest_city = min(
+                cities_with_dentists,
+                key=lambda c: geodesic(ref_point, (c.latitude, c.longitude)).km
+            )
+            city = nearest_city
+            city_name_display = nearest_city.city
+            data1 = Dentist.objects.filter(city=nearest_city, status=True)
+
+    # Sort doctors within this city by proximity to the user if coordinates are available
+    if city and user_latitude and user_longitude:
         doctors_with_location = []
         doctors_without_location = []
 
         for doctor in data1:
-            if doctor.lat is not None and doctor.long is not None:
+            doc_lat, doc_long = doctor.lat, doctor.long
+            if doc_lat is None or doc_long is None:
+                if doctor.iframe:
+                    match = re.search(r"!2d(-?\d+\.\d+)!3d(-?\d+\.\d+)", doctor.iframe)
+                    if match:
+                        try:
+                            doc_long = float(match.group(1))
+                            doc_lat = float(match.group(2))
+                        except Exception:
+                            pass
+            if doc_lat is not None and doc_long is not None:
                 try:
                     doctor_distance = geodesic(
                         (user_latitude, user_longitude), 
-                        (doctor.lat, doctor.long)
+                        (doc_lat, doc_long)
                     ).km
                     doctors_with_location.append((doctor_distance, doctor))
                 except Exception:
@@ -418,39 +470,17 @@ def search_all_usd(request, city_name=None):
 
         doctors_with_location.sort(key=lambda x: x[0])
         sorted_doctors = [doc for _, doc in doctors_with_location] + doctors_without_location
+    elif city:
+        sorted_doctors = list(data1.order_by('name'))
     else:
-        sorted_doctors = list(data1)
+        sorted_doctors = []
 
-    # Apply name search filter
-    if query:
-        sorted_doctors = data1.filter(name__icontains=query)
-
-    # Fallback to nearest city with dentists if current city has no data
-    if not data1.exists() and city and city.latitude and city.longitude:
-        user_location = (city.latitude, city.longitude)
-
-        nearby_cities = City.objects.exclude(id=city.id).exclude(latitude__isnull=True, longitude__isnull=True)
-
-        nearby_city_distances = []
-        for c in nearby_cities:
-            if Dentist.objects.filter(city=c, status=True).exists():
-                dist = geodesic(user_location, (c.latitude, c.longitude)).km
-                nearby_city_distances.append((dist, c))
-
-        nearby_city_distances.sort(key=lambda x: x[0])
-
-        if nearby_city_distances:
-            nearest_city = nearby_city_distances[0][1]
-            city = nearest_city
-            city_name = nearest_city.city
-            data1 = Dentist.objects.filter(city=nearest_city, status=True)
-            sorted_doctors = list(data1)
-            search_message = (
-                f"No Ultimate Designers Found in {user_location[0]}, {user_location[1]}. "
-                f"Showing nearest city: {nearest_city.city}, {nearest_city.state}."
-            )
-        else:
-            search_message = "No Ultimate Designers Found Nearby."
+    # Apply search query filter if user entered a search query
+    if query and sorted_doctors:
+        sorted_doctors = [
+            doc for doc in sorted_doctors 
+            if query.lower() in doc.name.lower() or (doc.clinic_name and query.lower() in doc.clinic_name.lower())
+        ]
 
     # Pagination
     paginator = Paginator(sorted_doctors, 12)
@@ -460,27 +490,34 @@ def search_all_usd(request, city_name=None):
     except PageNotAnInteger:
         data = paginator.page(1)
     except EmptyPage:
-        data = paginator.page(paginator.num_pages)
+        data = paginator.page(paginator.num_pages if paginator.num_pages > 0 else 1)
 
     context = {
         'sorted_doctors': sorted_doctors,
         'data': data,
         'search_message': search_message,
         'query': query,
-        'city': city.city if city else 'all',
+        'city': city.city if city else '',
         'city_id': city.id if city else '',
-        'total': len(data),
-        'city_name': city_name,
+        'total': len(sorted_doctors),
+        'city_name': city_name_display or (city.city if city else ''),
         'a_city': a_city,
+        'location_required': location_required,
     }
 
     return render(request, 'list.html', context)
-
 
 def search_city_dentists(request, city_name):
     """
     Displays the list of dentists specific to a given city using city-dentist.html template.
     """
+    city_name_lower = city_name.lower()
+    if city_name != city_name_lower:
+        query_string = request.META.get('QUERY_STRING')
+        url = reverse('home:search_city_dentists', kwargs={'city_name': city_name_lower})
+        if query_string:
+            url = f"{url}?{query_string}"
+        return redirect(url, permanent=True)
 
     query = request.GET.get('q', '').strip()
     user_latitude = request.session.get('latitude')
@@ -490,11 +527,11 @@ def search_city_dentists(request, city_name):
     search_message = None
 
     try:
-        city = City.objects.get(city__iexact=city_name.replace("-", " "))
+        city = City.objects.get(city__iexact=city_name_lower.replace("-", " "))
         data1 = Dentist.objects.filter(city=city, status=True).order_by('name')
     except City.DoesNotExist:
         data1 = Dentist.objects.none()
-        search_message = f"No Ultimate Designers Found in {city_name}."
+        search_message = f"No Ultimate Designers Found in {city_name_lower}."
 
     # Location-based sorting if available
     if user_latitude and user_longitude:
@@ -524,7 +561,7 @@ def search_city_dentists(request, city_name):
         sorted_doctors = [doc for doc in sorted_doctors if query.lower() in doc.name.lower()]
 
     if not data1.exists():
-        search_message = f"No Ultimate Designers Found in {city.city if city else city_name}."
+        search_message = f"No Ultimate Designers Found in {city.city if city else city_name_lower}."
 
     paginator = Paginator(sorted_doctors, 12)
     page = request.GET.get('page', 1)
@@ -538,8 +575,8 @@ def search_city_dentists(request, city_name):
 
     context = {
         'data': data,
-        'city': city.city if city else city_name,
-        'city_name': city_name,
+        'city': city.city if city else city_name_lower,
+        'city_name': city_name_lower,
         'query': query,
         'search_message': search_message,
     }
@@ -594,7 +631,7 @@ def find_dentist_d(request, pk):
 
             # Check if city still has active dentists
             if city and Dentist.objects.filter(city=city, status=True).exists():
-                city_name = city.city  # <-- using City model's "city" field
+                city_name = slugify(city.city)
                 return redirect(f"/certified-dentists/city/{city_name}/", permanent=True)
             else:
                 # No dentists in this city → fallback to main certified dentists page
@@ -634,18 +671,7 @@ def find_dentist_d(request, pk):
         post_data = request.POST.copy()
         if post_data.get('full_phone'):
             post_data['phone'] = post_data.get('full_phone')
-        form = ContactHomePageForm(post_data)
-        # recaptcha_response = request.POST.get('g-recaptcha-response')
-        # data = {
-        #     'secret': settings.RECAPTCHA_SECRET_KEY,
-        #     'response': recaptcha_response,
-        # }
-        # r = requests.post("https://www.google.com/recaptcha/api/siteverify", data=data)
-        # result = r.json()
-
-        # if not result.get('success'):
-        #     messages.error(request, 'Invalid reCAPTCHA. Please try again.')
-        #     return redirect(request.META.get('HTTP_REFERER','contact'))
+        form = UserSubmissionForm(post_data)
 
         if form.is_valid():
             user_submission = form.save()
@@ -655,6 +681,7 @@ def find_dentist_d(request, pk):
                 "Name": user_submission.first_name + " " + user_submission.last_name,
                 "Email": user_submission.email,
                 "Phone": user_submission.phone,
+                "Pincode": user_submission.pincode or "",
                 "City": user_submission.city,
                 "Message": user_submission.message,
                 "Doctor_name": user_submission.doctor_name or "NA",
@@ -662,18 +689,14 @@ def find_dentist_d(request, pk):
             }
 
             # Send email to company
-            threading.Thread(
-                target=send_contact_email_async,
-                args=(context_dict,),
-                daemon=True
-            ).start()
+            send_contact_email_async(context_dict)
 
             bikai_payload ={
                 "First_name": user_submission.first_name,
                 "Last_name": user_submission.last_name,
                 "Email": user_submission.email,
                 "Phone": user_submission.phone,
-                "Email": user_submission.email,
+                "Pincode": user_submission.pincode or "",
                 "City": user_submission.city,
                 "Message": user_submission.message,
                 "Doctor_name": user_submission.doctor_name,
@@ -693,20 +716,16 @@ def find_dentist_d(request, pk):
                 crm_response.raise_for_status()
             except requests.exceptions.RequestException as e:
                 messages.warning(request, f"Form saved but CRM sync failed: {str(e)}")
-            # messages.success(
-            #     request,
-            #     f"Form submitted successfully! Thank you, {user_submission.first_name} {user_submission.last_name}."
-            # )
-            # form = UserSubmissionForm()
             return redirect('home:thankyou')
         else:
-            messages.error(request,"Something went wrong! Please check your details.")
-            return render(request,'detail.html',
-                          {
-                            'form':form,
-                            # 'RECAPTCHA_SITE_KEY': settings.RECAPTCHA_SITE_KEY,
-                            'error_message':'Please correct the errors below.'
-                            })
+            messages.error(request, "Something went wrong! Please check your details.")
+            return render(request, 'detail.html', {
+                'data': data,
+                'gallery': gallery,
+                'reviews': reviews,
+                'form': form,
+                'error_message': 'Please correct the errors below.'
+            })
     else:
         form = UserSubmissionForm()
 
@@ -714,8 +733,7 @@ def find_dentist_d(request, pk):
         'data': data,
         'gallery': gallery,
         'reviews': reviews,
-        'form':form,
-        # 'RECAPTCHA_SITE_KEY': settings.RECAPTCHA_SITE_KEY,
+        'form': form,
     }
     return render(request, 'detail.html', context)
 
@@ -867,22 +885,19 @@ def blogsd(request, pk):
                 "Name": submission.name,
                 "Email":  submission.email,
                 "Phone": submission.phone,
+                "Pincode": submission.pincode or "",
                 "City": submission.city,
                 "Message": submission.message,
                 "Page URL": request.META.get("HTTP_REFERER", "Not available")
             }
-            threading.Thread(
-                target=send_contact_email_async,
-                args=(context_dict,),
-                daemon=True
-            ).start()
-            # messages.success(request, 'Your data is sent successfully.')
+            send_contact_email_async(context_dict)
             bikai_payload  ={
                "Name": submission.name,
                "Email": submission.email,
                "Contact": submission.phone,
+               "Pincode": submission.pincode or "",
                "City": submission.city,
-               "Subject": submission.subject,
+               "Subject": getattr(submission, 'subject', '') or "",
                "Message": submission.message,
                "DateTime": formatted_datetime,
             }
@@ -898,17 +913,12 @@ def blogsd(request, pk):
                     timeout=10,
                 )
                 crm_response.raise_for_status()
-                # messages.success(
-                #     request,
-                #     "Thanks for contacting the Ultimate Smile Design Team. We will get back to you shortly."
-                # )
             except requests.exceptions.RequestException as e:
                 messages.warning(request, f"Form saved but CRM sync failed: {str(e)}")
 
             return redirect('home:thankyou')
         else:
-            messages.error(request, "Your query is not sent! Try again.")
-            return redirect(request.META.get('HTTP_REFERER', 'home:blogs'))
+            messages.error(request, "Something went wrong! Please check your details.")
         
     ids = list(BeforeAfter.objects.values_list('id', flat=True))
     random_ids = random.sample(ids, min(len(ids), 6))
@@ -979,16 +989,13 @@ def contact(request):
                 "Name": submission.name,
                 "Email":  submission.email,
                 "Phone": submission.phone,
+                "Pincode": submission.pincode or "",
                 "City": submission.city,
                 "Subject": submission.subject,
                 "Message": submission.message,
                 "Page URL": request.META.get("HTTP_REFERER", "Not available")
             }
-            threading.Thread(
-                target=send_contact_email_async,
-                args=(context_dict,),
-                daemon=True
-            ).start()
+            send_contact_email_async(context_dict)
 
             #messages.success(request, 'Your data is sent successfully.')
             # return redirect('home:thankyou')
@@ -1024,6 +1031,7 @@ def contact(request):
                "Name": submission.name,
                "Email": submission.email,
                "Phone": submission.phone,
+               "Pincode": submission.pincode or "",
                "City": submission.city,
                "Subject": submission.subject,
                "Message": submission.message,
@@ -1051,11 +1059,10 @@ def contact(request):
 
             return redirect('home:thankyou')
         else:
-            messages.error(request, 'Something went wrong! Please try again.')
-            return redirect(request.META.get('HTTP_REFERER', 'contact'))
+            messages.error(request, 'Something went wrong! Please check your details.')
+            return render(request, 'contact.html', {'form': form})
 
     context = {
-        # "RECAPTCHA_SITE_KEY": settings.RECAPTCHA_SITE_KEY
     }
     return render(request, 'contact.html', context)
 
@@ -1064,7 +1071,7 @@ def dentist_connect(request):
         post_data = request.POST.copy()
         if post_data.get('full_phone'):
             post_data['phone'] = post_data.get('full_phone')
-        form = ContactHomePageForm(post_data)
+        form = DentistConnectForm(post_data)
 
         # recaptcha_response = request.POST.get('g-recaptcha-response')
         # data = {
@@ -1087,20 +1094,18 @@ def dentist_connect(request):
                 "Name": submission.name,
                 "Email": submission.email,
                 "Phone": submission.phone,
+                "Pincode": submission.pincode or "",
                 "ClinicName": submission.clinic_name,
                 "City": submission.city,
                 "DateTime": formatted_datetime,
                 "Page URL": request.META.get("HTTP_REFERER", "Not available")
             }
-            # threading.Thread(
-            #     target=send_contact_email_async,
-            #     args=(context_dict,),
-            #     daemon=True
-            # ).start()
+            send_contact_email_async(context_dict)
             # bikai_payload  ={
             #    "Name": submission.name,
             #    "Email": submission.email,
             #    "Contact": submission.phone,
+            #    "Pincode": submission.pincode or "",
             #    "ClinicName": submission.clinic_name,
             #    "City": submission.city,
             #    "DateTime": formatted_datetime,
@@ -1130,6 +1135,7 @@ def dentist_connect(request):
                "Name": submission.name,
                "Email": submission.email,
                "Phone": submission.phone,
+               "Pincode": submission.pincode or "",
                "City": submission.city,
                "ClinicName": submission.clinic_name,
                "Website": "Ultimate Smile Design",
@@ -1157,10 +1163,9 @@ def dentist_connect(request):
             return redirect('home:dthankyou')
         
         else:
-            messages.error(request, 'Something went wrong! Please try again.')
-            return redirect(request.META.get('HTTP_REFERER', 'dentist-connect'))
+            messages.error(request, 'Something went wrong! Please check your details.')
+            return render(request, 'dentist-connect.html', {'form': form})
     context = {
-        # "RECAPTCHA_SITE_KEY": settings.RECAPTCHA_SITE_KEY
     }
     return render(request, 'dentist-connect.html', context)
 
@@ -1181,20 +1186,7 @@ def dentist(request):
         post_data = request.POST.copy()
         if post_data.get('full_phone'):
             post_data['phone'] = post_data.get('full_phone')
-        form = ContactHomePageForm(post_data)
-
-        # reCAPTCHA validation
-        # recaptcha_response = request.POST.get('g-recaptcha-response')
-        # data = {
-        #     "secret": settings.RECAPTCHA_SECRET_KEY,
-        #     "response": recaptcha_response,
-        # }
-        # r = requests.post("https://www.google.com/recaptcha/api/siteverify", data=data)
-        # result = r.json()
-
-        # if not result.get("success"):
-        #     messages.error(request, "Invalid reCAPTCHA. Please try again.")
-        #     return redirect(request.META.get("HTTP_REFERER", "dentist"))
+        form = UserSubmissionForm(post_data)
 
         if form.is_valid():
             user_submission = form.save()
@@ -1204,16 +1196,13 @@ def dentist(request):
                 "Name": user_submission.first_name + " " + user_submission.last_name,
                 "Email": user_submission.email,
                 "Phone": user_submission.phone,
+                "Pincode": user_submission.pincode or "",
                 "City": user_submission.city,
                 "Message": user_submission.message,
                 "Doctor_name": user_submission.doctor_name or "NA",
                 "Page URL": request.META.get("HTTP_REFERER", "Not available")
             }
-            # threading.Thread(
-            #     target=send_contact_email_async,
-            #     args=(context_dict,),
-            #     daemon=True
-            # ).start()
+            send_contact_email_async(context_dict)
 
             # bikai_payload ={
             #     "First_name": user_submission.first_name,
@@ -1256,6 +1245,7 @@ def dentist(request):
                 "Name": user_submission.first_name + " " + user_submission.last_name,
                 "Email": user_submission.email,
                 "Phone": user_submission.phone,
+                "Pincode": user_submission.pincode or "",
                 "City": user_submission.city,
                 "Message": user_submission.message,
                 "DoctorName": user_submission.doctor_name,
@@ -1349,11 +1339,7 @@ def dentist_api(request):
         }
 
         # Send async notification email
-        threading.Thread(
-            target=send_contact_email_async,
-            args=(context_dict,),
-            daemon=True
-        ).start()
+        send_contact_email_async(context_dict)
 
         # Sync with Bikayi CRM
         bikayi_synced = False
@@ -1636,10 +1622,102 @@ def verify_warranty(request):
     return render(request, 'verify_warranty.html')
 
 def aboutPage(request):
-    context = {
+    if request.method == 'POST':
+        post_data = request.POST.copy()
+        if post_data.get('full_phone'):
+            post_data['phone'] = post_data.get('full_phone')
 
+        form = ContactHomePageForm(post_data)
+        if form.is_valid():
+            submission = form.save()
+            current_datetime_ist = timezone.localtime(timezone.now())
+            formatted_datetime = current_datetime_ist.strftime("%d-%m-%Y %I:%M %p")
+            context_dict = {
+                "Name": submission.name or "",
+                "Email": submission.email or "",
+                "Phone": submission.phone or "",
+                "Pincode": submission.pincode or "",
+                "City": submission.city or "",
+                "Message": submission.message or "",
+                "Page URL": request.META.get("HTTP_REFERER", "Not available")
+            }
+            try:
+                send_contact_email_async(context_dict)
+            except Exception:
+                pass
+
+            bikai_payload = {
+                "Name": submission.name or "",
+                "Email": submission.email or "",
+                "Contact": submission.phone or "",
+                "Pincode": submission.pincode or "",
+                "City": submission.city or "",
+                "Message": submission.message or "",
+                "DateTime": formatted_datetime,
+            }
+            bikai_url = "https://bikapi.bikayi.app/chatbot/webhook/N8eHI9BWzqVPK7RnXu2xs5qIQt23?flow=webleads3220"
+            headers = {
+                "Content-Type": "application/json",
+            }
+            try:
+                requests.post(
+                    bikai_url,
+                    json=bikai_payload,
+                    headers=headers,
+                    timeout=10,
+                )
+            except Exception:
+                pass
+
+            zoho_payload = {
+                "Name": submission.name or "",
+                "Email": submission.email or "",
+                "Phone": submission.phone or "",
+                "Contact": submission.phone or "",
+                # "Pincode": submission.pincode or "",
+                "City": submission.city or "",
+                "Message": submission.message or "",
+                "DateTime": formatted_datetime,
+                "Website": "Ultimate Smile Design",
+                "FormName": "Contact Form",
+            }
+            zoho_url = "https://flow.zoho.in/60070945438/flow/webhook/incoming?zapikey=1001.a119cd21b36db26402ffe013750915ad.885b5855c0af73a633e0a39a93142bcd&isdebug=false"
+            try:
+                requests.post(
+                    zoho_url,
+                    json=zoho_payload,
+                    headers={"Content-Type": "application/json"},
+                    timeout=10,
+                )
+            except Exception:
+                pass
+
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest' or request.POST.get('is_ajax') == '1':
+                return JsonResponse({
+                    'status': 'success',
+                    'message': 'Thank you! Your message has been submitted successfully.'
+                })
+
+            messages.success(request, 'Thank you! Your message has been submitted successfully.')
+            return redirect('home:aboutPage')
+        else:
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest' or request.POST.get('is_ajax') == '1':
+                errors = []
+                for field, err_list in form.errors.items():
+                    errors.append(f"{field.capitalize()}: {', '.join(err_list)}")
+                return JsonResponse({
+                    'status': 'error',
+                    'message': ' '.join(errors) or 'Something went wrong! Please check your details.'
+                }, status=400)
+
+            messages.error(request, 'Something went wrong! Please check your details.')
+
+    all_images = Hgallery.objects.all().order_by('-id')
+    context_dict = {
+        'all_img': all_images,
+        'RECAPTCHA_SITE_KEY': getattr(settings, 'RECAPTCHA_SITE_KEY', ''),
     }
-    return render(request, 'aboutPage.html', context)
+    return render(request, 'aboutPage.html', context_dict)
 
 
 def ai_guideline(request):

@@ -53,6 +53,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'account.redirect_slug_to_blog.DynamicRedirectMiddleware',
     'home.redirect_middleware.RedirectToNewUrl',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -226,13 +227,15 @@ RECAPTCHA_SECRET_KEY = "6LeNfq4rAAAAAPM7U4LVTLif735LUSoLuYjEbBo_"
 # EMAIL_HOST_USER= 'support@ultimatesmiledesign.com'
 # EMAIL_HOST_PASSWORD='ZpMB({j]ki!k'
 # ACCOUNT_EMAIL_VERIFICATION ='none'
+EMAIL_TIMEOUT = 20  # never let SMTP hang a process forever
 
 EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST ='smtp.gmail.com' 
 EMAIL_PORT= 587
 EMAIL_USE_TLS= True
 EMAIL_HOST_USER= 'vaghela9632@gmail.com'
-EMAIL_HOST_PASSWORD='qazj gyab odid agqa'
+# EMAIL_HOST_PASSWORD='qazj gyab odid agqa'
+EMAIL_HOST_PASSWORD='tmftxaeeeyazmjjx'
 ACCOUNT_EMAIL_VERIFICATION ='none'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

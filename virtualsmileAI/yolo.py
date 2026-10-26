@@ -8,6 +8,11 @@ import cv2
 from django.conf import settings
 
 try:
+    cv2.setNumThreads(1)
+except Exception:
+    pass
+
+try:
     from ultralytics import YOLO
 except Exception:
     YOLO = None

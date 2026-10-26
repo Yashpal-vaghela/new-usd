@@ -10,7 +10,7 @@ from django.views.decorators.http import require_POST
 from django.conf import settings
 from django.utils import timezone
 import threading
-from home.utils import send_mail
+from home.utils import send_mail, queue_mail
 from virtualsmileAI.forms import SmileDesignLeadForm
 from virtualsmileAI.gemini import add_logo_on_right
 from .models import SmileDesignLead
@@ -178,11 +178,11 @@ def create_smile_lead_api(request):
         "After Image": get_absolute_image_url(obj.after_image), 
     }
 
-    threading.Thread(
-        target=send_smile_lead_email_async,
-        args=(context_dict,),
-        daemon=True
-    ).start()
+    queue_mail(
+        to_email="bhavinparmar005@gmail.com",
+        subject=f"New Smile Ai Design Lead from {context_dict.get('Name', 'Unknown')}",
+        context_dict=context_dict,
+    )
     # ✅ clear so it can’t be reused
     request.session.pop("smile_before", None)
     request.session.pop("smile_after", None)
@@ -296,6 +296,12 @@ def trigger_whatsapp_api(request):
     except Exception as e:
         return JsonResponse({"ok": False, "error": str(e)}, status=502)
 
+# Limit how many heavy AI jobs run at once so a burst of users cannot exhaust
+# RAM / process limits and crash the whole site.
+_DETECT_SLOTS = threading.BoundedSemaphore(3)
+_SMILE_SLOTS = threading.BoundedSemaphore(2)
+
+
 @csrf_exempt
 def detect_api(request):
     """
@@ -314,6 +320,8 @@ def detect_api(request):
     if not img_b64:
         return HttpResponseBadRequest("Missing image")
 
+    if not _DETECT_SLOTS.acquire(timeout=5):
+        return JsonResponse({"error": "Server busy, retrying..."}, status=503)
     try:
         img_bgr = decode_base64_image(img_b64)
         out = run_inference_on_bgr(img_bgr)
@@ -327,6 +335,8 @@ def detect_api(request):
         return JsonResponse({"conf": conf, "visible": visible, "annotated": annotated})
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=400)
+    finally:
+        _DETECT_SLOTS.release()
 
 @require_POST
 @csrf_exempt
@@ -352,6 +362,22 @@ def capture_api(request):
 
 @csrf_exempt
 def smile_design_api(request):
+    if not _SMILE_SLOTS.acquire(timeout=90):
+        return JsonResponse(
+            {"error": "Too many smile designs are being created right now. Please try again in a minute."},
+            status=503,
+        )
+    try:
+        return _smile_design_api(request)
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return JsonResponse({"error": str(e)}, status=500)
+    finally:
+        _SMILE_SLOTS.release()
+
+
+def _smile_design_api(request):
     """
     Accepts JSON {image: dataUrl/base64}.
     Saves before image, adds logo on right, sends to Gemini, saves after, returns URLs.
