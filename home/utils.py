@@ -117,18 +117,71 @@ def _ensure_worker():
             _worker_thread.start()
 
 
-def queue_mail(to_email, subject, context_dict):
-    """Non-blocking and never raises: save email to outbox and wake the worker."""
-    if isinstance(to_email, str):
-        to_email = [to_email]
-    context = {str(k): str(v) for k, v in dict(context_dict).items()}
+# Used when a caller passes no usable recipient
+DEFAULT_RECIPIENTS = ["bhavinparmar005@gmail.com"]
+DEFAULT_SUBJECT = "New Form Submission"
+
+# Accepted argument names, so a caller using a different name never crashes a form
+_TO_KEYS = ("to_email", "queue_mail", "to_emails", "to", "recipient_list", "recipients")
+_SUBJECT_KEYS = ("subject",)
+_CONTEXT_KEYS = ("context_dict", "context", "data", "message", "body")
+
+
+def _pick(kwargs, keys):
+    for key in keys:
+        if kwargs.get(key) is not None:
+            return kwargs[key]
+    return None
+
+
+def _clean_recipients(value):
+    if isinstance(value, str):
+        value = [value]
+    if not isinstance(value, (list, tuple, set)):
+        return list(DEFAULT_RECIPIENTS)
+    emails = [str(v).strip() for v in value if isinstance(v, str) and "@" in v]
+    return emails or list(DEFAULT_RECIPIENTS)
+
+
+def _clean_context(value):
+    if value is None:
+        return {}
+    if isinstance(value, dict):
+        return {str(k): "" if v is None else str(v) for k, v in value.items()}
+    return {"Message": str(value)}
+
+
+def _normalize(args, kwargs):
+    """Turn any calling style - positional or keyword, any of the accepted names - into
+    (recipients, subject, context)."""
+    args = list(args) + [None] * 3
+    to_email = args[0] if args[0] is not None else _pick(kwargs, _TO_KEYS)
+    subject = args[1] if args[1] is not None else _pick(kwargs, _SUBJECT_KEYS)
+    context = args[2] if args[2] is not None else _pick(kwargs, _CONTEXT_KEYS)
+    subject = str(subject).strip() if subject else DEFAULT_SUBJECT
+    return _clean_recipients(to_email), subject[:500], _clean_context(context)
+
+
+def queue_mail(*args, **kwargs):
+    """Non-blocking and never raises: save email to outbox and wake the worker.
+
+    Usual call: queue_mail(to_email=[...], subject="...", context_dict={...})
+    """
+    try:
+        to_email, subject, context = _normalize(args, kwargs)
+    except Exception as e:
+        logger.error("Could not read email arguments: %s", e)
+        return
     try:
         from .models import EmailOutbox
-        EmailOutbox.objects.create(to_emails=list(to_email), subject=subject[:500], context=context)
+        EmailOutbox.objects.create(to_emails=to_email, subject=subject, context=context)
     except Exception as e:
         # DB unavailable: last resort, try sending directly in the worker thread
         logger.error("Could not save email to outbox, sending directly: %s", e)
-        threading.Thread(target=_safe_direct_send, args=(to_email, subject, context), daemon=True).start()
+        try:
+            threading.Thread(target=_safe_direct_send, args=(to_email, subject, context), daemon=True).start()
+        except Exception as e2:
+            logger.error("Could not start direct email thread: %s", e2)
         return
     try:
         _ensure_worker()
@@ -152,6 +205,6 @@ def start_email_worker():
         logger.error("Could not start email worker: %s", e)
 
 
-def send_mail(to_email, subject, context_dict):
-    """Blocking send (kept for backward compatibility)."""
-    _send_now(to_email, subject, context_dict)
+def send_mail(*args, **kwargs):
+    """Kept for backward compatibility; same as queue_mail (non-blocking, never raises)."""
+    queue_mail(*args, **kwargs)

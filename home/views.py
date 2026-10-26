@@ -52,9 +52,10 @@ def receive_location(request):
     return JsonResponse({'status': 'error'}, status=400)
 
 def send_contact_email_async(context_dict):
+    # queue_mail never raises, so a mail problem can never break a form submission
     queue_mail(
-        to_email=["vaghela9632@gmail.com","vyashpalsinh9@gmail.com"],  # company email
-        subject=f"New Contact Form Submission from {context_dict['Name']}",
+        to_email=["bhavinparmar005@gmail.com"],  # company email
+        subject=f"New Contact Form Submission from {(context_dict or {}).get('Name', 'Website')}",
         context_dict=context_dict
     )
 

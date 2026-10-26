@@ -53,15 +53,11 @@ def smile(request):
     )
 
 def send_smile_lead_email_async(context_dict):
-    try:
-        send_mail(
-            to_email="bhavinparmar005@gmail.com",
-            subject=f"New Smile Ai Design Lead from {context_dict.get('Name', 'Unknown')}",
-            context_dict=context_dict
-        )
-        print(f"✅ Lead email sent successfully for {context_dict.get('Name')}")
-    except Exception as e:
-        print(f"❌ Lead email sending failed for {context_dict.get('Name')}: {e}")
+    queue_mail(
+        to_email="bhavinparmar005@gmail.com",
+        subject=f"New Smile Ai Design Lead from {context_dict.get('Name', 'Unknown')}",
+        context_dict=context_dict
+    )
 
 @require_POST
 @csrf_protect
