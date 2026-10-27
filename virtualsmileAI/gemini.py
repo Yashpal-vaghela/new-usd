@@ -422,7 +422,7 @@ def add_logo_on_right(image_path: str, logo_path: str) -> None:
     y = base_h - target_h - padding_y
 
     base.paste(logo, (x, y), logo)
-    base.convert("RGB").save(image_path, "JPEG", quality=95)
+    base.convert("RGB").save(image_path, "JPEG", quality=100, subsampling=0)
 
 
 
@@ -499,19 +499,9 @@ def match_teeth_blur_and_whiteness(
         curr_teeth_var = float(np.var(cv2.Laplacian(a_gray, cv2.CV_64F)[mask > 0]))
         target_var = max(5.0, orig_teeth_var * 1.08)
 
-        # If AI teeth are noticeably sharper than the input photo, calculate matching Gaussian blur sigma
+        # Blur disabled per user request: keep 100% razor sharp teeth texture
         best_sigma = 0.0
-        if curr_teeth_var > target_var * 1.10:
-            for s in np.arange(0.2, 3.0, 0.1):
-                bl_gray = cv2.GaussianBlur(a_gray, (0, 0), s)
-                v = float(np.var(cv2.Laplacian(bl_gray, cv2.CV_64F)[mask > 0]))
-                if v <= target_var:
-                    best_sigma = float(s)
-                    break
-        # Old cap of 0.30 never matched soft phone photos (teeth stayed ~6x sharper = "HD" look)
-        best_sigma = min(2.5, best_sigma)
-
-        print(f"[SmileAI BlurMatch] Input teeth var: {orig_teeth_var:.1f}, AI teeth var: {curr_teeth_var:.1f}, Target var: {target_var:.1f} -> best_sigma: {best_sigma:.1f}")
+        print("[SmileAI BlurMatch] Teeth blur disabled; preserving 100% razor sharp texture.")
 
         # 4. Whiteness, Lighting & Ambient Luminance Balancing
         b_lab = cv2.cvtColor(b_img, cv2.COLOR_BGR2LAB)
@@ -671,17 +661,8 @@ def match_teeth_blur_and_whiteness(
 
         a_img = cv2.cvtColor(a_lab, cv2.COLOR_LAB2BGR)
 
-        # 9. Optical Camera Softness / Blur Matching (Final Lens Pass)
-        if best_sigma > 0:
-            print(f"[SmileAI BlurMatch] Applying optical blur (sigma={best_sigma:.1f}) to match camera lens softness.")
-            feather_blur = cv2.GaussianBlur(mask.astype(np.float32) / 255.0, (9, 9), 2.0)
-            feather_blur_3 = np.repeat(feather_blur[:, :, np.newaxis], 3, axis=2)
-            a_blurred = cv2.GaussianBlur(a_img, (0, 0), best_sigma)
-            a_img = (a_blurred.astype(np.float32) * feather_blur_3 + a_img.astype(np.float32) * (1.0 - feather_blur_3)).astype(np.uint8)
-            curr_post_var = float(np.var(cv2.Laplacian(cv2.cvtColor(a_img, cv2.COLOR_BGR2GRAY), cv2.CV_64F)[mask > 0]))
-            print(f"[SmileAI BlurMatch] Post-blur teeth variance: {curr_post_var:.1f} (matched to original: {orig_teeth_var:.1f})")
-        else:
-            print("[SmileAI BlurMatch] Input image is crisp; preserving 100% sharp texture.")
+        # 9. Optical Camera Softness / Blur Matching (Disabled: preserving 100% razor sharp teeth)
+        print("[SmileAI BlurMatch] Preserving 100% sharp teeth without optical blur.")
 
         # 10. Camera grain: Gemini's teeth are noise-free, the photo is not. Add matching
         # luminance grain inside the mouth so the teeth belong to the same photo.
@@ -731,23 +712,24 @@ def generate_smile_design(input_path: str, output_path: str) -> None:
     # Capture exact original dimensions for pixel-perfect comparison alignment
     with Image.open(input_path) as orig_img:
         orig_w, orig_h = orig_img.size
-        # Optimize image for Gemini API (max 1024px longest edge for fast upload & vision encoding)
+        # Optimize image for Gemini API by default to 2K (max 2048px longest edge)
         max_dim = max(orig_w, orig_h)
-        if max_dim > 1024:
-            scale = 1024.0 / max_dim
+        if max_dim > 2048:
+            scale = 2048.0 / max_dim
             send_w, send_h = int(orig_w * scale), int(orig_h * scale)
             optimized_img = orig_img.resize((send_w, send_h), Image.Resampling.LANCZOS)
             buf = io.BytesIO()
             if optimized_img.mode in ("RGBA", "P"):
                 optimized_img = optimized_img.convert("RGB")
-            optimized_img.save(buf, format="JPEG", quality=95, optimize=True)
+            optimized_img.save(buf, format="JPEG", quality=98, optimize=True)
             img_bytes = buf.getvalue()
             mime_type = "image/jpeg"
-            print(f"[SmileAI] Optimized API payload: {orig_w}x{orig_h} -> {send_w}x{send_h} ({len(img_bytes)} bytes)")
+            print(f"[SmileAI] Optimized API payload (2K default): {orig_w}x{orig_h} -> {send_w}x{send_h} ({len(img_bytes)} bytes)")
         else:
             with open(input_path, "rb") as f:
                 img_bytes = f.read()
             mime_type = "image/png" if input_path.lower().endswith(".png") else "image/jpeg"
+            print(f"[SmileAI] 2K payload: {orig_w}x{orig_h} ({len(img_bytes)} bytes)")
 
     print(f"[SmileAI] Model endpoint  : {model_name}")
     print(f"[SmileAI] Thinking level  : {thinking_level}")
@@ -806,12 +788,14 @@ def generate_smile_design(input_path: str, output_path: str) -> None:
     kwargs = {
         "model": model_name,
         "input": input_payload,
-        "generation_config": {"thinking_level": thinking_level},
+        "generation_config": {
+            "thinking_level": thinking_level,
+            "image_size": "2K",
+        },
     }
 
     try:
         interaction = client.interactions.create(**kwargs)
-
     except Exception as e:
         raise RuntimeError(f"Google Gemini Interactions API call failed: {str(e)}") from e
 
@@ -843,12 +827,32 @@ def generate_smile_design(input_path: str, output_path: str) -> None:
     raw_bytes = base64.b64decode(interaction.output_image.data)
     rendered_img = Image.open(io.BytesIO(raw_bytes))
 
-    # Resize back to exact original canvas dimensions so split-slider has 0 pixel jitter
-    if rendered_img.size != (orig_w, orig_h):
-        print(f"[SmileAI] Resizing {rendered_img.size} -> ({orig_w}, {orig_h}) with Lanczos for 100% frame alignment.")
-        rendered_img = rendered_img.resize((orig_w, orig_h), Image.LANCZOS)
+    # If output is higher resolution, preserve the higher resolution and upscale to at least 2.5K (2560px) for 2MB+ uncompressed quality
+    target_max = max(orig_w, orig_h, rendered_img.width, rendered_img.height, 2560)
 
-    rendered_img.convert("RGB").save(output_path, "JPEG", quality=95)
+    aspect = float(orig_w) / float(orig_h)
+    if orig_w >= orig_h:
+        final_w = target_max
+        final_h = int(round(target_max / aspect))
+    else:
+        final_h = target_max
+        final_w = int(round(target_max * aspect))
+
+    final_w = final_w + (final_w % 2)
+    final_h = final_h + (final_h % 2)
+
+    if rendered_img.size != (final_w, final_h):
+        print(f"[SmileAI] Keeping higher resolution: {rendered_img.size} -> ({final_w}, {final_h})")
+        rendered_img = rendered_img.resize((final_w, final_h), Image.LANCZOS)
+
+    # Upgrade before photo to exact same (final_w, final_h) so Before/After comparison slider has zero jitter
+    with Image.open(input_path) as b_img_pil:
+        if b_img_pil.size != (final_w, final_h):
+            print(f"[SmileAI] Matching before image resolution: {b_img_pil.size} -> ({final_w}, {final_h})")
+            upgraded_b = b_img_pil.resize((final_w, final_h), Image.LANCZOS)
+            upgraded_b.convert("RGB").save(input_path, "JPEG", quality=100, subsampling=0)
+
+    rendered_img.convert("RGB").save(output_path, "JPEG", quality=100, subsampling=0)
 
     # 4. Match Optical Softness/Blurriness & Balance Whiteness to Input Photo
     try:

@@ -476,17 +476,19 @@
   transform: scale(1);
 }
 
-/* Hide guide brackets and text when photo is captured or set to d-none */
+/* Hide guide brackets, text and detection badge when photo is captured or set to d-none */
 .face-frame-brackets.d-none,
 .camera-viewport-container.is-captured .face-frame-brackets,
 .camera-guide-text.d-none,
-.camera-viewport-container.is-captured .camera-guide-text {
+.camera-viewport-container.is-captured .camera-guide-text,
+.smile-detect-score-badge.d-none,
+.camera-viewport-container.is-captured .smile-detect-score-badge {
   display: none !important;
   opacity: 0 !important;
   visibility: hidden !important;
 }
 
-/* Bottom Overlay: Guide Text & Button (matching Image 1) */
+/* Bottom Overlay: Detection Badge, Guide Text & Button (matching Image 1) */
 .camera-bottom-overlay {
   position: absolute;
   bottom: 24px;
@@ -495,8 +497,71 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 10;
+  z-index: 20;
   padding: 0 20px;
+}
+
+/* Smile Detection Score Badge (matching design with circular progress ring) */
+.smile-detect-score-badge {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(18, 18, 18, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.45);
+  z-index: 25;
+  pointer-events: none;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+}
+
+.smile-detect-score-badge .detect-progress-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 44px;
+  height: 44px;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+.smile-detect-score-badge .detect-ring-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.24);
+  stroke-width: 2.2px;
+}
+
+.smile-detect-score-badge .detect-ring-progress {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 2.4px;
+  stroke-linecap: round;
+  stroke-dasharray: 113.1;
+  stroke-dashoffset: 113.1;
+  transition: stroke-dashoffset 0.25s cubic-bezier(0.16, 1, 0.3, 1), stroke 0.3s ease;
+}
+
+.smile-detect-score-badge .detect-percent-text {
+  position: relative;
+  z-index: 2;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: "Barlow", sans-serif;
+  letter-spacing: -0.2px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95);
+  line-height: 1;
+}
+
+/* When score is high / ready */
+.smile-detect-score-badge.score-high .detect-ring-progress {
+  stroke: #ffffff;
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.6));
 }
 
 .camera-guide-text {
@@ -1221,6 +1286,137 @@
 } */
 .preview-wrapper svg {
   margin: 0px 5px;
+}
+
+/* ✨ Smile design processing loader (ChatGPT style golden dot grid + progress %) */
+/* White border box (.preview-modal-wrapper) ke andar overlay; box ki CSS same rehti hai */
+#PreviewModal .smile-process-loader {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  padding: 18px 20px 20px;
+  background: #0a0a0a;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0s linear 0.35s;
+}
+
+#PreviewModal .preview-wrapper.is-processing .smile-process-loader {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.35s ease;
+}
+
+/* Loader on rahe tab tak niche ke buttons hide (jagah same, koi layout jump nahi) */
+#PreviewModal .preview-actions {
+  transition: opacity 0.35s ease;
+}
+
+#PreviewModal .preview-wrapper.is-processing .preview-actions {
+  visibility: hidden;
+  opacity: 0;
+}
+
+#PreviewModal .smile-process-title {
+  margin: 0 0 12px;
+  font-family: "Barlow", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.2px;
+  text-align: left;
+  color: #ececec;
+  /* ChatGPT jaisa text shimmer, golden highlight ke saath */
+  background: linear-gradient(90deg, #ececec 0%, #ececec 40%, #f3dc95 50%, #ececec 60%, #ececec 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: smileProcessShimmer 2.6s linear infinite;
+}
+
+#PreviewModal .smile-process-dots {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+#PreviewModal .smile-process-dots canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+#PreviewModal .smile-process-percent {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  min-width: 56px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(38, 38, 38, 0.92);
+  font-family: "Barlow", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  color: #dfc86f;
+}
+
+/* Error: dots ruk jate hain, title me message */
+#PreviewModal .preview-wrapper.is-failed .smile-process-title {
+  color: #ff8a8a;
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  animation: none;
+}
+
+#PreviewModal .preview-wrapper.is-failed .smile-process-dots {
+  opacity: 0.35;
+}
+
+#PreviewModal .preview-wrapper.is-failed .smile-process-percent {
+  display: none;
+}
+
+@keyframes smileProcessShimmer {
+  from {
+    background-position: 100% 0;
+  }
+
+  to {
+    background-position: 0% 0;
+  }
+}
+
+@media (max-width: 576px) {
+  #PreviewModal .smile-process-loader {
+    padding: 14px 14px 14px;
+  }
+
+  #PreviewModal .smile-process-title {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  #PreviewModal .smile-process-percent {
+    right: 10px;
+    bottom: 10px;
+    min-width: 50px;
+    font-size: 13px;
+    padding: 5px 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #PreviewModal .smile-process-title {
+    animation: none;
+  }
 }
 
 /* 🔵 [STEP 3 CSS END] ====================================================== */
@@ -2211,6 +2407,21 @@
     z-index: 25 !important;
   }
 
+  .smile-detect-score-badge {
+    width: 40px !important;
+    height: 40px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .smile-detect-score-badge .detect-progress-ring {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .smile-detect-score-badge .detect-percent-text {
+    font-size: 12px !important;
+  }
+
   .camera-guide-text {
     font-size: 13px !important;
     margin-bottom: 12px !important;
@@ -2896,57 +3107,149 @@
   width: 100%;
 }
 
+#contactModal .contact_input_phone {
+  position: relative !important;
+}
+
+#contactModal #leadPhone {
+  padding-right: 42px !important;
+}
+
 #contactModal #leadPincode,
 #contactModal #pincodeInput {
   padding-right: 42px !important;
 }
 
+/* Phone VALID (Green border, status icon, NO box-shadow) */
+#contactModal #leadPhone.is-valid,
+#contactModal input#leadPhone.is-valid,
+#contactModal #leadPhone.is-valid:focus,
+#contactModal input#leadPhone.is-valid:focus,
+#contactModal .contact_input_phone.is-valid #leadPhone {
+  border: 1px solid #10b981 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  background-image: none !important;
+}
+
+#contactModal .flag_icon_ai_main.is-valid,
+#contactModal #countrySelectBtn.is-valid,
+#contactModal .contact_input_phone.is-valid .flag_icon_ai_main,
+#contactModal .contact_input_phone:has(#leadPhone.is-valid) .flag_icon_ai_main {
+  border: 1px solid #10b981 !important;
+  border-right: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Phone INVALID (Red border, status icon, NO box-shadow) */
+#contactModal #leadPhone.is-invalid,
+#contactModal input#leadPhone.is-invalid,
+#contactModal #leadPhone.is-invalid:focus,
+#contactModal input#leadPhone.is-invalid:focus,
+#contactModal .contact_input_phone.is-invalid #leadPhone {
+  border: 1px solid #ef4444 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  background-image: none !important;
+}
+
+#contactModal .flag_icon_ai_main.is-invalid,
+#contactModal #countrySelectBtn.is-invalid,
+#contactModal .contact_input_phone.is-invalid .flag_icon_ai_main,
+#contactModal .contact_input_phone:has(#leadPhone.is-invalid) .flag_icon_ai_main {
+  border: 1px solid #ef4444 !important;
+  border-right: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Pincode VALID (Green border, status icon, NO box-shadow) */
 #contactModal #leadPincode.is-valid,
-#contactModal #pincodeInput.is-valid {
-  border: 1.5px solid #10b981 !important;
-  background: #000 !important;
-  box-shadow: 0 0 8px rgba(16, 185, 129, 0.3) !important;
+#contactModal input#leadPincode.is-valid,
+#contactModal #leadPincode.is-valid:focus,
+#contactModal input#leadPincode.is-valid:focus,
+#contactModal #pincodeInput.is-valid,
+#contactModal #pincodeInput.is-valid:focus,
+#contactModal .pincode-input-container.is-valid #leadPincode,
+#contactModal .pincode-input-wrapper.is-valid #leadPincode {
+  border: 1px solid #10b981 !important;
+  box-shadow: none !important;
+  outline: none !important;
   background-image: none !important;
 }
 
+/* Pincode INVALID (Red border, status icon, NO box-shadow) */
 #contactModal #leadPincode.is-invalid,
-#contactModal #pincodeInput.is-invalid {
-  border: 1.5px solid #ef4444 !important;
-  background: #000 !important;
-  box-shadow: 0 0 8px rgba(239, 68, 68, 0.3) !important;
+#contactModal input#leadPincode.is-invalid,
+#contactModal #leadPincode.is-invalid:focus,
+#contactModal input#leadPincode.is-invalid:focus,
+#contactModal #pincodeInput.is-invalid,
+#contactModal #pincodeInput.is-invalid:focus,
+#contactModal .pincode-input-container.is-invalid #leadPincode,
+#contactModal .pincode-input-wrapper.is-invalid #leadPincode {
+  border: 1px solid #ef4444 !important;
+  box-shadow: none !important;
+  outline: none !important;
   background-image: none !important;
 }
 
-.smile-pincode-spinner {
-  position: absolute;
-  right: 16px;
-  top: calc(50% - 12px);
-  transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-top-color: #c7a041;
-  border-radius: 50%;
-  animation: smilePinSpin 0.7s linear infinite;
-  pointer-events: none;
+/* Strict suppression of box-shadow on focus / hover for all lead form inputs */
+#contactModal input:focus,
+#contactModal .form-control:focus,
+#contactModal #leadPhone:focus,
+#contactModal #leadPincode:focus,
+#contactModal #leadCity:focus,
+#contactModal #leadName:focus,
+#contactModal #leadEmail:focus,
+#contactModal #countrySelectBtn:focus,
+#contactModal .flag_icon_ai_main:focus {
+  box-shadow: none !important;
+  outline: none !important;
 }
 
-@keyframes smilePinSpin {
-  to {
-    transform: translateY(-50%) rotate(360deg);
-  }
+/* Status Icons & Spinner positioning */
+.smile-phone-status-icon {
+  position: absolute !important;
+  right: 14px !important;
+  top: 33% !important;
+  transform: translateY(-50%) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 22px !important;
+  height: 22px !important;
+  pointer-events: none !important;
+  z-index: 10 !important;
 }
 
 .smile-pincode-status-icon {
-  position: absolute;
-  right: 16px;
-  top: calc(50% - 12px);
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  pointer-events: none;
+  position: absolute !important;
+  right: 14px !important;
+  top: 33% !important;
+  transform: translateY(-50%) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 22px !important;
+  height: 22px !important;
+  pointer-events: none !important;
+  z-index: 10 !important;
+}
+
+.smile-pincode-spinner {
+  position: absolute !important;
+  right: 14px !important;
+  top: 33% !important;
+  transform: translateY(-50%) !important;
+  width: 18px !important;
+  height: 18px !important;
+  border: 2px solid rgba(255, 255, 255, 0.2) !important;
+  border-top-color: #c7a041 !important;
+  border-radius: 50% !important;
+  animation: smilePinSpin 0.7s linear infinite !important;
+  pointer-events: none !important;
+  z-index: 10 !important;
 }
 
 #contactModal #leadCity:read-only,
@@ -3030,29 +3333,42 @@
   }
 
   .smile-pincode-spinner {
-    position: absolute;
-    right: 16px;
-    top: calc(58% - 12px);
-    transform: translateY(-50%);
-    width: 18px;
-    height: 18px;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-top-color: #c7a041;
-    border-radius: 50%;
-    animation: smilePinSpin 0.7s linear infinite;
-    pointer-events: none;
+    position: absolute !important;
+    right: 14px !important;
+    top: 22px !important;
+    transform: translateY(-50%) !important;
+    width: 18px !important;
+    height: 18px !important;
+    border: 2px solid rgba(255, 255, 255, 0.2) !important;
+    border-top-color: #c7a041 !important;
+    border-radius: 50% !important;
+    animation: smilePinSpin 0.7s linear infinite !important;
+    pointer-events: none !important;
   }
 
-
   .smile-pincode-status-icon {
-    position: absolute;
-    right: 16px;
-    top: calc(58% - 12px);
-    transform: translateY(-50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    pointer-events: none;
+    position: absolute !important;
+    right: 14px !important;
+    top: 22px !important;
+    transform: translateY(-50%) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 22px !important;
+    height: 22px !important;
+    pointer-events: none !important;
+  }
+
+  .smile-phone-status-icon {
+    position: absolute !important;
+    right: 14px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 22px !important;
+    height: 22px !important;
+    pointer-events: none !important;
   }
 }

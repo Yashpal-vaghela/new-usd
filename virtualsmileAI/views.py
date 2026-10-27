@@ -152,17 +152,17 @@ def create_smile_lead_api(request):
         except Exception as e:
             print(f"⚠️ Auto-generation of after image failed: {e}")
 
-    obj = form.save(commit=False)
-    obj.before_image = before_saved
-    obj.after_image = after_saved
-    obj.save()
-
     def get_absolute_image_url(path):
         if not path:
-            return "N/A"
+            return ""
         if path.startswith("http://") or path.startswith("https://"):
             return path
         return request.build_absolute_uri(settings.MEDIA_URL + path.lstrip("/"))
+
+    obj = form.save(commit=False)
+    obj.before_image = get_absolute_image_url(before_saved)
+    obj.after_image = get_absolute_image_url(after_saved)
+    obj.save()
     
     context_dict = {
         "Name": obj.name,

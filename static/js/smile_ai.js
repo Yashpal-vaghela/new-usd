@@ -9,7 +9,37 @@
   const msg = document.getElementById("msg");
   const guideLine = document.getElementById("smileGuideLine");
   const faceOverlay = document.getElementById("faceOverlay");
+  const smileDetectBadge = document.getElementById("smileDetectBadge");
+  const smileDetectPercent = document.getElementById("smileDetectPercent");
+  const detectRingProgress = document.getElementById("detectRingProgress");
   const switchCameraBtn = document.getElementById("switchCameraBtn");
+
+  function updateDetectScore(conf, visible) {
+    if (!smileDetectPercent) return;
+
+    let pct = 0;
+    if (typeof conf === "number" && !isNaN(conf) && conf > 0) {
+      const scaled = conf <= 1 ? Math.round(conf * 100) : Math.round(conf);
+      pct = Math.min(100, Math.max(0, scaled));
+    }
+
+    smileDetectPercent.textContent = pct + "%";
+
+    if (detectRingProgress) {
+      const radius = 18;
+      const circumference = 2 * Math.PI * radius; // 113.1
+      const offset = circumference - (pct / 100) * circumference;
+      detectRingProgress.style.strokeDashoffset = offset;
+    }
+
+    if (smileDetectBadge) {
+      if (pct >= 55) {
+        smileDetectBadge.classList.add("score-high");
+      } else {
+        smileDetectBadge.classList.remove("score-high");
+      }
+    }
+  }
 
   const resultWrap = document.getElementById("resultWrap");
   const resultStatus = document.getElementById("resultStatus");
@@ -28,6 +58,235 @@
   const leadEmail = document.getElementById("leadEmail");
   const leadFormMsg = document.getElementById("leadFormMsg");
   const leadSubmitBtn = document.getElementById("leadSubmitBtn");
+
+  // ✨ "Your smile design processing" loader (ChatGPT style golden dot grid + progress %)
+  // Preview popup ke white border box ke andar dikhta hai, image ready hone tak
+  const processLoader = createProcessLoader();
+
+  function createProcessLoader() {
+    const wrap = document.querySelector("#PreviewModal .preview-wrapper");
+    const box = document.getElementById("smileProcessLoader");
+    const titleEl = document.getElementById("smileProcessTitle");
+    const dotCanvas = document.getElementById("smileProcessCanvas");
+    const percentEl = document.getElementById("smileProcessPercent");
+    const dotCtx = dotCanvas ? dotCanvas.getContext("2d") : null;
+
+    if (!wrap || !box || !dotCtx || !percentEl) {
+      return { start() { }, finish(cb) { if (cb) cb(); }, stop() { }, fail() { } };
+    }
+
+    const defaultTitle = titleEl ? titleEl.textContent.trim() : "";
+    const GAP = 12; // dot spacing (css px)
+    const RADIUS = 1.1; // dot radius (css px)
+    const LEVELS = 16; // brightness steps
+    const FINISH_MS = 650; // current % -> 100% animation
+    const HOLD_MS = 300; // 100% dikhane ke baad result dikhao
+    const TAU = Math.PI * 2;
+    const reduceMotion = !!(
+      window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    );
+
+    // Dim dark gold (#C3942F) -> bright champagne gold (#E7DC96)
+    const palette = [];
+    for (let l = 0; l < LEVELS; l++) {
+      const k = l / (LEVELS - 1);
+      const r = Math.round(195 + (231 - 195) * k);
+      const g = Math.round(148 + (220 - 148) * k);
+      const b = Math.round(47 + (150 - 47) * k);
+      palette.push(`rgba(${r}, ${g}, ${b}, ${(0.18 + 0.82 * k).toFixed(3)})`);
+    }
+
+    let dots = null;
+    let viewW = 0;
+    let viewH = 0;
+    let active = false;
+    let rafId = 0;
+    let startedAt = 0;
+    let shownPct = 0;
+    let finishFrom = 0;
+    let finishAt = 0;
+    let finishTimer = 0;
+    let onFinished = null;
+
+    function layoutDots() {
+      const rect = dotCanvas.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      viewW = Math.max(1, Math.round(rect.width));
+      viewH = Math.max(1, Math.round(rect.height));
+      dotCanvas.width = Math.round(viewW * dpr);
+      dotCanvas.height = Math.round(viewH * dpr);
+      dotCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const cols = Math.max(1, Math.floor(viewW / GAP));
+      const rows = Math.max(1, Math.floor(viewH / GAP));
+      const offX = (viewW - (cols - 1) * GAP) / 2;
+      const offY = (viewH - (rows - 1) * GAP) / 2;
+      const count = cols * rows;
+
+      dots = {
+        count,
+        x: new Float32Array(count),
+        y: new Float32Array(count),
+        col: new Float32Array(count),
+        row: new Float32Array(count),
+        edge: new Float32Array(count),
+        phase: new Float32Array(count),
+        speed: new Float32Array(count),
+        level: new Uint8Array(count),
+      };
+
+      let i = 0;
+      for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++, i++) {
+          // outer rows/cols thode dim (soft edge)
+          const edgeDist = Math.min(col, row, cols - 1 - col, rows - 1 - row);
+          dots.x[i] = offX + col * GAP;
+          dots.y[i] = offY + row * GAP;
+          dots.col[i] = col;
+          dots.row[i] = row;
+          dots.edge[i] = Math.min(1, 0.35 + edgeDist * 0.22);
+          dots.phase[i] = Math.random() * TAU;
+          dots.speed[i] = 1.2 + Math.random() * 2.4;
+        }
+      }
+    }
+
+    function drawDots(t) {
+      if (!dots) return;
+      const { count, x, y, col, row, edge, phase, speed, level } = dots;
+
+      // diagonal sweep + drifting clouds + per-dot twinkle
+      for (let i = 0; i < count; i++) {
+        const c = col[i];
+        const r = row[i];
+        const sweep = 0.5 + 0.5 * Math.sin((c + r) * 0.16 - t * 2.2);
+        const cloud = 0.5 + 0.5 * Math.sin(c * 0.21 + t * 0.9) * Math.sin(r * 0.27 - t * 0.7);
+        const drift = 0.5 + 0.5 * Math.sin(c * 0.12 - r * 0.19 + t * 1.3);
+        const twinkle = 0.5 + 0.5 * Math.sin(t * speed[i] + phase[i]);
+        let v = sweep * 0.4 + cloud * 0.3 + drift * 0.15 + twinkle * 0.15;
+        v = Math.pow(v, 1.6) * edge[i];
+        level[i] = Math.min(LEVELS - 1, (v * LEVELS) | 0);
+      }
+
+      dotCtx.clearRect(0, 0, viewW, viewH);
+
+      // ek brightness level = ek path (kam fill() calls, smooth on mobile)
+      for (let l = 0; l < LEVELS; l++) {
+        const rad = RADIUS * (0.85 + 0.45 * (l / (LEVELS - 1)));
+        let has = false;
+        dotCtx.beginPath();
+        for (let i = 0; i < count; i++) {
+          if (level[i] !== l) continue;
+          dotCtx.moveTo(x[i] + rad, y[i]);
+          dotCtx.arc(x[i], y[i], rad, 0, TAU);
+          has = true;
+        }
+        if (has) {
+          dotCtx.fillStyle = palette[l];
+          dotCtx.fill();
+        }
+      }
+    }
+
+    function setPercent(pct) {
+      shownPct = pct;
+      const val = Math.min(100, Math.floor(pct));
+      const text = val + "%";
+      if (percentEl.textContent !== text) {
+        percentEl.textContent = text;
+        box.setAttribute("aria-valuenow", String(val));
+      }
+    }
+
+    function tick(now) {
+      if (!active) return;
+      if (finishAt) {
+        const k = Math.min(1, (now - finishAt) / FINISH_MS);
+        setPercent(finishFrom + (100 - finishFrom) * (1 - Math.pow(1 - k, 3)));
+      } else {
+        // estimated progress: pehle fast, phir result aane tak 96% ke paas slow
+        setPercent(Math.max(shownPct, 96 * (1 - Math.exp(-(now - startedAt) / 9000))));
+      }
+      if (!reduceMotion) drawDots((now - startedAt) / 1000);
+      rafId = requestAnimationFrame(tick);
+    }
+
+    function flushFinished() {
+      clearTimeout(finishTimer);
+      finishTimer = 0;
+      const cb = onFinished;
+      onFinished = null;
+      if (cb) cb();
+    }
+
+    function start() {
+      stop();
+      active = true;
+      if (titleEl) titleEl.textContent = defaultTitle;
+      wrap.classList.add("is-processing");
+      box.setAttribute("aria-hidden", "false");
+      startedAt = performance.now();
+      setPercent(0);
+      layoutDots();
+      drawDots(0);
+      rafId = requestAnimationFrame(tick);
+    }
+
+    // Progress 100% tak le jao, phir cb (result dikhao)
+    function finish(cb) {
+      if (!active) {
+        if (cb) cb();
+        return;
+      }
+      onFinished = cb || null;
+      if (finishAt) return;
+      finishFrom = shownPct;
+      finishAt = performance.now();
+      finishTimer = setTimeout(flushFinished, FINISH_MS + HOLD_MS);
+    }
+
+    // loader hatao (fade out ke time 100% hi dikhe, isliye % reset start() me hota hai)
+    function stop() {
+      flushFinished(); // pending result callback kabhi miss na ho
+      active = false;
+      cancelAnimationFrame(rafId);
+      rafId = 0;
+      finishAt = 0;
+      wrap.classList.remove("is-processing", "is-failed");
+      box.setAttribute("aria-hidden", "true");
+    }
+
+    // error: box me hi message dikhao, buttons hidden rahenge
+    function fail(message) {
+      clearTimeout(finishTimer);
+      finishTimer = 0;
+      onFinished = null;
+      active = false;
+      cancelAnimationFrame(rafId);
+      rafId = 0;
+      finishAt = 0;
+      if (titleEl) titleEl.textContent = message;
+      wrap.classList.add("is-processing", "is-failed");
+      box.setAttribute("aria-hidden", "false");
+    }
+
+    // popup open hote hi (aur screen resize pe) box ke size ke hisab se dots
+    function relayoutIfResized() {
+      if (!active) return;
+      const rect = dotCanvas.getBoundingClientRect();
+      if (Math.round(rect.width) === viewW && Math.round(rect.height) === viewH) return;
+      layoutDots();
+      drawDots((performance.now() - startedAt) / 1000);
+    }
+
+    if (typeof ResizeObserver === "function") {
+      new ResizeObserver(relayoutIfResized).observe(dotCanvas);
+    } else {
+      window.addEventListener("resize", relayoutIfResized);
+    }
+
+    return { start, finish, stop, fail };
+  }
 
   const ctx = canvas.getContext("2d", { willReadFrequently: true });
 
@@ -55,7 +314,8 @@
   let generationPromise = null;
   let generationResult = null;
   let leadSubmitted = false;
-  let previewOpened = false;
+  let resultShown = false; // is run me preview box me result dikh chuka
+  let submitRun = 0; // preview band hone pe purane submit ka async kaam ignore
   let leadId = null;
   let captureNonce = null;
   let isCapturing = false;
@@ -82,74 +342,126 @@
   let lastVisible = false;
   const DETECT_FRESH_MS = 350; // adjust if needed
 
-  function tryOpenPreviewInline() {
-    if (previewOpened) return;
+  function setPreviewImages(beforeSrc, afterSrc) {
+    const pBefore = document.getElementById("previewBeforeImg");
+    const pAfter = document.getElementById("previewAfterImg");
+
+    if (pBefore && beforeSrc) {
+      pBefore.src = beforeSrc;
+      const syncAspect = () => {
+        const wrap = document.querySelector(".preview-modal-wrapper");
+        if (wrap && pBefore.naturalWidth && pBefore.naturalHeight) {
+          wrap.style.aspectRatio = `${pBefore.naturalWidth} / ${pBefore.naturalHeight}`;
+        }
+      };
+      if (pBefore.complete && pBefore.naturalWidth) {
+        syncAspect();
+      } else {
+        pBefore.onload = syncAspect;
+      }
+    }
+    if (pAfter && afterSrc) pAfter.src = afterSrc;
+  }
+
+  // dono images load (ya error / timeout) hone par cb sirf ek baar
+  function whenImagesReady(imgs, cb, timeoutMs = 10000) {
+    let pending = 0;
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      clearTimeout(timer);
+      cb();
+    };
+    const timer = setTimeout(finish, timeoutMs);
+
+    imgs.forEach((img) => {
+      if (!img || (img.complete && img.naturalWidth)) return;
+      pending++;
+      const settle = () => {
+        if (--pending === 0) finish();
+      };
+      img.addEventListener("load", settle, { once: true });
+      img.addEventListener("error", settle, { once: true });
+    });
+
+    if (pending === 0) finish();
+  }
+
+  function resetPreviewSlider() {
+    const slider = document.getElementById("slider");
+    if (!slider) return;
+    slider.value = 50;
+    slider.dispatchEvent(new Event("input"));
+  }
+
+  // ✅ Form submit hote hi next step (preview) open; image ready hone tak box me loader
+  function openPreviewWithLoader() {
+    // captured photo se box ka size abhi set ho jata hai (final image same size ki hoti hai)
+    setPreviewImages(capturedDataUrl, capturedDataUrl);
+    processLoader.start();
+
+    isTransitioningStep = true;
+
+    // Close smileModal completely if still open
+    const smileModal = bootstrap.Modal.getInstance(smileModalEl);
+    if (smileModal && smileModalEl && smileModalEl.classList.contains("show")) {
+      smileModal.hide();
+    }
+
+    const contactModalEl = document.getElementById("contactModal");
+    const contactModal = contactModalEl ? bootstrap.Modal.getInstance(contactModalEl) : null;
+
+    const previewEl = document.getElementById("PreviewModal");
+    const previewModal =
+      bootstrap.Modal.getInstance(previewEl) || new bootstrap.Modal(previewEl);
+
+    if (contactModal && contactModalEl && contactModalEl.classList.contains("show")) {
+      contactModalEl.addEventListener(
+        "hidden.bs.modal",
+        () => {
+          previewModal.show();
+        },
+        { once: true }
+      );
+      contactModal.hide();
+    } else {
+      contactModal?.hide();
+      previewModal.show();
+    }
+  }
+
+  // Generation + lead dono ready → box me before/after slider + buttons
+  function tryShowPreviewResult() {
+    if (resultShown) return;
     if (!leadSubmitted) return;
     if (!generationResult || generationResult.done !== true) return;
 
-    // stop loader
-    if (leadFormMsg) {
-      leadFormMsg.innerHTML = "";
-      leadFormMsg.style.color = "";
-    }
+    resultShown = true;
 
     if (generationResult.ok === true) {
-      const pBefore = document.getElementById("previewBeforeImg");
-      const pAfter = document.getElementById("previewAfterImg");
+      setPreviewImages(
+        generationResult.beforeUrl || capturedDataUrl,
+        generationResult.afterUrl || generationResult.beforeUrl
+      );
 
-      if (pBefore) {
-        pBefore.src = generationResult.beforeUrl || capturedDataUrl;
-        const syncAspect = () => {
-          const wrap = document.querySelector(".preview-modal-wrapper");
-          if (wrap && pBefore.naturalWidth && pBefore.naturalHeight) {
-            wrap.style.aspectRatio = `${pBefore.naturalWidth} / ${pBefore.naturalHeight}`;
-          }
-        };
-        if (pBefore.complete && pBefore.naturalWidth) {
-          syncAspect();
-        } else {
-          pBefore.onload = syncAspect;
+      // images load hone ke baad 100% → loader hatao, slider + buttons dikhao
+      whenImagesReady(
+        [document.getElementById("previewBeforeImg"), document.getElementById("previewAfterImg")],
+        () => {
+          processLoader.finish(() => {
+            processLoader.stop();
+            resetPreviewSlider();
+          });
         }
-      }
-      if (pAfter) pAfter.src = generationResult.afterUrl || generationResult.beforeUrl;
+      );
 
-      isTransitioningStep = true;
-
-      // Close smileModal completely if still open
-      const smileModal = bootstrap.Modal.getInstance(smileModalEl);
-      if (smileModal && smileModalEl && smileModalEl.classList.contains("show")) {
-        smileModal.hide();
-      }
-
-      const contactModalEl = document.getElementById("contactModal");
-      const contactModal = contactModalEl ? bootstrap.Modal.getInstance(contactModalEl) : null;
-
-      const previewEl = document.getElementById("PreviewModal");
-      const previewModal =
-        bootstrap.Modal.getInstance(previewEl) || new bootstrap.Modal(previewEl);
-
-      if (contactModal && contactModalEl && contactModalEl.classList.contains("show")) {
-        contactModalEl.addEventListener(
-          "hidden.bs.modal",
-          () => {
-            previewModal.show();
-          },
-          { once: true }
-        );
-        contactModal.hide();
-      } else {
-        contactModal?.hide();
-        previewModal.show();
-      }
-
-      previewOpened = true;
       leadForm?.reset();
 
       // ✅ Only triggers once due to whatsappInFlight lock
       tryTriggerWhatsapp();
     } else {
-      leadFormMsg.style.color = "red";
-      leadFormMsg.textContent = generationResult.error || "Smile generation failed.";
+      processLoader.fail(generationResult.error || "Smile generation failed. Please try again.");
     }
   }
 
@@ -172,6 +484,9 @@
     if (guideLine) {
       guideLine.classList.add("d-none");
     }
+    if (smileDetectBadge) {
+      smileDetectBadge.classList.add("d-none");
+    }
   }
 
   function hideFreeze() {
@@ -186,6 +501,9 @@
     }
     if (guideLine) {
       guideLine.classList.remove("d-none");
+    }
+    if (smileDetectBadge) {
+      smileDetectBadge.classList.remove("d-none");
     }
   }
 
@@ -232,6 +550,9 @@
     }
     if (guideLine) {
       guideLine.classList.add("d-none");
+    }
+    if (smileDetectBadge) {
+      smileDetectBadge.classList.add("d-none");
     }
     updateSwitchCameraButtonVisibility();
   }
@@ -316,7 +637,8 @@
 
     const dataUrl = canvas.toDataURL("image/jpeg", 0.85);
 
-    const resp = await fetch("https://ai.ultimatesmiledesign.com/detect", {
+    // same-origin call (no CORS)
+    const resp = await fetch("/virtual-smile-try-on/api/detect/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ image: dataUrl }),
@@ -415,6 +737,10 @@
     if (guideLine) {
       guideLine.classList.remove("d-none");
     }
+    if (smileDetectBadge) {
+      smileDetectBadge.classList.remove("d-none");
+      updateDetectScore(0, false);
+    }
     updateSwitchCameraButtonVisibility();
   }
 
@@ -433,6 +759,9 @@
     }
     if (guideLine) {
       guideLine.classList.add("d-none");
+    }
+    if (smileDetectBadge) {
+      smileDetectBadge.classList.add("d-none");
     }
     updateSwitchCameraButtonVisibility();
   }
@@ -526,6 +855,9 @@
         if (status) {
           status.textContent = `Confidence: ${conf.toFixed(2)} | Visible: ${visible} | Threshold: ${threshold}`;
         }
+
+        // Live update detection percentage indicator
+        updateDetectScore(conf, visible);
 
         // Optional: require freshness (small extra protection)
         const fresh = Date.now() - lastDetectAt <= DETECT_FRESH_MS;
@@ -715,7 +1047,7 @@
               error: result?.error || "Smile generation failed",
               done: true,
             };
-            tryOpenPreviewInline();
+            tryShowPreviewResult();
             return generationResult;
           }
 
@@ -731,7 +1063,7 @@
             resultStatus.textContent = "Smile generated ✅";
           }
 
-          tryOpenPreviewInline();
+          tryShowPreviewResult();
           return generationResult;
         } catch (e) {
           generationResult = { ok: false, error: e.message || String(e), done: true };
@@ -781,6 +1113,9 @@
     return cookieValue;
   }
 
+    function getCsrfToken() {
+    return getCookie("csrftoken") || document.querySelector('[name=csrfmiddlewaretoken]')?.value || "";
+  }
   const csrftoken = getCookie("csrftoken");
 
   async function triggerWhatsappWebhook() {
@@ -833,15 +1168,9 @@
 
       if (leadSubmitBtn) leadSubmitBtn.disabled = true;
 
-      // Show processing message while ensuring Gemini generation completes
-      if (leadFormMsg) {
-        leadFormMsg.style.color = "white";
-        leadFormMsg.innerHTML = `
-            <div class="d-flex align-items-center justify-content-center gap-2">
-              <span class="spinner-border spinner-border-sm"></span>
-              <span>Processing smile design… please wait</span>
-            </div>`;
-      }
+      // ✅ Submit hote hi preview popup open, image ready hone tak white border box me loader
+      openPreviewWithLoader();
+      const run = ++submitRun;
 
       // ✅ Wait for Gemini generation to finish if still in flight
       if (generationPromise) {
@@ -850,6 +1179,12 @@
         } catch (err) {
           console.warn("Generation promise error:", err);
         }
+      }
+
+      // user ne beech me preview band kar diya → ye submit yahin khatam
+      if (run !== submitRun) {
+        if (leadSubmitBtn) leadSubmitBtn.disabled = false;
+        return;
       }
 
       const selectedCodeEl = document.getElementById("selectedCode");
@@ -886,35 +1221,23 @@
         });
 
         const data = await res.json();
+        if (run !== submitRun) return;
 
         if (!res.ok || !data.ok) {
-          leadFormMsg.style.color = "red";
-          leadFormMsg.textContent = data?.error || "Form error. Please check fields.";
+          // form band ho chuka hai, isliye error preview box me hi
+          processLoader.fail(data?.error || "Could not save your details. Please try again.");
           if (leadSubmitBtn) leadSubmitBtn.disabled = false;
           return;
         }
 
         leadSubmitted = true;
         leadId = data.id || null;
-        previewOpened = false;
+        resultShown = false;
 
-        function showLeadLoader(text = "Your smile generation is in process…") {
-          if (!leadFormMsg) return;
-          leadFormMsg.style.color = "white";
-          leadFormMsg.innerHTML = `
-              <div class="d-flex align-items-center justify-content-center gap-2">
-                <span class="spinner-border spinner-border-sm"></span>
-                <span>${text}</span>
-              </div>`;
-        }
-
-        showLeadLoader();
-
-        tryOpenPreviewInline();
+        tryShowPreviewResult();
         tryTriggerWhatsapp(); // ✅ safe now
       } catch (err) {
-        leadFormMsg.style.color = "red";
-        leadFormMsg.textContent = "Network error. Please try again.";
+        if (run === submitRun) processLoader.fail("Network error. Please try again.");
       } finally {
         if (leadSubmitBtn) leadSubmitBtn.disabled = false;
       }
@@ -978,6 +1301,10 @@
     hideFreeze();
     resetResult();
 
+    if (smileDetectBadge) {
+      smileDetectBadge.classList.add("d-none");
+      updateDetectScore(0, false);
+    }
     if (smileCameraView) smileCameraView.classList.add("d-none");
     if (smileIntroView) smileIntroView.classList.remove("d-none");
 
@@ -1004,7 +1331,7 @@
       generationResult = null;
       capturedDataUrl = null;
       leadSubmitted = false;
-      previewOpened = false;
+      resultShown = false;
       leadId = null;
 
       // ✅ reset WhatsApp flags for new session
@@ -1023,6 +1350,9 @@
 
       resetResult();
       hideFreeze();
+      if (smileDetectBadge) {
+        updateDetectScore(0, false);
+      }
 
       // Show Figma Intro View first
       if (smileCameraView) smileCameraView.classList.add("d-none");
@@ -1045,6 +1375,10 @@
 
       if (smileCameraView) smileCameraView.classList.add("d-none");
       if (smileIntroView) smileIntroView.classList.remove("d-none");
+      if (smileDetectBadge) {
+        smileDetectBadge.classList.add("d-none");
+        updateDetectScore(0, false);
+      }
 
       if (!isTransitioningStep) {
         generationPromise = null;
@@ -1078,7 +1412,7 @@
 
     contactModalEl.addEventListener("hidden.bs.modal", () => {
       // If user manually closed contactModal without moving to Preview
-      if (!isTransitioningStep && !previewOpened && !leadSubmitted) {
+      if (!isTransitioningStep && !resultShown && !leadSubmitted) {
         const smileModal = bootstrap.Modal.getInstance(smileModalEl);
         if (smileModal && smileModalEl && smileModalEl.classList.contains("show")) {
           smileModal.hide();
@@ -1113,7 +1447,11 @@
 
     previewEl.addEventListener("hidden.bs.modal", () => {
       isTransitioningStep = false;
-      previewOpened = false;
+      resultShown = false;
+
+      // loader band + chal raha submit ignore (agla run fresh)
+      submitRun++;
+      processLoader.stop();
 
       // Ensure smileModal and contactModal are definitely closed
       const smileModal = bootstrap.Modal.getInstance(smileModalEl);

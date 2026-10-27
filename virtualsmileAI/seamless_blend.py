@@ -282,15 +282,15 @@ def _outward_feather(binary: np.ndarray, w: int, grow_allowed: Optional[np.ndarr
     if cnts:
         cv2.drawContours(binary, cnts, -1, 1, -1)
 
-    grow = max(3, min(8, int(round(w * 0.006))))
+    grow = max(4, min(10, int(round(w * 0.007))))
     if grow_allowed is not None:
         allowed = (grow_allowed > 0).astype(np.uint8)
         k3 = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
         for _ in range(grow):
             binary = binary | (cv2.dilate(binary, k3) & allowed)
-        grow_px = 1
+        grow_px = max(2, int(round(w * 0.0018)))
     else:
-        grow_px = 2
+        grow_px = max(3, int(round(w * 0.003)))
     binary = cv2.dilate(binary, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * grow_px + 1, 2 * grow_px + 1)))
 
     # Smooth the outline: pixel-level colour decisions leave a zigzag edge along the lip that
@@ -1149,7 +1149,7 @@ def apply_seamless_lip_lock(
     output_path: Optional[str] = None,
     feather_kernel_size: int = 15,
     feather_sigma: float = 3.0,
-    dilate_px: int = 2,
+    dilate_px: int = 3,
     bite_info: Optional[dict] = None,
     cached_mask: Optional[np.ndarray] = None,
 ) -> bool:
@@ -1213,6 +1213,10 @@ def apply_seamless_lip_lock(
         # Snap Gemini's teeth back onto the original mouth before compositing
         a_img = align_after_to_before(b_img, a_img, exclude_mask=(mask_blurred > 0.05))
 
+        # Slightly upscale mask footprint for seamless 2K coverage without edge seams
+        k_slight = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
+        mask_blurred = cv2.dilate(mask_blurred, k_slight)
+
         mask_3ch = np.repeat(mask_blurred[:, :, np.newaxis], 3, axis=2)
 
         # Alpha composite:
@@ -1253,8 +1257,8 @@ def apply_seamless_lip_lock(
             bite_info = detect_bite_space_line(b_img, before_path=before_path)
         blended = preserve_space_line_shadow(b_img, blended, bite_info=bite_info)
 
-        # Save result with high quality
-        cv2.imwrite(output_path, blended, [int(cv2.IMWRITE_JPEG_QUALITY), 95])
+        # Save result with maximum uncompressed JPEG quality (2MB+)
+        cv2.imwrite(output_path, blended, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
         print(f"[SeamlessLipLock] Successfully locked lips and blended teeth using seamless_blend.py to {output_path}")
         return True
 

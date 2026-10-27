@@ -1,4 +1,3 @@
-import os
 from django.contrib import admin
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
@@ -14,18 +13,10 @@ class SmileDesignLeadAdmin(ImportExportModelAdmin):
     search_fields = ("name", "phone", "city")
     list_filter = ('created_at',)
     ordering = ('-created_at',)
-    readonly_fields = ('before_preview', 'after_preview')
 
     def _get_image_url(self, path):
-        """
-        Resolves image path to a clean browser-loadable URL.
-        - Supports base64 data URLs directly.
-        - Converts absolute /media/ paths to root-relative /media/... to prevent mixed-content blocks.
-        - Upgrades external http:// URLs to https://.
-        """
         if not path or path == "N/A":
             return None
-
         p = str(path).strip()
         if not p:
             return None
@@ -34,13 +25,15 @@ class SmileDesignLeadAdmin(ImportExportModelAdmin):
         if p.startswith("data:image"):
             return p
 
-        # 2. Contains /media/ (extract root-relative /media/... to prevent mixed content & domain issues)
+        # 2. Extract root-relative /media/... (works cleanly on both http local & https prod)
         if "/media/" in p:
             return p[p.index("/media/"):]
 
-        # 3. External HTTP URL -> upgrade to HTTPS to prevent browser mixed content blocking
+        # 3. External HTTP URL -> upgrade to HTTPS if not local
         if p.startswith("http://"):
-            return "https://" + p[7:]
+            if not ("127.0.0.1" in p or "localhost" in p):
+                return "https://" + p[7:]
+            return p
 
         if p.startswith("https://") or p.startswith("/"):
             return p
@@ -54,8 +47,6 @@ class SmileDesignLeadAdmin(ImportExportModelAdmin):
         if not url:
             return mark_safe('<span style="color: #666; font-size: 12px;">(No Image)</span>')
 
-        # Use referrerpolicy="no-referrer" so server hotlink protection doesn't block the admin preview,
-        # and loading="lazy" for smooth changelist rendering.
         return format_html(
             '<div style="position: relative; width: 120px; height: 120px;">'
             '<a href="{0}" target="_blank" rel="noopener noreferrer">'
@@ -64,8 +55,8 @@ class SmileDesignLeadAdmin(ImportExportModelAdmin):
             'onerror="this.style.display=\'none\'; this.parentElement.nextElementSibling.style.display=\'flex\';" />'
             '</a>'
             '<div style="display: none; width: 120px; height: 120px; border: 1px dashed #555; border-radius: 6px; '
-            'flex-direction: column; align-items: center; justify-content: center; background: #181818; color: #888; font-size: 11px; text-align: center; padding: 4px; box-sizing: border-box;">'
-            '<span>⚠️ Load Error</span>'
+            'flex-direction: column; align-items: center; justify-content: center; background: #181818; color: #888; font-size: 10px; text-align: center; padding: 2px; box-sizing: border-box;">'
+            '<span>⚠️ Error</span>'
             '</div>'
             '</div>',
             url
@@ -74,11 +65,36 @@ class SmileDesignLeadAdmin(ImportExportModelAdmin):
     def before_preview(self, obj):
         return self._render_preview(obj.before_image, "Before")
 
-    before_preview.short_description = "Before Image"
+    before_preview.short_description = "Before"
 
     def after_preview(self, obj):
         return self._render_preview(obj.after_image, "After")
 
-    after_preview.short_description = "After Image"
+    after_preview.short_description = "After"
+
+    def get_form(self, request, obj=None, change=False, **kwargs):
+        if obj:
+            def to_full_url(path):
+                if not path or path == "N/A" or path.startswith("data:image"):
+                    return path
+                p = str(path).strip()
+                is_local_path = "127.0.0.1" in p or "localhost" in p
+                is_current_local = "127.0.0.1" in request.get_host() or "localhost" in request.get_host()
+                if (is_local_path and not is_current_local) or not (p.startswith("http://") or p.startswith("https://")):
+                    if "/media/" in p:
+                        clean = p[p.index("/media/"):]
+                    else:
+                        media_url = getattr(settings, "MEDIA_URL", "/media/")
+                        clean = f"{media_url}{p.lstrip('/')}"
+                    return request.build_absolute_uri(clean)
+                return p
+
+            if obj.before_image:
+                obj.before_image = to_full_url(obj.before_image)
+            if obj.after_image:
+                obj.after_image = to_full_url(obj.after_image)
+        return super().get_form(request, obj=obj, change=change, **kwargs)
+
+
 
 

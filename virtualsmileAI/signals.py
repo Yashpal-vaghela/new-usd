@@ -10,11 +10,14 @@ def _normalize_path(image_path):
     if not image_path:
         return ""
     p = str(image_path).strip()
-    media_url = getattr(settings, "MEDIA_URL", "/media/")
-    if p.startswith(media_url):
-        p = p[len(media_url):]
-    elif p.startswith("/media/"):
-        p = p[len("/media/"):]
+    if "/media/" in p:
+        p = p[p.index("/media/") + len("/media/"):]
+    else:
+        media_url = getattr(settings, "MEDIA_URL", "/media/")
+        if p.startswith(media_url):
+            p = p[len(media_url):]
+        elif p.startswith("/media/"):
+            p = p[len("/media/"):]
     return p.lstrip("/")
 
 
