@@ -30,6 +30,7 @@ urlpatterns = [
     path('quick-links/',views.quicklinks,name="quicklinks"),
     # path('sitemap.xml/',views.sitemap, name='sitemap'),
     path('robots.txt',views.robots, name='robots'),
+    path('llms.txt', views.llms_txt, name='llms_txt'),
     path('certified-dentists/', views.search_all_usd, name='search_all_usd'),
     path('certified-dentists/city/<slug:city_name>/', views.search_city_dentists, name='search_city_dentists'),
     path('receive_location/', views.receive_location, name='receive_location'),

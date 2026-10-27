@@ -1172,6 +1172,100 @@ def dentist_connect(request):
 
 def robots(request):
     return render(request, 'robots.txt', content_type='text')   
+
+def llms_txt(request):
+    base_url = "https://ultimatesmiledesign.com"
+
+    # 1. USD Certified Dentists
+    dentist_qs = (
+        Dentist.objects.filter(status=True)
+        .select_related("city")
+        .exclude(slug__isnull=True)
+        .exclude(slug="")
+        .order_by("name")
+    )
+    if not dentist_qs.exists():
+        dentist_qs = (
+            Dentist.objects.exclude(slug__isnull=True)
+            .exclude(slug="")
+            .order_by("name")
+        )
+
+    dentists_list = []
+    for d in dentist_qs:
+        desc = (d.description or "").strip()
+        if not desc:
+            city_str = f" in {d.city}" if d.city else ""
+            desc = (
+                f"Explore {d.name}'s profile, a smile design expert and best dentist"
+                f"{city_str}. {d.name} provides comprehensive dental and cosmetic smile solutions."
+            )
+        desc = " ".join(desc.split())
+        slug_clean = d.slug.strip("/")
+        url = f"{base_url}/certified-dentists/{slug_clean}/"
+        dentists_list.append({
+            "name": d.name.strip(),
+            "url": url,
+            "description": desc,
+        })
+
+    # 2. Cities with USD Certified Dentists Availability
+    city_qs = (
+        City.objects.annotate(
+            active_dentist_count=Count("dentist", filter=Q(dentist__status=True))
+        )
+        .filter(active_dentist_count__gt=0)
+        .order_by("city")
+    )
+    if not city_qs.exists():
+        city_qs = (
+            City.objects.annotate(active_dentist_count=Count("dentist"))
+            .filter(active_dentist_count__gt=0)
+            .order_by("city")
+        )
+
+    cities_list = []
+    for c in city_qs:
+        city_name = c.city.strip()
+        city_slug = slugify(city_name)
+        url = f"{base_url}/certified-dentists/city/{city_slug}/"
+        desc = (
+            f"Find the best dentists in {city_name} for smile designing treatment. "
+            f"Find top cosmetic dentists and qualified smile design experts near you in {city_name}."
+        )
+        cities_list.append({
+            "name": city_name,
+            "url": url,
+            "description": desc,
+        })
+
+    # 3. Knowledge Resources (Blogs)
+    blog_qs = Blog.objects.filter(status=True).order_by("-published", "-id")
+    if not blog_qs.exists():
+        blog_qs = Blog.objects.all().order_by("-id")
+
+    blogs_list = []
+    for b in blog_qs:
+        title = (b.h1 or b.title or "").strip()
+        desc = " ".join((b.description or "").split())
+        if b.canonical and b.canonical.strip().startswith("http"):
+            url = b.canonical.strip()
+        else:
+            slug_clean = (b.slug or "").strip("/")
+            url = f"{base_url}/blogs/{slug_clean}/"
+        blogs_list.append({
+            "title": title,
+            "url": url,
+            "description": desc,
+        })
+
+    context = {
+        "dentists": dentists_list,
+        "cities": cities_list,
+        "blogs": blogs_list,
+    }
+    content = render_to_string("llms.txt", context, request=request)
+    return HttpResponse(content, content_type="text/plain; charset=utf-8")
     
 def thankyou(request):
     return render(request, 'pthankyou.html')
