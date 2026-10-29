@@ -520,6 +520,60 @@ keywords:
 
 --------------------------
 
+intent: dentist_comparison_final
+
+trigger_condition: >
+  Use FIRST whenever the caller compares their dentist with USD, says
+  their own dentist is the best, better than USD, prefers their dentist,
+  trusts their dentist more, or has more experience.
+  This is the FIRST comparison step (Stage 1).
+  Sequence: 1. This 5-point comparison FIRST -> 2. Four comparison questions -> 3. USD specialised protocol explanation.
+
+user_questions:
+  - "My dentist is the best."
+  - "My dentist is better than USD."
+  - "I prefer my own dentist."
+  - "My dentist has more experience."
+  - "I trust my dentist more."
+  - "How do I compare my dentist with USD?"
+
+emotion: confident, respectful, reassuring
+
+voice_response: >
+  That's absolutely fine! You should always feel confident about the
+  person you choose for your smile. Since you've already explored
+  Ultimate Smile Designing, I'd encourage you to compare both options
+  across five important areas: your dentist's total smile design cases
+  and experience, their Instagram and social media results, their digital
+  technology workflow, the aesthetic quality of their results, and how
+  predictable their smile design process is.
+
+  Your smile is a lifetime investment, so take your time and make an
+  informed decision. We warmly invite you to visit your nearest
+  authorised USD Smile Designer and experience our process in person.
+  That way, you can decide for yourself which approach gives you
+  greater confidence.
+
+follow_up: >
+  Would you like to see our smile design gallery or learn about the
+  consultation process?
+
+keywords:
+  - dentist is better
+  - my dentist is the best
+  - prefer my dentist
+  - trust my dentist
+  - compare dentists
+
+rules:
+  - Speak this response FIRST when the caller compares their dentist or says their dentist is best/better/preferred.
+  - After this first comparison response, if the comparison conversation continues, move to the four comparison questions (Stage 2), and then the USD specialised protocol explanation (Stage 3).
+  - Never argue with or disrespect the caller's dentist.
+  - Encourage independent comparison without claiming USD is automatically superior.
+  - Keep the tone natural, warm, and conversational.
+
+--------------------------
+
 intent: usd_dentist_difference
 
 user_questions:

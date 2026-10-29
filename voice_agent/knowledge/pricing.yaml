@@ -12,8 +12,6 @@ user_questions:
 - Premium option?
 - Average cost?
 - How much for full smile?
-- Why ₹3 lakh?
-- Why ₹25,000 per veneer?
 - Can I negotiate?
 
 emotion:
@@ -21,18 +19,17 @@ price_conscious
 
 voice_response:
 
-If you're looking for a premium, aesthetic, natural, and celebrity-level smile designed specifically for your face, USD Smile Designing is the perfect choice.
+If you're looking for a bespoke, celebrity-level, luxury smile designed specifically for your face, Ultimate Smile Design (USD) provides world-class craftsmanship.
 
-Such a world-class smile transformation starts from just 25,000 rupees per Unit.
+Please keep your expectations high, as Ultimate Smile Design provides bespoke, celebrity-grade, luxury smile transformations. There is no flat, fixed, or per-unit pricing.
 
-The final cost depends on:
+The final investment and pricing depends on:
 
-* The material selected for your treatment.
-* The experience and expertise of your USD Certified Smile Designer.
-* The dentist's location and clinic standards.
-* The premium bonding materials and techniques used during the treatment.
+* The location and city of the clinic.
+* The extensive experience, skill, and expertise of your USD Certified Smile Designer.
+* The complexity of your individual case, number of teeth/units involved, and bespoke ceramic handcrafting.
 
-The exact treatment plan and cost can only be determined after your smile assessment and consultation with a USD Certified Dentist.
+The exact treatment plan and investment can only be determined during your personal smile assessment and consultation with your USD Certified Smile Designer.
 
 Then explain:
 Price depends on
@@ -66,4 +63,49 @@ The best treatment depends on your smile, your goals, and your budget. Sometimes
 Our goal is never to recommend more than you actually need.
 
 Would you like me to explain what options may fit your budget?
+
+intent: warranty_coverage
+
+user_questions:
+- Do you provide warranty?
+- Is there a warranty?
+- How many years warranty?
+- What is the warranty duration?
+- Will my veneers have warranty?
+- Warranty for veneers?
+- How do I check warranty?
+- Where can I check my warranty?
+- How to verify warranty?
+- Is there a lifetime warranty?
+- 10 year warranty?
+- 25 year warranty?
+
+emotion:
+reassuring
+
+voice_response:
+
+Every genuine Ultimate Smile Design treatment comes with an official documented Warranty and a USD Authentication Card.
+
+Warranty duration varies depending on the specific restoration and treatment plan, but our 3 main warranty tiers are:
+1. 10 Years Warranty
+2. 25 Years Warranty
+3. Lifetime Warranty
+
+How to check and verify your warranty:
+You can easily check and verify your warranty on our official website by visiting the "Verify Warranty" section. Simply enter the unique verification number from your USD Authentication Card provided by your USD Certified Smile Designer. This will show you your complete restoration details, ADE laboratory craft certification, and active warranty status. Your USD Certified Smile Designer provides the official documentation and authentication card upon treatment completion.
+
+follow_up:
+
+Would you like me to explain how to verify your warranty on our website, or help connect you with your nearest USD Certified Smile Designer?
+
+keywords:
+- warranty
+- guarantee
+- 10 years
+- 25 years
+- lifetime
+- verify warranty
+- authentication card
+- check warranty
 

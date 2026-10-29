@@ -10,7 +10,10 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.core.mail import EmailMessage, get_connection
+from django.core.files.base import ContentFile
 from voice_agent.audio.transcoder import wrap_pcm_to_wav_base64
+from voice_agent.models import VoiceRecordingLog
+from voice_agent.utils.constants import GEMINI_VOICE_NAME
 
 def chat_bot(request):
     return render(request, 'chat_bot.html')
@@ -35,10 +38,11 @@ def api_tts(request):
         "contents": [{"parts": [{"text": text}]}],
         "generationConfig": {
             "responseModalities": ["AUDIO"],
+            "maxOutputTokens": 2048,
             "speechConfig": {
                 "voiceConfig": {
                     "prebuiltVoiceConfig": {
-                        "voiceName": "Despina"
+                        "voiceName": os.getenv("GEMINI_VOICE_NAME") or GEMINI_VOICE_NAME or "Aoede"
                     }
                 }
             }
@@ -75,82 +79,20 @@ def api_tts(request):
 # TO (Destination): marketing@advancedentalexport.com
 # ==============================================================================
 SENDER_GMAIL = os.getenv('SENDER_GMAIL', 'vaghela9632@gmail.com')
-SENDER_GMAIL_APP_PASSWORD = os.getenv('SENDER_GMAIL_APP_PASSWORD', 'ooby stkw cvkn wzwy')
+SENDER_GMAIL_APP_PASSWORD = os.getenv('SENDER_GMAIL_APP_PASSWORD', 'oobystkwcvknwzwy')
 FEEDBACK_RECIPIENT_EMAILS = [
     os.getenv('MARKETING_EMAIL', 'marketing@advancedentalexport.com'),
 ]
 
 def dispatch_feedback_email(rating_label='Call Completed', transcript='No transcript provided.', audio_bytes=None, audio_filename='voice_recording.webm'):
-    """Sends independent Gmail SMTP email with transcript and attached in-memory audio recording."""
-    try:
-        now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        email_body = (
-            f"=========================================\n"
-            f"🌟 ULTIMATE SMILE DESIGN VOICE AGENT LOG\n"
-            f"=========================================\n\n"
-            f"• Event / Status: {rating_label}\n"
-            f"• Timestamp: {now_str}\n\n"
-            f"=========================================\n"
-            f"CONVERSATION TRANSCRIPT:\n"
-            f"=========================================\n\n"
-            f"{transcript.strip()}\n\n"
-            f"=========================================\n"
-        )
-        
-        if SENDER_GMAIL and SENDER_GMAIL_APP_PASSWORD:
-            connection = get_connection(
-                backend='django.core.mail.backends.smtp.EmailBackend',
-                host='smtp.gmail.com',
-                port=587,
-                username=SENDER_GMAIL,
-                password=SENDER_GMAIL_APP_PASSWORD,
-                use_tls=True,
-            )
-            from_email_str = f"USD Voice Agent <{SENDER_GMAIL}>"
-        else:
-            connection = None
-            from_email_str = f"USD Voice Agent <{SENDER_GMAIL}>"
-        
-        email_msg = EmailMessage(
-            subject=f"🌟 USD Voice Agent: {rating_label}",
-            body=email_body,
-            from_email=from_email_str,
-            to=FEEDBACK_RECIPIENT_EMAILS,
-            reply_to=[SENDER_GMAIL],
-            connection=connection
-        )
-        
-        if audio_bytes and len(audio_bytes) > 0:
-            try:
-                mime_type = 'audio/webm'
-                if audio_filename.endswith('.mp4'):
-                    mime_type = 'audio/mp4'
-                elif audio_filename.endswith('.wav'):
-                    mime_type = 'audio/wav'
-                elif audio_filename.endswith('.opus'):
-                    mime_type = 'audio/ogg'
-                email_msg.attach(audio_filename, audio_bytes, mime_type)
-                size_kb = round(len(audio_bytes) / 1024, 1)
-                email_msg.body += f"\n🎙️ AUDIO RECORDING ATTACHED:\n• File: {audio_filename} (~{size_kb} KB, Opus compressed)\n"
-            except Exception as att_err:
-                print(f"[WARNING] Failed to attach in-memory audio: {att_err}")
-                
-        email_msg.send(fail_silently=False)
-        print(f"[INFO] Direct Gmail SMTP delivery successful from {from_email_str} to {FEEDBACK_RECIPIENT_EMAILS} (Audio attached: {bool(audio_bytes)})")
-        return True
-    except Exception as e:
-        import traceback
-        print(f"[ERROR] Direct Gmail SMTP delivery error: {e}")
-        traceback.print_exc()
-        return False
+    return True
 
 @csrf_exempt
 def submit_feedback(request):
     """
     Receives transcript, rating, and optional raw recorded audio file.
-    Accepts both application/json (with base64 audio) and multipart/form-data.
-    Directly sends email to recipients via Django SMTP (Gmail),
-    attaching the audio file directly in-memory without saving to local disk.
+    Saves recording file (.mp3/.webm) and transcript (.txt) into VoiceRecordingLog table in DB.
+    Supports save_type tags: 'submit_feedback' (way 1) and 'without_submit' (way 2, on close).
     """
     if request.method == 'OPTIONS':
         response = JsonResponse({'status': 'ok'})
@@ -169,15 +111,24 @@ def submit_feedback(request):
         transcript = 'No transcript provided.'
         audio_bytes = None
         audio_filename = 'voice_recording.webm'
+        save_type = 'without_submit'
+        conversation_type = 'voice_agent'
         
-        # Check if request is JSON
-        if request.content_type and 'application/json' in request.content_type:
+        # Check if request body contains JSON (handles fetch, sendBeacon, etc.)
+        body_data = None
+        if request.body:
             try:
-                body_data = json.loads(request.body.decode('utf-8'))
+                parsed = json.loads(request.body.decode('utf-8'))
+                if isinstance(parsed, dict):
+                    body_data = parsed
             except Exception:
-                body_data = {}
+                pass
+
+        if body_data is not None:
             rating_label = body_data.get('rating', 'Call Completed')
             transcript = body_data.get('transcript', 'No transcript provided.')
+            save_type = body_data.get('save_type') or body_data.get('tag') or ('submit_feedback' if ('Stars' in rating_label or 'Submit' in rating_label or 'feedback' in rating_label.lower()) else 'without_submit')
+            conversation_type = body_data.get('conversation_type') or body_data.get('agent_type') or 'voice_agent'
             audio_b64 = body_data.get('audio_base64')
             if audio_b64:
                 if ',' in audio_b64:
@@ -190,21 +141,72 @@ def submit_feedback(request):
         else:
             rating_label = request.POST.get('rating', 'Call Completed')
             transcript = request.POST.get('transcript', 'No transcript provided.')
+            save_type = request.POST.get('save_type') or request.POST.get('tag') or ('submit_feedback' if ('Stars' in rating_label or 'Submit' in rating_label or 'feedback' in rating_label.lower()) else 'without_submit')
+            conversation_type = request.POST.get('conversation_type') or request.POST.get('agent_type') or 'voice_agent'
             audio_file = request.FILES.get('audio') or request.FILES.get('file')
             if audio_file:
                 audio_filename = audio_file.name or 'voice_recording.webm'
                 audio_bytes = audio_file.read()
+            audio_b64 = request.POST.get('audio_base64')
+            if not audio_bytes and audio_b64:
+                if ',' in audio_b64:
+                    audio_b64 = audio_b64.split(',', 1)[1]
+                try:
+                    audio_bytes = base64.b64decode(audio_b64)
+                    audio_filename = request.POST.get('audio_filename', 'voice_recording.webm')
+                except Exception as b64_err:
+                    print(f"[WARN] Error decoding audio base64 from POST: {b64_err}")
         
-        # ⚡ Dispatch email asynchronously so web worker finishes immediately without freezing the website ⚡
-        t = threading.Thread(
-            target=dispatch_feedback_email,
-            args=(rating_label, transcript, audio_bytes, audio_filename),
-            daemon=False
-        )
-        t.start()
+        # Determine call_id
+        call_id = None
+        if body_data:
+            call_id = body_data.get('call_id')
+        if not call_id:
+            call_id = request.POST.get('call_id') or f"call_{uuid.uuid4().hex[:10]}"
+
+        # ⚡ SAVE OR UPDATE TO DATABASE (VoiceRecordingLog) ⚡
+        log_id = None
+        try:
+            log_record, created = VoiceRecordingLog.objects.get_or_create(
+                call_id=call_id,
+                defaults={
+                    'rating': rating_label,
+                    'transcript': transcript,
+                    'save_type': save_type,
+                    'conversation_type': conversation_type
+                }
+            )
+            if not created:
+                if transcript and transcript != "No transcript provided.":
+                    curr_len = len((log_record.transcript or "").strip())
+                    if len(transcript.strip()) >= curr_len:
+                        log_record.transcript = transcript
+                if save_type == 'submit_feedback' or log_record.save_type != 'submit_feedback':
+                    log_record.rating = rating_label
+                    log_record.save_type = save_type
+                if conversation_type:
+                    log_record.conversation_type = conversation_type
+
+            if audio_bytes and len(audio_bytes) > 0:
+                has_valid_file = False
+                try:
+                    has_valid_file = bool(log_record.audio_file and log_record.audio_file.name and os.path.exists(log_record.audio_file.path))
+                except Exception:
+                    has_valid_file = False
+                if not has_valid_file:
+                    unique_filename = f"rec_{uuid.uuid4().hex[:8]}_{audio_filename}"
+                    log_record.audio_file.save(unique_filename, ContentFile(audio_bytes), save=False)
+            log_record.save()
+            log_id = log_record.id
+            print(f"[INFO] Saved VoiceRecordingLog #{log_id} in DB (created={created}, conv_type={conversation_type}, save_type={save_type}, audio={bool(audio_bytes)})")
+        except Exception as db_err:
+            print(f"[ERROR] Failed to save VoiceRecordingLog in DB: {db_err}")
 
         response = JsonResponse({
             'status': 'success',
+            'record_id': log_id,
+            'conversation_type': conversation_type,
+            'save_type': save_type,
             'rating': rating_label,
             'audio_attached': bool(audio_bytes)
         })

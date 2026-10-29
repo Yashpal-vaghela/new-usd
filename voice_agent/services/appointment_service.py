@@ -10,11 +10,15 @@ from email.mime.multipart import MIMEMultipart
 
 logger = logging.getLogger(__name__)
 
-# Consultation API endpoint on ultimatesmiledesign.com
+# Consultation API endpoint
 CONSULT_API_ENDPOINT = os.getenv(
     "CONSULT_API_ENDPOINT",
-    os.getenv("LOCAL_API_ENDPOINT", "https://ultimatesmiledesign.com/api/consult-with-dentist/")
+    os.getenv("LOCAL_API_ENDPOINT")
 )
+# CONSULT_API_ENDPOINT = os.getenv(
+#     "CONSULT_API_ENDPOINT",
+#     os.getenv("CONSULT_API_ENDPOINT")
+# )
 LOCAL_API_ENDPOINT = CONSULT_API_ENDPOINT
 
 # GoDaddy lightweight internal endpoint (Disabled for now - local database only)
@@ -257,12 +261,23 @@ def fetch_existing_lead_data(sub_id, phone_val):
                 lead = UserSubmission.objects.filter(phone__endswith=digits[-10:]).order_by('-id').first()
             except Exception:
                 lead = None
+    if not lead:
+        try:
+            cand = UserSubmission.objects.order_by('-id').first()
+            if cand and cand.created_at:
+                import datetime
+                now_utc = datetime.datetime.now(datetime.timezone.utc)
+                if (now_utc - cand.created_at).total_seconds() < 1800:
+                    lead = cand
+        except Exception:
+            lead = None
     if lead:
         return {
             "id": lead.id,
             "first_name": lead.first_name,
             "last_name": lead.last_name,
             "city": lead.city,
+            "pincode": getattr(lead, "pincode", "") or "",
             "doctor_name": lead.doctor_name,
             "message": lead.message,
             "email": lead.email,
@@ -276,8 +291,9 @@ def save_lead_to_local_db(payload: dict):
     from account.models import UserSubmission
     lead_id = payload.get('id') or payload.get('lead_id') or payload.get('submission_id')
     is_cancel = bool(payload.get('is_cancel', False))
-    is_update = bool(payload.get('is_update', False))
+    is_update = bool(payload.get('is_update', False)) or bool(lead_id)
     phone_val = str(payload.get('phone', '')).strip()
+    old_phone_val = str(payload.get('old_phone', '')).strip()
 
     lead = None
     if lead_id:
@@ -286,43 +302,85 @@ def save_lead_to_local_db(payload: dict):
         except (UserSubmission.DoesNotExist, ValueError):
             lead = None
 
-    # If no lead_id found, match the most recent lead with same phone if this is an update or cancellation
+    # If no lead_id found by ID, match the most recent lead with same old_phone or phone if this is an update or cancellation
+    if not lead and old_phone_val and (is_cancel or is_update):
+        old_digits = "".join(filter(str.isdigit, old_phone_val))
+        if len(old_digits) >= 10:
+            recent_leads = UserSubmission.objects.filter(phone__endswith=old_digits[-10:]).order_by('-id')
+            if recent_leads.exists():
+                lead = recent_leads.first()
+
     if not lead and phone_val and (is_cancel or is_update):
-        recent_leads = UserSubmission.objects.filter(phone__endswith=phone_val[-10:]).order_by('-id')
+        digits = "".join(filter(str.isdigit, phone_val))
+        if len(digits) >= 10:
+            recent_leads = UserSubmission.objects.filter(phone__endswith=digits[-10:]).order_by('-id')
+            if recent_leads.exists():
+                lead = recent_leads.first()
+
+    # Fallback for updates & cancellations: if lead still not found by ID or phone,
+    # find the most recent lead created in the last 30 minutes to update/cancel in place instead of creating a duplicate row!
+    if not lead and (is_update or is_cancel):
+        recent_leads = UserSubmission.objects.order_by('-id')
         if recent_leads.exists():
-            lead = recent_leads.first()
+            candidate = recent_leads.first()
+            import datetime
+            now_utc = datetime.datetime.now(datetime.timezone.utc)
+            if candidate.created_at and (now_utc - candidate.created_at).total_seconds() < 1800:
+                lead = candidate
+
+    city_val = str(payload.get('city') or '').strip()
+    pin_val = str(payload.get('pincode') or '').strip()
+    if pin_val:
+        try:
+            from voice_agent.services.dentist_service import get_pincode_canonical_city
+            canon_c = get_pincode_canonical_city(pin_val)
+            if canon_c:
+                city_val = canon_c
+        except Exception:
+            pass
+    if not city_val and payload.get('city'):
+        city_val = str(payload.get('city')).strip()
+    if "," in city_val:
+        city_val = city_val.split(",")[-1].strip()
 
     if lead:
         if 'is_cancel' in payload:
             lead.is_cancel = is_cancel
-        if payload.get('doctor_name'):
+        if payload.get('doctor_name') is not None:
             lead.doctor_name = payload.get('doctor_name')
         if payload.get('first_name'):
             lead.first_name = payload.get('first_name')
         if payload.get('last_name'):
             lead.last_name = payload.get('last_name')
-        if payload.get('city'):
-            lead.city = payload.get('city')
+        if phone_val and len("".join(filter(str.isdigit, phone_val))) >= 10:
+            lead.phone = "".join(filter(str.isdigit, phone_val))[-10:]
+        if city_val:
+            lead.city = city_val
+        if hasattr(lead, 'pincode') and pin_val:
+            lead.pincode = pin_val
         if payload.get('message'):
             lead.message = payload.get('message')
-        if payload.get('email') and payload.get('email') != 'no-reply@ultimatesmiledesign.com':
+        if payload.get('email') and payload.get('email') not in ['no-reply@ultimatesmiledesign.com', '--', '-']:
             lead.email = payload.get('email')
         lead.save()
-        print(f"[SUCCESS] Updated local UserSubmission lead ID {lead.id}! (Doctor: {lead.doctor_name}, is_cancel={lead.is_cancel})")
+        print(f"[SUCCESS] Updated local UserSubmission lead ID {lead.id}! (City: {lead.city}, Pincode: {getattr(lead, 'pincode', '-')} Doctor: {lead.doctor_name}, Phone: {lead.phone}, is_cancel={lead.is_cancel})")
         return lead.id
 
-    lead = UserSubmission.objects.create(
-        first_name=payload.get('first_name', ''),
-        last_name=payload.get('last_name', '-'),
-        phone=phone_val,
-        email=payload.get('email') or 'no-reply@ultimatesmiledesign.com',
-        city=payload.get('city', ''),
-        message=payload.get('message', ''),
-        doctor_name=payload.get('doctor_name', ''),
-        is_cancel=is_cancel,
-        agree_to_terms=True
-    )
-    print(f"[SUCCESS] Saved directly to local UserSubmission table! (ID: {lead.id}, Name: {lead.first_name} {lead.last_name}, is_cancel={lead.is_cancel})")
+    create_kwargs = {
+        "first_name": payload.get('first_name', ''),
+        "last_name": payload.get('last_name', '-'),
+        "phone": phone_val,
+        "email": payload.get('email') or 'no-reply@ultimatesmiledesign.com',
+        "city": city_val,
+        "message": payload.get('message', ''),
+        "doctor_name": payload.get('doctor_name', ''),
+        "is_cancel": is_cancel,
+        "agree_to_terms": True
+    }
+    if hasattr(UserSubmission, 'pincode'):
+        create_kwargs['pincode'] = pin_val
+    lead = UserSubmission.objects.create(**create_kwargs)
+    print(f"[SUCCESS] Saved directly to local UserSubmission table! (ID: {lead.id}, City: {lead.city}, Pincode: {getattr(lead, 'pincode', '-')}, Name: {lead.first_name} {lead.last_name}, is_cancel={lead.is_cancel})")
     return lead.id
 
 def sync_lead_to_godaddy_sqlite(payload: dict) -> int:
@@ -341,6 +399,7 @@ def sync_lead_to_godaddy_sqlite(payload: dict) -> int:
             "phone": phone_digits,
             "email": payload.get("email") or "no-reply@ultimatesmiledesign.com",
             "city": payload.get("city", ""),
+            "pincode": payload.get("pincode", ""),
             "message": payload.get("message", ""),
             "doctor_name": payload.get("doctor_name", ""),
             "is_cancel": bool(payload.get("is_cancel", False)),
@@ -379,7 +438,7 @@ _API_LEAD_MAP = {}  # In-memory cache mapping phone (10-digits) -> API lead_id
 _LOCAL_API_LEAD_MAP = _API_LEAD_MAP
 
 def sync_lead_to_api_endpoint(payload: dict) -> int:
-    """Dispatches consultation appointment lead directly to the consultation API endpoint: https://ultimatesmiledesign.com/api/consult-with-dentist/"""
+    """Dispatches consultation appointment lead directly to the consultation API endpoint."""
     try:
         api_url = os.getenv("CONSULT_API_ENDPOINT") or os.getenv("LOCAL_API_ENDPOINT") or "https://ultimatesmiledesign.com/api/consult-with-dentist/"
         headers = {
@@ -390,15 +449,31 @@ def sync_lead_to_api_endpoint(payload: dict) -> int:
         is_cancel = bool(payload.get("is_cancel", False))
         is_update = bool(payload.get("is_update", False))
 
+        city_name = (payload.get("city") or "").strip().title()
+        city_pincodes = {
+            "Ahmedabad": "380001", "Surat": "395001", "Vadodara": "390001", "Rajkot": "360001",
+            "Mumbai": "400001", "Pune": "411001", "Delhi": "110001", "New Delhi": "110001",
+            "Gurugram": "122001", "Gurgaon": "122001", "Bangalore": "560001", "Bengaluru": "560001",
+            "Hyderabad": "500001", "Chennai": "600001", "Indore": "452001", "Gwalior": "474001",
+            "Jamnagar": "361001", "Bharuch": "392001"
+        }
+        pincode_val = str(payload.get("pincode") or "").strip()
+
         # Build exact fields matching the specification:
-        # first_name, last_name, email, phone, city, message, doctor_name, source
+        # first_name, last_name, email, phone, city, message, doctor_name, source, pincode
+        # NOTE: message must contain ONLY the patient's dental concern — never append pincode here.
+        msg_text = payload.get("message", "") or "."
+
         api_payload = {
             "first_name": payload.get("first_name", "") or "",
             "last_name": payload.get("last_name", "-") or "-",
             "email": payload.get("email") or "no-reply@ultimatesmiledesign.com",
             "phone": phone_digits if phone_digits else str(payload.get("phone", "")),
             "city": payload.get("city", "") or "",
-            "message": payload.get("message", "") or ".",
+            "pincode": pincode_val,
+            "pin_code": pincode_val,
+            "postal_code": pincode_val,
+            "message": msg_text,
             "doctor_name": payload.get("doctor_name", "") or "",
             "source": "voice_agent",
             "is_cancel": is_cancel,
@@ -434,7 +509,7 @@ def sync_lead_to_api_endpoint(payload: dict) -> int:
             else:
                 print(f"[WARN] Consultation API endpoint returned status {resp.status_code}: {resp.text}")
     except Exception as e:
-        print(f"[WARN] Failed to post lead to Consultation API endpoint: {e}")
+        print(f"[WARN] Failed to post lead to Consultation API endpoint ({api_url}): {e}")
     return 0
 
 # def sync_to_zoho_crm(payload: dict):
@@ -505,6 +580,8 @@ async def submit_consultation_appointment(data: dict) -> dict:
                     data["last_name"] = lead_info["last_name"]
                 if not data.get("city"):
                     data["city"] = lead_info["city"]
+                if not data.get("pincode") and lead_info.get("pincode"):
+                    data["pincode"] = lead_info["pincode"]
                 if not data.get("doctor_name"):
                     data["doctor_name"] = lead_info["doctor_name"]
                 if not data.get("message"):
@@ -571,6 +648,18 @@ async def submit_consultation_appointment(data: dict) -> dict:
         city = city.title()
     data["city"] = city
 
+    raw_pincode = str(data.get("pincode", "")).strip()
+    digits_pin = "".join(filter(str.isdigit, raw_pincode))
+    if not is_cancel and len(digits_pin) != 6:
+        return {
+            "status": "error",
+            "missing_field": "pincode",
+            "message": "Cannot submit appointment: Area pincode is missing. Please ask the patient for their 6-digit area pincode before submitting."
+        }
+    if is_cancel and len(digits_pin) != 6:
+        digits_pin = digits_pin if len(digits_pin) == 6 else "380001"
+    data["pincode"] = digits_pin
+
     raw_message = str(data.get("message", "")).strip()
     if not is_cancel and (not raw_message or raw_message.lower() in ["none", "null", "not provided", "dental consultation appointment request", ""]):
         return {
@@ -596,7 +685,7 @@ async def submit_consultation_appointment(data: dict) -> dict:
     data["doctor_name"] = doctor_name
 
     # ⚡ Duplicate Submission Guard: Ignore identical duplicate in-flight requests within 30s ⚡
-    if not data.get("submission_id") and not data.get("is_cancel") and is_duplicate_submission(digits_only[-10:], doctor_name):
+    if not data.get("submission_id") and not data.get("is_update") and not data.get("is_cancel") and is_duplicate_submission(digits_only[-10:], doctor_name):
         print(f"[INFO] Deduplication guard: Submission for {digits_only[-10:]} with {doctor_name} already in progress. Ignoring duplicate.")
         return {
             "status": "success",
@@ -623,6 +712,7 @@ async def submit_consultation_appointment(data: dict) -> dict:
         "email": valid_email,
         "phone": digits_only[-10:],
         "city": city,
+        "pincode": digits_pin,
         "message": message,
         "doctor_name": doctor_name,
         "is_cancel": is_cancel,
@@ -638,7 +728,7 @@ async def submit_consultation_appointment(data: dict) -> dict:
         payload["godaddy_id"] = data["godaddy_id"]
     
     action_str = "Cancellation" if is_cancel else "Booking"
-    print(f"[INFO] Processing appointment {action_str} for: {payload['first_name']} {payload['last_name']} ({payload['city']}) with {payload['doctor_name']}")
+    print(f"[INFO] Processing appointment {action_str} for: {payload['first_name']} {payload['last_name']} ({payload['city']}, Pincode: {payload.get('pincode', '-')}) with {payload['doctor_name']}")
     
     # ⚡ 1. Direct local database save (Primary local SQLite UserSubmission table) ⚡
     try:
@@ -651,9 +741,11 @@ async def submit_consultation_appointment(data: dict) -> dict:
     except Exception as db_err:
         print(f"[INFO] Local DB save skipped: {db_err}")
 
-    # ⚡ 2. Direct POST to Consultation API endpoint (https://ultimatesmiledesign.com/api/consult-with-dentist/) ⚡
+    # ⚡ 2. Direct POST to Consultation API endpoint (http://192.168.0.161:1020/api/consult-with-dentist/) ⚡
     try:
-        api_id = sync_lead_to_api_endpoint(payload)
+        # Blocking HTTP call (up to 10 s timeout): run it in a worker thread so the event loop keeps relaying
+        # mic audio to Gemini and bot audio to the client (otherwise barge-in and hearing stall during the call)
+        api_id = await asyncio.to_thread(sync_lead_to_api_endpoint, payload)
         if api_id:
             payload["api_id"] = api_id
             data["api_id"] = api_id

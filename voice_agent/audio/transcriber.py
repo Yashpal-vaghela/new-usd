@@ -27,7 +27,7 @@ async def transcribe_audio_with_gemini(pcm_bytes, sample_rate=16000):
             }],
             "generationConfig": {
                 "temperature": 0.0,
-                "maxOutputTokens": 200
+                "maxOutputTokens": 800
             }
         }
         

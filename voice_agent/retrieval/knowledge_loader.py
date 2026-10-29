@@ -8,9 +8,22 @@ def get_compiled_knowledge(force_reload=False):
     global _cached_knowledge
     if _cached_knowledge is not None and not force_reload:
         return _cached_knowledge
-        
+
+    # ⚡ Check Redis cache first (instant sub-millisecond fetch)
+    if not force_reload:
+        try:
+            from voice_agent.services.redis_service import get_cached_knowledge_from_redis
+            redis_data = get_cached_knowledge_from_redis()
+            if redis_data:
+                _cached_knowledge = redis_data
+                print(f"[INFO] [REDIS] Knowledge Base fetched directly from Redis! Length: {len(_cached_knowledge)} chars.")
+                return _cached_knowledge
+        except Exception as e:
+            pass
+
     try:
         base_dir = Path(__file__).resolve().parent.parent
+
         knowledge_dir = os.path.join(base_dir, 'knowledge')
         
         if not os.path.exists(knowledge_dir):

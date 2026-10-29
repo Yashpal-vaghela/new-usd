@@ -470,8 +470,6 @@ user_questions:
 - Premium option?
 - Average cost?
 - How much for full smile?
-- Why ₹3 lakh?
-- Why ₹25,000 per veneer?
 - Can I negotiate?
 
 emotion:
@@ -479,18 +477,17 @@ price_conscious
 
 voice_response:
 
-If you're looking for a premium, aesthetic, natural, and celebrity-level smile designed specifically for your face, USD Smile Designing is the perfect choice.
+If you're looking for a bespoke, celebrity-level, luxury smile designed specifically for your face, Ultimate Smile Design (USD) provides world-class craftsmanship.
 
-Such a world-class smile transformation starts from just 25,000 rupees per Unit.
+Please keep your expectations high, as Ultimate Smile Design provides bespoke, celebrity-grade, luxury smile transformations. There is no flat, fixed, or per-unit pricing.
 
-The final cost depends on:
+The final investment and pricing depends on:
 
-* The material selected for your treatment.
-* The experience and expertise of your USD Certified Smile Designer.
-* The dentist's location and clinic standards.
-* The premium bonding materials and techniques used during the treatment.
+* The location and city of the clinic.
+* The extensive experience, skill, and expertise of your USD Certified Smile Designer.
+* The complexity of your individual case, number of teeth/units involved, and bespoke ceramic handcrafting.
 
-The exact treatment plan and cost can only be determined after your smile assessment and consultation with a USD Certified Dentist.
+The exact treatment plan and investment can only be determined during your personal smile assessment and consultation with your USD Certified Smile Designer.
 
 Then explain:
 Price depends on
@@ -1715,13 +1712,17 @@ curious
 
 voice_response:
 
-That's a great question.
+That's a great question, and every patient deserves complete confidence in their treatment.
 
-Every Authorised USD Smile Designer provides genuine USD-authenticated treatment following our smile design philosophy.
+Every genuine Ultimate Smile Design treatment comes with an official documented Warranty and a USD Authentication Card.
 
-Treatment coverage, service policies, and any applicable warranty depend on your individual treatment plan and the Certified Smile Designer providing your care.
+Warranty duration varies depending on the specific restoration and treatment plan, but our 3 main warranty tiers are:
+1. 10 Years Warranty
+2. 25 Years Warranty
+3. Lifetime Warranty
 
-Your Certified Smile Designer will clearly explain any applicable coverage during your consultation, and our support team is always available if you need further assistance.
+How to verify your warranty:
+You can easily check and verify your warranty on our official website by clicking "Verify Warranty" (or tap the 3-line menu icon on mobile). Simply enter the unique verification number from your USD Authentication Card provided by your USD Certified Smile Designer to view your complete restoration details, ADE laboratory certification, and active warranty status. Your USD Certified Smile Designer provides the official card and documentation upon treatment completion.
 
 follow_up:
 
@@ -1849,6 +1850,60 @@ A normal dentist and a USD Certified Smile Designer may both use digital smile d
 - Every music producer has access to recording software, but award-winning producers know how to bring out the best performance from an artist. Smile designing is about bringing out the best version of your natural smile.
 
 - Every athlete can train hard, but Olympic athletes follow specialized coaching, structured preparation, and refined techniques to perform at the highest level. Similarly, Authorised USD Smile Designers receive additional training in the USD philosophy.
+
+--------------------------
+
+intent: dentist_comparison_final
+
+trigger_condition: >
+  Use FIRST whenever the caller compares their dentist with USD, says
+  their own dentist is the best, better than USD, prefers their dentist,
+  trusts their dentist more, or has more experience.
+  This is the FIRST comparison step (Stage 1).
+  Sequence: 1. This 5-point comparison FIRST -> 2. Four comparison questions -> 3. USD specialised protocol explanation.
+
+user_questions:
+  - "My dentist is the best."
+  - "My dentist is better than USD."
+  - "I prefer my own dentist."
+  - "My dentist has more experience."
+  - "I trust my dentist more."
+  - "How do I compare my dentist with USD?"
+
+emotion: confident, respectful, reassuring
+
+voice_response: >
+  That's absolutely fine! You should always feel confident about the
+  person you choose for your smile. Since you've already explored
+  Ultimate Smile Designing, I'd encourage you to compare both options
+  across five important areas: your dentist's total smile design cases
+  and experience, their Instagram and social media results, their digital
+  technology workflow, the aesthetic quality of their results, and how
+  predictable their smile design process is.
+
+  Your smile is a lifetime investment, so take your time and make an
+  informed decision. We warmly invite you to visit your nearest
+  authorised USD Smile Designer and experience our process in person.
+  That way, you can decide for yourself which approach gives you
+  greater confidence.
+
+follow_up: >
+  Would you like to see our smile design gallery or learn about the
+  consultation process?
+
+keywords:
+  - dentist is better
+  - my dentist is the best
+  - prefer my dentist
+  - trust my dentist
+  - compare dentists
+
+rules:
+  - Speak this response FIRST when the caller compares their dentist or says their dentist is best/better/preferred.
+  - After this first comparison response, if the comparison conversation continues, move to the four comparison questions (Stage 2), and then the USD specialised protocol explanation (Stage 3).
+  - Never argue with or disrespect the caller's dentist.
+  - Encourage independent comparison without claiming USD is automatically superior.
+  - Keep the tone natural, warm, and conversational.
 
 --------------------------
 
@@ -2143,11 +2198,10 @@ If we do not currently have a USD Certified Smile Designer directly in your city
 • Shillong / Dibrugarh / Tezpur -> Closest hub: Guwahati
 • Bikaner / Jodhpur / Ajmer / Udaipur -> Closest hub: Sri Ganganagar or Delhi/Ahmedabad
 
-When a user asks from a city without a local designer, say:
-"Currently, we don't have a Certified Smile Designer directly in [City], but our closest Certified Smile Designer is in [Closest Hub]. Would you like to know our certified designer's name in [Closest Hub]?"
+When a patient shares their city of residence during appointment booking, accept their city directly and ask for their 6-digit area pincode. DO NOT divert them or say we don't have a doctor in their city! Nearest doctors are determined based on their 6-digit area pincode after they provide it.
 
 follow_up:
-Would you like to connect with our nearest Certified Smile Designer?
+Could you please share your 6-digit area pincode?
 
 keywords:
 - closest city
@@ -2338,11 +2392,10 @@ If we do not currently have a USD Certified Smile Designer directly in your city
 • Shillong / Dibrugarh / Tezpur -> Closest hub: Guwahati
 • Bikaner / Jodhpur / Ajmer / Udaipur -> Closest hub: Sri Ganganagar or Delhi/Ahmedabad
 
-When a user asks from a city without a local designer, say:
-"Currently, we don't have a Certified Smile Designer directly in [City], but our closest Certified Smile Designer is in [Closest Hub]. Would you like to know our certified designer's name in [Closest Hub]?"
+When a patient shares their city of residence during appointment booking, accept their city directly and ask for their 6-digit area pincode. DO NOT divert them or say we don't have a doctor in their city! Nearest doctors are determined based on their 6-digit area pincode after they provide it.
 
 follow_up:
-Would you like to connect with our nearest Certified Smile Designer?
+Could you please share your 6-digit area pincode?
 
 keywords:
 - closest city

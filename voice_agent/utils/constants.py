@@ -5,8 +5,15 @@ SILENCE_TIMEOUT = 12     # seconds of user silence before sending nudge
 
 GEMINI_LIVE_MODEL = os.getenv("GEMINI_LIVE_MODEL", "models/gemini-3.1-flash-live-preview")
 GEMINI_TEXT_MODEL = os.getenv("GEMINI_TEXT_MODEL", "gemini-3.5-flash-lite")
+GEMINI_VOICE_NAME = os.getenv("GEMINI_VOICE_NAME", "Aoede")
 
 DEFAULT_LANGUAGE = "en-IN"
 
 SAMPLE_RATE_LIVE = 24000  # sample rate for assistant audio output
 SAMPLE_RATE_USER = 16000  # sample rate for user audio input
+
+def get_live_model_name():
+    raw = os.getenv("GEMINI_LIVE_MODEL") or GEMINI_LIVE_MODEL
+    if not raw.startswith("models/"):
+        return f"models/{raw}"
+    return raw
