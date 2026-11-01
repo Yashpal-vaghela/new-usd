@@ -560,6 +560,7 @@ body {
   overflow: hidden;
   position: relative;
   flex-shrink: 0;
+  border: 1px solid #2D2D2D;
 }
 .smile_solutions_images_slider > img{
   width: 100%;
