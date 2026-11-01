@@ -10,6 +10,7 @@ from django.views.decorators.http import require_POST
 from django.conf import settings
 from django.utils import timezone
 import threading
+import requests
 from home.utils import send_mail, queue_mail
 from virtualsmileAI.forms import SmileDesignLeadForm
 from virtualsmileAI.gemini import add_logo_on_right
@@ -52,12 +53,104 @@ def smile(request):
         {"threshold": THRESHOLD, "form": SmileDesignLeadForm()},
     )
 
+ZOHO_SMILE_AI_WEBHOOK_URL = getattr(
+    settings,
+    "ZOHO_SMILE_AI_WEBHOOK_URL",
+    "https://flow.zoho.in/60070945438/flow/webhook/incoming?zapikey=1001.e004fd6566ce7ee00ed93243b678184c.52d2040d5c37df86b23e4c204f60ac7d&isdebug=false",
+)
+
+
+def to_absolute_image_url(url, request=None):
+    if not url:
+        return ""
+    url_str = str(url).strip()
+    if not url_str or url_str == "N/A":
+        return ""
+
+    if url_str.startswith("http://") or url_str.startswith("https://"):
+        if "127.0.0.1" in url_str or "localhost" in url_str:
+            path_part = url_str.split("/media/", 1)[-1]
+            return f"https://ultimatesmiledesign.com/media/{path_part.lstrip('/')}"
+        return url_str
+
+    clean_path = url_str.lstrip("/")
+    if clean_path.startswith("media/"):
+        clean_path = clean_path[len("media/"):].lstrip("/")
+
+    if request:
+        return request.build_absolute_uri(settings.MEDIA_URL + clean_path)
+
+    return f"https://ultimatesmiledesign.com/media/{clean_path}"
+
+
+def send_zoho_smile_webhook_async(payload):
+    def _worker():
+        try:
+            headers = {"Content-Type": "application/json"}
+            res = requests.post(ZOHO_SMILE_AI_WEBHOOK_URL, json=payload, headers=headers, timeout=10)
+            print(f"✅ Zoho Smile AI Webhook Sent! Status: {res.status_code}, Response: {res.text[:200]}")
+        except Exception as e:
+            print(f"❌ Zoho Smile AI Webhook Error: {e}")
+
+    t = threading.Thread(target=_worker, daemon=True)
+    t.start()
+
+
+def trigger_zoho_smile_lead(lead, before_url=None, after_url=None, request=None):
+    """
+    Triggers Zoho webhook when both before and after images are linked to the lead.
+    Ensures the webhook is sent exactly once per lead.
+    """
+    from django.core.cache import cache
+
+    cache_key = f"zoho_synced_smile_lead_{lead.id}"
+    if cache.get(cache_key):
+        return False
+
+    b_url = to_absolute_image_url(before_url or lead.before_image, request=request)
+    a_url = to_absolute_image_url(after_url or lead.after_image, request=request)
+
+    # Must wait until BOTH before and after images are linked
+    if not b_url or not a_url:
+        return False
+
+    cache.set(cache_key, True, timeout=86400)
+
+    raw_phone = (lead.phone or "").strip()
+    digits = "".join(ch for ch in raw_phone if ch.isdigit())
+    cleaned_phone = f"+{digits}" if digits else raw_phone
+
+    if lead.created_at:
+        dt = timezone.localtime(lead.created_at)
+    else:
+        dt = timezone.localtime(timezone.now())
+    formatted_datetime = dt.strftime("%d%m%y %H:%M:%S")
+
+    zoho_payload = {
+        "Name": (lead.name or "").strip(),
+        "Email": (lead.email or "").strip(),
+        "Contact": cleaned_phone,
+        "Pincode": str(lead.pincode or "").strip(),
+        "City": str(lead.city or "").strip(),
+        "Before_Image": b_url,
+        "Image": a_url,
+        "DateTime": formatted_datetime,
+        "LeadSource": "Website",
+        "Website": "Ultimate Smile Design",
+        "FormName": "Smile Design AI",
+    }
+
+    send_zoho_smile_webhook_async(zoho_payload)
+    return True
+
+
 def send_smile_lead_email_async(context_dict):
     queue_mail(
         to_email="bhavinparmar005@gmail.com",
         subject=f"New Smile Ai Design Lead from {context_dict.get('Name', 'Unknown')}",
         context_dict=context_dict
     )
+
 
 @require_POST
 @csrf_protect
@@ -163,6 +256,9 @@ def create_smile_lead_api(request):
     obj.before_image = get_absolute_image_url(before_saved)
     obj.after_image = get_absolute_image_url(after_saved)
     obj.save()
+
+    # Trigger Zoho webhook if both images are linked
+    trigger_zoho_smile_lead(obj, before_url=obj.before_image, after_url=obj.after_image, request=request)
     
     context_dict = {
         "Name": obj.name,
@@ -235,6 +331,9 @@ def trigger_whatsapp_api(request):
         lead.after_image = normalize_media_path(after_url)
     if before_url or after_url:
         lead.save(update_fields=["before_image", "after_image"])
+
+    # Trigger Zoho webhook once before and after images are linked
+    trigger_zoho_smile_lead(lead, before_url=before_url, after_url=after_url, request=request)
 
     # Phone normalization - take country code and phone as passed in payload / lead
     raw_phone = (incoming.get("phone") or lead.phone or "").strip()

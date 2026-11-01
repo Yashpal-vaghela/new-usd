@@ -8,7 +8,7 @@ from import_export.admin import ImportExportModelAdmin
 
 @admin.register(SmileDesignLead)
 class SmileDesignLeadAdmin(ImportExportModelAdmin):
-    list_display = ("before_preview", "after_preview", "name", "phone", "city", "created_at")
+    list_display = ("name", "phone", "city", "created_at")
     list_display_links = ("name",)
     search_fields = ("name", "phone", "city")
     list_filter = ('created_at',)

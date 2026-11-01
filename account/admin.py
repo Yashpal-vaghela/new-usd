@@ -6,52 +6,84 @@ from django_json_widget.widgets import JSONEditorWidget
 from .models import *
 
 class DentistAdmin(ImportExportModelAdmin):
-    list_display = ('image_preview', 'name', 'city', 'contact', 'status')
+    list_display = ('profile_preview', 'dentist_image_preview', 'name', 'city', 'contact', 'status')
     list_display_links = ('name',)
     search_fields = ('name', 'city__city', 'contact')
     list_filter = ('status', 'city')
-    readonly_fields = ('image_preview',)
+    readonly_fields = ('profile_preview', 'dentist_image_preview')
 
-    def image_preview(self, obj):
-        image = obj.dentist_image or obj.profile
-        if image:
+    def profile_preview(self, obj):
+        if obj.profile:
             try:
                 return format_html(
                     '<a href="{}" target="_blank" rel="noopener noreferrer">'
-                    '<img src="{}" width="120" height="120" style="object-fit: contain; border-radius: 6px; display: block; cursor: pointer;" />'
+                    '<img src="{}" width="100" height="100" style="object-fit: contain; border-radius: 6px; display: block; cursor: pointer;" />'
                     '</a>',
-                    image.url,
-                    image.url
+                    obj.profile.url,
+                    obj.profile.url
                 )
             except Exception:
                 pass
         return mark_safe('<span style="color: #888;">(No Image)</span>')
 
-    image_preview.short_description = "Image"
+    profile_preview.short_description = "Profile"
+
+    def dentist_image_preview(self, obj):
+        if obj.dentist_image:
+            try:
+                return format_html(
+                    '<a href="{}" target="_blank" rel="noopener noreferrer">'
+                    '<img src="{}" width="100" height="100" style="object-fit: contain; border-radius: 6px; display: block; cursor: pointer;" />'
+                    '</a>',
+                    obj.dentist_image.url,
+                    obj.dentist_image.url
+                )
+            except Exception:
+                pass
+        return mark_safe('<span style="color: #888;">(No Image)</span>')
+
+    dentist_image_preview.short_description = "Dentist Image"
+
 
 class DentistDetailsAdmin(ImportExportModelAdmin):
-    list_display = ('image_preview', 'name', 'city', 'contact', 'status')
+    list_display = ('list_page_image_preview', 'details_page_image_preview', 'name', 'city', 'contact', 'status')
     list_display_links = ('name',)
     search_fields = ('name', 'city__city', 'contact')
     list_filter = ('status', 'city')
-    readonly_fields = ('image_preview',)
+    readonly_fields = ('list_page_image_preview', 'details_page_image_preview')
 
-    def image_preview(self, obj):
-        image = obj.list_page_image or obj.details_page_image
-        if image:
+    def list_page_image_preview(self, obj):
+        if obj.list_page_image:
             try:
                 return format_html(
                     '<a href="{}" target="_blank" rel="noopener noreferrer">'
-                    '<img src="{}" width="120" height="120" style="object-fit: contain; border-radius: 6px; display: block; cursor: pointer;" />'
+                    '<img src="{}" width="100" height="100" style="object-fit: contain; border-radius: 6px; display: block; cursor: pointer;" />'
                     '</a>',
-                    image.url,
-                    image.url
+                    obj.list_page_image.url,
+                    obj.list_page_image.url
                 )
             except Exception:
                 pass
         return mark_safe('<span style="color: #888;">(No Image)</span>')
 
-    image_preview.short_description = "Image"
+    list_page_image_preview.short_description = "List Page Image"
+
+    def details_page_image_preview(self, obj):
+        if obj.details_page_image:
+            try:
+                return format_html(
+                    '<a href="{}" target="_blank" rel="noopener noreferrer">'
+                    '<img src="{}" width="100" height="100" style="object-fit: contain; border-radius: 6px; display: block; cursor: pointer;" />'
+                    '</a>',
+                    obj.details_page_image.url,
+                    obj.details_page_image.url
+                )
+            except Exception:
+                pass
+        return mark_safe('<span style="color: #888;">(No Image)</span>')
+
+    details_page_image_preview.short_description = "Details Page Image"
+
 
 class BlogAdmin(admin.ModelAdmin):
     list_display = ('h1', 'author', 'published', 'status')
