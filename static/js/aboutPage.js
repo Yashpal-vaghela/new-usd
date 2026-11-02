@@ -146,12 +146,12 @@ document.addEventListener("DOMContentLoaded", function () {
     //smile_story_section
     // -------------------------------------------------------------
     window.smileStorySwiper = new Swiper(".smile-story-swiper", {
-        loop: true, 
+        loop: true,
         speed: 4000,
-        slidesPerView: "auto", 
+        slidesPerView: "auto",
         spaceBetween: 30,
         autoplay: {
-            delay: 0, 
+            delay: 0,
             disableOnInteraction: false,
         },
         preventClicks: false,
@@ -391,7 +391,7 @@ document.addEventListener("DOMContentLoaded", function () {
             },
         });
     }
-  
+
     // -------------------------------------------------------------
     // about_page_contact_form (Country Code Flag + ContactHomePage + SweetAlert)
     // -------------------------------------------------------------
@@ -552,7 +552,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Dynamically update pincode validation rules & limits
             if (pincodeCtrl) {
-                pincodeCtrl.updateCountry(currentSelected); 
+                pincodeCtrl.updateCountry(currentSelected);
             }
         }
 
@@ -852,7 +852,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
-  
+
     // -------------------------------------------------------------
     // Responsive AOS for Smile Values Cards (fade-up on <= 576px)
     // -------------------------------------------------------------
@@ -878,5 +878,102 @@ document.addEventListener("DOMContentLoaded", function () {
             AOS.refresh();
         }
     });
+
+    // -------------------------------------------------------------
+    // FAQ Accordion (Smooth CSS Grid toggle)
+    // -------------------------------------------------------------
+    const faqCards = document.querySelectorAll(".faq_right_side_main .question_main");
+
+    if (faqCards.length > 0) {
+        faqCards.forEach((card) => {
+            card.addEventListener("click", function (e) {
+                // If user clicked inside the answer itself (e.g. selecting text/link), do not toggle
+                if (e.target.closest(".faq_answer_box")) return;
+
+                const isCurrentlyActive = this.classList.contains("active");
+
+                // Close all other FAQ items simultaneously
+                faqCards.forEach((otherCard) => {
+                    if (otherCard !== this) {
+                        otherCard.classList.remove("active");
+                    }
+                });
+
+                // Toggle clicked item
+                if (isCurrentlyActive) {
+                    this.classList.remove("active");
+                } else {
+                    this.classList.add("active");
+                }
+            });
+        });
+    }
+
+    // -------------------------------------------------------------
+    // FAQ Dynamic Scroll Fade (Top & Bottom Shadow Mask)
+    // -------------------------------------------------------------
+    const faqContainer = document.querySelector(".faq_right_side_main");
+    if (faqContainer) {
+        const updateFaqScrollMask = () => {
+            // Disable scroll mask on mobile screens (<= 576px)
+            if (window.innerWidth <= 576) {
+                faqContainer.style.maskImage = "none";
+                faqContainer.style.webkitMaskImage = "none";
+                return;
+            }
+
+            const scrollTop = faqContainer.scrollTop;
+            const scrollHeight = faqContainer.scrollHeight;
+            const clientHeight = faqContainer.clientHeight;
+            const maxScroll = scrollHeight - clientHeight;
+
+            if (maxScroll <= 0) {
+                faqContainer.style.maskImage = "none";
+                faqContainer.style.webkitMaskImage = "none";
+                return;
+            }
+
+            const topProgress = Math.min(1, scrollTop / 30);
+            const topFadePx = Math.round(topProgress * 60);
+
+            const remaining = maxScroll - scrollTop;
+            const bottomProgress = Math.min(1, remaining / 40);
+            const bottomFadePx = Math.round(bottomProgress * 105);
+
+            const topStop = topFadePx > 0 ? `transparent 0%, black ${topFadePx}px` : `black 0px`;
+            const bottomStop = bottomFadePx > 0 ? `black calc(100% - ${bottomFadePx}px), transparent 100%` : `black 100%`;
+
+            const mask = `linear-gradient(to bottom, ${topStop}, ${bottomStop})`;
+            faqContainer.style.webkitMaskImage = mask;
+            faqContainer.style.maskImage = mask;
+        };
+
+        faqContainer.addEventListener("scroll", updateFaqScrollMask, { passive: true });
+        window.addEventListener("resize", updateFaqScrollMask);
+        updateFaqScrollMask();
+    }
+
+    // -------------------------------------------------------------
+    // Mobile View More / View Less FAQ Toggle (<= 576px)
+    // -------------------------------------------------------------
+    const faqViewMoreBtn = document.getElementById("faqViewMoreBtn");
+    if (faqViewMoreBtn && faqContainer) {
+        faqViewMoreBtn.addEventListener("click", function () {
+            const isShowingAll = faqContainer.classList.contains("show-all");
+            if (isShowingAll) {
+                faqContainer.classList.remove("show-all");
+                this.textContent = "View More";
+                // Smooth scroll back to FAQ heading
+                const faqSection = document.querySelector(".faq_main_section");
+                if (faqSection) {
+                    const topPos = faqSection.getBoundingClientRect().top + window.pageYOffset - 80;
+                    window.scrollTo({ top: topPos, behavior: "smooth" });
+                }
+            } else {
+                faqContainer.classList.add("show-all");
+                this.textContent = "View Less";
+            }
+        });
+    }
 
 });
