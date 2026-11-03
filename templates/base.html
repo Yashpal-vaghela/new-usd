@@ -114,6 +114,13 @@
             ]
         }
     </script>
+    <!-- Official Google Publisher SDK (popup + toast for the custom "preferred source" button) -->
+    <script async src="https://news.google.com/swg/js/v1/publisher.js"></script>
+    <script>
+        if (window.location.hash && window.location.hash.indexOf('_WA_RES_') !== -1) {
+            window.close();
+        }
+    </script>
     {% block css %} {% endblock css %}
 </head>
 

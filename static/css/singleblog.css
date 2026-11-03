@@ -670,7 +670,7 @@
 
 @media(max-width:576px) {
     .single-blog-wrapper .breadcrumbs-section .container {
-        top: 40% !important;
+        top: 35% !important;
     }
 
     .single-blog-wrapper .breadcrumbs-title {

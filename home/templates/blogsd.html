@@ -67,7 +67,32 @@
       transform: translateY(-50%) !important;
       z-index: 10 !important;
     }
-  </style>
+
+  .google_button {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  @media (max-width: 768px){
+    .google_button {  
+    flex-direction: column;
+    align-items: start;
+    gap:10px;
+  }
+  .breadcrumbs-section .container {
+    position: relative;
+    top: 50%;
+  }
+  }
+  @media (max-width: 576px){
+  .breadcrumbs-section .container {
+    position: relative;
+    top: 33% !important;
+  }
+  }
+  
+</style>
 {% endblock css %} 
 {% block body %}
 
@@ -80,7 +105,10 @@
         &nbsp; <i class=" fa fa-solid fa-angles-right"></i> 
         &nbsp; <a href="{% url 'home:blogs' %}"> Blogs </a> 
         &nbsp; <i class=" fa fa-solid fa-angles-right"></i>
-        &nbsp; <br/><a class="breadcrumbs-title" href="{% url 'home:blogsd' blog.slug %}">{{ blog.h1 }}</a>
+      </div>
+      <div class="google_button">
+        <a class="breadcrumbs-title text-white" href="{% url 'home:blogsd' blog.slug %}">{{ blog.h1 }}</a>
+        {% include 'google-preferred-source-btn.html' %}
       </div>
       {% comment %} <h1 class=" breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool fs-4">{{blog.h1}}</h1> {% endcomment %}
     </div>

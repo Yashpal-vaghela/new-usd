@@ -27,6 +27,23 @@
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/blog.css' %}" />
+<style>
+  .google_button {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  @media (max-width: 350px){
+    .google_button {  
+    flex-direction: column;
+    align-items: start;
+    gap:10px;
+  }
+    
+  }
+
+</style>
 {% endblock css %}
 {% block body %}
 {% load static %}
@@ -35,7 +52,10 @@
     <section class="breadcrumbs-section ">
         <div class="container">
             <div class="breadcrumbs-path"> <a href="{% url 'home:home' %}"> Home </a> &nbsp;<i class=" fa fa-solid fa-angles-right"></i> &nbsp;Blogs</div>
-            <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool">Blogs</h1>
+            <div class="google_button">
+               <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool">Blogs</h1>
+               {% include 'google-preferred-source-btn.html' %}
+            </div>
             {% comment %} <img src="{% static 'text_vec.svg' %}" class="img-fluid" /> {% endcomment %}
         </div>
     </section>
