@@ -24,6 +24,7 @@ urlpatterns = [
     path('certified-dentists/<str:pk>/', views.find_dentist_d, name='find_dentist_d'),
     path('blogs/', views.blogs, name='blogs'),
     path('blogs/<str:pk>/', views.blogsd, name='blogsd'),
+    path('blogs/<str:pk>/ai-summary/', views.blog_ai_summary, name='blog_ai_summary'),
     path('contact/', views.contact, name='contact'),
     path('thank-you/', views.thankyou, name='thankyou'),
     path('dentist-thank-you/', views.dthankyou, name='dthankyou'),

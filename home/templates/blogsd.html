@@ -18,7 +18,7 @@
 {% endblock seo%}
 {% block header %} {% endblock header %} 
 {% block css %} 
-  <link rel="stylesheet" href="{% static 'css/singleblog.css' %}?v=1.1"/>
+  <link rel="stylesheet" href="{% static 'css/singleblog.css' %}?v=1.8"/>
   <style>
     /* Strict NO BORDER on valid/invalid for blog form */
     .single-blog-content2 .pincode-input-container .form-control.is-valid,
@@ -164,6 +164,45 @@
               </svg>
               {{blog.author}}
             </span>
+            <span class="ai-summary-btns"><span class="ai-summary-label"><svg class="ai-summary-label-icon" width="18" height="18" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M10 2c0 4.418-3.582 8-8 8 4.418 0 8 3.582 8 8 0-4.418 3.582-8 8-8-4.418 0-8-3.582-8-8z" fill="url(#ai_sparkle_grad)"/><path d="M19 14c0 2.209-1.791 4-4 4 2.209 0 4 1.791 4 4 0-2.209 1.791-4 4-4-2.209 0-4-1.791-4-4z" fill="url(#ai_sparkle_grad)"/></svg>Summarize With AI</span>
+              <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+                <defs>
+                  <linearGradient id="ai_sparkle_grad" x1="7.06811" y1="-1.63359e-07" x2="18.5011" y2="1.85666" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#C3942F"/>
+                    <stop offset="0.234" stop-color="#D89C27"/>
+                    <stop offset="0.449" stop-color="#E7DC96"/>
+                    <stop offset="0.669" stop-color="#DFC86F"/>
+                    <stop offset="0.849" stop-color="#D89C27"/>
+                    <stop offset="1" stop-color="#C99C30"/>
+                  </linearGradient>
+                  <linearGradient id="gemini_logo_grad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#4796E3"/>
+                    <stop offset="0.5" stop-color="#9168C0"/>
+                    <stop offset="1" stop-color="#D96570"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+              <button type="button" class="summury_button_main ai-summary-trigger" data-provider="chatgpt" data-name="ChatGPT" aria-expanded="false" aria-controls="aiSummaryBox" data-url="{% url 'home:blog_ai_summary' blog.slug %}?provider=chatgpt">
+                <svg class="summary_ai_icon me-1" viewBox="0 0 24 24" aria-hidden="true"><path fill="#ffffff" d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"/></svg>
+                
+              </button>
+              <button type="button" class="summury_button_main ai-summary-trigger" data-provider="gemini" data-name="Gemini" aria-expanded="false" aria-controls="aiSummaryBox" data-url="{% url 'home:blog_ai_summary' blog.slug %}?provider=gemini">
+                <svg class="summary_ai_icon me-1" viewBox="0 0 24 24" aria-hidden="true"><path fill="url(#gemini_logo_grad)" d="M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81"/></svg>
+                
+              </button>
+            </span>
+          </div>
+          <div class="ai-summary-box" id="aiSummaryBox" role="region" aria-label="AI Summary" hidden>
+            <div class="ai-summary-head">
+              <span class="ai-summary-title">
+                <svg width="18" height="18" class="me-1" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M10 2c0 4.418-3.582 8-8 8 4.418 0 8 3.582 8 8 0-4.418 3.582-8 8-8-4.418 0-8-3.582-8-8z" fill="url(#ai_sparkle_grad)"/><path d="M19 14c0 2.209-1.791 4-4 4 2.209 0 4 1.791 4 4 0-2.209 1.791-4 4-4-2.209 0-4-1.791-4-4z" fill="url(#ai_sparkle_grad)"/></svg>
+                AI Summary
+                <span class="ai-summary-model" id="aiSummaryModel"></span>
+              </span>
+              <button type="button" class="ai-summary-hide cool" id="aiSummaryHide">Hide</button>
+            </div>
+            <div class="ai-summary-body" id="aiSummaryBody" aria-live="polite"></div>
+            <div class="ai-summary-foot" id="aiSummaryFoot" hidden>AI-generated content may be incorrect. Please read the full blog for complete details.</div>
           </div>
           <div class="single-blog-page position-relative">
             <img
@@ -636,6 +675,169 @@
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script src="{% static 'js/recaptcha-api.js' %}" async defer></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+(function () {
+  var buttons = Array.prototype.slice.call(document.querySelectorAll(".ai-summary-trigger"));
+  var box = document.getElementById("aiSummaryBox");
+  if (!buttons.length || !box) return;
+  var btn = buttons[0];                                 // currently selected model button
+  var body = document.getElementById("aiSummaryBody");
+  var foot = document.getElementById("aiSummaryFoot");
+  var modelBadge = document.getElementById("aiSummaryModel");
+  var controller = null;
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text) e.textContent = text;
+    return e;
+  }
+  // Render the streamed plain-text summary ("## heading", "- bullet", paragraphs).
+  // Split streamed text into sections, each starting with a "## heading".
+  function splitSections(txt) {
+    return txt.replace(/\*\*/g, "").split(/\r?\n(?=\s*#{1,6}\s)/).filter(function (s) { return s.trim(); });
+  }
+  // Build one complete section (heading + paragraph / bullets) as a block.
+  function sectionNode(chunk) {
+    var wrap = el("div", "ai-summary-sec"), ul = null;
+    chunk.split(/\r?\n/).forEach(function (line) {
+      line = line.trim();
+      if (!line) { ul = null; return; }
+      if (/^#{1,6}\s/.test(line)) {
+        ul = null;
+        wrap.appendChild(el("h3", "ai-summary-h", line.replace(/^#+\s*/, "")));
+      } else if (/^[-*•]\s/.test(line)) {
+        if (!ul) ul = wrap.appendChild(el("ul", "ai-summary-list"));
+        ul.appendChild(el("li", null, line.replace(/^[-*•]\s*/, "")));
+      } else {
+        ul = null;
+        wrap.appendChild(el("p", null, line));
+      }
+    });
+    return wrap;
+  }
+  function showError(msg) {
+    body.innerHTML = "";
+    var p = el("p", "ai-summary-error", (msg || "Could not generate summary.") + " ");
+    var retry = el("button", "ai-summary-retry", "Try again");
+    retry.type = "button";
+    retry.onclick = load;
+    p.appendChild(retry);
+    body.appendChild(p);
+  }
+  // Steps always shown before the summary, even if the API already finished.
+  var STEPS = [["Analyzing", 2000], ["Thinking", 2000], ["Summarizing", 1500], ["Generating", 1500]];
+  var SECTION_GAP_MS = 700;                           // delay between sections appearing
+
+  function showStep(label) {
+    body.innerHTML = "";
+    var p = el("p", "ai-summary-loading", label);
+    for (var i = 0; i < 3; i++) p.appendChild(el("span", null, "."));
+    body.appendChild(p);
+  }
+  function load() {
+    if (controller) controller.abort();
+    var ctrl = controller = new AbortController();
+    var txt = "", streamDone = false, failed = false, shown = 0;
+    foot.hidden = true;
+
+    function fail(msg) {
+      if (failed || ctrl.signal.aborted) return;
+      failed = true;
+      showError(msg);
+    }
+
+    // 1) Start the API request immediately; buffer the streamed text.
+    fetch(btn.dataset.url, { signal: ctrl.signal, cache: "no-store", headers: { "X-Requested-With": "XMLHttpRequest" } })
+      .then(function (r) {
+        var type = r.headers.get("Content-Type") || "";
+        if (!r.ok || type.indexOf("application/json") !== -1) {
+          return r.json().then(function (j) { throw new Error(j.message || ""); });
+        }
+        var reader = r.body.getReader(), dec = new TextDecoder();
+        function pump() {
+          return reader.read().then(function (res) {
+            if (res.done) {
+              if (!txt.trim()) throw new Error("");
+              streamDone = true;
+              return;
+            }
+            txt += dec.decode(res.value, { stream: true });
+            return pump();
+          });
+        }
+        return pump();
+      })
+      .catch(function (e) { fail(e && e.message); });
+
+    // 2) Show the thinking steps one by one.
+    var delay = 0;
+    STEPS.forEach(function (step) {
+      setTimeout(function () { if (!failed && !ctrl.signal.aborted) showStep(step[0]); }, delay);
+      delay += step[1];
+    });
+
+    // 3) After the steps, show the summary section by section (each section appears complete).
+    var lastShownAt = 0;
+    function reveal() {
+      if (failed || ctrl.signal.aborted) return;
+      var secs = splitSections(txt);
+      var ready = streamDone ? secs.length : Math.max(0, secs.length - 1); // last one may still be streaming
+      if (shown < ready && Date.now() - lastShownAt >= SECTION_GAP_MS) {
+        if (shown === 0) body.innerHTML = "";          // remove "Generating..."
+        body.appendChild(sectionNode(secs[shown]));
+        shown++;
+        lastShownAt = Date.now();
+      }
+      if (streamDone && shown >= secs.length) {
+        foot.hidden = false;
+        if (controller === ctrl) controller = null;
+        return;
+      }
+      setTimeout(reveal, 100);
+    }
+    setTimeout(reveal, delay);
+  }
+  // Show which model generated the summary (logo + name) in the box header.
+  function setModelBadge(b) {
+    modelBadge.innerHTML = "";
+    modelBadge.appendChild(el("span", "ai-summary-model-by", "by"));
+    var logo = b.querySelector("svg");
+    if (logo) {
+      logo = logo.cloneNode(true);
+      logo.setAttribute("class", "ai-summary-model-logo");
+      modelBadge.appendChild(logo);
+    }
+    modelBadge.appendChild(el("span", null, b.dataset.name));
+  }
+  function setActive(b) {
+    buttons.forEach(function (x) {
+      var on = x === b && !box.hidden;
+      x.classList.toggle("is-active", on);
+      x.setAttribute("aria-expanded", on ? "true" : "false");
+    });
+  }
+  function open(b) {                                    // fresh summary from the chosen model
+    btn = b;
+    box.hidden = false;
+    setModelBadge(b);
+    setActive(b);
+    load();
+  }
+  function close() {
+    box.hidden = true;
+    setActive(null);
+    if (controller) { controller.abort(); controller = null; }
+  }
+  buttons.forEach(function (b) {
+    b.addEventListener("click", function () {
+      if (!box.hidden && btn === b) close();            // same button again = hide
+      else open(b);                                     // other button = switch model
+    });
+  });
+  document.getElementById("aiSummaryHide").addEventListener("click", close);
+})();
+</script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   const accordion = document.querySelector("#accordion");
