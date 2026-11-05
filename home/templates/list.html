@@ -40,7 +40,7 @@
 <div class="page-content">
   <section class="breadcrumbs-section">
     <div class="container">
-      <div class="breadcrumbs-path"> <a href="{% url 'home:home' %}"> Home </a> &nbsp; <i class=" fa fa-solid fa-angles-right"></i> &nbsp; Certified Dentists</div>
+      <div class="breadcrumbs-path"> <a href="{% url 'home:home' %}"> Home </a> &nbsp; <i class=" fa fa-solid fa-angles-right"></i> &nbsp; Authorised Dentists</div>
       <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool">Ultimate Smile Designers</h1>
       {% comment %} <img src="{% static 'Group 291.svg' %}" class="find-dentist-img img-fluid" /> {% endcomment %}
     </div>
@@ -48,7 +48,7 @@
   <div id="location-fallback-message" class="text-center py-5 text-white d-none">
     <div class="container">
         <span class="fw-500 fs-4 cool mb-2">Missing One Step to Your Ultimate Smile</span>
-        <p class="mx-auto text-center" style="max-width: 700px;">We can't access your location. Share your location access to find a certified Ultimate Smile Designer dentists near you and transform your ordinary smile into ultimate smile.</p>
+        <p class="mx-auto text-center" style="max-width: 700px;">We can't access your location. Share your location access to find an authorised Ultimate Smile Designer dentists near you and transform your ordinary smile into ultimate smile.</p>
         <button type="button" onclick="requestLocationAccess()" class="btn mt-3 bat text-black">
           Allow Location Access
         </button>
@@ -57,7 +57,7 @@
   <div class="new-browser-wrapper d-none m-auto justify-content-center text-center py-5" id="browser-permission-helper">
     <div class="container">
       <span class="fw-600 fs-4 cool mb-2 d-inline-block" style="font-family: 'Gilda Display', serif">Your Browser’s Location Access is Disabled</span>
-      <p class="mx-auto text-center text-white" style="max-width: 700px;">To find certified Ultimate Smile Designer dentists near you, please enable your location. Follow the steps below to reset your browser’s location permissions.</p>
+      <p class="mx-auto text-center text-white" style="max-width: 700px;">To find authorised Ultimate Smile Designer dentists near you, please enable your location. Follow the steps below to reset your browser’s location permissions.</p>
       <div class="step-wrapper text-center mb-5" id="step-1">
         <p class="text-white fs-5">Step 1: Click the padlock icon next to the website address in your browser’s address bar.</p>
         <img src="{% static 'resetlocation-img1.webp' %}" class="resetlocation-img1 m-auto img-fluid" id="Resetlocation-img1" alt="Step by step guide to give location permission Ultimate Smile Design" />
@@ -241,7 +241,7 @@
                 <button class="btn bookAppoinment-btn mt-0 w-100 bat" onclick="BookAppoinment('{{ie.name}}')">
                   Book Appointment
                 </button>
-                <span class="cool d-inline-block">ADE Certified Dentist</span>
+                <span class="cool d-inline-block">USD Authorised Dentist</span>
               </div>
               
             </div>
@@ -384,7 +384,7 @@
     if ((!latitude || !longitude || !permission) && !cityParam) {
       Swal.fire({
         title: "Allow Your Location for Nearest Smile Designers.",
-        text: "Please allow location access to find certified dentists nearest to you.",
+        text: "Please allow location access to find authorised dentists nearest to you.",
         showCancelButton: false,
         confirmButtonText: "Allow Location",
         showCloseButton: true,

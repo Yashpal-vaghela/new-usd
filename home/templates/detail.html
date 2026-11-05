@@ -117,7 +117,7 @@
           <div class="dentists-top">
             <h2 class="dentists-name d-block cool font-Glida-display">{{data.name}}</h2>
             {% if data.certificate_code %}
-              <p>USD Certified -{{data.certificate_code|striptags}} 
+              <p>USD Authorised -{{data.certificate_code|striptags}} 
                 {% comment %} {% with edu=data.education|striptags|linebreaksbr %}
                     {% if edu|slice:":4" == "<br>" %}
                       {{ edu|slice:"4:"|safe }}
@@ -127,7 +127,7 @@
                 {% endwith %} {% endcomment %}
                </p>
             {% else %}
-              <p>Certified Ultimate Smile Designer</p>
+              <p>Authorised Ultimate Smile Designer</p>
             {% endif %}
             
             {% comment %} <h3 class="dentists-city-name d-inline-block d-none d-lg-none cool">Dentist in Surat</h3> {% endcomment %}

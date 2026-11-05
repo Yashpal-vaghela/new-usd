@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% load static %}{% block header %}
 {% block seo%}
-<title>Best Dentists in {{city_name | capfirst}} for Smile Designing | ✅ USD Certified</title>
+<title>Best Dentists in {{city_name | capfirst}} for Smile Designing | ✅ USD Authorised</title>
 <meta name="description" content="Find the best dentists in {{city_name | capfirst}} for smile designing treatment. Find top cosmetic dentists and qualified smile design experts near you in {{city_name | capfirst}}." />
 {% if data.number > 1 %}
 <link rel="canonical" href="https://ultimatesmiledesign.com/certified-dentists/city/{{city_name|lower}}/?page={{data.number}}" />
@@ -30,7 +30,7 @@
     <div class="container">
       <div class="breadcrumbs-path"> <a href="{% url 'home:home' %}"> Home </a> &nbsp;
       <i class=" fa fa-solid fa-angles-right"></i> &nbsp; 
-      <a href="{% url 'home:search_all_usd' %}">Certified Dentists</a>&nbsp;
+      <a href="{% url 'home:search_all_usd' %}">Authorised Dentists</a>&nbsp;
       <i class=" fa fa-solid fa-angles-right"></i> &nbsp; {{city_name | capfirst}}
       </div>
       <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool">Best Dentists in {{city_name | capfirst}} for Ultimate Smile Design</h1>
@@ -64,7 +64,7 @@
                   {% comment %} <a href="#">Book Appointment</a> {% endcomment %}
                   {% comment %} <a href="/account/dentist/" >Book Appointment</a> {% endcomment %}
                 </button>
-                <span class="cool d-inline-block">ADE Certified Dentist</span>
+                <span class="cool d-inline-block">ADE Authorised Dentist</span>
               </div>
               
             </div>
