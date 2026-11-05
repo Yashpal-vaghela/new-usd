@@ -110,7 +110,14 @@ class Dentist(models.Model):
     Fri = models.CharField(max_length=300, default='open',blank=True, null=True)
     Sat = models.CharField(max_length=300, default='open',blank=True, null=True)
     Sun = models.CharField(max_length=300, default='close',blank=True, null=True)
-    
+
+    # Google Maps Place ID of the clinic. Mon–Sun above are refreshed from Google
+    # every night by `python manage.py sync_clinic_hours` for dentists that have one.
+    google_place_id = models.CharField(max_length=300, blank=True, null=True,
+        help_text="Google Maps Place ID (fill with `python manage.py find_place_ids`). Mon–Sun hours sync from Google nightly when set.")
+    hours_synced_at = models.DateTimeField(blank=True, null=True,
+        help_text="Last time Mon–Sun hours were checked against Google Maps.")
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

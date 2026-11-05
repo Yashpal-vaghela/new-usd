@@ -1,0 +1,15 @@
+{% extends "admin/change_form.html" %}
+{# Dentist edit page: adds "Fetch hours from Google" next to History. #}
+
+{% block object-tools-items %}
+  {% if original.pk %}
+    <li>
+      <form id="sync-one-google-hours-form" method="post" action="{% url 'admin:account_dentist_sync_one_google_hours' original.pk %}">{% csrf_token %}</form>
+      <a href="#" class="viewlink"
+         onclick="if (confirm('Fetch this clinic\'s opening hours from Google Maps now?\n\nSave your other changes first, unsaved edits on this page will be lost.')) { this.textContent = 'Fetching…'; document.getElementById('sync-one-google-hours-form').submit(); } return false;">
+        Fetch hours from Google
+      </a>
+    </li>
+  {% endif %}
+  {{ block.super }}
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "admin/import_export/change_list_import_export.html" %}
+{# Dentists list: adds "Fetch Google hours (all active)" next to Import / Export / Add. #}
+
+{% block object-tools-items %}
+  <li>
+    <form id="sync-all-google-hours-form" method="post" action="{% url 'admin:account_dentist_sync_all_google_hours' %}">{% csrf_token %}</form>
+    <a href="#" class="viewlink"
+       onclick="if (confirm('Fetch opening hours from Google Maps for ALL active dentists now?\n\nThis makes 1 Google call per active dentist and can take up to a minute.')) { this.textContent = 'Fetching…'; document.getElementById('sync-all-google-hours-form').submit(); } return false;">
+      Fetch Google hours (all active)
+    </a>
+  </li>
+  {{ block.super }}
+{% endblock %}

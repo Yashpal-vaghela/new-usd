@@ -1,8 +1,15 @@
-from django.contrib import admin
+from django.contrib import admin, messages
+from django.contrib.admin.utils import unquote
+from django.core.exceptions import PermissionDenied
 from django.db import models
+from django.http import Http404, HttpResponseNotAllowed
+from django.shortcuts import redirect
+from django.urls import path
 from import_export.admin import ImportExportModelAdmin
 from django.utils.html import format_html, mark_safe
 from django_json_widget.widgets import JSONEditorWidget
+from .clinic_hours import active_dentists, sync_dentist_hours
+from .google_places import PlacesConfigError
 from .models import *
 
 class DentistAdmin(ImportExportModelAdmin):
@@ -10,7 +17,90 @@ class DentistAdmin(ImportExportModelAdmin):
     list_display_links = ('name',)
     search_fields = ('name', 'city__city', 'contact')
     list_filter = ('status', 'city')
-    readonly_fields = ('profile_preview', 'dentist_image_preview')
+    readonly_fields = ('profile_preview', 'dentist_image_preview', 'hours_synced_at')
+
+    # "Fetch Google hours" buttons (templates in account/templates/admin/account/dentist/)
+    import_export_change_list_template = 'admin/account/dentist/change_list_google_hours.html'
+    change_form_template = 'admin/account/dentist/change_form_google_hours.html'
+    actions = ['fetch_google_hours']
+
+    def get_urls(self):
+        urls = [
+            path('google-hours/sync-all/',
+                 self.admin_site.admin_view(self.sync_all_google_hours_view),
+                 name='account_dentist_sync_all_google_hours'),
+            path('<path:object_id>/google-hours/sync/',
+                 self.admin_site.admin_view(self.sync_one_google_hours_view),
+                 name='account_dentist_sync_one_google_hours'),
+        ]
+        return urls + super().get_urls()
+
+    @admin.action(description='Fetch opening hours from Google (selected active dentists)')
+    def fetch_google_hours(self, request, queryset):
+        self._sync_google_hours(request, queryset.select_related('city').order_by('id'))
+
+    def sync_all_google_hours_view(self, request):
+        if request.method != 'POST':
+            return HttpResponseNotAllowed(['POST'])
+        if not self.has_change_permission(request):
+            raise PermissionDenied
+        self._sync_google_hours(request, active_dentists())
+        return redirect('admin:account_dentist_changelist')
+
+    def sync_one_google_hours_view(self, request, object_id):
+        if request.method != 'POST':
+            return HttpResponseNotAllowed(['POST'])
+        dentist = self.get_object(request, unquote(object_id))
+        if dentist is None:
+            raise Http404('Dentist not found')
+        if not self.has_change_permission(request, dentist):
+            raise PermissionDenied
+        self._sync_google_hours(request, [dentist])
+        return redirect('admin:account_dentist_change', dentist.pk)
+
+    def _sync_google_hours(self, request, dentists):
+        """Run the Google hours sync for `dentists` and report the outcome as admin messages."""
+        results = []
+        try:
+            for dentist in dentists:
+                results.append(sync_dentist_hours(dentist))
+        except PlacesConfigError as exc:
+            self.message_user(request, f'Google Places API not usable, nothing more was fetched: {exc}', messages.ERROR)
+
+        by_status = {}
+        for r in results:
+            by_status.setdefault(r.status, []).append(r)
+            if r.linked_place:
+                self.message_user(
+                    request,
+                    f'{r.label}: linked to Google place "{r.linked_place_text}". '
+                    f'If this is the wrong clinic, correct the "Google place id" field.',
+                    messages.INFO,
+                )
+            if r.business_status and r.business_status != 'OPERATIONAL':
+                self.message_user(request, f'{r.label}: Google Maps says {r.business_status}.', messages.WARNING)
+            if r.status == 'error':
+                self.message_user(request, f'{r.label}: Google error: {r.error}', messages.ERROR)
+
+        def names(status, with_days=False):
+            items = by_status.get(status, [])
+            if with_days and len(items) <= 5:  # show the changed days only for a few dentists
+                return ', '.join(f'{r.label} ({", ".join(r.changes)})' for r in items)
+            return ', '.join(r.label for r in items)
+
+        if 'changed' in by_status:
+            self.message_user(request, f'Opening hours updated for {len(by_status["changed"])} dentist(s): '
+                                       f'{names("changed", with_days=True)}', messages.SUCCESS)
+        if 'unchanged' in by_status:
+            self.message_user(request, f'Opening hours already up to date for {len(by_status["unchanged"])} dentist(s).', messages.SUCCESS)
+        if 'no_hours' in by_status:
+            self.message_user(request, f'No opening hours on Google Maps (kept existing hours): {names("no_hours")}', messages.WARNING)
+        if 'not_found' in by_status:
+            self.message_user(request, f'Clinic not found on Google Maps, add the "Google place id" manually: {names("not_found")}', messages.WARNING)
+        if 'inactive' in by_status:
+            self.message_user(request, f'Skipped (status is off, only active dentists are fetched): {names("inactive")}', messages.WARNING)
+        if not results and not dentists:
+            self.message_user(request, 'No active dentists to fetch.', messages.WARNING)
 
     def profile_preview(self, obj):
         if obj.profile:
