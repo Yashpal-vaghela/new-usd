@@ -74,7 +74,7 @@
       <div class="breadcrumbs-path">
         <a href="{% url 'home:home' %}"> Home </a> &nbsp;
         <i class="fa fa-solid fa-angles-right"></i> &nbsp;
-        <a href="{% url 'home:search_all_usd' %}">Certified Dentists </a> &nbsp;
+        <a href="{% url 'home:search_all_usd' %}">Authorised Dentists </a> &nbsp;
         <i class="fa fa-solid fa-angles-right"></i> &nbsp;{{data.name}}
       </div>
       <h1 class="breadcrumbs-title bg-linear-gradient mb-0 fw-bold cool">
@@ -138,7 +138,7 @@
             {% comment %} <h2 class="dentists-name d-none d-lg-block ">{{data.name}}</h2> {% endcomment %}
             <div>
               <h2 class="new-dentists-title cool  font-Glida-display">About {{data.name}}</h2>
-              <p class="new-dentists-subtitle text-white">{{data.description}}</p>
+              <p class="new-dentists-subtitle text-white">{% if data.bio %}{{ data.bio|linebreaksbr }}{% else %}{{ data.description|default_if_none:"" }}{% endif %}</p>
             </div>
             <div class="text-center text-lg-start">
               <button class="premium-book-btn bat" onClick="BookAppoinment('{{data.name}}','{{data.city}}')">
@@ -212,12 +212,46 @@
       </div>
     </div>
   </section>
+  <style>
+    .dentist-hours{position:relative;flex-shrink:0}
+    .dentist-hours-toggle{display:flex;align-items:center;gap:6px;background:transparent;color:#fff;border:2px solid #3d3d3d;border-radius:8px;padding:8px 10px;font-size:13px;line-height:1;cursor:pointer;white-space:nowrap}
+    .dentist-hours-toggle .dh-arrow{margin-left:2px;transition:transform .2s}
+    .dentist-hours-toggle[aria-expanded="true"] .dh-arrow{transform:rotate(180deg)}
+    .dentist-hours-week{display:none;position:absolute;right:0;top:calc(100% + 6px);z-index:20;min-width:100%;list-style:none;margin:0;padding:8px 12px;background:#000;border:2px solid #3d3d3d;border-radius:8px}
+    .dentist-hours-week.open{display:block}
+    .dentist-hours-week li{display:flex;justify-content:space-between;gap:20px;padding:5px 0;color:#fff;font-size:13px;white-space:nowrap}
+    .dentist-hours-week li.dh-today{font-weight:600}
+    .dentist-hours .dh-closed{color:#ff6b6b}
+    @media (max-width:767px){.dentist-hours-week{left:0;right:auto}}
+  </style>
   <section class="dentists-location-section mb-5">
     <div class="container">
       <h2 class="cool font-Glida-display new-dentists-title">Location</h2> 
       <br />
       <h3 class="new-dentists-content-title">{{data.clinic_name}}</h3>
-      <p class="text-white">{{data.address}}</p>
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-3">
+        <p class="text-white mb-0">{{data.address}}</p>
+        {% if week_hours %}
+        <div class="dentist-hours">
+          {% for d in week_hours %}{% if d.today %}
+          <button type="button" class="dentist-hours-toggle" aria-expanded="false" aria-controls="dentistHoursWeek"
+            onclick="var o=document.getElementById('dentistHoursWeek').classList.toggle('open');this.setAttribute('aria-expanded',o);">
+            <span>{{ d.day }} :</span>
+            <span class="{% if d.closed %}dh-closed{% endif %}">{{ d.hours }}</span>
+            <svg class="dh-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1.5 4l4.5 4.5L10.5 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          {% endif %}{% endfor %}
+          <ul class="dentist-hours-week" id="dentistHoursWeek">
+            {% for d in week_hours %}
+            <li class="{% if d.today %}dh-today{% endif %}">
+              <span>{{ d.day }}</span>
+              <span class="{% if d.closed %}dh-closed{% endif %}">{{ d.hours }}</span>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+      </div>
       <div class="sf-doc-location-map grayscle-area">{{data.iframe|safe}}</div>
     </div>
   </section>

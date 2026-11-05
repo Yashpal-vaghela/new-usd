@@ -29,6 +29,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.trycloudflare.com',
+]
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# Allow cross-origin popups (like Google Preferred Sources popup) to communicate with parent window and auto-close
+SECURE_CROSS_ORIGIN_OPENER_POLICY = None
+
 
 # Application definition
 
@@ -255,5 +262,13 @@ INTERNAL_SYNC_SECRET = os.getenv("INTERNAL_SYNC_SECRET", "usd-secret-sync-token-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+OPENAI_API_KEY = os.getenv("CHAT_GPT_URL")
+OPENAI_SUMMARY_MODEL = os.getenv("OPENAI_SUMMARY_MODEL", "gpt-4o-mini")
+GEMINI_BLOG_API_KEY = os.getenv("GEMINI_BLOG_URL")
+GEMINI_SUMMARY_MODEL = os.getenv("GEMINI_SUMMARY_MODEL", "gemini-3.8-flash")
+
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 GEMINI_MODEL_NAME = os.getenv("GEMINI_MODEL_NAME")
+
+# Google Places API (New) — used to sync dentist clinic opening hours
+GOOGLE_PLACES_API_KEY = os.getenv("GOOGLE_PLACES_API_KEY")

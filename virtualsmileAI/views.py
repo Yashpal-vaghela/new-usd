@@ -96,9 +96,23 @@ def send_zoho_smile_webhook_async(payload):
     t.start()
 
 
+def send_common_crm_smile_webhook_async(payload):
+    def _worker():
+        try:
+            crm_url = "https://proactive-sporty-surgical.ngrok-free.dev/api/webhooks/common/"
+            headers = {"Content-Type": "application/json"}
+            res = requests.post(crm_url, json=payload, headers=headers, timeout=10)
+            print(f"✅ Common CRM Smile Design Webhook Sent! Status: {res.status_code}, Response: {res.text[:200]}")
+        except Exception as e:
+            print(f"❌ Common CRM Smile Design Webhook Error: {e}")
+
+    t = threading.Thread(target=_worker, daemon=True)
+    t.start()
+
+
 def trigger_zoho_smile_lead(lead, before_url=None, after_url=None, request=None):
     """
-    Triggers Zoho webhook when both before and after images are linked to the lead.
+    Triggers Zoho & Common CRM webhooks when both before and after images are linked to the lead.
     Ensures the webhook is sent exactly once per lead.
     """
     from django.core.cache import cache
@@ -141,6 +155,20 @@ def trigger_zoho_smile_lead(lead, before_url=None, after_url=None, request=None)
     }
 
     send_zoho_smile_webhook_async(zoho_payload)
+
+    # Common CRM Webhook
+    crm_payload = {
+        "source": "smile_design",
+        "name": (lead.name or "").strip(),
+        "city": str(lead.city or "").strip(),
+        "contact_number": cleaned_phone,
+        "email": (lead.email or "").strip(),
+        "pincode": str(lead.pincode or "").strip(),
+        "before_url": b_url,
+        "after_url": a_url,
+    }
+    send_common_crm_smile_webhook_async(crm_payload)
+
     return True
 
 

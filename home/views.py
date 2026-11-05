@@ -148,6 +148,28 @@ def home(request):
             except requests.exceptions.RequestException as e:
                 messages.warning(request, f"Form saved but CRM sync failed: {str(e)}")
 
+            # Common CRM Webhook
+            crm_payload = {
+                "source": "smile_contact",
+                "name": submission.name or "",
+                "email": submission.email or "",
+                "phone": submission.phone or "",
+                "pincode": submission.pincode or "",
+                "city": submission.city or "",
+                "subject": post_data.get("subject") or "Smile makeover",
+                "message": submission.message or "",
+            }
+            crm_url = "https://proactive-sporty-surgical.ngrok-free.dev/api/webhooks/common/"
+            try:
+                requests.post(
+                    crm_url,
+                    json=crm_payload,
+                    headers={"Content-Type": "application/json"},
+                    timeout=10,
+                )
+            except Exception:
+                pass
+
             return redirect('home:thankyou')
         else:
             messages.error(request, 'Something went wrong! Please check your details.')
@@ -620,6 +642,29 @@ def search_city_dentists(request, city_name):
 #     }
 #     return render(request, 'list.html', context)
 
+WEEK_DAYS = [("Mon", "Monday"), ("Tue", "Tuesday"), ("Wed", "Wednesday"), ("Thu", "Thursday"),
+             ("Fri", "Friday"), ("Sat", "Saturday"), ("Sun", "Sunday")]
+
+
+def dentist_week_hours(dentist):
+    """Mon–Sun hours (synced from Google Maps) for the detail page; today (IST) is flagged."""
+    today = timezone.localdate().weekday()
+    week = []
+    for i, (field, label) in enumerate(WEEK_DAYS):
+        value = (getattr(dentist, field, None) or "").strip()
+        low = value.lower()
+        if low in ("close", "closed"):
+            value = "Closed"
+        elif low == "open":
+            value = "Open"
+        elif not value:
+            value = "Not available"
+        else:
+            value = re.sub(r"\s*[–-]\s*", " – ", value)  # "9:30 am–8 pm" -> "9:30 am – 8 pm"
+        week.append({"day": label, "hours": value, "closed": value == "Closed", "today": i == today})
+    return week[today:] + week[:today]  # start from today, like Google Maps
+
+
 def find_dentist_d(request, pk):
     try:
         # Try to get Dentist by slug
@@ -725,6 +770,7 @@ def find_dentist_d(request, pk):
                 'gallery': gallery,
                 'reviews': reviews,
                 'form': form,
+                'week_hours': dentist_week_hours(data),
                 'error_message': 'Please correct the errors below.'
             })
     else:
@@ -735,6 +781,7 @@ def find_dentist_d(request, pk):
         'gallery': gallery,
         'reviews': reviews,
         'form': form,
+        'week_hours': dentist_week_hours(data),
     }
     return render(request, 'detail.html', context)
 
@@ -917,6 +964,28 @@ def blogsd(request, pk):
             except requests.exceptions.RequestException as e:
                 messages.warning(request, f"Form saved but CRM sync failed: {str(e)}")
 
+            # Common CRM Webhook
+            crm_payload = {
+                "source": "smile_contact",
+                "name": submission.name or "",
+                "email": submission.email or "",
+                "phone": submission.phone or "",
+                "pincode": submission.pincode or "",
+                "city": submission.city or "",
+                "subject": getattr(submission, 'subject', '') or post_data.get("subject") or "Smile makeover",
+                "message": submission.message or "",
+            }
+            crm_url = "https://proactive-sporty-surgical.ngrok-free.dev/api/webhooks/common/"
+            try:
+                requests.post(
+                    crm_url,
+                    json=crm_payload,
+                    headers={"Content-Type": "application/json"},
+                    timeout=10,
+                )
+            except Exception:
+                pass
+
             return redirect('home:thankyou')
         else:
             messages.error(request, "Something went wrong! Please check your details.")
@@ -962,6 +1031,226 @@ def blogsd(request, pk):
     }
     # print("relatedBlog",related_blog)
     return render(request, 'blogsd.html', context)
+
+
+# ---------------------------------------------------------------------------
+# AI Blog Summary (OpenAI). One API call per blog; result cached on disk and
+# regenerated only when the blog title/content/FAQ changes.
+# ---------------------------------------------------------------------------
+BLOG_SUMMARY_MAX_CHARS = 10000  # ~2.5k input tokens max per blog
+
+BLOG_SUMMARY_PROMPT = """You are an expert dental content summarizer for Ultimate Smile Design.
+Read and understand the complete blog article before generating its summary.
+Create a concise, accurate and easy-to-understand summary using exactly these 4 sections:
+
+SECTION 1 – Topic-Based Heading
+Generate a short, relevant heading based on the blog's main topic.
+Write one informative paragraph of approximately 35–40 words (2–3 lines).
+MAIN FOCUS: Give maximum importance to the paragraph's content and completeness. Summarise the entire blog by covering its central topic, purpose, major concepts and most important information. Explain what the article discusses and what readers can learn from it. Avoid generic introductions or superficial descriptions.
+
+SECTION 2 – Key Points at a Glance
+Provide exactly 5–6 bullet points highlighting the most important information from the article.
+Select the most relevant facts, treatments, benefits, procedures, comparisons or considerations actually discussed in the blog.
+BULLET POINT FORMATTING RULES:
+- Keep each bullet point short, clear and informative.
+- Each bullet point should ideally contain 6–12 words.
+- Each bullet point must communicate only one main idea.
+- Keep every bullet point to a single short line.
+- Avoid long explanations, lengthy sentences or unnecessary details.
+- Do not use paragraph-style descriptions in bullet points.
+- Prioritise the most valuable information from the original blog.
+- Do not repeat the same information across multiple bullets.
+
+SECTION 3 – Topic-Based Paragraph Heading
+Generate a relevant heading based on the key points discussed in Section 2.
+Convert the 5–6 bullet points from Section 2 into one detailed, well-connected paragraph of approximately 40–45 words (3–4 lines).
+MAIN FOCUS: Do not simply repeat or mechanically rewrite the bullet points. Explain how the important points connect, why they matter and what overall understanding readers should gain. Make this paragraph informative and meaningful, adding context while staying strictly within the original blog's information.
+
+SECTION 4 – Conclusion with CTA
+Generate a relevant and engaging heading based on the blog topic.
+Write a concise conclusion of approximately 25–30 words (2–3 lines) that reinforces the article's central message and encourages readers to take a relevant next step.
+Include a natural, contextually relevant Call to Action (CTA), such as exploring smile design options, consulting a qualified dentist, learning about available treatments or visiting Ultimate Smile Design.
+Avoid aggressive sales language or unrelated promotional CTAs.
+
+STRICT INSTRUCTIONS:
+- Total summary length must be between 130 and 150 words, including all headings and bullet points. Keep headings short (3–6 words).
+- Use exactly 4 sections in the specified order.
+- Generate unique, relevant headings according to the actual blog content.
+- Section 1 must contain one paragraph of approximately 35–40 words.
+- Section 2 must contain exactly 5–6 short bullet points.
+- Each bullet point should ideally contain 6–12 words and fit on a single line.
+- Section 3 must contain one paragraph of approximately 40–45 words.
+- Section 4 must contain one conclusion paragraph of approximately 25–30 words with a relevant CTA.
+- Do not apply paragraph line-length rules to bullet points.
+- Prioritise meaningful information over generic descriptions.
+- Use simple, natural and reader-friendly English.
+- Maintain a professional, informative and trustworthy dental healthcare tone.
+- Keep all information factually consistent with the original blog.
+- Do not introduce external information, assumptions or unsupported claims.
+- Avoid unnecessary repetition and promotional language.
+- Do not add FAQs or any additional sections.
+- Do not repeat identical information across Sections 1, 2 and 3.
+- Keep the summary easy to scan and suitable for displaying inside a website blog summary box.
+- Ensure the CTA is relevant to the specific blog topic and Ultimate Smile Design.
+
+FINAL PRIORITY:
+- Section 1: Provide a meaningful overview of the complete blog.
+- Section 2: Present 5–6 short, single-line, easy-to-scan bullet points.
+- Section 3: Explain the key information through a deeper, connected paragraph.
+- Section 4: Deliver a meaningful conclusion with a natural CTA.
+Do not sacrifice paragraph quality just to meet the word limit. Maintain the 130–150-word total while keeping every section informative and relevant.
+
+Return only the formatted summary as plain text in exactly this format (no JSON, no bold, no other markdown):
+## <Section 1 heading>
+<Section 1 paragraph>
+
+## Key Points at a Glance
+- <bullet>
+- <bullet>
+
+## <Section 3 heading>
+<Section 3 paragraph>
+
+## <Section 4 heading>
+<Section 4 paragraph>"""
+
+
+def _blog_plain_text(blog):
+    from django.utils.html import strip_tags
+    import html as html_lib
+
+    raw = re.sub(r"(?is)<(script|style)[^>]*>.*?</\1>", " ", blog.content or "")
+    raw = re.sub(r"(?i)<(br|/p|/h[1-6]|/li|/tr|/div)[^>]*>", "\n", raw)
+    text = html_lib.unescape(strip_tags(raw))
+    text = re.sub(r"[ \t ]+", " ", text)
+    text = re.sub(r"\n\s*\n+", "\n", text).strip()
+
+    faq = blog.faq if isinstance(blog.faq, list) else []
+    faq_text = "\n".join(
+        f"Q: {i.get('q', '')}\nA: {i.get('a', '')}" for i in faq if isinstance(i, dict)
+    )
+    if faq_text:
+        text += "\nFAQ:\n" + faq_text
+    return text[:BLOG_SUMMARY_MAX_CHARS]
+
+
+def _openai_summary_stream(api_key, user_text):
+    upstream = requests.post(
+        "https://api.openai.com/v1/chat/completions",
+        headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
+        json={
+            "model": settings.OPENAI_SUMMARY_MODEL,
+            "temperature": 0.7,
+            "max_tokens": 500,
+            "stream": True,
+            "messages": [
+                {"role": "system", "content": BLOG_SUMMARY_PROMPT},
+                {"role": "user", "content": user_text},
+            ],
+        },
+        stream=True,
+        timeout=(10, 60),
+    )
+    upstream.raise_for_status()
+
+    def extract(data):
+        if data == "[DONE]":
+            return None
+        return json.loads(data)["choices"][0]["delta"].get("content")
+
+    return upstream, extract
+
+
+def _gemini_summary_stream(api_key, user_text):
+    upstream = requests.post(
+        f"https://generativelanguage.googleapis.com/v1beta/models/{settings.GEMINI_SUMMARY_MODEL}:streamGenerateContent?alt=sse",
+        headers={"x-goog-api-key": api_key, "Content-Type": "application/json"},
+        json={
+            "systemInstruction": {"parts": [{"text": BLOG_SUMMARY_PROMPT}]},
+            "contents": [{"role": "user", "parts": [{"text": user_text}]}],
+            "generationConfig": {
+                "temperature": 0.7,
+                "maxOutputTokens": 600,
+                "thinkingConfig": {"thinkingBudget": 0},  # no hidden "thinking" tokens = lower cost
+            },
+        },
+        stream=True,
+        timeout=(10, 60),
+    )
+    upstream.raise_for_status()
+
+    def extract(data):
+        parts = json.loads(data)["candidates"][0].get("content", {}).get("parts", [])
+        return "".join(p.get("text", "") for p in parts if not p.get("thought"))
+
+    return upstream, extract
+
+
+BLOG_SUMMARY_PROVIDERS = {
+    "chatgpt": ("OPENAI_API_KEY", _openai_summary_stream),
+    "gemini": ("GEMINI_BLOG_API_KEY", _gemini_summary_stream),
+}
+
+
+def blog_ai_summary(request, pk):
+    """Streams a fresh AI summary on every click (no caching) from ChatGPT or Gemini."""
+    from django.core.cache import cache
+    from django.http import StreamingHttpResponse
+
+    provider = request.GET.get("provider", "chatgpt")
+    if provider not in BLOG_SUMMARY_PROVIDERS:
+        provider = "chatgpt"
+    key_setting, start_stream = BLOG_SUMMARY_PROVIDERS[provider]
+
+    blog = Blog.objects.filter(slug=pk).first()
+    if not blog:
+        return JsonResponse({"status": "error", "message": "Blog not found."}, status=404)
+
+    api_key = getattr(settings, key_setting, None)
+    text = _blog_plain_text(blog)
+    if not api_key or len(text) < 50:
+        return JsonResponse({"status": "error", "message": "Summary is not available right now."}, status=503)
+
+    # Basic abuse protection for the paid APIs: max 6 summaries per minute per IP.
+    ip = (request.META.get("HTTP_X_FORWARDED_FOR") or request.META.get("REMOTE_ADDR") or "").split(",")[0].strip()
+    rl_key = f"blog_summary_rl:{ip}"
+    cache.add(rl_key, 0, timeout=60)
+    try:
+        if cache.incr(rl_key) > 6:
+            return JsonResponse({"status": "error", "message": "Too many requests. Please wait a minute and try again."}, status=429)
+    except ValueError:
+        pass
+
+    try:
+        upstream, extract = start_stream(api_key, f"Title: {blog.h1}\n\n{text}")
+    except Exception as e:
+        print(f"Blog AI summary error [{provider}] ({pk}): {e}")
+        return JsonResponse({"status": "error", "message": "Could not generate summary. Please try again."}, status=502)
+
+    def generate():
+        try:
+            for line in upstream.iter_lines(decode_unicode=True):
+                if not line or not line.startswith("data:"):
+                    continue
+                data = line[5:].strip()
+                try:
+                    chunk = extract(data)
+                except (ValueError, KeyError, IndexError):
+                    continue
+                if chunk is None:
+                    break
+                if chunk:
+                    yield chunk
+        except Exception as e:
+            print(f"Blog AI summary stream error [{provider}] ({pk}): {e}")
+        finally:
+            upstream.close()
+
+    response = StreamingHttpResponse(generate(), content_type="text/plain; charset=utf-8")
+    response["Cache-Control"] = "no-store"
+    response["X-Accel-Buffering"] = "no"  # disable nginx buffering so text streams live
+    return response
+
 
 def contact(request):
     if request.method == 'POST':
@@ -1057,6 +1346,28 @@ def contact(request):
                 # )
             except requests.exceptions.RequestException as e:
                 messages.warning(request, f"Form saved but CRM sync zoho api failed: {str(e)}")
+
+            # Common CRM Webhook
+            crm_payload = {
+                "source": "smile_contact",
+                "name": submission.name or "",
+                "email": submission.email or "",
+                "phone": submission.phone or "",
+                "pincode": submission.pincode or "",
+                "city": submission.city or "",
+                "subject": getattr(submission, 'subject', '') or post_data.get("subject") or "Smile makeover",
+                "message": submission.message or "",
+            }
+            crm_url = "https://proactive-sporty-surgical.ngrok-free.dev/api/webhooks/common/"
+            try:
+                requests.post(
+                    crm_url,
+                    json=crm_payload,
+                    headers={"Content-Type": "application/json"},
+                    timeout=10,
+                )
+            except Exception:
+                pass
 
             return redirect('home:thankyou')
         else:
@@ -1160,6 +1471,27 @@ def dentist_connect(request):
                 # )
             except requests.exceptions.RequestException as e:
                 messages.warning(request, f"Form saved but CRM sync zoho api failed: {str(e)}")
+
+            # Common CRM Webhook
+            crm_payload = {
+                "source": "smile_dentist",
+                "full_name": submission.name or "",
+                "email": submission.email or "",
+                "phone": submission.phone or "",
+                "city": submission.city or "",
+                "pincode": submission.pincode or "",
+                "clinic_name": submission.clinic_name or "",
+            }
+            crm_url = "https://proactive-sporty-surgical.ngrok-free.dev/api/webhooks/common/"
+            try:
+                requests.post(
+                    crm_url,
+                    json=crm_payload,
+                    headers={"Content-Type": "application/json"},
+                    timeout=10,
+                )
+            except Exception:
+                pass
 
             return redirect('home:dthankyou')
         
@@ -1372,7 +1704,28 @@ def dentist(request):
             except requests.exceptions.RequestException as e:
                 messages.warning(request, f"Form saved but CRM sync failed: {str(e)}")
 
-            
+            # Common CRM Webhook
+            crm_payload = {
+                "source": "smile_consult",
+                "first_name": user_submission.first_name or "",
+                "last_name": user_submission.last_name or "",
+                "phone": user_submission.phone or "",
+                "email": user_submission.email or "",
+                "pincode": user_submission.pincode or "",
+                "message": user_submission.message or "",
+                "preferred_doctor": user_submission.doctor_name or "",
+            }
+            crm_url = "https://proactive-sporty-surgical.ngrok-free.dev/api/webhooks/common/"
+            try:
+                requests.post(
+                    crm_url,
+                    json=crm_payload,
+                    headers={"Content-Type": "application/json"},
+                    timeout=10,
+                )
+            except Exception:
+                pass
+
             return redirect('home:thankyou')
         else:
             messages.error(request, "Something went wrong! Please check your details.")
@@ -1486,6 +1839,32 @@ def dentist_api(request):
         except requests.exceptions.RequestException:
             pass
 
+        # Sync with Common CRM Webhook
+        crm_synced = False
+        crm_payload = {
+            "source": "smile_consult",
+            "first_name": user_submission.first_name or "",
+            "last_name": user_submission.last_name or "",
+            "phone": user_submission.phone or "",
+            "email": user_submission.email or "",
+            "city": user_submission.city or "",
+            "pincode": user_submission.pincode or "",
+            "message": user_submission.message or "",
+            "preferred_doctor": user_submission.doctor_name or "",
+        }
+        crm_url = "https://proactive-sporty-surgical.ngrok-free.dev/api/webhooks/common/"
+        try:
+            crm_res = requests.post(
+                crm_url,
+                json=crm_payload,
+                headers={"Content-Type": "application/json"},
+                timeout=10
+            )
+            crm_res.raise_for_status()
+            crm_synced = True
+        except requests.exceptions.RequestException:
+            pass
+
         return JsonResponse({
             'status': 'success',
             'message': f"Form submitted successfully! Thank you, {user_submission.first_name} {user_submission.last_name}.",
@@ -1498,6 +1877,7 @@ def dentist_api(request):
                 'city': user_submission.city,
                 'bikayi_synced': bikayi_synced,
                 'zoho_synced': zoho_synced,
+                'crm_synced': crm_synced,
             }
         }, status=201)
 
@@ -1781,6 +2161,28 @@ def aboutPage(request):
                 requests.post(
                     zoho_url,
                     json=zoho_payload,
+                    headers={"Content-Type": "application/json"},
+                    timeout=10,
+                )
+            except Exception:
+                pass
+
+            # Common CRM Webhook
+            crm_payload = {
+                "source": "smile_contact",
+                "name": submission.name or "",
+                "email": submission.email or "",
+                "phone": submission.phone or "",
+                "pincode": submission.pincode or "",
+                "city": submission.city or "",
+                "subject": post_data.get("subject") or "Smile makeover",
+                "message": submission.message or "",
+            }
+            crm_url = "https://proactive-sporty-surgical.ngrok-free.dev/api/webhooks/common/"
+            try:
+                requests.post(
+                    crm_url,
+                    json=crm_payload,
                     headers={"Content-Type": "application/json"},
                     timeout=10,
                 )
